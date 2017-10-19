@@ -1,0 +1,1 @@
+放javafx的controller
