@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import util.ResultMessage;
+import vo.GoodsVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
 
