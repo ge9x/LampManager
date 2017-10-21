@@ -111,7 +111,7 @@ public interface SalesBLService {
 	   * @return 进货单据是否成功保存到草稿中
 	   * @author zlk
 	   */
-	  public ResultMessage save(SalesVO bill);
+	  public ResultMessage saveSales(SalesVO bill);
 	  /**
 	   * 保存销售单到草稿中
 	   * 
@@ -119,6 +119,6 @@ public interface SalesBLService {
 	   * @return 销售单据是否成功保存到草稿中
 	   * @author zlk
 	   */
-	  public ResultMessage save(PurchaseVO bill);
+	  public ResultMessage savePurchase(PurchaseVO bill);
 	  
 }
