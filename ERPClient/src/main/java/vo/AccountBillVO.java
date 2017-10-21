@@ -1,11 +1,19 @@
 package vo;
 
+import util.BillState;
+import util.BillType;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/10/21.
  */
 public class AccountBillVO {
+    /**
+     * 单据创建时间
+     */
+    public Date date;
 
     /**
      * 收付款单据编号
@@ -16,6 +24,12 @@ public class AccountBillVO {
      * 收付款单据状态
      */
     public BillState state;
+
+    /**
+     * 收付款单据类型
+     */
+    public BillType type;
+
     /**
      * 客户名称
      */
@@ -36,8 +50,11 @@ public class AccountBillVO {
      */
     public double sum;
 
-    public AccountBillVO(String ID, String customerName, String userName, ArrayList<AccountBillItemVO> items){
+    public AccountBillVO(Date date, String ID, BillState state, BillType type, String customerName, String userName, ArrayList<AccountBillItemVO> items) {
+        this.date = date;
         this.ID = ID;
+        this.state = state;
+        this.type = type;
         this.customerName = customerName;
         this.userName = userName;
         this.accountBillItems = items;
