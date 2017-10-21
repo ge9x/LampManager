@@ -22,7 +22,7 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage checkReceipt(PO receipt);
+	public ResultMessage checkReceipt(BillVO receipt);
 	
 	/**
      * 修改单据内容
@@ -30,7 +30,7 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage modifyReceipt(PO receipt);
+	public ResultMessage modifyReceipt(BillVO receipt);
 	
 	/**
      * 修改单据状态
@@ -38,5 +38,5 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage approveReceipt(PO receipt);
+	public ResultMessage approveReceipt(BillVO receipt);
 }

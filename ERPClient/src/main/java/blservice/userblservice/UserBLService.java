@@ -1,6 +1,8 @@
 package blservice.userblservice;
 
 import util.ResultMessage;
+import util.UserLimits;
+import util.UserPosition;
 
 /** 
  * Created by Aster on 2017/10/20
