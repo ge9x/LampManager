@@ -17,19 +17,19 @@ public class ClassificationPO extends PO {
 	 */
 	private String name;
 	/**
-	 * 该商品分类的父分类的名称
+	 * 该商品分类的父分类
 	 */
-	private String father;
+	private ClassificationPO father;
 	/**
-	 * 该商品分类的所有子分类的名称
+	 * 该商品分类的所有子分类
 	 */
-	private ArrayList<String> chidren;
+	private ArrayList<ClassificationPO> chidren;
 	/**
-	 * 该商品分类下的所有商品的ID
+	 * 该商品分类下的所有商品
 	 */
-	private ArrayList<String> goods;
+	private ArrayList<GoodsPO> goods;
 	
-	public ClassificationPO(String id, String name, String father, ArrayList<String> chidren, ArrayList<String> goods) {
+	public ClassificationPO(String id, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -54,27 +54,27 @@ public class ClassificationPO extends PO {
 		this.name = name;
 	}
 
-	public String getFather() {
+	public ClassificationPO getFather() {
 		return father;
 	}
 
-	public void setFather(String father) {
+	public void setFather(ClassificationPO father) {
 		this.father = father;
 	}
 
-	public ArrayList<String> getChidren() {
+	public ArrayList<ClassificationPO> getChidren() {
 		return chidren;
 	}
 
-	public void setChidren(ArrayList<String> chidren) {
+	public void setChidren(ArrayList<ClassificationPO> chidren) {
 		this.chidren = chidren;
 	}
 
-	public ArrayList<String> getGoods() {
+	public ArrayList<GoodsPO> getGoods() {
 		return goods;
 	}
 
-	public void setGoods(ArrayList<String> goods) {
+	public void setGoods(ArrayList<GoodsPO> goods) {
 		this.goods = goods;
 	}
 	
