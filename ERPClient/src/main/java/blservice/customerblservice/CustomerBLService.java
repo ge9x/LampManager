@@ -36,7 +36,7 @@ public interface CustomerBLService {
 	 * @return 处理信息
 	 * @author zlk
 	 */
-	public ResultMessage deleteCustomer(String name);
+	public ResultMessage deleteCustomer(String customerID);
 	/**
 	 * 通过关键字查找客户
 	 * 
