@@ -9,26 +9,8 @@ import java.util.Date;
 /**
  * Created by Kry·L on 2017/10/21.
  */
-public class AccountBillVO {
-    /**
-     * 单据创建时间
-     */
-    public Date date;
+public class AccountBillVO extends BillVO{
 
-    /**
-     * 收付款单据编号
-     */
-    public String ID;
-
-    /**
-     * 收付款单据状态
-     */
-    public BillState state;
-
-    /**
-     * 收付款单据类型
-     */
-    public BillType type;
 
     /**
      * 客户名称
