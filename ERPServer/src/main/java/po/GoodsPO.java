@@ -1,5 +1,7 @@
 package po;
 
+import java.util.ArrayList;
+
 /**
  * Created on 2017/10/21
  * @author 巽
@@ -45,15 +47,15 @@ public class GoodsPO extends PO{
 	/**
 	 * 商品最近进价
 	 */
-	private double recentBuyingPrice;
+	private ArrayList<Double> recentBuyingPrice;
 	/**
 	 * 商品最近零售价
 	 */
-	private double recentRetailPrice;
+	private ArrayList<Double> recentRetailPrice;
 	
 	public GoodsPO(String id, String name, String model, String classification, String inventory, int amount,
-			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice) {
+			int alarmAmount, double buyingPrice, double retailPrice, ArrayList<Double> recentBuyingPrice,
+			ArrayList<Double> recentRetailPrice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -140,19 +142,19 @@ public class GoodsPO extends PO{
 		this.retailPrice = retailPrice;
 	}
 	
-	public double getRecentBuyingPrice() {
+	public ArrayList<Double> getRecentBuyingPrice() {
 		return recentBuyingPrice;
 	}
 	
-	public void setRecentBuyingPrice(double recentBuyingPrice) {
+	public void setRecentBuyingPrice(ArrayList<Double> recentBuyingPrice) {
 		this.recentBuyingPrice = recentBuyingPrice;
 	}
 	
-	public double getRecentRetailPrice() {
+	public ArrayList<Double> getRecentRetailPrice() {
 		return recentRetailPrice;
 	}
 	
-	public void setRecentRetailPrice(double recentRetailPrice) {
+	public void setRecentRetailPrice(ArrayList<Double> recentRetailPrice) {
 		this.recentRetailPrice = recentRetailPrice;
 	}
 	
