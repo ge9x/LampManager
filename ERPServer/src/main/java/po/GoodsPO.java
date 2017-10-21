@@ -67,70 +67,93 @@ public class GoodsPO extends PO{
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 	}
+	
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getModel() {
 		return model;
 	}
+	
 	public void setModel(String model) {
 		this.model = model;
 	}
+	
 	public String getClassification() {
 		return classification;
 	}
+	
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
+	
 	public String getInventory() {
 		return inventory;
 	}
+	
 	public void setInventory(String inventory) {
 		this.inventory = inventory;
 	}
+	
 	public int getAmount() {
 		return amount;
 	}
+	
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
 	public int getAlarmAmount() {
 		return alarmAmount;
 	}
+	
 	public void setAlarmAmount(int alarmAmount) {
 		this.alarmAmount = alarmAmount;
 	}
+	
 	public double getBuyingPrice() {
 		return buyingPrice;
 	}
+	
 	public void setBuyingPrice(double buyingPrice) {
 		this.buyingPrice = buyingPrice;
 	}
+	
 	public double getRetailPrice() {
 		return retailPrice;
 	}
+	
 	public void setRetailPrice(double retailPrice) {
 		this.retailPrice = retailPrice;
 	}
+	
 	public double getRecentBuyingPrice() {
 		return recentBuyingPrice;
 	}
+	
 	public void setRecentBuyingPrice(double recentBuyingPrice) {
 		this.recentBuyingPrice = recentBuyingPrice;
 	}
+	
 	public double getRecentRetailPrice() {
 		return recentRetailPrice;
 	}
+	
 	public void setRecentRetailPrice(double recentRetailPrice) {
 		this.recentRetailPrice = recentRetailPrice;
 	}
+	
 }
