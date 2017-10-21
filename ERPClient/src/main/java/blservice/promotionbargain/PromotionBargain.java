@@ -3,6 +3,7 @@ package blservice.promotionbargain;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.ResultMessage;
 import vo.PromotionBargainVO;
 
 /** 

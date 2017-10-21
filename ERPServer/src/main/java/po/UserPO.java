@@ -1,5 +1,8 @@
 package po;
 
+import util.UserLimits;
+import util.UserPosition;
+
 public class UserPO {
 	public String userID;
 	

@@ -3,6 +3,7 @@ package blservice.promotionTotal;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.ResultMessage;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
 

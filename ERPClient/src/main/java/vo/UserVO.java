@@ -1,5 +1,8 @@
 package vo;
 
+import util.UserLimits;
+import util.UserPosition;
+
 /**
  * Created by Aster on 2017/10/21.
  */

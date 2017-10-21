@@ -1,5 +1,7 @@
 package blservice.userblservice;
 
+import util.ResultMessage;
+
 /** 
  * Created by Aster on 2017/10/20
  */

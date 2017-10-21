@@ -3,6 +3,8 @@ package po;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.PromotionType;
+
 public class PromotionPO {
 	private String promotionID;
 	

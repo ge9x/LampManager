@@ -2,6 +2,7 @@ package blservice.examinationblservice;
 
 import java.util.ArrayList;
 
+import util.ResultMessage;
 import vo.ExaminationVO;
 
 /** 

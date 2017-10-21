@@ -4,6 +4,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import po.ExaminationPO;
+import util.ResultMessage;
+
 /** 
  * Created by Aster on 2017/10/21
  */
