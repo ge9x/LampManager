@@ -1,4 +1,4 @@
-package blservice;
+package blservice.inventoryblservice;
 
 import java.util.ArrayList;
 import java.util.Date;
