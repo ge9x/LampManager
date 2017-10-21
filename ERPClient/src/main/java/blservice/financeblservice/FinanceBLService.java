@@ -1,5 +1,8 @@
 package blservice.financeblservice;
 
+import util.ResultMessage;
+import vo.AccountBillVO;
+
 /**
  * Created by Kry·L on 2017/10/21.
  */
@@ -23,5 +26,29 @@ public interface FinanceBLService {
      */
     public String getNewCashBillID();
 
-    public AccountBillVO
+    /**
+     * 获得当前用户ID
+     * @return 当前用户ID
+     */
+    public String getUserID();
+
+
+    /**
+     * 提交单据
+     * @return 是否成功
+     */
+    public ResultMessage submit();
+
+    /**
+     * 保存为草稿单据
+     * @return
+     */
+    public ResultMessage save();
+
+    /**
+     * 修改草稿单据
+     * @param vo
+     * @return
+     */
+    public ResultMessage updateDraft(AccountBillVO vo);
 }
