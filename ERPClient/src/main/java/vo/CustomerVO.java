@@ -1,5 +1,7 @@
 package vo;
 
+import util.CustomerCategory;
+
 /**
  * created by zlk on 2017/10/21
  */
@@ -29,13 +31,15 @@ public class CustomerVO {
 	public double pay;
 	/**默认业务员*/
 	public String salesman;
+	/**客户积分*/
+	public double points;
 	
 	/**
 	 * 在查看界面时，显示所有可以显示的商品信息
 	 */
 	public CustomerVO(String customerID,CustomerCategory category,Level level,String customerName,
 			String phone,String address,String postCode,String mail,double receivableLimit,double
-			receive,double pay,String salesman){
+			receive,double pay,String salesman,double points){
 		this.customerID=customerID;
 		this.category=category;
 		this.level=level;
@@ -48,5 +52,6 @@ public class CustomerVO {
 		this.receive=receive;
 		this.pay=pay;
 		this.salesman=salesman;
+		this.points=points;
 	}
 }
