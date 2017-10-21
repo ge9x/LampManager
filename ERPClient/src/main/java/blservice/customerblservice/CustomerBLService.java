@@ -2,6 +2,7 @@ package blservice.customerblservice;
 
 import java.util.ArrayList;
 
+import util.ResultMessage;
 import vo.CustomerAddVO;
 import vo.CustomerVO;
 
