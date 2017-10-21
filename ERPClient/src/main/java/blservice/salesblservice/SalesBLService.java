@@ -57,14 +57,14 @@ public interface SalesBLService {
 	   * @return 会员促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionCustomerVO> findFitPromotionCustomer();
+	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer();
 	  /**
 	   * 得到合适的总价促销策略
 	   * 
 	   * @return 总价促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionTotalVO> findFitPromotionTotal();
+	  public ArrayList <PromotionTotalVO> getFitPromotionTotal();
 	  /**
 	   * 创建一个进货单
 	   * 
@@ -87,7 +87,7 @@ public interface SalesBLService {
 	   * @return 得到创建后的销售单
 	   * @author zlk
 	   */
-	  public SalesVO addSalesItem(SalesVO vo);
+	  public SalesVO addSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 
@@ -111,7 +111,7 @@ public interface SalesBLService {
 	   * @return 进货单据是否成功保存到草稿中
 	   * @author zlk
 	   */
-	  public ResultMessage save(SalesVO bill);
+	  public ResultMessage saveSales(SalesVO bill);
 	  /**
 	   * 保存销售单到草稿中
 	   * 
@@ -119,6 +119,6 @@ public interface SalesBLService {
 	   * @return 销售单据是否成功保存到草稿中
 	   * @author zlk
 	   */
-	  public ResultMessage save(PurchaseVO bill);
+	  public ResultMessage savePurchase(PurchaseVO bill);
 	  
 }
