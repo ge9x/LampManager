@@ -3,6 +3,7 @@ package blservice.examinationblservice;
 import java.util.ArrayList;
 
 import util.ResultMessage;
+import vo.BillVO;
 import vo.ExaminationVO;
 
 /** 
@@ -22,7 +23,7 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage checkReceipt(BillVO receipt);
+	public BillVO checkReceipt(String billID);
 	
 	/**
      * 修改单据内容
@@ -30,7 +31,7 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage modifyReceipt(BillVO receipt);
+	public ResultMessage modifyReceipt(BillVO bill);
 	
 	/**
      * 修改单据状态
@@ -38,5 +39,5 @@ public interface ExaminationBLService {
      * @param receipt
      * @return ResultMessage
      */
-	public ResultMessage approveReceipt(BillVO receipt);
+	public ResultMessage approveReceipt(BillVO bill);
 }
