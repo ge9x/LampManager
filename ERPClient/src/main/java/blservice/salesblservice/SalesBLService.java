@@ -57,14 +57,14 @@ public interface SalesBLService {
 	   * @return 会员促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionCustomerVO> findFitPromotionCustomer();
+	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer();
 	  /**
 	   * 得到合适的总价促销策略
 	   * 
 	   * @return 总价促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionTotalVO> findFitPromotionTotal();
+	  public ArrayList <PromotionTotalVO> getFitPromotionTotal();
 	  /**
 	   * 创建一个进货单
 	   * 
