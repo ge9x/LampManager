@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import util.BillState;
 import util.BillType;
-import vo.GoodsItemVO;
-import vo.UserPosition;
+import util.UserPosition;
+
 
 /**
  * created by zlk on 2017/10/20
@@ -30,7 +30,7 @@ public class SalesPO {
 	/**仓库*/
 	public String inventory;
 	/**商品列表*/
-	public ArrayList<GoodsItemVO> goodsItem;
+	public ArrayList<GoodsItemPO> goodsItem;
 	/**折让前总额*/
 	public double beforeSum;
 	/**折让*/
@@ -45,8 +45,8 @@ public class SalesPO {
 	public Date endDate;
 	
 	
-	public SalesPO(Date date, po.BillType type, po.BillState state, String iD, String customer, String salesman,
-			po.UserPosition user, String inventory, ArrayList<po.GoodsItemVO> goodsItem, double beforeSum,
+	public SalesPO(Date date, BillType type, BillState state, String iD, String customer, String salesman,
+			UserPosition user, String inventory, ArrayList<GoodsItemPO> goodsItem, double beforeSum,
 			double allowance, double voucher, double afterSum, String remarks, Date endDate) {
 		super();
 		this.date = date;
@@ -147,12 +147,12 @@ public class SalesPO {
 	}
 
 
-	public ArrayList<GoodsItemVO> getGoodsItem() {
+	public ArrayList<GoodsItemPO> getGoodsItem() {
 		return goodsItem;
 	}
 
 
-	public void setGoodsItem(ArrayList<GoodsItemVO> goodsItem) {
+	public void setGoodsItem(ArrayList<GoodsItemPO> goodsItem) {
 		this.goodsItem = goodsItem;
 	}
 

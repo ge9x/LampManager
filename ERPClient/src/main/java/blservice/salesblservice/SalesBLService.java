@@ -3,7 +3,13 @@ package blservice.salesblservice;
 import java.util.ArrayList;
 
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
+import vo.PromotionBargainVO;
+import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 /**
  * created by zlk on 2017/10/21
@@ -66,7 +72,7 @@ public interface SalesBLService {
 	   * @return 得到创建后的进货单
 	   * @author zlk
 	   */
-	  public purchaseVO addPurchase(PurchaseVO vo);
+	  public PurchaseVO addPurchase(PurchaseVO vo);
 	  /**
 	   * 添加商品清单信息
 	   * 

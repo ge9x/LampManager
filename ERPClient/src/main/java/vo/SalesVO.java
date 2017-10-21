@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import util.BillState;
 import util.BillType;
+import util.UserPosition;
 
 public class SalesVO {
 	/**单据创建时间*/
