@@ -87,7 +87,7 @@ public interface SalesBLService {
 	   * @return 得到创建后的销售单
 	   * @author zlk
 	   */
-	  public SalesVO addSalesItem(SalesVO vo);
+	  public SalesVO addSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 
