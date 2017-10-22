@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Kry·L on 2017/10/20.
  */
-public interface AccountBLservice {
+public interface AccountBLService {
 
     /**
      * 添加银行账户
