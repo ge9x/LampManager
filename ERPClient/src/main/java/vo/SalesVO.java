@@ -1,21 +1,13 @@
 package vo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import util.BillState;
 import util.BillType;
 import util.UserPosition;
 
-public class SalesVO {
-	/**单据创建时间*/
-	public Date date;
-	/**单据类型*/
-	public BillType type;
-	/**单据状态*/
-	public BillState state;
-	/**单据编号*/
-	public String ID;
+public class SalesVO extends BillVO{
 	/**客户*/
 	public String customer;
 	/**业务员*/
@@ -25,7 +17,7 @@ public class SalesVO {
 	/**仓库*/
 	public String inventory;
 	/**商品列表*/
-	public ArrayList<GoodsItemVO> goodsItem;
+	public GoodsItemVO goodsItem;
 	/**折让前总额*/
 	public double beforeSum;
 	/**折让*/
@@ -36,18 +28,15 @@ public class SalesVO {
 	public double afterSum;
 	/**备注*/
 	public String remarks;
-	/**单据最后修改时间*/
-	public Date endDate;
 	
 	
-	public SalesVO(Date date, BillType type, BillState state, String iD, String customer, String salesman,
-			UserPosition user, String inventory, ArrayList<GoodsItemVO> goodsItem, double beforeSum, double allowance,
+	public SalesVO( BillType type, BillState state, String billID, String customer, String salesman,
+			UserPosition user, String inventory, GoodsItemVO goodsItem, double beforeSum, double allowance,
 			double voucher, double afterSum, String remarks, Date endDate) {
 		super();
-		this.date = date;
 		this.type = type;
 		this.state = state;
-		ID = iD;
+		ID = billID;
 		this.customer = customer;
 		this.salesman = salesman;
 		this.user = user;
@@ -58,7 +47,7 @@ public class SalesVO {
 		this.voucher = voucher;
 		this.afterSum = afterSum;
 		this.remarks = remarks;
-		this.endDate = endDate;
+		this.date = endDate;
 	}
 	
 	

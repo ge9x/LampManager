@@ -1,6 +1,6 @@
 package po;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import util.BillState;
@@ -13,43 +13,41 @@ import util.UserPosition;
  */
 
 public class SalesPO {
-	/**单据创建时间*/
-	public Date date;
+	
 	/**单据类型*/
-	public BillType type;
+	private BillType type;
 	/**单据状态*/
-	public BillState state;
+	private BillState state;
 	/**单据编号*/
-	public String ID;
+	private String ID;
 	/**客户*/
-	public String customer;
+	private String customer;
 	/**业务员*/
-	public String salesman;
+	private String salesman;
 	/**操作员*/
-	public UserPosition user;
+	private UserPosition user;
 	/**仓库*/
-	public String inventory;
+	private String inventory;
 	/**商品列表*/
-	public ArrayList<GoodsItemPO> goodsItem;
+	private GoodsItemPO goodsItem;
 	/**折让前总额*/
-	public double beforeSum;
+	private double beforeSum;
 	/**折让*/
-	public double allowance;
+	private double allowance;
 	/**使用代金券金额*/
-	public double voucher;
+	private double voucher;
 	/**折让后总额*/
-	public double afterSum;
+	private double afterSum;
 	/**备注*/
-	public String remarks;
+	private String remarks;
 	/**单据最后修改时间*/
-	public Date endDate;
+	private Date date;
 	
 	
-	public SalesPO(Date date, BillType type, BillState state, String iD, String customer, String salesman,
-			UserPosition user, String inventory, ArrayList<GoodsItemPO> goodsItem, double beforeSum,
+	public SalesPO( BillType type, BillState state, String iD, String customer, String salesman,
+			UserPosition user, String inventory,GoodsItemPO goodsItem, double beforeSum,
 			double allowance, double voucher, double afterSum, String remarks, Date endDate) {
 		super();
-		this.date = date;
 		this.type = type;
 		this.state = state;
 		ID = iD;
@@ -63,18 +61,9 @@ public class SalesPO {
 		this.voucher = voucher;
 		this.afterSum = afterSum;
 		this.remarks = remarks;
-		this.endDate = endDate;
+		this.date = endDate;
 	}
 
-
-	public Date getDate() {
-		return date;
-	}
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 
 	public BillType getType() {
@@ -147,12 +136,12 @@ public class SalesPO {
 	}
 
 
-	public ArrayList<GoodsItemPO> getGoodsItem() {
+	public GoodsItemPO getGoodsItem() {
 		return goodsItem;
 	}
 
 
-	public void setGoodsItem(ArrayList<GoodsItemPO> goodsItem) {
+	public void setGoodsItem(GoodsItemPO goodsItem) {
 		this.goodsItem = goodsItem;
 	}
 
@@ -207,13 +196,13 @@ public class SalesPO {
 	}
 
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getDate() {
+		return date;
 	}
 
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setDate(Date endDate) {
+		this.date = endDate;
 	}
 	
 	
