@@ -1,7 +1,7 @@
 package po;
 
-import com.sun.glass.ui.Window.Level;
-
+import util.Level;
+import java.util.Date;
 import util.CustomerCategory;
 
 public class CustomerPO {

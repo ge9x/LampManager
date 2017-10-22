@@ -19,7 +19,7 @@ public interface CustomerBLService {
 	 * @author zlk
 	 * 
 	 */
-	public long getNewCustomerID();
+	public String getNewCustomerID();
       //管理客户的步骤
 	/**
 	 * 管理客户中的添加客户
@@ -61,4 +61,5 @@ public interface CustomerBLService {
 	 * @author zlk
 	 */
 	public ResultMessage updateCustomer(CustomerAddVO vo);
+	
 }

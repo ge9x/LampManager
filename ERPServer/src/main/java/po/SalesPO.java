@@ -1,6 +1,6 @@
 package po;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import util.BillState;
@@ -30,7 +30,7 @@ public class SalesPO {
 	/**仓库*/
 	public String inventory;
 	/**商品列表*/
-	public ArrayList<GoodsItemPO> goodsItem;
+	public GoodsItemPO goodsItem;
 	/**折让前总额*/
 	public double beforeSum;
 	/**折让*/
@@ -46,7 +46,7 @@ public class SalesPO {
 	
 	
 	public SalesPO(Date date, BillType type, BillState state, String iD, String customer, String salesman,
-			UserPosition user, String inventory, ArrayList<GoodsItemPO> goodsItem, double beforeSum,
+			UserPosition user, String inventory,GoodsItemPO goodsItem, double beforeSum,
 			double allowance, double voucher, double afterSum, String remarks, Date endDate) {
 		super();
 		this.date = date;
@@ -147,12 +147,12 @@ public class SalesPO {
 	}
 
 
-	public ArrayList<GoodsItemPO> getGoodsItem() {
+	public GoodsItemPO getGoodsItem() {
 		return goodsItem;
 	}
 
 
-	public void setGoodsItem(ArrayList<GoodsItemPO> goodsItem) {
+	public void setGoodsItem(GoodsItemPO goodsItem) {
 		this.goodsItem = goodsItem;
 	}
 

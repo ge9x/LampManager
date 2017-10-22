@@ -1,6 +1,6 @@
 package po;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 import util.BillState;
@@ -23,7 +23,7 @@ public class PurchasePO {
 	/**操作员*/
 	public UserPosition user;
 	/**商品列表*/
-	public ArrayList<GoodsItemPO> goodsItem;
+	public GoodsItemPO goodsItem;
 	/**备注*/
 	public String remarks;
 	/**总额合计*/
@@ -32,7 +32,7 @@ public class PurchasePO {
 	public Date endDate;
 	
 	public PurchasePO(Date startDate,BillType type,BillState state,String ID,String supplier
-			,String inventory,UserPosition user,ArrayList<GoodsItemPO> goodsItem,String remarks
+			,String inventory,UserPosition user,GoodsItemPO goodsItem,String remarks
 			,double sum,Date endDate){
 		this.startDate=startDate;
 		this.type=type;
@@ -103,11 +103,11 @@ public class PurchasePO {
 		this.user = user;
 	}
 
-	public ArrayList<GoodsItemPO> getGoodsItem() {
+	public GoodsItemPO getGoodsItem() {
 		return goodsItem;
 	}
 
-	public void setGoodsItem(ArrayList<GoodsItemPO> goodsItem) {
+	public void setGoodsItem(GoodsItemPO goodsItem) {
 		this.goodsItem = goodsItem;
 	}
 

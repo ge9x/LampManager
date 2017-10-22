@@ -1,5 +1,9 @@
 package util;
 
+/**
+ * created by zlk on 2017/10/21
+ */
+
 public enum Level {
 	LEVEL_ONE("一级普通客户"),
 	LEVEL_TEO("二级客户"),
