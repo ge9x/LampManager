@@ -3,6 +3,7 @@ package vo;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.Level;
 import util.PromotionType;
 
 /**

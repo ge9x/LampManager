@@ -1,65 +1,30 @@
 package po;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 public class ExaminationPO {
-	private ArrayList<InventoryBillPO> inventoryBillPOs;
-
-	private ArrayList<SalesPO> salesPOs;
+	private BillPO bill;
 	
-	private ArrayList<PurchasePO> purchasePOs;
+	private Date examinationDate;
 	
-	private ArrayList<AccountBillPO> accountBillPOs;
-	
-	private ArrayList<CashBillPO> cashBillPOs;
-	
-	public ExaminationPO(ArrayList<InventoryBillPO> inventoryBillPOs, ArrayList<SalesPO> salesPOs, ArrayList<PurchasePO> purchasePOs, ArrayList<AccountBillPO> accountBillPOs, public ArrayList<CashBillPO> cashBillPOs){
-		this.inventoryBillPOs = inventoryBillPOs;
-		this.salesPOs = salesPOs;
-		this.purchasePOs = purchasePOs;
-		this.accountBillPOs = accountBillPOs;
-		this.cashBillPOs = cashBillPOs;
+	public ExaminationPO(BillPO bill, Date examinationDate){
+		this.bill = bill;
+		this.examinationDate = examinationDate;
 	}
 
-	public ArrayList<InventoryBillPO> getInventoryBillPOs() {
-		return inventoryBillPOs;
+	public BillPO getBill() {
+		return bill;
 	}
 
-	public void setInventoryBillPOs(ArrayList<InventoryBillPO> inventoryBillPOs) {
-		this.inventoryBillPOs = inventoryBillPOs;
+	public void setBill(BillPO bill) {
+		this.bill = bill;
 	}
 
-	public ArrayList<SalesPO> getSalesPOs() {
-		return salesPOs;
+	public Date getExaminationDate() {
+		return examinationDate;
 	}
 
-	public void setSalesPOs(ArrayList<SalesPO> salesPOs) {
-		this.salesPOs = salesPOs;
+	public void setExaminationDate(Date examinationDate) {
+		this.examinationDate = examinationDate;
 	}
-
-	public ArrayList<PurchasePO> getPurchasePOs() {
-		return purchasePOs;
-	}
-
-	public void setPurchasePOs(ArrayList<PurchasePO> purchasePOs) {
-		this.purchasePOs = purchasePOs;
-	}
-
-	public ArrayList<AccountBillPO> getAccountBillPOs() {
-		return accountBillPOs;
-	}
-
-	public void setAccountBillPOs(ArrayList<AccountBillPO> accountBillPOs) {
-		this.accountBillPOs = accountBillPOs;
-	}
-
-	public ArrayList<CashBillPO> getCashBillPOs() {
-		return cashBillPOs;
-	}
-
-	public void setCashBillPOs(ArrayList<CashBillPO> cashBillPOs) {
-		this.cashBillPOs = cashBillPOs;
-	}
-	
-	
 }
