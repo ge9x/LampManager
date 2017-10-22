@@ -11,31 +11,31 @@ import util.BillType;
  * @author 巽
  *
  */
-public class InventoryBillVO {
+public class InventoryBillVO extends BillVO{
+//	/**
+//	 * 单据ID
+//	 */
+//	String id;
+//	/**
+//	 * 单据类型
+//	 */
+//	BillType type;
+//	/**
+//	 * 单据状态
+//	 */
+//	BillState state;
+//	/**
+//	 * 单据提交时间
+//	 */
+//	Date date;
 	/**
-	 * 单据ID
+	 * 该单据内的商品对应的溢出/缺损/赠送/报警数量（报警数量为商品警戒数量，实际数量由商品引用取得）
 	 */
-	String id;
-	/**
-	 * 单据类型
-	 */
-	BillType type;
-	/**
-	 * 单据状态
-	 */
-	BillState state;
-	/**
-	 * 单据提交时间
-	 */
-	Date date;
-	/**
-	 * 该单据内的商品对应的溢出/缺损数量
-	 */
-	HashMap<GoodsVO, Integer> goodsMap;
+	public HashMap<GoodsVO, Integer> goodsMap;
 	
-	public InventoryBillVO(String id, BillType type, BillState state, Date date, HashMap<GoodsVO, Integer> goodsMap) {
+	public InventoryBillVO(String ID, BillType type, BillState state, Date date, HashMap<GoodsVO, Integer> goodsMap) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.type = type;
 		this.state = state;
 		this.date = date;

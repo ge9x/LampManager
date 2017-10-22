@@ -15,7 +15,7 @@ public class InventoryBillPO extends PO{
 	/**
 	 * 单据ID
 	 */
-	private String id;
+	private String ID;
 	/**
 	 * 单据类型
 	 */
@@ -33,9 +33,9 @@ public class InventoryBillPO extends PO{
 	 */
 	private HashMap<GoodsPO, Integer> goodsMap;
 	
-	public InventoryBillPO(String id, BillType type, BillState state, Date date, HashMap<GoodsPO, Integer> goodsMap) {
+	public InventoryBillPO(String ID, BillType type, BillState state, Date date, HashMap<GoodsPO, Integer> goodsMap) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.type = type;
 		this.state = state;
 		this.date = date;
@@ -43,11 +43,11 @@ public class InventoryBillPO extends PO{
 	}
 
 	public String getId() {
-		return id;
+		return ID;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String ID) {
+		this.ID = ID;
 	}
 
 	public BillType getType() {

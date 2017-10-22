@@ -1,6 +1,7 @@
 package dataservice.classificationdataservice;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.ClassificationPO;
 import util.ResultMessage;
@@ -11,12 +12,18 @@ import util.ResultMessage;
  */
 public interface ClassificationDataService {
 	/**
+	 * 得到所有商品分类
+	 * @return 所有商品分类的PO
+	 * @throws RemoteException
+	 */
+	public ArrayList<ClassificationPO> show() throws RemoteException;
+	/**
 	 * 查找商品分类PO
-	 * @param id 商品分类ID
+	 * @param ID 商品分类ID
 	 * @return 找到的商品分类PO
 	 * @throws RemoteException
 	 */
-	public ClassificationPO find(String id) throws RemoteException;
+	public ClassificationPO find(String ID) throws RemoteException;
 	/**
 	 * 添加商品分类
 	 * @param po 待添加的商品分类PO

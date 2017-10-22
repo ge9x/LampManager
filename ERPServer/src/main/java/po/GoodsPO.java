@@ -11,7 +11,7 @@ public class GoodsPO extends PO{
 	/**
 	 * 商品ID
 	 */
-	private String id;
+	private String ID;
 	/**
 	 * 商品名称
 	 */
@@ -53,11 +53,11 @@ public class GoodsPO extends PO{
 	 */
 	private ArrayList<Double> recentRetailPrice;
 	
-	public GoodsPO(String id, String name, String model, String classification, String inventory, int amount,
+	public GoodsPO(String ID, String name, String model, String classification, String inventory, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, ArrayList<Double> recentBuyingPrice,
 			ArrayList<Double> recentRetailPrice) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
@@ -71,11 +71,11 @@ public class GoodsPO extends PO{
 	}
 	
 	public String getId() {
-		return id;
+		return ID;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String ID) {
+		this.ID = ID;
 	}
 	
 	public String getName() {

@@ -12,9 +12,15 @@ public class InventoryCheckVO {
 	/**
 	 * 盘点日期
 	 */
-	Date date;
+	public Date date;
 	/**
 	 * 每个商品->库存均价
 	 */
-	HashMap<GoodsVO, Double> averagePrice;
+	public HashMap<GoodsVO, Double> averagePrice;
+	
+	public InventoryCheckVO(Date date, HashMap<GoodsVO, Double> averagePrice) {
+		super();
+		this.date = date;
+		this.averagePrice = averagePrice;
+	}
 }

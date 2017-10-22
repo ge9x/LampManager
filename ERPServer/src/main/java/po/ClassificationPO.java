@@ -11,7 +11,7 @@ public class ClassificationPO extends PO {
 	/**
 	 * 商品分类ID
 	 */
-	private String id;
+	private String ID;
 	/**
 	 * 商品分类名称
 	 */
@@ -29,9 +29,9 @@ public class ClassificationPO extends PO {
 	 */
 	private ArrayList<GoodsPO> goods;
 	
-	public ClassificationPO(String id, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
+	public ClassificationPO(String ID, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.name = name;
 		this.father = father;
 		this.chidren = chidren;
@@ -39,11 +39,11 @@ public class ClassificationPO extends PO {
 	}
 
 	public String getId() {
-		return id;
+		return ID;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String ID) {
+		this.ID = ID;
 	}
 
 	public String getName() {
