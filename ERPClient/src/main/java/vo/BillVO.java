@@ -10,22 +10,22 @@ import java.util.Date;
  */
 public abstract class BillVO {
     /**
-     * 单据创建时间
+     * 单据最后修改时间
      */
     public Date date;
 
     /**
-     * 收付款单据编号
+     * 单据编号
      */
     public String ID;
 
     /**
-     * 收付款单据状态
+     * 单据状态
      */
     public BillState state;
 
     /**
-     * 收付款单据类型
+     * 单据类型
      */
     public BillType type;
 }
