@@ -46,13 +46,13 @@ public class InventoryDataService_Stub implements InventoryDataService{
 
 	public InventoryBillPO findBill(String ID) throws RemoteException {
 		for(InventoryBillPO po : data){
-			if(po.getId().equals(ID)){
+			if(po.getID().equals(ID)){
 				System.out.println("find bill success");
 				return po;
 			}
 		}
 		for(InventoryBillPO po : alarmData){
-			if(po.getId().equals(ID)){
+			if(po.getID().equals(ID)){
 				System.out.println("find bill success");
 				return po;
 			}
@@ -63,13 +63,13 @@ public class InventoryDataService_Stub implements InventoryDataService{
 
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException {
 		for(InventoryBillPO ipo : data){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				System.out.println("add bill failed");
 				return ResultMessage.FAILED;
 			}
 		}
 		for(InventoryBillPO ipo : alarmData){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				System.out.println("add bill failed");
 				return ResultMessage.FAILED;
 			}
@@ -81,14 +81,14 @@ public class InventoryDataService_Stub implements InventoryDataService{
 
 	public ResultMessage deleteBill(InventoryBillPO po) throws RemoteException {
 		for(InventoryBillPO ipo : data){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				data.remove(ipo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		for(InventoryBillPO ipo : alarmData){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				data.remove(ipo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
@@ -100,7 +100,7 @@ public class InventoryDataService_Stub implements InventoryDataService{
 
 	public ResultMessage updateBill(InventoryBillPO po) throws RemoteException {
 		for(InventoryBillPO ipo : data){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				data.remove(ipo);
 				data.add(po);
 				System.out.println("update bill success");
@@ -108,7 +108,7 @@ public class InventoryDataService_Stub implements InventoryDataService{
 			}
 		}
 		for(InventoryBillPO ipo : alarmData){
-			if(ipo.getId().equals(po.getId())){
+			if(ipo.getID().equals(po.getID())){
 				data.remove(ipo);
 				data.add(po);
 				System.out.println("update bill success");

@@ -1,27 +1,18 @@
 package vo;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 /** 
  * Created by Aster on 2017/10/20
  */
 
 public class ExaminationVO {
-	public ArrayList<InventoryBillVO> inventoryBillVOs;
-
-	public ArrayList<SalesVO> salesVOs;
+	public BillVO bill;
 	
-	public ArrayList<PurchaseVO> purchaseVOs;
+	public Date examinationDate;
 	
-	public ArrayList<AccountBillVO> accountBillVOs;
-	
-	public ArrayList<CashBillVO> cashBillVOs;
-	
-	public ExaminationVO(ArrayList<InventoryBillVO> inventoryBillVOs, ArrayList<SalesVO> salesVOs, ArrayList<PurchaseVO> purchaseVOs, ArrayList<AccountBillVO> accountBillVOs, public ArrayList<CashBillVO> cashBillVOs){
-		this.inventoryBillVOs = inventoryBillVOs;
-		this.salesVOs = salesVOs;
-		this.purchaseVOs = purchaseVOs;
-		this.accountBillVOs = accountBillVOs;
-		this.cashBillVOs = cashBillVOs;
+	public ExaminationVO(BillVO bill, Date examinationDate){
+		this.bill = bill;
+		this.examinationDate = examinationDate;
 	}
 }

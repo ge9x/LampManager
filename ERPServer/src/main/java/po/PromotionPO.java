@@ -3,6 +3,7 @@ package po;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.Level;
 import util.PromotionType;
 
 public class PromotionPO {
@@ -142,6 +143,5 @@ public class PromotionPO {
 	public void setType(PromotionType type) {
 		this.type = type;
 	}
-	
 	
 }
