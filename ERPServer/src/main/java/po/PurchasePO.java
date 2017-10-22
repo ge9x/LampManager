@@ -19,7 +19,7 @@ public class PurchasePO {
 	/**仓库*/
 	private String inventory;
 	/**操作员*/
-	private UserPosition user;
+	private String user;
 	/**商品列表*/
 	private GoodsItemPO goodsItem;
 	/**备注*/
@@ -30,7 +30,7 @@ public class PurchasePO {
 	private Date date;
 	
 	public PurchasePO(BillType type,BillState state,String ID,String supplier
-			,String inventory,UserPosition user,GoodsItemPO goodsItem,String remarks
+			,String inventory,String user,GoodsItemPO goodsItem,String remarks
 			,double sum,Date endDate){
 		this.type=type;
 		this.state=state;
@@ -84,11 +84,11 @@ public class PurchasePO {
 		this.inventory = inventory;
 	}
 
-	public UserPosition getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(UserPosition user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
