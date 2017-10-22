@@ -9,47 +9,47 @@ public class GoodsVO {
 	/**
 	 * 商品ID
 	 */
-	String id;
+	public String id;
 	/**
 	 * 商品名称
 	 */
-	String name;
+	public String name;
 	/**
 	 * 商品型号
 	 */
-	String model;
+	public String model;
 	/**
 	 * 商品所属分类
 	 */
-	String classification;
+	public String classification;
 	/**
 	 * 商品所在仓库
 	 */
-	String inventory;
+	public String inventory;
 	/**
 	 * 商品数量
 	 */
-	int amount;
+	public int amount;
 	/**
 	 * 商品警戒数量
 	 */
-	int alarmAmount;
+	public int alarmAmount;
 	/**
 	 * 商品进价
 	 */
-	double buyingPrice;
+	public double buyingPrice;
 	/**
 	 * 商品零售价
 	 */
-	double retailPrice;
+	public double retailPrice;
 	/**
 	 * 商品最近进价
 	 */
-	double recentBuyingPrice;
+	public double recentBuyingPrice;
 	/**
 	 * 商品最近零售价
 	 */
-	double recentRetailPrice;
+	public double recentRetailPrice;
 	
 	public GoodsVO(String id, String name, String model, String classification, String inventory, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,

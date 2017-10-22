@@ -11,23 +11,23 @@ public class ClassificationVO {
 	/**
 	 * 商品分类ID
 	 */
-	String id;
+	public String id;
 	/**
 	 * 商品分类名称
 	 */
-	String name;
+	public String name;
 	/**
 	 * 该商品分类的父分类
 	 */
-	ClassificationVO father;
+	public ClassificationVO father;
 	/**
 	 * 该商品分类的所有子分类
 	 */
-	ArrayList<ClassificationVO> chidren;
+	public ArrayList<ClassificationVO> chidren;
 	/**
 	 * 该商品分类下的所有商品
 	 */
-	ArrayList<GoodsVO> goods;
+	public ArrayList<GoodsVO> goods;
 	
 	public ClassificationVO(String id, String name, ClassificationVO father, ArrayList<ClassificationVO> chidren,
 			ArrayList<GoodsVO> goods) {

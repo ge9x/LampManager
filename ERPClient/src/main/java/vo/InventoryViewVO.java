@@ -15,23 +15,23 @@ public class InventoryViewVO {
 	/**
 	 * 开始时间点
 	 */
-	Date startDate;
+	public Date startDate;
 	/**
 	 * 截止时间点
 	 */
-	Date endDate;
+	public Date endDate;
 	/**
 	 * 仓库
 	 */
-	String inventory;
+	public String inventory;
 	/**
 	 * 每张单据中每种商品的库存变动条目
 	 */
-	ArrayList<InventoryViewItemVO> item;
+	public ArrayList<InventoryViewItemVO> item;
 	/**
 	 * 商品数量合计
 	 */
-	HashMap<GoodsVO, Double> total;
+	public HashMap<GoodsVO, Double> total;
 }
 
 /**
