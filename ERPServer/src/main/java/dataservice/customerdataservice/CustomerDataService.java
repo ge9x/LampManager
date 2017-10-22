@@ -34,7 +34,7 @@ public interface CustomerDataService {
 	 * @return 查找到符合条件的客户po
 	 * @author zlk
 	 */
-	public CustomerPO findByCustomerID(String customerID) throws RemoteException;
+	public ArrayList<CustomerPO> findByCustomerID(String customerID) throws RemoteException;
 	/**
 	 * 通过关键字查找客户
 	 * 
@@ -42,7 +42,7 @@ public interface CustomerDataService {
 	 * @return 查找到符合条件的客户po
 	 * @author zlk
 	 */
-	public CustomerPO findByKeywords(String keywords) throws RemoteException;
+	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException;
 	/**
 	 * 更新客户信息
 	 * 
@@ -71,6 +71,6 @@ public interface CustomerDataService {
 	 * @return 
 	 * @author zlk
 	 */
-	public CustomerPO getCustomerData() throws RemoteException;
+	public CustomerPO getCustomerData(String ID) throws RemoteException;
 
 }

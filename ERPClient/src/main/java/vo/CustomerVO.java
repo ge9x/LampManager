@@ -1,6 +1,6 @@
 package vo;
 
-import com.sun.glass.ui.Window.Level;
+import util.Level;
 
 import util.CustomerCategory;
 

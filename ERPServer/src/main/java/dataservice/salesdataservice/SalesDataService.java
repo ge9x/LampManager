@@ -2,6 +2,7 @@ package dataservice.salesdataservice;
 
 import java.util.ArrayList;
 
+import po.PurchasePO;
 import po.SalesPO;
 import util.ResultMessage;
 
@@ -11,37 +12,69 @@ import util.ResultMessage;
 
 public interface SalesDataService {
 	/**
-	 * 通过单据编号查找单据
+	 * 通过单据编号查找进货单据
 	 * 
 	 * @param ID
-	 * @return 查找到的单据
+	 * @return 查找到的进货单据
 	 * @author zlk
 	 */
-	public SalesPO find(String ID);
+	public PurchasePO findPurchase(String ID);
 	/**
-	 * 添加单据
+	 * 通过单据编号查找销售单据
+	 * 
+	 * @param ID
+	 * @return 查找到的销售单据
+	 * @author zlk
+	 */
+	public SalesPO findSlaes(String ID);
+	/**
+	 * 添加进货单据
 	 * 
 	 * @param po
-	 * @return 是否成功添加单据
+	 * @return 是否成功添加今后单据
 	 * @author zlk
 	 */
-	public ResultMessage add(SalesPO po);
+	public ResultMessage addPurchase(PurchasePO po);
 	/**
-	 * 更新单据
+	 * 添加销售单据
 	 * 
 	 * @param po
-	 * @return 是否成功更新单据
+	 * @return 是否成功添加销售单据
 	 * @author zlk
 	 */
-	public ResultMessage update(SalesPO po);
+	public ResultMessage addSales(SalesPO po);
 	/**
-	 * 删除单据
+	 * 更新进货单据
 	 * 
 	 * @param po
-	 * @return 是否成功删除单据
+	 * @return 是否成功更新进货单据
 	 * @author zlk
 	 */
-	public ResultMessage delete(SalesPO po);
+	public ResultMessage updatePurchase(PurchasePO po);
+	/**
+	 * 更新销售单据
+	 * 
+	 * @param po
+	 * @return 是否成功更新销售单据
+	 * @author zlk
+	 */
+	public ResultMessage updateSales(SalesPO po);
+	/**
+	 * 删除进货单据
+	 * 
+	 * @param po
+	 * @return 是否成功删除进货单据
+	 * @author zlk
+	 */
+	public ResultMessage deletePurchase(PurchasePO po);
+	/**
+	 * 删除销售单据
+	 * 
+	 * @param po
+	 * @return 是否成功删除销售单据
+	 * @author zlk
+	 */
+	public ResultMessage deleteSales(SalesPO po);
 	/**
 	 * 初始化持久化数据库
 	 * 
@@ -49,10 +82,17 @@ public interface SalesDataService {
 	 */
 	public void init();
 	/**
-	 * 展示单据
+	 * 展示进货单据
 	 * 
 	 * @return po列表
 	 * @author zlk
 	 */
-	public ArrayList<SalesPO> show();
+	public ArrayList<PurchasePO> showPurchase();
+	/**
+	 * 展示销售单据
+	 * 
+	 * @return po列表
+	 * @author zlk
+	 */
+	public ArrayList<SalesPO> showSales();
 }
