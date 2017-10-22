@@ -35,10 +35,15 @@ public interface InventoryBLService {
 	 */
 	public ResultMessage exportExcel(InventoryCheckVO vo);
 	/**
-	 * 得到所有库存单据
-	 * @return 所有库存单据
+	 * 得到所有库存报溢/报损单和赠送单
+	 * @return 所有库存报溢/报损单和赠送单的VO
 	 */
 	public ArrayList<InventoryBillVO> showBills();
+	/**
+	 * 得到所有库存报警单
+	 * @return 所有库存报警单的VO
+	 */
+	public ArrayList<InventoryBillVO> showAlarmBills();
 	/**
 	 * 搜索符合条件的库存单据
 	 * @param startDate 开始时间点
@@ -46,27 +51,27 @@ public interface InventoryBLService {
 	 * @param inventory 仓库名
 	 * @param id 单据ID
 	 * @param keyword 关键字
-	 * @return 符合条件的库存单据
+	 * @return 符合条件的库存单据的VO
 	 */
 	public ArrayList<InventoryBillVO> searchBill(Date startDate, Date endDate, String inventory, String id, String keyword);
 	/**
-	 * 添加库存报溢单
+	 * 添加库存报溢单/报溢单/报警单
 	 * @param vo
 	 * @return 是否成功添加
 	 */
-	public ResultMessage addOverflowBill(InventoryBillVO vo);
-	/**
-	 * 添加库存报损单
-	 * @param vo
-	 * @return 是否成功添加
-	 */
-	public ResultMessage addLossBill(InventoryBillVO vo);
+	public ResultMessage addBill(InventoryBillVO vo);
 	/**
 	 * 删除库存单据
 	 * @param id 单据ID
 	 * @return 是否成功删除
 	 */
 	public ResultMessage deleteBill(String id);
+	/**
+	 * 修改库存单据
+	 * @param vo
+	 * @return 是否成功修改
+	 */
+	public ResultMessage updateBill(InventoryBillVO vo);
 	/**
 	 * 查看库存单据详情
 	 * @param id 单据ID
