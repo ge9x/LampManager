@@ -77,7 +77,7 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return alarmData;
 	}
 
-	public ArrayList<InventoryBillVO> searchBill(Date startDate, Date endDate, String inventory, String ID,
+	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String ID,
 			String keyword) {
 		ArrayList<InventoryBillVO> ret = new ArrayList<InventoryBillVO>();
 		for(InventoryBillVO vo : data){

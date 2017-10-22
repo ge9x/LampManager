@@ -53,7 +53,7 @@ public interface InventoryBLService {
 	 * @param keyword 关键字
 	 * @return 符合条件的库存单据的VO
 	 */
-	public ArrayList<InventoryBillVO> searchBill(Date startDate, Date endDate, String inventory, String id, String keyword);
+	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id, String keyword);
 	/**
 	 * 添加库存报溢单/报溢单/报警单
 	 * @param vo
