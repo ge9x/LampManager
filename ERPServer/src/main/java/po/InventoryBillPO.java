@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import util.BillState;
 import util.BillType;
-import util.UserPosition;
 
 /**
  * Created on 2017/10/21
@@ -20,13 +19,13 @@ public class InventoryBillPO extends BillPO{
 	/**
 	 * 操作员
 	 */
-	private UserPosition user;
+	private String user;
 	/**
 	 * 该单据内的商品对应的溢出/缺损数量
 	 */
 	private HashMap<GoodsPO, Integer> goodsMap;
 	
-	public InventoryBillPO(String ID, BillType type, BillState state, Date date, String inventory, UserPosition user, HashMap<GoodsPO, Integer> goodsMap) {
+	public InventoryBillPO(String ID, BillType type, BillState state, Date date, String inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);
 		this.inventory = inventory;
 		this.user = user;
@@ -41,11 +40,11 @@ public class InventoryBillPO extends BillPO{
 		this.inventory = inventory;
 	}
 
-	public UserPosition getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(UserPosition user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

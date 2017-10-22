@@ -11,7 +11,6 @@ import po.GoodsPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
-import util.UserPosition;
 
 /**
  * Created on 2017/10/22
@@ -25,11 +24,11 @@ public class InventoryDataService_Stub implements InventoryDataService{
 	{
 		data = new ArrayList<InventoryBillPO>();
 		alarmData = new ArrayList<InventoryBillPO>();
-		InventoryBillPO vo1 = new InventoryBillPO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsPO, Integer>());
-		InventoryBillPO vo2 = new InventoryBillPO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsPO, Integer>());
-		InventoryBillPO vo3 = new InventoryBillPO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsPO, Integer>());
-		InventoryBillPO vo4 = new InventoryBillPO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsPO, Integer>());
-		InventoryBillPO vo5 = new InventoryBillPO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsPO, Integer>());
+		InventoryBillPO vo1 = new InventoryBillPO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
+		InventoryBillPO vo2 = new InventoryBillPO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
+		InventoryBillPO vo3 = new InventoryBillPO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
+		InventoryBillPO vo4 = new InventoryBillPO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
+		InventoryBillPO vo5 = new InventoryBillPO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
 		data.add(vo1);
 		data.add(vo2);
 		alarmData.add(vo3);

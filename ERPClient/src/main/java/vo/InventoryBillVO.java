@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import util.BillState;
 import util.BillType;
-import util.UserPosition;
 
 /**
  * Created on 2017/10/21
@@ -20,13 +19,13 @@ public class InventoryBillVO extends BillVO{
 	/**
 	 * 操作员
 	 */
-	public UserPosition user;
+	public String user;
 	/**
 	 * 该单据内的商品对应的溢出/缺损/赠送/报警数量（报警数量为商品警戒数量，实际数量由商品引用取得）
 	 */
 	public HashMap<GoodsVO, Integer> goodsMap;
 	
-	public InventoryBillVO(String ID, BillType type, BillState state, Date date, String inventory, UserPosition user, HashMap<GoodsVO, Integer> goodsMap) {
+	public InventoryBillVO(String ID, BillType type, BillState state, Date date, String inventory, String user, HashMap<GoodsVO, Integer> goodsMap) {
 		super();
 		this.ID = ID;
 		this.type = type;
