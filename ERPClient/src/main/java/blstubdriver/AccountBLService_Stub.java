@@ -1,6 +1,6 @@
 package blstubdriver;
 
-import blservice.accountblservice.AccountBLservice;
+import blservice.accountblservice.AccountBLService;
 import util.ResultMessage;
 import vo.AccountVO;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Kry·L on 2017/10/21.
  */
-public class AccountBLService_Stub implements AccountBLservice{
+public class AccountBLService_Stub implements AccountBLService{
     public ResultMessage addAccount(AccountVO accountVO) {
         if (accountVO.accountName.equals("工商银行账户")) {
             System.out.println("Add account failed");
