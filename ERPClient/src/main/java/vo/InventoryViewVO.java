@@ -32,6 +32,16 @@ public class InventoryViewVO {
 	 * 商品数量合计
 	 */
 	public HashMap<GoodsVO, Double> total;
+	
+	public InventoryViewVO(Date startDate, Date endDate, String inventory, ArrayList<InventoryViewItemVO> item,
+			HashMap<GoodsVO, Double> total) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.inventory = inventory;
+		this.item = item;
+		this.total = total;
+	}
 }
 
 /**
@@ -57,4 +67,12 @@ class InventoryViewItemVO{
 	 * 金额
 	 */
 	public double price;
+	
+	public InventoryViewItemVO(GoodsVO goods, InventoryViewItemType type, int amount, double price) {
+		super();
+		this.goods = goods;
+		this.type = type;
+		this.amount = amount;
+		this.price = price;
+	}
 }
