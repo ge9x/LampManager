@@ -24,10 +24,10 @@ public interface ClassificationBLService {
 	public ArrayList<ClassificationVO> find(String keyword);
 	/**
 	 * 查看商品分类详情
-	 * @param id 商品分类ID
+	 * @param ID 商品分类ID
 	 * @return 该商品分类
 	 */
-	public ClassificationVO showDetails(String id);
+	public ClassificationVO showDetails(String ID);
 	/**
 	 * 添加商品分类
 	 * @param vo 待添加的商品分类
@@ -36,10 +36,10 @@ public interface ClassificationBLService {
 	public ResultMessage add(ClassificationVO vo);
 	/**
 	 * 删除商品分类
-	 * @param id 待删除的商品分类的ID
+	 * @param ID 待删除的商品分类的ID
 	 * @return 是否删除成功
 	 */
-	public ResultMessage delete(String id);
+	public ResultMessage delete(String ID);
 	/**
 	 * 修改商品分类
 	 * @param vo 已修改的商品分类

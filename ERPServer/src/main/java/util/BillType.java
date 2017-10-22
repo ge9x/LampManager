@@ -7,6 +7,7 @@ public enum BillType {
     OVERFLOW("库存报溢单"),
     LOSS("库存报损单"),
     ALARM("库存报警单"),
+    GIFT("库存赠送单"),
     PURCHASE("进货单"),
     RETURN("进货退货单"),
     SALES("销售单"),

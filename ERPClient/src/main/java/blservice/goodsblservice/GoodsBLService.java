@@ -24,10 +24,10 @@ public interface GoodsBLService {
 	public ArrayList<GoodsVO> find(String keyword);
 	/**
 	 * 查看商品详细信息
-	 * @param id 商品ID
+	 * @param ID 商品ID
 	 * @return 商品
 	 */
-	public GoodsVO showDetails(String id);
+	public GoodsVO showDetails(String ID);
 	/**
 	 * 添加商品
 	 * @param vo 待添加的商品
@@ -36,10 +36,10 @@ public interface GoodsBLService {
 	public ResultMessage add(GoodsVO vo);
 	/**
 	 * 删除商品
-	 * @param id 待删除的商品的ID
+	 * @param ID 待删除的商品的ID
 	 * @return 是否删除成功
 	 */
-	public ResultMessage delete(String id);
+	public ResultMessage delete(String ID);
 	/**
 	 * 修改商品
 	 * @param vo 已修改的商品
