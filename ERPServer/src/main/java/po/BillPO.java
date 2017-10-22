@@ -25,6 +25,13 @@ public class BillPO {
      * 单据类型
      */
     private BillType type;
+    
+    public BillPO(String ID, Date date, BillType type, BillState state){
+    	this.ID = ID;
+    	this.date = date;
+    	this.type = type;
+    	this.state = state;
+    }
 
 	public Date getDate() {
 		return date;
