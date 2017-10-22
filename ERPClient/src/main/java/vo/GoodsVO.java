@@ -6,8 +6,66 @@ package vo;
  *
  */
 public class GoodsVO {
-	private String id;
-	private String name;
-	private String model;
-	private int amount;
+	/**
+	 * 商品ID
+	 */
+	public String ID;
+	/**
+	 * 商品名称
+	 */
+	public String name;
+	/**
+	 * 商品型号
+	 */
+	public String model;
+	/**
+	 * 商品所属分类名称
+	 */
+	public String classification;
+	/**
+	 * 商品所在仓库名称
+	 */
+	public String inventory;
+	/**
+	 * 商品数量
+	 */
+	public int amount;
+	/**
+	 * 商品警戒数量
+	 */
+	public int alarmAmount;
+	/**
+	 * 商品进价
+	 */
+	public double buyingPrice;
+	/**
+	 * 商品零售价
+	 */
+	public double retailPrice;
+	/**
+	 * 商品最近进价
+	 */
+	public double recentBuyingPrice;
+	/**
+	 * 商品最近零售价
+	 */
+	public double recentRetailPrice;
+	
+	public GoodsVO(String ID, String name, String model, String classification, String inventory, int amount,
+			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
+			double recentRetailPrice) {
+		super();
+		this.ID = ID;
+		this.name = name;
+		this.model = model;
+		this.classification = classification;
+		this.inventory = inventory;
+		this.amount = amount;
+		this.alarmAmount = alarmAmount;
+		this.buyingPrice = buyingPrice;
+		this.retailPrice = retailPrice;
+		this.recentBuyingPrice = recentBuyingPrice;
+		this.recentRetailPrice = recentRetailPrice;
+	}
+	
 }
