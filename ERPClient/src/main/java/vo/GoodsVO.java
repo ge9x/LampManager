@@ -19,11 +19,11 @@ public class GoodsVO {
 	 */
 	public String model;
 	/**
-	 * 商品所属分类
+	 * 商品所属分类名称
 	 */
 	public String classification;
 	/**
-	 * 商品所在仓库
+	 * 商品所在仓库名称
 	 */
 	public String inventory;
 	/**
