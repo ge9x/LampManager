@@ -11,67 +11,15 @@ import util.BillType;
  * @author 巽
  *
  */
-public class InventoryBillPO extends PO{
-	/**
-	 * 单据ID
-	 */
-	private String ID;
-	/**
-	 * 单据类型
-	 */
-	private BillType type;
-	/**
-	 * 单据状态
-	 */
-	private BillState state;
-	/**
-	 * 单据提交时间
-	 */
-	private Date date;
+public class InventoryBillPO extends BillPO{
 	/**
 	 * 该单据内的商品对应的溢出/缺损数量
 	 */
 	private HashMap<GoodsPO, Integer> goodsMap;
 	
 	public InventoryBillPO(String ID, BillType type, BillState state, Date date, HashMap<GoodsPO, Integer> goodsMap) {
-		super();
-		this.ID = ID;
-		this.type = type;
-		this.state = state;
-		this.date = date;
+		super(ID, date, type, state);
 		this.goodsMap = goodsMap;
-	}
-
-	public String getId() {
-		return ID;
-	}
-
-	public void setId(String ID) {
-		this.ID = ID;
-	}
-
-	public BillType getType() {
-		return type;
-	}
-
-	public void setType(BillType type) {
-		this.type = type;
-	}
-
-	public BillState getState() {
-		return state;
-	}
-
-	public void setState(BillState state) {
-		this.state = state;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public HashMap<GoodsPO, Integer> getGoodsMap() {
