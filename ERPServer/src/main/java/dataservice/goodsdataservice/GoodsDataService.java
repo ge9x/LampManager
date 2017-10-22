@@ -12,11 +12,11 @@ import util.ResultMessage;
 public interface GoodsDataService {
 	/**
 	 * 查找商品
-	 * @param id 商品ID
+	 * @param ID 商品ID
 	 * @return 找到的商品PO
 	 * @throws RemoteException
 	 */
-	public GoodsPO find(String id) throws RemoteException;
+	public GoodsPO find(String ID) throws RemoteException;
 	/**
 	 * 添加商品
 	 * @param po 待添加的商品PO

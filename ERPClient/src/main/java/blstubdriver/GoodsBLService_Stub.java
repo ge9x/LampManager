@@ -44,7 +44,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 
 	public GoodsVO showDetails(String id) {
 		for(GoodsVO vo : data){
-			if(vo.id.equals(id)){
+			if(vo.ID.equals(id)){
 				return vo;
 			}
 		}
@@ -53,7 +53,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 
 	public ResultMessage add(GoodsVO vo) {
 		for(GoodsVO gvo : data){
-			if(gvo.id.equals(vo.id)){
+			if(gvo.ID.equals(vo.ID)){
 				System.out.println("add goods failed");
 				return ResultMessage.FAILED;
 			}
@@ -65,7 +65,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 
 	public ResultMessage delete(String id) {
 		for(GoodsVO gvo : data){
-			if(gvo.id.equals(id)){
+			if(gvo.ID.equals(id)){
 				data.remove(gvo);
 				System.out.println("delete goods success");
 				return ResultMessage.SUCCESS;
@@ -77,7 +77,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 
 	public ResultMessage update(GoodsVO vo) {
 		for(GoodsVO gvo : data){
-			if(gvo.id.equals(vo.id)){
+			if(gvo.ID.equals(vo.ID)){
 				data.remove(gvo);
 				data.add(vo);
 				System.out.println("update goods success");

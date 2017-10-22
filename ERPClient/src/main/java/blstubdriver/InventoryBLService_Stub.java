@@ -77,11 +77,11 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return alarmData;
 	}
 
-	public ArrayList<InventoryBillVO> searchBill(Date startDate, Date endDate, String inventory, String id,
+	public ArrayList<InventoryBillVO> searchBill(Date startDate, Date endDate, String inventory, String ID,
 			String keyword) {
 		ArrayList<InventoryBillVO> ret = new ArrayList<InventoryBillVO>();
 		for(InventoryBillVO vo : data){
-			if(vo.ID.equals(id)){
+			if(vo.ID.equals(ID)){
 				ret.add(vo);
 			}
 			else {
@@ -94,7 +94,7 @@ public class InventoryBLService_Stub implements InventoryBLService{
 			}
 		}
 		for(InventoryBillVO vo : alarmData){
-			if(vo.ID.equals(id)){
+			if(vo.ID.equals(ID)){
 				ret.add(vo);
 			}
 			else {
@@ -132,16 +132,16 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.SUCCESS;
 	}
 
-	public ResultMessage deleteBill(String id) {
+	public ResultMessage deleteBill(String ID) {
 		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				alarmData.remove(ivo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				data.remove(ivo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
@@ -176,29 +176,29 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.FAILED;
 	}
 
-	public InventoryBillVO showBillDetails(String id) {
+	public InventoryBillVO showBillDetails(String ID) {
 		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				return ivo;
 			}
 		}
 		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				return ivo;
 			}
 		}
 		return null;
 	}
 
-	public ResultMessage submitBill(String id) {
+	public ResultMessage submitBill(String ID) {
 		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(id)){
+			if(ivo.ID.equals(ID)){
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}

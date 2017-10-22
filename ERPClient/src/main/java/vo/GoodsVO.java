@@ -9,7 +9,7 @@ public class GoodsVO {
 	/**
 	 * 商品ID
 	 */
-	public String id;
+	public String ID;
 	/**
 	 * 商品名称
 	 */
@@ -51,11 +51,11 @@ public class GoodsVO {
 	 */
 	public double recentRetailPrice;
 	
-	public GoodsVO(String id, String name, String model, String classification, String inventory, int amount,
+	public GoodsVO(String ID, String name, String model, String classification, String inventory, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.name = name;
 		this.model = model;
 		this.classification = classification;

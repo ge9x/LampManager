@@ -11,7 +11,7 @@ public class ClassificationVO {
 	/**
 	 * 商品分类ID
 	 */
-	public String id;
+	public String ID;
 	/**
 	 * 商品分类名称
 	 */
@@ -29,10 +29,10 @@ public class ClassificationVO {
 	 */
 	public ArrayList<GoodsVO> goods;
 	
-	public ClassificationVO(String id, String name, ClassificationVO father, ArrayList<ClassificationVO> chidren,
+	public ClassificationVO(String ID, String name, ClassificationVO father, ArrayList<ClassificationVO> chidren,
 			ArrayList<GoodsVO> goods) {
 		super();
-		this.id = id;
+		this.ID = ID;
 		this.name = name;
 		this.father = father;
 		this.chidren = chidren;

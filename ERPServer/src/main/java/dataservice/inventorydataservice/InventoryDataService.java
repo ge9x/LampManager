@@ -25,11 +25,11 @@ public interface InventoryDataService {
 	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException;
 	/**
 	 * 查找库存单据
-	 * @param id 单据ID
+	 * @param ID 单据ID
 	 * @return 找到的库存单据PO
 	 * @throws RemoteException
 	 */
-	public InventoryBillPO findBill(String id) throws RemoteException;
+	public InventoryBillPO findBill(String ID) throws RemoteException;
 	/**
 	 * 添加库存单据
 	 * @param po 待添加的单据PO

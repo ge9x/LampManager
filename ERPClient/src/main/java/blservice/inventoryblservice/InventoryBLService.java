@@ -62,10 +62,10 @@ public interface InventoryBLService {
 	public ResultMessage addBill(InventoryBillVO vo);
 	/**
 	 * 删除库存单据
-	 * @param id 单据ID
+	 * @param ID 单据ID
 	 * @return 是否成功删除
 	 */
-	public ResultMessage deleteBill(String id);
+	public ResultMessage deleteBill(String ID);
 	/**
 	 * 修改库存单据
 	 * @param vo
@@ -74,14 +74,14 @@ public interface InventoryBLService {
 	public ResultMessage updateBill(InventoryBillVO vo);
 	/**
 	 * 查看库存单据详情
-	 * @param id 单据ID
+	 * @param ID 单据ID
 	 * @return 库存单据详情
 	 */
-	public InventoryBillVO showBillDetails(String id);
+	public InventoryBillVO showBillDetails(String ID);
 	/**
 	 * 将单据草稿提交给总经理审批，改变单据状态为未审核状态
-	 * @param id 单据ID
+	 * @param ID 单据ID
 	 * @return 是否成功提交
 	 */
-	public ResultMessage submitBill(String id);
+	public ResultMessage submitBill(String ID);
 }

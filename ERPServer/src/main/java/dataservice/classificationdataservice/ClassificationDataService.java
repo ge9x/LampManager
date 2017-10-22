@@ -12,11 +12,11 @@ import util.ResultMessage;
 public interface ClassificationDataService {
 	/**
 	 * 查找商品分类PO
-	 * @param id 商品分类ID
+	 * @param ID 商品分类ID
 	 * @return 找到的商品分类PO
 	 * @throws RemoteException
 	 */
-	public ClassificationPO find(String id) throws RemoteException;
+	public ClassificationPO find(String ID) throws RemoteException;
 	/**
 	 * 添加商品分类
 	 * @param po 待添加的商品分类PO

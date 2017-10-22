@@ -33,9 +33,9 @@ public class InventoryBillVO extends BillVO{
 	 */
 	public HashMap<GoodsVO, Integer> goodsMap;
 	
-	public InventoryBillVO(String id, BillType type, BillState state, Date date, HashMap<GoodsVO, Integer> goodsMap) {
+	public InventoryBillVO(String ID, BillType type, BillState state, Date date, HashMap<GoodsVO, Integer> goodsMap) {
 		super();
-		this.ID = id;
+		this.ID = ID;
 		this.type = type;
 		this.state = state;
 		this.date = date;
