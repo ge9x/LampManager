@@ -56,10 +56,12 @@ public class ClassificationBLService_Stub implements ClassificationBLService{
 	public ResultMessage add(ClassificationVO vo) {
 		for(ClassificationVO cvo : dataSet){
 			if(cvo.id.equals(vo.id)){
+				System.out.println("add classification failed");
 				return ResultMessage.FAILED;
 			}
 		}
 		dataSet.add(vo);
+		System.out.println("add classification success");
 		return ResultMessage.SUCCESS;
 	}
 
@@ -67,9 +69,11 @@ public class ClassificationBLService_Stub implements ClassificationBLService{
 		for(ClassificationVO cvo : dataSet){
 			if(cvo.id.equals(id)){
 				dataSet.remove(cvo);
+				System.out.println("delete classification success");
 				return ResultMessage.SUCCESS;
 			}
 		}
+		System.out.println("delete classification failed");
 		return ResultMessage.FAILED;
 	}
 
@@ -78,9 +82,11 @@ public class ClassificationBLService_Stub implements ClassificationBLService{
 			if(cvo.id.equals(vo.id)){
 				dataSet.remove(cvo);
 				dataSet.add(vo);
+				System.out.println("update classification success");
 				return ResultMessage.SUCCESS;
 			}
 		}
+		System.out.println("update classification failed");
 		return ResultMessage.FAILED;
 	}
 

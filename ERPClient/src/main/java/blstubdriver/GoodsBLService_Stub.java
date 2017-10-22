@@ -54,10 +54,12 @@ public class GoodsBLService_Stub implements GoodsBLService{
 	public ResultMessage add(GoodsVO vo) {
 		for(GoodsVO gvo : data){
 			if(gvo.id.equals(vo.id)){
+				System.out.println("add goods failed");
 				return ResultMessage.FAILED;
 			}
 		}
 		data.add(vo);
+		System.out.println("add goods success");
 		return ResultMessage.SUCCESS;
 	}
 
@@ -65,9 +67,11 @@ public class GoodsBLService_Stub implements GoodsBLService{
 		for(GoodsVO gvo : data){
 			if(gvo.id.equals(id)){
 				data.remove(gvo);
+				System.out.println("delete goods success");
 				return ResultMessage.SUCCESS;
 			}
 		}
+		System.out.println("delete goods failed");
 		return ResultMessage.FAILED;
 	}
 
@@ -76,9 +80,11 @@ public class GoodsBLService_Stub implements GoodsBLService{
 			if(gvo.id.equals(vo.id)){
 				data.remove(gvo);
 				data.add(vo);
+				System.out.println("update goods success");
 				return ResultMessage.SUCCESS;
 			}
 		}
+		System.out.println("update goods failed");
 		return ResultMessage.FAILED;
 	}
 
