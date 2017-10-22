@@ -7,6 +7,11 @@ import util.ResultMessage;
 import vo.ClassificationVO;
 import vo.GoodsVO;
 
+/**
+ * Created on 2017/10/22
+ * @author 巽
+ *
+ */
 public class ClassificationBLService_Stub implements ClassificationBLService{
 
 	ArrayList<ClassificationVO> dataSet;
