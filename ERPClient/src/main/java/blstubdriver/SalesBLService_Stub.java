@@ -16,6 +16,7 @@ import vo.PurchaseVO;
 import vo.SalesVO;
 
 public class SalesBLService_Stub implements SalesBLService{
+	ArrayList<SalesVO> salesBill=new ArrayList<>
 	String purchaseID;
 	String returnID;
 	String salesID;

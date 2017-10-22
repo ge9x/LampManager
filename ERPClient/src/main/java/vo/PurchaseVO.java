@@ -8,10 +8,6 @@ import util.BillType;
 import util.UserPosition;
 
 public class PurchaseVO extends BillVO{
-	/**单据创建时间*/
-	public Date startDate;
-	/**单据编号*/
-	public String ID;
 	/**供应商*/
 	public String supplier;
 	/**仓库*/
@@ -24,13 +20,10 @@ public class PurchaseVO extends BillVO{
 	public String remarks;
 	/**总额合计*/
 	public double sum;
-	/**单据最后修改时间*/
-	public Date endDate;
 	
-	public PurchaseVO(Date startDate,BillType type,BillState state,String ID,String supplier
+	public PurchaseVO(BillType type,BillState state,String ID,String supplier
 			,String inventory,UserPosition user,GoodsItemVO goodsItem,String remarks
 			,double sum,Date endDate){
-		this.startDate=startDate;
 		this.type=type;
 		this.state=state;
 		this.ID=ID;
@@ -40,6 +33,6 @@ public class PurchaseVO extends BillVO{
 		this.goodsItem=goodsItem;
 		this.sum=sum;
 		this.remarks=remarks;
-		this.endDate=endDate;
+		this.date=endDate;
 	}
 }

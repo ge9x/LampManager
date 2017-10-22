@@ -11,92 +11,98 @@ import util.ResultMessage;
 import po.CustomerPO;
 
 public class CustomerDataService_Stub implements CustomerDataService{
-	String ID;
-
-	public CustomerDataService_Stub(String iD) {
-		super();
-		ID = iD;
+	ArrayList<CustomerPO> customerData=new ArrayList<CustomerPO>();
+		{
+		CustomerPO c1=new CustomerPO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
+					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0);
+		CustomerPO c2=new CustomerPO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商1","15247678373",
+					"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0);
+		CustomerPO c3=new CustomerPO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
+				"南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0);
+		customerData.add(c1);
+		customerData.add(c2);
+		customerData.add(c3);
 	}
 
 	public ResultMessage add(CustomerPO po) throws RemoteException {
-		if(po.customerName.equals("客户1")){
-			System.out.println("Add customer success");
-			return ResultMessage.SUCCESS;
-		}else if(po.customerName.equals("客户2")){
-			System.out.println("Customer exist");
-			return ResultMessage.EXIST;
-		}else{
-			System.out.println("Add customer failed");
-			return ResultMessage.FAILED;
+		for(CustomerPO cus:customerData){
+			if(po.address.equals(cus.address)&&po.customerName.equals(cus.customerName)&&po.phone.equals(cus.phone)){
+				System.out.println("Add customer failed");
+				return ResultMessage.EXIST;
+			}
 		}
+		customerData.add(po);
+		System.out.println("Add customer success");
+		return ResultMessage.SUCCESS;
+
 	}
 
 	public ResultMessage delete(CustomerPO po) throws RemoteException {
-		if(po.customerID.equals("00000001")){
-			System.out.println("Delete customer success");
-			return ResultMessage.SUCCESS;
-		}else if(po.customerID.equals("00000002")){
-			System.out.println("Cutomer not exist");
-			return ResultMessage.NOT_EXIST;
-		}else{
-			System.out.println("Delete customer failed");
-			return ResultMessage.FAILED;
+		for(CustomerPO cus:customerData){
+			if(cus.customerID.equals(po.customerID)){
+				customerData.remove(cus);
+				System.out.println("Delete customer success");
+				return ResultMessage.SUCCESS;
+			}
 		}
-	}
+		System.out.println("Delete customer failed");
+		return ResultMessage.FAILED;
+			}
 
 	public ArrayList<CustomerPO> findByCustomerID(String customerID) throws RemoteException{
-		if(ID.equals(customerID)){
-			ArrayList<CustomerPO> findCustomerPO=new ArrayList<CustomerPO>();
-			findCustomerPO.add(new CustomerPO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
-					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0));
-			return findCustomerPO;
-		}else{
-		return new ArrayList<CustomerPO>();	
+		ArrayList<CustomerPO> findList=new ArrayList<CustomerPO>();
+		for(CustomerPO cus:customerData){
+			if(cus.customerID.contains(customerID)){
+				findList.add(cus);
+			}
 		}
+		System.out.println("Find customer success");
+		return findList;
 	}
 
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException {
-		if("客户1".equals(keywords)){
-			ArrayList<CustomerPO> findCustomerPO=new ArrayList<CustomerPO>();
-			findCustomerPO.add(new CustomerPO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
-					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0));
-			return findCustomerPO;
-		}else{
-		return new ArrayList<CustomerPO>();	
+		ArrayList<CustomerPO> findList=new ArrayList<CustomerPO>();
+		for(CustomerPO cus:customerData){
+			if(cus.customerName.contains(keywords)){
+				findList.add(cus);
+			}
 		}
+		System.out.println("Find customer success");
+		return findList;
+
 	}
 
 	public ResultMessage update(CustomerPO po) throws RemoteException {
-		if(po.customerID.equals("00000001")){
-			System.out.println("Update customer success");
-			return ResultMessage.SUCCESS;
-		}else if(po.customerID.equals("00000002")){
-			System.out.println("Customer not exist");
-			return ResultMessage.NOT_EXIST;
+		for(CustomerPO cus:customerData){
+			if(cus.customerID.equals(po.customerID)){
+				customerData.remove(cus);
+				customerData.add(po);
+				System.out.println("Update customer success");
+				return ResultMessage.SUCCESS;
+			}
 		}
-		else{
-			System.out.println("Update customer failed");
-			return ResultMessage.FAILED;
-		}
+		System.out.println("Update customer failed");
+		return ResultMessage.FAILED;
 	}
 
 	public ArrayList<CustomerPO> show() throws RemoteException {
-		ArrayList<CustomerPO> customerList=new ArrayList<CustomerPO>();
-		customerList.add(new CustomerPO("00000012", CustomerCategory.PUR_AGENT, Level.LEVEL_FOUR, "撒哈拉", "13343579908",
-			"南半球热带地区", "421099","566@163.com", 1.2, 40000, 30000,
-			"业务员1", 222.0));
-		return customerList;
+		return customerData;
+		}
+    
+	public CustomerPO getCustomerData(String ID) throws RemoteException{
+		for(CustomerPO cus:customerData){
+			if(cus.customerID.equals(ID)){
+				System.out.println("Get customerData success");
+				return cus;
+			}
+		}
+		System.out.println("Get customerData failed");
+		return null;
 	}
 
 	public void init() throws RemoteException {
-	      System.out.println("Init customers");
-	}
-
-	public CustomerPO getCustomerData() throws RemoteException {
-		  CustomerPO newCustomerPO=new CustomerPO("00000012", CustomerCategory.PUR_AGENT, Level.LEVEL_FOUR, "撒哈拉", "13343579908",
-					"南半球热带地区", "421099","566@163.com", 1.2, 40000, 30000,
-					"业务员1", 222.0);
-		  return newCustomerPO;
+		customerData.clear();
+	    System.out.println("Init customerList success");
 	}
 
 }

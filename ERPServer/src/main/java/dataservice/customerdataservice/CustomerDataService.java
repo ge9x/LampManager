@@ -71,6 +71,6 @@ public interface CustomerDataService {
 	 * @return 
 	 * @author zlk
 	 */
-	public CustomerPO getCustomerData() throws RemoteException;
+	public CustomerPO getCustomerData(String ID) throws RemoteException;
 
 }

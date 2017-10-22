@@ -28,7 +28,7 @@ public interface CustomerBLService {
 	 * @return 处理信息
 	 * @author zlk
 	 */
-	public ResultMessage addCustomer(CustomerAddVO vo);
+	public ResultMessage addCustomer(CustomerVO vo);
 	/**
 	 * 管理客户中的删除客户
 	 * 
@@ -60,6 +60,6 @@ public interface CustomerBLService {
 	 * @return 处理信息
 	 * @author zlk
 	 */
-	public ResultMessage updateCustomer(CustomerAddVO vo);
+	public ResultMessage updateCustomer(CustomerVO vo);
 	
 }

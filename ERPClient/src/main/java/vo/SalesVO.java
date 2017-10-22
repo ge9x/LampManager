@@ -8,8 +8,6 @@ import util.BillType;
 import util.UserPosition;
 
 public class SalesVO extends BillVO{
-	/**单据创建时间*/
-	public Date startDate;
 	/**客户*/
 	public String customer;
 	/**业务员*/
@@ -30,18 +28,15 @@ public class SalesVO extends BillVO{
 	public double afterSum;
 	/**备注*/
 	public String remarks;
-	/**单据最后修改时间*/
-	public Date endDate;
 	
 	
-	public SalesVO(Date startDate, BillType type, BillState state, String ID, String customer, String salesman,
+	public SalesVO( BillType type, BillState state, String billID, String customer, String salesman,
 			UserPosition user, String inventory, GoodsItemVO goodsItem, double beforeSum, double allowance,
 			double voucher, double afterSum, String remarks, Date endDate) {
 		super();
-		this.date = startdate;
 		this.type = type;
 		this.state = state;
-		ID = D;
+		ID = billID;
 		this.customer = customer;
 		this.salesman = salesman;
 		this.user = user;
@@ -52,7 +47,7 @@ public class SalesVO extends BillVO{
 		this.voucher = voucher;
 		this.afterSum = afterSum;
 		this.remarks = remarks;
-		this.endDate = endDate;
+		this.date = endDate;
 	}
 	
 	
