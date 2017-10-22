@@ -8,33 +8,30 @@ import util.BillType;
 import util.UserPosition;
 
 public class PurchasePO {
-	/**单据创建时间*/
-	public Date startDate;
 	/**单据类型*/
-	public BillType type;
+	private BillType type;
 	/**单据状态*/
-	public BillState state;
+	private BillState state;
 	/**单据编号*/
-	public String ID;
+	private String ID;
 	/**供应商*/
-	public String supplier;
+	private String supplier;
 	/**仓库*/
-	public String inventory;
+	private String inventory;
 	/**操作员*/
-	public UserPosition user;
+	private UserPosition user;
 	/**商品列表*/
-	public GoodsItemPO goodsItem;
+	private GoodsItemPO goodsItem;
 	/**备注*/
-	public String remarks;
+	private String remarks;
 	/**总额合计*/
-	public double sum;
+	private double sum;
 	/**单据最后修改时间*/
-	public Date endDate;
+	private Date date;
 	
-	public PurchasePO(Date startDate,BillType type,BillState state,String ID,String supplier
+	public PurchasePO(BillType type,BillState state,String ID,String supplier
 			,String inventory,UserPosition user,GoodsItemPO goodsItem,String remarks
 			,double sum,Date endDate){
-		this.startDate=startDate;
 		this.type=type;
 		this.state=state;
 		this.ID=ID;
@@ -44,17 +41,9 @@ public class PurchasePO {
 		this.goodsItem=goodsItem;
 		this.sum=sum;
 		this.remarks=remarks;
-		this.endDate=endDate;
+		this.date=endDate;
 	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
+/**
 	public BillType getType() {
 		return type;
 	}
@@ -62,7 +51,7 @@ public class PurchasePO {
 	public void setType(BillType type) {
 		this.type = type;
 	}
-
+*/
 	public BillState getState() {
 		return state;
 	}
@@ -126,14 +115,13 @@ public class PurchasePO {
 	public void setSum(double sum) {
 		this.sum = sum;
 	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date endDate) {
+		this.date = endDate;
+	}
 	
 }

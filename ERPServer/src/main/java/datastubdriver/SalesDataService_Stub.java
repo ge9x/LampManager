@@ -12,141 +12,151 @@ import util.BillType;
 import util.ResultMessage;
 import util.UserPosition;
 
+
 public class SalesDataService_Stub implements SalesDataService{
-	String billID;
-	Date startDate;
-	Date endDate;
+	ArrayList<PurchasePO> purchaseBill=new ArrayList<PurchasePO>();
+	ArrayList<SalesPO> salesBill=new ArrayList<SalesPO>();
+	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
+	
+	GoodsItemPO gi1=new GoodsItemPO("000001", "霓虹灯", "大", 20, 35.0, 700,
+			"耐用");
+	GoodsItemPO gi2=new GoodsItemPO("000002", "挂灯", "xxdd", 10, 35.0, 350,
+			"好看");
+	
+	{
+		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
+			,"默认仓库",UserPosition.SALES_STAFF,gi1,"满足客户需求"
+			,900.0,new Date());
+		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
+				,"默认仓库",UserPosition.SALES_STAFF,gi2,"好看"
+				,700.0,new Date());
+		purchaseBill.add(p1);
+		purchaseBill.add(p2);
+	}
+	
+	{
+		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
+				UserPosition.SALES_STAFF, "默认仓库",gi1 , 5000, 100,
+				500, 4400, "满足客户需求", new Date());
+	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
+					UserPosition.SALES_STAFF, "默认仓库",gi2 , 5000, 100,
+					500, 4400, "满足客户需求", new Date());
+	    salesBill.add(s1);
+	    salesBill.add(s2);
+	}
+	
 
 	public PurchasePO findPurchase(String ID) {
-		if(billID.equals(ID)){
-			System.out.println("Find purchase");
-			GoodsItemPO goodsItem=new GoodsItemPO("000022","霓虹灯","xxAd",50,30.0,
-					1500.0,"包装好");
-			PurchasePO pur=new PurchasePO(startDate,BillType.PURCHASE,BillState.DRAFT,ID,"金主爸爸"
-					,"默认仓库",UserPosition.SALES_STAFF,goodsItem,"双击666"
-					,10000.0,endDate);
-			return pur;
-		}else{
-			System.out.println("Not found");
-			return null;
+		for(PurchasePO pur:purchaseBill){
+			if(pur.getID().equals(ID)){
+				System.out.println("Find purchase success");
+				return pur;
+			}
 		}
+		System.out.println("Find purchase failed");
+		return null;
 	}
 
 	public SalesPO findSlaes(String ID) {
-		if(billID.equals(ID)){
-			System.out.println("Find sales");
-			GoodsItemPO goodsItem=new GoodsItemPO("000022","霓虹灯","xxAd",50,30.0,
-					1500.0,"包装好");
-			SalesPO sal=new SalesPO(startDate, BillType.SALES, BillState.PASS, ID, "销售商A", "Lay",
-					UserPosition.SALES_STAFF, "默认仓库", goodsItem, 6000.0,
-					300.0, 200.0, 5500.0, "come on p,let's go p", endDate);
-			return sal;
-		}else{
-			System.out.println("Not found");
-			return null;
+		for(SalesPO sal:salesBill){
+			if(sal.getID().equals(ID)){
+				System.out.println("Find sales success");
+				return sal;
+			}
 		}
+		System.out.println("Find sales failed");
+		return null;
 	}
 
 	public ResultMessage addPurchase(PurchasePO po) {
-		if(po.ID.equals("JHD-yyyyMMdd-000002")){
-			System.out.println("Add purchase success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("JHD-yyyyMMdd-000001")){
-			System.out.println("purchase exist");
-			return ResultMessage.EXIST;
-		}else{
-			System.out.println("Add purchase failes");
-			return ResultMessage.FAILED;
+		for(PurchasePO pur:purchaseBill){
+			if(pur.getID().equals(po.getID())){
+				System.out.println("Add purchase failed");
+				return ResultMessage.FAILED;
+			}
 		}
+		System.out.println("Add purchase success");
+		purchaseBill.add(po);
+		return ResultMessage.SUCCESS;
 	}
 
 	public ResultMessage addSales(SalesPO po) {
-		if(po.ID.equals("XSD-yyyyMMdd-000002")){
-			System.out.println("Add sales success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("XSD-yyyyMMdd-000001")){
-			System.out.println("sales exist");
-			return ResultMessage.EXIST;
-		}else{
-			System.out.println("Add sales failes");
-			return ResultMessage.FAILED;
+		for(SalesPO sal:salesBill){
+			if(sal.getID().equals(po.getID())){
+				System.out.println("Add sales failed");
+				return ResultMessage.FAILED;
+			}
 		}
+		System.out.println("Add sales success");
+		salesBill.add(po);
+		return ResultMessage.SUCCESS;
 	}
 
 	public ResultMessage updatePurchase(PurchasePO po) {
-		if(po.ID.equals("JHD-yyyyMMdd-000001")){
-			System.out.println("Update purchase success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("JHD-yyyyMMdd-000002")){
-			System.out.println("Purchase not exist");
-			return ResultMessage.NOT_EXIST;
-		}else{
-			System.out.println("Update purchase failed");
-			return ResultMessage.FAILED;
+		for(PurchasePO pur:purchaseBill){
+			if(pur.getID().equals(po.getID())){
+				System.out.println("Update purchase success");
+				purchaseBill.remove(pur);
+				purchaseBill.add(po);
+				return ResultMessage.SUCCESS;
+	
+			}
 		}
+		System.out.println("Update purchase failed");
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage updateSales(SalesPO po) {
-		if(po.ID.equals("XSD-yyyyMMdd-000001")){
-			System.out.println("Update sales success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("XSD-yyyyMMdd-000002")){
-			System.out.println("Sales not exist");
-			return ResultMessage.NOT_EXIST;
-		}else{
-			System.out.println("Update sales failed");
-			return ResultMessage.FAILED;
+		for(SalesPO sal:salesBill){
+			if(sal.getID().equals(po.getID())){
+				System.out.println("Update sales success");
+				salesBill.remove(sal);
+				salesBill.add(po);
+				return ResultMessage.SUCCESS;
+	
+			}
 		}
+		System.out.println("Update sales failed");
+		return ResultMessage.FAILED;
+
 	}
 
 	public ResultMessage deletePurchase(PurchasePO po) {
-		if(po.ID.equals("JHD-yyyyMMdd-000001")){
-			System.out.println("Delete purchase success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("JHD-yyyyMMdd-000002")){
-			System.out.println("Purchase not exist");
-			return ResultMessage.NOT_EXIST;
-		}else{
-			System.out.println("Delete purchase failed");
-			return ResultMessage.FAILED;
+		for(PurchasePO pur:purchaseBill){
+			if(pur.getID().equals(po.getID())){
+				purchaseBill.remove(pur);
+				System.out.println("Delete purchase success");
+				return ResultMessage.SUCCESS;
+			}
 		}
+		System.out.println("Delete Purchase failed");
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage deleteSales(SalesPO po) {
-		if(po.ID.equals("XSD-yyyyMMdd-000001")){
-			System.out.println("Delete sales success");
-			return ResultMessage.SUCCESS;
-		}else if(po.ID.equals("XSD-yyyyMMdd-000002")){
-			System.out.println("Sales not exist");
-			return ResultMessage.NOT_EXIST;
-		}else{
-			System.out.println("Delte sales failed");
-			return ResultMessage.FAILED;
+		for(SalesPO sal:salesBill){
+			if(sal.getID().equals(po.getID())){
+				salesBill.remove(sal);
+				System.out.println("Delete sales success");
+				return ResultMessage.SUCCESS;
+			}
 		}
+		System.out.println("Delete sales failed");
+		return ResultMessage.FAILED;
 	}
 
 	public void init() {
-		System.out.println("Init sales and purchase");
-	}
+		purchaseBill.clear();
+		salesBill.clear();
+		System.out.println("Init sales and purchase success");
+		}
 	
 	public ArrayList<PurchasePO> showPurchase() {
-		ArrayList<PurchasePO> purList=new ArrayList<PurchasePO>();
-		GoodsItemPO goodsItem=new GoodsItemPO("000022","霓虹灯","xxAd",50,30.0,
-			1500.0,"包装好");
-		purList.add(new PurchasePO(startDate,BillType.PURCHASE,BillState.DRAFT,"JHD-yyyyMMdd-000001","金主爸爸"
-					,"默认仓库",UserPosition.SALES_STAFF,goodsItem,"双击666"
-					,10000.0,endDate));
-		return purList;
+		return purchaseBill;
 	}
 
 	public ArrayList<SalesPO> showSales() {
-		ArrayList<SalesPO> salList=new ArrayList<SalesPO>();
-		GoodsItemPO goodsItem=new GoodsItemPO("000022","霓虹灯","xxAd",50,30.0,
-			1500.0,"包装好");
-		salList.add(new SalesPO(startDate, BillType.SALES, BillState.PASS, billID, "销售商A", "Lay",
-				UserPosition.SALES_STAFF, "默认仓库", goodsItem, 6000.0,
-				300.0, 200.0, 5500.0, "come on p,let's go p", endDate));
-		return salList;
+		return salesBill;
 	}
     
 }

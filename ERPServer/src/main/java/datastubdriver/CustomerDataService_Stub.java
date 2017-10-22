@@ -26,7 +26,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 
 	public ResultMessage add(CustomerPO po) throws RemoteException {
 		for(CustomerPO cus:customerData){
-			if(po.address.equals(cus.address)&&po.customerName.equals(cus.customerName)&&po.phone.equals(cus.phone)){
+			if(po.getAddress().equals(cus.getAddress())&&po.getCustomerName().equals(cus.getCustomerName())&&po.getPhone().equals(cus.getPhone())){
 				System.out.println("Add customer failed");
 				return ResultMessage.EXIST;
 			}
@@ -39,7 +39,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 
 	public ResultMessage delete(CustomerPO po) throws RemoteException {
 		for(CustomerPO cus:customerData){
-			if(cus.customerID.equals(po.customerID)){
+			if(cus.getCustomerID().equals(po.getCustomerID())){
 				customerData.remove(cus);
 				System.out.println("Delete customer success");
 				return ResultMessage.SUCCESS;
@@ -52,7 +52,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 	public ArrayList<CustomerPO> findByCustomerID(String customerID) throws RemoteException{
 		ArrayList<CustomerPO> findList=new ArrayList<CustomerPO>();
 		for(CustomerPO cus:customerData){
-			if(cus.customerID.contains(customerID)){
+			if(cus.getCustomerID().contains(customerID)){
 				findList.add(cus);
 			}
 		}
@@ -63,7 +63,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException {
 		ArrayList<CustomerPO> findList=new ArrayList<CustomerPO>();
 		for(CustomerPO cus:customerData){
-			if(cus.customerName.contains(keywords)){
+			if(cus.getCustomerName().contains(keywords)){
 				findList.add(cus);
 			}
 		}
@@ -74,7 +74,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 
 	public ResultMessage update(CustomerPO po) throws RemoteException {
 		for(CustomerPO cus:customerData){
-			if(cus.customerID.equals(po.customerID)){
+			if(cus.getCustomerID().equals(po.getCustomerID())){
 				customerData.remove(cus);
 				customerData.add(po);
 				System.out.println("Update customer success");
@@ -91,7 +91,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
     
 	public CustomerPO getCustomerData(String ID) throws RemoteException{
 		for(CustomerPO cus:customerData){
-			if(cus.customerID.equals(ID)){
+			if(cus.getCustomerID().equals(ID)){
 				System.out.println("Get customerData success");
 				return cus;
 			}

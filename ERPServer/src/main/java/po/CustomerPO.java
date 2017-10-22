@@ -6,31 +6,31 @@ import util.CustomerCategory;
 
 public class CustomerPO extends PO{
 	/**客户编号*/
-	public String customerID;
+	private String customerID;
 	/**客户分类:进货商、销售商*/
-	public CustomerCategory category;
+	private CustomerCategory category;
 	/**客户级别:级别分一级到五级，一级普通用户，五级VIP用户*/
-	public Level level;
+	private Level level;
 	/**客户姓名*/
-	public String customerName;
+	private String customerName;
 	/**电话*/
-	public String phone;
+	private String phone;
 	/**地址*/
-	public String address;
+	private String address;
 	/**邮编*/
-	public String postCode;
+	private String postCode;
 	/**电子邮箱*/
-	public String mail;
+	private String mail;
 	/**应收额度*/
-	public double receivableLimit;
+	private double receivableLimit;
 	/**应收*/
-	public double receive;
+	private double receive;
 	/**应付*/
-	public double pay;
+	private double pay;
 	/**默认业务员*/
-	public String salesman;
+	private String salesman;
 	/**客户积分*/
-	public double points;
+	private double points;
 	
 	
 	public CustomerPO(String customerID, CustomerCategory category, Level level, String customerName, String phone,
