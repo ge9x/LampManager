@@ -33,10 +33,10 @@ public class SalesBLService_Stub implements SalesBLService{
 	}
 	{
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.SUBMITTED,"JHD-20171022-00001","供应商1"
-				,"默认仓库",UserPosition.SALES_STAFF,gi1,"光照强"
+				,"默认仓库","大傻",gi1,"光照强"
 				,700.0,new Date());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-				,"默认仓库",UserPosition.SALES_STAFF,gi2,"好看"
+				,"默认仓库","二傻",gi2,"好看"
 				,700.0,new Date());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
@@ -44,10 +44,10 @@ public class SalesBLService_Stub implements SalesBLService{
 	
 	{
 		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-			UserPosition.SALES_STAFF, "默认仓库",gi1 , 5000, 100,
+			"三傻", "默认仓库",gi1 , 5000, 100,
 			500, 4400, "满足客户需求", new Date());
 		SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-				UserPosition.SALES_STAFF, "默认仓库",gi2 , 5000, 100,
+				"龙母", "默认仓库",gi2 , 5000, 100,
 				500, 4400, "满足客户需求", new Date());
 		salesBill.add(s1);
 		salesBill.add(s2);

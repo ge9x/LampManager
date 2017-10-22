@@ -25,10 +25,10 @@ public class SalesDataService_Stub implements SalesDataService{
 	
 	{
 		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
-			,"默认仓库",UserPosition.SALES_STAFF,gi1,"满足客户需求"
+			,"默认仓库","阿红",gi1,"满足客户需求"
 			,900.0,new Date());
 		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-				,"默认仓库",UserPosition.SALES_STAFF,gi2,"好看"
+				,"默认仓库","阿明",gi2,"好看"
 				,700.0,new Date());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
@@ -36,10 +36,10 @@ public class SalesDataService_Stub implements SalesDataService{
 	
 	{
 		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				UserPosition.SALES_STAFF, "默认仓库",gi1 , 5000, 100,
+				"阿强", "默认仓库",gi1 , 5000, 100,
 				500, 4400, "满足客户需求", new Date());
 	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					UserPosition.SALES_STAFF, "默认仓库",gi2 , 5000, 100,
+					"阿奇", "默认仓库",gi2 , 5000, 100,
 					500, 4400, "满足客户需求", new Date());
 	    salesBill.add(s1);
 	    salesBill.add(s2);

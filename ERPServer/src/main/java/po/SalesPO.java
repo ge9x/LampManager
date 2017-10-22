@@ -25,7 +25,7 @@ public class SalesPO {
 	/**业务员*/
 	private String salesman;
 	/**操作员*/
-	private UserPosition user;
+	private String user;
 	/**仓库*/
 	private String inventory;
 	/**商品列表*/
@@ -45,7 +45,7 @@ public class SalesPO {
 	
 	
 	public SalesPO( BillType type, BillState state, String iD, String customer, String salesman,
-			UserPosition user, String inventory,GoodsItemPO goodsItem, double beforeSum,
+			String user, String inventory,GoodsItemPO goodsItem, double beforeSum,
 			double allowance, double voucher, double afterSum, String remarks, Date endDate) {
 		super();
 		this.type = type;
@@ -116,12 +116,12 @@ public class SalesPO {
 	}
 
 
-	public UserPosition getUser() {
+	public String getUser() {
 		return user;
 	}
 
 
-	public void setUser(UserPosition user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

@@ -13,7 +13,7 @@ public class SalesVO extends BillVO{
 	/**业务员*/
 	public String salesman;
 	/**操作员*/
-	public UserPosition user;
+	public String user;
 	/**仓库*/
 	public String inventory;
 	/**商品列表*/
@@ -31,7 +31,7 @@ public class SalesVO extends BillVO{
 	
 	
 	public SalesVO( BillType type, BillState state, String billID, String customer, String salesman,
-			UserPosition user, String inventory, GoodsItemVO goodsItem, double beforeSum, double allowance,
+			String user, String inventory, GoodsItemVO goodsItem, double beforeSum, double allowance,
 			double voucher, double afterSum, String remarks, Date endDate) {
 		super();
 		this.type = type;
