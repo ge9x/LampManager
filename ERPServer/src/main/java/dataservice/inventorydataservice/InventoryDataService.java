@@ -1,6 +1,7 @@
 package dataservice.inventorydataservice;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.InventoryBillPO;
 import util.ResultMessage;
@@ -10,6 +11,18 @@ import util.ResultMessage;
  *
  */
 public interface InventoryDataService {
+	/**
+	 * 得到所有库存报溢单、报损单和赠送单
+	 * @return 所有库存报溢单、报损单和赠送单的PO
+	 * @throws RemoteException
+	 */
+	public ArrayList<InventoryBillPO> show() throws RemoteException;
+	/**
+	 * 得到所有库存报警单
+	 * @return 所有库存报警单的PO
+	 * @throws RemoteException
+	 */
+	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException;
 	/**
 	 * 查找库存单据
 	 * @param id 单据ID
