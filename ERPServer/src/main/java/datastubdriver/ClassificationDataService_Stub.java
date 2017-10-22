@@ -29,6 +29,10 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		data.add(po5);
 	}
 
+	public ArrayList<ClassificationPO> show() throws RemoteException {
+		return data;
+	}
+	
 	public ClassificationPO find(String ID) throws RemoteException {
 		for(ClassificationPO po : data){
 			if(po.getId().equals(ID)){
@@ -74,5 +78,5 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		System.out.println("update classification failed");
 		return ResultMessage.FAILED;
 	}
-	
+
 }

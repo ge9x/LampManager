@@ -1,6 +1,7 @@
 package dataservice.goodsdataservice;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.GoodsPO;
 import util.ResultMessage;
@@ -10,6 +11,12 @@ import util.ResultMessage;
  *
  */
 public interface GoodsDataService {
+	/**
+	 * 得到所有商品
+	 * @return 所有商品的PO
+	 * @throws RemoteException
+	 */
+	public ArrayList<GoodsPO> show() throws RemoteException;
 	/**
 	 * 查找商品
 	 * @param ID 商品ID
