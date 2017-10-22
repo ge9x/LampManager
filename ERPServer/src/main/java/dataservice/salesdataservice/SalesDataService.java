@@ -1,5 +1,6 @@
 package dataservice.salesdataservice;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.PurchasePO;
@@ -18,7 +19,7 @@ public interface SalesDataService {
 	 * @return 查找到的进货单据
 	 * @author zlk
 	 */
-	public PurchasePO findPurchase(String ID);
+	public PurchasePO findPurchase(String ID) throws RemoteException;
 	/**
 	 * 通过单据编号查找销售单据
 	 * 
@@ -26,7 +27,7 @@ public interface SalesDataService {
 	 * @return 查找到的销售单据
 	 * @author zlk
 	 */
-	public SalesPO findSlaes(String ID);
+	public SalesPO findSlaes(String ID) throws RemoteException;
 	/**
 	 * 添加进货单据
 	 * 
@@ -34,7 +35,7 @@ public interface SalesDataService {
 	 * @return 是否成功添加今后单据
 	 * @author zlk
 	 */
-	public ResultMessage addPurchase(PurchasePO po);
+	public ResultMessage addPurchase(PurchasePO po) throws RemoteException;
 	/**
 	 * 添加销售单据
 	 * 
@@ -42,7 +43,7 @@ public interface SalesDataService {
 	 * @return 是否成功添加销售单据
 	 * @author zlk
 	 */
-	public ResultMessage addSales(SalesPO po);
+	public ResultMessage addSales(SalesPO po) throws RemoteException;
 	/**
 	 * 更新进货单据
 	 * 
@@ -50,7 +51,7 @@ public interface SalesDataService {
 	 * @return 是否成功更新进货单据
 	 * @author zlk
 	 */
-	public ResultMessage updatePurchase(PurchasePO po);
+	public ResultMessage updatePurchase(PurchasePO po) throws RemoteException;
 	/**
 	 * 更新销售单据
 	 * 
@@ -58,7 +59,7 @@ public interface SalesDataService {
 	 * @return 是否成功更新销售单据
 	 * @author zlk
 	 */
-	public ResultMessage updateSales(SalesPO po);
+	public ResultMessage updateSales(SalesPO po) throws RemoteException;
 	/**
 	 * 删除进货单据
 	 * 
@@ -66,7 +67,7 @@ public interface SalesDataService {
 	 * @return 是否成功删除进货单据
 	 * @author zlk
 	 */
-	public ResultMessage deletePurchase(PurchasePO po);
+	public ResultMessage deletePurchase(PurchasePO po) throws RemoteException;
 	/**
 	 * 删除销售单据
 	 * 
@@ -74,25 +75,25 @@ public interface SalesDataService {
 	 * @return 是否成功删除销售单据
 	 * @author zlk
 	 */
-	public ResultMessage deleteSales(SalesPO po);
+	public ResultMessage deleteSales(SalesPO po) throws RemoteException;
 	/**
 	 * 初始化持久化数据库
 	 * 
 	 * @author zlk
 	 */
-	public void init();
+	public void init() throws RemoteException;
 	/**
 	 * 展示进货单据
 	 * 
 	 * @return po列表
 	 * @author zlk
 	 */
-	public ArrayList<PurchasePO> showPurchase();
+	public ArrayList<PurchasePO> showPurchase() throws RemoteException;
 	/**
 	 * 展示销售单据
 	 * 
 	 * @return po列表
 	 * @author zlk
 	 */
-	public ArrayList<SalesPO> showSales();
+	public ArrayList<SalesPO> showSales() throws RemoteException;
 }

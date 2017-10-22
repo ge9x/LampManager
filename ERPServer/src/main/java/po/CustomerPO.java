@@ -4,7 +4,7 @@ import util.Level;
 import java.util.Date;
 import util.CustomerCategory;
 
-public class CustomerPO extends PO{
+public class CustomerPO {
 	/**客户编号*/
 	private String customerID;
 	/**客户分类:进货商、销售商*/
