@@ -8,6 +8,7 @@ import blservice.inventoryblservice.InventoryBLService;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
@@ -26,11 +27,11 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	{
 		data = new ArrayList<InventoryBillVO>();
 		alarmData = new ArrayList<InventoryBillVO>();
-		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", UserPosition.INVENTORY_STAFF, new HashMap<GoodsVO, Integer>());
 		data.add(vo1);
 		data.add(vo2);
 		alarmData.add(vo3);

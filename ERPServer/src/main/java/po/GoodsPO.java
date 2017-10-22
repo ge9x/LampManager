@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author 巽
  *
  */
-public class GoodsPO extends PO{
+public class GoodsPO {
 	/**
 	 * 商品ID
 	 */
