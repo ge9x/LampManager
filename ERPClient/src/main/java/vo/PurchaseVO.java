@@ -13,7 +13,7 @@ public class PurchaseVO extends BillVO{
 	/**仓库*/
 	public String inventory;
 	/**操作员*/
-	public UserPosition user;
+	public String user;
 	/**商品列表*/
 	public GoodsItemVO goodsItem;
 	/**备注*/
@@ -22,7 +22,7 @@ public class PurchaseVO extends BillVO{
 	public double sum;
 	
 	public PurchaseVO(BillType type,BillState state,String ID,String supplier
-			,String inventory,UserPosition user,GoodsItemVO goodsItem,String remarks
+			,String inventory,String user,GoodsItemVO goodsItem,String remarks
 			,double sum,Date endDate){
 		this.type=type;
 		this.state=state;
