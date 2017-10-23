@@ -68,9 +68,9 @@ public class FinanceBLService_Stub implements FinanceBLService {
                 "客户甲","营业员1",accountBillItemVOS);
         AccountBillVO billVO2 = new AccountBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
                 "客户甲","营业员1",accountBillItemVOS);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
+        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
+        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
         GoodsItemVO gi2=new GoodsItemVO("000002", "挂灯", "xxdd", 10, 35.0, 350,
                 "好看");
         PurchaseVO billVO5=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
@@ -151,11 +151,23 @@ public class FinanceBLService_Stub implements FinanceBLService {
     }
 
     public ResultMessage updateDraft(AccountBillVO vo) {
-        return null;
+        if(vo.ID.equals("SKD-20171022-00001")){
+            System.out.println("Update succeed");
+            return ResultMessage.SUCCESS;
+        }else{
+            System.out.println("Update failed");
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage updateDraft(CashBillVO vo) {
-        return null;
+        if(vo.ID.equals("XJFYD-20171022-00001")){
+            System.out.println("Update succeed");
+            return ResultMessage.SUCCESS;
+        }else{
+            System.out.println("Update failed");
+            return ResultMessage.FAILED;
+        }
     }
 
     public BillVO findByID(String ID) {
@@ -171,7 +183,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
     }
 
     public ArrayList<BillVO> getDocumentDetails(Date startDate, Date endDate, BillType billType, String customerName, String salesman, String inventory) {
-        return null;
+        return billVOS;
     }
 
     public ResultMessage redCover(BillVO vo) {

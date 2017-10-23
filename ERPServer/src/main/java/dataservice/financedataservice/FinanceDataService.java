@@ -100,12 +100,12 @@ public interface FinanceDataService {
     public ArrayList<String> getAllIDByType(BillType type) throws RemoteException;
 
     /**
-     * 获得该单据的起始时间和结束时间
+     * 获得该单据的最后修改时间
      * @param ID
      * @return
      * @throws RemoteException
      */
-    public HashMap<Date,Date> getTimeRange(String ID) throws RemoteException;
+    public Date getDate(String ID) throws RemoteException;
 
     /**
      * 获得该单据的客户
