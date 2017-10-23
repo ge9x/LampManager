@@ -71,6 +71,11 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
         InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), new HashMap<GoodsVO, Integer>());
+        GoodsItemVO gi2=new GoodsItemVO("000002", "挂灯", "xxdd", 10, 35.0, 350,
+                "好看");
+        PurchaseVO billVO5=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
+                ,"默认仓库",UserPosition.SALES_STAFF,gi2,"好看"
+                ,700.0,new Date());
 
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
                 200,400,900,9500,5000,
@@ -102,7 +107,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
     }
 
     public ResultMessage submit(AccountBillVO vo) {
-        if (vo.ID != null && vo.accountBillItems != null && vo.sum != null
+        if (vo.ID != null && vo.accountBillItems != null
                 && vo.userName != null && vo.customerName != null
                 && vo.type != null){
             System.out.println("Submit succeed");
@@ -114,7 +119,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
     }
 
     public ResultMessage submit(CashBillVO vo) {
-        if (vo.ID != null && vo.cashBillItems != null && vo.sum != null
+        if (vo.ID != null && vo.cashBillItems != null
                 && vo.userName != null && vo.accountName != null
                 && vo.type != null){
             System.out.println("Submit succeed");
