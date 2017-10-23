@@ -74,7 +74,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
         GoodsItemVO gi2=new GoodsItemVO("000002", "挂灯", "xxdd", 10, 35.0, 350,
                 "好看");
         PurchaseVO billVO5=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-                ,"默认仓库",UserPosition.SALES_STAFF,gi2,"好看"
+                ,"默认仓库","操作员1",gi2,"好看"
                 ,700.0,new Date());
 
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
