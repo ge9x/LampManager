@@ -13,10 +13,10 @@ import util.ResultMessage;
 public interface ExaminationDataService {
 	
 	/**
-     * 按审批时间段查找返回相应的ExaminationPO结果
+     * 按审批时间段查找返回相应的BillVO结果
      * 
      * @param startEnd, endDate
-     * @return ArrayList<ExaminationPO>
+     * @return ArrayList<BillPO>
      */
 	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
 	

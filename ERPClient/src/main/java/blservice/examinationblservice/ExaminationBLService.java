@@ -12,7 +12,7 @@ public interface ExaminationBLService {
 	/**
      * 显示待审批单据
      * 
-     * @return ArrayList<ExaminationVO>
+     * @return ArrayList<BillVO>
      */
 	public ArrayList<BillVO> show();
 	
