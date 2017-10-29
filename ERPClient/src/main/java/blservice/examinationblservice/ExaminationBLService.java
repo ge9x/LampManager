@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import util.ResultMessage;
 import vo.BillVO;
-import vo.ExaminationVO;
 
 /** 
  * Created by Aster on 2017/10/20
@@ -15,7 +14,7 @@ public interface ExaminationBLService {
      * 
      * @return ArrayList<ExaminationVO>
      */
-	public ArrayList<ExaminationVO> show();
+	public ArrayList<BillVO> show();
 	
 	/**
      * 查看单据内容

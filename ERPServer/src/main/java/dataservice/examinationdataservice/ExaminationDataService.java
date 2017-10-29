@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import po.ExaminationPO;
+import po.BillPO;
 import util.ResultMessage;
 
 /** 
@@ -18,9 +18,9 @@ public interface ExaminationDataService {
      * @param startEnd, endDate
      * @return ArrayList<ExaminationPO>
      */
-	public ArrayList<ExaminationPO> finds(Date startDate, Date endDate) throws RemoteException;
+	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
 	
-	public ResultMessage add(ExaminationPO po) throws RemoteException;
+	public ResultMessage add(BillPO po) throws RemoteException;
 	
 	public void init() throws RemoteException;
 }
