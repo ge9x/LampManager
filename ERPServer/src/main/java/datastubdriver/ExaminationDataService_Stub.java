@@ -5,27 +5,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dataservice.examinationdataservice.ExaminationDataService;
-import po.ExaminationPO;
+import po.BillPO;
 import util.ResultMessage;
 
 public class ExaminationDataService_Stub implements ExaminationDataService{
-	ArrayList<ExaminationPO> history = new ArrayList<ExaminationPO>();
+	ArrayList<BillPO> history = new ArrayList<BillPO>();
 	
-	public ArrayList<ExaminationPO> finds(Date startDate, Date endDate) throws RemoteException {
+	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException {
 		// TODO Auto-generated method stub
-		ArrayList<ExaminationPO> target = new ArrayList<ExaminationPO>();
-		for(ExaminationPO po :  history){
-			if(!po.getExaminationDate().before(startDate)&&!po.getExaminationDate().after(endDate)){
+		ArrayList<BillPO> target = new ArrayList<BillPO>();
+		for(BillPO po :  history){
+			if(!po.getDate().before(startDate)&&!po.getDate().after(endDate)){
 				target.add(po);
 			}
 		}
 		return target;
 	}
 
-	public ResultMessage add(ExaminationPO po) throws RemoteException {
+	public ResultMessage add(BillPO po) throws RemoteException {
 		// TODO Auto-generated method stub
-		for(ExaminationPO i :  history){
-			if(i.getBill().getID().equals(po.getBill().getID())){
+		for(BillPO i :  history){
+			if(i.getID().equals(po.getID())){
 				System.out.println("The same bill information exist!");
 				return ResultMessage.FAILED;
 			}
