@@ -1,8 +1,7 @@
 package blservice.userblservice;
 
 import util.ResultMessage;
-import util.UserLimits;
-import util.UserPosition;
+import vo.UserVO;
 
 /** 
  * Created by Aster on 2017/10/20
@@ -22,7 +21,7 @@ public interface UserBLService {
      * @param userID, password, name, position, limit
      * @return ResultMessage
      */
-	public ResultMessage addUser(String userID, String password, String name, UserPosition position, UserLimits limit);
+	public ResultMessage addUser(UserVO vo);
 	
 	/**
      * 根据ID查找相应用户并删除
@@ -38,5 +37,5 @@ public interface UserBLService {
      * @param userID, password, name, position, limit
      * @return ResultMessage
      */
-	public ResultMessage modifyUser(String userID, String password, String name, UserPosition position, UserLimits limit);
+	public ResultMessage modifyUser(UserVO vo);
 }

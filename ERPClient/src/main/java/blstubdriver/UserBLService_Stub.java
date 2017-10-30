@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import blservice.userblservice.UserBLService;
 import util.ResultMessage;
-import util.UserLimits;
-import util.UserPosition;
 import vo.UserVO;
 
 public class UserBLService_Stub implements UserBLService{
@@ -23,15 +21,14 @@ public class UserBLService_Stub implements UserBLService{
 		}
 	}
 
-	public ResultMessage addUser(String userID, String password, String name, UserPosition position, UserLimits limit) {
+	public ResultMessage addUser(UserVO vo) {
 		// TODO Auto-generated method stub
-		if(userID.equals("test")){
+		if(vo.userID.equals("test")){
 			return ResultMessage.EXIST;
 		}
 		else{
 			ArrayList<UserVO> allUser = new ArrayList<UserVO>();
-			UserVO user = new UserVO(userID, password, name, position, limit);
-			allUser.add(user);
+			allUser.add(vo);
 			return ResultMessage.SUCCESS;
 		}
 	}
@@ -48,10 +45,9 @@ public class UserBLService_Stub implements UserBLService{
 		}
 	}
 
-	public ResultMessage modifyUser(String userID, String password, String name, UserPosition position,
-			UserLimits limit) {
+	public ResultMessage modifyUser(UserVO vo) {
 		// TODO Auto-generated method stub
-		if(userID.equals("test")){
+		if(vo.userID.equals("test")){
 			System.out.println("Modify user success!");
 			return ResultMessage.SUCCESS;
 		}
