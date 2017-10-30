@@ -41,4 +41,14 @@ public class ExaminationDataService_Stub implements ExaminationDataService{
 		System.out.println("Initial success!");
 	}
 
+    public BillPO find(String ID) throws RemoteException {
+		// TODO Auto-generated method stub
+		for(BillPO po :  history){
+			if(po.getID().equals(ID)){
+				return po;
+			}
+		}
+		return null;
+	}
+
 }
