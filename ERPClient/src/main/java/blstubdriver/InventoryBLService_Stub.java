@@ -22,6 +22,7 @@ import vo.GoodsVO;
 public class InventoryBLService_Stub implements InventoryBLService{
 	ArrayList<InventoryBillVO> data;
 	ArrayList<InventoryBillVO> alarmData;
+	ArrayList<String> inventoryName;
 	
 	{
 		data = new ArrayList<InventoryBillVO>();
@@ -36,6 +37,48 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		alarmData.add(vo3);
 		data.add(vo4);
 		data.add(vo5);
+	}
+
+	public ArrayList<String> showInventory() {
+		return inventoryName;
+	}
+
+	public ResultMessage addInventory(String inventory) {
+		for(String s : inventoryName){
+			if(s.equals(inventory)){
+				System.out.println("add inventory failed");
+				return ResultMessage.FAILED;
+			}
+		}
+		inventoryName.add(inventory);
+		System.out.println("add inventory success");
+		return ResultMessage.SUCCESS;
+	}
+
+	public ResultMessage deleteInventory(String inventory) {
+		for(String s : inventoryName){
+			if(s.equals(inventory)){
+				inventoryName.remove(s);
+				System.out.println("delete inventory success");
+				return ResultMessage.SUCCESS;
+			}
+		}
+		inventoryName.add(inventory);
+		System.out.println("delete inventory failed");
+		return ResultMessage.FAILED;
+	}
+
+	public ResultMessage updateInventory(String before, String after) {
+		for(String s : inventoryName){
+			if(s.equals(before)){
+				inventoryName.remove(s);
+				inventoryName.add(after);
+				System.out.println("update inventory success");
+				return ResultMessage.SUCCESS;
+			}
+		}
+		System.out.println("update inventory failed");
+		return ResultMessage.FAILED;
 	}
 
 	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {

@@ -15,6 +15,11 @@ import vo.InventoryViewVO;
  */
 public interface InventoryBLService {
 	/**
+	 * 得到所有的仓库名
+	 * @return 包含所有仓库名的链表
+	 */
+	public ArrayList<String> showInventory();
+	/**
 	 * 得到此仓库此时间段内的出／入库数量／金额，销售／进货数量／金额，以及库存合计
 	 * @param startDate 开始时间点
 	 * @param endDate 结束时间点
@@ -55,17 +60,36 @@ public interface InventoryBLService {
 	 */
 	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id, String keyword);
 	/**
+	 * 新增仓库名
+	 * @param inventory 等待新增的仓库名
+	 * @return 是否成功新增
+	 */
+	public ResultMessage addInventory(String inventory);
+	/**
 	 * 添加库存报溢单/报溢单/报警单
 	 * @param vo
 	 * @return 是否成功添加
 	 */
 	public ResultMessage addBill(InventoryBillVO vo);
 	/**
+	 * 删除仓库名
+	 * @param inventory 等待删除的仓库名
+	 * @return 是否成功删除
+	 */
+	public ResultMessage deleteInventory(String inventory);
+	/**
 	 * 删除库存单据
 	 * @param ID 单据ID
 	 * @return 是否成功删除
 	 */
 	public ResultMessage deleteBill(String ID);
+	/**
+	 * 修改仓库名
+	 * @param before 修改前的仓库名
+	 * @param after 修改后的仓库名
+	 * @return 是否成功修改
+	 */
+	public ResultMessage updateInventory(String before, String after);
 	/**
 	 * 修改库存单据
 	 * @param vo
