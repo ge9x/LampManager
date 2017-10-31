@@ -20,7 +20,8 @@ import util.ResultMessage;
 public class InventoryDataService_Stub implements InventoryDataService{
 	ArrayList<InventoryBillPO> data;
 	ArrayList<InventoryBillPO> alarmData;
-	
+	ArrayList<String> inventoryName;
+
 	{
 		data = new ArrayList<InventoryBillPO>();
 		alarmData = new ArrayList<InventoryBillPO>();
@@ -34,6 +35,50 @@ public class InventoryDataService_Stub implements InventoryDataService{
 		alarmData.add(vo3);
 		data.add(vo4);
 		data.add(vo5);
+		inventoryName.add("栖霞区仓库");
+		inventoryName.add("鼓楼区仓库");
+	}
+	
+	public ArrayList<String> showInventory() throws RemoteException {
+		return inventoryName;
+	}
+
+	public ResultMessage addInventroy(String inventory) throws RemoteException {
+		for(String s : inventoryName){
+			if(s.equals(inventory)){
+				System.out.println("add inventory failed");
+				return ResultMessage.FAILED;
+			}
+		}
+		inventoryName.add(inventory);
+		System.out.println("add inventory success");
+		return ResultMessage.SUCCESS;
+	}
+
+	public ResultMessage deleteInventory(String inventory) throws RemoteException {
+		for(String s : inventoryName){
+			if(s.equals(inventory)){
+				inventoryName.remove(s);
+				System.out.println("delete inventory success");
+				return ResultMessage.SUCCESS;
+			}
+		}
+		inventoryName.add(inventory);
+		System.out.println("delete inventory failed");
+		return ResultMessage.FAILED;
+	}
+
+	public ResultMessage updateInventory(String before, String after) throws RemoteException {
+		for(String s : inventoryName){
+			if(s.equals(before)){
+				inventoryName.remove(s);
+				inventoryName.add(after);
+				System.out.println("update inventory success");
+				return ResultMessage.SUCCESS;
+			}
+		}
+		System.out.println("update inventory failed");
+		return ResultMessage.FAILED;
 	}
 
 	public ArrayList<InventoryBillPO> show() throws RemoteException {
