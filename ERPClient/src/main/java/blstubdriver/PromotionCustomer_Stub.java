@@ -68,4 +68,11 @@ public class PromotionCustomer_Stub implements PromotionCustomer{
 		}
 	}
 
+	public void setCustomer(Level level) {
+		// TODO Auto-generated method stub
+		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		promotion.level = level;
+		System.out.println("Set customer level success!");
+	}
+
 }

@@ -3,6 +3,7 @@ package blservice.promotioncustomer;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.Level;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
@@ -38,6 +39,13 @@ public interface PromotionCustomer {
      * @param price
      */
 	public void addAllowance(double price);
+	
+	/**
+     * 设置会员促销粗略针对的会员等级
+     * 
+     * @param level
+     */
+	public void setCustomer(Level level);
 	
 	/**
      * 设置促销策略开始时间
