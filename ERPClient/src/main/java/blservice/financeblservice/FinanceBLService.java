@@ -103,7 +103,7 @@ public interface FinanceBLService {
      * @param inventory
      * @return 商品销售记录列表
      */
-    public ArrayList<SalesDetailVO> getSalesDetails(Date startDate, Date endDate, String goodName, String customerName, String salesman, String inventory);
+    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input);
 
     /**
      * 查看经营历程表
@@ -115,7 +115,7 @@ public interface FinanceBLService {
      * @param inventory
      * @return 所有符合条件的单据列表
      */
-    public ArrayList<BillVO> getDocumentDetails(Date startDate, Date endDate, BillType billType, String customerName, String salesman, String inventory);
+    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input);
 
     /**
      * 红冲单据
