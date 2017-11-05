@@ -1,6 +1,7 @@
 package bl.accountbl;
 
 import blservice.accountblservice.AccountBLService;
+import blservice.accountblservice.AccountInfo;
 import util.ResultMessage;
 import vo.AccountVO;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Kry·L on 2017/11/5.
  */
-public class AccountController implements AccountBLService{
+public class AccountController implements AccountBLService, AccountInfo{
 
     private Account account;
 
@@ -34,6 +35,14 @@ public class AccountController implements AccountBLService{
     }
 
     public ArrayList<AccountVO> show() {
+        return null;
+    }
+
+    public ArrayList<String> getAllAccountName() {
+        return null;
+    }
+
+    public ArrayList<AccountVO> getAllAccount() {
         return null;
     }
 }

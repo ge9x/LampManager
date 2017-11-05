@@ -1,5 +1,6 @@
 package bl.financialbl;
 
+import blservice.salesblservice.SalesInfo;
 import vo.SalesDetailVO;
 
 /**
