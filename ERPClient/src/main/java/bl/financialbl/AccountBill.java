@@ -1,5 +1,7 @@
 package bl.financialbl;
 
+import blservice.customerblservice.CustomerInfo;
+import blservice.userblservice.UserInfo;
 import vo.AccountBillVO;
 
 import java.util.ArrayList;

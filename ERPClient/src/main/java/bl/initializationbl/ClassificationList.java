@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import blservice.classificationblservice.ClassificationInfo;
 import vo.ClassificationVO;
 
 import java.util.ArrayList;

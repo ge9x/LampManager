@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import blservice.goodsblservice.GoodsInfo;
 import vo.GoodsVO;
 
 import java.util.ArrayList;

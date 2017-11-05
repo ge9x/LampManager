@@ -1,6 +1,7 @@
 package bl.financialbl;
 
 import blservice.accountblservice.AccountInfo;
+import blservice.userblservice.UserInfo;
 
 import java.util.ArrayList;
 
