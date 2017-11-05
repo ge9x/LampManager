@@ -1,11 +1,9 @@
 package bl.goodsbl;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import blservice.classificationblservice.ClassificationInfo;
-import blservice.goodsblservice.GoodsBLService;
-import po.GoodsPO;
+import dataservice.goodsdataservice.GoodsDataService;
 import util.ResultMessage;
 import vo.GoodsVO;
 
@@ -16,7 +14,7 @@ import vo.GoodsVO;
  */
 public class Goods {
 	private GoodsVO vo;
-	private GoodsBLService goodsBLService;
+	private GoodsDataService goodsDataService;
 	private ClassificationInfo classificationInfo;
 
 	public ArrayList<GoodsVO> show() {
