@@ -1,8 +1,10 @@
 package bl.classificationbl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blservice.classificationblservice.ClassificationBLService;
+import blservice.classificationblservice.ClassificationInfo;
 import util.ResultMessage;
 import vo.ClassificationVO;
 
@@ -11,7 +13,7 @@ import vo.ClassificationVO;
  * @author 巽
  *
  */
-public class ClassificationController implements ClassificationBLService{
+public class ClassificationController implements ClassificationBLService, ClassificationInfo{
 	
 	private Classification classification;
 
@@ -44,6 +46,10 @@ public class ClassificationController implements ClassificationBLService{
 	}
 
 	public String getNewID() {
+		return null;
+	}
+
+	public HashMap<String, String> getAllClassification() {
 		return null;
 	}
 	

@@ -3,6 +3,7 @@ package bl.goodsbl;
 import java.util.ArrayList;
 
 import blservice.goodsblservice.GoodsBLService;
+import blservice.goodsblservice.GoodsInfo;
 import util.ResultMessage;
 import vo.GoodsVO;
 
@@ -11,7 +12,7 @@ import vo.GoodsVO;
  * @author 巽
  *
  */
-public class GoodsController implements GoodsBLService{
+public class GoodsController implements GoodsBLService, GoodsInfo{
 	
 	private Goods goods;
 	
@@ -44,6 +45,10 @@ public class GoodsController implements GoodsBLService{
 	}
 
 	public String getNewID() {
+		return null;
+	}
+
+	public ArrayList<GoodsVO> getAllGoods() {
 		return null;
 	}
 
