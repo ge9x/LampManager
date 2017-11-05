@@ -8,6 +8,10 @@ import vo.AccountBillVO;
 public class AccountBill {
 
     private AccountBillVO accountBill;
+    private AccountBillItem accountBillItem;
+
+    private UserInfo userInfo;
+    private CustomerInfo info;
 
     public AccountBill(){
 
