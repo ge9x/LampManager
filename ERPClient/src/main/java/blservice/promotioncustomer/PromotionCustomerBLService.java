@@ -1,26 +1,26 @@
-package blservice.promotionTotal;
+package blservice.promotioncustomer;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.Level;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
 
 /** 
  * Created by Aster on 2017/10/20
  */
-public interface PromotionTotal {
+public interface PromotionCustomerBLService {
 	/**
-     * 显示所有总价促销策略
+     * 显示所有会员促销策略
      * 
      * @return ArrayList<PromotionCustomerVO>
      */
-	public ArrayList<PromotionTotalVO> show();
+	public ArrayList<PromotionCustomerVO> show();
 	
 	/**
-     * 添加赠品到促销策略中
+     * 添加商品到促销策略中
      * 
      * @param GoodsVO
      */
@@ -34,11 +34,18 @@ public interface PromotionTotal {
 	public void addVoucher(double price);
 	
 	/**
-     * 设置促销策略的目标总价
+     * 添加价格折让到促销策略中
      * 
      * @param price
      */
-	public void setPrice(double price);
+	public void addAllowance(double price);
+	
+	/**
+     * 设置会员促销粗略针对的会员等级
+     * 
+     * @param level
+     */
+	public void setCustomer(Level level);
 	
 	/**
      * 设置促销策略开始时间

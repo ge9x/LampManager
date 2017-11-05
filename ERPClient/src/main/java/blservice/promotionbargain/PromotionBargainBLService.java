@@ -10,7 +10,7 @@ import vo.PromotionBargainVO;
 /** 
  * Created by Aster on 2017/10/20
  */
-public interface PromotionBargain {
+public interface PromotionBargainBLService {
 	/**
      * 显示所有特价包策略
      * 
