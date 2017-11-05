@@ -3,13 +3,12 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionTotal.PromotionTotal;
+import blservice.promotionTotal.PromotionTotalBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
-import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
 
-public class PromotionTotal_Stub implements PromotionTotal{
+public class PromotionTotal_Stub implements PromotionTotalBLService{
 
 	public ArrayList<PromotionTotalVO> show() {
 		// TODO Auto-generated method stub
@@ -56,7 +55,7 @@ public class PromotionTotal_Stub implements PromotionTotal{
 		System.out.println("Set end time success!");
 	}
 
-	public ResultMessage submit(PromotionCustomerVO vo) {
+	public ResultMessage submit(PromotionTotalVO vo) {
 		// TODO Auto-generated method stub
 		if(vo.endDate.after(vo.startDate)){
 			System.out.println("Submit success!");
