@@ -18,6 +18,7 @@ public class Inventory {
 	
 	private InventoryDataService inventoryDataService;
 	private InventoryList inventoryList;
+	private ArrayList<InventoryBill> inventoryBill;
 	
 	public ArrayList<String> showInventory() {
 		return null;
