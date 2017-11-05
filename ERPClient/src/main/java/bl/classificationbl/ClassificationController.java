@@ -20,31 +20,31 @@ public class ClassificationController implements ClassificationBLService{
 	}
 	
 	public ArrayList<ClassificationVO> show() {
-		return classification.show();
+		return null;
 	}
 
 	public ArrayList<ClassificationVO> find(String keyword) {
-		return classification.find(keyword);
+		return null;
 	}
 
 	public ClassificationVO showDetails(String ID) {
-		return classification.showDetails(ID);
+		return null;
 	}
 
 	public ResultMessage add(ClassificationVO vo) {
-		return classification.add(vo);
+		return null;
 	}
 
 	public ResultMessage delete(String ID) {
-		return classification.delete(ID);
+		return null;
 	}
 
 	public ResultMessage update(ClassificationVO vo) {
-		return classification.update(vo);
+		return null;
 	}
 
 	public String getNewID() {
-		return classification.getNewID();
+		return null;
 	}
 	
 
