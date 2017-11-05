@@ -1,18 +1,17 @@
 package bl.goodsbl;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import dataservice.goodsdataservice.GoodsDataService;
-import po.GoodsPO;
+import blservice.goodsblservice.GoodsBLService;
 import util.ResultMessage;
+import vo.GoodsVO;
 
 /**
  * Created on 2017/11/5
  * @author 巽
  *
  */
-public class GoodsController implements GoodsDataService{
+public class GoodsController implements GoodsBLService{
 	
 	private Goods goods;
 	
@@ -20,23 +19,32 @@ public class GoodsController implements GoodsDataService{
 		goods = new Goods();
 	}
 
-	public ArrayList<GoodsPO> show() throws RemoteException {
+	public ArrayList<GoodsVO> show() {
 		return null;
 	}
 
-	public GoodsPO find(String ID) throws RemoteException {
+	public ArrayList<GoodsVO> find(String keyword) {
 		return null;
 	}
 
-	public ResultMessage add(GoodsPO po) throws RemoteException {
+	public GoodsVO showDetails(String ID) {
 		return null;
 	}
 
-	public ResultMessage delete(GoodsPO po) throws RemoteException {
+	public ResultMessage add(GoodsVO vo) {
 		return null;
 	}
 
-	public ResultMessage update(GoodsPO po) throws RemoteException {
+	public ResultMessage delete(String ID) {
 		return null;
 	}
+
+	public ResultMessage update(GoodsVO vo) {
+		return null;
+	}
+
+	public String getNewID() {
+		return null;
+	}
+
 }

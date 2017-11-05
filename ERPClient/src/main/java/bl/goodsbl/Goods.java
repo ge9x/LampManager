@@ -19,23 +19,31 @@ public class Goods {
 	private GoodsBLService goodsBLService;
 	private ClassificationInfo classificationInfo;
 
-	public ArrayList<GoodsPO> show() throws RemoteException {
+	public ArrayList<GoodsVO> show() {
 		return null;
 	}
 
-	public GoodsPO find(String ID) throws RemoteException {
+	public ArrayList<GoodsVO> find(String keyword) {
 		return null;
 	}
 
-	public ResultMessage add(GoodsPO po) throws RemoteException {
+	public GoodsVO showDetails(String ID) {
 		return null;
 	}
 
-	public ResultMessage delete(GoodsPO po) throws RemoteException {
+	public ResultMessage add(GoodsVO vo) {
 		return null;
 	}
 
-	public ResultMessage update(GoodsPO po) throws RemoteException {
+	public ResultMessage delete(String ID) {
+		return null;
+	}
+
+	public ResultMessage update(GoodsVO vo) {
+		return null;
+	}
+
+	public String getNewID() {
 		return null;
 	}
 }
