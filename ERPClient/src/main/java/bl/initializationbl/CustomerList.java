@@ -11,4 +11,8 @@ import java.util.ArrayList;
 public class CustomerList {
     private ArrayList<CustomerVO> customerVOS;
     private CustomerInfo customerInfo;
+
+    public ArrayList<CustomerVO> getCustomers(){
+        return customerVOS;
+    }
 }

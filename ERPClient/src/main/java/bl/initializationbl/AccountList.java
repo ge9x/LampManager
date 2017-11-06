@@ -11,4 +11,8 @@ import java.util.ArrayList;
 public class AccountList {
     private ArrayList<AccountVO> accountVOS;
     private AccountInfo info;
+
+    public ArrayList<AccountVO> getAccounts(){
+        return accountVOS;
+    }
 }

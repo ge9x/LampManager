@@ -21,7 +21,7 @@ public class Initialization{
     public Initialization(){
 
     }
-    public ResultMessage init(InitAccountVO vo) {
+    public InitAccountVO init() {
         return null;
     }
 

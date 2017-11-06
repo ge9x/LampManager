@@ -1,5 +1,7 @@
 package vo;
 
+import bl.classificationbl.Classification;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,11 +13,13 @@ public class InitAccountVO {
     ArrayList<AccountVO> accountVOS;
     ArrayList<CustomerVO> customerVOS;
     ArrayList<GoodsVO> goodsVOS;
+    ArrayList<ClassificationVO> classificationVOS;
 
-    public InitAccountVO(Date date, ArrayList<AccountVO> accountVOS, ArrayList<CustomerVO> customerVOS, ArrayList<GoodsVO> goodsVOS) {
+    public InitAccountVO(Date date, ArrayList<AccountVO> accountVOS, ArrayList<CustomerVO> customerVOS, ArrayList<GoodsVO> goodsVOS, ArrayList<ClassificationVO> classificationVOS) {
         this.date = date;
         this.accountVOS = accountVOS;
         this.customerVOS = customerVOS;
         this.goodsVOS = goodsVOS;
+        this.classificationVOS = classificationVOS;
     }
 }

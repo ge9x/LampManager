@@ -1,6 +1,7 @@
 package bl.initializationbl;
 
 import blservice.initializationblservice.InitializationBLService;
+import po.InitAccountPO;
 import util.ResultMessage;
 import vo.InitAccountVO;
 
@@ -13,7 +14,7 @@ public class InitializationController implements InitializationBLService{
     public InitializationController(){
         initialization = new Initialization();
     }
-    public ResultMessage init(InitAccountVO vo) {
+    public InitAccountVO init() {
         return null;
     }
 

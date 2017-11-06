@@ -9,7 +9,12 @@ import vo.SalesDetailVO;
 public class SalesDetailsItem {
     SalesDetailVO vo;
     SalesInfo salesInfo;
+
     public SalesDetailsItem(){
 
     }
+    public SalesDetailVO getSalesItemByID(String ID){
+        return null;
+    }
+
 }

@@ -12,6 +12,9 @@ public class GoodsList {
     private ArrayList<GoodsVO> goodsVOS;
     private GoodsInfo goodsInfo;
 
+    public ArrayList<GoodsVO> getGoods(){
 
+        return goodsVOS;
+    }
 
 }

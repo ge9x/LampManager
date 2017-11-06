@@ -13,4 +13,7 @@ public class CashBill {
     private ArrayList<CashBillItem> cashBillItems;
     private UserInfo userInfo;
     private AccountInfo accountInfo;
+
+
+
 }

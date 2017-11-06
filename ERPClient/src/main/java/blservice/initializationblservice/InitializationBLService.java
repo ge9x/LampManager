@@ -11,10 +11,9 @@ import java.util.ArrayList;
 public interface InitializationBLService {
     /**
      * 期初建账
-     * @param vo
      * @return
      */
-    public ResultMessage init(InitAccountVO vo);
+    public InitAccountVO init();
 
     /**
      * 展示所有期初建账信息

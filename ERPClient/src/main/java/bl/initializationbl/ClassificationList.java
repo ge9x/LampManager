@@ -11,4 +11,8 @@ import java.util.ArrayList;
 public class ClassificationList {
     private ArrayList<ClassificationVO> classificationVOS;
     private ClassificationInfo classificationInfo;
+
+    public ArrayList<ClassificationVO> getClassifications(){
+        return classificationVOS;
+    }
 }
