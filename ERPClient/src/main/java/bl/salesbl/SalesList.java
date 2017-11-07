@@ -2,7 +2,7 @@ package bl.salesbl;
 
 import java.util.ArrayList;
 
-import po.SalesPO;
+import vo.SalesVO;
 
 public class SalesList {
     private ArrayList<SalesLineItem> salesList;
@@ -11,7 +11,7 @@ public class SalesList {
     	
     }
 	
-	public ArrayList<SalesPO> showSales(){
+	public ArrayList<SalesVO> showSales(){
 		return null;
 	}
 }

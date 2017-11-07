@@ -28,19 +28,19 @@ public class Sales {
 	}
 	
 	
-	public SalesPO findSlaesByID(String ID) {
+	public SalesVO findSlaesByID(String ID) {
 		return null;
 	}
 	
-	public SalesPO findSalesByState(BillState state) {
+	public SalesVO findSalesByState(BillState state) {
 		return null;
 	}
 	
-	public ResultMessage addSales(SalesPO po){
+	public ResultMessage addSales(SalesVO vo){
 		return null;
 	}
 	
-	public ResultMessage updateSales(SalesPO po){
+	public ResultMessage updateSales(SalesVO vo){
 		return null;
 	}
 	
@@ -50,6 +50,10 @@ public class Sales {
 	
 	public void init(){
 		
+	}
+	
+	public ResultMessage submitSales(SalesVO vo){
+		return null;
 	}
 	
 }

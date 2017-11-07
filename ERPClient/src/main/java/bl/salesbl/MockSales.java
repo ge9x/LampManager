@@ -9,30 +9,33 @@ import po.SalesPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.GoodsItemVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 public class MockSales extends Sales{
-	ArrayList<SalesPO> salesBill=new ArrayList<SalesPO>();
-	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
+	ArrayList<SalesVO> salesBill=new ArrayList<SalesVO>();
+	ArrayList<GoodsItemVO> goodsItemList=new ArrayList<GoodsItemVO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO( "霓虹灯", 20, 35.0,
+	GoodsItemVO gi1=new GoodsItemVO( "霓虹灯", 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO( "挂灯", 10, 35.0,
+	GoodsItemVO gi2=new GoodsItemVO( "挂灯", 10, 35.0,
 			"好看");
 	
 	{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
-		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
+		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
 				"阿强", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
-	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
+	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
 					"阿奇", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}
 	
-	public SalesPO findSlaesByID(String ID) {
-		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(ID)){
+	public SalesVO findSlaesByID(String ID) {
+		for(SalesVO sal:salesBill){
+			if(sal.ID.equals(ID)){
 				System.out.println("Find sales success");
 				return sal;
 			}
@@ -41,9 +44,9 @@ public class MockSales extends Sales{
 		return null;
 	}
 	
-	public SalesPO findSalesByState(BillState state) {
-		for(SalesPO sal:salesBill){
-			if(sal.getState().equals(state)){
+	public SalesVO findSalesByState(BillState state) {
+		for(SalesVO sal:salesBill){
+			if(sal.state.equals(state)){
 				System.out.println("Find sales success");
 				return sal;
 			}
@@ -52,9 +55,9 @@ public class MockSales extends Sales{
 		return null;
 	}
 	
-	public ResultMessage addSales(SalesPO po){
-		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(po.getID())){
+	public ResultMessage addSales(SalesVO po){
+		for(SalesVO sal:salesBill){
+			if(sal.ID.equals(po)){
 				System.out.println("Add sales failed");
 				return ResultMessage.FAILED;
 			}
@@ -64,9 +67,9 @@ public class MockSales extends Sales{
 		return ResultMessage.SUCCESS;
 	}
 	
-	public ResultMessage updateSales(SalesPO po){
-		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(po.getID())){
+	public ResultMessage updateSales(SalesVO po){
+		for(SalesVO sal:salesBill){
+			if(sal.ID.equals(po.ID)){
 				System.out.println("Update sales success");
 				salesBill.remove(sal);
 				salesBill.add(po);
@@ -79,8 +82,8 @@ public class MockSales extends Sales{
 	}
 	
 	public ResultMessage deleteSales(String ID) {
-		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(ID)){
+		for(SalesVO sal:salesBill){
+			if(sal.ID.equals(ID)){
 				salesBill.remove(sal);
 				System.out.println("Delete sales success");
 				return ResultMessage.SUCCESS;
@@ -93,5 +96,16 @@ public class MockSales extends Sales{
 	public void init(){
 		salesBill.clear();
 		System.out.println("Init sales and purchase success");
+	}
+	
+	public ResultMessage submitSales(SalesVO vo){
+		for(SalesVO sal:salesBill){
+			if(sal.ID.equals(vo.ID)){
+				sal.state=BillState.SUBMITTED;
+				return ResultMessage.SUCCESS;
+			}
+		}
+		System.out.println("not find bill");
+		return ResultMessage.NOT_EXIST;
 	}
 }

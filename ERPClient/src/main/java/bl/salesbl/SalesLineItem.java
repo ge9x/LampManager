@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import util.ResultMessage;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
+import vo.PurchaseVO;
 import vo.SalesVO;
 
 public class SalesLineItem {
@@ -33,6 +35,14 @@ public class SalesLineItem {
     }
 		  
     public ArrayList <PromotionTotalVO> getFitPromotionTotal(){
+		return null;
+	}
+    
+    public ResultMessage alterInventory(SalesVO vo){
+		return null;
+	}
+	
+	public ResultMessage alterCustomer(SalesVO vo){
 		return null;
 	}
 }
