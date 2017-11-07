@@ -28,19 +28,19 @@ public class Purchase {
 		
 	}
 	
-	public PurchasePO findPurchaseByID(String ID) {
+	public PurchaseVO findPurchaseByID(String ID) {
 		return null;
 	}
 	
-	public PurchasePO findPurchaseByState(BillState state) {
+	public PurchaseVO findPurchaseByState(BillState state) {
 		return null;
 	}
 	
-	public ResultMessage addPurchase(PurchasePO po) {
+	public ResultMessage addPurchase(PurchaseVO po) {
 		return null;
 	}
 	
-	public ResultMessage updatePurchase(PurchasePO po) {
+	public ResultMessage updatePurchase(PurchaseVO po) {
 		return null;
 	}
 		
@@ -51,5 +51,10 @@ public class Purchase {
 	public void init() {
 		
 	}
+	
+	public ResultMessage submitPurchase(PurchaseVO vo){
+		return null;
+	}
+	
 	
 }

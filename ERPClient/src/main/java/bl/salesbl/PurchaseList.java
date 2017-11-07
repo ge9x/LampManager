@@ -13,7 +13,7 @@ public class PurchaseList {
 		
 	}
 	
-	public ArrayList<PurchasePO> showPurchase(){
+	public ArrayList<PurchaseVO> showPurchase(){
 		return null;
 	}
 	

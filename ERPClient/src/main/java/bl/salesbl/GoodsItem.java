@@ -20,4 +20,11 @@ public class GoodsItem {
 		
 	}
 	
+	public String getGoodsID(String goodsName){
+		return null;
+	}
+	
+	public String getModel(String goodsName){
+		return null;
+	}
 }

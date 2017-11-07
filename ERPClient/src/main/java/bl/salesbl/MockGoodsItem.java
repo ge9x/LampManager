@@ -2,22 +2,44 @@ package bl.salesbl;
 
 import java.util.ArrayList;
 
-import po.GoodsItemPO;
 import vo.GoodsItemVO;
 
 public class MockGoodsItem {
-    ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
+    ArrayList<GoodsItemVO> goodsItemList=new ArrayList<GoodsItemVO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO( "霓虹灯", 20, 35.0,
+	GoodsItemVO gi1=new GoodsItemVO( "霓虹灯", 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO( "挂灯", 10, 35.0,
+	GoodsItemVO gi2=new GoodsItemVO( "挂灯", 10, 35.0,
 			"好看");
 
-    public void addGoodsItem(GoodsItemVO item){
-    	goodsItemList.add(gi1);
+	{
+		goodsItemList.add(gi1);
     	goodsItemList.add(gi2);
-    	GoodsItemPO gi3=new GoodsItemPO( "台灯", 20, 35.0,
+	}
+	
+    public void addGoodsItem(GoodsItemVO item){
+    	GoodsItemVO gi3=new GoodsItemVO( "台灯", 20, 35.0,
     			"耐用");
     	goodsItemList.add(gi3);
+	}
+    
+    public String getGoodsID(String goodsName){
+		for(GoodsItemVO vo:goodsItemList){
+			if(vo.goodsName.equals(goodsName)){
+				return vo.ID;
+			}
+		}
+		System.out.println("goods not exist");
+		return null;
+	}
+	
+	public String getModel(String goodsName){
+		for(GoodsItemVO vo:goodsItemList){
+			if(vo.goodsName.equals(goodsName)){
+				return vo.model;
+			}
+		}
+		System.out.println("goods not exist");
+		return null;
 	}
 }
