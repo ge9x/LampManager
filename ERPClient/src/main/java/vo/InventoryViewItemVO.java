@@ -1,6 +1,6 @@
 package vo;
 
-import util.InventoryViewItemType;
+import util.InventoryListItemType;
 
 /**
  * 一张单据中一种商品的库存变动条目<br><br>
@@ -16,7 +16,7 @@ public class InventoryViewItemVO{
 	/**
 	 * 库存变动类型
 	 */
-	public InventoryViewItemType type;
+	public InventoryListItemType type;
 	/**
 	 * 数量
 	 */
@@ -26,7 +26,7 @@ public class InventoryViewItemVO{
 	 */
 	public double price;
 	
-	public InventoryViewItemVO(GoodsVO goods, InventoryViewItemType type, int amount, double price) {
+	public InventoryViewItemVO(GoodsVO goods, InventoryListItemType type, int amount, double price) {
 		super();
 		this.goods = goods;
 		this.type = type;

@@ -1,6 +1,8 @@
 package bl.inventorybl;
 
-import blservice.salesblservice.SalesInfo;
+import blservice.goodsblservice.GoodsInfo;
+import util.ResultMessage;
+import vo.InventoryBillVO;
 
 /**
  * Created on 2017/11/5
@@ -8,5 +10,22 @@ import blservice.salesblservice.SalesInfo;
  *
  */
 public class InventoryBill {
-	private SalesInfo salesInfo;
+	private InventoryBillVO vo;
+	private GoodsInfo goodsInfo;
+	
+	public InventoryBill(){
+		
+	}
+
+    public InventoryBillVO submit(){
+        return null;
+    }
+    
+    public InventoryBillVO save(){
+        return null;
+    }
+    
+    public ResultMessage update(InventoryBillVO vo){
+        return null;
+    }
 }

@@ -15,7 +15,6 @@ import vo.InventoryViewVO;
  *
  */
 public class Inventory {
-	
 	private InventoryDataService inventoryDataService;
 	private InventoryList inventoryList;
 	private ArrayList<InventoryBill> inventoryBill;
