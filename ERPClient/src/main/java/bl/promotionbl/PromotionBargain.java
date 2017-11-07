@@ -34,4 +34,8 @@ public class PromotionBargain extends Promotion{
 	public ResultMessage submit(PromotionBargainVO vo){
 		return null;
 	}
+	
+	public PromotionBargainVO findPromotionByID(String promotionID){
+		return null;
+	}
 }

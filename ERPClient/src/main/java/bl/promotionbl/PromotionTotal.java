@@ -5,6 +5,7 @@ import java.util.Date;
 
 import util.ResultMessage;
 import vo.GoodsVO;
+import vo.PromotionBargainVO;
 import vo.PromotionTotalVO;
 
 public class PromotionTotal extends Promotion{
@@ -36,6 +37,10 @@ public class PromotionTotal extends Promotion{
 	}
 
 	public ResultMessage submit(PromotionTotalVO vo){
+		return null;
+	}
+	
+	public PromotionTotalVO findPromotionByID(String promotionID){
 		return null;
 	}
 }

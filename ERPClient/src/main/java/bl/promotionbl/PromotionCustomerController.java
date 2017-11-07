@@ -57,4 +57,9 @@ public class PromotionCustomerController implements PromotionCustomerBLService{
 		return null;
 	}
 
+	public PromotionCustomerVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -32,4 +32,8 @@ public class Examination {
 	public ResultMessage approveReceipt(BillVO bill){
 		return null;
 	}
+	
+	public ArrayList<BillVO> showHistory() {
+		return null;
+	}
 }

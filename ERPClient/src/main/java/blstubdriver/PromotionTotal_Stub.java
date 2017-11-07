@@ -67,4 +67,16 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 		}
 	}
 
+	public PromotionTotalVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionTotalVO promotion = new PromotionTotalVO("000005", new Date(), new Date(), 500, new ArrayList<GoodsVO>(), 10000);
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
+		}
+	}
+
 }

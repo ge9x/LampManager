@@ -9,12 +9,7 @@ import util.PromotionType;
 /**
  * Created by Aster on 2017/10/21.
  */
-public class PromotionCustomerVO {
-	public String promotionID;
-	
-	public Date startDate;
-	
-	public Date endDate;
+public class PromotionCustomerVO extends PromotionVO{
 	
 	public double voucher;
 	
@@ -23,8 +18,6 @@ public class PromotionCustomerVO {
 	public ArrayList<GoodsVO> gifts;
 	
 	public Level level;
-	
-	public PromotionType type;
 	
 	public PromotionCustomerVO(String promotionID, Date startDate, Date endDate, double voucher, double allowance, ArrayList<GoodsVO> gifts, Level level){
 		this.promotionID = promotionID;
