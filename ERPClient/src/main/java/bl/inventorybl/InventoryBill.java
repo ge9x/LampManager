@@ -17,14 +17,27 @@ public class InventoryBill {
 		
 	}
 
-    public InventoryBillVO submit(){
+	/**
+	 * 提交单据
+	 * @return 是否提交成功
+	 */
+    public ResultMessage submit(){
         return null;
     }
     
-    public InventoryBillVO save(){
+    /**
+     * 保存单据（成为草稿状态）
+     * @return 是否保存成功
+     */
+    public ResultMessage save(){
         return null;
     }
     
+    /**
+     * 修改单据
+     * @param vo 要修改的单据的VO
+     * @return 是否修改成功
+     */
     public ResultMessage update(InventoryBillVO vo){
         return null;
     }
