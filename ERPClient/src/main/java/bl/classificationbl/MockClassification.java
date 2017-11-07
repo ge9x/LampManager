@@ -46,7 +46,7 @@ public class MockClassification extends Classification{
 
 	@Override
 	public ResultMessage add(ClassificationVO vo) {
-		if(vo.ID.equals("01")){
+		if(vo.name.equals("台灯")){
 			return ResultMessage.EXIST;
 		}
 		else{
