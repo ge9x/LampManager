@@ -12,12 +12,14 @@ public class InitAccountPO {
     private ArrayList<CustomerPO> customerPOS;
     private ArrayList<AccountPO> accountPOS;
     private ArrayList<GoodsPO> goodsPOS;
+    private ArrayList<ClassificationPO> classificationPOS;
 
-    public InitAccountPO(Date date, ArrayList<CustomerPO> customerPOS, ArrayList<AccountPO> accountPOS, ArrayList<GoodsPO> goodsPOS) {
+    public InitAccountPO(Date date, ArrayList<CustomerPO> customerPOS, ArrayList<AccountPO> accountPOS, ArrayList<GoodsPO> goodsPOS,ArrayList<ClassificationPO> classificationPOS) {
         this.date = date;
         this.customerPOS = customerPOS;
         this.accountPOS = accountPOS;
         this.goodsPOS = goodsPOS;
+        this.classificationPOS = classificationPOS;
     }
 
     public Date getDate() {
@@ -50,5 +52,13 @@ public class InitAccountPO {
 
     public void setGoodsPOS(ArrayList<GoodsPO> goodsPOS) {
         this.goodsPOS = goodsPOS;
+    }
+
+    public ArrayList<ClassificationPO> getClassificationPOS() {
+        return classificationPOS;
+    }
+
+    public void setClassificationPOS(ArrayList<ClassificationPO> classificationPOS) {
+        this.classificationPOS = classificationPOS;
     }
 }

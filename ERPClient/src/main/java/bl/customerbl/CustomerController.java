@@ -18,37 +18,31 @@ public class CustomerController implements CustomerBLService{
 		customer=new Customer();
 	}
 
-	@Override
 	public String getNewCustomerID() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ResultMessage addCustomer(CustomerVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ResultMessage deleteCustomer(String customerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ArrayList<CustomerVO> findCustomerByKeywords(String keywords) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ArrayList<CustomerVO> findCustomerByCustomerID(String customerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ResultMessage updateCustomer(CustomerVO vo) {
 		// TODO Auto-generated method stub
 		return null;

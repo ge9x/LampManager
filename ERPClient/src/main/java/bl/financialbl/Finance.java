@@ -1,10 +1,14 @@
 package bl.financialbl;
 
+import blservice.financeblservice.DocumentDetailsInput;
+import blservice.financeblservice.FinanceBLService;
+import blservice.financeblservice.SalesDetailsInput;
 import dataservice.financedataservice.FinanceDataService;
 import po.BillPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -22,63 +26,75 @@ public class Finance{
 
     private FinanceDataService financeDataService;
 
-    public String getNewReceiptID() throws RemoteException {
+    public String getNewReceiptID() {
         return null;
     }
 
-    public String getNewPaymentID() throws RemoteException {
+    public String getNewPaymentID() {
         return null;
     }
 
-    public String getNewCashBillID() throws RemoteException {
+    public String getNewCashBillID() {
         return null;
     }
 
-    public ResultMessage addBill(BillPO po) throws RemoteException {
+    public String getUserID() {
         return null;
     }
 
-    public ResultMessage deleteBill(BillPO po) throws RemoteException {
+    public ArrayList<CustomerVO> getAllCustomer() {
         return null;
     }
 
-    public ResultMessage updateBill(BillPO po) throws RemoteException {
+    public ArrayList<AccountVO> getAllAccount() {
         return null;
     }
 
-    public ArrayList<BillPO> findBillByType(BillType typpe) throws RemoteException {
+    public ResultMessage submit(AccountBillVO vo) {
         return null;
     }
 
-    public BillPO findBillByID(String ID) throws RemoteException {
+    public ResultMessage submit(CashBillVO vo) {
         return null;
     }
 
-    public ArrayList<BillPO> findBillByState(BillState state) throws RemoteException {
+    public ResultMessage save(AccountBillVO vo) {
         return null;
     }
 
-    public ArrayList<BillPO> show() throws RemoteException {
+    public ResultMessage save(CashBillVO vo) {
         return null;
     }
 
-    public ArrayList<String> getAllIDByType(BillType type) throws RemoteException {
+    public ResultMessage updateDraft(AccountBillVO vo) {
         return null;
     }
 
-    public Date getDate(String ID) throws RemoteException {
+    public ResultMessage updateDraft(CashBillVO vo) {
         return null;
     }
 
-    public String getCustomer(String ID) throws RemoteException {
+    public BillVO findByID(String ID) {
         return null;
     }
 
-    public String getSalesman(String ID) throws RemoteException {
+    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
         return null;
     }
 
-    public String getInventory(String ID) throws RemoteException {
+    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
+        return null;
+    }
+
+    public ResultMessage redCover(BillVO billVO) {
+        return null;
+    }
+
+    public ResultMessage redCoverAndCopy(BillVO billVO) {
+        return null;
+    }
+
+    public ProfitVO getProfit(Date startDate, Date endDate) {
         return null;
     }
 }
