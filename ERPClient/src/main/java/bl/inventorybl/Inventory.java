@@ -3,6 +3,7 @@ package bl.inventorybl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import util.ResultMessage;
 import vo.InventoryBillVO;
@@ -18,6 +19,7 @@ public class Inventory {
 	private InventoryDataService inventoryDataService;
 	private InventoryList inventoryList;
 	private ArrayList<InventoryBill> inventoryBill;
+	private SalesInfo salesInfo;
 	
 	public ArrayList<String> showInventory() {
 		return null;
