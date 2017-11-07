@@ -16,18 +16,16 @@ public class GoodsItemPO {
 	/**单价*/
 	private double price;
 	/**金额*/
-	private double total;
+	private double sum;
 	/**备注*/
 	private String remarks;
 	
-	public GoodsItemPO(String goodsID,String goodsName,String model,int number,double price,
-			double total,String remarks){
-		this.goodsID=goodsID;
+	public GoodsItemPO(String goodsName,int number,double price,
+			String remarks){
 		this.goodsName=goodsName;
-		this.model=model;
 		this.number=number;
 		this.price=price;
-		this.total=total;
+		this.sum=number*price;
 		this.remarks=remarks;
 	}
 
@@ -71,12 +69,12 @@ public class GoodsItemPO {
 		this.price = price;
 	}
 
-	public double getTotal() {
-		return total;
+	public double getSum() {
+		return sum;
 	}
 
-	public void setTotal(double total) {
-		this.total = total;
+	public void setSum(double sum) {
+		this.sum = sum;
 	}
 
 	public String getRemarks() {

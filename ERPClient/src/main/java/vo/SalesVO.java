@@ -17,7 +17,7 @@ public class SalesVO extends BillVO{
 	/**仓库*/
 	public String inventory;
 	/**商品列表*/
-	public GoodsItemVO goodsItem;
+	public ArrayList<GoodsItemVO> goodsItemList;
 	/**折让前总额*/
 	public double beforeSum;
 	/**折让*/
@@ -31,9 +31,8 @@ public class SalesVO extends BillVO{
 	
 	
 	public SalesVO( BillType type, BillState state, String billID, String customer, String salesman,
-			String user, String inventory, GoodsItemVO goodsItem, double beforeSum, double allowance,
-			double voucher, double afterSum, String remarks, Date endDate) {
-		super();
+			String user, String inventory, ArrayList<GoodsItemVO> goodsItemList, double allowance,
+			double voucher, String remarks, Date endDate) {
 		this.type = type;
 		this.state = state;
 		ID = billID;
@@ -41,15 +40,30 @@ public class SalesVO extends BillVO{
 		this.salesman = salesman;
 		this.user = user;
 		this.inventory = inventory;
-		this.goodsItem = goodsItem;
-		this.beforeSum = beforeSum;
+		this.goodsItemList = goodsItemList;
+		this.beforeSum = calBeforeSum();
 		this.allowance = allowance;
 		this.voucher = voucher;
-		this.afterSum = afterSum;
+		this.afterSum = calAfterSum();
 		this.remarks = remarks;
 		this.date = endDate;
 	}
 	
+	private double calBeforeSum(){
+		double sum=0;
+		for(int i=0;i<goodsItemList.size();i++){
+			sum+=goodsItemList.get(i).sum;
+		}
+		return sum;
+	}
 	
+	private double calAfterSum(){
+		double sum=0;
+		for(int i=0;i<goodsItemList.size();i++){
+			sum+=goodsItemList.get(i).sum;
+		}
+		sum=sum-allowance-voucher;
+		return sum;
+	}
 	
 }
