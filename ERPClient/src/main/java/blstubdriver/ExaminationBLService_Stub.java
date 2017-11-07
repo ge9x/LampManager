@@ -10,13 +10,12 @@ import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 import vo.BillVO;
-import vo.ExaminationVO;
 
 public class ExaminationBLService_Stub implements ExaminationBLService{
 
-	public ArrayList<ExaminationVO> show() {
+	public ArrayList<BillVO> show() {
 		// TODO Auto-generated method stub
-		ArrayList<ExaminationVO> billList = new ArrayList<ExaminationVO>();
+		ArrayList<BillVO> billList = new ArrayList<BillVO>();
 		return billList;
 	}
 

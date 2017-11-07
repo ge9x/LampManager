@@ -1,6 +1,8 @@
 package blstubdriver;
 
+import blservice.financeblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
+import blservice.financeblservice.SalesDetailsInput;
 import util.*;
 import vo.*;
 
@@ -178,11 +180,11 @@ public class FinanceBLService_Stub implements FinanceBLService {
         }
     }
 
-    public ArrayList<SalesDetailVO> getSalesDetails(Date startDate, Date endDate, String goodName, String customerName, String salesman, String inventory) {
+    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
         return salesDetailVOS;
     }
 
-    public ArrayList<BillVO> getDocumentDetails(Date startDate, Date endDate, BillType billType, String customerName, String salesman, String inventory) {
+    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
         return billVOS;
     }
 

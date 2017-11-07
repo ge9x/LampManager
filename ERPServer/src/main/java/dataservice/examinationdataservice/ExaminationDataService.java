@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import po.ExaminationPO;
+import po.BillPO;
 import util.ResultMessage;
 
 /** 
@@ -13,14 +13,16 @@ import util.ResultMessage;
 public interface ExaminationDataService {
 	
 	/**
-     * 按审批时间段查找返回相应的ExaminationPO结果
+     * 按审批时间段查找返回相应的BillVO结果
      * 
      * @param startEnd, endDate
-     * @return ArrayList<ExaminationPO>
+     * @return ArrayList<BillPO>
      */
-	public ArrayList<ExaminationPO> finds(Date startDate, Date endDate) throws RemoteException;
+	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
 	
-	public ResultMessage add(ExaminationPO po) throws RemoteException;
+	public BillPO find(String ID) throws RemoteException;
+	
+	public ResultMessage add(BillPO po) throws RemoteException;
 	
 	public void init() throws RemoteException;
 }

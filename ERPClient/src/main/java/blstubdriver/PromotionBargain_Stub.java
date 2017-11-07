@@ -3,12 +3,12 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionbargain.PromotionBargain;
+import blservice.promotionbargain.PromotionBargainBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
-public class PromotionBargain_Stub implements PromotionBargain{
+public class PromotionBargain_Stub implements PromotionBargainBLService{
 
 	public ArrayList<PromotionBargainVO> show() {
 		// TODO Auto-generated method stub

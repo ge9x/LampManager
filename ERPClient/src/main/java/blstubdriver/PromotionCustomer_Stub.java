@@ -3,13 +3,13 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotioncustomer.PromotionCustomer;
+import blservice.promotioncustomer.PromotionCustomerBLService;
 import util.Level;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
 
-public class PromotionCustomer_Stub implements PromotionCustomer{
+public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 
 	public ArrayList<PromotionCustomerVO> show() {
 		// TODO Auto-generated method stub
@@ -66,6 +66,13 @@ public class PromotionCustomer_Stub implements PromotionCustomer{
 			System.out.println("Set time error!");
 			return ResultMessage.FAILED;
 		}
+	}
+
+	public void setCustomer(Level level) {
+		// TODO Auto-generated method stub
+		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		promotion.level = level;
+		System.out.println("Set customer level success!");
 	}
 
 }
