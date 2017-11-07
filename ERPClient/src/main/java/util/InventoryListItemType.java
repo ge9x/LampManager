@@ -6,7 +6,7 @@ package util;
  * @author 巽
  *
  */
-public enum InventoryViewItemType {
+public enum InventoryListItemType {
 	IN("入库"),
 	OUT("出库"),
 	PURCHASE("进货"),
@@ -14,7 +14,7 @@ public enum InventoryViewItemType {
 
 	String value;
 	
-	InventoryViewItemType(String value){
+	InventoryListItemType(String value){
 		this.value = value;
 	}
 	
