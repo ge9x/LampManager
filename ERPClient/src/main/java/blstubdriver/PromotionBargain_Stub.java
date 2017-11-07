@@ -71,4 +71,16 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 		}
 	}
 
+	public PromotionBargainVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionBargainVO promotion = new PromotionBargainVO("000001", 1000, 900, new Date(), new Date(), new ArrayList<GoodsVO>());
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
+		}
+	}
+
 }

@@ -51,4 +51,9 @@ public class PromotionTotalController implements PromotionTotalBLService{
 		return null;
 	}
 
+	public PromotionTotalVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
