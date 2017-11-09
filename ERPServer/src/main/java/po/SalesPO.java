@@ -12,14 +12,8 @@ import util.UserPosition;
  * created by zlk on 2017/10/20
  */
 
-public class SalesPO {
+public class SalesPO extends BillPO{
 	
-	/**单据类型*/
-	private BillType type;
-	/**单据状态*/
-	private BillState state;
-	/**单据编号*/
-	private String ID;
 	/**客户*/
 	private String customer;
 	/**业务员*/
@@ -29,7 +23,7 @@ public class SalesPO {
 	/**仓库*/
 	private String inventory;
 	/**商品列表*/
-	private GoodsItemPO goodsItem;
+	private ArrayList<GoodsItemPO> goodsItemList;
 	/**折让前总额*/
 	private double beforeSum;
 	/**折让*/
@@ -40,59 +34,39 @@ public class SalesPO {
 	private double afterSum;
 	/**备注*/
 	private String remarks;
-	/**单据最后修改时间*/
-	private Date date;
 	
 	
-	public SalesPO( BillType type, BillState state, String iD, String customer, String salesman,
-			String user, String inventory,GoodsItemPO goodsItem, double beforeSum,
-			double allowance, double voucher, double afterSum, String remarks, Date endDate) {
-		super();
-		this.type = type;
-		this.state = state;
-		ID = iD;
+	public SalesPO( BillType type, BillState state, String ID, String customer, String salesman,
+			String user, String inventory,ArrayList<GoodsItemPO> goodsItemList,
+			double allowance, double voucher, String remarks, Date endDate) {
+		super(ID, endDate, type, state);
 		this.customer = customer;
 		this.salesman = salesman;
 		this.user = user;
 		this.inventory = inventory;
-		this.goodsItem = goodsItem;
-		this.beforeSum = beforeSum;
+		this.goodsItemList = goodsItemList;
+		this.beforeSum = calBeforeSum();
 		this.allowance = allowance;
 		this.voucher = voucher;
-		this.afterSum = afterSum;
+		this.afterSum = calAfterSum();
 		this.remarks = remarks;
-		this.date = endDate;
 	}
-
-
-
-	public BillType getType() {
-		return type;
+	
+	private double calBeforeSum(){
+		double sum=0;
+		for(int i=0;i<goodsItemList.size();i++){
+			sum+=goodsItemList.get(i).getSum();
+		}
+		return sum;
 	}
-
-
-	public void setType(BillType type) {
-		this.type = type;
-	}
-
-
-	public BillState getState() {
-		return state;
-	}
-
-
-	public void setState(BillState state) {
-		this.state = state;
-	}
-
-
-	public String getID() {
-		return ID;
-	}
-
-
-	public void setID(String iD) {
-		ID = iD;
+	
+	private double calAfterSum(){
+		double sum=0;
+		for(int i=0;i<goodsItemList.size();i++){
+			sum+=goodsItemList.get(i).getSum();
+		}
+		sum=sum-allowance-voucher;
+		return sum;
 	}
 
 
@@ -136,13 +110,13 @@ public class SalesPO {
 	}
 
 
-	public GoodsItemPO getGoodsItem() {
-		return goodsItem;
+	public ArrayList<GoodsItemPO> getGoodsItemList() {
+		return goodsItemList;
 	}
 
 
-	public void setGoodsItem(GoodsItemPO goodsItem) {
-		this.goodsItem = goodsItem;
+	public void setGoodsItemList(ArrayList<GoodsItemPO> goodsItemList) {
+		this.goodsItemList = goodsItemList;
 	}
 
 
@@ -195,16 +169,5 @@ public class SalesPO {
 		this.remarks = remarks;
 	}
 
-
-	public Date getDate() {
-		return date;
-	}
-
-
-	public void setDate(Date endDate) {
-		this.date = endDate;
-	}
-	
-	
 	
 }

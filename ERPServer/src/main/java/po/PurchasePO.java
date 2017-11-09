@@ -7,13 +7,7 @@ import util.BillState;
 import util.BillType;
 import util.UserPosition;
 
-public class PurchasePO {
-	/**单据类型*/
-	private BillType type;
-	/**单据状态*/
-	private BillState state;
-	/**单据编号*/
-	private String ID;
+public class PurchasePO extends BillPO{
 	/**供应商*/
 	private String supplier;
 	/**仓库*/
@@ -21,51 +15,31 @@ public class PurchasePO {
 	/**操作员*/
 	private String user;
 	/**商品列表*/
-	private GoodsItemPO goodsItem;
+	private ArrayList<GoodsItemPO> goodsItemList;
 	/**备注*/
 	private String remarks;
 	/**总额合计*/
 	private double sum;
-	/**单据最后修改时间*/
-	private Date date;
+	
 	
 	public PurchasePO(BillType type,BillState state,String ID,String supplier
-			,String inventory,String user,GoodsItemPO goodsItem,String remarks
-			,double sum,Date endDate){
-		this.type=type;
-		this.state=state;
-		this.ID=ID;
+			,String inventory,String user,ArrayList<GoodsItemPO> goodsItemList,String remarks
+			,Date endDate){
+		super(ID, endDate, type, state);
 		this.supplier=supplier;
 		this.inventory=inventory;
 		this.user=user;
-		this.goodsItem=goodsItem;
-		this.sum=sum;
+		this.goodsItemList=goodsItemList;
+		this.sum=calSum();
 		this.remarks=remarks;
-		this.date=endDate;
 	}
-/**
-	public BillType getType() {
-		return type;
-	}
-
-	public void setType(BillType type) {
-		this.type = type;
-	}
-*/
-	public BillState getState() {
-		return state;
-	}
-
-	public void setState(BillState state) {
-		this.state = state;
-	}
-
-	public String getID() {
-		return ID;
-	}
-
-	public void setID(String iD) {
-		ID = iD;
+	
+	private double calSum(){
+		double sum=0;
+		for(int i=0;i<goodsItemList.size();i++){
+			sum+=goodsItemList.get(i).getSum();
+		}
+		return sum;
 	}
 
 	public String getSupplier() {
@@ -92,12 +66,12 @@ public class PurchasePO {
 		this.user = user;
 	}
 
-	public GoodsItemPO getGoodsItem() {
-		return goodsItem;
+	public ArrayList<GoodsItemPO> getGoodsItemList() {
+		return goodsItemList;
 	}
 
-	public void setGoodsItem(GoodsItemPO goodsItem) {
-		this.goodsItem = goodsItem;
+	public void setGoodsItemList(ArrayList<GoodsItemPO> goodsItemList) {
+		this.goodsItemList = goodsItemList;
 	}
 
 	public String getRemarks() {
@@ -115,13 +89,6 @@ public class PurchasePO {
 	public void setSum(double sum) {
 		this.sum = sum;
 	}
-	
-	public Date getDate() {
-		return date;
-	}
 
-	public void setDate(Date endDate) {
-		this.date = endDate;
-	}
 	
 }

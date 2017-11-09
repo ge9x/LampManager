@@ -1,5 +1,6 @@
 package bl.userbl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import blservice.userblservice.UserBLService;
@@ -36,6 +37,16 @@ public class UserController implements UserBLService, UserInfo{
 	}
 
 	public HashMap<String, String> getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<UserVO> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public UserVO findUserByID(String UserID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

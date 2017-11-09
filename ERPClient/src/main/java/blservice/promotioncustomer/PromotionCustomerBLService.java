@@ -68,4 +68,6 @@ public interface PromotionCustomerBLService {
      * @return ResultMessage
      */
 	public ResultMessage submit(PromotionCustomerVO vo);
+	
+	public PromotionCustomerVO findPromotionByID(String promotionID);
 }

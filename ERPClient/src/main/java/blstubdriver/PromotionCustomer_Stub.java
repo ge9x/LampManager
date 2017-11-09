@@ -75,4 +75,16 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		System.out.println("Set customer level success!");
 	}
 
+	public PromotionCustomerVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
+		}
+	}
+
 }
