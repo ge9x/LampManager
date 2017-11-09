@@ -1,4 +1,4 @@
-package blservice.promotioncustomer;
+package blservice.promotionblservice.promotioncustomer;
 
 import java.util.ArrayList;
 import java.util.Date;

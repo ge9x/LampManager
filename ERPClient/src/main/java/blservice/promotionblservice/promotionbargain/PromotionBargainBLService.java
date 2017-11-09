@@ -1,39 +1,32 @@
-package blservice.promotionTotal;
+package blservice.promotionblservice.promotionbargain;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.ResultMessage;
 import vo.GoodsVO;
-import vo.PromotionTotalVO;
+import vo.PromotionBargainVO;
 
 /** 
  * Created by Aster on 2017/10/20
  */
-public interface PromotionTotalBLService {
+public interface PromotionBargainBLService {
 	/**
-     * 显示所有总价促销策略
+     * 显示所有特价包策略
      * 
-     * @return ArrayList<PromotionCustomerVO>
+     * @return ArrayList<PromotionBargainVO>
      */
-	public ArrayList<PromotionTotalVO> show();
+	public ArrayList<PromotionBargainVO> show();
 	
 	/**
-     * 添加赠品到促销策略中
+     * 添加商品到特价包中
      * 
      * @param GoodsVO
      */
-	public void addGift(GoodsVO vo);
+	public void addBargain(GoodsVO vo);
 	
 	/**
-     * 添加代金券到促销策略中
-     * 
-     * @param price
-     */
-	public void addVoucher(double price);
-	
-	/**
-     * 设置促销策略的目标总价
+     * 设置特价包价格
      * 
      * @param price
      */
@@ -59,7 +52,7 @@ public interface PromotionTotalBLService {
      * @param PromotionCustomerVO
      * @return ResultMessage
      */
-	public ResultMessage submit(PromotionTotalVO vo);
+	public ResultMessage submit(PromotionBargainVO vo);
 	
-	public PromotionTotalVO findPromotionByID(String promotionID);
+	public PromotionBargainVO findPromotionByID(String promotionID);
 }

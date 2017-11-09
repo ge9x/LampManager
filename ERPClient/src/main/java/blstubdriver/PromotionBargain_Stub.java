@@ -3,7 +3,7 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionbargain.PromotionBargainBLService;
+import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
