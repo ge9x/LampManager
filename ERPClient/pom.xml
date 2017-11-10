@@ -12,9 +12,11 @@
   <artifactId>ERPClient</artifactId>
   <name>ERPClient</name>
   <url>http://maven.apache.org</url>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -26,6 +28,11 @@
           <groupId>edu.nju.erp</groupId>
           <artifactId>ERPServer</artifactId>
           <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>com.jfoenix</groupId>
+          <artifactId>jfoenix</artifactId>
+          <version>1.10.0</version>
       </dependency>
   </dependencies>
 </project>
