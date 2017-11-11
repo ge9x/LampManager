@@ -49,7 +49,7 @@
                </image>
             </ImageView>
             <Label fx:id="userIcon" layoutX="334.0" layoutY="207.0" prefHeight="14.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
-            <Label fx:id="passwordIcon" layoutX="335.0" layoutY="309.0" prefHeight="15.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
+            <Label fx:id="passwordIcon"  layoutX="335.0" layoutY="309.0" prefHeight="15.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
          </children>
       </AnchorPane>
    </children>
