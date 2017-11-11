@@ -73,11 +73,13 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
         InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
-        GoodsItemVO gi2=new GoodsItemVO("000002", "挂灯", "xxdd", 10, 35.0, 350,
+        GoodsItemVO gi2=new GoodsItemVO("挂灯", 10, 35.0,
                 "好看");
+        ArrayList<GoodsItemVO> goodsItemVOS = new ArrayList<GoodsItemVO>();
+        goodsItemVOS.add(gi2);
         PurchaseVO billVO5=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-                ,"默认仓库","操作员1",gi2,"好看"
-                ,700.0,new Date());
+                ,"默认仓库","操作员1",goodsItemVOS,"好看"
+                ,new Date());
 
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
                 200,400,900,9500,5000,
