@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="826.0" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.LoginViewController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="413.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/login.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="413.0" prefHeight="500.0" prefWidth="413.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <JFXButton layoutX="74.0" layoutY="370.0" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="登  录" textFill="WHITE">
+               <font>
+                  <Font name="Microsoft YaHei" size="17.0" />
+               </font>
+            </JFXButton>
+            <Label layoutX="74.0" layoutY="172.0" text="用户名" textFill="#95989a">
+               <font>
+                  <Font name="Microsoft YaHei" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="271.0" text="密码" textFill="#95989a">
+               <font>
+                  <Font name="Microsoft YaHei" size="15.0" />
+               </font>
+            </Label>
+            <PasswordField layoutX="74.0" layoutY="299.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
+               <font>
+                  <Font name="Microsoft YaHei" size="13.0" />
+               </font>
+            </PasswordField>
+            <TextField layoutX="74.0" layoutY="199.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
+               <font>
+                  <Font name="Microsoft YaHei" size="13.0" />
+               </font>
+            </TextField>
+            <ImageView fitHeight="84.0" fitWidth="79.0" layoutX="167.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/logo.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="userIcon" layoutX="334.0" layoutY="207.0" prefHeight="14.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
+            <Label fx:id="passwordIcon"  layoutX="335.0" layoutY="309.0" prefHeight="15.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
