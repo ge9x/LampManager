@@ -35,15 +35,15 @@ public class CustomerVO {
 	public String salesman;
 	/**客户积分*/
 	public double points;
-	///**代金券*/
-	//public double voucher;
+	/**代金券*/
+	public double voucher;
 	
 	/**
 	 * 在查看界面时，显示所有可以显示的商品信息
 	 */
 	public CustomerVO(String customerID,CustomerCategory category,Level level,String customerName,
 			String phone,String address,String postCode,String mail,double receivableLimit,double
-			receive,double pay,String salesman,double points){
+			receive,double pay,String salesman,double points,double voucher){
 		this.customerID=customerID;
 		this.category=category;
 		this.level=level;
@@ -57,5 +57,6 @@ public class CustomerVO {
 		this.pay=pay;
 		this.salesman=salesman;
 		this.points=points;
+		this.voucher=voucher;
 	}
 }

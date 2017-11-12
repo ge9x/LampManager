@@ -12,7 +12,7 @@ public class MockCustomer extends Customer{
 	
 	public MockCustomer(){
 		this.exampleCustomerVO=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主爸爸","15545786610",
-				"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0);
+				"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,600);
 	}
 	
 	/**
@@ -55,11 +55,11 @@ public class MockCustomer extends Customer{
 	 */
 	public ArrayList<CustomerVO> findCustomerByKeywords(String keywords){
 		CustomerVO exampleCustomerVO1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545788373",
-					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0);
+					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
 		CustomerVO exampleCustomerVO2=new CustomerVO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商1","15247678373",
-				"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0);
+				"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0,600);
 		CustomerVO exampleCustomerVO3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244356610",
-				"南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0);
+				"南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 		ArrayList<CustomerVO> customerList=new ArrayList<CustomerVO>();
 		customerList.add(exampleCustomerVO1);
 		customerList.add(exampleCustomerVO2);
