@@ -35,6 +35,8 @@ public class CustomerVO {
 	public String salesman;
 	/**客户积分*/
 	public double points;
+	///**代金券*/
+	//public double voucher;
 	
 	/**
 	 * 在查看界面时，显示所有可以显示的商品信息

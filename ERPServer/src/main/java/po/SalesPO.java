@@ -16,6 +16,8 @@ public class SalesPO extends BillPO{
 	
 	/**客户*/
 	private String customer;
+	/**客户ID*/
+	private String customerID;
 	/**业务员*/
 	private String salesman;
 	/**操作员*/
@@ -36,11 +38,12 @@ public class SalesPO extends BillPO{
 	private String remarks;
 	
 	
-	public SalesPO( BillType type, BillState state, String ID, String customer, String salesman,
+	public SalesPO( BillType type, BillState state, String ID, String customer,String customerID, String salesman,
 			String user, String inventory,ArrayList<GoodsItemPO> goodsItemList,
 			double allowance, double voucher, String remarks, Date endDate) {
 		super(ID, endDate, type, state);
 		this.customer = customer;
+		this.customerID=customerID;
 		this.salesman = salesman;
 		this.user = user;
 		this.inventory = inventory;

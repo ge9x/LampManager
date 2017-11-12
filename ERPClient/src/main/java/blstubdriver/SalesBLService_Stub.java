@@ -26,9 +26,9 @@ public class SalesBLService_Stub implements SalesBLService{
 	ArrayList<SalesVO> salesBill=new ArrayList<SalesVO>();
 	ArrayList<GoodsItemVO> goodsItemList=new ArrayList<GoodsItemVO>();
 
-	GoodsItemVO gi1=new GoodsItemVO( "霓虹灯", 20, 35.0,
+	GoodsItemVO gi1=new GoodsItemVO("01", "霓虹灯",null ,20, 35.0,
 			"耐用");
-	GoodsItemVO gi2=new GoodsItemVO( "挂灯", 10, 35.0,
+	GoodsItemVO gi2=new GoodsItemVO("02", "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);
@@ -36,10 +36,10 @@ public class SalesBLService_Stub implements SalesBLService{
 	}
 	{
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
-				,"默认仓库","阿红",goodsItemList,"满足客户需求"
+				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
 			     ,new Date());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-					,"默认仓库","阿明",goodsItemList,"好看"
+					,"00000002","默认仓库","阿明",goodsItemList,"好看"
 					,new Date());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
@@ -47,9 +47,9 @@ public class SalesBLService_Stub implements SalesBLService{
 	
 	{
 		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
 	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+					"阿奇", "000000004","默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

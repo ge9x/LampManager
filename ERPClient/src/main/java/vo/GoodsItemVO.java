@@ -17,9 +17,11 @@ public class GoodsItemVO {
 	public String remarks;
 	
 	
-	public GoodsItemVO( String goodsName, int number, double price,
+	public GoodsItemVO(String ID,String goodsName,String model,int number, double price,
 			String remarks) {
+		this.ID=ID;
 		this.goodsName = goodsName;
+		this.model=model;
 		this.number = number;
 		this.price = price;
 		this.sum = number*price;
