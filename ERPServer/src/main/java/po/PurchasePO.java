@@ -10,6 +10,8 @@ import util.UserPosition;
 public class PurchasePO extends BillPO{
 	/**供应商*/
 	private String supplier;
+	/**供应商ID*/
+	private String customerID;
 	/**仓库*/
 	private String inventory;
 	/**操作员*/
@@ -23,10 +25,11 @@ public class PurchasePO extends BillPO{
 	
 	
 	public PurchasePO(BillType type,BillState state,String ID,String supplier
-			,String inventory,String user,ArrayList<GoodsItemPO> goodsItemList,String remarks
+			,String customerID,String inventory,String user,ArrayList<GoodsItemPO> goodsItemList,String remarks
 			,Date endDate){
 		super(ID, endDate, type, state);
 		this.supplier=supplier;
+		this.customerID=customerID;
 		this.inventory=inventory;
 		this.user=user;
 		this.goodsItemList=goodsItemList;

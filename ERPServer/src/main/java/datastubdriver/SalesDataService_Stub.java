@@ -19,9 +19,9 @@ public class SalesDataService_Stub implements SalesDataService{
 	ArrayList<SalesPO> salesBill=new ArrayList<SalesPO>();
 	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO( "霓虹灯", 20, 35.0,
+	GoodsItemPO gi1=new GoodsItemPO("01", "霓虹灯",null, 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO( "挂灯", 10, 35.0,
+	GoodsItemPO gi2=new GoodsItemPO("02", "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);
@@ -29,10 +29,10 @@ public class SalesDataService_Stub implements SalesDataService{
 	}
 	{
 		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
-				,"默认仓库","阿红",goodsItemList,"满足客户需求"
+				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
 			     ,new Date());
 		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-					,"默认仓库","阿明",goodsItemList,"好看"
+					,"00000002","默认仓库","阿明",goodsItemList,"好看"
 					,new Date());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
@@ -40,9 +40,9 @@ public class SalesDataService_Stub implements SalesDataService{
 	
 	{
 		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+				"阿强", "00000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
 	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+					"阿奇","00000004", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

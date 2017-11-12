@@ -20,9 +20,11 @@ public class GoodsItemPO {
 	/**备注*/
 	private String remarks;
 	
-	public GoodsItemPO(String goodsName,int number,double price,
+	public GoodsItemPO(String goodsID,String goodsName,String model,int number,double price,
 			String remarks){
+		this.goodsID=goodsID;
 		this.goodsName=goodsName;
+		this.model=model;
 		this.number=number;
 		this.price=price;
 		this.sum=number*price;

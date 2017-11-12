@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.promotionblservice.PromotionInfo;
 import util.ResultMessage;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;

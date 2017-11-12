@@ -7,9 +7,9 @@ import vo.GoodsItemVO;
 public class MockGoodsItem {
     ArrayList<GoodsItemVO> goodsItemList=new ArrayList<GoodsItemVO>();
 	
-	GoodsItemVO gi1=new GoodsItemVO( "霓虹灯", 20, 35.0,
+	GoodsItemVO gi1=new GoodsItemVO("01", "霓虹灯",null, 20, 35.0,
 			"耐用");
-	GoodsItemVO gi2=new GoodsItemVO( "挂灯", 10, 35.0,
+	GoodsItemVO gi2=new GoodsItemVO("01", "挂灯","null", 10, 35.0,
 			"好看");
 
 	{
@@ -18,7 +18,7 @@ public class MockGoodsItem {
 	}
 	
     public void addGoodsItem(GoodsItemVO item){
-    	GoodsItemVO gi3=new GoodsItemVO( "台灯", 20, 35.0,
+    	GoodsItemVO gi3=new GoodsItemVO("01", "台灯","null", 20, 35.0,
     			"耐用");
     	goodsItemList.add(gi3);
 	}
