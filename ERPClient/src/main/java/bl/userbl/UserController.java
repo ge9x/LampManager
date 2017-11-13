@@ -50,5 +50,15 @@ public class UserController implements UserBLService, UserInfo{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getCurrentUserID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCurrentUserNameByID(String UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 }
