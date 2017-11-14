@@ -33,12 +33,12 @@
                   <Font name="Microsoft YaHei" size="15.0" />
                </font>
             </Label>
-            <PasswordField layoutX="74.0" layoutY="299.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
+            <PasswordField fx:id="password" layoutX="74.0" layoutY="299.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
                <font>
                   <Font name="Microsoft YaHei" size="13.0" />
                </font>
             </PasswordField>
-            <TextField layoutX="74.0" layoutY="199.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
+            <TextField fx:id="username" layoutX="74.0" layoutY="199.0" prefHeight="35.0" prefWidth="287.0" style="-fx-background-color: #f6f6f6; -fx-border-color: #95989a; -fx-background-radius: 5; -fx-border-radius: 5; -fx-highlight-fill: #1DB1A5;">
                <font>
                   <Font name="Microsoft YaHei" size="13.0" />
                </font>

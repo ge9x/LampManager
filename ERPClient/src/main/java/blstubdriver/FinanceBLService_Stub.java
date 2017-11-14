@@ -23,12 +23,12 @@ public class FinanceBLService_Stub implements FinanceBLService {
     ArrayList<BillVO> billVOS;
 
     public FinanceBLService_Stub(){
-        CustomerVO c1=new CustomerVO("00000001", CustomerCategory.SELLER, Level.LEVEL_FIVE,"金主","15545786610",
-                "南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0);
+        CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
+                "南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
         CustomerVO c2=new CustomerVO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商1","15247678373",
-                "南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0);
+                "南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0,600);
         CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
-                "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0);
+                "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 
         AccountVO vo1 = new AccountVO("工商银行账户1",2000);
         AccountVO vo2 = new AccountVO("工商银行账户2",1000);
@@ -73,12 +73,12 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
         InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
-        GoodsItemVO gi2=new GoodsItemVO("挂灯", 10, 35.0,
-                "好看");
+        GoodsItemVO gi2=new GoodsItemVO("01", "霓虹灯",null ,20, 35.0,
+                "耐用");
         ArrayList<GoodsItemVO> goodsItemVOS = new ArrayList<GoodsItemVO>();
         goodsItemVOS.add(gi2);
-        PurchaseVO billVO5=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-                ,"默认仓库","操作员1",goodsItemVOS,"好看"
+        PurchaseVO billVO5=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
+                ,"00000001","默认仓库","阿红",goodsItemVOS,"满足客户需求"
                 ,new Date());
 
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
