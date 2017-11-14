@@ -23,9 +23,15 @@ public interface GoodsInfo {
 	 */
 	public ArrayList<GoodsIdentityVO> getAllGoodsIdentity();
 	/**
-	 * 根据商品ID得到商品的进价和销售价
+	 * 根据商品ID得到商品的进价
 	 * @param ID 商品ID
-	 * @return 包含商品进价和销售价的哈希表：HashMap<进价，销售价>
+	 * @return 商品进价
 	 */
-	public HashMap<Double, Double> getBuyingPriceAndRetailPriceByID(String ID);
+	public Double getBuyingPriceByID(String ID);
+	/**
+	 * 根据商品ID得到商品的销售价
+	 * @param ID 商品ID
+	 * @return 商品销售价
+	 */
+	public Double getRetailPriceByID(String ID);
 }
