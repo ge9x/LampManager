@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
 <AnchorPane prefHeight="1095.0" prefWidth="268.0" style="-fx-background-color: #272727;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialNavbarController">
-
+   <children>
+      <JFXListView layoutX="10.0" layoutY="400.0" />
+   </children>
 </AnchorPane>

@@ -36,7 +36,7 @@ public class LoginViewController {
         this.mainUIController = mainUIController;
     }
     public void login(){
-        ResultMessage re = userBLService.login(username.getText(),password.getText();
+        ResultMessage re = userBLService.login(username.getText(),password.getText());
         if (re == ResultMessage.SUCCESS){
             mainUIController.showFinancialStaffView();
         }
