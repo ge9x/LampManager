@@ -33,9 +33,9 @@ public class FinanceDataService_Stub implements FinanceDataService {
      */
     ArrayList<SalesPO> salesPOS = new ArrayList<SalesPO>();
 
-    GoodsItemPO gi1=new GoodsItemPO("霓虹灯", 20, 35.0,
+    GoodsItemPO gi1=new GoodsItemPO("01", "霓虹灯",null, 20, 35.0,
             "耐用");
-    GoodsItemPO gi2=new GoodsItemPO("挂灯",  10, 35.0,
+    GoodsItemPO gi2=new GoodsItemPO("02", "挂灯",null, 10, 35.0,
             "好看");
     ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
     {
@@ -43,9 +43,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
         goodsItemList.add(gi2);
     }
     SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-            "阿强", "默认仓库",goodsItemList , 5000, 100, "满足客户需求", new Date());
-    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-            "阿奇", "默认仓库",goodsItemList , 5000, 100, "满足客户需求", new Date());
+            "阿强", "00000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
 
     /**
      * 财务单据集
@@ -71,7 +69,6 @@ public class FinanceDataService_Stub implements FinanceDataService {
         inventoryBillPOS.add(po5);
 
         salesPOS.add(s1);
-        salesPOS.add(s2);
 
         accountBillItemPOS.add(itemPO1);
         accountBillItemPOS.add(itemPO2);
