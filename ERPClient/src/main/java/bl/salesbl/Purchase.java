@@ -36,11 +36,11 @@ public class Purchase {
 		return null;
 	}
 	
-	public ResultMessage addPurchase(PurchaseVO po) {
+	public ResultMessage addPurchase(PurchaseVO vo) {
 		return null;
 	}
 	
-	public ResultMessage updatePurchase(PurchaseVO po) {
+	public ResultMessage updatePurchase(PurchaseVO vo) {
 		return null;
 	}
 		

@@ -44,4 +44,11 @@ public class MockUser extends User{
 		}
 	}
 	
+	@Override
+	public UserVO findUserByID(String UserID){
+		if(financialStaff.userID.equals(UserID)){
+			return financialStaff;
+		}
+		return null;
+	}
 }
