@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import blservice.goodsblservice.GoodsBLService;
 import blservice.goodsblservice.GoodsInfo;
 import util.ResultMessage;
+import vo.GoodsIdentityVO;
 import vo.GoodsVO;
 
 /**
@@ -49,6 +50,18 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public ArrayList<GoodsVO> getAllGoods() {
+		return null;
+	}
+
+	public ArrayList<GoodsIdentityVO> getAllGoodsIdentity() {
+		return null;
+	}
+
+	public Double getBuyingPriceByID(String ID) {
+		return null;
+	}
+
+	public Double getRetailPriceByID(String ID) {
 		return null;
 	}
 

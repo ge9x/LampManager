@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import blservice.classificationblservice.ClassificationInfo;
 import dataservice.goodsdataservice.GoodsDataService;
 import util.ResultMessage;
+import vo.GoodsIdentityVO;
 import vo.GoodsVO;
 
 /**
@@ -42,6 +43,18 @@ public class Goods {
 	}
 
 	public String getNewID() {
+		return null;
+	}
+	
+	public ArrayList<GoodsIdentityVO> getAllGoodsIdentity() {
+		return null;
+	}
+
+	public Double getBuyingPriceByID(String ID) {
+		return null;
+	}
+
+	public Double getRetailPriceByID(String ID) {
 		return null;
 	}
 }
