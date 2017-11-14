@@ -38,4 +38,12 @@ public interface UserBLService {
      * @return ResultMessage
      */
 	public ResultMessage modifyUser(UserVO vo);
+	
+	/**
+     * 根据用户ID查找相应用户
+     * 
+     * @param userID
+     * @return userVO
+     */
+	public UserVO findUserByID(String UserID);
 }

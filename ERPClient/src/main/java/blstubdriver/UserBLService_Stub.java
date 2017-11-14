@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import blservice.userblservice.UserBLService;
 import util.ResultMessage;
+import util.UserLimits;
+import util.UserPosition;
 import vo.UserVO;
 
 public class UserBLService_Stub implements UserBLService{
@@ -55,6 +57,14 @@ public class UserBLService_Stub implements UserBLService{
 			System.out.println("User doesn't exist!");
 			return ResultMessage.NOT_EXIST;
 		}
+	}
+
+	public UserVO findUserByID(String UserID) {
+		// TODO Auto-generated method stub
+		if(UserID.equals("test")){
+			return new UserVO("test", "123456", "test", UserPosition.ADMIN, UserLimits.STAFF);
+		}
+		return null;
 	}
 
 }
