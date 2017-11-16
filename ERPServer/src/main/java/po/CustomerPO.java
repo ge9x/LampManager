@@ -31,11 +31,13 @@ public class CustomerPO {
 	private String salesman;
 	/**客户积分*/
 	private double points;
+	/**代金券*/
+	private double voucher;
 	
 	
 	public CustomerPO(String customerID, CustomerCategory category, Level level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
-			String salesman, double points) {
+			String salesman, double points,double voucher) {
 		super();
 		this.customerID = customerID;
 		this.category = category;
@@ -50,6 +52,7 @@ public class CustomerPO {
 		this.pay = pay;
 		this.salesman = salesman;
 		this.points = points;
+		this.voucher=voucher;
 	}
 
 
@@ -181,7 +184,17 @@ public class CustomerPO {
 	public void setPoints(double points) {
 		this.points = points;
 	}
-	
-	
+
+
+	public double getVoucher() {
+		return voucher;
+	}
+
+
+	public void setVoucher(double voucher) {
+		this.voucher = voucher;
+	}
+
+
 	
 }

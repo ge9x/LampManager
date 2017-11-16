@@ -13,5 +13,5 @@ public class FinanceBill {
     public ResultMessage addAccountBill(){
         return null;
     }
-
+    public ResultMessage addCashBill(){return null;}
 }

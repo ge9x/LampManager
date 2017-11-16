@@ -3,7 +3,7 @@ package bl.promotionbl;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotioncustomer.PromotionCustomerBLService;
+import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import util.Level;
 import util.ResultMessage;
 import vo.GoodsVO;
@@ -53,6 +53,11 @@ public class PromotionCustomerController implements PromotionCustomerBLService{
 	}
 
 	public ResultMessage submit(PromotionCustomerVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PromotionCustomerVO findPromotionByID(String promotionID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

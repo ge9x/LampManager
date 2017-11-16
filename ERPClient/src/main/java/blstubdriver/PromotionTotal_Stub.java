@@ -3,7 +3,7 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionTotal.PromotionTotalBLService;
+import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionTotalVO;
@@ -64,6 +64,18 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 		else{
 			System.out.println("Set time error!");
 			return ResultMessage.FAILED;
+		}
+	}
+
+	public PromotionTotalVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionTotalVO promotion = new PromotionTotalVO("000005", new Date(), new Date(), 500, new ArrayList<GoodsVO>(), 10000);
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
 		}
 	}
 

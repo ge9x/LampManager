@@ -1,7 +1,9 @@
 package blservice.goodsblservice;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import vo.GoodsIdentityVO;
 import vo.GoodsVO;
 
 /**
@@ -15,4 +17,21 @@ public interface GoodsInfo {
 	 * @return 包含所有商品的VO的链表
 	 */
 	public ArrayList<GoodsVO> getAllGoods();
+	/**
+	 * 得到所有商品的ID、名称和型号
+	 * @return 包含所有商品的ID、名称和型号的VO的链表
+	 */
+	public ArrayList<GoodsIdentityVO> getAllGoodsIdentity();
+	/**
+	 * 根据商品ID得到商品的进价
+	 * @param ID 商品ID
+	 * @return 商品进价
+	 */
+	public Double getBuyingPriceByID(String ID);
+	/**
+	 * 根据商品ID得到商品的销售价
+	 * @param ID 商品ID
+	 * @return 商品销售价
+	 */
+	public Double getRetailPriceByID(String ID);
 }

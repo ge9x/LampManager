@@ -3,7 +3,7 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotioncustomer.PromotionCustomerBLService;
+import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import util.Level;
 import util.ResultMessage;
 import vo.GoodsVO;
@@ -73,6 +73,18 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
 		promotion.level = level;
 		System.out.println("Set customer level success!");
+	}
+
+	public PromotionCustomerVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
+		}
 	}
 
 }

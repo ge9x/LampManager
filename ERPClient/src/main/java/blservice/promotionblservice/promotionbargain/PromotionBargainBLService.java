@@ -1,4 +1,4 @@
-package blservice.promotionbargain;
+package blservice.promotionblservice.promotionbargain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,4 +53,6 @@ public interface PromotionBargainBLService {
      * @return ResultMessage
      */
 	public ResultMessage submit(PromotionBargainVO vo);
+	
+	public PromotionBargainVO findPromotionByID(String promotionID);
 }

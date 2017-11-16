@@ -3,7 +3,7 @@ package bl.promotionbl;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionTotal.PromotionTotalBLService;
+import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionTotalVO;
@@ -47,6 +47,11 @@ public class PromotionTotalController implements PromotionTotalBLService{
 	}
 
 	public ResultMessage submit(PromotionTotalVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public PromotionTotalVO findPromotionByID(String promotionID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

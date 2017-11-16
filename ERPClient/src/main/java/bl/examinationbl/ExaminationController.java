@@ -34,4 +34,9 @@ public class ExaminationController implements ExaminationBLService{
 		return null;
 	}
 
+	public ArrayList<BillVO> showHistory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

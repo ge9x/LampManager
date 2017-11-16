@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import po.PurchasePO;
 import po.SalesPO;
+import util.BillState;
 import util.ResultMessage;
 
 /**
@@ -19,7 +20,15 @@ public interface SalesDataService {
 	 * @return 查找到的进货单据
 	 * @author zlk
 	 */
-	public PurchasePO findPurchase(String ID) throws RemoteException;
+	public PurchasePO findPurchaseByID(String ID) throws RemoteException;
+	/**
+	 * 通过单据状态查找进货单据
+	 * 
+	 * @param ID
+	 * @return 查找到的进货单据
+	 * @author zlk
+	 */
+	public PurchasePO findPurchaseByState(BillState state) throws RemoteException;
 	/**
 	 * 通过单据编号查找销售单据
 	 * 
@@ -27,7 +36,15 @@ public interface SalesDataService {
 	 * @return 查找到的销售单据
 	 * @author zlk
 	 */
-	public SalesPO findSlaes(String ID) throws RemoteException;
+	public SalesPO findSlaesByID(String ID) throws RemoteException;
+	/**
+	 * 通过单据编号查找销售单据
+	 * 
+	 * @param ID
+	 * @return 查找到的销售单据
+	 * @author zlk
+	 */
+	public SalesPO findSlaesByState(BillState state) throws RemoteException;
 	/**
 	 * 添加进货单据
 	 * 
@@ -67,7 +84,7 @@ public interface SalesDataService {
 	 * @return 是否成功删除进货单据
 	 * @author zlk
 	 */
-	public ResultMessage deletePurchase(PurchasePO po) throws RemoteException;
+	public ResultMessage deletePurchase(String ID) throws RemoteException;
 	/**
 	 * 删除销售单据
 	 * 
@@ -75,7 +92,7 @@ public interface SalesDataService {
 	 * @return 是否成功删除销售单据
 	 * @author zlk
 	 */
-	public ResultMessage deleteSales(SalesPO po) throws RemoteException;
+	public ResultMessage deleteSales(String ID) throws RemoteException;
 	/**
 	 * 初始化持久化数据库
 	 * 

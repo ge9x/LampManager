@@ -3,7 +3,7 @@ package blstubdriver;
 import java.util.ArrayList;
 import java.util.Date;
 
-import blservice.promotionbargain.PromotionBargainBLService;
+import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
@@ -68,6 +68,18 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 				System.out.println("Set time error!");
 			}
 			return ResultMessage.FAILED;
+		}
+	}
+
+	public PromotionBargainVO findPromotionByID(String promotionID) {
+		// TODO Auto-generated method stub
+		PromotionBargainVO promotion = new PromotionBargainVO("000001", 1000, 900, new Date(), new Date(), new ArrayList<GoodsVO>());
+		if(promotion.promotionID.equals(promotionID)){
+			return promotion;
+		}
+		else{
+			System.out.println("Can't find promotion!");
+			return null;
 		}
 	}
 

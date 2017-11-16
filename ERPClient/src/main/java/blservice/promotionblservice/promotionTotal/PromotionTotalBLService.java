@@ -1,4 +1,4 @@
-package blservice.promotionTotal;
+package blservice.promotionblservice.promotionTotal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,4 +60,6 @@ public interface PromotionTotalBLService {
      * @return ResultMessage
      */
 	public ResultMessage submit(PromotionTotalVO vo);
+	
+	public PromotionTotalVO findPromotionByID(String promotionID);
 }

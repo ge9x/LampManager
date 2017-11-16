@@ -1,5 +1,6 @@
 package bl.customerbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.customerdataservice.CustomerDataService;
@@ -37,7 +38,7 @@ public class Customer {
 	 * @return 处理信息
 	 * @author zlk
 	 */
-	public ResultMessage addCustomer(CustomerVO vo){
+	public ResultMessage addCustomer(CustomerVO vo) {
 		return null;
 		
 	}
@@ -70,7 +71,7 @@ public class Customer {
 	 * @return 满足条件的客户
 	 * @author zlk
 	 */
-	public ArrayList<CustomerVO> findCustomerByCustomerID(String customerID){
+	public ArrayList<CustomerVO> findCustomerByCustomerID(String customerID) {
 		return null;
 		
 	}

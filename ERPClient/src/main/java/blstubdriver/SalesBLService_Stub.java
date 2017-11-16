@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.salesblservice.SalesBLService;
+import po.GoodsItemPO;
+import po.PurchasePO;
+import po.SalesPO;
 import util.PromotionType;
 import util.ResultMessage;
 import util.UserPosition;
@@ -23,34 +26,32 @@ public class SalesBLService_Stub implements SalesBLService{
 	ArrayList<SalesVO> salesBill=new ArrayList<SalesVO>();
 	ArrayList<GoodsItemVO> goodsItemList=new ArrayList<GoodsItemVO>();
 
-	GoodsItemVO gi1=new GoodsItemVO("000001", "霓虹灯", "大", 20, 35.0, 700,
+	GoodsItemVO gi1=new GoodsItemVO("01", "霓虹灯",null ,20, 35.0,
 			"耐用");
-	GoodsItemVO gi2=new GoodsItemVO("000002", "挂灯", "xxdd", 10, 35.0, 350,
+	GoodsItemVO gi2=new GoodsItemVO("02", "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
 	}
 	{
-		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.SUBMITTED,"JHD-20171022-00001","供应商1"
-				,"默认仓库","大傻",gi1,"光照强"
-				,700.0,new Date());
+		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
+				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
+			     ,new Date());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-				,"默认仓库","二傻",gi2,"好看"
-				,700.0,new Date());
+					,"00000002","默认仓库","阿明",goodsItemList,"好看"
+					,new Date());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
 	
 	{
 		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-			"三傻", "默认仓库",gi1 , 5000, 100,
-			500, 4400, "满足客户需求", new Date());
-		SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-				"龙母", "默认仓库",gi2 , 5000, 100,
-				500, 4400, "满足客户需求", new Date());
-		salesBill.add(s1);
-		salesBill.add(s2);
+				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
+					"阿奇", "000000004","默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+	    salesBill.add(s1);
+	    salesBill.add(s2);
 	}
 
 	public String getnewPurchaseID() {

@@ -1,7 +1,7 @@
 package vo;
 
 public class GoodsItemVO {
-     /**商品编号*/
+	/**编号*/
 	public String ID;
 	/**名称*/
 	public String goodsName;
@@ -17,17 +17,15 @@ public class GoodsItemVO {
 	public String remarks;
 	
 	
-	public GoodsItemVO(String iD, String goodsName, String model, int number, double price, double sum,
+	public GoodsItemVO(String ID,String goodsName,String model,int number, double price,
 			String remarks) {
-		super();
-		ID = iD;
+		this.ID=ID;
 		this.goodsName = goodsName;
-		this.model = model;
+		this.model=model;
 		this.number = number;
 		this.price = price;
-		this.sum = sum;
+		this.sum = number*price;
 		this.remarks = remarks;
 	}
-	
 	
 }
