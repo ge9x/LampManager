@@ -1,0 +1,17 @@
+.nav-text {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 16;
+}
+
+@font-face {
+    font-family: 'iconfont';
+    src: url('//at.alicdn.com/t/font_471684_bilru64sty8ehfr.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 25px;
+    -fx-text-fill: #eeeeee;
+}
+#root {
+    -fx-background-color: #272727;
+}

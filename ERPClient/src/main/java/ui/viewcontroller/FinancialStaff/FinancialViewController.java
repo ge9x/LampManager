@@ -1,7 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import ui.viewcontroller.common.MainUIController;
 
@@ -13,19 +12,25 @@ import java.io.IOException;
 public class FinancialViewController {
 
     private FinancialNavbarController financialNavbarController;
-    public FinancialViewController(){
-        try {
+    private FinancialAccountController financialAccountController;
+    private MainUIController mainUIController;
 
+    public FinancialViewController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
+
+        try {
             FXMLLoader navbarLoader = new FXMLLoader();
             navbarLoader.setLocation(getClass().getResource("/view/financialStaff/FinancialStaffNavbar.fxml"));
             Pane navbar = navbarLoader.load();
+            financialNavbarController = navbarLoader.getController();
 
             FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/financialStaff/FinancialStaffPage"));
-            BorderPane borderPane = pageLoader.load();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/Account.fxml"));
+            Pane page = pageLoader.load();
+            financialAccountController = pageLoader.getController();
 
-            borderPane.setLeft(navbar);
-
+            mainUIController.setLeft(navbar);
+            mainUIController.setCenter(page);
 
         } catch (IOException e) {
             e.printStackTrace();
