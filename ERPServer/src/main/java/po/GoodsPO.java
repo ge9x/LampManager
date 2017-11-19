@@ -2,11 +2,15 @@ package po;
 
 import java.util.ArrayList;
 
+import javax.persistence.*;
+
 /**
  * Created on 2017/10/21
  * @author 巽
  *
  */
+@Entity
+@Table(name = "goods")
 public class GoodsPO {
 	/**
 	 * 商品ID
@@ -70,6 +74,9 @@ public class GoodsPO {
 		this.recentRetailPrice = recentRetailPrice;
 	}
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	public String getId() {
 		return ID;
 	}
@@ -78,6 +85,7 @@ public class GoodsPO {
 		this.ID = ID;
 	}
 	
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -86,6 +94,7 @@ public class GoodsPO {
 		this.name = name;
 	}
 	
+	@Column(name = "model")
 	public String getModel() {
 		return model;
 	}
@@ -94,6 +103,8 @@ public class GoodsPO {
 		this.model = model;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name = "claid")
 	public String getClassification() {
 		return classification;
 	}
@@ -102,6 +113,7 @@ public class GoodsPO {
 		this.classification = classification;
 	}
 	
+	//TODO 要删掉的属性
 	public String getInventory() {
 		return inventory;
 	}
@@ -110,6 +122,7 @@ public class GoodsPO {
 		this.inventory = inventory;
 	}
 	
+	@Column(name = "amount")
 	public int getAmount() {
 		return amount;
 	}
@@ -117,7 +130,8 @@ public class GoodsPO {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
+	@Column(name = "alarmamount")
 	public int getAlarmAmount() {
 		return alarmAmount;
 	}
@@ -125,7 +139,8 @@ public class GoodsPO {
 	public void setAlarmAmount(int alarmAmount) {
 		this.alarmAmount = alarmAmount;
 	}
-	
+
+	@Column(name = "buyingprice")
 	public double getBuyingPrice() {
 		return buyingPrice;
 	}
@@ -133,7 +148,8 @@ public class GoodsPO {
 	public void setBuyingPrice(double buyingPrice) {
 		this.buyingPrice = buyingPrice;
 	}
-	
+
+	@Column(name = "retailprice")
 	public double getRetailPrice() {
 		return retailPrice;
 	}
@@ -142,6 +158,7 @@ public class GoodsPO {
 		this.retailPrice = retailPrice;
 	}
 	
+	// TODO
 	public ArrayList<Double> getRecentBuyingPrice() {
 		return recentBuyingPrice;
 	}
@@ -150,6 +167,7 @@ public class GoodsPO {
 		this.recentBuyingPrice = recentBuyingPrice;
 	}
 	
+	// TODO
 	public ArrayList<Double> getRecentRetailPrice() {
 		return recentRetailPrice;
 	}
