@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 
-
-<AnchorPane prefHeight="1095.0" prefWidth="268.0" style="-fx-background-color: #272727;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialNavbarController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialNavbarController">
    <children>
-      <JFXListView layoutX="10.0" layoutY="400.0" />
+      <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="100.0" layoutY="99.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
+      <AnchorPane fx:id="accountNav" layoutY="226.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+            <Label fx:id="AccountIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+            <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="银行账户" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ReceiptNav" layoutY="266.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+            <Label fx:id="ReceiptIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+            <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="制定收款单" />
+         </children>
+      </AnchorPane>
+       <AnchorPane fx:id="PaymentNav" layoutY="306.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="PaymentIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="制定付款单" />
+           </children>
+       </AnchorPane>
+       <AnchorPane fx:id="CashNav" layoutY="346.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="CashIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="现金费用单">
+               </Label>
+           </children>
+       </AnchorPane>
+       <AnchorPane fx:id="SalesDetailNav" layoutY="386.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="SalesDetailsIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="销售明细表">
+               </Label>
+           </children>
+       </AnchorPane>
+       <AnchorPane layoutY="426.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="DocumentDetailsIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="经营历程表">
+               </Label>
+           </children>
+       </AnchorPane>
+       <AnchorPane layoutY="466.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="ProfitIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="经营情况表">
+               </Label>
+           </children>
+       </AnchorPane>
+       <AnchorPane layoutY="466.0" prefHeight="40.0" prefWidth="200.0">
+           <children>
+               <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="200.0" />
+               <Label fx:id="InitIcon" layoutX="14.0" layoutY="13.0" styleClass="icon-label" />
+               <Label layoutX="51.0" layoutY="10.0" styleClass="nav-text" text="期初建账">
+               </Label>
+           </children>
+       </AnchorPane>
+
+
    </children>
 </AnchorPane>

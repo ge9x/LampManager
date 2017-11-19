@@ -33,14 +33,14 @@ public class Main extends Application {
             loader.setLocation(getClass().getResource("/view/common/mainView.fxml"));
             root = loader.load();
             mainUIController = loader.getController();
-
+            mainUIController.setStage(primaryStage);
             mainUIController.showLogin();
 
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
 
 //        无关闭按钮（为测试方便先注释掉了）
