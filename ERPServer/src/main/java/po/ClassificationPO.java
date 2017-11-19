@@ -2,11 +2,15 @@ package po;
 
 import java.util.ArrayList;
 
+import javax.persistence.*;
+
 /**
  * Created on 2017/10/21
  * @author 巽
  *
  */
+@Entity
+@Table(name = "classification")
 public class ClassificationPO {
 	/**
 	 * 商品分类ID
@@ -38,6 +42,9 @@ public class ClassificationPO {
 		this.goods = goods;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	public String getId() {
 		return ID;
 	}
@@ -46,6 +53,7 @@ public class ClassificationPO {
 		this.ID = ID;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -54,6 +62,8 @@ public class ClassificationPO {
 		this.name = name;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "claid")
 	public ClassificationPO getFather() {
 		return father;
 	}
@@ -62,6 +72,8 @@ public class ClassificationPO {
 		this.father = father;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "claid")
 	public ArrayList<ClassificationPO> getChidren() {
 		return chidren;
 	}
@@ -70,6 +82,8 @@ public class ClassificationPO {
 		this.chidren = chidren;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "claid")
 	public ArrayList<GoodsPO> getGoods() {
 		return goods;
 	}
