@@ -28,7 +28,7 @@ public class FinancialAccountController {
     @FXML
     TilePane accountList;
 
-    private static final int NUM_OF_CELLS = 4;
+    private static final int NUM_OF_CELLS = 6;
     private FXMLLoader[] loaders = new FXMLLoader[NUM_OF_CELLS];
     private VBox[] cells = new VBox[NUM_OF_CELLS];
     AccountBLService accountBLService = new AccountBLService_Stub();
@@ -40,9 +40,9 @@ public class FinancialAccountController {
         addIcon.setText("\ue61e");
         searchIcon.setText("\ue69d");
 
-        accountList.setHgap(30);
-        accountList.setVgap(20);
-        accountList.setPrefColumns(3);
+        accountList.setHgap(50);
+        accountList.setVgap(30);
+        accountList.setPrefColumns(2);
 
 
         for (int i = 0; i < NUM_OF_CELLS; i++){
@@ -67,7 +67,6 @@ public class FinancialAccountController {
             accountCellController.setAccount(accounts.get(i));
             accountList.getChildren().add(cells[i]);
         }
-
-
     }
+
 }

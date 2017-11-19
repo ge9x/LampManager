@@ -57,9 +57,15 @@ public class AccountBLService_Stub implements AccountBLService{
         AccountVO vo1 = new AccountVO("工商银行账户1",2000);
         AccountVO vo2 = new AccountVO("工商银行账户2",1000);
         AccountVO vo3 = new AccountVO("工商银行账户3",4000);
+        AccountVO vo4 = new AccountVO("工商银行账户4",2000);
+        AccountVO vo5 = new AccountVO("工商银行账户5",1000);
+//        AccountVO vo6 = new AccountVO("工商银行账户6",4000);
         accountVOS.add(vo1);
         accountVOS.add(vo2);
         accountVOS.add(vo3);
+        accountVOS.add(vo4);
+        accountVOS.add(vo5);
+//        accountVOS.add(vo6);
         return accountVOS;
     }
 }

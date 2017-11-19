@@ -5,3 +5,9 @@
 .icon-label {
     -fx-font-family: iconfont;
 }
+.bank-name {
+    -fx-font-size: 16px;
+}
+#Balance {
+    -fx-font-size: 14px;
+}
