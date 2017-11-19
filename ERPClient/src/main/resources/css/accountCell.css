@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+}
