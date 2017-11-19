@@ -1,0 +1,12 @@
+.label{
+    -fx-font-family: MicroSoft YaHei;
+}
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
+}

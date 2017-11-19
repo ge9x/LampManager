@@ -66,7 +66,7 @@ public class MainUIController {
      */
     public void resizeToPage(){
         primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(1000);
+        primaryStage.setMinWidth(1030);
     }
 
     public void setCenter(Node node){
