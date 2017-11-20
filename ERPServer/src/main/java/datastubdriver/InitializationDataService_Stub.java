@@ -32,7 +32,7 @@ public class InitializationDataService_Stub implements InitializationDataService
         ArrayList<ClassificationPO> classificationPOS = new ArrayList<ClassificationPO>();
         classificationPOS.add(classification);
 
-        GoodsPO goods = new GoodsPO("05000005", "后现代主义七彩霓虹灯", "LLL", "霓虹灯", 7, 3, 23333.3, 250000, 2000.0,2000.0);
+        GoodsPO goods = new GoodsPO("05000005", "后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 2000.0,2000.0);
         ArrayList<GoodsPO> goodsVOS = new ArrayList<GoodsPO>();
         goodsVOS.add(goods);
 

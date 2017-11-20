@@ -17,11 +17,11 @@ public class GoodsDataService_Stub implements GoodsDataService{
 	
 	{
 		data = new ArrayList<GoodsPO>();
-		GoodsPO g1 = new GoodsPO("02000001", "圣洁牌纯黑落地灯", "L", "落地灯", 700, 250, 233.3, 250, 233.3, 250);
-		GoodsPO g2 = new GoodsPO("02000002", "圣洁牌纯白落地灯", "M", "落地灯", 700, 250, 233.3, 250, 233.3, 250);
-		GoodsPO g3 = new GoodsPO("03000003", "圣洁牌简洁黑白配台灯", "S", "台灯", 7000, 2500, 233.3, 250, 233.3, 250);
-		GoodsPO g4 = new GoodsPO("04000004", "圣洁牌古典吊灯", "LL", "吊灯", 70, 250, 2333.3, 2500, 2333.3, 2500);
-		GoodsPO g5 = new GoodsPO("05000005", "圣洁牌后现代主义七彩霓虹灯", "LLL", "霓虹灯", 7, 3, 23333.3, 250000, 23333.3, 250000);
+		GoodsPO g1 = new GoodsPO("02000001", "圣洁牌纯黑落地灯", "L", null, 700, 250, 233.3, 250, 233.3, 250);
+		GoodsPO g2 = new GoodsPO("02000002", "圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3, 250);
+		GoodsPO g3 = new GoodsPO("03000003", "圣洁牌简洁黑白配台灯", "S", null, 7000, 2500, 233.3, 250, 233.3, 250);
+		GoodsPO g4 = new GoodsPO("04000004", "圣洁牌古典吊灯", "LL", null, 70, 250, 2333.3, 2500, 2333.3, 2500);
+		GoodsPO g5 = new GoodsPO("05000005", "圣洁牌后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 23333.3, 250000);
 		data.add(g1);
 		data.add(g2);
 		data.add(g3);
