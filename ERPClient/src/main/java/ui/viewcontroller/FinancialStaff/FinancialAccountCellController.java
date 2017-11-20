@@ -24,7 +24,7 @@ public class FinancialAccountCellController {
 
     @FXML
     Label BankIcon;
-
+    AccountVO account;
     FinancialAccountController financialAccountController;
     @FXML
     public void initialize(){
@@ -34,6 +34,7 @@ public class FinancialAccountCellController {
     }
 
     public void setAccount(AccountVO account){
+        this.account = account;
         BankName.setText(account.accountName);
         Balance.setText(getMoneyString(account.money));
     }
@@ -55,12 +56,10 @@ public class FinancialAccountCellController {
     }
 
     public void clickEditButton(){
-        String accountName = BankName.getText();
-        financialAccountController.editAccount(accountName);
+        financialAccountController.editAccount(account.accountID);
     }
     public void clickDeleteButton(){
-        String accountName = BankName.getText();
-        financialAccountController.deleteAccount(accountName);
+        financialAccountController.deleteAccount(account.accountID);
     }
     public void setFinancialAccountController(FinancialAccountController financialAccountController){
         this.financialAccountController = financialAccountController;
