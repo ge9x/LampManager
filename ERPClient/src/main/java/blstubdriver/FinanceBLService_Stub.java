@@ -30,9 +30,9 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
                 "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 
-        AccountVO vo1 = new AccountVO("工商银行账户1",2000);
-        AccountVO vo2 = new AccountVO("工商银行账户2",1000);
-        AccountVO vo3 = new AccountVO("工商银行账户3",4000);
+        AccountVO vo1 = new AccountVO("001","工商银行账户1",2000);
+        AccountVO vo2 = new AccountVO("001","工商银行账户2",1000);
+        AccountVO vo3 = new AccountVO("001","工商银行账户3",4000);
 
         AccountBillItemVO itemVO1 = new AccountBillItemVO(vo1,300,"卖出灯具20个");
         AccountBillItemVO itemVO2 = new AccountBillItemVO(vo2,400,"卖出灯具30个");
