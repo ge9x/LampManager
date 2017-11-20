@@ -48,7 +48,7 @@ public class MockAccountBill extends AccountBill {
 
     @Override
     public AccountBillVO submit() {
-        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00),300,"卖出灯具20个");
+        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("001","工商银行账户",2000.00),300,"卖出灯具20个");
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
         AccountBillVO billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.SUBMITTED, BillType.RECEIPT,
@@ -58,7 +58,7 @@ public class MockAccountBill extends AccountBill {
 
     @Override
     public AccountBillVO save() {
-        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00),300,"卖出灯具20个");
+        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("001","工商银行账户",2000.00),300,"卖出灯具20个");
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
         AccountBillVO billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,

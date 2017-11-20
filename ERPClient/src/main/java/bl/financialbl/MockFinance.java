@@ -43,7 +43,7 @@ public class MockFinance extends Finance {
 
     @Override
     public ArrayList<AccountVO> getAllAccount() {
-        AccountVO account = new AccountVO("工商银行账户", 2000.00);
+        AccountVO account = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList<AccountVO> accountVOS = new ArrayList<AccountVO>();
         accountVOS.add(account);
         return accountVOS;
@@ -106,8 +106,8 @@ public class MockFinance extends Finance {
     public BillVO findByID(String ID){
         if (ID.equals("SKD-20171022-00001")){
             System.out.println("Submit succeed");
-            AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00),300,"卖出灯具20个");
-            AccountBillItemVO itemVO2 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00), 400, "卖出灯具30个");
+            AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("001","工商银行账户",2000.00),300,"卖出灯具20个");
+            AccountBillItemVO itemVO2 = new AccountBillItemVO(new AccountVO("001","工商银行账户",2000.00), 400, "卖出灯具30个");
             ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
             accountBillItemVOS.add(itemVO1);
             accountBillItemVOS.add(itemVO2);

@@ -28,6 +28,7 @@ public class FinancialViewController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/Account.fxml"));
             Pane page = pageLoader.load();
             financialAccountController = pageLoader.getController();
+            financialAccountController.setFinancialViewController(this);
 
             mainUIController.setLeft(navbar);
             mainUIController.setCenter(page);

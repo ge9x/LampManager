@@ -17,7 +17,7 @@ public class MockInitialization extends Initialization {
 
     @Override
     public InitAccountVO init() {
-        AccountVO account = new AccountVO("工商银行账户", 2000.00);
+        AccountVO account = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList<AccountVO> accountVOS = new ArrayList<AccountVO>();
         accountVOS.add(account);
 

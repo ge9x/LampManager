@@ -32,7 +32,7 @@ public class MockAccount extends Account {
     public ArrayList<AccountVO> findAccountByName(String keyword) {
         if (("工商银行账户").contains(keyword)){
             System.out.println("Find account succeed");
-            AccountVO vo = new AccountVO("工商银行账户", 2000.00);
+            AccountVO vo = new AccountVO("001","工商银行账户", 2000.00);
             ArrayList vos = new ArrayList();
             vos.add(vo);
             return vos;
@@ -51,7 +51,7 @@ public class MockAccount extends Account {
 
     @Override
     public ArrayList<AccountVO> show() {
-        AccountVO vo = new AccountVO("工商银行账户", 2000.00);
+        AccountVO vo = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList vos = new ArrayList();
         vos.add(vo);
         return vos;

@@ -24,7 +24,7 @@
                      </effect>
                      <children>
                         <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
-                        <Label text="管理银行账户">
+                        <Label fx:id="title" text="管理银行账户">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -55,7 +55,7 @@
                         <Insets left="20.0" />
                      </padding>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
                   <TilePane fx:id="accountList" minWidth="716.0" prefHeight="274.0" prefWidth="716.0">

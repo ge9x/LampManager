@@ -25,6 +25,7 @@ public class FinancialAccountCellController {
     @FXML
     Label BankIcon;
 
+    FinancialAccountController financialAccountController;
     @FXML
     public void initialize(){
         BankIcon.setText("\ue607");
@@ -54,9 +55,14 @@ public class FinancialAccountCellController {
     }
 
     public void clickEditButton(){
-
+        String accountName = BankName.getText();
+        financialAccountController.editAccount(accountName);
     }
     public void clickDeleteButton(){
-
+        String accountName = BankName.getText();
+        financialAccountController.deleteAccount(accountName);
+    }
+    public void setFinancialAccountController(FinancialAccountController financialAccountController){
+        this.financialAccountController = financialAccountController;
     }
 }
