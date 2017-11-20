@@ -24,8 +24,10 @@ public class MainUIController {
     @FXML
     BorderPane borderPane;
 
+
     UserBLService userBLService = new UserBLService_Stub();
     Stage primaryStage;
+
     public MainUIController() {
 
     }
@@ -74,6 +76,10 @@ public class MainUIController {
         primaryStage.setMinWidth(1030);
     }
 
+    public void showAlert(){
+//        AlertPane.setVisible(true);
+    }
+
     public void setCenter(Node node){
         borderPane.setCenter(node);
     }
@@ -85,5 +91,6 @@ public class MainUIController {
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
     }
+
 
 }
