@@ -1,7 +1,5 @@
 package po;
 
-import java.util.ArrayList;
-
 import javax.persistence.*;
 
 /**
@@ -29,10 +27,6 @@ public class GoodsPO {
 	 */
 	private String classification;
 	/**
-	 * 商品所在仓库
-	 */
-	private String inventory;
-	/**
 	 * 商品数量
 	 */
 	private int amount;
@@ -51,21 +45,20 @@ public class GoodsPO {
 	/**
 	 * 商品最近进价
 	 */
-	private ArrayList<Double> recentBuyingPrice;
+	private double recentBuyingPrice;
 	/**
 	 * 商品最近零售价
 	 */
-	private ArrayList<Double> recentRetailPrice;
+	private double recentRetailPrice;
 	
-	public GoodsPO(String ID, String name, String model, String classification, String inventory, int amount,
-			int alarmAmount, double buyingPrice, double retailPrice, ArrayList<Double> recentBuyingPrice,
-			ArrayList<Double> recentRetailPrice) {
+	public GoodsPO(String ID, String name, String model, String classification, int amount,
+			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
+			double recentRetailPrice) {
 		super();
 		this.ID = ID;
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
-		this.inventory = inventory;
 		this.amount = amount;
 		this.alarmAmount = alarmAmount;
 		this.buyingPrice = buyingPrice;
@@ -113,15 +106,6 @@ public class GoodsPO {
 		this.classification = classification;
 	}
 	
-	//TODO 要删掉的属性
-	public String getInventory() {
-		return inventory;
-	}
-	
-	public void setInventory(String inventory) {
-		this.inventory = inventory;
-	}
-	
 	@Column(name = "amount")
 	public int getAmount() {
 		return amount;
@@ -157,22 +141,22 @@ public class GoodsPO {
 	public void setRetailPrice(double retailPrice) {
 		this.retailPrice = retailPrice;
 	}
-	
-	// TODO
-	public ArrayList<Double> getRecentBuyingPrice() {
+
+	@Column(name = "recentbuyingprice")
+	public double getRecentBuyingPrice() {
 		return recentBuyingPrice;
 	}
 	
-	public void setRecentBuyingPrice(ArrayList<Double> recentBuyingPrice) {
+	public void setRecentBuyingPrice(double recentBuyingPrice) {
 		this.recentBuyingPrice = recentBuyingPrice;
 	}
-	
-	// TODO
-	public ArrayList<Double> getRecentRetailPrice() {
+
+	@Column(name = "recentretailprice")
+	public double getRecentRetailPrice() {
 		return recentRetailPrice;
 	}
 	
-	public void setRecentRetailPrice(ArrayList<Double> recentRetailPrice) {
+	public void setRecentRetailPrice(double recentRetailPrice) {
 		this.recentRetailPrice = recentRetailPrice;
 	}
 	
