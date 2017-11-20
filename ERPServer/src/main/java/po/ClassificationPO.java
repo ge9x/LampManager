@@ -1,6 +1,6 @@
 package po;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -27,15 +27,15 @@ public class ClassificationPO {
 	/**
 	 * 该商品分类的所有子分类
 	 */
-	private ArrayList<ClassificationPO> chidren;
+	private List<ClassificationPO> chidren;
 	/**
 	 * 该商品分类下的所有商品
 	 */
-	private ArrayList<GoodsPO> goods;
+	private List<GoodsPO> goods;
 	
 	public ClassificationPO(){ }
 	
-	public ClassificationPO(String ID, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
+	public ClassificationPO(String ID, String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -45,7 +45,6 @@ public class ClassificationPO {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public String getId() {
 		return ID;
@@ -76,21 +75,21 @@ public class ClassificationPO {
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "claid")
-	public ArrayList<ClassificationPO> getChidren() {
+	public List<ClassificationPO> getChidren() {
 		return chidren;
 	}
 
-	public void setChidren(ArrayList<ClassificationPO> chidren) {
+	public void setChidren(List<ClassificationPO> chidren) {
 		this.chidren = chidren;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "claid")
-	public ArrayList<GoodsPO> getGoods() {
+	public List<GoodsPO> getGoods() {
 		return goods;
 	}
 
-	public void setGoods(ArrayList<GoodsPO> goods) {
+	public void setGoods(List<GoodsPO> goods) {
 		this.goods = goods;
 	}
 	

@@ -25,7 +25,7 @@ public class GoodsPO {
 	/**
 	 * 商品所属分类
 	 */
-	private String classification;
+	private ClassificationPO classification;
 	/**
 	 * 商品数量
 	 */
@@ -53,7 +53,7 @@ public class GoodsPO {
 	
 	public GoodsPO(){ }
 	
-	public GoodsPO(String ID, String name, String model, String classification, int amount,
+	public GoodsPO(String ID, String name, String model, ClassificationPO classification, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
 		super();
@@ -70,7 +70,6 @@ public class GoodsPO {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public String getId() {
 		return ID;
@@ -100,11 +99,11 @@ public class GoodsPO {
 	
 	@ManyToOne
 	@JoinColumn(name = "claid")
-	public String getClassification() {
+	public ClassificationPO getClassification() {
 		return classification;
 	}
 	
-	public void setClassification(String classification) {
+	public void setClassification(ClassificationPO classification) {
 		this.classification = classification;
 	}
 	
