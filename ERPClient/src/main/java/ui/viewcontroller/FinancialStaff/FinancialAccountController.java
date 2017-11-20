@@ -15,6 +15,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+import util.ResultMessage;
 import vo.AccountVO;
 
 import java.io.IOException;
@@ -91,7 +92,12 @@ public class FinancialAccountController {
 
 
         String newName = (String)result.get();
-//        accountBLService.updateAccount();
+        AccountVO account = findVOByID(ID);
+        account.accountName = newName;
+        ResultMessage re = accountBLService.updateAccount(account);
+        if (re == ResultMessage.SUCCESS){
+            showAccountList();
+        }
     }
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
