@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.ERPClient.Main;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffViewController;
 
 import java.io.IOException;
 
@@ -33,6 +34,10 @@ public class MainUIController {
     public void showFinancialStaffView(){
         resizeToPage();
         FinancialViewController financialViewController = new FinancialViewController(this);
+    }
+    public void showSalesStaffView(){
+        resizeToPage();
+        SalesStaffViewController salesStaffViewController = new SalesStaffViewController(this);
     }
 
 
