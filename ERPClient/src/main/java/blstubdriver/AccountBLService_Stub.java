@@ -20,8 +20,8 @@ public class AccountBLService_Stub implements AccountBLService{
         }
     }
 
-    public ResultMessage deleteAccount(String name) {
-        if (name.equals("工商银行账户")){
+    public ResultMessage deleteAccount(String ID) {
+        if (ID.equals("001")){
             System.out.println("Delete account success");
             return ResultMessage.SUCCESS;
         }else{

@@ -2,19 +2,13 @@ package ui.viewcontroller.FinancialStaff;
 
 import blservice.accountblservice.AccountBLService;
 import blstubdriver.AccountBLService_Stub;
-import dataservice.accountdataservice.AccountDataService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.stage.StageStyle;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
+import ui.component.DialogFactory;
 import util.ResultMessage;
 import vo.AccountVO;
 
@@ -69,6 +63,7 @@ public class FinancialAccountController {
     }
 
     public void showAccountList(){
+        accountList.getChildren().clear();
         accounts = accountBLService.show();
 
         for (int i =0; i < accounts.size(); i++){
@@ -79,29 +74,37 @@ public class FinancialAccountController {
         }
     }
 
-    public void deleteAccount(String name){
+    public void deleteAccount(String ID){
+        Dialog alert = DialogFactory.getConfirmationAlert();
+        alert.setHeaderText("确定要删除此账户？");
+        Optional result = alert.showAndWait();
 
-    }
-    public void editAccount(String ID){
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Lamp Manager");
-        dialog.setHeaderText("请输入新的银行账户名称");
-        dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setId("CancelButton");
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/css/textInput.css").toExternalForm());
-        Optional result = dialog.showAndWait();
-
-
-        String newName = (String)result.get();
-        AccountVO account = findVOByID(ID);
-        account.accountName = newName;
-        ResultMessage re = accountBLService.updateAccount(account);
-        if (re == ResultMessage.SUCCESS){
+        if (result.get() == ButtonType.OK) {
+            accountBLService.deleteAccount(ID);
             showAccountList();
         }
     }
+    public void editAccount(String ID){
+        Dialog dialog = DialogFactory.getTextInputDialog();
+        dialog.setHeaderText("请输入新的银行账户名称");
+        Optional result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String newName = (String)result.get();
+            AccountVO account = findVOByID(ID);
+            account.accountName = newName;
+            ResultMessage re = accountBLService.updateAccount(account);
+            if (re == ResultMessage.SUCCESS){
+                showAccountList();
+            }
+        }
+
+    }
+
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
     }
+
     private AccountVO findVOByID(String ID){
         for (AccountVO account:accounts){
             if (account.accountID == ID)
