@@ -51,6 +51,8 @@ public class GoodsPO {
 	 */
 	private double recentRetailPrice;
 	
+	public GoodsPO(){ }
+	
 	public GoodsPO(String ID, String name, String model, String classification, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {

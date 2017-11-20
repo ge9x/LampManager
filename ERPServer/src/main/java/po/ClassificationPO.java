@@ -33,6 +33,8 @@ public class ClassificationPO {
 	 */
 	private ArrayList<GoodsPO> goods;
 	
+	public ClassificationPO(){ }
+	
 	public ClassificationPO(String ID, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
 		super();
 		this.ID = ID;
