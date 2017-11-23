@@ -19,6 +19,11 @@
 		
 		<mapping class="po.ClassificationPO" />
 		<mapping class="po.GoodsPO" />
+		<mapping class="po.CustomerPO" />
+		<mapping class="po.BillPO" />
+		<mapping class="po.PromotionPO" />
+		<mapping class="po.PurchasePO" />
+		<mapping class="po.GoodsItemPO" />
     </session-factory>
  
 </hibernate-configuration>
