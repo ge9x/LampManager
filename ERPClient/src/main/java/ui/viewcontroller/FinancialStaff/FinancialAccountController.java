@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
+import javafx.util.Pair;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import vo.AccountVO;
@@ -29,9 +30,11 @@ public class FinancialAccountController {
     @FXML
     TilePane accountList;
 
-    private static final int NUM_OF_CELLS = 6;
-    private FXMLLoader[] loaders = new FXMLLoader[NUM_OF_CELLS];
-    private VBox[] cells = new VBox[NUM_OF_CELLS];
+    @FXML
+    TextField keywordInput;
+
+    private ArrayList<FXMLLoader> loaders = new ArrayList<>();
+    private ArrayList<VBox> cells = new ArrayList<>();
 
     AccountBLService accountBLService = new AccountBLService_Stub();
     FinancialViewController financialViewController;
@@ -47,69 +50,74 @@ public class FinancialAccountController {
         accountList.setVgap(30);
         accountList.setPrefColumns(2);
 
-
-        for (int i = 0; i < NUM_OF_CELLS; i++){
-            try {
-                FXMLLoader accountLoader = new FXMLLoader();
-                accountLoader.setLocation(getClass().getResource("/view/financialStaff/AccountCell.fxml"));
-                VBox cell = accountLoader.load();
-                loaders[i] = accountLoader;
-                cells[i] = cell;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         showAccountList();
     }
 
     public void showAccountList(){
         accountList.getChildren().clear();
         accounts = accountBLService.show();
-
+        for (int i = 0; i < accounts.size(); i++){
+            try {
+                FXMLLoader accountLoader = new FXMLLoader();
+                accountLoader.setLocation(getClass().getResource("/view/financialStaff/AccountCell.fxml"));
+                VBox cell = accountLoader.load();
+                loaders.add(accountLoader);
+                cells.add(cell);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         for (int i =0; i < accounts.size(); i++){
-            FinancialAccountCellController accountCellController = loaders[i].getController();
+            FinancialAccountCellController accountCellController = loaders.get(i).getController();
             accountCellController.setAccount(accounts.get(i));
             accountCellController.setFinancialAccountController(this);
-            accountList.getChildren().add(cells[i]);
+            accountList.getChildren().add(cells.get(i));
         }
     }
+    public void addAccount(){
+        Dialog dialog = DialogFactory.getDoubleTextDialog("账户名称","账户余额");
+        dialog.setHeaderText("请输入新建账户信息");
+        Optional<Pair<String,String>> result = dialog.showAndWait();
 
-    public void deleteAccount(String ID){
-        Dialog alert = DialogFactory.getConfirmationAlert();
-        alert.setHeaderText("确定要删除此账户？");
-        Optional result = alert.showAndWait();
-
-        if (result.get() == ButtonType.OK) {
-            accountBLService.deleteAccount(ID);
-            showAccountList();
-        }
-    }
-    public void editAccount(String ID){
-        Dialog dialog = DialogFactory.getTextInputDialog();
-        dialog.setHeaderText("请输入新的银行账户名称");
-        Optional result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            String newName = (String)result.get();
-            AccountVO account = findVOByID(ID);
-            account.accountName = newName;
-            ResultMessage re = accountBLService.updateAccount(account);
+        if (result.isPresent()){
+            String accountName = null;
+            String money = null;
+            Pair<String,String> pair = result.get();
+            AccountVO account = new AccountVO(null,pair.getKey(),Double.parseDouble(pair.getValue()));
+            ResultMessage re = accountBLService.addAccount(account);
             if (re == ResultMessage.SUCCESS){
                 showAccountList();
             }
         }
+    }
+    public void deleteAccount(String ID){
+            ResultMessage re = accountBLService.deleteAccount(ID);
+        if (re == ResultMessage.SUCCESS){
+            showAccountList();
+        }
+    }
+    public void editAccount(AccountVO vo){
+        ResultMessage re = accountBLService.updateAccount(vo);
+        if (re == ResultMessage.SUCCESS){
+            showAccountList();
+        }
+    }
 
+    public void searchAccount(String keyword){
+        accounts = accountBLService.findAccountByName(keyword);
+        showAccountList();
     }
 
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
     }
 
-    private AccountVO findVOByID(String ID){
-        for (AccountVO account:accounts){
-            if (account.accountID == ID)
-                return account;
-        }
-        return null;
+
+    public void clickAddButton(){
+        addAccount();
+    }
+    public void clickSearchButton(){
+        String keyword = keywordInput.getText();
+        searchAccount(keyword);
     }
 }

@@ -32,17 +32,17 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Label fx:id="addIcon" styleClass="icon-label" text="+">
+                        <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
+                        <TextField fx:id="keywordInput" style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
                            <HBox.margin>
                               <Insets left="330.0" />
                            </HBox.margin>
                         </TextField>
-                        <Label fx:id="searchIcon" styleClass="icon-label" text="Q">
+                        <Label  fx:id="searchIcon" onMouseClicked="#clickSearchButton" styleClass="icon-label" text="Q">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
