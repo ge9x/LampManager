@@ -1,16 +1,14 @@
 package bl.financialbl;
 
-import blservice.financeblservice.DocumentDetailsInput;
-import blservice.financeblservice.FinanceBLService;
-import blservice.financeblservice.SalesDetailsInput;
+import bl.formbl.DocumentDetails;
+import bl.formbl.Profit;
+import bl.formbl.SalesDetails;
+import blservice.formblservice.DocumentDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
 import dataservice.financedataservice.FinanceDataService;
-import po.BillPO;
-import util.BillState;
-import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,10 +17,8 @@ import java.util.Date;
  */
 public class Finance{
 
-    private FinanceBill financeBill;
-    private SalesDetails salesDetails;
-    private DocumentDetails documentDetails;
-    private Profit profit;
+    AccountBill accountBill;
+    CashBill cashBill;
 
     private FinanceDataService financeDataService;
 
@@ -74,27 +70,5 @@ public class Finance{
         return null;
     }
 
-    public BillVO findByID(String ID) {
-        return null;
-    }
 
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return null;
-    }
-
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return null;
-    }
-
-    public ResultMessage redCover(BillVO billVO) {
-        return null;
-    }
-
-    public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return null;
-    }
-
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return null;
-    }
 }
