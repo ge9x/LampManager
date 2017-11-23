@@ -1,6 +1,6 @@
-package bl.financialbl;
+package bl.formbl;
 
-import blservice.financeblservice.SalesDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
 import vo.SalesDetailVO;
 
 import java.util.ArrayList;

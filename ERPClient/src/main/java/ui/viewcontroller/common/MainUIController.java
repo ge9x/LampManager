@@ -11,7 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.ERPClient.Main;
+
+import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
+import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffViewController;
 
 import java.io.IOException;
 
@@ -23,14 +27,28 @@ public class MainUIController {
     @FXML
     BorderPane borderPane;
 
+
     UserBLService userBLService = new UserBLService_Stub();
     Stage primaryStage;
+
     public MainUIController() {
 
     }
     public void showFinancialStaffView(){
         resizeToPage();
         FinancialViewController financialViewController = new FinancialViewController(this);
+    }
+    public void showSalesStaffView(){
+        resizeToPage();
+        SalesStaffViewController salesStaffViewController = new SalesStaffViewController(this);
+    }
+    public void showGeneralManagerView(){
+        resizeToPage();
+        GeneralManagerViewController generalManagerViewController = new GeneralManagerViewController(this);
+    }
+    public void showAdminView(){
+        resizeToPage();
+        AdminViewController adminViewController = new AdminViewController(this);
     }
 
 
@@ -66,7 +84,11 @@ public class MainUIController {
      */
     public void resizeToPage(){
         primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(1030);
+        primaryStage.setMinWidth(1000);
+    }
+
+    public void showAlert(){
+//        AlertPane.setVisible(true);
     }
 
     public void setCenter(Node node){
@@ -80,5 +102,6 @@ public class MainUIController {
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
     }
+
 
 }

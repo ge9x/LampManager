@@ -19,7 +19,7 @@ public class InitializationDataService_Stub implements InitializationDataService
     }
 
     public InitAccountPO show() {
-        AccountPO account = new AccountPO("工商银行账户", 2000.00);
+        AccountPO account = new AccountPO("001","工商银行账户", 2000.00);
         ArrayList<AccountPO> accountPOS = new ArrayList<AccountPO>();
         accountPOS.add(account);
 

@@ -60,5 +60,10 @@ public class UserController implements UserBLService, UserInfo{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public ArrayList<UserVO> show() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 }

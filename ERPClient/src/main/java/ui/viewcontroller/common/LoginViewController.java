@@ -45,7 +45,10 @@ public class LoginViewController {
 //                case FINANCIAL_STAFF: mainUIController.showFinancialStaffView();
 //            }
             mainUIController.setCenter(null);
-            mainUIController.showFinancialStaffView();
+//            mainUIController.showFinancialStaffView();
+            mainUIController.showSalesStaffView();
+//            mainUIController.showGeneralManagerView();
+//            mainUIController.showAdminView();
 //        }
     }
 

@@ -1,0 +1,31 @@
+.label{
+    -fx-font-family: MicroSoft YaHei;
+}
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
+}
+#CustomerIcon{
+	-fx-font-family: iconfont;
+    -fx-font-size: 70px;
+    -fx-text-fill: #DCDCDC;
+}
+#DetailIcon{
+	-fx-font-family: iconfont;
+    -fx-font-size: 30px;
+    -fx-text-fill: #1db1a4;
+}
+#CustomerLevel{
+	-fx-background-radius: 20;
+	-fx-border-radius: 20;
+	-fx-font-size: 15px;
+}
+#CustomerName{
+	-fx-font-size: 28px;
+	-fx-font-weight: bold;
+}

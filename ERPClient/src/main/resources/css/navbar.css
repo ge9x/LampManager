@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_471684_bilru64sty8ehfr.ttf');
+    src: url('../fonts/iconfont.ttf');
 }
 .icon-label {
     -fx-font-family: iconfont;
@@ -14,4 +14,7 @@
 }
 #root {
     -fx-background-color: #272727;
+}
+#SalesReturnIcon {
+	-fx-font-size: 28px;
 }
