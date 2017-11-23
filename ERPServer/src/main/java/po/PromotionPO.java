@@ -2,10 +2,25 @@ package po;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import util.Level;
 import util.PromotionType;
 
+@Entity
+@Table(name = "promotion")
 public class PromotionPO {
 	private String promotionID;
 	
@@ -17,13 +32,13 @@ public class PromotionPO {
 	
 	private Date endDate;
 	
-	private ArrayList<GoodsPO> bargains;
+	private List<GoodsPO> bargains;
 	
 	private double voucher;
 	
 	private double allowance;
 	
-	private ArrayList<GoodsPO> gifts;
+	private List<GoodsPO> gifts;
 	
 	private Level level;
 	
@@ -32,7 +47,7 @@ public class PromotionPO {
 	private PromotionType type;
 
 	public PromotionPO(String promotionID, double goodsTotal, double bargainTotal, Date startDate, Date endDate,
-			ArrayList<GoodsPO> bargains, double voucher, double allowance, ArrayList<GoodsPO> gifts, Level level,
+			List<GoodsPO> bargains, double voucher, double allowance, List<GoodsPO> gifts, Level level,
 			double totalPrice, PromotionType type) {
 		this.promotionID = promotionID;
 		this.goodsTotal = goodsTotal;
@@ -48,6 +63,8 @@ public class PromotionPO {
 		this.type = type;
 	}
 
+	@Id
+	@Column(name = "promotionID")
 	public String getPromotionID() {
 		return promotionID;
 	}
@@ -56,6 +73,7 @@ public class PromotionPO {
 		this.promotionID = promotionID;
 	}
 
+	@Column(name = "goodsTotal")
 	public double getGoodsTotal() {
 		return goodsTotal;
 	}
@@ -64,6 +82,7 @@ public class PromotionPO {
 		this.goodsTotal = goodsTotal;
 	}
 
+	@Column(name = "bargainTotal")
 	public double getBargainTotal() {
 		return bargainTotal;
 	}
@@ -72,6 +91,7 @@ public class PromotionPO {
 		this.bargainTotal = bargainTotal;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -80,6 +100,7 @@ public class PromotionPO {
 		this.startDate = startDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -88,14 +109,17 @@ public class PromotionPO {
 		this.endDate = endDate;
 	}
 
-	public ArrayList<GoodsPO> getBargains() {
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "claid")
+	public List<GoodsPO> getBargains() {
 		return bargains;
 	}
 
-	public void setBargains(ArrayList<GoodsPO> bargains) {
+	public void setBargains(List<GoodsPO> bargains) {
 		this.bargains = bargains;
 	}
 
+	@Column(name = "voucher")
 	public double getVoucher() {
 		return voucher;
 	}
@@ -104,6 +128,7 @@ public class PromotionPO {
 		this.voucher = voucher;
 	}
 
+	@Column(name = "allowance")
 	public double getAllowance() {
 		return allowance;
 	}
@@ -112,14 +137,18 @@ public class PromotionPO {
 		this.allowance = allowance;
 	}
 
-	public ArrayList<GoodsPO> getGifts() {
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "claid")
+	public List<GoodsPO> getGifts() {
 		return gifts;
 	}
 
-	public void setGifts(ArrayList<GoodsPO> gifts) {
+	public void setGifts(List<GoodsPO> gifts) {
 		this.gifts = gifts;
 	}
 
+	@Column
+	@Enumerated(EnumType.STRING)
 	public Level getLevel() {
 		return level;
 	}
@@ -128,6 +157,7 @@ public class PromotionPO {
 		this.level = level;
 	}
 
+	@Column(name = "totalPrice")
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -136,6 +166,8 @@ public class PromotionPO {
 		this.totalPrice = totalPrice;
 	}
 
+	@Column
+	@Enumerated(EnumType.STRING)
 	public PromotionType getType() {
 		return type;
 	}
