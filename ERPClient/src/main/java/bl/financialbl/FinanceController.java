@@ -1,8 +1,8 @@
 package bl.financialbl;
 
-import blservice.financeblservice.DocumentDetailsInput;
+import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
-import blservice.financeblservice.SalesDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
 import util.ResultMessage;
 import vo.*;
 
@@ -68,27 +68,5 @@ public class FinanceController implements FinanceBLService{
         return null;
     }
 
-    public BillVO findByID(String ID) {
-        return null;
-    }
 
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return null;
-    }
-
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return null;
-    }
-
-    public ResultMessage redCover(BillVO billVO) {
-        return null;
-    }
-
-    public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return null;
-    }
-
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return null;
-    }
 }

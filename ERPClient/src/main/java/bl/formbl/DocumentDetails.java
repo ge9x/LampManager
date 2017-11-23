@@ -1,6 +1,6 @@
-package bl.financialbl;
+package bl.formbl;
 
-import blservice.financeblservice.DocumentDetailsInput;
+import blservice.formblservice.DocumentDetailsInput;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.salesblservice.SalesInfo;
 import vo.BillVO;

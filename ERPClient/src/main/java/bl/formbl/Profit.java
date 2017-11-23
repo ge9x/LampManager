@@ -1,4 +1,4 @@
-package bl.financialbl;
+package bl.formbl;
 
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.salesblservice.SalesInfo;

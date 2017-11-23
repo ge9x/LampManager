@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
  * Created by Kry·L on 2017/11/4.
  */
 public class FinancialNavbarController {
+    private FinancialViewController financialViewController;
     @FXML
     Label AccountIcon;
 
@@ -47,7 +48,13 @@ public class FinancialNavbarController {
     }
 
     public void clickAccountButton(){
-
+        financialViewController.showAccountView();
+    }
+    public void clickReceiptButton(){
+        financialViewController.showReceiptView();
     }
 
+    public void setFinancialViewController(FinancialViewController financialViewController){
+        this.financialViewController = financialViewController;
+    }
 }
