@@ -1,5 +1,7 @@
 package bl.userbl;
 
+import java.util.ArrayList;
+
 import dataservice.userdataservice.UserDataService;
 import util.ResultMessage;
 import vo.UserVO;
@@ -30,6 +32,10 @@ public class User {
 	}
 	
 	public UserVO findUserByID(String UserID){
+		return null;
+	}
+	
+	public ArrayList<UserVO> show(){
 		return null;
 	}
 	

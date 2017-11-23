@@ -14,13 +14,19 @@ public class CustomerBLService_Stub implements CustomerBLService{
 		{
 		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
 					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
-		CustomerVO c2=new CustomerVO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商1","15247678373",
+		CustomerVO c2=new CustomerVO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_ONE,"进货商1","15247678373",
 					"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0,600);
-		CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
+		CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_THREE,"进货商2","15244358373",
 				"南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
+		CustomerVO c4=new CustomerVO("00000004",CustomerCategory.PUR_AGENT,Level.LEVEL_TWO,"进货商3","15244358397",
+				"南京新街口","421001","12s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
+		CustomerVO c5=new CustomerVO("00000005",CustomerCategory.SELLER,Level.LEVEL_FOUR,"金主2","15546674310",
+				"南京仙林大学城","421000","ddk@163.com",1.0,15000.0,0.0,"业务员1",150.0,500);
 		customerData.add(c1);
 		customerData.add(c2);
 		customerData.add(c3);
+		customerData.add(c4);
+		customerData.add(c5);
 	}
 	
 	public String getNewCustomerID() {
@@ -90,6 +96,11 @@ public class CustomerBLService_Stub implements CustomerBLService{
 		}
 		System.out.println("Update customer failed");
 		return ResultMessage.FAILED;
+	}
+
+	public ArrayList<CustomerVO> show() {
+		// TODO Auto-generated method stub
+		return customerData;
 	}
 	
 }

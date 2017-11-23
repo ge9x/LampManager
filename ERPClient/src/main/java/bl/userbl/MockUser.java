@@ -51,4 +51,11 @@ public class MockUser extends User{
 		}
 		return null;
 	}
+	
+	@Override
+	public ArrayList<UserVO> show(){
+		ArrayList<UserVO> user = new ArrayList<UserVO>();
+		user.add(financialStaff);
+		return user;
+	}
 }

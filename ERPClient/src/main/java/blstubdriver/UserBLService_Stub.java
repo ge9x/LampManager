@@ -9,6 +9,19 @@ import util.UserPosition;
 import vo.UserVO;
 
 public class UserBLService_Stub implements UserBLService{
+	ArrayList<UserVO> users = new ArrayList<UserVO>();
+	{
+		UserVO user1 = new UserVO("0012", "1234", "InventoryStaff", UserPosition.INVENTORY_STAFF, UserLimits.STAFF);
+		UserVO user2 = new UserVO("0033", "1234", "SalesStaff", UserPosition.SALES_STAFF, UserLimits.STAFF);
+		UserVO user3 = new UserVO("0047", "1234", "FinancialStaff", UserPosition.FINANCIAL_STAFF, UserLimits.STAFF);
+		UserVO user4 = new UserVO("0026", "1234", "GeneralManager", UserPosition.GENERAL_MANAGER, UserLimits.STAFF);
+		UserVO user5 = new UserVO("0001", "1234", "Admin", UserPosition.ADMIN, UserLimits.STAFF);
+		users.add(user1);
+		users.add(user2);
+		users.add(user3);
+		users.add(user4);
+		users.add(user5);
+	}
 
 	public ResultMessage login(String userID, String password) {
 		// TODO Auto-generated method stub
@@ -65,6 +78,11 @@ public class UserBLService_Stub implements UserBLService{
 			return new UserVO("test", "123456", "test", UserPosition.ADMIN, UserLimits.STAFF);
 		}
 		return null;
+	}
+
+	public ArrayList<UserVO> show() {
+		// TODO Auto-generated method stub
+		return users;
 	}
 
 }
