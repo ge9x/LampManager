@@ -1,3 +1,7 @@
+.dialog-pane {
+    -fx-pref-height: 200px;
+    -fx-pref-width: 400px;
+}
 .text-field {
     -fx-background-color: #ffffff;
     -fx-border-color: #eeeeee;
@@ -6,9 +10,13 @@
     -fx-background-color: #1db1a4;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
+    -fx-text-fill: white;
+    -fx-pref-height: 30px;
+    -fx-pref-width: 60px;
 }
 #CancelButton {
     -fx-background-color: #f6f6f7;
     -fx-border-color: #1db1a4;
     -fx-border-width: 2px;
+    -fx-text-fill: #1db1a4;
 }

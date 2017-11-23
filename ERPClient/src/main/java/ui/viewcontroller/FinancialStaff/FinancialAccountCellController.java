@@ -1,9 +1,15 @@
 package ui.viewcontroller.FinancialStaff;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import ui.component.DialogFactory;
+import util.ResultMessage;
 import vo.AccountVO;
+
+import java.util.Optional;
 
 /**
  * Created by Kry·L on 2017/11/19.
@@ -56,10 +62,24 @@ public class FinancialAccountCellController {
     }
 
     public void clickEditButton(){
-        financialAccountController.editAccount(account.accountID);
+        Dialog dialog = DialogFactory.getTextInputDialog();
+        dialog.setHeaderText("请输入新的银行账户名称");
+        Optional result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String newName = (String)result.get();
+            account.accountName = newName;
+            financialAccountController.editAccount(account);
+        }
     }
     public void clickDeleteButton(){
-        financialAccountController.deleteAccount(account.accountID);
+        Dialog alert = DialogFactory.getConfirmationAlert();
+        alert.setHeaderText("确定要删除此账户？");
+        Optional result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            financialAccountController.deleteAccount(account.accountID);
+        }
     }
     public void setFinancialAccountController(FinancialAccountController financialAccountController){
         this.financialAccountController = financialAccountController;

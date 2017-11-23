@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/10/21.
  */
 public class AccountBLService_Stub implements AccountBLService{
+    boolean delete = false;
+    //注意ID没有
     public ResultMessage addAccount(AccountVO accountVO) {
         if (accountVO.accountName.equals("工商银行账户")) {
             System.out.println("Add account failed");
@@ -23,11 +25,13 @@ public class AccountBLService_Stub implements AccountBLService{
     public ResultMessage deleteAccount(String ID) {
         if (ID.equals("001")){
             System.out.println("Delete account success");
+            delete = true;
             return ResultMessage.SUCCESS;
         }else{
             System.out.println("Delete account failed");
             return ResultMessage.NOT_EXIST;
         }
+
     }
 
     public ArrayList<AccountVO> findAccountByName(String keyword) {
@@ -64,7 +68,9 @@ public class AccountBLService_Stub implements AccountBLService{
         accountVOS.add(vo2);
         accountVOS.add(vo3);
         accountVOS.add(vo4);
-        accountVOS.add(vo5);
+        if (!delete){
+            accountVOS.add(vo5);
+        }
 //        accountVOS.add(vo6);
         return accountVOS;
     }
