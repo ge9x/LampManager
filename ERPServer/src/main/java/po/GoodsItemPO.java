@@ -1,9 +1,16 @@
 package po;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * created by zlk on 2017/10/20
  */
 
+@Entity
+@Table(name = "goodsItem")
 public class GoodsItemPO {
 	/**商品编号*/
 	private String goodsID;
@@ -31,6 +38,8 @@ public class GoodsItemPO {
 		this.remarks=remarks;
 	}
 
+	@Id
+	@Column(name = "goodsID")
 	public String getGoodsID() {
 		return goodsID;
 	}
@@ -39,6 +48,7 @@ public class GoodsItemPO {
 		this.goodsID = goodsID;
 	}
 
+	@Column(name = "goodsName")
 	public String getGoodsName() {
 		return goodsName;
 	}
@@ -47,6 +57,7 @@ public class GoodsItemPO {
 		this.goodsName = goodsName;
 	}
 
+	@Column(name = "model")
 	public String getModel() {
 		return model;
 	}
@@ -55,6 +66,7 @@ public class GoodsItemPO {
 		this.model = model;
 	}
 
+	@Column(name = "number")
 	public int getNumber() {
 		return number;
 	}
@@ -63,6 +75,7 @@ public class GoodsItemPO {
 		this.number = number;
 	}
 
+	@Column(name = "price")
 	public double getPrice() {
 		return price;
 	}
@@ -71,6 +84,7 @@ public class GoodsItemPO {
 		this.price = price;
 	}
 
+	@Column(name = "sum")
 	public double getSum() {
 		return sum;
 	}
@@ -79,6 +93,7 @@ public class GoodsItemPO {
 		this.sum = sum;
 	}
 
+	@Column(name = "remarks")
 	public String getRemarks() {
 		return remarks;
 	}
