@@ -33,7 +33,7 @@ public class FinancialReceiptController {
         addIcon.setText("\ue61e");
     }
     public void showReceiptList(){
-
+        financialViewController.showReceiptView();
     }
     public void clickAddButton(){
         showReceiptEditView();

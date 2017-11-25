@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -25,11 +26,10 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
+import util.BillState;
+import util.BillType;
 import util.Money;
-import vo.AccountBillItemVO;
-import vo.AccountBillVO;
-import vo.AccountVO;
-import vo.BillVO;
+import vo.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +45,7 @@ public class FinancialReceiptEditController {
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
-
+    ArrayList<CustomerVO> customers;
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
             FXCollections.observableArrayList();
@@ -66,11 +66,21 @@ public class FinancialReceiptEditController {
     @FXML
     Text Total;
 
+    @FXML
+    ComboBox Customer;
+
     public void initialize(){
         addIcon.setText("\ue61e");
         String name = financeBLService.getUserID();
         Username.setText(name);
         accounts = financeBLService.getAllAccount();
+        customers = financeBLService.getAllCustomer();
+        //初始化Customer选择框
+        ArrayList<String> customerNames = new ArrayList<>();
+        for (CustomerVO customer : customers){
+            customerNames.add(customer.customerName);
+        }
+        Customer.getItems().addAll(customerNames);
 
         //初始化表格
         itemTable = new TableView<>();
@@ -90,6 +100,7 @@ public class FinancialReceiptEditController {
         itemTable.getColumns().addAll(accountColumn,moneyColumn,remarkColumn);
         vbox.getChildren().add(itemTable);
 
+        //总额Text与绑定转账金额之和绑定
         total.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -121,10 +132,33 @@ public class FinancialReceiptEditController {
     }
 
     public void clickSubmitButton(){
-//        financeBLService.submit();
+        String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
+        AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
+                BillState.SUBMITTED,BillType.RECEIPT,customerID,
+                Username.getText(),accountBillItems);
+        financeBLService.submit(accountBillVO);
+        financialReceiptController.showReceiptList();
     }
     public void clickCancelButton(){
+        Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("需要保存为草稿吗？");
+        Optional result = dialog.showAndWait();
 
+
+        if (result.isPresent()){
+            if (result.get() == ButtonType.OK) {
+                String customerID = "";
+                if (Customer.getSelectionModel().getSelectedIndex() >= 0){
+                    customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
+                }
+                AccountBillVO accountBillVO = new AccountBillVO(new Date(), BillID.getText(),
+                        BillState.DRAFT, BillType.RECEIPT, customerID,
+                        Username.getText(), accountBillItems);
+                financeBLService.save(accountBillVO);
+            }
+
+            financialReceiptController.showReceiptList();
+        }
     }
     public  Dialog getAccountBillItemDialog(){
         JFXComboBox name = new JFXComboBox();
