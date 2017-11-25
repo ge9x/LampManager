@@ -26,9 +26,9 @@ public class TestDatabase {
 		
 
 		ClassificationPO clapo = new ClassificationPO();
-		clapo.setId("11");
+		clapo.setId(11);
 		clapo.setName("灯");
-		GoodsPO gpo = new GoodsPO("0100011", "圣洁牌经典黑白款落地灯", "L", null, 500, 50, 233.3, 250, 233.3, 250);
+		GoodsPO gpo = new GoodsPO(11, "圣洁牌经典黑白款落地灯", "L", null, 500, 50, 233.3, 250, 233.3, 250);
 		List<GoodsPO> goods = new ArrayList<GoodsPO>();
 		goods.add(gpo);
 		clapo.setGoods(goods);
