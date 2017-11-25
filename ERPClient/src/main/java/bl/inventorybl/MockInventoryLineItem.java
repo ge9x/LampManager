@@ -14,30 +14,5 @@ public class MockInventoryLineItem extends InventoryLineItem {
 			int numberDifference, int totalPrice){
 		super(salesInfo, inventoryListItemType, goodsName, numberDifference, totalPrice);
 	}
-	
-	@Override
-	public String getGoodsID() {
-		return super.getGoodsID();
-	}
-
-	@Override
-	public InventoryListItemType getInventoryListItemType() {
-		return super.getInventoryListItemType();
-	}
-
-	@Override
-	public String getGoodsName() {
-		return super.getGoodsName();
-	}
-
-	@Override
-	public int getNumberDifference() {
-		return super.getNumberDifference();
-	}
-
-	@Override
-	public int getTotalPrice() {
-		return super.getTotalPrice();
-	}
 
 }

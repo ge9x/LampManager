@@ -13,6 +13,7 @@ public class FinancialViewController {
 
     private FinancialNavbarController financialNavbarController;
     private FinancialAccountController financialAccountController;
+    private FinancialReceiptController financialReceiptController;
     private MainUIController mainUIController;
 
     public FinancialViewController(MainUIController mainUIController){
@@ -23,22 +24,54 @@ public class FinancialViewController {
             navbarLoader.setLocation(getClass().getResource("/view/financialStaff/FinancialStaffNavbar.fxml"));
             Pane navbar = navbarLoader.load();
             financialNavbarController = navbarLoader.getController();
+            financialNavbarController.setFinancialViewController(this);
 
+            mainUIController.setLeft(navbar);
+        }catch (IOException e){
+                e.printStackTrace();
+        }
+        financialNavbarController.clickAccountButton();
+
+    }
+    public void showAccountView(){
+
+        mainUIController.setCenter(null);
+
+        try {
             FXMLLoader pageLoader = new FXMLLoader();
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/Account.fxml"));
             Pane page = pageLoader.load();
             financialAccountController = pageLoader.getController();
             financialAccountController.setFinancialViewController(this);
 
-            mainUIController.setLeft(navbar);
             mainUIController.setCenter(page);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        financialNavbarController.clickAccountButton();
+        financialAccountController.showAccountList();
+    }
+    public void showReceiptView(){
+        mainUIController.setCenter(null);
 
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/Receipt.fxml"));
+            Pane page = pageLoader.load();
+            financialReceiptController = pageLoader.getController();
+            financialReceiptController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        financialReceiptController.showReceiptList();
+    }
+
+    public void showReceiptEditView(Pane pane) {
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
     }
 
 }

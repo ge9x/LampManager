@@ -1,4 +1,4 @@
-package bl.financialbl;
+package bl.formbl;
 
 import blservice.salesblservice.SalesInfo;
 import vo.SalesDetailVO;
