@@ -52,7 +52,28 @@ public class GoodsPO {
 	private double recentRetailPrice;
 	
 	public GoodsPO(){ }
-	
+
+	public GoodsPO(String name, String model, ClassificationPO classification, int amount,
+			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
+			double recentRetailPrice) {
+		super();
+		this.name = name;
+		this.model = model;
+		this.classification = classification;
+		this.amount = amount;
+		this.alarmAmount = alarmAmount;
+		this.buyingPrice = buyingPrice;
+		this.retailPrice = retailPrice;
+		this.recentBuyingPrice = recentBuyingPrice;
+		this.recentRetailPrice = recentRetailPrice;
+	}
+
+	/**
+	 * 请使用无需设置ID的构造方法，因为：<br>
+	 * 1、要新增的PO的ID应由数据库自动生成，而非手动填入<br>
+	 * 2、要修改的PO应从数据库中得到，而非代码生成
+	 */
+	@Deprecated
 	public GoodsPO(int ID, String name, String model, ClassificationPO classification, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {

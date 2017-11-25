@@ -34,7 +34,21 @@ public class ClassificationPO {
 	private List<GoodsPO> goods;
 	
 	public ClassificationPO(){ }
-	
+
+	public ClassificationPO(String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
+		super();
+		this.name = name;
+		this.father = father;
+		this.chidren = chidren;
+		this.goods = goods;
+	}
+
+	/**
+	 * 请使用无需设置ID的构造方法，因为：<br>
+	 * 1、要新增的PO的ID应由数据库自动生成，而非手动填入<br>
+	 * 2、要修改的PO应从数据库中得到，而非代码生成
+	 */
+	@Deprecated
 	public ClassificationPO(int ID, String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
 		super();
 		this.ID = ID;
