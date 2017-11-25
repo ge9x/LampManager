@@ -1,6 +1,6 @@
 package datahelper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -62,32 +62,32 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	}
 
 	@Override
-	public T exactlyQuery(String field, String value) {
+	public T exactlyQuery(String field, Object value) {
 		return fullyQuery(field, value).get(0);
 	}
 
 	@Override
-	public List<T> fullyQuery(String field, String value) {
+	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		criteria.add(Restrictions.eq(field, value));
-		List<T> ret = criteria.list();
+		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
 	}
 
 	@Override
-	public List<T> fuzzyQuery(String field, String value) {
+	public ArrayList<T> fuzzyQuery(String field, String value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		criteria.add(Restrictions.like(field, value));
-		List<T> ret = criteria.list();
+		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
 	}
 
 	@Override
-	public List<T> multiQuery(List<Criterion> criteria) {
+	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria) {
 		initSession();
 		Criteria crit = session.createCriteria(type);
 		for(Criterion criterion : criteria){
@@ -103,7 +103,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 				break;
 			}
 		}
-		List<T> ret = crit.list();
+		ArrayList<T> ret = (ArrayList<T>) crit.list();
 		commitAndClose();
 		return ret;
 	}

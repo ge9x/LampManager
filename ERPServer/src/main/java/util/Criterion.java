@@ -14,11 +14,11 @@ public class Criterion {
 	/**
 	 * 约束值
 	 */
-	private String value;
+	private Object value;
 	/**
 	 * 范围查询方式时的上限
 	 */
-	private String anotherValue;
+	private Object anotherValue;
 	/**
 	 * 查询数据库的方式
 	 */
@@ -30,13 +30,13 @@ public class Criterion {
 	 * @param value 约束值
 	 * @param queryMode 查询方式
 	 */
-	public Criterion(String field, String value, QueryMode queryMode) {
+	public Criterion(String field, Object value, QueryMode queryMode) {
 		super();
 		this.field = field;
 		this.anotherValue = null;
 		this.queryMode = queryMode;
 		if(queryMode == QueryMode.FUZZY){
-			this.value = '%' + value + '%';
+			this.value = '%' + value.toString() + '%';
 		}
 		else{
 			this.value = value;
@@ -49,7 +49,7 @@ public class Criterion {
 	 * @param min 下限
 	 * @param max 上限
 	 */
-	public Criterion(String field, String min, String max) {
+	public Criterion(String field, Object min, Object max) {
 		super();
 		this.field = field;
 		this.value = min;
@@ -61,11 +61,11 @@ public class Criterion {
 		return field;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public String getAnotherValue() {
+	public Object getAnotherValue() {
 		return anotherValue;
 	}
 

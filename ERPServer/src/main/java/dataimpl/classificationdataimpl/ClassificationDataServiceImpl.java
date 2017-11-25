@@ -3,6 +3,8 @@ package dataimpl.classificationdataimpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import datahelper.DataHelper;
+import datahelper.HibernateDataHelper;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
 import util.ResultMessage;
@@ -14,6 +16,7 @@ import util.ResultMessage;
  */
 public class ClassificationDataServiceImpl implements ClassificationDataService{
 	private static ClassificationDataServiceImpl classificationDataServiceImpl;
+	private DataHelper<ClassificationPO> ClassificationDataHelper;
 	
 	public static ClassificationDataServiceImpl getInstance(){
 		if(classificationDataServiceImpl == null){
@@ -23,31 +26,26 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 	
 	private ClassificationDataServiceImpl(){
-		
+		this.ClassificationDataHelper = new HibernateDataHelper<ClassificationPO>();
 	}
 
 	public ArrayList<ClassificationPO> show() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return ClassificationDataHelper.fullyQuery("ID", null);
 	}
 
 	public ClassificationPO find(String ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return ClassificationDataHelper.exactlyQuery("ID", Integer.parseInt(ID));
 	}
 
 	public ResultMessage add(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return ClassificationDataHelper.save(po);
 	}
 
 	public ResultMessage delete(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return ClassificationDataHelper.delete(po);
 	}
 
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return ClassificationDataHelper.update(po);
 	}
 }

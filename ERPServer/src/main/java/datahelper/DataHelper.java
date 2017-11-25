@@ -1,6 +1,6 @@
 package datahelper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import util.Criterion;
 import util.ResultMessage;
@@ -37,25 +37,25 @@ public interface DataHelper<T> {
 	 * @param value 要匹配的值
 	 * @return 查询到的对象
 	 */
-	public T exactlyQuery(String field, String value);
+	public T exactlyQuery(String field, Object value);
 	/**
 	 * 完全匹配，多用于查询字段某一值的所有对象
 	 * @param field 要查询的字段
 	 * @param value 要匹配的值
 	 * @return 查询到的所有对象的集合
 	 */
-	public List<T> fullyQuery(String field, String value);
+	public ArrayList<T> fullyQuery(String field, Object value);
 	/**
 	 * 模糊查询
 	 * @param field 要查询的字段
 	 * @param value 要匹配的关键字
 	 * @return 查询到的对象的集合
 	 */
-	public List<T> fuzzyQuery(String field, String value);
+	public ArrayList<T> fuzzyQuery(String field, String value);
 	/**
 	 * 多重条件查询
 	 * @param criteria 所有条件的集合
 	 * @return 查询到的对象的集合
 	 */
-	public List<T> multiQuery(List<Criterion> criteria);
+	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria);
 }
