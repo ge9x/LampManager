@@ -11,9 +11,9 @@ import java.util.Date;
  */
 public class AccountBillPO extends BillPO {
     /**
-     * 客户名
+     * 客户的ID
      */
-    private String customerName;
+    private int customerID;
 
     /**
      * 操作员
@@ -30,9 +30,9 @@ public class AccountBillPO extends BillPO {
      */
     private double sum;
 
-    public AccountBillPO(String ID, Date date, BillType type, BillState state, String customerName, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
+    public AccountBillPO(String ID, Date date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
         super(ID, date, type, state);
-        this.customerName = customerName;
+        this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
         this.sum = calSum();
@@ -45,12 +45,12 @@ public class AccountBillPO extends BillPO {
         return sum;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public int getCustomerName() {
+        return customerID;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerName(int customerID) {
+        this.customerID = customerID;
     }
 
     public String getUserName() {
