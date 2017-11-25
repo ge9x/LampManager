@@ -84,7 +84,7 @@ public class MainUIController {
      */
     public void resizeToPage(){
         primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(1030);
+        primaryStage.setMinWidth(1000);
     }
 
     public void showAlert(){
