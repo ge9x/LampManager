@@ -7,6 +7,7 @@ import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -16,7 +17,7 @@ import util.ResultMessage;
  */
 public class ClassificationDataServiceImpl implements ClassificationDataService{
 	private static ClassificationDataServiceImpl classificationDataServiceImpl;
-	private DataHelper<ClassificationPO> ClassificationDataHelper;
+	private DataHelper<ClassificationPO> classificationDataHelper;
 	
 	public static ClassificationDataServiceImpl getInstance(){
 		if(classificationDataServiceImpl == null){
@@ -26,26 +27,31 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 	
 	private ClassificationDataServiceImpl(){
-		this.ClassificationDataHelper = new HibernateDataHelper<ClassificationPO>();
+		this.classificationDataHelper = new HibernateDataHelper<ClassificationPO>(ClassificationPO.class);
 	}
 
+	@Override
 	public ArrayList<ClassificationPO> show() throws RemoteException {
-		return ClassificationDataHelper.fullyQuery("ID", null);
+		return classificationDataHelper.multiQuery(new ArrayList<Criterion>());
 	}
 
+	@Override
 	public ClassificationPO find(String ID) throws RemoteException {
-		return ClassificationDataHelper.exactlyQuery("ID", Integer.parseInt(ID));
+		return classificationDataHelper.exactlyQuery("id", Integer.parseInt(ID));
 	}
 
+	@Override
 	public ResultMessage add(ClassificationPO po) throws RemoteException {
-		return ClassificationDataHelper.save(po);
+		return classificationDataHelper.save(po);
 	}
 
+	@Override
 	public ResultMessage delete(ClassificationPO po) throws RemoteException {
-		return ClassificationDataHelper.delete(po);
+		return classificationDataHelper.delete(po);
 	}
 
+	@Override
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
-		return ClassificationDataHelper.update(po);
+		return classificationDataHelper.update(po);
 	}
 }

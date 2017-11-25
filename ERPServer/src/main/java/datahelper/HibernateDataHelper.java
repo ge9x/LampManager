@@ -23,8 +23,9 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	private Session session;
 	private Class<T> type;
 	
-	public HibernateDataHelper(){
+	public HibernateDataHelper(Class<T> type){
 		sessionFactory = new Configuration().configure().buildSessionFactory();
+		this.type = type;
 	}
 	
 	private void initSession(){
