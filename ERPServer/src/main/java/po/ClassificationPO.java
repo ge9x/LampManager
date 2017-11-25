@@ -15,7 +15,7 @@ public class ClassificationPO {
 	/**
 	 * 商品分类ID
 	 */
-	private String ID;
+	private int ID;
 	/**
 	 * 商品分类名称
 	 */
@@ -35,7 +35,7 @@ public class ClassificationPO {
 	
 	public ClassificationPO(){ }
 	
-	public ClassificationPO(String ID, String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
+	public ClassificationPO(int ID, String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -45,12 +45,13 @@ public class ClassificationPO {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public String getId() {
+	public int getId() {
 		return ID;
 	}
 
-	public void setId(String ID) {
+	public void setId(int ID) {
 		this.ID = ID;
 	}
 

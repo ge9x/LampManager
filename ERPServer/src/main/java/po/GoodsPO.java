@@ -13,7 +13,7 @@ public class GoodsPO {
 	/**
 	 * 商品ID
 	 */
-	private String ID;
+	private int ID;
 	/**
 	 * 商品名称
 	 */
@@ -53,7 +53,7 @@ public class GoodsPO {
 	
 	public GoodsPO(){ }
 	
-	public GoodsPO(String ID, String name, String model, ClassificationPO classification, int amount,
+	public GoodsPO(int ID, String name, String model, ClassificationPO classification, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
 		super();
@@ -70,12 +70,13 @@ public class GoodsPO {
 	}
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public String getId() {
+	public int getId() {
 		return ID;
 	}
 	
-	public void setId(String ID) {
+	public void setId(int ID) {
 		this.ID = ID;
 	}
 	
