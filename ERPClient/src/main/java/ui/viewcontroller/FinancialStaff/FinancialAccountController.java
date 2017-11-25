@@ -82,8 +82,8 @@ public class FinancialAccountController {
         if (result.isPresent()){
             String accountName = null;
             String money = null;
-            Pair<String,String> pair = result.get();
-            AccountVO account = new AccountVO(null,pair.getKey(),Double.parseDouble(pair.getValue()));
+            Pair<String,String> results = result.get();
+            AccountVO account = new AccountVO(null,results.getKey(),Double.parseDouble(results.getValue()));
             ResultMessage re = accountBLService.addAccount(account);
             if (re == ResultMessage.SUCCESS){
                 showAccountList();
