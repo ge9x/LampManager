@@ -36,4 +36,23 @@ public class SalesStaffViewController {
         salesStaffNavBarController.clickCustomerButton();
 
     }
+    
+    public void showCustomerList(){
+    	mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/CustomerInfo.fxml"));
+            Pane page = pageLoader.load();
+            salesStaffCustomerInfoController = pageLoader.getController();
+            salesStaffCustomerInfoController.setSalesStaffViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        salesStaffCustomerInfoController.showCustomerList();
+    }
+    
 }
