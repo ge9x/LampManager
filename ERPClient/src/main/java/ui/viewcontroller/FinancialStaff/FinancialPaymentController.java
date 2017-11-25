@@ -14,16 +14,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Kry·L on 2017/11/23.
+ * Created by Kry·L on 2017/11/25.
  */
-public class FinancialReceiptController {
+
+public class FinancialPaymentController {
 
 
     @FXML
     Label addIcon;
 
     FinancialViewController financialViewController;
-    FinancialReceiptEditController financialReceiptEditController;
+    FinancialPaymentEditController financialPaymentEditController;
 
     FinanceBLService financeBLService = new FinanceBLService_Stub();
     AccountBillVO accountBillVO;
@@ -32,21 +33,21 @@ public class FinancialReceiptController {
     public void initialize(){
         addIcon.setText("\ue61e");
     }
-    public void showReceiptList(){
-        financialViewController.showReceiptView();
+    public void showPaymentList(){
+//        financialViewController.showPaymentView();
     }
     public void clickAddButton(){
-        showReceiptEditView();
-        financialReceiptEditController.addReceipt();
+        showPaymentEditView();
+//        financialPaymentEditController.addPayment();
     }
-    public void showReceiptEditView(){
+    public void showPaymentEditView(){
         try{
             FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/financialStaff/ReceiptEdit.fxml"));
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/PaymentEdit.fxml"));
             Pane page = pageLoader.load();
-            financialReceiptEditController = pageLoader.getController();
-            financialReceiptEditController.setFinancialReceiptController(this);
-            financialViewController.showReceiptEditView(page);
+            financialPaymentEditController = pageLoader.getController();
+            financialPaymentEditController.setFinancialPaymentController(this);
+//            financialViewController.showPaymentEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }

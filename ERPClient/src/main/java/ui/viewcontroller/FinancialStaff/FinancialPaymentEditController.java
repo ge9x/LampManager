@@ -38,9 +38,9 @@ import java.util.Optional;
 /**
  * Created by Kry·L on 2017/11/23.
  */
-public class FinancialReceiptEditController {
+public class FinancialPaymentEditController {
 
-    FinancialReceiptController financialReceiptController;
+    FinancialPaymentController financialPaymentController;
     FinanceBLService financeBLService = new FinanceBLService_Stub();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
@@ -137,7 +137,7 @@ public class FinancialReceiptEditController {
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService.submit(accountBillVO);
-        financialReceiptController.showReceiptList();
+        financialPaymentController.showPaymentList();
     }
     public void clickCancelButton(){
         Dialog dialog = DialogFactory.getConfirmationAlert();
@@ -157,7 +157,7 @@ public class FinancialReceiptEditController {
                 financeBLService.save(accountBillVO);
             }
 
-            financialReceiptController.showReceiptList();
+            financialPaymentController.showPaymentList();
         }
     }
     public  Dialog getAccountBillItemDialog(){
@@ -204,8 +204,8 @@ public class FinancialReceiptEditController {
         return dialog;
     }
 
-    public void setFinancialReceiptController(FinancialReceiptController financialReceiptController){
-        this.financialReceiptController = financialReceiptController;
+    public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
+        this.financialPaymentController = financialPaymentController;
     }
 
     public class AccountBillItemBean {

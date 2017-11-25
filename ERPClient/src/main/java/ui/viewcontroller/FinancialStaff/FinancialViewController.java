@@ -65,8 +65,6 @@ public class FinancialViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        financialReceiptController.showReceiptList();
     }
 
     public void showReceiptEditView(Pane pane) {
