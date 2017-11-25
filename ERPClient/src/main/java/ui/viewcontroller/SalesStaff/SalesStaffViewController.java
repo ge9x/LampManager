@@ -55,4 +55,7 @@ public class SalesStaffViewController {
         salesStaffCustomerInfoController.showCustomerList();
     }
     
+    public void showCustomerDetail(Pane customerDetail){
+    	mainUIController.setCenter(customerDetail);
+    }
 }

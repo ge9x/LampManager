@@ -52,7 +52,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="DetailIcon" contentDisplay="CENTER" text="Label">
+            <Label fx:id="DetailIcon" contentDisplay="CENTER" onMouseClicked="#clickDetailButton" text="Label">
                <VBox.margin>
                   <Insets top="40.0" />
                </VBox.margin>
