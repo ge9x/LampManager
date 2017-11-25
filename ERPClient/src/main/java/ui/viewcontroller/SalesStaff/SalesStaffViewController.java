@@ -21,18 +21,13 @@ public class SalesStaffViewController {
             Pane navbar = navbarLoader.load();
             salesStaffNavBarController = navbarLoader.getController();
 
-            FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/salesStaff/CustomerInfo.fxml"));
-            Pane page = pageLoader.load();
-            salesStaffCustomerInfoController = pageLoader.getController();
-
             mainUIController.setLeft(navbar);
-            mainUIController.setCenter(page);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        salesStaffNavBarController.setSalesStaffViewController(this);
         salesStaffNavBarController.clickCustomerButton();
 
     }
