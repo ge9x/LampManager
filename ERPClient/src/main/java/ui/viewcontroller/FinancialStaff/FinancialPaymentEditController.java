@@ -137,7 +137,7 @@ public class FinancialPaymentEditController {
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService.submit(accountBillVO);
-        financialReceiptController.showReceiptList();
+        financialPaymentController.showPaymentList();
     }
     public void clickCancelButton(){
         Dialog dialog = DialogFactory.getConfirmationAlert();
@@ -157,7 +157,7 @@ public class FinancialPaymentEditController {
                 financeBLService.save(accountBillVO);
             }
 
-            financialReceiptController.showReceiptList();
+            financialPaymentController.showPaymentList();
         }
     }
     public  Dialog getAccountBillItemDialog(){
@@ -204,8 +204,8 @@ public class FinancialPaymentEditController {
         return dialog;
     }
 
-    public void setFinancialReceiptController(FinancialReceiptController financialReceiptController){
-        this.financialReceiptController = financialReceiptController;
+    public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
+        this.financialPaymentController = financialPaymentController;
     }
 
     public class AccountBillItemBean {
