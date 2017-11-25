@@ -7,6 +7,11 @@ import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
 import util.ResultMessage;
 
+/**
+ * Created on 2017/11/23
+ * @author 巽
+ *
+ */
 public class ClassificationDataServiceImpl implements ClassificationDataService{
 	private static ClassificationDataServiceImpl classificationDataServiceImpl;
 	

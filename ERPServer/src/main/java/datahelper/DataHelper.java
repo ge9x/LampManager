@@ -18,19 +18,19 @@ public interface DataHelper<T> {
 	 * @param t 要添加的持久化对象
 	 * @return 是否添加成功
 	 */
-	public ResultMessage save(T t);
+	public ResultMessage save(T po);
 	/**
 	 * 删除数据库中的持久化对象
 	 * @param t 要删除的持久化对象
 	 * @return 是否删除成功
 	 */
-	public ResultMessage delete(T t);
+	public ResultMessage delete(T po);
 	/**
 	 * 修改数据库中的持久化对象
 	 * @param t 要修改的持久化对象
 	 * @return 是否修改成功
 	 */
-	public ResultMessage update(T t);
+	public ResultMessage update(T po);
 	/**
 	 * 精确查询，多用于通过ID查询，默认结果数<=1
 	 * @param field 要查询的字段
