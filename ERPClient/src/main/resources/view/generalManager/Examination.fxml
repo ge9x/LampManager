@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/account.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerExaminationViewController">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutX="29.0" layoutY="93.0" prefHeight="81.0" prefWidth="755.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <effect>
+            <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+         </effect>
+         <children>
+            <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+            <Label text="管理银行账户">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+            <Label fx:id="addIcon" styleClass="icon-label" text="+">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </Label>
+            <TextField style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
+               <HBox.margin>
+                  <Insets left="330.0" />
+               </HBox.margin></TextField>
+            <Label fx:id="searchIcon" styleClass="icon-label" text="Q">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <TilePane fx:id="accountList" layoutX="29.0" layoutY="200.0" prefHeight="376.0" prefWidth="755.0" />
+   </children>
+</AnchorPane>
+
+

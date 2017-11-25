@@ -1,5 +1,7 @@
 package blservice.userblservice;
 
+import java.util.ArrayList;
+
 import util.ResultMessage;
 import vo.UserVO;
 
@@ -46,4 +48,6 @@ public interface UserBLService {
      * @return userVO
      */
 	public UserVO findUserByID(String UserID);
+	
+	public ArrayList<UserVO> show();
 }

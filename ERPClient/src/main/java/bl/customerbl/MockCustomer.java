@@ -100,4 +100,10 @@ public class MockCustomer extends Customer{
 			return ResultMessage.FAILED;
 		}
 	}
+	
+	public ArrayList<CustomerVO> show() {
+		ArrayList<CustomerVO> customerList=new ArrayList<CustomerVO>();
+		customerList.add(exampleCustomerVO);
+		return customerList;
+	}
 }

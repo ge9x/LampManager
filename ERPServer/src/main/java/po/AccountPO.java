@@ -5,6 +5,10 @@ package po;
  */
 public class AccountPO {
     /**
+     * 银行账户ID
+     */
+    private  String ID;
+    /**
      * 银行账户名称
      */
     private String name;
@@ -14,9 +18,10 @@ public class AccountPO {
      */
     private double money;
 
-    public AccountPO(String name, double money) {
+    public AccountPO(String ID, String name, double money) {
         this.name = name;
         this.money = money;
+        this.ID = ID;
     }
 
     public String getName() {
@@ -33,5 +38,13 @@ public class AccountPO {
 
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

@@ -62,4 +62,6 @@ public interface CustomerBLService {
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo);
 	
+	public ArrayList<CustomerVO> show();
+	
 }

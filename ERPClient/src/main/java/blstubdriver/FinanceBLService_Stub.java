@@ -1,8 +1,8 @@
 package blstubdriver;
 
-import blservice.financeblservice.DocumentDetailsInput;
+import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
-import blservice.financeblservice.SalesDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
 import util.*;
 import vo.*;
 
@@ -18,8 +18,8 @@ public class FinanceBLService_Stub implements FinanceBLService {
     ArrayList<CustomerVO> customerVOS;
     ArrayList<AccountVO> accountVOS;
     AccountBillVO billVO;
-    ArrayList<SalesDetailVO> salesDetailVOS;
-    ProfitVO profitVO;
+
+
     ArrayList<BillVO> billVOS;
 
     public FinanceBLService_Stub(){
@@ -30,19 +30,16 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
                 "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 
-        AccountVO vo1 = new AccountVO("工商银行账户1",2000);
-        AccountVO vo2 = new AccountVO("工商银行账户2",1000);
-        AccountVO vo3 = new AccountVO("工商银行账户3",4000);
+        AccountVO vo1 = new AccountVO("001","工商银行账户1",2000);
+        AccountVO vo2 = new AccountVO("001","工商银行账户2",1000);
+        AccountVO vo3 = new AccountVO("001","工商银行账户3",4000);
 
         AccountBillItemVO itemVO1 = new AccountBillItemVO(vo1,300,"卖出灯具20个");
         AccountBillItemVO itemVO2 = new AccountBillItemVO(vo2,400,"卖出灯具30个");
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         CashBillItemVO itemVO4 = new CashBillItemVO("吃饭",200,"请客户吃中饭");
 
-        SalesDetailVO salesDetailVO1 = new SalesDetailVO(new Date(),"霓虹灯", "大", 20, 35.0);
-        SalesDetailVO salesDetailVO2 = new SalesDetailVO(new Date(),"挂灯", "xxdd", 10, 35.0);
-        salesDetailVOS.add(salesDetailVO1);
-        salesDetailVOS.add(salesDetailVO2);
+
 
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
@@ -81,9 +78,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
                 ,"00000001","默认仓库","阿红",goodsItemVOS,"满足客户需求"
                 ,new Date());
 
-        profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
-                200,400,900,9500,5000,
-                4000,1000,500,5500,4000);
+
     }
 
     public String getNewReceiptID() {
@@ -174,43 +169,8 @@ public class FinanceBLService_Stub implements FinanceBLService {
         }
     }
 
-    public BillVO findByID(String ID) {
-        if (ID.equals("SKD-20171022-00001")){
-            return billVO;
-        }else{
-            return null;
-        }
-    }
 
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return salesDetailVOS;
-    }
 
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return billVOS;
-    }
 
-    public ResultMessage redCover(BillVO vo) {
-        if (vo.ID.equals(billVO.ID)){
-            System.out.println("RedCover succeed");
-            return ResultMessage.SUCCESS;
-        }else{
-            System.out.println("RedCover failed");
-            return ResultMessage.FAILED;
-        }
-    }
 
-    public ResultMessage redCoverAndCopy(BillVO vo) {
-        if (vo.ID.equals(billVO.ID)){
-            System.out.println("RedCoverAndCopy succeed");
-            return ResultMessage.SUCCESS;
-        }else{
-            System.out.println("RedCoverAndCopy failed");
-            return ResultMessage.FAILED;
-        }
-    }
-
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return profitVO;
-    }
 }

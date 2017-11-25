@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MockAccountList extends AccountList {
     @Override
     public ArrayList<AccountVO> getAccounts() {
-        AccountVO account = new AccountVO("工商银行账户", 2000.00);
+        AccountVO account = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList<AccountVO> accountVOS = new ArrayList<AccountVO>();
         accountVOS.add(account);
         return accountVOS;

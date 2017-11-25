@@ -85,4 +85,8 @@ public class Customer {
 	public ResultMessage updateCustomer(CustomerVO vo){
 		return null;
 	}
+	
+	public ArrayList<CustomerVO> show() {
+		return null;
+	}
 }

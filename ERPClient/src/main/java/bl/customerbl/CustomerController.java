@@ -54,5 +54,9 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	public CustomerVO getCustomerByID() {
 		return null;
 	}
+
+	public ArrayList<CustomerVO> show() {
+		return null;
+	}
 	
 }
