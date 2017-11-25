@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
+}
+#title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+.tree-table-view .column-header {
+    -fx-pref-height: 30px;
+}
+#BillPane {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+.input-label {
+    -fx-text-fill: #707070;
+    -fx-font-size: 14px;
+}
+.ID-label,#BillID {
+    -fx-font-size: 18px;
+}

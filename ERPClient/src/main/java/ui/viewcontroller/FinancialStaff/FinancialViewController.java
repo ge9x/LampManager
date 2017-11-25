@@ -69,4 +69,9 @@ public class FinancialViewController {
         financialReceiptController.showReceiptList();
     }
 
+    public void showReceiptEditView(Pane pane) {
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+
 }
