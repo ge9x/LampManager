@@ -1,12 +1,16 @@
 package po;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
 
 /**
  * Created on 2017/10/21
  * @author 巽
  *
  */
+@Entity
+@Table(name = "classification")
 public class ClassificationPO {
 	/**
 	 * 商品分类ID
@@ -23,13 +27,15 @@ public class ClassificationPO {
 	/**
 	 * 该商品分类的所有子分类
 	 */
-	private ArrayList<ClassificationPO> chidren;
+	private List<ClassificationPO> chidren;
 	/**
 	 * 该商品分类下的所有商品
 	 */
-	private ArrayList<GoodsPO> goods;
+	private List<GoodsPO> goods;
 	
-	public ClassificationPO(String ID, String name, ClassificationPO father, ArrayList<ClassificationPO> chidren, ArrayList<GoodsPO> goods) {
+	public ClassificationPO(){ }
+	
+	public ClassificationPO(String ID, String name, ClassificationPO father, List<ClassificationPO> chidren, List<GoodsPO> goods) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -38,6 +44,8 @@ public class ClassificationPO {
 		this.goods = goods;
 	}
 
+	@Id
+	@Column(name = "id")
 	public String getId() {
 		return ID;
 	}
@@ -46,6 +54,7 @@ public class ClassificationPO {
 		this.ID = ID;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -54,6 +63,8 @@ public class ClassificationPO {
 		this.name = name;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "claid")
 	public ClassificationPO getFather() {
 		return father;
 	}
@@ -62,19 +73,23 @@ public class ClassificationPO {
 		this.father = father;
 	}
 
-	public ArrayList<ClassificationPO> getChidren() {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "claid")
+	public List<ClassificationPO> getChidren() {
 		return chidren;
 	}
 
-	public void setChidren(ArrayList<ClassificationPO> chidren) {
+	public void setChidren(List<ClassificationPO> chidren) {
 		this.chidren = chidren;
 	}
 
-	public ArrayList<GoodsPO> getGoods() {
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "claid")
+	public List<GoodsPO> getGoods() {
 		return goods;
 	}
 
-	public void setGoods(ArrayList<GoodsPO> goods) {
+	public void setGoods(List<GoodsPO> goods) {
 		this.goods = goods;
 	}
 	

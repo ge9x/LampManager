@@ -2,8 +2,18 @@ package po;
 
 import util.Level;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import util.CustomerCategory;
 
+@Entity
+@Table(name = "customer")
 public class CustomerPO {
 	/**客户编号*/
 	private String customerID;
@@ -55,7 +65,8 @@ public class CustomerPO {
 		this.voucher=voucher;
 	}
 
-
+	@Id
+	@Column(name = "id")
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -65,7 +76,8 @@ public class CustomerPO {
 		this.customerID = customerID;
 	}
 
-
+	@Column
+	@Enumerated(EnumType.STRING)
 	public CustomerCategory getCategory() {
 		return category;
 	}
@@ -75,7 +87,8 @@ public class CustomerPO {
 		this.category = category;
 	}
 
-
+	@Column
+	@Enumerated(EnumType.STRING)
 	public Level getLevel() {
 		return level;
 	}
@@ -85,7 +98,7 @@ public class CustomerPO {
 		this.level = level;
 	}
 
-
+	@Column(name = "customerName")
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -95,7 +108,7 @@ public class CustomerPO {
 		this.customerName = customerName;
 	}
 
-
+	@Column(name = "phone")
 	public String getPhone() {
 		return phone;
 	}
@@ -105,7 +118,7 @@ public class CustomerPO {
 		this.phone = phone;
 	}
 
-
+	@Column(name = "address")
 	public String getAddress() {
 		return address;
 	}
@@ -115,7 +128,7 @@ public class CustomerPO {
 		this.address = address;
 	}
 
-
+	@Column(name = "postcode")
 	public String getPostCode() {
 		return postCode;
 	}
@@ -125,7 +138,7 @@ public class CustomerPO {
 		this.postCode = postCode;
 	}
 
-
+	@Column(name = "mail")
 	public String getMail() {
 		return mail;
 	}
@@ -135,7 +148,7 @@ public class CustomerPO {
 		this.mail = mail;
 	}
 
-
+	@Column(name = "receivableLimit")
 	public double getReceivableLimit() {
 		return receivableLimit;
 	}
@@ -145,7 +158,7 @@ public class CustomerPO {
 		this.receivableLimit = receivableLimit;
 	}
 
-
+	@Column(name = "receive")
 	public double getReceive() {
 		return receive;
 	}
@@ -155,7 +168,7 @@ public class CustomerPO {
 		this.receive = receive;
 	}
 
-
+	@Column(name = "pay")
 	public double getPay() {
 		return pay;
 	}
@@ -165,7 +178,7 @@ public class CustomerPO {
 		this.pay = pay;
 	}
 
-
+	@Column(name = "salesman")
 	public String getSalesman() {
 		return salesman;
 	}
@@ -175,7 +188,7 @@ public class CustomerPO {
 		this.salesman = salesman;
 	}
 
-
+	@Column(name = "points")
 	public double getPoints() {
 		return points;
 	}
@@ -185,7 +198,7 @@ public class CustomerPO {
 		this.points = points;
 	}
 
-
+	@Column(name = "voucher")
 	public double getVoucher() {
 		return voucher;
 	}
