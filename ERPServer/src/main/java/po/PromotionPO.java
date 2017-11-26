@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -22,7 +24,7 @@ import util.PromotionType;
 @Entity
 @Table(name = "promotion")
 public class PromotionPO {
-	private String promotionID;
+	private int promotionID;
 	
 	private double goodsTotal;
 	
@@ -46,10 +48,9 @@ public class PromotionPO {
 	
 	private PromotionType type;
 
-	public PromotionPO(String promotionID, double goodsTotal, double bargainTotal, Date startDate, Date endDate,
+	public PromotionPO( double goodsTotal, double bargainTotal, Date startDate, Date endDate,
 			List<GoodsPO> bargains, double voucher, double allowance, List<GoodsPO> gifts, Level level,
 			double totalPrice, PromotionType type) {
-		this.promotionID = promotionID;
 		this.goodsTotal = goodsTotal;
 		this.bargainTotal = bargainTotal;
 		this.startDate = startDate;
@@ -64,12 +65,13 @@ public class PromotionPO {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "promotionID")
-	public String getPromotionID() {
+	public int getPromotionID() {
 		return promotionID;
 	}
 
-	public void setPromotionID(String promotionID) {
+	public void setPromotionID(int promotionID) {
 		this.promotionID = promotionID;
 	}
 

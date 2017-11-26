@@ -19,9 +19,9 @@ public class SalesDataService_Stub implements SalesDataService{
 	ArrayList<SalesPO> salesBill=new ArrayList<SalesPO>();
 	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO("01", "霓虹灯",null, 20, 35.0,
+	GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO("02", "挂灯",null, 10, 35.0,
+	GoodsItemPO gi2=new GoodsItemPO(2, "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);

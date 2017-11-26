@@ -9,7 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import dataimpl.classificationdataimpl.ClassificationDataServiceImpl;
-import dataimpl.goodsdataimpl.GoodsDataServiceImpl;
+//import dataimpl.goodsdataimpl.GoodsDataServiceImpl;
 import dataservice.classificationdataservice.ClassificationDataService;
 import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
@@ -70,7 +70,7 @@ public class TestDatabase {
 	public void testGoods(){
 		Session session = setUp();
 		
-		GoodsDataService goodsImpl = GoodsDataServiceImpl.getInstance();
+		//GoodsDataService goodsImpl = GoodsDataServiceImpl.getInstance();
 		
 		end(session);
 	}
@@ -78,7 +78,7 @@ public class TestDatabase {
 	public static void main(String[] args) {
 		TestDatabase test = new TestDatabase();
 		
-//		test.testClassification();
+		test.testClassification();
 		test.testGoods();
 		
 		test.sf.close();
