@@ -72,4 +72,8 @@ public class SalesStaffCustomerInfoViewController {
     public void showCustomerDetail(Pane customerDetail){
     	salesStaffViewController.showCustomerDetail(customerDetail);
     }
+    
+    public void clickReturnButton(){
+    	salesStaffViewController.showCustomerList();
+    }
 }

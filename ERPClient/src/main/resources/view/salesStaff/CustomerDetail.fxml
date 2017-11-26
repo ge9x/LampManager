@@ -307,12 +307,12 @@
             </VBox>
          </content>
       </ScrollPane>
-      <JFXButton layoutX="703.0" layoutY="550.0" onAction="#clickEditButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #1DB1A4; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #1db1a4;" text="编    辑" textFill="WHITE">
+      <JFXButton fx:id="editButton" layoutX="703.0" layoutY="550.0" onAction="#clickEditButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #1DB1A4; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #1db1a4;" text="编    辑" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="600.0" layoutY="550.0" onAction="#clickReturnButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
+      <JFXButton fx:id="returnButton" layoutX="600.0" layoutY="550.0" onAction="#clickReturnButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
          <font>
             <Font size="15.0" />
          </font>

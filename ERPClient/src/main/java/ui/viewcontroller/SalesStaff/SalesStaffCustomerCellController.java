@@ -91,6 +91,6 @@ public class SalesStaffCustomerCellController {
     }
     
     public void clickReturnButton(){
-    	salesStaffCustomerInfoViewController.showCustomerList();
+    	salesStaffCustomerInfoViewController.clickReturnButton();
     }
 }
