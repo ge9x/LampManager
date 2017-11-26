@@ -98,7 +98,6 @@ public class SalesStaffCustomerDetailViewController {
 	
 	public void clickEditButton(){
 		if(!hasEdited){
-			customerID.setEditable(true);
 			customerType.setEditable(true);
 			customerName.setEditable(true);
 			customerPhone.setEditable(true);
@@ -118,7 +117,7 @@ public class SalesStaffCustomerDetailViewController {
 			customer.customerName = customerName.getText();
 			customer.phone = customerPhone.getText();
 			customer.address = customerAddress.getText();
-			customer.phone = customerPostcode.getText();
+			customer.postCode = customerPostcode.getText();
 			customer.mail = customerMail.getText();
 			customer.salesman = customerSalesman.getText();
 			customer.receivableLimit = Double.parseDouble(customerReceivableLimit.getText());
