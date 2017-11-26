@@ -53,6 +53,22 @@ public class FinancialNavbarController {
     public void clickReceiptButton(){
         financialViewController.showReceiptView();
     }
+    public void clickPaymentButton() {
+        financialViewController.showPaymentView();
+    }
+    public void clickCashBillButton(){
+        financialViewController.showCashBillView();
+    }
+    public void clickSalesDetailsButton(){
+        financialViewController.showSalesDetailsView();
+    }
+    public void clickDocumentDetailsButton(){
+        financialViewController.showDocumentDetailsView();
+    }
+    public void clickProfieView(){
+        financialViewController.showProfitView();
+    }
+
 
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
