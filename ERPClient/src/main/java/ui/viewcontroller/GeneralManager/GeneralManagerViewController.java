@@ -20,14 +20,9 @@ public class GeneralManagerViewController {
             navbarLoader.setLocation(getClass().getResource("/view/generalManager/GeneralManagerNavBar.fxml"));
             Pane navbar = navbarLoader.load();
             generalManagerNavBarController = navbarLoader.getController();
-
-            FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/generalManager/Examination.fxml"));
-            Pane page = pageLoader.load();
-            generalManagerExaminationViewController = pageLoader.getController();
+            generalManagerNavBarController.setGeneralManagerViewController(this);
 
             mainUIController.setLeft(navbar);
-            mainUIController.setCenter(page);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,5 +30,23 @@ public class GeneralManagerViewController {
 
         generalManagerNavBarController.clickExaminationButton();
 
+    }
+    
+    public void showExaminationView(){
+    	mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/generalManager/Examination.fxml"));
+            Pane page = pageLoader.load();
+            generalManagerExaminationViewController = pageLoader.getController();
+            generalManagerExaminationViewController.setGeneralManagerViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        generalManagerExaminationViewController.showBillList();
     }
 }

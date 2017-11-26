@@ -278,7 +278,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                            <children>
-                              <Label fx:id="customerSalesman" text="默认业务员">
+                              <Label text="默认业务员">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
@@ -286,7 +286,7 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label prefHeight="21.0" prefWidth="338.0" text="Label">
+                              <Label fx:id="customerSalesman" prefHeight="21.0" prefWidth="338.0" text="Label">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
@@ -312,7 +312,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="600.0" layoutY="557.0" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
+      <JFXButton layoutX="600.0" layoutY="557.0" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
          <font>
             <Font size="15.0" />
          </font>
