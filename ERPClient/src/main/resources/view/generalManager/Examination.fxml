@@ -22,7 +22,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerExaminationViewController">
    <children>
-      <ScrollPane layoutX="5.0" layoutY="50.0" prefHeight="497.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="481.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="506.0" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
@@ -59,12 +59,12 @@
             </VBox>
          </content>
       </ScrollPane>
-      <JFXButton layoutX="715.0" layoutY="554.0" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-color: #1db1a4; -fx-border-radius: 5; -fx-border-width: 2;" text="通   过" textFill="WHITE">
+      <JFXButton layoutX="715.0" layoutY="547.0" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-color: #1db1a4; -fx-border-radius: 5; -fx-border-width: 2;" text="通   过" textFill="WHITE">
          <font>
             <Font name="Microsoft YaHei" size="13.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="591.0" layoutY="554.0" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: #f6f6f7; -fx-border-color: #1db1a4; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;" text="不 通 过" textFill="#1db1a4">
+      <JFXButton layoutX="614.0" layoutY="547.0" prefHeight="32.0" prefWidth="84.0" style="-fx-background-color: #f6f6f7; -fx-border-color: #1db1a4; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 2;" text="不 通 过" textFill="#1db1a4">
          <font>
             <Font size="13.0" />
          </font>

@@ -41,7 +41,7 @@
             <Insets top="10.0" />
          </VBox.margin>
          <children>
-            <Label fx:id="billIDIcon" prefHeight="40.0" prefWidth="47.0" text="Label">
+            <Label fx:id="billIDIcon" alignment="CENTER" prefHeight="40.0" prefWidth="47.0" styleClass="icon-label" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -58,7 +58,7 @@
       </HBox>
       <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billDateIcon" prefHeight="40.0" prefWidth="47.0" text="Label">
+            <Label fx:id="billDateIcon" alignment="CENTER" prefHeight="40.0" prefWidth="47.0" styleClass="icon-label" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -75,7 +75,7 @@
       </HBox>
       <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billCreaterIcon" prefHeight="41.0" prefWidth="47.0" text="Label">
+            <Label fx:id="billCreaterIcon" alignment="CENTER" prefHeight="41.0" prefWidth="47.0" styleClass="icon-label" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
@@ -92,7 +92,7 @@
       </HBox>
       <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billMoneyIcon" prefHeight="41.0" prefWidth="47.0" text="Label">
+            <Label fx:id="billMoneyIcon" alignment="CENTER" prefHeight="35.0" prefWidth="47.0" styleClass="icon-label" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>

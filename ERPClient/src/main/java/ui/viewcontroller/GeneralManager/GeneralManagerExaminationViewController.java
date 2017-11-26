@@ -29,7 +29,7 @@ public class GeneralManagerExaminationViewController {
         billList.setVgap(10);
         billList.setPrefColumns(3);
 
-        showBillList();
+//        showBillList();
     }
     
     public void setGeneralManagerViewController(GeneralManagerViewController generalManagerViewController){

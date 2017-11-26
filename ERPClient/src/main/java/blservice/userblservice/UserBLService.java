@@ -50,4 +50,7 @@ public interface UserBLService {
 	public UserVO findUserByID(String UserID);
 	
 	public ArrayList<UserVO> show();
+	
+	public String getCurrentUserID();
+	
 }
