@@ -13,9 +13,9 @@ public class AccountBillVO extends BillVO{
 
 
     /**
-     * 客户名称
+     * 客户ID
      */
-    public String customerName;
+    public String customerID;
 
     /**
      * 操作员（当前登录用户）名称
@@ -32,12 +32,12 @@ public class AccountBillVO extends BillVO{
      */
     public double sum;
 
-    public AccountBillVO(Date date, String ID, BillState state, BillType type, String customerName, String userName, ArrayList<AccountBillItemVO> items) {
+    public AccountBillVO(Date date, String ID, BillState state, BillType type, String customerID, String userName, ArrayList<AccountBillItemVO> items) {
         this.date = date;
         this.ID = ID;
         this.state = state;
         this.type = type;
-        this.customerName = customerName;
+        this.customerID = customerID;
         this.userName = userName;
         this.accountBillItems = items;
         this.sum = calSum();

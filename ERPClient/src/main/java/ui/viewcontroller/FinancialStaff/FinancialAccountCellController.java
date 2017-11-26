@@ -6,6 +6,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import ui.component.DialogFactory;
+import util.Money;
 import util.ResultMessage;
 import vo.AccountVO;
 
@@ -42,24 +43,10 @@ public class FinancialAccountCellController {
     public void setAccount(AccountVO account){
         this.account = account;
         BankName.setText(account.accountName);
-        Balance.setText(getMoneyString(account.money));
+        Balance.setText(Money.getMoneyString(account.money));
     }
 
-    String getMoneyString(double money){
-        String raw = String.valueOf(money);
-        if (!raw.contains(".")){
-            raw = raw + ".00";
-        }
-        if ((raw.length() - raw.lastIndexOf(".")) < 3){
-            for (int i = 0; i < 3-(raw.length() - raw.lastIndexOf(".")); i++){
-                raw = raw + "0";
-            }
-        }
-        for (int i = raw.lastIndexOf(".")-3; i >= 0; i=i-3){
-            raw = raw.substring(0,i) + "," + raw.substring(i);
-        }
-        return "￥"+raw;
-    }
+
 
     public void clickEditButton(){
         Dialog dialog = DialogFactory.getTextInputDialog();
@@ -80,8 +67,10 @@ public class FinancialAccountCellController {
         if (result.get() == ButtonType.OK) {
             financialAccountController.deleteAccount(account.accountID);
         }
+
     }
     public void setFinancialAccountController(FinancialAccountController financialAccountController){
         this.financialAccountController = financialAccountController;
     }
+
 }

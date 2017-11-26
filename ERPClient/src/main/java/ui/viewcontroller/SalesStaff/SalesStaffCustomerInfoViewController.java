@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import vo.CustomerVO;
 
@@ -66,5 +67,9 @@ public class SalesStaffCustomerInfoViewController {
     
     public void setSalesStaffViewController(SalesStaffViewController salesStaffViewController){
     	this.salesStaffViewController = salesStaffViewController;
+    }
+    
+    public void showCustomerDetail(Pane customerDetail){
+    	salesStaffViewController.showCustomerDetail(customerDetail);
     }
 }

@@ -107,7 +107,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
 
     public ResultMessage submit(AccountBillVO vo) {
         if (vo.ID != null && vo.accountBillItems != null
-                && vo.userName != null && vo.customerName != null
+                && vo.userName != null && vo.customerID != null
                 && vo.type != null){
             System.out.println("Submit succeed");
             return ResultMessage.SUCCESS;
