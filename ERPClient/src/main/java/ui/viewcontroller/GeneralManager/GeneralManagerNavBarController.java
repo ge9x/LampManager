@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class GeneralManagerNavBarController {
+	
+	private GeneralManagerViewController generalManagerViewController;
 
     @FXML
     Label ExaminationIcon;
@@ -23,6 +25,10 @@ public class GeneralManagerNavBarController {
     @FXML
     Label ProfitIcon;
     
+    public void setGeneralManagerViewController(GeneralManagerViewController generalManagerViewController){
+    	this.generalManagerViewController = generalManagerViewController;
+    }
+    
     @FXML
     public void initialize() {
         ExaminationIcon.setText("\ue697");
@@ -34,7 +40,7 @@ public class GeneralManagerNavBarController {
     }
 
     public void clickExaminationButton(){
-
+    	generalManagerViewController.showExaminationView();
     }
 
 }
