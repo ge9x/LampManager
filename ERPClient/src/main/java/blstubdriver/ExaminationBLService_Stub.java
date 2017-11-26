@@ -24,7 +24,7 @@ public class ExaminationBLService_Stub implements ExaminationBLService{
 		AccountBillItemVO Item = new AccountBillItemVO(account, 2000, "无");
 		billItem.add(Item);
 	}
-	AccountBillVO accountBill = new AccountBillVO(new Date(), "XSFKD-20171021-00001", BillState.SUBMITTED, BillType.CASH, "ZLK", "Aster",billItem);
+	AccountBillVO accountBill = new AccountBillVO(new Date(), "XSFKD-20171021-00001", BillState.SUBMITTED, BillType.PAYMENT, "ZLK", "Aster",billItem);
 	public ArrayList<BillVO> show() {
 		// TODO Auto-generated method stub
 		billList.add(accountBill);

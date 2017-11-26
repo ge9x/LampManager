@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -9,8 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="267.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="267.0" prefWidth="220.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #a8a8a8;" stylesheets="@../../css/examinationCell.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="220.0">
          <children>
@@ -36,81 +36,90 @@
             <Insets />
          </VBox.margin>
       </Line>
-      <HBox prefHeight="41.0" prefWidth="220.0" spacing="10.0">
+      <HBox prefHeight="41.0" prefWidth="220.0">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>
          <children>
-            <Label fx:id="billIDIcon" alignment="CENTER" prefHeight="41.0" prefWidth="62.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label fx:id="billIDIcon" prefHeight="40.0" prefWidth="47.0" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Label>
             <Label fx:id="billID" prefHeight="41.0" prefWidth="140.0" text="Label">
                <font>
-                  <Font name="Microsoft YaHei" size="15.0" />
+                  <Font name="Microsoft YaHei" size="12.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="41.0" prefWidth="220.0" spacing="10.0">
+      <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billDateIcon" alignment="CENTER" prefHeight="41.0" prefWidth="62.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label fx:id="billDateIcon" prefHeight="40.0" prefWidth="47.0" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Label>
             <Label fx:id="billDate" prefHeight="41.0" prefWidth="140.0" text="Label">
                <font>
-                  <Font name="Microsoft YaHei" size="15.0" />
+                  <Font name="Microsoft YaHei" size="12.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="41.0" prefWidth="220.0" spacing="10.0">
+      <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billCreaterIcon" alignment="CENTER" prefHeight="41.0" prefWidth="62.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label fx:id="billCreaterIcon" prefHeight="41.0" prefWidth="47.0" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
             </Label>
             <Label fx:id="billCreater" prefHeight="41.0" prefWidth="140.0" text="Label">
                <font>
-                  <Font name="Microsoft YaHei" size="15.0" />
+                  <Font name="Microsoft YaHei" size="12.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="41.0" prefWidth="220.0" spacing="10.0">
+      <HBox prefHeight="41.0" prefWidth="220.0">
          <children>
-            <Label fx:id="billMoneyIcon" alignment="CENTER" prefHeight="41.0" prefWidth="62.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label fx:id="billMoneyIcon" prefHeight="41.0" prefWidth="47.0" text="Label">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
-            </Label>
-            <Label fx:id="billMoney" prefHeight="41.0" prefWidth="140.0" text="Label">
                <font>
-                  <Font name="Microsoft YaHei" size="15.0" />
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="billMoney" prefHeight="41.0" prefWidth="140.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="Microsoft YaHei" size="12.0" />
                </font>
             </Label>
          </children>
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="220.0">
          <children>
-            <Label fx:id="DetailIcon" alignment="CENTER" prefHeight="38.0" prefWidth="66.0" text="Label" />
+            <Label fx:id="DetailIcon" alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="72.0" text="Label">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" right="10.0" />
+               </HBox.margin></Label>
          </children>
       </HBox>
    </children>
+   <effect>
+      <DropShadow color="#00000059" />
+   </effect>
 </VBox>
