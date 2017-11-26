@@ -30,22 +30,27 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 		this.classificationDataHelper = new HibernateDataHelper<ClassificationPO>(ClassificationPO.class);
 	}
 
+	@Override
 	public ArrayList<ClassificationPO> show() throws RemoteException {
 		return classificationDataHelper.multiQuery(new ArrayList<Criterion>());
 	}
 
+	@Override
 	public ClassificationPO find(String ID) throws RemoteException {
 		return classificationDataHelper.exactlyQuery("id", Integer.parseInt(ID));
 	}
 
+	@Override
 	public ResultMessage add(ClassificationPO po) throws RemoteException {
 		return classificationDataHelper.save(po);
 	}
 
+	@Override
 	public ResultMessage delete(ClassificationPO po) throws RemoteException {
 		return classificationDataHelper.delete(po);
 	}
 
+	@Override
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
 		return classificationDataHelper.update(po);
 	}

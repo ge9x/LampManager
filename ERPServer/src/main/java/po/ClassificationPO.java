@@ -65,8 +65,8 @@ public class ClassificationPO {
 		return ID;
 	}
 
-	public void setId(int string) {
-		this.ID = string;
+	public void setId(int ID) {
+		this.ID = ID;
 	}
 
 	@Column(name = "name")
