@@ -51,7 +51,7 @@ public class TestDatabase {
 		
 		ClassificationPO father;
 		try {
-			father = claImpl.find("01");
+			father = claImpl.find(1);
 			claImpl.add(new ClassificationPO("落地灯", father, null, null));
 			
 			ArrayList<ClassificationPO> claPOs = claImpl.show();
