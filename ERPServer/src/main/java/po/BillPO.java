@@ -1,7 +1,5 @@
 package po;
 
-import java.util.Date;
-
 import util.BillState;
 import util.BillType;
 
@@ -9,12 +7,12 @@ public class BillPO {
 	 /**
      * 单据最后修改时间
      */
-    private Date date;
+    private String date;
 
     /**
      * 单据编号
      */
-    private String ID;
+    private int ID;
 
     /**
      * 单据状态
@@ -26,26 +24,26 @@ public class BillPO {
      */
     private BillType type;
     
-    public BillPO(String ID, Date date, BillType type, BillState state){
+    public BillPO(int ID, String date, BillType type, BillState state){
     	this.ID = ID;
     	this.date = date;
     	this.type = type;
     	this.state = state;
     }
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 
