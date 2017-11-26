@@ -35,7 +35,7 @@ public interface InventoryDataService {
 	 * @return 找到的库存单据PO
 	 * @throws RemoteException
 	 */
-	public InventoryBillPO findBill(String ID) throws RemoteException;
+	public InventoryBillPO findBill(int ID) throws RemoteException;
 	/**
 	 * 新增仓库名
 	 * @param inventory 等待新增的仓库名

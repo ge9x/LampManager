@@ -36,8 +36,8 @@ public class GoodsDataServiceImpl implements GoodsDataService{
 	}
 
 	@Override
-	public GoodsPO find(String ID) throws RemoteException {
-		return goodsDataHelper.exactlyQuery("id", Integer.parseInt(ID.substring(2)));	//TODO ID转换职责归属。。。
+	public GoodsPO find(int ID) throws RemoteException {
+		return goodsDataHelper.exactlyQuery("id", ID);
 	}
 
 	@Override

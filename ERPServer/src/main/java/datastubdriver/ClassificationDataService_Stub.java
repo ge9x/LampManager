@@ -33,9 +33,9 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		return data;
 	}
 	
-	public ClassificationPO find(String ID) throws RemoteException {
+	public ClassificationPO find(int ID) throws RemoteException {
 		for(ClassificationPO po : data){
-			if(po.getId() == Integer.parseInt(ID)){
+			if(po.getId() == ID){
 				return po;
 			}
 		}

@@ -36,8 +36,8 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 
 	@Override
-	public ClassificationPO find(String ID) throws RemoteException {
-		return classificationDataHelper.exactlyQuery("id", Integer.parseInt(ID));
+	public ClassificationPO find(int ID) throws RemoteException {
+		return classificationDataHelper.exactlyQuery("id", ID);
 	}
 
 	@Override
