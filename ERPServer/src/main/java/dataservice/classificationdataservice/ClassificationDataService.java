@@ -23,7 +23,7 @@ public interface ClassificationDataService {
 	 * @return 找到的商品分类PO
 	 * @throws RemoteException
 	 */
-	public ClassificationPO find(String ID) throws RemoteException;
+	public ClassificationPO find(int ID) throws RemoteException;
 	/**
 	 * 添加商品分类
 	 * @param po 待添加的商品分类PO

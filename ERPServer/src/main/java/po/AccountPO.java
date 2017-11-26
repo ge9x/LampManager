@@ -7,7 +7,7 @@ public class AccountPO {
     /**
      * 银行账户ID
      */
-    private  String ID;
+    private  int ID;
     /**
      * 银行账户名称
      */
@@ -18,7 +18,7 @@ public class AccountPO {
      */
     private double money;
 
-    public AccountPO(String ID, String name, double money) {
+    public AccountPO(int ID, String name, double money) {
         this.name = name;
         this.money = money;
         this.ID = ID;
@@ -40,11 +40,11 @@ public class AccountPO {
         this.money = money;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 }
