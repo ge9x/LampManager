@@ -23,9 +23,9 @@ public class TestPromotion {
 		s.beginTransaction();
 		
 		ClassificationPO clapo = new ClassificationPO();
-		clapo.setId("08");
+		clapo.setId(8);
 		clapo.setName("灯");
-		GoodsPO gpo1 = new GoodsPO("0100011", "圣洁牌经典黑白款落地灯", "L", null, 500, 50, 233.3, 250, 233.3, 250);
+		GoodsPO gpo1 = new GoodsPO(11, "圣洁牌经典黑白款落地灯", "L", null, 500, 50, 233.3, 250, 233.3, 250);
 		List<GoodsPO> goods=new ArrayList<GoodsPO>();
 		goods.add(gpo1);
 		PromotionPO pro=new PromotionPO("00000006", 300, 400, new Date(), new Date(), null, 20.0, 30.0, null, Level.LEVEL_FOUR, 800, PromotionType.MEMBER_PROMOTION_STRATEGY);
