@@ -10,8 +10,10 @@ import org.hibernate.cfg.Configuration;
 
 import dataimpl.classificationdataimpl.ClassificationDataServiceImpl;
 import dataimpl.goodsdataimpl.GoodsDataServiceImpl;
+import dataimpl.inventorydataimpl.InventoryDataServiceImpl;
 import dataservice.classificationdataservice.ClassificationDataService;
 import dataservice.goodsdataservice.GoodsDataService;
+import dataservice.inventorydataservice.InventoryDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 
@@ -71,6 +73,14 @@ public class TestDatabase {
 		Session session = setUp();
 		
 		GoodsDataService goodsImpl = GoodsDataServiceImpl.getInstance();
+		
+		end(session);
+	}
+	
+	public void testInventory(){
+		Session session = setUp();
+		
+		InventoryDataService inventoryImpl = InventoryDataServiceImpl.getInstance();
 		
 		end(session);
 	}
