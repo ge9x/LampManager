@@ -46,8 +46,8 @@ public class LoginViewController {
 //            }
             mainUIController.setCenter(null);
 //            mainUIController.showFinancialStaffView();
-//            mainUIController.showSalesStaffView();
-            mainUIController.showGeneralManagerView();
+            mainUIController.showSalesStaffView();
+//            mainUIController.showGeneralManagerView();
 //            mainUIController.showAdminView();
 //        }
     }

@@ -89,4 +89,8 @@ public class SalesStaffCustomerCellController {
     	salesStaffCustomerDetailViewController.setCustomer(customer);
     	salesStaffCustomerInfoViewController.showCustomerDetail(customerDetail);
     }
+    
+    public void clickReturnButton(){
+    	salesStaffCustomerInfoViewController.showCustomerList();
+    }
 }

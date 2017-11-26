@@ -13,7 +13,7 @@ public class UserBLService_Stub implements UserBLService{
 	{
 		UserVO user1 = new UserVO("0012", "1234", "InventoryStaff", UserPosition.INVENTORY_STAFF, UserLimits.STAFF);
 		UserVO user2 = new UserVO("0033", "1234", "SalesStaff", UserPosition.SALES_STAFF, UserLimits.STAFF);
-		UserVO user3 = new UserVO("0047", "1234", "FinancialStaff", UserPosition.FINANCIAL_STAFF, UserLimits.STAFF);
+		UserVO user3 = new UserVO("0047", "1234", "FinancialStaff", UserPosition.FINANCIAL_STAFF, UserLimits.MANAGER);
 		UserVO user4 = new UserVO("0026", "1234", "GeneralManager", UserPosition.GENERAL_MANAGER, UserLimits.STAFF);
 		UserVO user5 = new UserVO("0001", "1234", "Admin", UserPosition.ADMIN, UserLimits.STAFF);
 		users.add(user1);
@@ -74,8 +74,10 @@ public class UserBLService_Stub implements UserBLService{
 
 	public UserVO findUserByID(String UserID) {
 		// TODO Auto-generated method stub
-		if(UserID.equals("test")){
-			return new UserVO("test", "123456", "test", UserPosition.ADMIN, UserLimits.STAFF);
+		for(int i=0;i<users.size();i++){
+			if(users.get(i).userID.equals(UserID)){
+				return users.get(i);
+			}
 		}
 		return null;
 	}
@@ -83,6 +85,12 @@ public class UserBLService_Stub implements UserBLService{
 	public ArrayList<UserVO> show() {
 		// TODO Auto-generated method stub
 		return users;
+	}
+
+	@Override
+	public String getCurrentUserID() {
+		// TODO Auto-generated method stub
+		return new UserVO("0047", "1234", "FinancialStaff", UserPosition.FINANCIAL_STAFF, UserLimits.MANAGER).userID;
 	}
 
 }
