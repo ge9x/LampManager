@@ -23,7 +23,7 @@ public interface PromotionDataService {
      * @param promotionID
      * @return promotionPO
      */
-	public PromotionPO find(String ID) throws RemoteException;
+	public PromotionPO find(int ID) throws RemoteException;
 	
 	public ResultMessage add(PromotionPO po) throws RemoteException;
 	

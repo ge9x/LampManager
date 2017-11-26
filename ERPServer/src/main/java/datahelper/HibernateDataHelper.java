@@ -38,7 +38,6 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		session.close();
 	}
 	
-	@Override
 	public ResultMessage save(T po) {
 		initSession();
 		session.save(po);
@@ -46,7 +45,6 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return ResultMessage.SUCCESS;
 	}
 
-	@Override
 	public ResultMessage delete(T po) {
 		initSession();
 		session.delete(po);
@@ -54,7 +52,6 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return ResultMessage.SUCCESS;
 	}
 
-	@Override
 	public ResultMessage update(T po) {
 		initSession();
 		session.update(po);
@@ -62,12 +59,10 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return ResultMessage.SUCCESS;
 	}
 
-	@Override
 	public T exactlyQuery(String field, Object value) {
 		return fullyQuery(field, value).get(0);
 	}
 
-	@Override
 	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
@@ -77,7 +72,6 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return ret;
 	}
 
-	@Override
 	public ArrayList<T> fuzzyQuery(String field, String value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
@@ -87,7 +81,6 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return ret;
 	}
 
-	@Override
 	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria) {
 		initSession();
 		Criteria crit = session.createCriteria(type);
