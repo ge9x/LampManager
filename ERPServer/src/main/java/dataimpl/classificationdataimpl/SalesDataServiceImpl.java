@@ -57,7 +57,6 @@ public class SalesDataServiceImpl implements SalesDataService{
 	}
 
 	public void init() throws RemoteException {
-		// TODO Auto-generated method stub
 		
 	}
 
