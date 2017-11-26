@@ -41,4 +41,22 @@ public class FormController implements FormBLService{
     public ProfitVO getProfit(Date startDate, Date endDate) {
         return null;
     }
+    public String getStartDate(){
+       return null;
+    }
+
+    @Override
+    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
+        return null;
+    }
+
+    @Override
+    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {
+        return null;
+    }
+
+    @Override
+    public ResultMessage exportProfit(ArrayList<ProfitVO> vos) {
+        return null;
+    }
 }
