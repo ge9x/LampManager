@@ -7,6 +7,7 @@ import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,7 +34,7 @@ public class MockForm extends Form{
 
     @Override
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        SalesDetailVO salesDetailVO1 = new SalesDetailVO(new Date(), "霓虹灯", "大", 20, 35.0);
+        SalesDetailVO salesDetailVO1 = new SalesDetailVO(LocalDate.now().toString(), "霓虹灯", "大", 20, 35.0);
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<SalesDetailVO>();
         salesDetailVOS.add(salesDetailVO1);
         return salesDetailVOS;

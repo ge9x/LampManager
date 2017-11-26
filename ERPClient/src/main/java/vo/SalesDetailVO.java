@@ -9,7 +9,7 @@ public class SalesDetailVO {
     /**
      * 时间（精确到天）
      */
-    public Date date;
+    public String date;
 
     /**
      * 商品名称
@@ -36,7 +36,7 @@ public class SalesDetailVO {
      */
     public double sum;
 
-    public SalesDetailVO(Date date, String goodName, String type, int amount, double price) {
+    public SalesDetailVO(String date, String goodName, String type, int amount, double price) {
         this.date = date;
         this.goodName = goodName;
         this.type = type;

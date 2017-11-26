@@ -1,16 +1,12 @@
 package ui.component;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
-import sun.plugin.javascript.navig.Array;
 
-import javax.xml.soap.Text;
 import java.util.ArrayList;
-import java.util.Optional;
 
 /**
  * Created by Kry·L on 2017/11/20.
@@ -24,6 +20,12 @@ public class DialogFactory {
     }
     public static Dialog getConfirmationAlert(){
         Dialog alert = new Alert(Alert.AlertType.CONFIRMATION);
+        initStyle(alert);
+        return alert;
+    }
+
+    public static Dialog getInformationAlert(){
+        Dialog alert = new Alert(Alert.AlertType.INFORMATION);
         initStyle(alert);
         return alert;
     }
@@ -88,7 +90,9 @@ public class DialogFactory {
     }
     public static void initStyle(Dialog dialog){
         dialog.setTitle("Lamp Manager");
-        dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setId("CancelButton");
+        Node cancelButton = dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
+        if (cancelButton != null)
+            cancelButton.setId("CancelButton");
         dialog.getDialogPane().getStylesheets().add("/css/dialog.css");
     }
 
