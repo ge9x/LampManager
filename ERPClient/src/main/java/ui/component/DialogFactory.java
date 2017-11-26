@@ -6,7 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import sun.plugin.javascript.navig.Array;
 
+import javax.xml.soap.Text;
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -25,22 +28,21 @@ public class DialogFactory {
         return alert;
     }
     public static Dialog getDoubleTextDialog(String label1,String label2){
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+
 
         TextField textField1 = new TextField();
         textField1.setPromptText(label1);
         TextField textField2 = new TextField();
         textField2.setPromptText(label2);
 
-        grid.add(new Label(label1), 0, 0);
-        grid.add(textField1, 1, 0);
-        grid.add(new Label(label2), 0, 1);
-        grid.add(textField2, 1, 1);
+        ArrayList<Label> labels = new ArrayList<>();
+        labels.add(new Label(label1));
+        labels.add(new Label(label2));
+
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.add(textField1);
+        nodes.add(textField2);
+        Dialog<Pair<String,String>> dialog = createDialog(labels,nodes);
 
         Node confirmButton = dialog.getDialogPane().lookupButton(ButtonType.FINISH);
         confirmButton.setDisable(true);
@@ -53,10 +55,6 @@ public class DialogFactory {
             confirmButton.setDisable(newValue.trim().isEmpty() || textField1.getText().trim().isEmpty());
         });
 
-        dialog.getDialogPane().setContent(grid);
-
-        // 默认光标在第一个输入框上
-        Platform.runLater(() -> textField1.requestFocus());
 
         // 确认按钮后，将结果转为pair
         dialog.setResultConverter(dialogButton -> {
@@ -69,6 +67,25 @@ public class DialogFactory {
         return dialog;
     }
 
+
+
+    public static Dialog createDialog(ArrayList<Label> labels, ArrayList<Node> nodes) {
+        Dialog dialog = new Dialog<>();
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        for (int i = 0; i < labels.size(); i++){
+            grid.add(labels.get(i), 0, i);
+            grid.add(nodes.get(i), 1, i);
+        }
+        dialog.getDialogPane().setContent(grid);
+
+        initStyle(dialog);
+        return dialog;
+    }
     public static void initStyle(Dialog dialog){
         dialog.setTitle("Lamp Manager");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setId("CancelButton");
