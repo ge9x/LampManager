@@ -109,8 +109,8 @@ public class FinancialPaymentEditController {
         });
 
     }
-    public void addReceipt() {
-        String ID = financeBLService.getNewReceiptID();
+    public void addPayment() {
+        String ID = financeBLService.getNewPaymentID();
         BillID.setText(ID);
     }
 
@@ -134,7 +134,7 @@ public class FinancialPaymentEditController {
     public void clickSubmitButton(){
         String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
-                BillState.SUBMITTED,BillType.RECEIPT,customerID,
+                BillState.SUBMITTED,BillType.PAYMENT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService.submit(accountBillVO);
         financialPaymentController.showPaymentList();
@@ -152,7 +152,7 @@ public class FinancialPaymentEditController {
                     customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
                 }
                 AccountBillVO accountBillVO = new AccountBillVO(new Date(), BillID.getText(),
-                        BillState.DRAFT, BillType.RECEIPT, customerID,
+                        BillState.DRAFT, BillType.PAYMENT, customerID,
                         Username.getText(), accountBillItems);
                 financeBLService.save(accountBillVO);
             }

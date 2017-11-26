@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/salesDetails.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialSalesDetailsController">
+    <children>
+        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="541.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" text="销售明细表">
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                           <HBox.margin>
+                              <Insets right="470.0" />
+                           </HBox.margin>
+                                </Label>
+                        <JFXButton prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="导 出" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="14.0" />
+                           </font></JFXButton>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                  <AnchorPane fx:id="TablePane" prefHeight="404.0" prefWidth="744.0">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" layoutX="33.0" layoutY="25.0" prefHeight="44.0" prefWidth="271.0">
+                           <children>
+                              <JFXDatePicker prefHeight="23.0" prefWidth="119.0" />
+                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="21.0" text="—" />
+                              <JFXDatePicker prefHeight="23.0" prefWidth="119.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" layoutX="347.0" layoutY="28.0" prefHeight="36.0" prefWidth="368.0">
+                           <children>
+                              <ComboBox fx:id="Filters" prefHeight="25.0" prefWidth="80.0" style="-fx-background-radius: 10 0 0 10; -fx-background-color: #f6f6f7; -fx-border-color: #bfbfbf; -fx-border-radius: 10 0 0 10;" />
+                              <TextField style="-fx-background-radius: 0 10 10 0; -fx-background-color: #f6f6f7; -fx-border-radius: 0 10 10 0; -fx-border-color: #bfbfbf;">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Label fx:id="searchIcon" alignment="CENTER" styleClass="icon-label" text="Q" />
+                           </children>
+                        </HBox>
+                        <ScrollPane fx:id="TableScrollPane" layoutX="33.0" layoutY="77.0" prefHeight="293.0" prefWidth="681.0" style="-fx-background-color: #ffffff;" />
+                     </children>
+                  </AnchorPane>
+
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

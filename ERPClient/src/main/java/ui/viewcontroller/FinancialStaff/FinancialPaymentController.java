@@ -34,11 +34,11 @@ public class FinancialPaymentController {
         addIcon.setText("\ue61e");
     }
     public void showPaymentList(){
-//        financialViewController.showPaymentView();
+        financialViewController.showPaymentView();
     }
     public void clickAddButton(){
         showPaymentEditView();
-//        financialPaymentEditController.addPayment();
+        financialPaymentEditController.addPayment();
     }
     public void showPaymentEditView(){
         try{
@@ -47,7 +47,7 @@ public class FinancialPaymentController {
             Pane page = pageLoader.load();
             financialPaymentEditController = pageLoader.getController();
             financialPaymentEditController.setFinancialPaymentController(this);
-//            financialViewController.showPaymentEditView(page);
+            financialViewController.showPaymentEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }
