@@ -3,6 +3,7 @@ package ui.viewcontroller.GeneralManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import util.BillType;
 import vo.AccountBillVO;
 import vo.BillVO;
@@ -17,7 +18,7 @@ public class GeneralManagerExaminationCellController {
 	GeneralManagerExaminationViewController generalManagerExaminationViewController;
 	
 	@FXML
-	Label circle;
+	Circle circle;
 	
 	@FXML
 	Label billType;
