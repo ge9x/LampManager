@@ -136,6 +136,9 @@ public class TestDatabase {
 			for(InventoryBillPO po : allAlarmBills){
 				System.out.println(po.getID() + " " + po.getState().toString() + " " + po.getInventory() + " " + po.getGoodsMap());
 			}
+			InventoryBillPO bill3 = inventoryImpl.findBill(3);
+			System.out.println("查询ID为3的库存类单据：");
+			System.out.println(bill3.getID() + " " + bill3.getDate() + " " + bill3.getType() + " " + bill3.getState());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -145,8 +148,8 @@ public class TestDatabase {
 		TestDatabase test = new TestDatabase();
 		
 		test.testClassification();
-//		test.testGoods();
-//		test.testInventory();
+		test.testGoods();
+		test.testInventory();
 		
 		test.sf.close();
 	}
