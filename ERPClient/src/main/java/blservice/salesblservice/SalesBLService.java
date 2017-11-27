@@ -3,6 +3,7 @@ package blservice.salesblservice;
 import java.util.ArrayList;
 
 import util.ResultMessage;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
@@ -120,5 +121,21 @@ public interface SalesBLService {
 	   * @author zlk
 	   */
 	  public ResultMessage savePurchase(PurchaseVO bill);
+	  /**
+	   * 获得当前用户ID
+	   * @return 当前用户ID
+	   */
+	  public String getUserID();
+	  /**
+	   * 获得所有供应商列表
+	   * @return 供应商VO的列表
+	   */
+	  public ArrayList<CustomerVO> getAllSupplier();
+	  /**
+	   * 获得所有仓库列表
+	   * @return 仓库VO的列表
+	   */
+	  public ArrayList<String> getAllInventory();
+	    
 	  
 }

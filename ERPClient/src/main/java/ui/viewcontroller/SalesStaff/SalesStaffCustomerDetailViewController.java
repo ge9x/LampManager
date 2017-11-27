@@ -3,7 +3,9 @@ package ui.viewcontroller.SalesStaff;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import blservice.customerblservice.CustomerBLService;
 import blservice.userblservice.UserBLService;
+import blstubdriver.CustomerBLService_Stub;
 import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +16,7 @@ import vo.CustomerVO;
 public class SalesStaffCustomerDetailViewController {
 	private boolean hasEdited = false;
 	UserBLService userBLService = new UserBLService_Stub();
+	CustomerBLService customerBLService = new CustomerBLService_Stub();
 
 	@FXML
 	JFXTextField customerID;
@@ -131,6 +134,7 @@ public class SalesStaffCustomerDetailViewController {
 
 			setCustomer(customer);
 			editButton.setText("编    辑");
+			customerBLService.updateCustomer(customer);
 			hasEdited = false;
 		}
 	}

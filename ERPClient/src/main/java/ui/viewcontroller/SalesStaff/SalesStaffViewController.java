@@ -10,6 +10,8 @@ public class SalesStaffViewController {
 
 	private SalesStaffNavBarController salesStaffNavBarController;
 	private SalesStaffCustomerInfoViewController salesStaffCustomerInfoController;
+	private SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
+	private SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	private MainUIController mainUIController;
 	
     public SalesStaffViewController(MainUIController mainUIController){
@@ -52,5 +54,47 @@ public class SalesStaffViewController {
     
     public void showCustomerDetail(Pane customerDetail){
     	mainUIController.setCenter(customerDetail);
+    }
+    
+    public void showPurchaseOrderView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/PurchaseOrder.fxml"));
+            Pane page = pageLoader.load();
+            salesStaffPurchaseOrderViewController = pageLoader.getController();
+            salesStaffPurchaseOrderViewController.setSalesStaffViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showPurchaseOrderEditView(Pane pane){
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+    
+    public void showReturnOrderView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrder.fxml"));
+            Pane page = pageLoader.load();
+            salesStaffReturnOrderViewController = pageLoader.getController();
+            salesStaffReturnOrderViewController.setSalesStaffViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showReturnOrderEditView(Pane pane){
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
     }
 }

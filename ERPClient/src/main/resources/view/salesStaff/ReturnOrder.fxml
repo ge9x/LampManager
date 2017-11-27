@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseOrder.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffPurchaseOrderViewController">
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseOrder.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffReturnOrderViewController">
     <children>
         <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
@@ -25,7 +25,7 @@
                             </effect>
                             <children>
                                 <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
-                                <Label fx:id="title" text="我的进货单">
+                                <Label fx:id="title" text="进货退货单">
                                     <font>
                                         <Font name="Microsoft YaHei Bold" size="24.0" />
                                     </font>
@@ -49,7 +49,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                        <TilePane fx:id="PurchaseOrderList" minWidth="716.0" prefHeight="274.0" prefWidth="716.0">
+                        <TilePane fx:id="ReturnOrderList" minWidth="716.0" prefHeight="274.0" prefWidth="716.0">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
