@@ -8,6 +8,8 @@ import datahelper.HibernateDataHelper;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.InventoryBillPO;
 import po.InventoryPO;
+import util.BillType;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -34,44 +36,54 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 
 	@Override
 	public ArrayList<InventoryBillPO> show() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.multiQuery(new ArrayList<Criterion>());
 	}
 
 	@Override
 	public ArrayList<String> showInventory() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> ret = new ArrayList<>();
+		ArrayList<InventoryPO> data = inventoryDataHelper.multiQuery(new ArrayList<Criterion>());
+		for(InventoryPO po : data){
+			ret.add(po.getName());
+		}
+		return ret;
 	}
 
 	@Override
 	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.fullyQuery("type", BillType.ALARM);
 	}
 
 	@Override
 	public InventoryBillPO findBill(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.exactlyQuery("id", ID);
 	}
 
 	@Override
 	public ResultMessage addInventroy(String inventory) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		InventoryPO attempt = inventoryDataHelper.exactlyQuery("name", inventory);
+		if(attempt == null){
+			return inventoryDataHelper.save(new InventoryPO(inventory));
+		}
+		else{
+			return ResultMessage.EXIST;
+		}
 	}
 
 	@Override
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.save(po);
 	}
 
 	@Override
 	public ResultMessage deleteInventory(String inventory) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		InventoryPO attempt = inventoryDataHelper.exactlyQuery("name", inventory);
+		if(attempt != null){
+			return inventoryDataHelper.delete(new InventoryPO(inventory));
+		}
+		else{
+			return ResultMessage.NOT_EXIST;
+		}
 	}
 
 	@Override

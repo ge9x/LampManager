@@ -64,7 +64,13 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 
 	@Override
 	public T exactlyQuery(String field, Object value) {
-		return fullyQuery(field, value).get(0);
+		ArrayList<T> ret = fullyQuery(field, value);
+		if(ret.size() == 0){
+			return null;
+		}
+		else{
+			return ret.get(0);
+		}
 	}
 
 	@Override
