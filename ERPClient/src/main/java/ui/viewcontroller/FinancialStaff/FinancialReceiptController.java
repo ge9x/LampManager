@@ -1,25 +1,22 @@
 package ui.viewcontroller.FinancialStaff;
 
-import bl.financialbl.AccountBill;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import com.jfoenix.controls.JFXTabPane;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
+import ui.viewcontroller.common.BillController;
 import vo.AccountBillVO;
-import vo.AccountVO;
+import vo.BillVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class FinancialReceiptController {
 
     ArrayList<VBox> billNodes = new ArrayList<>();
     ArrayList<FXMLLoader> fxmlLoaders = new ArrayList<>();
-
+    TilePane billPane;
 
     @FXML
     public void initialize(){
@@ -58,7 +55,6 @@ public class FinancialReceiptController {
         submitted = financeBLService.getSubmittedAccountBills();
         pass = financeBLService.getPassAccountBills();
         failed = financeBLService.getFailedAccountBills();
-
 
         initTabPane();
     }
@@ -74,28 +70,60 @@ public class FinancialReceiptController {
         passTab.setText("审批通过单据");
         failedTab.setText("审批不通过单据");
 
-        TilePane billPane = new TilePane();
-        billPane.setPrefColumns(3);
-
-        draftTab.setOnSelectionChanged(new EventHandler<Event>() {
-            @Override
-            public void handle(Event event) {
-                loadBills();
-                billPane.getChildren().addAll(billNodes);
-                ((Tab)event.getSource()).setContent(billPane);
-            }
-        });
-        billPane.getChildren().addAll(billNodes);
-        draftTab.setContent(billPane);
 
 
+        initTabs(draftTab,submittedTab,passTab,failedTab);
         tabPane.getTabs().addAll(draftTab,submittedTab,passTab,failedTab);
         tabPane.getSelectionModel().selectFirst();
     }
-    public void loadBills(){
-        for (int i = 0; i < draft.size(); i++){
-           FXMLLoader loader = fxmlLoaders.get(i);
-//           loader.setLocation(getClass().getResource());
+    public void initTabs(Tab...tabs){
+        for (int i = 0; i < tabs.length; i++){
+            tabs[i].setOnSelectionChanged(new EventHandler<Event>() {
+                @Override
+                public void handle(Event event) {
+                    Tab tab = (Tab)event.getSource();
+                    if (tab.isSelected()){
+                        ScrollPane scrollPane = new ScrollPane();
+                        billPane = new TilePane();
+                        billPane.setPadding(new Insets(10,7,0,10));
+                        billPane.setPrefColumns(3);
+                        billPane.setHgap(25);
+                        billPane.setVgap(20);
+                        billPane.getChildren().clear();
+                        billNodes.clear();
+                        fxmlLoaders.clear();
+                        loadBills(tab.getText());
+                        billPane.getChildren().addAll(billNodes);
+                        scrollPane.setContent(billPane);
+                        tab.setContent(scrollPane);
+                    }
+                }
+            });
+        }
+    }
+    public void loadBills(String tab){
+        ArrayList<AccountBillVO> bills = null;
+        switch (tab){
+            case "草稿单据": bills = draft;break;
+            case "待审批单据": bills = submitted;break;
+            case "审批通过单据": bills = pass;break;
+            case "审批不通过单据": bills = failed;break;
+
+        }
+        for (int i = 0; i < bills.size(); i++){
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/view/common/bill.fxml"));
+                VBox node = loader.load();
+                fxmlLoaders.add(loader);
+                billNodes.add(node);
+                BillController financialBillController = loader.getController();
+                financialBillController.hideCheckbox();
+                financialBillController.setFinancialReceiptController(this);
+                financialBillController.setBill(bills.get(i));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     public void showReceiptList() {
@@ -104,6 +132,11 @@ public class FinancialReceiptController {
     public void clickAddButton(){
         showReceiptEditView();
         financialReceiptEditController.addReceipt();
+    }
+
+    public void showReceiptDetailView(AccountBillVO vo){
+        showReceiptEditView();
+        financialReceiptEditController.setForDetailView(vo);
     }
     public void showReceiptEditView(){
         try{

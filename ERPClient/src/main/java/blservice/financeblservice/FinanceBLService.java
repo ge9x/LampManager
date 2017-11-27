@@ -45,6 +45,13 @@ public interface FinanceBLService {
     public ArrayList<CustomerVO> getAllCustomer();
 
     /**
+     * 根据ID的到客户名字
+     * @param ID
+     * @return
+     */
+    public String getCustomerNameByID(String ID);
+
+    /**
      * 获得所有银行账户列表
      * @return
      */

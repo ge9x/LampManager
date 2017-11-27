@@ -47,11 +47,11 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                  <JFXTabPane fx:id="tabPane" prefHeight="396.0" prefWidth="400.0">
+                  <JFXTabPane fx:id="tabPane" prefHeight="900.0" prefWidth="400.0">
                   </JFXTabPane>
                     </children>
                     <padding>
-                        <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />
+                        <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
                     </padding>
                 </VBox>
             </content>
