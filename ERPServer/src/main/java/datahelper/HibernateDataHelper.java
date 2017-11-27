@@ -64,14 +64,22 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 
 	@Override
 	public T exactlyQuery(String field, Object value) {
-		return fullyQuery(field, value).get(0);
+		ArrayList<T> ret = fullyQuery(field, value);
+		if(ret.size() == 0){
+			return null;
+		}
+		else{
+			return ret.get(0);
+		}
 	}
 
 	@Override
 	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		criteria.add(Restrictions.eq(field, value));
+		if(value != null){
+			criteria.add(Restrictions.eq(field, value));
+		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
@@ -81,7 +89,9 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fuzzyQuery(String field, String value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		criteria.add(Restrictions.like(field, value));
+		if(value != null){
+			criteria.add(Restrictions.like(field, value));
+		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
@@ -92,21 +102,31 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		initSession();
 		Criteria crit = session.createCriteria(type);
 		for(Criterion criterion : criteria){
-			switch(criterion.getQueryMode()){
-			case FULL:
-				crit.add(Restrictions.eq(criterion.getField(), criterion.getValue()));
-				break;
-			case FUZZY:
-				crit.add(Restrictions.like(criterion.getField(), criterion.getValue()));
-				break;
-			case RANGE:
-				crit.add(Restrictions.between(criterion.getField(), criterion.getValue(), criterion.getAnotherValue()));
-				break;
-			}
+			crit.add(buildCriterion(criterion));
 		}
 		ArrayList<T> ret = (ArrayList<T>) crit.list();
 		commitAndClose();
 		return ret;
+	}
+	
+	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion){
+		switch(criterion.getQueryMode()){
+		case FULL:
+			return Restrictions.eq(criterion.getField(), criterion.getValue());
+		case FUZZY:
+			return Restrictions.like(criterion.getField(), criterion.getValue());
+		case RANGE:
+			return Restrictions.between(criterion.getField(), criterion.getValue(), criterion.getAnotherValue());
+		case OR:
+			return buildCriterion(criterion.getCriterion1(), criterion.getCriterion2());
+		default:
+			System.out.println("错误：出现了未识别的QueryMode！");
+			return null;
+		}
+	}
+	
+	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion1, Criterion criterion2) {
+		return Restrictions.or(buildCriterion(criterion1), buildCriterion(criterion2));
 	}
 
 }

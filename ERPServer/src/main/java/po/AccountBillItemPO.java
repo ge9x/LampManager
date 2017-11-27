@@ -4,7 +4,12 @@ package po;
  * Created by Kry·L on 2017/10/22.
  */
 public class AccountBillItemPO {
-    /**
+	/**
+	 * 条目唯一标识ID
+	 */
+	private int ID;
+
+	/**
      * 银行账户名称
      */
     private String accountName;
@@ -26,6 +31,14 @@ public class AccountBillItemPO {
         this.remark = remark;
     }
 
+    public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+	
     public String getAccountName() {
         return accountName;
     }

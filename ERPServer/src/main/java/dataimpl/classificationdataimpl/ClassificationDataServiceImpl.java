@@ -32,7 +32,7 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 
 	@Override
 	public ArrayList<ClassificationPO> show() throws RemoteException {
-		return classificationDataHelper.multiQuery(new ArrayList<Criterion>());
+		return classificationDataHelper.fullyQuery(null, null);
 	}
 
 	@Override
