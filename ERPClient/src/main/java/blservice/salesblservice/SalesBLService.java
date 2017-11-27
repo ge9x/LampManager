@@ -136,6 +136,10 @@ public interface SalesBLService {
 	   * @return 仓库VO的列表
 	   */
 	  public ArrayList<String> getAllInventory();
-	    
+	  /**
+	   * 获得所有客户列表
+	   * @return 客户VO的列表
+	   */
+	  public ArrayList<CustomerVO> getAllCustomer();
 	  
 }

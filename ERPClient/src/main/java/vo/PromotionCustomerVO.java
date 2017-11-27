@@ -19,7 +19,8 @@ public class PromotionCustomerVO extends PromotionVO{
 	
 	public Level level;
 	
-	public PromotionCustomerVO(String promotionID, Date startDate, Date endDate, double voucher, double allowance, ArrayList<GoodsVO> gifts, Level level){
+	public PromotionCustomerVO(String promotionName, String promotionID, Date startDate, Date endDate, double voucher, double allowance, ArrayList<GoodsVO> gifts, Level level){
+		this.promotionName = promotionName;
 		this.promotionID = promotionID;
 		this.startDate = startDate;
 		this.endDate = endDate;

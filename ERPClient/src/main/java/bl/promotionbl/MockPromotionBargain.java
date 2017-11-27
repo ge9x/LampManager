@@ -8,7 +8,7 @@ import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
 public class MockPromotionBargain extends PromotionBargain{
-	private PromotionBargainVO promotionBargain = new PromotionBargainVO("000001", 0, 0, new Date(), new Date(), new ArrayList<GoodsVO>());
+	private PromotionBargainVO promotionBargain = new PromotionBargainVO("特价包策略","000001", 0, 0, new Date(), new Date(), new ArrayList<GoodsVO>());
 	
 	@Override
 	public ArrayList<PromotionBargainVO> show(){

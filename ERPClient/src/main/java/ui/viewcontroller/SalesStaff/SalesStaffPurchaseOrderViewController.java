@@ -30,7 +30,7 @@ public class SalesStaffPurchaseOrderViewController {
     	this.salesStaffViewController = salesStaffViewController;
     }
     
-    public void showPruchaseOrderList(){
+    public void showPurchaseOrderList(){
     	salesStaffViewController.showPurchaseOrderView();
     }
     
