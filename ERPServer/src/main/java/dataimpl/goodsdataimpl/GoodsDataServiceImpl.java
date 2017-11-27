@@ -32,7 +32,7 @@ public class GoodsDataServiceImpl implements GoodsDataService{
 
 	@Override
 	public ArrayList<GoodsPO> show() throws RemoteException {
-		return goodsDataHelper.multiQuery(new ArrayList<Criterion>());
+		return goodsDataHelper.fullyQuery(null, null);
 	}
 
 	@Override

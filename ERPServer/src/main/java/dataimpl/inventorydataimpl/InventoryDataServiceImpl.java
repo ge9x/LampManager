@@ -52,7 +52,7 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 
 	@Override
 	public ArrayList<InventoryPO> showInventory() throws RemoteException {
-		return inventoryDataHelper.multiQuery(new ArrayList<Criterion>());
+		return inventoryDataHelper.fullyQuery(null, null);
 	}
 
 	@Override

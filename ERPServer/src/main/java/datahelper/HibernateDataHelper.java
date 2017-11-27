@@ -77,7 +77,9 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		criteria.add(Restrictions.eq(field, value));
+		if(value != null){
+			criteria.add(Restrictions.eq(field, value));
+		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
@@ -87,7 +89,9 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fuzzyQuery(String field, String value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		criteria.add(Restrictions.like(field, value));
+		if(value != null){
+			criteria.add(Restrictions.like(field, value));
+		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
