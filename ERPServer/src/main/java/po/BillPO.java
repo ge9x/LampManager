@@ -24,6 +24,14 @@ public class BillPO {
      */
     private BillType type;
     
+    public BillPO(){ }
+    
+    public BillPO(String date, BillType type, BillState state){
+    	this.date = date;
+    	this.type = type;
+    	this.state = state;
+    }
+    
     public BillPO(int ID, String date, BillType type, BillState state){
     	this.ID = ID;
     	this.date = date;

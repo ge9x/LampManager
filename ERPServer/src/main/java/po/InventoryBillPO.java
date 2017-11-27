@@ -38,7 +38,7 @@ public class InventoryBillPO extends BillPO{
 	/**
 	 * 该单据涉及的仓库
 	 */
-	private String inventory;
+	private InventoryPO inventory;
 	/**
 	 * 操作员
 	 */
@@ -48,7 +48,20 @@ public class InventoryBillPO extends BillPO{
 	 */
 	private Map<GoodsPO, Integer> goodsMap;
 	
-	public InventoryBillPO(int ID, String date, BillType type, BillState state, String inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
+	public InventoryBillPO(){ }
+	
+	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
+		super(date, type, state);
+		this.date = date;
+		this.state = state;
+		this.type = type;
+		this.inventory = inventory;
+		this.user = user;
+		this.goodsMap = goodsMap;
+	}
+	
+	@Deprecated
+	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);
 		this.date = date;
 		this.ID = ID;
@@ -99,12 +112,13 @@ public class InventoryBillPO extends BillPO{
 		this.type = type;
 	}
 
-	@Column(name = "inventory")
-	public String getInventory() {
+	@ManyToOne
+	@JoinColumn(name = "inventoryid")
+	public InventoryPO getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(String inventory) {
+	public void setInventory(InventoryPO inventory) {
 		this.inventory = inventory;
 	}
 
@@ -117,8 +131,8 @@ public class InventoryBillPO extends BillPO{
 		this.user = user;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "goods")
-	@MapKey(name = "changenumber")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "inventorybill_change_info")
 	public Map<GoodsPO, Integer> getGoodsMap() {
 		return goodsMap;
 	}

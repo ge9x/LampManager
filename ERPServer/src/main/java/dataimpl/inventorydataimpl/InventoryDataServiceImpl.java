@@ -10,6 +10,7 @@ import po.InventoryBillPO;
 import po.InventoryPO;
 import util.BillType;
 import util.Criterion;
+import util.QueryMode;
 import util.ResultMessage;
 
 /**
@@ -36,17 +37,22 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 
 	@Override
 	public ArrayList<InventoryBillPO> show() throws RemoteException {
-		return inventoryBillDataHelper.multiQuery(new ArrayList<Criterion>());
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(
+				new Criterion(
+						new Criterion("type", BillType.OVERFLOW, QueryMode.FULL),
+						new Criterion(
+								new Criterion("type", BillType.GIFT, QueryMode.FULL),
+								new Criterion("type", BillType.LOSS, QueryMode.FULL)
+								)
+						)
+				);
+		return inventoryBillDataHelper.multiQuery(criteria);
 	}
 
 	@Override
-	public ArrayList<String> showInventory() throws RemoteException {
-		ArrayList<String> ret = new ArrayList<>();
-		ArrayList<InventoryPO> data = inventoryDataHelper.multiQuery(new ArrayList<Criterion>());
-		for(InventoryPO po : data){
-			ret.add(po.getName());
-		}
-		return ret;
+	public ArrayList<InventoryPO> showInventory() throws RemoteException {
+		return inventoryDataHelper.multiQuery(new ArrayList<Criterion>());
 	}
 
 	@Override
@@ -60,14 +66,8 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	}
 
 	@Override
-	public ResultMessage addInventroy(String inventory) throws RemoteException {
-		InventoryPO attempt = inventoryDataHelper.exactlyQuery("name", inventory);
-		if(attempt == null){
-			return inventoryDataHelper.save(new InventoryPO(inventory));
-		}
-		else{
-			return ResultMessage.EXIST;
-		}
+	public ResultMessage addInventroy(InventoryPO po) throws RemoteException {
+		return inventoryDataHelper.save(po);
 	}
 
 	@Override
@@ -76,31 +76,22 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	}
 
 	@Override
-	public ResultMessage deleteInventory(String inventory) throws RemoteException {
-		InventoryPO attempt = inventoryDataHelper.exactlyQuery("name", inventory);
-		if(attempt != null){
-			return inventoryDataHelper.delete(new InventoryPO(inventory));
-		}
-		else{
-			return ResultMessage.NOT_EXIST;
-		}
+	public ResultMessage deleteInventory(InventoryPO po) throws RemoteException {
+		return inventoryDataHelper.delete(po);
 	}
 
 	@Override
 	public ResultMessage deleteBill(InventoryBillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.delete(po);
 	}
 
 	@Override
-	public ResultMessage updateInventory(String before, String after) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultMessage updateInventory(InventoryPO po) throws RemoteException {
+		return inventoryDataHelper.update(po);
 	}
 
 	@Override
 	public ResultMessage updateBill(InventoryBillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryBillDataHelper.update(po);
 	}
 }
