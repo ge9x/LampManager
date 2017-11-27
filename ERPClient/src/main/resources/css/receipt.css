@@ -14,3 +14,9 @@
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
+.tab {
+    -fx-background-color: #1db1a4;
+}
+.tab-header-background {
+    -fx-background-color: #1db1a4;
+}
