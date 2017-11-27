@@ -31,7 +31,7 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check() {
 		return null;
 	}
 
