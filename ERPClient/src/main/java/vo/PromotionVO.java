@@ -5,6 +5,7 @@ import java.util.Date;
 import util.PromotionType;
 
 public class PromotionVO {
+	public String promotionName;
 	
 	public String promotionID;
 	

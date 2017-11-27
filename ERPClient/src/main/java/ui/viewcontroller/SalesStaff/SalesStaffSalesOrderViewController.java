@@ -7,9 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class SalesStaffReturnOrderViewController {
+public class SalesStaffSalesOrderViewController {
+	
 	SalesStaffViewController salesStaffViewController;
-	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
+	SalesStaffSalesEditViewController salesStaffSalesEditViewController;
 	
 	@FXML
     Label addIcon;
@@ -23,23 +24,23 @@ public class SalesStaffReturnOrderViewController {
     	this.salesStaffViewController = salesStaffViewController;
     }
     
-    public void showReturnOrderList(){
-    	salesStaffViewController.showReturnOrderView();
+    public void showSalesOrderList(){
+    	salesStaffViewController.showSalesOrderView();
     }
     
     public void clickAddButton(){
-    	showReturnEditView();
-    	salesStaffReturnEditViewController.addReturnOrder();
+    	showSalesEditView();
+    	salesStaffSalesEditViewController.addSalesOrder();
     }
     
-    public void showReturnEditView(){
+    public void showSalesEditView(){
     	try{
             FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrderEdit.fxml"));
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesOrderEdit.fxml"));
             Pane page = pageLoader.load();
-            salesStaffReturnEditViewController = pageLoader.getController();
-            salesStaffReturnEditViewController.setSalesStaffReturnOrderViewController(this);
-            salesStaffViewController.showReturnOrderEditView(page);
+            salesStaffSalesEditViewController = pageLoader.getController();
+            salesStaffSalesEditViewController.setSalesStaffSalesOrderViewController(this);
+            salesStaffViewController.showSalesOrderEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }

@@ -33,7 +33,7 @@
                <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="进货退货单" />
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="SalesNav" layoutY="346.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="SalesNav" layoutY="346.0" onMouseClicked="#clickSalesOrderButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="SalesIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />

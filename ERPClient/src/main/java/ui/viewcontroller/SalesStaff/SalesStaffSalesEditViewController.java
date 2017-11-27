@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
@@ -24,7 +25,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -34,33 +34,32 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ui.component.DialogFactory;
-import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
-import ui.viewcontroller.FinancialStaff.FinancialCashBillEditController.CashBillItemBean;
+import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController.GoodsItemBean;
 import util.BillState;
 import util.BillType;
 import util.Money;
-import vo.AccountVO;
-import vo.CashBillItemVO;
-import vo.CashBillVO;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
+import vo.PromotionVO;
 import vo.PurchaseVO;
+import vo.SalesVO;
 
-public class SalesStaffPurchaseEditViewController {
-	
-	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
+public class SalesStaffSalesEditViewController {
+	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
 	
 	SalesBLService salesBLService = new SalesBLService_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
-	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
+	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
+	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
     DoubleProperty total = new SimpleDoubleProperty(0);
-
+    DoubleProperty afterSum = new SimpleDoubleProperty(0);
+    
     @FXML
     Label addIcon;
 
@@ -69,6 +68,9 @@ public class SalesStaffPurchaseEditViewController {
 
     @FXML
     Text Username;
+    
+    @FXML
+    Text Salesman;
 
     @FXML
     VBox vbox;
@@ -77,31 +79,52 @@ public class SalesStaffPurchaseEditViewController {
     Text Total;
     
     @FXML
-    JFXTextArea remark;
-
+    Text beforeSum;
+    
     @FXML
-    JFXComboBox supplier;
+    JFXTextArea remark;
+    
+    @FXML
+    JFXTextField allowance;
+    
+    @FXML
+    JFXTextField voucher;
     
     @FXML
     JFXComboBox inventory;
+    
+    @FXML
+    JFXComboBox customer;
+    
+    @FXML
+    JFXComboBox promotion;
     
     public void initialize(){
         addIcon.setText("\ue61e");
         String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
         Username.setText(name);
-        suppliers = salesBLService.getAllSupplier();
+        customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
-        
+        promotions.addAll(salesBLService.showBargains());
+        promotions.addAll(salesBLService.getFitPromotionCustomer());
+        promotions.addAll(salesBLService.getFitPromotionTotal());
 
         //初始化supplier选择框
-        ArrayList<String> supplierNames = new ArrayList<>();
-        for (CustomerVO customer : suppliers){
-            supplierNames.add(customer.customerName);
+        ArrayList<String> customerNames = new ArrayList<>();
+        for (CustomerVO temp : customers){
+            customerNames.add(temp.customerName);
         }
-        supplier.getItems().addAll(supplierNames);
+        customer.getItems().addAll(customerNames);
         
-      //初始化inventory选择框
+        //初始化inventory选择框
         inventory.getItems().addAll(inventories);
+        
+        //初始化promotion选择框
+        ArrayList<String> promotionNames = new ArrayList<String>();
+        for (PromotionVO temp : promotions){
+            promotionNames.add(temp.promotionName);
+        }
+        promotion.getItems().addAll(promotionNames);
 
         //初始化表格
         itemTable = new TableView<>();
@@ -133,18 +156,68 @@ public class SalesStaffPurchaseEditViewController {
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
 
-        //总额Text与商品总额金额之和绑定
+        //折让前总额Text与商品总额金额之和绑定
         total.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Total.setText(Money.getMoneyString(total.get()));
+                beforeSum.setText(Money.getMoneyString(total.get()));
             }
         });
+        
+        //折让后总额Text与代金券和折让绑定
+        afterSum.addListener(new ChangeListener<Number>(){
 
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				Total.setText(Money.getMoneyString(afterSum.get()));
+			}
+        	
+        });
+        
+        allowance.textProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+				}
+				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+					afterSum.set(total.get());
+				}
+				else if(allowance.getText().length()<=0){
+					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+				}
+				else{
+					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				}
+			}      	
+        });
+
+        voucher.textProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+				}
+				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+					afterSum.set(total.get());
+				}
+				else if(allowance.getText().length()<=0){
+					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+				}
+				else{
+					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				}
+			}      	
+        });
     }
     
-    public void addPurchaseOrder() {
-        String ID = salesBLService.getnewPurchaseID();
+    public void addSalesOrder() {
+        String ID = salesBLService.getnewSalesID();
         BillID.setText(ID);
     }
 
@@ -201,15 +274,16 @@ public class SalesStaffPurchaseEditViewController {
             goodsItemList.add(GoodsItemVO);
             data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
             total.set(total.get()+money);
+            afterSum.set(afterSum.get()+money);
         }
     }
 
     public void clickSubmitButton(){
-        String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
-        salesBLService.submitPurchase(purchaseVO);
-        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),new Date());
+        salesBLService.submitSales(salesVO);
+        salesStaffSalesOrderViewController.showSalesOrderList();
     }
     
     public void clickCancelButton(){
@@ -220,25 +294,29 @@ public class SalesStaffPurchaseEditViewController {
 
         if (result.isPresent()){
             if (result.get() == ButtonType.OK) {
-            	String supplierName = "";
+            	String customerName = "";
                 String inventoryName = "";
-                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
-                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+                String customerID = "";
+                String customerSalesman = "";
+                if (customer.getSelectionModel().getSelectedIndex() >= 0){
+                    customerName = customers.get(customer.getSelectionModel().getSelectedIndex()).customerName;
+                    customerID = customers.get(customer.getSelectionModel().getSelectedIndex()).customerID;
+                    customerSalesman = customers.get(customer.getSelectionModel().getSelectedIndex()).salesman;
                 }
                 if (inventory.getSelectionModel().getSelectedIndex() >= 0){
                 	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
                 }
-                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
-                salesBLService.savePurchase(purchaseVO);
+                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),new Date());
+                salesBLService.saveSales(salesVO);
             }
 
-            salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+            salesStaffSalesOrderViewController.showSalesOrderList();
         }
     }
 
 
-    public void setSalesStaffPurchaseOrderViewController(SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController){
-        this.salesStaffPurchaseOrderViewController = salesStaffPurchaseOrderViewController;
+    public void setSalesStaffSalesOrderViewController(SalesStaffSalesOrderViewController salesStaffSalesOrderViewController){
+        this.salesStaffSalesOrderViewController = salesStaffSalesOrderViewController;
     }
     
     public class GoodsItemBean{

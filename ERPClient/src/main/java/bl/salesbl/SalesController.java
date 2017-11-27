@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import blservice.salesblservice.SalesBLService;
 import util.ResultMessage;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -89,6 +90,30 @@ public class SalesController implements SalesBLService{
 	}
 
 	public ResultMessage savePurchase(PurchaseVO bill) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUserID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllSupplier() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getAllInventory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
