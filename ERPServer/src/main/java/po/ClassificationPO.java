@@ -98,7 +98,7 @@ public class ClassificationPO {
 		this.chidren = chidren;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "claid")
 	public List<GoodsPO> getGoods() {
 		return goods;

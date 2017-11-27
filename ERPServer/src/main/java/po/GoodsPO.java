@@ -8,6 +8,7 @@ import javax.persistence.*;
  *
  */
 @Entity
+@Embeddable
 @Table(name = "goods")
 public class GoodsPO {
 	/**
