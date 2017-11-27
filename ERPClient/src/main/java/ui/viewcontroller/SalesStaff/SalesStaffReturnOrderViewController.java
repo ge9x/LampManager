@@ -2,21 +2,14 @@ package ui.viewcontroller.SalesStaff;
 
 import java.io.IOException;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class SalesStaffPurchaseOrderViewController {
-	
+public class SalesStaffReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
-	SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController;
+	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
 	
 	@FXML
     Label addIcon;
@@ -30,26 +23,25 @@ public class SalesStaffPurchaseOrderViewController {
     	this.salesStaffViewController = salesStaffViewController;
     }
     
-    public void showPruchaseOrderList(){
-    	salesStaffViewController.showPurchaseOrderView();
+    public void showReturnOrderList(){
+    	salesStaffViewController.showReturnOrderView();
     }
     
     public void clickAddButton(){
     	showPurchaseEditView();
-    	salesStaffPurchaseEditViewController.addPurchaseOrder();
+    	salesStaffReturnEditViewController.addReturnOrder();
     }
     
     public void showPurchaseEditView(){
     	try{
             FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/salesStaff/PurchaseOrderEdit.fxml"));
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrderEdit.fxml"));
             Pane page = pageLoader.load();
-            salesStaffPurchaseEditViewController = pageLoader.getController();
-            salesStaffPurchaseEditViewController.setSalesStaffPurchaseOrderViewController(this);
+            salesStaffReturnEditViewController = pageLoader.getController();
+            salesStaffReturnEditViewController.setSalesStaffReturnOrderViewController(this);
             salesStaffViewController.showPurchaseOrderEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }
     }
-    
 }

@@ -37,5 +37,13 @@ public class SalesStaffNavBarController {
     public void clickCustomerButton(){
     	salesStaffViewController.showCustomerList();
     }
+    
+    public void clickPurchaseOrderButton(){
+    	salesStaffViewController.showPurchaseOrderView();
+    }
+    
+    public void clickReturnOrderButton(){
+    	salesStaffViewController.showReturnOrderView();
+    }
 
 }

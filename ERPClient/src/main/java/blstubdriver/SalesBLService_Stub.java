@@ -9,17 +9,21 @@ import po.PurchasePO;
 import po.SalesPO;
 import util.PromotionType;
 import util.ResultMessage;
+import util.UserLimits;
 import util.UserPosition;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
 import util.BillState;
 import util.BillType;
+import util.CustomerCategory;
 import util.Level;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
+import vo.UserVO;
 
 public class SalesBLService_Stub implements SalesBLService{
 	ArrayList<PurchaseVO> purchaseBill=new ArrayList<PurchaseVO>();
@@ -193,6 +197,36 @@ public class SalesBLService_Stub implements SalesBLService{
 		}
 		System.out.println("Save purchase failed");
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public String getUserID() {
+		// TODO Auto-generated method stub
+		UserVO user = new UserVO("0033", "1234", "SalesStaff", UserPosition.SALES_STAFF, UserLimits.STAFF);
+		return user.userID;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllSupplier() {
+		// TODO Auto-generated method stub
+		ArrayList<CustomerVO> supplier = new ArrayList<>();
+		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
+				"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
+		CustomerVO c2=new CustomerVO("00000005",CustomerCategory.SELLER,Level.LEVEL_FOUR,"金主2","15546674310",
+			"南京仙林大学城","421000","ddk@163.com",1.0,15000.0,0.0,"业务员1",150.0,500);
+		supplier.add(c1);
+		supplier.add(c2);
+		return supplier;
+	}
+
+	@Override
+	public ArrayList<String> getAllInventory() {
+		// TODO Auto-generated method stub
+		ArrayList<String> inventory = new ArrayList<>();
+		inventory.add("仓库1");
+		inventory.add("仓库2");
+		inventory.add("仓库3");
+		return inventory;
 	}
 	
 }
