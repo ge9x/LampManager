@@ -9,7 +9,8 @@ package util;
 public enum QueryMode {
 	FULL("完全匹配"),
 	FUZZY("模糊匹配"),
-	RANGE("范围查询");
+	RANGE("范围查询"),
+	OR("并集查询");
 	
 	String value;
 	
@@ -17,8 +18,7 @@ public enum QueryMode {
 		this.value = value;
 	}
 
-	@Override
-	public String toString() {
+	public String getValue(){
 		return value;
 	}
 }
