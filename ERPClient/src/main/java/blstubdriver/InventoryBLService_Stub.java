@@ -91,14 +91,9 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		}
 	}
 
-	public InventoryCheckVO check(Date today) {
-		if(today==null){
-			return null;
-		}
-		else{
-			InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
-			return ret;
-		}
+	public InventoryCheckVO check() {
+        InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
+		return ret;
 	}
 
 	public ResultMessage exportExcel(InventoryCheckVO vo) {

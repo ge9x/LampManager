@@ -45,6 +45,13 @@ public interface FinanceBLService {
     public ArrayList<CustomerVO> getAllCustomer();
 
     /**
+     * 根据ID的到客户名字
+     * @param ID
+     * @return
+     */
+    public String getCustomerNameByID(String ID);
+
+    /**
      * 获得所有银行账户列表
      * @return
      */
@@ -88,6 +95,26 @@ public interface FinanceBLService {
      */
     public ResultMessage updateDraft(CashBillVO vo);
 
+    /**
+     * 获得所有草稿单据
+     *
+     */
+    public ArrayList<AccountBillVO> getDraftAccountBills();
+
+    /**
+     * 获得所有待审批单据
+     */
+    public ArrayList<AccountBillVO> getSubmittedAccountBills();
+
+    /**
+     * 获得所有待审批单据
+     */
+    public ArrayList<AccountBillVO> getPassAccountBills();
+
+    /**
+     * 获得所有待审批单据
+     */
+    public ArrayList<AccountBillVO> getFailedAccountBills();
 
 
 }

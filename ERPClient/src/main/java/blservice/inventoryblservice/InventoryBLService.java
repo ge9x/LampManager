@@ -29,10 +29,9 @@ public interface InventoryBLService {
 	public InventoryViewVO show(Date startDate, Date endDate, String inventory);
 	/**
 	 * 得到此日期的库存盘点
-	 * @param today 日期
 	 * @return  当天的库存盘点
 	 */
-	public InventoryCheckVO check(Date today);
+	public InventoryCheckVO check();
 	/**
 	 * 导出库存盘点到本地
 	 * @param vo 当天的库存盘点

@@ -10,39 +10,37 @@ import ui.viewcontroller.FinancialStaff.FinancialViewController;
 public class InventoryNavbarController {
     private InventoryViewController inventoryViewController;
     @FXML
-    Label viewIcon;
+    Label ViewIcon;
 
     @FXML
-    Label checkIcon;
+    Label CheckIcon;
 
     @FXML
-    Label syncIcon;
+    Label SyncIcon;
 
     @FXML
-    Label classificationIcon;
+    Label ClassificationIcon;
 
     @FXML
-    Label goodsIcon;
+    Label GoodsIcon;
 
 
 
     @FXML
     public void initialize() {
-        viewIcon.setText("\ue982");
-        checkIcon.setText("\ue60e");
-        syncIcon.setText("\ue60f");
-        classificationIcon.setText("\ue626");
-        goodsIcon.setText("\ue62a");
+        ViewIcon.setText("\ue678");
+        CheckIcon.setText("\ue803");
+        SyncIcon.setText("\ue603");
+        ClassificationIcon.setText("\ue64c");
+        GoodsIcon.setText("\ue68d");
     }
 
     public void clickViewButton(){
         inventoryViewController.showViewView();
     }
-
     public void clickCheckButton() {
         inventoryViewController.showCheckView();
     }
-
     public void clicSyncButton() {
         inventoryViewController.showSyncView();
     }

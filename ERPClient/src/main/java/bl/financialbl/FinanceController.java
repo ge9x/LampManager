@@ -68,5 +68,28 @@ public class FinanceController implements FinanceBLService{
         return null;
     }
 
+    @Override
+    public ArrayList<AccountBillVO> getDraftAccountBills() {
+        return null;
+    }
 
+    @Override
+    public ArrayList<AccountBillVO> getSubmittedAccountBills() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getPassAccountBills() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getFailedAccountBills() {
+        return null;
+    }
+
+    @Override
+    public String getCustomerNameByID(String ID) {
+        return null;
+    }
 }
