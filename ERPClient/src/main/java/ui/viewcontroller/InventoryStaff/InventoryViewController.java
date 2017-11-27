@@ -13,6 +13,7 @@ public class InventoryViewController {
 
     InventoryNavbarController inventoryNavbarController;
     InventoryCheckController inventoryCheckController;
+    InventoryLookController inventoryLookController;
     MainUIController mainUIController;
 
     public InventoryViewController(MainUIController mainUIController){
@@ -39,6 +40,10 @@ public class InventoryViewController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/Look.fxml"));
             Pane page = loader.load();
+            inventoryLookController = loader.getController();
+            inventoryLookController.setInventoryViewController(this);
+
+            mainUIController.setCenter(page);
         }catch (IOException e){
             e.printStackTrace();
         }

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/look.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
+    <children>
+        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="621.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" text="查看库存">
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                           <HBox.margin>
+                              <Insets right="390.0" />
+                           </HBox.margin>
+                                </Label>
+                        <JFXDatePicker prefHeight="23.0" prefWidth="100.0" />
+                        <Label contentDisplay="CENTER" prefHeight="15.0" prefWidth="20.0" text="—" />
+                        <JFXDatePicker prefWidth="100.0" />
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label fx:id="AlertIcon" prefHeight="100.0" prefWidth="94.0" styleClass="icon-label" text="!" />
+                        <ScrollPane prefHeight="121.0" prefWidth="744.0">
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <VBox prefHeight="115.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label text="库存合计">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                  </VBox>
+                  <TilePane fx:id="tilePane" hgap="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="764.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                           <content>
+                              <Label text="库存条目">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </content>
+                           <TilePane.margin>
+                              <Insets />
+                           </TilePane.margin>
+                           <padding>
+                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                           <padding>
+                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                           </padding>
+                           <content>
+                              <Label text="销售条目">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </TilePane>
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>
