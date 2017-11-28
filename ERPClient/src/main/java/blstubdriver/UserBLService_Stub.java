@@ -72,14 +72,15 @@ public class UserBLService_Stub implements UserBLService{
 		}
 	}
 
-	public UserVO findUserByID(String UserID) {
+	public ArrayList<UserVO> findUsersByID(String UserID) {
 		// TODO Auto-generated method stub
+		ArrayList<UserVO> result = new ArrayList<UserVO>();
 		for(int i=0;i<users.size();i++){
-			if(users.get(i).userID.equals(UserID)){
-				return users.get(i);
+			if(users.get(i).userID.contains(UserID)){
+				result.add(users.get(i));
 			}
 		}
-		return null;
+		return result;
 	}
 
 	public ArrayList<UserVO> show() {
@@ -93,4 +94,14 @@ public class UserBLService_Stub implements UserBLService{
 		return new UserVO("0047", "1234", "FinancialStaff", UserPosition.FINANCIAL_STAFF, UserLimits.MANAGER).userID;
 	}
 
+	public ArrayList<UserVO> findUsersByKeywords(String keywords) {
+		// TODO Auto-generated method stub
+		ArrayList<UserVO> result = new ArrayList<UserVO>();
+		for(int i=0;i<users.size();i++){
+			if(users.get(i).name.contains(keywords)){
+				result.add(users.get(i));
+			}
+		}
+		return result;
+	}
 }

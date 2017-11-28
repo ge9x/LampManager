@@ -47,10 +47,12 @@ public interface UserBLService {
      * @param userID
      * @return userVO
      */
-	public UserVO findUserByID(String UserID);
+	public ArrayList<UserVO> findUsersByID(String UserID);
 	
 	public ArrayList<UserVO> show();
 	
 	public String getCurrentUserID();
+	
+	public ArrayList<UserVO> findUsersByKeywords(String keywords);
 	
 }
