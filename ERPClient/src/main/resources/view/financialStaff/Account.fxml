@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/account.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialAccountController">
    <children>
-      <ScrollPane layoutY="50.0" prefHeight="552.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
             <VBox alignment="TOP_CENTER" prefHeight="497.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
@@ -42,7 +42,7 @@
                               <Insets left="330.0" />
                            </HBox.margin>
                         </TextField>
-                        <Label  fx:id="searchIcon" onMouseClicked="#clickSearchButton" styleClass="icon-label" text="Q">
+                        <Label fx:id="searchIcon" onMouseClicked="#clickSearchButton" styleClass="icon-label" text="Q">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

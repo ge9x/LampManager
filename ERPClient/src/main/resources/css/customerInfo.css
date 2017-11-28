@@ -2,10 +2,6 @@
     font-family: 'iconfont';
     src: url('../fonts/iconfont.ttf');
 }
-#title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-}
 .icon-label {
     -fx-font-family: iconfont;
     -fx-font-size: 20px;

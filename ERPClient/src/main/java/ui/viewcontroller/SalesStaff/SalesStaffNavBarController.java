@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class SalesStaffNavBarController {
+	private SalesStaffViewController salesStaffViewController;
 	
 	@FXML
 	Label CustomerIcon;
@@ -29,8 +30,12 @@ public class SalesStaffNavBarController {
         SalesReturnIcon.setText("\ue6e5");
     }
 
+    public void setSalesStaffViewController(SalesStaffViewController salesStaffViewController){
+    	this.salesStaffViewController = salesStaffViewController;
+    }
+    
     public void clickCustomerButton(){
-
+    	salesStaffViewController.showCustomerList();
     }
 
 }

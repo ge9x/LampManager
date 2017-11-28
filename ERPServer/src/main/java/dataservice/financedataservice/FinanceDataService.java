@@ -20,21 +20,21 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public String getNewReceiptID() throws RemoteException;
+    public int getNewReceiptID() throws RemoteException;
 
     /**
      * 获得新的付款单ID
      * @return
      * @throws RemoteException
      */
-    public String getNewPaymentID() throws RemoteException;
+    public int getNewPaymentID() throws RemoteException;
 
     /**
      * 获得新的现金费用单
      * @return
      * @throws RemoteException
      */
-    public String getNewCashBillID() throws RemoteException;
+    public int getNewCashBillID() throws RemoteException;
 
     /**
      * 添加新的单据
@@ -74,7 +74,7 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public BillPO findBillByID(String ID) throws RemoteException;
+    public BillPO findBillByID(int ID) throws RemoteException;
 
     /**
      * 根据单据状态查找
@@ -105,7 +105,7 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public Date getDate(String ID) throws RemoteException;
+    public Date getDate(int ID) throws RemoteException;
 
     /**
      * 获得该单据的客户
@@ -113,7 +113,7 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public String getCustomer(String ID) throws RemoteException;
+    public String getCustomer(int ID) throws RemoteException;
 
     /**
      * 获得该单据的业务员
@@ -121,7 +121,7 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public String getSalesman(String ID) throws RemoteException;
+    public String getSalesman(int ID) throws RemoteException;
 
     /**
      * 获得该单据的仓库
@@ -129,6 +129,6 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public String getInventory(String ID) throws RemoteException;
+    public String getInventory(int ID) throws RemoteException;
 
 }

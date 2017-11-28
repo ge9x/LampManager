@@ -1,6 +1,7 @@
 package blstubdriver;
 
 import blservice.formblservice.DocumentDetailsInput;
+import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
 import util.BillState;
 import util.BillType;
@@ -13,11 +14,11 @@ import java.util.Date;
 /**
  * Created by Kry·L on 2017/11/23.
  */
-public class FormBLService_Stub {
+public class FormBLService_Stub implements FormBLService {
     ProfitVO profitVO;
     BillVO billVO;
     ArrayList<BillVO> billVOS;
-    ArrayList<SalesDetailVO> salesDetailVOS;
+    ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
 
     public FormBLService_Stub(){
         AccountVO vo1 = new AccountVO("001","工商银行账户1",2000);

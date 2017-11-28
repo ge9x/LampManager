@@ -32,12 +32,12 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 
 	@Override
 	public ArrayList<ClassificationPO> show() throws RemoteException {
-		return classificationDataHelper.multiQuery(new ArrayList<Criterion>());
+		return classificationDataHelper.fullyQuery(null, null);
 	}
 
 	@Override
-	public ClassificationPO find(String ID) throws RemoteException {
-		return classificationDataHelper.exactlyQuery("id", Integer.parseInt(ID));
+	public ClassificationPO find(int ID) throws RemoteException {
+		return classificationDataHelper.exactlyQuery("id", ID);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class CashBillPO extends BillPO {
     /**
      * 银行账户
      */
-    private String accountName;
+    private String accountID;
 
     /**
      * 条目清单
@@ -31,10 +31,10 @@ public class CashBillPO extends BillPO {
      */
     private double sum;
 
-    public CashBillPO(String ID, Date date, BillType type, BillState state, String userName, String accountName, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
+    public CashBillPO(String ID, Date date, BillType type, BillState state, String userName, String accountID, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
         super(ID, date, type, state);
         this.userName = userName;
-        this.accountName = accountName;
+        this.accountID = accountID;
         this.cashBillItemPOS = cashBillItemPOS;
         this.sum = sum;
     }
@@ -48,11 +48,11 @@ public class CashBillPO extends BillPO {
     }
 
     public String getAccountName() {
-        return accountName;
+        return accountID;
     }
 
     public void setAccountName(String accountName) {
-        this.accountName = accountName;
+        this.accountID = accountName;
     }
 
     public ArrayList<CashBillItemPO> getCashBillItemPOS() {

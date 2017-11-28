@@ -20,7 +20,7 @@ public interface ExaminationDataService {
      */
 	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
 	
-	public BillPO find(String ID) throws RemoteException;
+	public BillPO find(int ID) throws RemoteException;
 	
 	public ResultMessage add(BillPO po) throws RemoteException;
 	

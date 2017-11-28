@@ -22,14 +22,14 @@
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="制定收款单" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="PaymentNav" layoutY="306.0" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="PaymentNav" layoutY="306.0" onMouseClicked="#clickPaymentButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="PaymentIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="制定付款单" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="CashNav" layoutY="346.0" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="CashNav" layoutY="346.0" onMouseClicked="#clickCashBillButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="CashIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
@@ -37,7 +37,7 @@
                 </Label>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="SalesDetailsNav" layoutY="386.0" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="SalesDetailsNav" layoutY="386.0" onMouseClicked="#clickSalesDetailsButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="SalesDetailsIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
