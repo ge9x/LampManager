@@ -16,7 +16,7 @@ public interface UserDataService {
      * @param userID
      * @return UserPO
      */
-	public UserPO find(String userID) throws RemoteException;
+	public UserPO find(int userID) throws RemoteException;
 	
 	public ResultMessage add(UserPO po) throws RemoteException;
 	

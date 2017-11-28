@@ -23,6 +23,14 @@ public class Criterion {
 	 * 查询数据库的方式
 	 */
 	private QueryMode queryMode;
+	/**
+	 * 并集查询方式时的约束1
+	 */
+	private Criterion criterion1;
+	/**
+	 * 并集查询方式时的约束2
+	 */
+	private Criterion criterion2;
 	
 	/**
 	 * 完全/模糊匹配查询
@@ -46,8 +54,8 @@ public class Criterion {
 	/**
 	 * 范围查询约束
 	 * @param field 字段
-	 * @param min 下限
-	 * @param max 上限
+	 * @param min 下限（若无则为null）
+	 * @param max 上限（若无则为null）
 	 */
 	public Criterion(String field, Object min, Object max) {
 		super();
@@ -55,6 +63,25 @@ public class Criterion {
 		this.value = min;
 		this.anotherValue = max;
 		this.queryMode = QueryMode.RANGE;
+	}
+	
+	/**
+	 * 并集查询约束
+	 * @param criterion1 约束1
+	 * @param criterion2 约束2
+	 */
+	public Criterion(Criterion criterion1, Criterion criterion2){
+		this.criterion1 = criterion1;
+		this.criterion2 = criterion2;
+		this.queryMode = QueryMode.OR;
+	}
+
+	public Criterion getCriterion1() {
+		return criterion1;
+	}
+
+	public Criterion getCriterion2() {
+		return criterion2;
 	}
 
 	public String getField() {

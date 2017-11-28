@@ -14,6 +14,11 @@ public class FinancialViewController {
     private FinancialNavbarController financialNavbarController;
     private FinancialAccountController financialAccountController;
     private FinancialReceiptController financialReceiptController;
+    private FinancialPaymentController financialPaymentController;
+    private FinancialCashBillController financialCashBillController;
+    private FinancialSalesDetailsController financialSalesDetailsController;
+    private FinancialProfitController financialProfitController;
+
     private MainUIController mainUIController;
 
     public FinancialViewController(MainUIController mainUIController){
@@ -65,8 +70,76 @@ public class FinancialViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        financialReceiptController.showReceiptList();
+    public void showPaymentView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/Payment.fxml"));
+            Pane page = pageLoader.load();
+            financialPaymentController = pageLoader.getController();
+            financialPaymentController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showCashBillView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBill.fxml"));
+            Pane page = pageLoader.load();
+            financialCashBillController = pageLoader.getController();
+            financialCashBillController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showReceiptEditView(Pane pane) {
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+
+    public void showPaymentEditView(Pane pane){
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+
+    public void showCashBillEditView(Pane pane){
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+
+    public void showSalesDetailsView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/SalesDetails.fxml"));
+            Pane page = pageLoader.load();
+            financialSalesDetailsController = pageLoader.getController();
+            financialSalesDetailsController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showDocumentDetailsView(){
+
+    }
+    public void showProfitView(){
+
     }
 
 }

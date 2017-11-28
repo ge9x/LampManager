@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -21,9 +22,9 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffCustomerInfoViewController">
    <children>
-      <ScrollPane layoutY="50.0" prefHeight="552.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane layoutX="5.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="506.0" prefWidth="828.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+            <VBox alignment="TOP_CENTER" prefHeight="506.0" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
                   <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <effect>
@@ -33,7 +34,7 @@
                         <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
                         <Label fx:id="title" text="客户管理">
                            <font>
-                              <Font name="System Bold" size="24.0" />
+                              <Font name="Microsoft YaHei Bold" size="24.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -41,12 +42,12 @@
                         </Label>
                         <Label fx:id="addIcon" styleClass="icon-label" text="+">
                            <HBox.margin>
-                              <Insets left="15.0" />
+                              <Insets left="400.0" />
                            </HBox.margin>
                         </Label>
                         <TextField style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
                            <HBox.margin>
-                              <Insets left="330.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
                         </TextField>
                         <Label fx:id="searchIcon" styleClass="icon-label" text="Q">
