@@ -55,4 +55,6 @@ public interface UserBLService {
 	
 	public ArrayList<UserVO> findUsersByKeywords(String keywords);
 	
+	public UserVO findUserByID(String userID);
+	
 }

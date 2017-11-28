@@ -104,4 +104,15 @@ public class UserBLService_Stub implements UserBLService{
 		}
 		return result;
 	}
+
+	@Override
+	public UserVO findUserByID(String userID) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<users.size();i++){
+			if(users.get(i).userID.equals(userID)){
+				return users.get(i);
+			}
+		}
+		return null;
+	}
 }
