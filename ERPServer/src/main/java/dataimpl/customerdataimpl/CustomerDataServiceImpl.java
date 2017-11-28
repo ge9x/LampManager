@@ -1,4 +1,4 @@
-package dataimpl.classificationdataimpl;
+package dataimpl.customerdataimpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -57,7 +57,10 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 	}
 
 	public void init() throws RemoteException {
-		
+		ArrayList<CustomerPO> cus=customerDataServiceImpl.show();
+		for(int i=0;i<cus.size();i++){
+			customerDataHelper.delete(cus.get(i));
+		}
 	}
 
 	public CustomerPO getCustomerData(int ID) throws RemoteException {

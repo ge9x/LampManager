@@ -30,9 +30,9 @@ public class PromotionPO {
 	
 	private double bargainTotal;
 	
-	private Date startDate;
+	private String startDate;
 	
-	private Date endDate;
+	private String endDate;
 	
 	private List<GoodsPO> bargains;
 	
@@ -48,7 +48,7 @@ public class PromotionPO {
 	
 	private PromotionType type;
 
-	public PromotionPO( double goodsTotal, double bargainTotal, Date startDate, Date endDate,
+	public PromotionPO( double goodsTotal, double bargainTotal, String startDate, String endDate,
 			List<GoodsPO> bargains, double voucher, double allowance, List<GoodsPO> gifts, Level level,
 			double totalPrice, PromotionType type) {
 		this.goodsTotal = goodsTotal;
@@ -93,21 +93,21 @@ public class PromotionPO {
 		this.bargainTotal = bargainTotal;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getStartDate() {
+	@Column(name = "startDate")
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getEndDate() {
+	@Column(name = "endDate")
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 

@@ -1,4 +1,4 @@
-package dataimpl.classificationdataimpl;
+package dataimpl.salesdataimpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
