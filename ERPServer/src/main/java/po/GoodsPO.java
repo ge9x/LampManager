@@ -1,5 +1,8 @@
 package po;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.*;
 
 /**
@@ -28,10 +31,6 @@ public class GoodsPO {
 	 */
 	private ClassificationPO classification;
 	/**
-	 * 商品数量
-	 */
-	private int amount;
-	/**
 	 * 商品警戒数量
 	 */
 	private int alarmAmount;
@@ -51,17 +50,20 @@ public class GoodsPO {
 	 * 商品最近零售价
 	 */
 	private double recentRetailPrice;
+	/**
+	 * 每个仓库里存的该商品的数量
+	 */
+	private Map<InventoryPO, Integer> number = new HashMap<InventoryPO, Integer>();
 	
 	public GoodsPO(){ }
 
-	public GoodsPO(String name, String model, ClassificationPO classification, int amount,
+	public GoodsPO(String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
 		super();
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
-		this.amount = amount;
 		this.alarmAmount = alarmAmount;
 		this.buyingPrice = buyingPrice;
 		this.retailPrice = retailPrice;
@@ -75,7 +77,7 @@ public class GoodsPO {
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-	public GoodsPO(int ID, String name, String model, ClassificationPO classification, int amount,
+	public GoodsPO(int ID, String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
 		super();
@@ -83,7 +85,6 @@ public class GoodsPO {
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
-		this.amount = amount;
 		this.alarmAmount = alarmAmount;
 		this.buyingPrice = buyingPrice;
 		this.retailPrice = retailPrice;
@@ -94,11 +95,11 @@ public class GoodsPO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getId() {
+	public int getID() {
 		return ID;
 	}
 	
-	public void setId(int ID) {
+	public void setID(int ID) {
 		this.ID = ID;
 	}
 	
@@ -130,13 +131,12 @@ public class GoodsPO {
 		this.classification = classification;
 	}
 	
-	@Column(name = "amount")
-	public int getAmount() {
+	public int countAmount() {
+		int amount = 0;
+		for(int num : number.values()){
+			amount += num;
+		}
 		return amount;
-	}
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
 	}
 
 	@Column(name = "alarmamount")
@@ -182,6 +182,18 @@ public class GoodsPO {
 	
 	public void setRecentRetailPrice(double recentRetailPrice) {
 		this.recentRetailPrice = recentRetailPrice;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="inventory_goods_number")
+	@MapKeyJoinColumn(name = "InventoryPO_id")
+	@Column(name = "number")
+	public Map<InventoryPO, Integer> getNumber() {
+		return number;
+	}
+
+	public void setNumber(Map<InventoryPO, Integer> number) {
+		this.number = number;
 	}
 	
 }

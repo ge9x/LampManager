@@ -29,7 +29,7 @@ public class TestGoods {
 			ArrayList<GoodsPO> allGoods = goodsImpl.show();
 			System.out.println("共有" + allGoods.size() + "条商品记录：");
 			for(GoodsPO po : allGoods){
-				System.out.println(po.getId() + " " + po.getName());
+				System.out.println(po.getID() + " " + po.getName());
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

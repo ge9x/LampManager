@@ -61,11 +61,11 @@ public class ClassificationPO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getId() {
+	public int getID() {
 		return ID;
 	}
 
-	public void setId(int ID) {
+	public void setID(int ID) {
 		this.ID = ID;
 	}
 
