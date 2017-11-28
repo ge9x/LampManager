@@ -26,7 +26,7 @@ public interface InventoryBLService {
 	 * @param inventory 仓库名
 	 * @return 此仓库此时间段内的出／入库数量／金额，销售／进货数量／金额，以及库存合计
 	 */
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory);
+	public InventoryViewVO show(String startDate, String endDate, String inventory);
 	/**
 	 * 得到此日期的库存盘点
 	 * @return  当天的库存盘点

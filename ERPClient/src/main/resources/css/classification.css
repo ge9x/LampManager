@@ -4,8 +4,8 @@
 }
 .icon-label {
     -fx-font-family: iconfont;
-    -fx-font-size: 60px;
-    -fx-text-fill: red;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
 }
 #title {
     -fx-font-size: 24px;

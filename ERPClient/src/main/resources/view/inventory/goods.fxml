@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/goods.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryGoodsController">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutY="50.0" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+            <children>
+                <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                    <effect>
+                        <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                    </effect>
+                    <children>
+                        <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                        <Label fx:id="title" text="管理商品">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding>
+                            <HBox.margin>
+                                <Insets right="300.0" />
+                            </HBox.margin>
+                        </Label>
+                        <JFXButton onMouseClicked="#clickModifyButton" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="修 改" textFill="WHITE">
+                            <font>
+                                <Font name="Arial" size="14.0" />
+                            </font>
+                        </JFXButton>
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <ScrollPane  prefHeight="412.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                    <effect>
+                        <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                    </effect>
+                    <padding>
+                        <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
+                    </padding>
+               <content>
+                  <AnchorPane fx:id="TablePane" prefHeight="362.0" prefWidth="704.0">
+                     <children>
+                        <TextField layoutX="450.0" layoutY="25.0" />
+                        <Label layoutX="623.0" layoutY="29.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+               </content>
+                </ScrollPane>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="20.0" top="10.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>
