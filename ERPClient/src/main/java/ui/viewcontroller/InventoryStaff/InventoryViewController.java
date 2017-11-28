@@ -14,6 +14,9 @@ public class InventoryViewController {
     InventoryNavbarController inventoryNavbarController;
     InventoryCheckController inventoryCheckController;
     InventoryLookController inventoryLookController;
+    InventoryClassificationController inventoryClassificationController;
+    InventoryGoodsController inventoryGoodsController;
+    InventorySyncController inventorySyncController;
     MainUIController mainUIController;
 
     public InventoryViewController(MainUIController mainUIController){
@@ -79,6 +82,10 @@ public class InventoryViewController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/Classification.fxml"));
             Pane page = loader.load();
+            inventoryClassificationController = loader.getController();
+            inventoryClassificationController.setInventoryViewController(this);
+
+            mainUIController.setCenter(page);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -89,6 +96,10 @@ public class InventoryViewController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/Goods.fxml"));
             Pane page = loader.load();
+            inventoryGoodsController = loader.getController();
+            inventoryGoodsController.setInventoryViewController(this);
+
+            mainUIController.setCenter(page);
         }catch (IOException e){
             e.printStackTrace();
         }

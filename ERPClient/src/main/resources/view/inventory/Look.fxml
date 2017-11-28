@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -32,12 +33,12 @@
                                         <Insets left="10.0" />
                                     </padding>
                            <HBox.margin>
-                              <Insets right="390.0" />
+                              <Insets right="350.0" />
                            </HBox.margin>
                                 </Label>
-                        <JFXDatePicker prefHeight="23.0" prefWidth="100.0" />
+                        <JFXDatePicker fx:id="StartDate" prefHeight="23.0" prefWidth="120.0" />
                         <Label contentDisplay="CENTER" prefHeight="15.0" prefWidth="20.0" text="—" />
-                        <JFXDatePicker prefWidth="100.0" />
+                        <JFXDatePicker fx:id="EndDate" prefWidth="120.0" />
                             </children>
                             <opaqueInsets>
                                 <Insets />
@@ -54,11 +55,8 @@
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
                      <children>
-                        <Label fx:id="AlertIcon" prefHeight="100.0" prefWidth="94.0" styleClass="icon-label" text="!" />
-                        <ScrollPane prefHeight="121.0" prefWidth="744.0">
-                           <padding>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="15.0" />
-                           </padding>
+                        <Label fx:id="AlertIcon" prefHeight="70.0" prefWidth="264.0" styleClass="icon-label" text="!" />
+                        <ScrollPane fx:id="AlarmTablePane" prefHeight="70.0" prefWidth="808.0">
                         </ScrollPane>
                      </children>
                      <padding>
@@ -75,6 +73,16 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
+                        <ToolBar prefHeight="29.0" prefWidth="724.0">
+                           <items>
+                              <Label text="入库数量" />
+                              <Label text="出库数量" />
+                              <Label text="入库" />
+                              <Label text="Label" />
+                              <Label text="Label" />
+                              <Label text="Label" />
+                           </items>
+                        </ToolBar>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -85,17 +93,10 @@
                   </VBox>
                   <TilePane fx:id="tilePane" hgap="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="764.0">
                      <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <ScrollPane fx:id="InventoryItemTablePane" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
                                 <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                             </effect>
-                           <content>
-                              <Label text="库存条目">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </content>
                            <TilePane.margin>
                               <Insets />
                            </TilePane.margin>
@@ -103,20 +104,13 @@
                               <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                            </padding>
                         </ScrollPane>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <ScrollPane fx:id="SalesItemTablePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
                                 <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                             </effect>
                            <padding>
                               <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                            </padding>
-                           <content>
-                              <Label text="销售条目">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                           </content>
                         </ScrollPane>
                      </children>
                   </TilePane>

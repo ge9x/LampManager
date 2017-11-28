@@ -7,6 +7,8 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Kry·L on 2017/11/20.
@@ -28,6 +30,11 @@ public class DialogFactory {
         Dialog alert = new Alert(Alert.AlertType.INFORMATION);
         initStyle(alert);
         return alert;
+    }
+    public static Dialog getChoiceDialog(ArrayList<String> choices){
+        Dialog dialog = new ChoiceDialog(choices.get(0),choices);
+        initStyle(dialog);
+        return dialog;
     }
     public static Dialog getDoubleTextDialog(String label1,String label2){
 
