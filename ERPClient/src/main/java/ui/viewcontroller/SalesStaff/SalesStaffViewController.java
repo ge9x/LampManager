@@ -57,6 +57,11 @@ public class SalesStaffViewController {
     	mainUIController.setCenter(customerDetail);
     }
     
+    public void showCustomerAddView(Pane customerAdd){
+    	mainUIController.setCenter(null);
+    	mainUIController.setCenter(customerAdd);
+    }
+    
     public void showPurchaseOrderView(){
         mainUIController.setCenter(null);
 
