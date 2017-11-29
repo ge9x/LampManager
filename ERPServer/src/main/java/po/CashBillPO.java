@@ -19,7 +19,7 @@ public class CashBillPO extends BillPO {
     /**
      * 银行账户
      */
-    private String accountID;
+    private int accountID;
 
     /**
      * 条目清单
@@ -31,7 +31,7 @@ public class CashBillPO extends BillPO {
      */
     private double sum;
 
-    public CashBillPO(String ID, Date date, BillType type, BillState state, String userName, String accountID, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
+    public CashBillPO(int ID, String date, BillType type, BillState state, String userName, int accountID, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
         super(ID, date, type, state);
         this.userName = userName;
         this.accountID = accountID;
