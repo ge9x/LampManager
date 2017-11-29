@@ -22,6 +22,8 @@ public class AccountPO {
      */
     private double money;
     
+    public AccountPO(){ }
+    
     public AccountPO(String name, double money) {
         this.name = name;
         this.money = money;

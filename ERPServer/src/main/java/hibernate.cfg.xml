@@ -26,6 +26,10 @@
 		<mapping class="po.GoodsItemPO" />
 		<mapping class="po.InventoryPO" />
 		<mapping class="po.InventoryBillPO" />
+		<mapping class="po.AccountPO" />
+		<mapping class="po.AccountBillPO" />
+		<mapping class="po.AccountBillItemPO" />
+		<mapping class="po.UserPO" />
     </session-factory>
  
 </hibernate-configuration>

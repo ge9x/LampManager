@@ -4,6 +4,7 @@ import util.BillState;
 import util.BillType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -45,12 +46,14 @@ public class AccountBillPO extends BillPO {
     /**
      * 转账列表
      */
-    private ArrayList<AccountBillItemPO> accountBillItemPOS;
+    private List<AccountBillItemPO> accountBillItemPOS;
 
     /**
      * 总额汇总
      */
     private double sum;
+
+    public AccountBillPO(){ }
 
     public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
         super(date, type, state);
@@ -121,7 +124,7 @@ public class AccountBillPO extends BillPO {
 		this.type = type;
 	}
 
-    @Column(name = "date")
+    @Column(name = "customerid")
 	public int getCustomerID() {
 		return customerID;
 	}
@@ -149,11 +152,11 @@ public class AccountBillPO extends BillPO {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "itemid")
-    public ArrayList<AccountBillItemPO> getAccountBillItemPOS() {
+    public List<AccountBillItemPO> getAccountBillItemPOS() {
         return accountBillItemPOS;
     }
 
-    public void setAccountBillItemPOS(ArrayList<AccountBillItemPO> accountBillItemPOS) {
+    public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
     }
 

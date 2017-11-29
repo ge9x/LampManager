@@ -28,6 +28,7 @@ public class AccountBillItemPO {
      */
     private String remark;
 
+    public AccountBillItemPO(){ }
 
     public AccountBillItemPO(String accountName, double money, String remark) {
         this.accountName = accountName;
