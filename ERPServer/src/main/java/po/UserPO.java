@@ -8,15 +8,17 @@ import util.UserPosition;
 @Entity
 @Table(name = "user")
 public class UserPO {
-	public String userID;
+	private int userID;
 	
-	public String password;
+	private String password;
 	
-	public String name;
+	private String name;
 	
-	public UserPosition position;
+	private UserPosition position;
 	
-	public UserLimits limit;
+	private UserLimits limit;
+	
+	public UserPO(){ }
 	
 	public UserPO(String password, String name, UserPosition position, UserLimits limit) {
 		super();
@@ -32,7 +34,7 @@ public class UserPO {
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-	public UserPO(String userID, String password, String name, UserPosition position, UserLimits limit) {
+	public UserPO(int userID, String password, String name, UserPosition position, UserLimits limit) {
 		super();
 		this.userID = userID;
 		this.password = password;
@@ -44,11 +46,11 @@ public class UserPO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
@@ -80,7 +82,7 @@ public class UserPO {
 		this.position = position;
 	}
 
-	@Column(name = "limit")
+	@Column(name = "userlimit")
 	@Enumerated(EnumType.STRING)
 	public UserLimits getLimit() {
 		return limit;
