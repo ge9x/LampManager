@@ -1,8 +1,12 @@
 package po;
 
+import javax.persistence.*;
+
 /**
  * Created by Kry·L on 2017/10/22.
  */
+@Entity
+@Table(name = "accountbillitem")
 public class AccountBillItemPO {
 	/**
 	 * 条目唯一标识ID
@@ -31,6 +35,9 @@ public class AccountBillItemPO {
         this.remark = remark;
     }
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public int getID() {
 		return ID;
 	}
@@ -39,6 +46,7 @@ public class AccountBillItemPO {
 		ID = iD;
 	}
 	
+	@Column(name = "accountname")
     public String getAccountName() {
         return accountName;
     }
@@ -47,6 +55,7 @@ public class AccountBillItemPO {
         this.accountName = accountName;
     }
 
+    @Column(name = "money")
     public double getMoney() {
         return money;
     }
@@ -55,6 +64,7 @@ public class AccountBillItemPO {
         this.money = money;
     }
 
+    @Column(name = "remark")
     public String getRemark() {
         return remark;
     }
