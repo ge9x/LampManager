@@ -139,7 +139,19 @@ public class FinancialViewController {
 
     }
     public void showProfitView(){
+        mainUIController.setCenter(null);
 
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/Profit.fxml"));
+            Pane page = pageLoader.load();
+            financialProfitController = pageLoader.getController();
+            financialProfitController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

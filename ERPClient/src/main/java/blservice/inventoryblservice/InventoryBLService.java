@@ -3,6 +3,7 @@ package blservice.inventoryblservice;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.BillType;
 import util.ResultMessage;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -107,4 +108,11 @@ public interface InventoryBLService {
 	 * @return 是否成功提交
 	 */
 	public ResultMessage submitBill(String ID);
+
+    /**
+     * 根据单据类型查找单据
+     * @param type
+     * @return
+     */
+	public ArrayList<InventoryBillVO> findBillByType(BillType type);
 }

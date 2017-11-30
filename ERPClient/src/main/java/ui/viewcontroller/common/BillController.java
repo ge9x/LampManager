@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
+import ui.viewcontroller.InventoryStaff.InventorySyncController;
 import util.BillType;
 import util.Money;
 import vo.*;
@@ -20,6 +21,7 @@ public class BillController {
 
     BillVO bill;
     FinancialReceiptController financialReceiptController;
+    InventorySyncController inventorySyncController;
 
     @FXML
     Circle circle;
@@ -168,6 +170,9 @@ public class BillController {
 
     public void setFinancialReceiptController(FinancialReceiptController financialReceiptController){
         this.financialReceiptController = financialReceiptController;
+    }
+    public void setInventorySyncController(InventorySyncController inventorySyncController){
+        this.inventorySyncController = inventorySyncController;
     }
 
 }

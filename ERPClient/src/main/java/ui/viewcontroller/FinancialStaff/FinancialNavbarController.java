@@ -65,7 +65,7 @@ public class FinancialNavbarController {
     public void clickDocumentDetailsButton(){
         financialViewController.showDocumentDetailsView();
     }
-    public void clickProfieView(){
+    public void clickProfitView(){
         financialViewController.showProfitView();
     }
 
