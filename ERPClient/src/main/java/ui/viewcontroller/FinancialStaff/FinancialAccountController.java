@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountBLService;
 import blstubdriver.AccountBLService_Stub;
 import javafx.fxml.FXML;
@@ -37,6 +38,7 @@ public class FinancialAccountController {
     private ArrayList<VBox> cells = new ArrayList<>();
 
     AccountBLService accountBLService = new AccountBLService_Stub();
+    AccountBLService accountBLService2 = new AccountController();
     FinancialViewController financialViewController;
     ArrayList<AccountVO> accounts;
 
@@ -83,8 +85,9 @@ public class FinancialAccountController {
             String accountName = null;
             String money = null;
             Pair<String,String> results = result.get();
-            AccountVO account = new AccountVO(null,results.getKey(),Double.parseDouble(results.getValue()));
-            ResultMessage re = accountBLService.addAccount(account);
+            AccountVO account = new AccountVO(null, results.getKey(), Double.parseDouble(results.getValue()));
+
+            ResultMessage re = accountBLService2.addAccount(account);
             if (re == ResultMessage.SUCCESS){
                 showAccountList();
             }
