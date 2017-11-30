@@ -12,28 +12,21 @@
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerNavBarController">
    <children>
       <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="99.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
-      <AnchorPane fx:id="ExaminationNav" layoutY="226.0" prefHeight="40.0" prefWidth="170.0">
+      <AnchorPane fx:id="ExaminationNav" layoutY="226.0" onMouseClicked="#clickExaminationButton" prefHeight="40.0" prefWidth="170.0">
          <children>
             <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
             <Label fx:id="ExaminationIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
             <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="审批单据" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="HistoryNav" layoutY="266.0" prefHeight="40.0" prefWidth="170.0">
-         <children>
-            <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
-            <Label fx:id="HistoryIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
-            <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="历史单据" />
-         </children>
-      </AnchorPane>
-       <AnchorPane fx:id="PromotionNav" layoutY="306.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="PromotionNav" layoutY="266.0" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="PromotionIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
                <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="促销策略" />
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="SalesDetailsNav" layoutY="346.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="SalesDetailsNav" layoutY="306.0" onMouseClicked="#clickSalesDetailsButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="SalesDetailsIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
@@ -41,7 +34,7 @@
                </Label>
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="DocumentDetailsNav" layoutY="386.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="DocumentDetailsNav" layoutY="346.0" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="DocumentDetailsIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />

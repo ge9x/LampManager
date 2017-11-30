@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import ui.viewcontroller.FinancialStaff.FinancialSalesDetailsController;
 import ui.viewcontroller.common.MainUIController;
 
 public class GeneralManagerViewController {
 
 	private GeneralManagerNavBarController generalManagerNavBarController;
 	private GeneralManagerExaminationViewController generalManagerExaminationViewController;
+	private FinancialSalesDetailsController financialSalesDetailsController;
 	private MainUIController mainUIController;
 	
     public GeneralManagerViewController(MainUIController mainUIController){
@@ -48,5 +50,20 @@ public class GeneralManagerViewController {
         }
 
         generalManagerExaminationViewController.showBillList();
+    }
+    
+    public void showSalesDetailsView(){
+    	 mainUIController.setCenter(null);
+
+         try {
+             FXMLLoader pageLoader = new FXMLLoader();
+             pageLoader.setLocation(getClass().getResource("/view/financialStaff/SalesDetails.fxml"));
+             Pane page = pageLoader.load();
+             financialSalesDetailsController = pageLoader.getController();
+
+             mainUIController.setCenter(page);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
     }
 }
