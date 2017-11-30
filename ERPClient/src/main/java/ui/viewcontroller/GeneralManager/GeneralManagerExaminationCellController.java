@@ -1,5 +1,7 @@
 package ui.viewcontroller.GeneralManager;
 
+import com.jfoenix.controls.JFXCheckBox;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -50,6 +52,9 @@ public class GeneralManagerExaminationCellController {
 	
 	@FXML
 	Label DetailIcon;
+	
+	@FXML
+	JFXCheckBox checkBox;
 	
 	@FXML
     public void initialize(){
@@ -151,5 +156,9 @@ public class GeneralManagerExaminationCellController {
 			billCreater.setText(salesBill.user);
 			billMoney.setText(Money.getMoneyString(salesBill.afterSum));
 		}
+	}
+	
+	public void clickDetailButton(){
+		
 	}
 }

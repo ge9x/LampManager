@@ -84,14 +84,15 @@ public class SalesStaffCustomerAddViewController {
 	}
 	
 	public void clickOKButton(){
-		setCustomerInfo();
 		if(isCompleted()){
+			setCustomerInfo();
 			customerBLService.addCustomer(customer);
 			salesStaffCustomerInfoViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();
 	        dialog.setHeaderText("客户信息填写不完整");
+	        Optional result = dialog.showAndWait();
 		}
 	}
 	

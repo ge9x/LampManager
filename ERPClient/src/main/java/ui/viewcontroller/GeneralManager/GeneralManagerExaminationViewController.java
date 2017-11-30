@@ -3,6 +3,8 @@ package ui.viewcontroller.GeneralManager;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.jfoenix.controls.JFXButton;
+
 import blservice.examinationblservice.ExaminationBLService;
 import blstubdriver.ExaminationBLService_Stub;
 import javafx.fxml.FXML;
@@ -15,6 +17,12 @@ public class GeneralManagerExaminationViewController {
 
 	@FXML
 	TilePane billList;
+	
+	@FXML
+	JFXButton passButton;
+	
+	@FXML
+	JFXButton noPassButton;
 	
 	private ArrayList<FXMLLoader> loaders = new ArrayList<>();
     private ArrayList<VBox> cells = new ArrayList<>();
@@ -38,6 +46,8 @@ public class GeneralManagerExaminationViewController {
     
     public void showBillList(){
     	billList.getChildren().clear();
+    	loaders.clear();
+    	cells.clear();
         bills = examinationBLService.show();
         for (int i = 0; i < bills.size(); i++){
             try {
@@ -56,5 +66,25 @@ public class GeneralManagerExaminationViewController {
             generalManagerExaminationCellController.setGeneralManagerExaminationViewController(this);
             billList.getChildren().add(cells.get(i));
         }
+    }
+    
+    public void clickPassButton(){
+    	for(int i=0;i<loaders.size();i++){
+    		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
+    		if(generalManagerExaminationCellController.checkBox.isSelected()){
+    			examinationBLService.approveReceipt(bills.get(i));
+    		}
+    	}
+    	generalManagerViewController.showExaminationView();
+    }
+    
+    public void clickNoPassButton(){
+    	for(int i=0;i<loaders.size();i++){
+    		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
+    		if(generalManagerExaminationCellController.checkBox.isSelected()){
+    			examinationBLService.refuseReceipt(bills.get(i));
+    		}
+    	}
+    	generalManagerViewController.showExaminationView();
     }
 }
