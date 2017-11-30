@@ -10,8 +10,12 @@ import org.hibernate.cfg.Configuration;
 
 import po.ClassificationPO;
 import po.CustomerPO;
+import po.GoodsItemPO;
 import po.GoodsPO;
 import po.PromotionPO;
+import po.PurchasePO;
+import util.BillState;
+import util.BillType;
 import util.CustomerCategory;
 import util.Level;
 import util.PromotionType;
@@ -23,20 +27,23 @@ public class TestPromotion {
 		Session s = sf.openSession();
 		s.beginTransaction();
 		
-		ClassificationPO clapo = new ClassificationPO();
-		clapo.setId(8);
-		clapo.setName("灯");
-		GoodsPO gpo1 = new GoodsPO( "圣洁牌经典黑白款落地灯", "L", null, 500, 50, 233.3, 250, 233.3, 250);
-		List<GoodsPO> goods=new ArrayList<GoodsPO>();
-		goods.add(gpo1);
+		GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
+				"耐用");
+		//salesImpl.addGoodsItem(gi1);
+		GoodsItemPO gi2=new GoodsItemPO(2, "挂灯",null, 10, 35.0,
+				"好看");
+		//salesImpl.addGoodsItem(gi2);
+		ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
+		goodsItemList.add(gi1);
+		goodsItemList.add(gi2);
+		
+		PurchasePO pur=new PurchasePO(BillType.PURCHASE,BillState.PASS,"供应商1"
+			,1,"默认仓库","阿红",goodsItemList,"满足客户需求"
+		     ,new Date().toString());
 
-		PromotionPO pro=new PromotionPO( 300, 400, new Date(), new Date(), null, 20.0, 30.0, null, Level.LEVEL_FOUR, 800, PromotionType.MEMBER_PROMOTION_STRATEGY);
-		List<PromotionPO> cus=new ArrayList<PromotionPO>();
-		cus.add(pro);
-
-		s.save(clapo);
-		s.save(gpo1);
-		s.save(pro);
+		s.save(gi1);
+		s.save(gi2);
+		s.save(pur);
 
 
 		
