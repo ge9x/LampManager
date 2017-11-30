@@ -12,7 +12,6 @@ import po.SalesPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
-import util.UserPosition;
 
 
 public class SalesDataService_Stub implements SalesDataService{
