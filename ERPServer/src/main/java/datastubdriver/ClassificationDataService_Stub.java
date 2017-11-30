@@ -17,11 +17,19 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 	ArrayList<ClassificationPO> data;
 	{
 		data = new ArrayList<ClassificationPO>();
-		ClassificationPO po1 = new ClassificationPO("01", "灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
-		ClassificationPO po2 = new ClassificationPO("02", "落地灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
-		ClassificationPO po3 = new ClassificationPO("03", "台灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
-		ClassificationPO po4 = new ClassificationPO("04", "吊灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
-		ClassificationPO po5 = new ClassificationPO("05", "霓虹灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		ClassificationPO po1 = new ClassificationPO(1, "灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		ClassificationPO po2 = new ClassificationPO(2, "落地灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		ClassificationPO po3 = new ClassificationPO(3, "台灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		ClassificationPO po4 = new ClassificationPO(4, "吊灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		ClassificationPO po5 = new ClassificationPO(5, "霓虹灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+		po2.setFather(po1);
+		po3.setFather(po1);
+		po4.setFather(po1);
+		po5.setFather(po1);
+		po1.getChidren().add(po2);
+		po1.getChidren().add(po3);
+		po1.getChidren().add(po4);
+		po1.getChidren().add(po5);
 		data.add(po1);
 		data.add(po2);
 		data.add(po3);
@@ -33,9 +41,9 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		return data;
 	}
 	
-	public ClassificationPO find(String ID) throws RemoteException {
+	public ClassificationPO find(int ID) throws RemoteException {
 		for(ClassificationPO po : data){
-			if(po.getId().equals(ID)){
+			if(po.getID() == ID){
 				return po;
 			}
 		}
@@ -44,7 +52,7 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 
 	public ResultMessage add(ClassificationPO po) throws RemoteException {
 		for(ClassificationPO cpo : data){
-			if(cpo.getId().equals(po.getId())){
+			if(cpo.getID() == po.getID()){
 				System.out.println("add classification failed");
 				return ResultMessage.FAILED;
 			}
@@ -56,7 +64,7 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 
 	public ResultMessage delete(ClassificationPO po) throws RemoteException {
 		for(ClassificationPO cpo : data){
-			if(cpo.getId().equals(po.getId())){
+			if(cpo.getID() == po.getID()){
 				data.remove(cpo);
 				System.out.println("delete classification success");
 				return ResultMessage.SUCCESS;
@@ -68,7 +76,7 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
 		for(ClassificationPO cpo : data){
-			if(cpo.getId().equals(po.getId())){
+			if(cpo.getID() == po.getID()){
 				data.remove(cpo);
 				data.add(po);
 				System.out.println("update classification success");

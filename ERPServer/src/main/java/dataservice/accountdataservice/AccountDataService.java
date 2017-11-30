@@ -3,13 +3,14 @@ package dataservice.accountdataservice;
 import po.AccountPO;
 import util.ResultMessage;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Created by Kry·L on 2017/10/22.
  */
-public interface AccountDataService {
+public interface AccountDataService extends Remote {
     /**
      * 添加一个银行账户
      * @param po

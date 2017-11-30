@@ -20,21 +20,21 @@ public interface FinanceDataService {
      * @return
      * @throws RemoteException
      */
-    public String getNewReceiptID() throws RemoteException;
+    public int getNewReceiptID() throws RemoteException;
 
     /**
      * 获得新的付款单ID
      * @return
      * @throws RemoteException
      */
-    public String getNewPaymentID() throws RemoteException;
+    public int getNewPaymentID() throws RemoteException;
 
     /**
      * 获得新的现金费用单
      * @return
      * @throws RemoteException
      */
-    public String getNewCashBillID() throws RemoteException;
+    public int getNewCashBillID() throws RemoteException;
 
     /**
      * 添加新的单据
@@ -59,6 +59,5 @@ public interface FinanceDataService {
      * @throws RemoteException
      */
     public ResultMessage updateBill(BillPO po) throws RemoteException;
-
 
 }

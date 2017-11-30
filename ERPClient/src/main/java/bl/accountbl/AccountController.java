@@ -5,6 +5,7 @@ import blservice.accountblservice.AccountInfo;
 import util.ResultMessage;
 import vo.AccountVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +20,12 @@ public class AccountController implements AccountBLService, AccountInfo{
     }
 
     public ResultMessage addAccount(AccountVO accountVO) {
-        return null;
+        try {
+            return account.addAccount(accountVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
     }
 
     public ResultMessage deleteAccount(String name) {
