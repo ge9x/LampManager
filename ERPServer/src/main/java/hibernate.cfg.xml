@@ -30,9 +30,6 @@
 		<mapping class="po.PromotionPO" />
 		<mapping class="po.PurchasePO" />
 		<mapping class="po.UserPO" />
-		<mapping class="po.SalesPO" />
-		
-
 
     </session-factory>
  
