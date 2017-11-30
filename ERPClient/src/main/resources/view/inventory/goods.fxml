@@ -30,7 +30,7 @@
                                 <Insets left="10.0" />
                             </padding>
                             <HBox.margin>
-                                <Insets right="300.0" />
+                                <Insets right="520.0" />
                             </HBox.margin>
                         </Label>
                         <JFXButton onMouseClicked="#clickModifyButton" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="修 改" textFill="WHITE">
@@ -49,22 +49,13 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-                <ScrollPane  prefHeight="412.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
-                    <effect>
-                        <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
-                    </effect>
-                    <padding>
-                        <Insets bottom="20.0" left="30.0" right="30.0" top="30.0" />
-                    </padding>
-               <content>
-                  <AnchorPane fx:id="TablePane" prefHeight="362.0" prefWidth="704.0">
-                     <children>
-                        <TextField layoutX="450.0" layoutY="25.0" />
-                        <Label layoutX="623.0" layoutY="29.0" text="Label" />
-                     </children>
-                  </AnchorPane>
-               </content>
-                </ScrollPane>
+            <AnchorPane prefHeight="425.0" prefWidth="764.0">
+               <children>
+                  <TextField layoutX="526.0" layoutY="32.0" />
+                  <Label layoutX="699.0" layoutY="36.0" text="Q" />
+                  <ScrollPane layoutX="26.0" layoutY="73.0" prefHeight="317.0" prefWidth="707.0" />
+               </children>
+            </AnchorPane>
             </children>
             <padding>
                 <Insets bottom="20.0" left="30.0" right="20.0" top="10.0" />

@@ -8,6 +8,7 @@ import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -49,8 +50,14 @@ public class FormBLService_Stub implements FormBLService {
         }
     }
 
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return profitVO;
+    public ProfitVO getProfit(String startDate, String endDate) {
+        if (startDate.equals(LocalDate.of(2017, 11, 29).toString())) {
+            profitVO.salesIncome = 100.0;
+            return profitVO;
+        } else {
+            profitVO.salesIncome = 200.0;
+            return profitVO;
+        }
     }
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
         return salesDetailVOS;
