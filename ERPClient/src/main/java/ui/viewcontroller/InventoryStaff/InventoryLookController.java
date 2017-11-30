@@ -75,15 +75,14 @@ public class InventoryLookController {
         tilePane.setPrefColumns(2);
 
         getInfos();
-        initAlarmTable();
-        initItemTable();
+            initAlarmTable();
+            initItemTable();
 
-        showAlarmTable();
-        showItemTable();
-
+            showAlarmTable();
+            showItemTable();
     }
 
-    public void getInfos(){
+    public boolean getInfos(){
         inventories = inventoryBLService.showInventory();
 
         ArrayList<Label> labels = new ArrayList<>();
@@ -104,12 +103,12 @@ public class InventoryLookController {
         dialog.setHeaderText("请选择查看的仓库名称和时间段");
 
         dialog.setResultConverter(dialogButton -> {
-            ArrayList<String> result = new ArrayList<>();
-            result.add(comboBox.getValue());
-            result.add(startDate.getValue().toString());
-            result.add(endDate.getValue().toString());
 
             if (dialogButton == ButtonType.FINISH) {
+                ArrayList<String> result = new ArrayList<>();
+                result.add(comboBox.getValue());
+                result.add(startDate.getValue().toString());
+                result.add(endDate.getValue().toString());
                 return result;
             }
             return null;
@@ -117,11 +116,15 @@ public class InventoryLookController {
 
         Optional result = dialog.showAndWait();
         if (result.isPresent()){
-            ArrayList<String> results = (ArrayList<String>)result.get();
-            inventory = results.get(0);
-            StartDate.setValue(LocalDate.parse(results.get(1)));
-            EndDate.setValue(LocalDate.parse(results.get(2)));
+            if (result.get() != null){
+                ArrayList<String> results = (ArrayList<String>)result.get();
+                inventory = results.get(0);
+                StartDate.setValue(LocalDate.parse(results.get(1)));
+                EndDate.setValue(LocalDate.parse(results.get(2)));
+                return true;
+            }
         }
+            return false;
     }
     public void initAlarmTable(){
         alarmTable = new TableView<>();
