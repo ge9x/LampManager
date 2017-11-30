@@ -1,6 +1,5 @@
 package po;
 
-import java.util.Date;
 import java.util.ArrayList;
 
 import util.BillState;
@@ -13,7 +12,12 @@ import util.UserPosition;
  */
 
 public class SalesPO extends BillPO{
-	
+	/**单据编号*/
+	private int ID;
+	/**单据类型*/
+	private BillType type;
+	/**单据状态*/
+	private BillState state;
 	/**客户*/
 	private String customer;
 	/**客户ID*/
@@ -36,12 +40,17 @@ public class SalesPO extends BillPO{
 	private double afterSum;
 	/**备注*/
 	private String remarks;
+	/**单据最后修改时间*/
+	private String date;
 	
 	
-	public SalesPO( BillType type, BillState state, String ID, String customer,String customerID, String salesman,
+	public SalesPO( BillType type, BillState state, int ID, String customer,String customerID, String salesman,
 			String user, String inventory,ArrayList<GoodsItemPO> goodsItemList,
-			double allowance, double voucher, String remarks, Date endDate) {
+			double allowance, double voucher, String remarks, String endDate) {
 		super(ID, endDate, type, state);
+		this.ID=ID;
+		this.type=type;
+		this.state=state;
 		this.customer = customer;
 		this.customerID=customerID;
 		this.salesman = salesman;
@@ -53,6 +62,7 @@ public class SalesPO extends BillPO{
 		this.voucher = voucher;
 		this.afterSum = calAfterSum();
 		this.remarks = remarks;
+		this.date=endDate;
 	}
 	
 	private double calBeforeSum(){
@@ -72,105 +82,126 @@ public class SalesPO extends BillPO{
 		return sum;
 	}
 
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public BillType getType() {
+		return type;
+	}
+
+	public void setType(BillType type) {
+		this.type = type;
+	}
+
+	public BillState getState() {
+		return state;
+	}
+
+	public void setState(BillState state) {
+		this.state = state;
+	}
 
 	public String getCustomer() {
 		return customer;
 	}
 
-
 	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
 
+	public String getCustomerID() {
+		return customerID;
+	}
+
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
+	}
 
 	public String getSalesman() {
 		return salesman;
 	}
 
-
 	public void setSalesman(String salesman) {
 		this.salesman = salesman;
 	}
-
 
 	public String getUser() {
 		return user;
 	}
 
-
 	public void setUser(String user) {
 		this.user = user;
 	}
-
 
 	public String getInventory() {
 		return inventory;
 	}
 
-
 	public void setInventory(String inventory) {
 		this.inventory = inventory;
 	}
-
 
 	public ArrayList<GoodsItemPO> getGoodsItemList() {
 		return goodsItemList;
 	}
 
-
 	public void setGoodsItemList(ArrayList<GoodsItemPO> goodsItemList) {
 		this.goodsItemList = goodsItemList;
 	}
-
 
 	public double getBeforeSum() {
 		return beforeSum;
 	}
 
-
 	public void setBeforeSum(double beforeSum) {
 		this.beforeSum = beforeSum;
 	}
-
 
 	public double getAllowance() {
 		return allowance;
 	}
 
-
 	public void setAllowance(double allowance) {
 		this.allowance = allowance;
 	}
-
 
 	public double getVoucher() {
 		return voucher;
 	}
 
-
 	public void setVoucher(double voucher) {
 		this.voucher = voucher;
 	}
-
 
 	public double getAfterSum() {
 		return afterSum;
 	}
 
-
 	public void setAfterSum(double afterSum) {
 		this.afterSum = afterSum;
 	}
-
 
 	public String getRemarks() {
 		return remarks;
 	}
 
-
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
-	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+		
 }

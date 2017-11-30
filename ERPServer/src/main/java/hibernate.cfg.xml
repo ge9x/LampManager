@@ -17,14 +17,19 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
 		
-		<mapping class="po.ClassificationPO" />
-		<mapping class="po.GoodsPO" />
-		<mapping class="po.CustomerPO" />
+		<mapping class="po.AccountBillItemPO" />
+		<mapping class="po.AccountBillPO" />
+		<mapping class="po.AccountPO" />
 		<mapping class="po.BillPO" />
+		<mapping class="po.ClassificationPO" />
+		<mapping class="po.CustomerPO" />
+		<mapping class="po.GoodsItemPO" />
+		<mapping class="po.GoodsPO" />
+		<mapping class="po.InventoryBillPO" />
+		<mapping class="po.InventoryPO" />
 		<mapping class="po.PromotionPO" />
 		<mapping class="po.PurchasePO" />
-		<mapping class="po.GoodsItemPO" />
-		<mapping class="po.InitAccountPO" />
+		<mapping class="po.UserPO" />
     </session-factory>
  
 </hibernate-configuration>

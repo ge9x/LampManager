@@ -33,9 +33,9 @@ public class FinanceDataService_Stub implements FinanceDataService {
      */
     ArrayList<SalesPO> salesPOS = new ArrayList<SalesPO>();
 
-    GoodsItemPO gi1=new GoodsItemPO("01", "霓虹灯",null, 20, 35.0,
+    GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
             "耐用");
-    GoodsItemPO gi2=new GoodsItemPO("02", "挂灯",null, 10, 35.0,
+    GoodsItemPO gi2=new GoodsItemPO(2, "挂灯",null, 10, 35.0,
             "好看");
     ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
     {
@@ -75,9 +75,9 @@ public class FinanceDataService_Stub implements FinanceDataService {
         cashBillItemPOS.add(itemPO3);
         cashBillItemPOS.add(itemPO4);
         billVO1 = new AccountBillPO("SKD-20171022-00001",new Date(), BillType.RECEIPT,BillState.DRAFT,
-                "客户甲","营业员1",accountBillItemPOS);
+                00000001,"营业员1",accountBillItemPOS);
         billVO2 = new AccountBillPO("FKD-20171022-00001",new Date(),BillType.PAYMENT, BillState.SUBMITTED,
-                "客户甲","营业员1",accountBillItemPOS);
+                00000001,"营业员1",accountBillItemPOS);
 
         billVO3 = new CashBillPO("FKD-20171022-00001", new Date(), BillType.CASH, BillState.SUBMITTED,
                 "营业员1", "工商银行账户", cashBillItemPOS, 220);

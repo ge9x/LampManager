@@ -3,12 +3,21 @@ package dataimpl.classificationdataimpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import datahelper.DataHelper;
+import datahelper.HibernateDataHelper;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
+import util.Criterion;
 import util.ResultMessage;
 
+/**
+ * Created on 2017/11/23
+ * @author 巽
+ *
+ */
 public class ClassificationDataServiceImpl implements ClassificationDataService{
 	private static ClassificationDataServiceImpl classificationDataServiceImpl;
+	private DataHelper<ClassificationPO> classificationDataHelper;
 	
 	public static ClassificationDataServiceImpl getInstance(){
 		if(classificationDataServiceImpl == null){
@@ -18,31 +27,31 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 	
 	private ClassificationDataServiceImpl(){
-		
+		this.classificationDataHelper = new HibernateDataHelper<ClassificationPO>(ClassificationPO.class);
 	}
 
+	@Override
 	public ArrayList<ClassificationPO> show() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return classificationDataHelper.fullyQuery(null, null);
 	}
 
-	public ClassificationPO find(String ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public ClassificationPO find(int ID) throws RemoteException {
+		return classificationDataHelper.exactlyQuery("id", ID);
 	}
 
+	@Override
 	public ResultMessage add(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return classificationDataHelper.save(po);
 	}
 
+	@Override
 	public ResultMessage delete(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return classificationDataHelper.delete(po);
 	}
 
+	@Override
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return classificationDataHelper.update(po);
 	}
 }

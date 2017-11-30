@@ -17,10 +17,10 @@ public class PromotionDataService_Stub implements PromotionDataService{
 		return newID;
 	}
 
-	public PromotionPO find(String ID) throws RemoteException {
+	public PromotionPO find(int ID) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(PromotionPO po : promotion){
-			if(po.getPromotionID().equals(ID)){
+			if(po.getPromotionID()==ID){
 				System.out.println("Get promotion success!");
 				return po;
 			}
@@ -41,7 +41,7 @@ public class PromotionDataService_Stub implements PromotionDataService{
 	public ResultMessage delete(PromotionPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(PromotionPO i : promotion){
-			if(i.getPromotionID().equals(po.getPromotionID())){
+			if(i.getPromotionID()==(po.getPromotionID())){
 				promotion.remove(i);
 				System.out.println("Delete promotion success!");
 				return ResultMessage.SUCCESS;
@@ -54,7 +54,7 @@ public class PromotionDataService_Stub implements PromotionDataService{
 	public ResultMessage update(PromotionPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(PromotionPO i : promotion){
-			if(i.getPromotionID().equals(po.getPromotionID())){
+			if(i.getPromotionID()==(po.getPromotionID())){
 				promotion.remove(i);
 				promotion.add(po);
 				System.out.println("Update promotion success!");

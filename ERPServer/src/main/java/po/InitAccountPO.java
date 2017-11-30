@@ -1,10 +1,9 @@
 package po;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -21,13 +20,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "initAccount")
 public class InitAccountPO {
-    private Date date;
+    private String date;
     private List<CustomerPO> customerPOS;
     private List<AccountPO> accountPOS;
     private List<GoodsPO> goodsPOS;
     private List<ClassificationPO> classificationPOS;
 
-    public InitAccountPO(Date date, List<CustomerPO> customerPOS, List<AccountPO> accountPOS, List<GoodsPO> goodsPOS,List<ClassificationPO> classificationPOS) {
+    public InitAccountPO(String date, List<CustomerPO> customerPOS, List<AccountPO> accountPOS, List<GoodsPO> goodsPOS,List<ClassificationPO> classificationPOS) {
         this.date = date;
         this.customerPOS = customerPOS;
         this.accountPOS = accountPOS;
@@ -36,12 +35,12 @@ public class InitAccountPO {
     }
     
     @Id
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getDate() {
+    @Column(name = "date")
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

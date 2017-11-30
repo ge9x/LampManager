@@ -23,16 +23,16 @@ public class InitializationDataService_Stub implements InitializationDataService
         ArrayList<AccountPO> accountPOS = new ArrayList<AccountPO>();
         accountPOS.add(account);
 
-        CustomerPO customer=new CustomerPO("00000003", CustomerCategory.PUR_AGENT, Level.LEVEL_FIVE,"进货商2","15244358373",
+        CustomerPO customer=new CustomerPO( CustomerCategory.PUR_AGENT, Level.LEVEL_FIVE,"进货商2","15244358373",
                 "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,100);
         ArrayList<CustomerPO> customerPOS = new ArrayList<CustomerPO>();
         customerPOS.add(customer);
 
-        ClassificationPO classification = new ClassificationPO("05", "霓虹灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
+        ClassificationPO classification = new ClassificationPO(5, "霓虹灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
         ArrayList<ClassificationPO> classificationPOS = new ArrayList<ClassificationPO>();
         classificationPOS.add(classification);
 
-        GoodsPO goods = new GoodsPO("05000005", "后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 2000.0,2000.0);
+        GoodsPO goods = new GoodsPO(5, "后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 2000.0,2000.0);
         ArrayList<GoodsPO> goodsVOS = new ArrayList<GoodsPO>();
         goodsVOS.add(goods);
 

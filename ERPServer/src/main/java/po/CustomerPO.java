@@ -1,12 +1,13 @@
 package po;
 
 import util.Level;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,7 +17,7 @@ import util.CustomerCategory;
 @Table(name = "customer")
 public class CustomerPO {
 	/**客户编号*/
-	private String customerID;
+	private int customerID;
 	/**客户分类:进货商、销售商*/
 	private CustomerCategory category;
 	/**客户级别:级别分一级到五级，一级普通用户，五级VIP用户*/
@@ -45,11 +46,10 @@ public class CustomerPO {
 	private double voucher;
 	
 	
-	public CustomerPO(String customerID, CustomerCategory category, Level level, String customerName, String phone,
+	public CustomerPO( CustomerCategory category, Level level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
 			String salesman, double points,double voucher) {
 		super();
-		this.customerID = customerID;
 		this.category = category;
 		this.level = level;
 		this.customerName = customerName;
@@ -66,13 +66,14 @@ public class CustomerPO {
 	}
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public String getCustomerID() {
+	public int getCustomerID() {
 		return customerID;
 	}
 
 
-	public void setCustomerID(String customerID) {
+	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
 
