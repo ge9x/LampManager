@@ -26,13 +26,12 @@ public interface InventoryBLService {
 	 * @param inventory 仓库名
 	 * @return 此仓库此时间段内的出／入库数量／金额，销售／进货数量／金额，以及库存合计
 	 */
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory);
+	public InventoryViewVO show(String startDate, String endDate, String inventory);
 	/**
 	 * 得到此日期的库存盘点
-	 * @param today 日期
 	 * @return  当天的库存盘点
 	 */
-	public InventoryCheckVO check(Date today);
+	public InventoryCheckVO check();
 	/**
 	 * 导出库存盘点到本地
 	 * @param vo 当天的库存盘点

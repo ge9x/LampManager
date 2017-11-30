@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 60px;
+    -fx-text-fill: red;
+}
+#title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}

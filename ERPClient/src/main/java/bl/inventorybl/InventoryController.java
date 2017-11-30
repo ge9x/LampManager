@@ -27,11 +27,11 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check() {
 		return null;
 	}
 

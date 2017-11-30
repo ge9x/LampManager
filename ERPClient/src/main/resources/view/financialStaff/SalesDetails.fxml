@@ -37,7 +37,7 @@
                               <Insets right="470.0" />
                            </HBox.margin>
                                 </Label>
-                        <JFXButton prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="导 出" textFill="WHITE">
+                        <JFXButton onMouseClicked="#clickExportButton" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="导 出" textFill="WHITE">
                            <font>
                               <Font name="Arial" size="14.0" />
                            </font></JFXButton>
@@ -59,20 +59,20 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" layoutX="33.0" layoutY="25.0" prefHeight="44.0" prefWidth="271.0">
                            <children>
-                              <JFXDatePicker prefHeight="23.0" prefWidth="119.0" />
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="21.0" text="—" />
-                              <JFXDatePicker prefHeight="23.0" prefWidth="119.0" />
+                              <JFXDatePicker fx:id="StartDate" prefHeight="23.0" prefWidth="119.0" />
+                              <Label prefHeight="15.0" prefWidth="21.0" text="—" />
+                              <JFXDatePicker fx:id="EndDate" prefHeight="23.0" prefWidth="119.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" layoutX="347.0" layoutY="28.0" prefHeight="36.0" prefWidth="368.0">
                            <children>
                               <ComboBox fx:id="Filters" prefHeight="25.0" prefWidth="80.0" style="-fx-background-radius: 10 0 0 10; -fx-background-color: #f6f6f7; -fx-border-color: #bfbfbf; -fx-border-radius: 10 0 0 10;" />
-                              <TextField style="-fx-background-radius: 0 10 10 0; -fx-background-color: #f6f6f7; -fx-border-radius: 0 10 10 0; -fx-border-color: #bfbfbf;">
+                              <TextField fx:id="Search" style="-fx-background-radius: 0 10 10 0; -fx-background-color: #f6f6f7; -fx-border-radius: 0 10 10 0; -fx-border-color: #bfbfbf;">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Label fx:id="searchIcon" alignment="CENTER" styleClass="icon-label" text="Q" />
+                              <Label fx:id="searchIcon" onMouseClicked="#clickSearchButton" alignment="CENTER" styleClass="icon-label" text="Q" />
                            </children>
                         </HBox>
                         <ScrollPane fx:id="TableScrollPane" layoutX="33.0" layoutY="77.0" prefHeight="293.0" prefWidth="681.0" style="-fx-background-color: #ffffff;" />

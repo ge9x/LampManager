@@ -1,46 +1,61 @@
 package ui.viewcontroller.SalesStaff;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+
+import blservice.userblservice.UserBLService;
+import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import util.CustomerCategory;
+import util.UserLimits;
 import vo.CustomerVO;
 
 public class SalesStaffCustomerDetailViewController {
+	private boolean hasEdited = false;
+	UserBLService userBLService = new UserBLService_Stub();
 
 	@FXML
-	Label customerID;
+	JFXTextField customerID;
 	
 	@FXML
-	Label customerType;
+	JFXTextField customerType;
 	
 	@FXML
-	Label customerLevel;
+	JFXTextField customerLevel;
 	
 	@FXML
-	Label customerName;
+	JFXTextField customerName;
 	
 	@FXML
-	Label customerPhone;
+	JFXTextField customerPhone;
 	
 	@FXML
-	Label customerAddress;
+	JFXTextField customerAddress;
 	
 	@FXML
-	Label customerPostcode;
+	JFXTextField customerPostcode;
 	
 	@FXML
-	Label customerMail;
+	JFXTextField customerMail;
 	
 	@FXML
-	Label customerReceivableLimit;
+	JFXTextField customerReceivableLimit;
 	
 	@FXML
-	Label customerReceive;
+	JFXTextField customerReceive;
 	
 	@FXML
-	Label customerPay;
+	JFXTextField customerPay;
 	
 	@FXML
-	Label customerSalesman;
+	JFXTextField customerSalesman;
+	
+	@FXML
+	JFXButton editButton;
+	
+	@FXML
+	JFXButton returnButton;
 	
 	CustomerVO customer;
 	SalesStaffCustomerCellController salesStaffCustomerCellController;
@@ -59,9 +74,64 @@ public class SalesStaffCustomerDetailViewController {
 		customerReceive.setText(String.valueOf(customer.receive));
 		customerPay.setText(String.valueOf(customer.pay));
 		customerSalesman.setText(customer.salesman);
+		customerID.setEditable(false);
+		customerType.setEditable(false);
+		customerLevel.setEditable(false);
+		customerName.setEditable(false);
+		customerPhone.setEditable(false);
+		customerAddress.setEditable(false);
+		customerPostcode.setEditable(false);
+		customerMail.setEditable(false);
+		customerReceivableLimit.setEditable(false);
+		customerReceive.setEditable(false);
+		customerPay.setEditable(false);
+		customerSalesman.setEditable(false);
 	}
 	
 	public void setSalesStaffCustomerCellController(SalesStaffCustomerCellController salesStaffCustomerCellController){
 		this.salesStaffCustomerCellController = salesStaffCustomerCellController;
+	}
+	
+	public void clickReturnButton(){
+		salesStaffCustomerCellController.clickReturnButton();
+	}
+	
+	public void clickEditButton(){
+		if(!hasEdited){
+			customerType.setEditable(true);
+			customerName.setEditable(true);
+			customerPhone.setEditable(true);
+			customerAddress.setEditable(true);
+			customerPostcode.setEditable(true);
+			customerMail.setEditable(true);
+			customerSalesman.setEditable(true);
+			if(userBLService.findUserByID(userBLService.getCurrentUserID()).limit==UserLimits.MANAGER){
+				customerReceivableLimit.setEditable(true);
+			}
+			
+			editButton.setText("完    成");
+			hasEdited = true;
+		}
+		else{
+			customer.customerID = customerID.getText();
+			customer.customerName = customerName.getText();
+			customer.phone = customerPhone.getText();
+			customer.address = customerAddress.getText();
+			customer.postCode = customerPostcode.getText();
+			customer.mail = customerMail.getText();
+			customer.salesman = customerSalesman.getText();
+			customer.receivableLimit = Double.parseDouble(customerReceivableLimit.getText());
+			
+			if(customerType.getText().equals("进货商")){
+				customer.category = CustomerCategory.PUR_AGENT;
+			}
+			else if(customerType.getText().equals("销售商")){
+				customer.category = CustomerCategory.SELLER;
+			}
+
+			setCustomer(customer);
+			editButton.setText("编    辑");
+			hasEdited = false;
+		}
 	}
 }

@@ -1,18 +1,24 @@
 package ui.viewcontroller.FinancialStaff;
 
-import blservice.financeblservice.FinanceBLService;
 import blservice.formblservice.FormBLService;
-import blstubdriver.FinanceBLService_Stub;
+import blservice.formblservice.SalesDetailsInput;
 import blstubdriver.FormBLService_Stub;
+import com.jfoenix.controls.JFXDatePicker;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
+import ui.component.DialogFactory;
+import util.ResultMessage;
 import vo.SalesDetailVO;
 
+import javax.swing.event.ChangeListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -25,14 +31,24 @@ public class FinancialSalesDetailsController {
 
     TableView<SalesDetailsBean> table = new TableView<SalesDetailsBean>();
     ObservableList<SalesDetailsBean> data = FXCollections.observableArrayList();
+
     @FXML
     Label searchIcon;
+    @FXML
+    TextField Search;
     @FXML
     AnchorPane TablePane;
     @FXML
     ScrollPane TableScrollPane;
     @FXML
-    ComboBox Filters;
+    ComboBox<String> Filters;
+
+    @FXML
+    JFXDatePicker StartDate;
+
+    @FXML
+    JFXDatePicker EndDate;
+
 
 
     public void initialize(){
@@ -41,7 +57,6 @@ public class FinancialSalesDetailsController {
         table.setEditable(false);
 
         Filters.getItems().addAll("商品名","客户","业务员","仓库");
-        Filters.getSelectionModel().selectFirst();
 
         TableColumn dateColumn = new TableColumn("时间");
         dateColumn.setPrefWidth(136);
@@ -66,10 +81,58 @@ public class FinancialSalesDetailsController {
         table.getColumns().addAll(dateColumn,nameColumn,modelColumn,amountColumn,priceolumn,sumColumn);
         TableScrollPane.setContent(table);
 
+        String start = formBLService.getStartDate();
+        String[] dateArr = start.split("-");
+        StartDate.setValue(LocalDate.of(Integer.parseInt(dateArr[0]),Integer.parseInt(dateArr[1]),Integer.parseInt(dateArr[2])));
+        EndDate.setValue(LocalDate.now());
+        StartDate.valueProperty().addListener(new javafx.beans.value.ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                showSalesDetails();
+            }
+        });
+        EndDate.valueProperty().addListener(new javafx.beans.value.ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                showSalesDetails();
+            }
+        });
+
+        showSalesDetails();
     }
 
-    public void showSalesdetails(){
-//        salesDetails = formBLService.getSalesDetails();
+    public void clickSearchButton(){
+        showSalesDetails();
+    }
+
+    public void clickExportButton(){
+        ResultMessage re = formBLService.exportSalesDetails(salesDetails);
+        if (re == ResultMessage.SUCCESS){
+            Dialog alert = DialogFactory.getInformationAlert();
+            alert.setHeaderText("导出成功");
+            alert.show();
+        }
+    }
+
+    public void showSalesDetails(){
+        String filters = Filters.getSelectionModel().getSelectedItem();
+        if (filters == null){
+            filters = "";
+        }
+        String searchInput = Search.getText();
+        SalesDetailsInput input = new SalesDetailsInput(StartDate.getValue(),EndDate.getValue(),null,null,null,null);
+        switch(filters){
+            case "商品名": input.goodName = searchInput;break;
+            case "客户": input.customerNam = searchInput;break;
+            case "业务员": input.salesman = searchInput;break;
+            case "仓库": input.inventory = searchInput;break;
+        }
+        salesDetails = formBLService.getSalesDetails(input);
+
+        data.clear();
+        for (SalesDetailVO vo : salesDetails){
+            data.add(new SalesDetailsBean(vo.date,vo.goodName,vo.type,vo.amount,vo.price,vo.sum));
+        }
     }
 
     public void setFinancialViewController(FinancialViewController financialViewController){
