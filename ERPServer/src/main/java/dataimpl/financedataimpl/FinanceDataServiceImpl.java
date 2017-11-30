@@ -7,6 +7,7 @@ import java.util.Date;
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.financedataservice.FinanceDataService;
+import po.AccountBillPO;
 import po.BillPO;
 import po.CashBillPO;
 import util.BillState;
@@ -16,6 +17,7 @@ import util.ResultMessage;
 public class FinanceDataServiceImpl implements FinanceDataService{
 	private static FinanceDataServiceImpl financeDataServiceImpl;
 	private DataHelper<CashBillPO> cashBillDataHelper;
+	private DataHelper<AccountBillPO> accountBillDataHelper;
 	
 	public static FinanceDataServiceImpl getInstance(){
 		if(financeDataServiceImpl == null){
@@ -26,6 +28,7 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 	
 	private FinanceDataServiceImpl(){
 		this.cashBillDataHelper = new HibernateDataHelper<CashBillPO>(CashBillPO.class);
+		this.accountBillDataHelper = new HibernateDataHelper<AccountBillPO>(AccountBillPO.class);
 	}
 
 	@Override
