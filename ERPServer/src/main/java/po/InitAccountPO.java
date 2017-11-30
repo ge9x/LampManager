@@ -18,13 +18,15 @@ import javax.persistence.TemporalType;
  */
 
 @Entity
-@Table(name = "initAccount")
+@Table(name = "initaccount")
 public class InitAccountPO {
     private String date;
     private List<CustomerPO> customerPOS;
     private List<AccountPO> accountPOS;
     private List<GoodsPO> goodsPOS;
     private List<ClassificationPO> classificationPOS;
+    
+    public InitAccountPO(){};
 
     public InitAccountPO(String date, List<CustomerPO> customerPOS, List<AccountPO> accountPOS, List<GoodsPO> goodsPOS,List<ClassificationPO> classificationPOS) {
         this.date = date;
