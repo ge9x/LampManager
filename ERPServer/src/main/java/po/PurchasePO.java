@@ -2,6 +2,7 @@ package po;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -44,11 +48,30 @@ public class PurchasePO extends BillPO{
 	/**总额合计*/
 	private double sum;
 	
+	public PurchasePO(){};
+	
+	public PurchasePO(BillType type,BillState state,String supplier
+			,int customerID,String inventory,String user,List<GoodsItemPO> goodsItemList,String remarks
+			,String endDate){
+		super( endDate, type, state);
+		this.type=type;
+		this.state=state;
+		this.supplier=supplier;
+		this.customerID=customerID;
+		this.inventory=inventory;
+		this.user=user;
+		this.goodsItemList=goodsItemList;
+		this.sum=calSum();
+		this.remarks=remarks;
+		this.date=endDate;
+	}
+	
 	@Deprecated
 	public PurchasePO(BillType type,BillState state,int ID,String supplier
 			,int customerID,String inventory,String user,List<GoodsItemPO> goodsItemList,String remarks
 			,String endDate){
 		super(ID, endDate, type, state);
+		this.ID=ID;
 		this.type=type;
 		this.state=state;
 		this.ID=ID;
@@ -147,7 +170,7 @@ public class PurchasePO extends BillPO{
 	}
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid")
+	@JoinColumn(name = "claid1")   
 	public List<GoodsItemPO> getGoodsItemList() {
 		return goodsItemList;
 	}

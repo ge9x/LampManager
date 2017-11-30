@@ -36,7 +36,8 @@ public class InitializationDataService_Stub implements InitializationDataService
         ArrayList<GoodsPO> goodsVOS = new ArrayList<GoodsPO>();
         goodsVOS.add(goods);
 
-        InitAccountPO po = new InitAccountPO(new Date(),customerPOS,accountPOS,goodsVOS,classificationPOS);
+        InitAccountPO po = new InitAccountPO(new Date().toString(),customerPOS,accountPOS,goodsVOS,classificationPOS);
         return po;
     }
+
 }
