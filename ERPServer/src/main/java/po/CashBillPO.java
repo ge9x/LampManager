@@ -3,7 +3,7 @@ package po;
 import util.BillState;
 import util.BillType;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -46,7 +46,7 @@ public class CashBillPO extends BillPO {
     /**
      * 条目清单
      */
-    private ArrayList<CashBillItemPO> cashBillItemPOS;
+    private List<CashBillItemPO> cashBillItemPOS;
 
     /**
      * 总额
@@ -55,7 +55,7 @@ public class CashBillPO extends BillPO {
     
     public CashBillPO(){ }
     
-    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
+    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum) {
         super(date, type, state);
         this.userName = userName;
         this.accountID = accountID;
@@ -69,7 +69,7 @@ public class CashBillPO extends BillPO {
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-    public CashBillPO(int ID, String date, BillType type, BillState state, String userName, int accountID, ArrayList<CashBillItemPO> cashBillItemPOS, double sum) {
+    public CashBillPO(int ID, String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum) {
         super(ID, date, type, state);
         this.userName = userName;
         this.accountID = accountID;
@@ -95,14 +95,17 @@ public class CashBillPO extends BillPO {
         this.accountID = accountID;
     }
 
-    public ArrayList<CashBillItemPO> getCashBillItemPOS() {
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cashbillid")
+    public List<CashBillItemPO> getCashBillItemPOS() {
         return cashBillItemPOS;
     }
 
-    public void setCashBillItemPOS(ArrayList<CashBillItemPO> cashBillItemPOS) {
+    public void setCashBillItemPOS(List<CashBillItemPO> cashBillItemPOS) {
         this.cashBillItemPOS = cashBillItemPOS;
     }
 
+    @Column(name = "sum")
     public double getSum() {
         return sum;
     }
@@ -111,6 +114,7 @@ public class CashBillPO extends BillPO {
         this.sum = sum;
     }
     
+    @Column(name = "date")
     public String getDate() {
 		return date;
 	}
@@ -119,6 +123,9 @@ public class CashBillPO extends BillPO {
 		this.date = date;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
 	public int getID() {
 		return ID;
 	}
@@ -127,6 +134,8 @@ public class CashBillPO extends BillPO {
 		ID = iD;
 	}
 
+	@Column(name = "state")
+	@Enumerated(EnumType.STRING)
 	public BillState getState() {
 		return state;
 	}
@@ -135,6 +144,8 @@ public class CashBillPO extends BillPO {
 		this.state = state;
 	}
 
+	@Column(name = "type")
+	@Enumerated(EnumType.STRING)
 	public BillType getType() {
 		return type;
 	}
