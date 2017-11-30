@@ -46,11 +46,6 @@ public class UserController implements UserBLService, UserInfo{
 		return null;
 	}
 
-	public UserVO findUserByID(String UserID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public String getCurrentUserID() {
 		// TODO Auto-generated method stub
 		return null;
@@ -62,6 +57,24 @@ public class UserController implements UserBLService, UserInfo{
 	}
 
 	public ArrayList<UserVO> show() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<UserVO> findUsersByID(String UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<UserVO> findUsersByKeywords(String keywords) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserVO findUserByID(String UserID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

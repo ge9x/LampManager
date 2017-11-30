@@ -10,7 +10,7 @@ import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 
 public class MockPromotionCustomer extends PromotionCustomer{
-	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("000002", new Date(), new Date(), 0, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("会员促销策略","000002", new Date(), new Date(), 0, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
 	
 	@Override
 	public ArrayList<PromotionCustomerVO> show(){

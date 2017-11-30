@@ -9,17 +9,21 @@ import po.PurchasePO;
 import po.SalesPO;
 import util.PromotionType;
 import util.ResultMessage;
+import util.UserLimits;
 import util.UserPosition;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
 import util.BillState;
 import util.BillType;
+import util.CustomerCategory;
 import util.Level;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
+import vo.UserVO;
 
 public class SalesBLService_Stub implements SalesBLService{
 	ArrayList<PurchaseVO> purchaseBill=new ArrayList<PurchaseVO>();
@@ -116,19 +120,19 @@ public class SalesBLService_Stub implements SalesBLService{
 
 	public ArrayList<PromotionBargainVO> showBargains() {
 		ArrayList<PromotionBargainVO> getBargains=new ArrayList<PromotionBargainVO>();
-		getBargains.add(new PromotionBargainVO("00001", 5000.0, 500.0, new Date(), new Date(), new ArrayList<GoodsVO>()));
+		getBargains.add(new PromotionBargainVO("特价包策略","00001", 5000.0, 500.0, new Date(), new Date(), new ArrayList<GoodsVO>()));
 		return getBargains;
 	}
 
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
 		ArrayList<PromotionCustomerVO> getCustomers=new ArrayList<PromotionCustomerVO>();
-		getCustomers.add(new PromotionCustomerVO("00002", new Date(), new Date(), 500.0, 300.0, new ArrayList<GoodsVO>(), util.Level.LEVEL_ONE));
+		getCustomers.add(new PromotionCustomerVO("会员促销策略","00002", new Date(), new Date(), 500.0, 300.0, new ArrayList<GoodsVO>(), util.Level.LEVEL_ONE));
 		return getCustomers;
 	} 
 
 	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
 		ArrayList<PromotionTotalVO> getTotal=new ArrayList<PromotionTotalVO>();
-		getTotal.add(new PromotionTotalVO("00001", new Date(), new Date(), 455.0, new ArrayList<GoodsVO>(), 700.0));
+		getTotal.add(new PromotionTotalVO("总价促销策略","00001", new Date(), new Date(), 455.0, new ArrayList<GoodsVO>(), 700.0));
 		return getTotal;
 	}
 
@@ -193,6 +197,58 @@ public class SalesBLService_Stub implements SalesBLService{
 		}
 		System.out.println("Save purchase failed");
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public String getUserID() {
+		// TODO Auto-generated method stub
+		UserVO user = new UserVO("0033", "1234", "SalesStaff", UserPosition.SALES_STAFF, UserLimits.STAFF);
+		return user.userID;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllSupplier() {
+		// TODO Auto-generated method stub
+		ArrayList<CustomerVO> supplier = new ArrayList<>();
+		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
+				"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
+		CustomerVO c2=new CustomerVO("00000005",CustomerCategory.SELLER,Level.LEVEL_FOUR,"金主2","15546674310",
+			"南京仙林大学城","421000","ddk@163.com",1.0,15000.0,0.0,"业务员1",150.0,500);
+		supplier.add(c1);
+		supplier.add(c2);
+		return supplier;
+	}
+
+	@Override
+	public ArrayList<String> getAllInventory() {
+		// TODO Auto-generated method stub
+		ArrayList<String> inventory = new ArrayList<>();
+		inventory.add("仓库1");
+		inventory.add("仓库2");
+		inventory.add("仓库3");
+		return inventory;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllCustomer() {
+		// TODO Auto-generated method stub
+		ArrayList<CustomerVO> customerData=new ArrayList<CustomerVO>();
+		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
+					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,500);
+		CustomerVO c2=new CustomerVO("00000002",CustomerCategory.PUR_AGENT,Level.LEVEL_ONE,"进货商1","15247678373",
+					"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0,600);
+		CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_THREE,"进货商2","15244358373",
+				"南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
+		CustomerVO c4=new CustomerVO("00000004",CustomerCategory.PUR_AGENT,Level.LEVEL_TWO,"进货商3","15244358397",
+				"南京新街口","421001","12s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
+		CustomerVO c5=new CustomerVO("00000005",CustomerCategory.SELLER,Level.LEVEL_FOUR,"金主2","15546674310",
+				"南京仙林大学城","421000","ddk@163.com",1.0,15000.0,0.0,"业务员1",150.0,500);
+		customerData.add(c1);
+		customerData.add(c2);
+		customerData.add(c3);
+		customerData.add(c4);
+		customerData.add(c5);
+		return customerData;
 	}
 	
 }
