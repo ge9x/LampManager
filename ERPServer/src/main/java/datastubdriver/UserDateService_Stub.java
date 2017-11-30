@@ -12,10 +12,10 @@ import util.UserPosition;
 public class UserDateService_Stub implements UserDataService{
 	ArrayList<UserPO> userInfo = new ArrayList<UserPO>();
 	
-	public UserPO find(String userID) throws RemoteException {
+	public UserPO find(int userID) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(UserPO po : userInfo){
-			if(po.getUserID().equals(userID)){
+			if(po.getUserID() == userID){
 				System.out.println("Find user success!");
 				return po;
 			}
@@ -27,7 +27,7 @@ public class UserDateService_Stub implements UserDataService{
 	public ResultMessage add(UserPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(UserPO i : userInfo){
-			if(i.getUserID().equals(po.getUserID())){
+			if(i.getUserID() == po.getUserID()){
 				System.out.println("User has existed!");
 				return ResultMessage.EXIST;
 			}
@@ -39,7 +39,7 @@ public class UserDateService_Stub implements UserDataService{
 	public ResultMessage delete(UserPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(UserPO i : userInfo){
-			if(i.getUserID().equals(po.getUserID())){
+			if(i.getUserID() == po.getUserID()){
 				userInfo.remove(i);
 				System.out.println("Delete user success!");
 				return ResultMessage.SUCCESS;
@@ -52,7 +52,7 @@ public class UserDateService_Stub implements UserDataService{
 	public ResultMessage update(UserPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(UserPO i : userInfo){
-			if(i.getUserID().equals(po.getUserID())){
+			if(i.getUserID() == po.getUserID()){
 				userInfo.remove(i);
 				userInfo.add(po);
 				System.out.println("Update user success!");
@@ -66,7 +66,7 @@ public class UserDateService_Stub implements UserDataService{
 	public void init() throws RemoteException {
 		// TODO Auto-generated method stub
 		userInfo.clear();
-		userInfo.add(new UserPO("admin", "admin", "admin", UserPosition.ADMIN, UserLimits.STAFF));
+		userInfo.add(new UserPO(1, "admin", "admin", UserPosition.ADMIN, UserLimits.STAFF));
 		System.out.println("Initial user information success!");
 	}
 
