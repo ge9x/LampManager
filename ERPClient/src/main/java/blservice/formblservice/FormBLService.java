@@ -64,7 +64,7 @@ public interface FormBLService {
      * @param endDate
      * @return 经营情况表
      */
-    public ProfitVO getProfit(Date startDate, Date endDate);
+    public ProfitVO getProfit(String startDate, String endDate);
 
     /**
      * 获得本次期初建账时间
