@@ -1,6 +1,5 @@
 package datastubdriver;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import dataservice.financedataservice.FinanceDataService;
 import po.*;
 import util.BillState;
@@ -22,11 +21,13 @@ public class FinanceDataService_Stub implements FinanceDataService {
      */
 
     ArrayList<InventoryBillPO> inventoryBillPOS = new ArrayList<InventoryBillPO>();
-    InventoryBillPO po1 = new InventoryBillPO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
-    InventoryBillPO po2 = new InventoryBillPO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
-    InventoryBillPO po3 = new InventoryBillPO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
-    InventoryBillPO po4 = new InventoryBillPO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
-    InventoryBillPO po5 = new InventoryBillPO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsPO, Integer>());
+    InventoryPO inpo1 = new InventoryPO(1, "栖霞区仓库");
+    InventoryPO inpo2 = new InventoryPO(2, "鼓楼区仓库");
+    InventoryBillPO po1 = new InventoryBillPO(1, "2017-10-23", BillType.OVERFLOW, BillState.PASS, inpo1, "王二小", new HashMap<GoodsPO, Integer>());
+    InventoryBillPO po2 = new InventoryBillPO(1, "2017-10-23", BillType.LOSS, BillState.PASS, inpo1, "王二小", new HashMap<GoodsPO, Integer>());
+    InventoryBillPO po3 = new InventoryBillPO(1, "2017-10-23", BillType.ALARM, BillState.PASS, inpo1, "王二小", new HashMap<GoodsPO, Integer>());
+    InventoryBillPO po4 = new InventoryBillPO(1, "2017-10-23", BillType.GIFT, BillState.PASS, inpo2, "王二小", new HashMap<GoodsPO, Integer>());
+    InventoryBillPO po5 = new InventoryBillPO(1, "2017-10-23", BillType.PURCHASE, BillState.PASS, inpo2, "王二小", new HashMap<GoodsPO, Integer>());
 
     /**
      * 销售单据集
@@ -42,8 +43,8 @@ public class FinanceDataService_Stub implements FinanceDataService {
         goodsItemList.add(gi1);
         goodsItemList.add(gi2);
     }
-    SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-            "阿强", "00000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+    SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, 1, "销售商1", "00001", "业务员1",
+            "阿强", "默认仓库", goodsItemList, 100.0, 500.0, "满足客户需求", "2017-11-30");
 
     /**
      * 财务单据集
@@ -74,33 +75,33 @@ public class FinanceDataService_Stub implements FinanceDataService {
         accountBillItemPOS.add(itemPO2);
         cashBillItemPOS.add(itemPO3);
         cashBillItemPOS.add(itemPO4);
-        billVO1 = new AccountBillPO("SKD-20171022-00001",new Date(), BillType.RECEIPT,BillState.DRAFT,
-                00000001,"营业员1",accountBillItemPOS);
-        billVO2 = new AccountBillPO("FKD-20171022-00001",new Date(),BillType.PAYMENT, BillState.SUBMITTED,
+        billVO1 = new AccountBillPO(1, "2017-10-23", BillType.RECEIPT,BillState.DRAFT,
+                1,"营业员1", accountBillItemPOS);
+        billVO2 = new AccountBillPO(1, "2017-10-23", BillType.PAYMENT, BillState.SUBMITTED,
                 00000001,"营业员1",accountBillItemPOS);
 
-        billVO3 = new CashBillPO("FKD-20171022-00001", new Date(), BillType.CASH, BillState.SUBMITTED,
-                "营业员1", "工商银行账户", cashBillItemPOS, 220);
+        billVO3 = new CashBillPO(1, "2017-10-23", BillType.CASH, BillState.SUBMITTED,
+                "营业员1", 1, cashBillItemPOS, 220.0);
         accountBillPOS = new ArrayList<AccountBillPO>();
         accountBillPOS.add(billVO1);
         accountBillPOS.add(billVO2);
         cashBillPOS.add(billVO3);
     }
 
-    public String getNewReceiptID() throws RemoteException {
-        return "SKD-20171023-00001";
+    public int getNewReceiptID() throws RemoteException {
+        return 1;
     }
 
-    public String getNewPaymentID() throws RemoteException {
-        return "FKD-20171023-00001";
+    public int getNewPaymentID() throws RemoteException {
+        return 1;
     }
 
-    public String getNewCashBillID() throws RemoteException {
-        return "XJFYD-20171023-00001";
+    public int getNewCashBillID() throws RemoteException {
+        return 1;
     }
 
     public ResultMessage addBill(BillPO po) throws RemoteException {
-        if (po.getID().equals("SKD-20171023-00001")){
+        if (po.getID() == 1 && po.getType() == BillType.RECEIPT && po.getDate().equals("2017-10-23")){
             System.out.println("Add failed");
             return ResultMessage.EXIST;
         }else{
@@ -110,7 +111,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
     }
 
     public ResultMessage deleteBill(BillPO po) throws RemoteException {
-        if (po.getID().equals("SKD-20171023-00001")){
+        if (po.getID() == 1 && po.getType() == BillType.RECEIPT && po.getDate().equals("2017-10-23")){
             System.out.println("Delete succeed");
             return ResultMessage.SUCCESS;
         }else{
@@ -120,7 +121,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
     }
 
     public ResultMessage updateBill(BillPO po) throws RemoteException {
-        if (po.getID().equals("SKD-20171023-00001")){
+        if (po.getID() == 1 && po.getType() == BillType.RECEIPT && po.getDate().equals("2017-10-23")){
             System.out.println("Update succeed");
             return ResultMessage.SUCCESS;
         }else{
@@ -128,6 +129,5 @@ public class FinanceDataService_Stub implements FinanceDataService {
             return ResultMessage.NOT_EXIST;
         }
     }
-
 
 }
