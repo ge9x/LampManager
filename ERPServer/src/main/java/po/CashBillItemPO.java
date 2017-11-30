@@ -1,10 +1,18 @@
 package po;
 
+import javax.persistence.*;
+
 /**
  * Created by Kry·L on 2017/10/22.
  */
+@Entity
+@Table(name = "cashbillitem")
 public class CashBillItemPO {
-    /**
+	/**
+	 * 条目ID
+	 */
+	private int ID;
+	/**
      * 条目名
      */
     private String itemName;
@@ -18,13 +26,27 @@ public class CashBillItemPO {
      * 备注
      */
     private String remark;
+    
+    public CashBillItemPO(){ }
 
     public CashBillItemPO(String itemName, double money, String remark) {
         this.itemName = itemName;
         this.money = money;
         this.remark = remark;
     }
+    
+    @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getID() {
+		return ID;
+	}
 
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	@Column(name = "itemname")
     public String getItemName() {
         return itemName;
     }
@@ -33,6 +55,7 @@ public class CashBillItemPO {
         this.itemName = itemName;
     }
 
+	@Column(name = "money")
     public double getMoney() {
         return money;
     }
@@ -41,6 +64,7 @@ public class CashBillItemPO {
         this.money = money;
     }
 
+	@Column(name = "remark")
     public String getRemark() {
         return remark;
     }
