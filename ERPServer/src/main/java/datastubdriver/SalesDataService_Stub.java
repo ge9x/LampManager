@@ -28,21 +28,21 @@ public class SalesDataService_Stub implements SalesDataService{
 		goodsItemList.add(gi2);
 	}
 	{
-		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
-				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-			     ,new Date());
-		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-					,"00000002","默认仓库","阿明",goodsItemList,"好看"
-					,new Date());
+		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,1,"供应商1"
+				,1,"默认仓库","阿红",goodsItemList,"满足客户需求"
+			     ,"2017-11-30");
+		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,2,"供应商2"
+					,2,"默认仓库","阿明",goodsItemList,"好看"
+					,"2017-11-30");
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
 	
 	{
-		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强", "00000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
-	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇","00000004", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, 1, "销售商1", "业务员1",
+				"阿强", "000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30");
+	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, 2, "销售商2", "业务员2",
+					"阿奇","000004", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-11-30");
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

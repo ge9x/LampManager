@@ -1,8 +1,8 @@
 package datastubdriver;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import dataservice.examinationdataservice.ExaminationDataService;
 import po.BillPO;
@@ -11,11 +11,11 @@ import util.ResultMessage;
 public class ExaminationDataService_Stub implements ExaminationDataService{
 	ArrayList<BillPO> history = new ArrayList<BillPO>();
 	
-	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException {
+	public ArrayList<BillPO> finds(String startDate, String endDate) throws RemoteException {
 		// TODO Auto-generated method stub
 		ArrayList<BillPO> target = new ArrayList<BillPO>();
 		for(BillPO po :  history){
-			if(!po.getDate().before(startDate)&&!po.getDate().after(endDate)){
+			if(!LocalDate.parse(po.getDate()).isBefore(LocalDate.parse(startDate))&&!LocalDate.parse(po.getDate()).isAfter(LocalDate.parse(endDate))){
 				target.add(po);
 			}
 		}
@@ -25,7 +25,7 @@ public class ExaminationDataService_Stub implements ExaminationDataService{
 	public ResultMessage add(BillPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(BillPO i :  history){
-			if(i.getID().equals(po.getID())){
+			if(i.getID() == po.getID()){
 				System.out.println("The same bill information exist!");
 				return ResultMessage.FAILED;
 			}
@@ -41,10 +41,10 @@ public class ExaminationDataService_Stub implements ExaminationDataService{
 		System.out.println("Initial success!");
 	}
 
-    public BillPO find(String ID) throws RemoteException {
+    public BillPO find(int ID) throws RemoteException {
 		// TODO Auto-generated method stub
 		for(BillPO po :  history){
-			if(po.getID().equals(ID)){
+			if(po.getID() == ID){
 				return po;
 			}
 		}

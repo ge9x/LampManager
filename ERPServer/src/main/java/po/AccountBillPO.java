@@ -151,7 +151,7 @@ public class AccountBillPO extends BillPO {
     }
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "itemid")
+	@JoinColumn(name = "accountbillid")
     public List<AccountBillItemPO> getAccountBillItemPOS() {
         return accountBillItemPOS;
     }
