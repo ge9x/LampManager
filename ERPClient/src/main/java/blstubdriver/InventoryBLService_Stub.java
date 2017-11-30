@@ -21,6 +21,7 @@ import vo.GoodsVO;
  */
 public class InventoryBLService_Stub implements InventoryBLService{
 	ArrayList<InventoryBillVO> data;
+	ArrayList<InventoryBillVO> newData = new ArrayList<>();
 	ArrayList<InventoryBillVO> alarmData;
 	ArrayList<String> inventoryName = new ArrayList<>();
 	
@@ -31,8 +32,13 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
 		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
 		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		data.add(vo1);
+        InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+        newData.add(vo1);
+        newData.add(vo1);
+        newData.add(vo1);
+        newData.add(vo2);
+        newData.add(vo3);
+        data.add(vo1);
 		data.add(vo2);
 		alarmData.add(vo3);
 		data.add(vo4);
@@ -247,4 +253,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.FAILED;
 	}
 
+    @Override
+    public ArrayList<InventoryBillVO> findBillByType(BillType type) {
+        return newData;
+    }
 }

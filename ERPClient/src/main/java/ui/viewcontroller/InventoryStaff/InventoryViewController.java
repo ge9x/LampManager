@@ -72,9 +72,17 @@ public class InventoryViewController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/inventory/Sync.fxml"));
         Pane page = loader.load();
+
+        inventorySyncController = loader.getController();
+        inventorySyncController.setInventoryViewController(this);
+
+        mainUIController.setCenter(page);
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    public void showSyncEditView(Pane page){
+        mainUIController.setCenter(page);
     }
     public void showClassificationView(){
         mainUIController.setCenter(null);

@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +16,7 @@
     <children>
         <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="621.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -63,7 +62,7 @@
                         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                      </padding>
                   </HBox>
-                  <VBox prefHeight="115.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                  <VBox prefHeight="175.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
@@ -73,16 +72,58 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ToolBar prefHeight="29.0" prefWidth="724.0">
-                           <items>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0" style="-fx-background-color: #f6f6f7;">
+                           <children>
                               <Label text="入库数量" />
                               <Label text="出库数量" />
-                              <Label text="入库" />
-                              <Label text="Label" />
-                              <Label text="Label" />
-                              <Label text="Label" />
-                           </items>
-                        </ToolBar>
+                              <Label text="入库金额" />
+                              <Label text="出库金额" />
+                              <Label text="出入数量合计" />
+                              <Label text="出入金额合计" />
+                           </children>
+                           <padding>
+                              <Insets left="60.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0">
+                           <children>
+                              <Label text="入库数量" />
+                              <Label text="出库数量" />
+                              <Label text="入库金额" />
+                              <Label text="出库金额" />
+                              <Label text="出入数量合计" />
+                              <Label text="出入金额合计" />
+                           </children>
+                           <padding>
+                              <Insets left="60.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0" style="-fx-background-color: #f6f6f7;">
+                           <children>
+                              <Label text="进货数量" />
+                              <Label text="销售数量" />
+                              <Label text="进货金额" />
+                              <Label text="销售金额" />
+                              <Label text="进货数量合计" />
+                              <Label text="销售金额合计" />
+                           </children>
+                           <padding>
+                              <Insets left="60.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0">
+                           <children>
+                              <Label text="进货数量" />
+                              <Label text="销售数量" />
+                              <Label text="进货金额" />
+                              <Label text="销售金额" />
+                              <Label text="进货数量合计" />
+                              <Label text="销售金额合计" />
+                           </children>
+                           <padding>
+                              <Insets left="60.0" />
+                           </padding>
+                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -93,7 +134,7 @@
                   </VBox>
                   <TilePane fx:id="tilePane" hgap="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="764.0">
                      <children>
-                        <ScrollPane fx:id="InventoryItemTablePane" prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <ScrollPane fx:id="InventoryItemTablePane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
                                 <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                             </effect>
@@ -104,7 +145,7 @@
                               <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                            </padding>
                         </ScrollPane>
-                        <ScrollPane fx:id="SalesItemTablePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <ScrollPane fx:id="SalesItemTablePane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
                                 <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                             </effect>
