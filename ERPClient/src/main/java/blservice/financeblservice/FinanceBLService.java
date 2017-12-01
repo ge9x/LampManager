@@ -5,13 +5,14 @@ import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/10/21.
  */
-public interface FinanceBLService {
+public interface FinanceBLService extends Remote{
 
     /**
      * 获得新建的收款单单据编号

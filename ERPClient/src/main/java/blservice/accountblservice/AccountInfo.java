@@ -19,5 +19,5 @@ public interface AccountInfo {
      * 得到所有账户信息
      * @return
      */
-    public ArrayList<AccountVO> getAllAccount();
+    public ArrayList<AccountVO> show();
 }

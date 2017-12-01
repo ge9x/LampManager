@@ -60,7 +60,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
     CashBillPO billVO3;
     AccountBillPO billVO2;
     ArrayList<AccountBillPO> accountBillPOS;
-    ArrayList<CashBillPO> cashBillPOS;
+    ArrayList<CashBillPO> cashBillPOS = new ArrayList<>();
 
     public FinanceDataService_Stub(){
         inventoryBillPOS.add(po1);
@@ -88,16 +88,16 @@ public class FinanceDataService_Stub implements FinanceDataService {
         cashBillPOS.add(billVO3);
     }
 
-    public int getNewReceiptID() throws RemoteException {
-        return 1;
+    public String getNewReceiptID() throws RemoteException {
+        return null;
     }
 
-    public int getNewPaymentID() throws RemoteException {
-        return 1;
+    public String getNewPaymentID() throws RemoteException {
+        return null;
     }
 
-    public int getNewCashBillID() throws RemoteException {
-        return 1;
+    public String getNewCashBillID() throws RemoteException {
+        return null;
     }
 
     public ResultMessage addBill(BillPO po) throws RemoteException {

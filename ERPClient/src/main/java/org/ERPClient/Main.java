@@ -6,13 +6,11 @@ package org.ERPClient;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import rmi.RemoteHelper;
-import ui.viewcontroller.common.LoginViewController;
+import rmi.AccountRemoteHelper;
+import rmi.FinanceRemoteHelper;
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
@@ -22,7 +20,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class Main extends Application {
-    private RemoteHelper remoteHelper;
+    private AccountRemoteHelper accountRemoteHelper;
+    private FinanceRemoteHelper financeRemoteHelper;
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -57,8 +56,10 @@ public class Main extends Application {
 
     private void linkToServer() {
         try {
-            remoteHelper = RemoteHelper.getInstance();
-            remoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/DataRemoteObject"));
+            accountRemoteHelper = AccountRemoteHelper.getInstance();
+            financeRemoteHelper = FinanceRemoteHelper.getInstance();
+            accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
+            financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();

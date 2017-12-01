@@ -1,11 +1,13 @@
 package bl.accountbl;
 
 import dataservice.accountdataservice.AccountDataService;
+import po.AccountBillPO;
 import po.AccountPO;
-import rmi.RemoteHelper;
+import rmi.AccountRemoteHelper;
 import util.ResultMessage;
 import vo.AccountVO;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -13,17 +15,18 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/5.
  */
 public class Account{
+    //TODO delete
 
-    private AccountVO vo;
     private AccountDataService accountDataService;
+    ArrayList<AccountPO> accountPOS;
 
     public Account() {
-        accountDataService = RemoteHelper.getInstance().getAccountDataService();
+        accountDataService = AccountRemoteHelper.getInstance().getAccountDataService();
 
     }
 
     public ResultMessage addAccount(AccountVO accountVO) throws RemoteException{
-        AccountPO accountPO = poTovo(accountVO);
+        AccountPO accountPO = voTopo(accountVO);
         ResultMessage re = accountDataService.addAccount(accountPO);
         return re;
     }
@@ -32,19 +35,48 @@ public class Account{
         return null;
     }
 
-    public ArrayList<AccountVO> findAccountByName(String keyword) {
-        return null;
+    public ArrayList<AccountVO> findAccountByName(String keyword) throws RemoteException{
+        accountPOS = accountDataService.findByName(keyword);
+        ArrayList<AccountVO> accountVOS = new ArrayList<>();
+        for (AccountPO po:accountPOS){
+            accountVOS.add(poTOvo(po));
+        }
+        return accountVOS;
     }
 
-    public ResultMessage updateAccount(AccountVO accountVO) {
-        return null;
+    public ResultMessage updateAccount(AccountVO accountVO) throws RemoteException {
+        for (AccountPO accountPO:accountPOS){
+            if (accountPO.getID() == Integer.parseInt(accountVO.accountID)) {
+                accountPO.setName(accountVO.accountName);
+                return accountDataService.updateAccount(accountPO);
+            }
+        }
+        return ResultMessage.FAILED;
     }
 
-    public ArrayList<AccountVO> show() {
-        return null;
+    public ArrayList<AccountVO> show() throws RemoteException{
+        accountPOS = accountDataService.show();
+        ArrayList<AccountVO> accountVOS = new ArrayList<>();
+        for (AccountPO po:accountPOS){
+            accountVOS.add(poTOvo(po));
+        }
+        return accountVOS;
     }
 
-    public AccountPO poTovo(AccountVO accountVO){
+    public ArrayList<String> getAllAccountName() throws RemoteException{
+        ArrayList<String> accountNames = new ArrayList<>();
+        for (AccountPO po:accountPOS){
+            accountNames.add(po.getName());
+        }
+        return accountNames;
+    }
+
+    public AccountPO voTopo(AccountVO accountVO){
         return new AccountPO(accountVO.accountName,accountVO.money);
     }
+    public AccountVO poTOvo(AccountPO accountPO){
+        return new AccountVO(String.valueOf(accountPO.getID()),accountPO.getName(),accountPO.getMoney());
+    }
+
+
 }
