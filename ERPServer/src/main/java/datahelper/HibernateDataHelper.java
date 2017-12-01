@@ -6,8 +6,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import javafx.util.Pair;
 import util.Criterion;
 import util.ResultMessage;
 
@@ -90,7 +94,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		if(value != null){
-			criteria.add(Restrictions.like(field, value));
+			criteria.add(Restrictions.like(field, "%" + value + "%"));
 		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
@@ -127,6 +131,11 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	
 	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion1, Criterion criterion2) {
 		return Restrictions.or(buildCriterion(criterion1), buildCriterion(criterion2));
+	}
+
+	@Override
+	public Long count() {
+		return (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }
