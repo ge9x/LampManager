@@ -47,6 +47,10 @@ public class InventoryBillPO extends BillPO{
 	 * 该单据内的商品对应的溢出/缺损数量
 	 */
 	private Map<GoodsPO, Integer> goodsMap;
+    /**
+     * 本单据是当天同单据类型的第几张单据
+     */
+    private int order;
 	
 	public InventoryBillPO(){ }
 	
@@ -145,5 +149,17 @@ public class InventoryBillPO extends BillPO{
 	public void setGoodsMap(Map<GoodsPO, Integer> goodsMap) {
 		this.goodsMap = goodsMap;
 	}
+	
+    public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public String buildID(){
+    	return type.getValue() + "-" + date.replace("-", "") + "-" + String.format("%5d", order);
+    }
 	
 }

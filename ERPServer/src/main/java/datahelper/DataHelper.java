@@ -2,6 +2,7 @@ package datahelper;
 
 import java.util.ArrayList;
 
+import javafx.util.Pair;
 import util.Criterion;
 import util.ResultMessage;
 
@@ -58,4 +59,11 @@ public interface DataHelper<T> {
 	 * @return 查询到的对象的集合
 	 */
 	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria);
+	/**
+	 * 统计持久化对象数量
+	 * @return 持久化对象的个数
+	 */
+	public Long count();
+	
+	public Long count(String propertyName, String value, String anotherProperty, String anotherValue);
 }

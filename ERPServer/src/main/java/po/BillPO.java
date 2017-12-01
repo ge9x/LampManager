@@ -23,6 +23,10 @@ public class BillPO {
      * 单据类型
      */
     private BillType type;
+    /**
+     * 本单据是当天同单据类型的第几张单据
+     */
+    private int order;
     
     public BillPO(){ }
     
@@ -71,5 +75,15 @@ public class BillPO {
 		this.type = type;
 	}
     
-    
+    public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public String buildID(){
+    	return type.getValue() + "-" + date + "-" + String.format("%5d", order);
+    }
 }

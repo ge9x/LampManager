@@ -6,8 +6,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import javafx.util.Pair;
 import util.Criterion;
 import util.ResultMessage;
 
@@ -127,6 +131,30 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	
 	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion1, Criterion criterion2) {
 		return Restrictions.or(buildCriterion(criterion1), buildCriterion(criterion2));
+	}
+
+	@Override
+	public Long count() {
+		return (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
+	}
+
+	@Override
+	public Long count(String propertyName, String value, String anotherProperty, String anotherValue) {
+		Criteria crit = session.createCriteria(type);
+		ProjectionList list = Projections.projectionList();
+		list.add(Projections.groupProperty("propertyName"));
+		list.add(Projections.groupProperty("anotherProperty"));
+		Long[][][] result = (Long[][][]) crit.setProjection(list).uniqueResult();
+		for(Object[][] twoD : result){
+			if(((String) twoD[0][0]).equals(value)){
+				for(Object[] oneD : twoD){
+					if(((String) oneD[1]).equals(anotherValue)){
+						return (Long) oneD[2];
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }
