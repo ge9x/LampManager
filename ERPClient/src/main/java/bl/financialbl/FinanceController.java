@@ -6,6 +6,7 @@ import blservice.formblservice.SalesDetailsInput;
 import util.ResultMessage;
 import vo.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,19 +22,29 @@ public class FinanceController implements FinanceBLService{
     }
 
     public String getNewReceiptID() {
-        return null;
+        try {
+            return finance.getNewReceiptID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getNewPaymentID() {
-        return null;
+        try {
+            return finance.getNewPaymentID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getNewCashBillID() {
-        return null;
+        return finance.getNewCashBillID();
     }
 
     public String getUserID() {
-        return null;
+        return finance.getUserID();
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
@@ -45,7 +56,12 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ResultMessage submit(AccountBillVO vo) {
-        return null;
+        try {
+            return finance.submit(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
     }
 
     public ResultMessage submit(CashBillVO vo) {

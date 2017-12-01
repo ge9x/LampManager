@@ -2,6 +2,7 @@ package ui.viewcontroller.FinancialStaff;
 
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
+import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import com.jfoenix.controls.JFXButton;
@@ -45,6 +46,7 @@ public class FinancialReceiptEditController {
 
     FinancialReceiptController financialReceiptController;
     FinanceBLService financeBLService = new FinanceBLService_Stub();
+    FinanceBLService financeBLService2 = new FinanceController();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
@@ -148,7 +150,7 @@ public class FinancialReceiptEditController {
         AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
-        financeBLService.submit(accountBillVO);
+        financeBLService2.submit(accountBillVO);
         financialReceiptController.showReceiptList();
     }
     public void clickCancelButton(){

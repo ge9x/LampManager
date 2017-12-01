@@ -1,5 +1,6 @@
 package rmi;
 
+import dataimpl.accountdataimpl.AccountDataServiceImpl;
 import dataservice.accountdataservice.AccountDataService;
 import datastubdriver.AccountDataService_Stub;
 import po.AccountPO;
@@ -13,12 +14,12 @@ import java.util.ArrayList;
 /**
  * Created by Kry·L on 2017/11/29.
  */
-public class DataRemoteObject extends UnicastRemoteObject implements AccountDataService{
+public class AccountDataRemoteObject extends UnicastRemoteObject implements AccountDataService{
 
 
     private AccountDataService accountDataService;
-    protected DataRemoteObject() throws RemoteException{
-        accountDataService = new AccountDataService_Stub();
+    protected AccountDataRemoteObject() throws RemoteException{
+        accountDataService = AccountDataServiceImpl.getInstance();
     }
 
     @Override
@@ -28,21 +29,21 @@ public class DataRemoteObject extends UnicastRemoteObject implements AccountData
 
     @Override
     public ResultMessage deleteAccount(AccountPO po) throws RemoteException {
-        return null;
+        return accountDataService.deleteAccount(po);
     }
 
     @Override
     public ResultMessage updateAccount(AccountPO po) throws RemoteException {
-        return null;
+        return accountDataService.updateAccount(po);
     }
 
     @Override
     public ArrayList<AccountPO> findByName(String keyword) throws RemoteException {
-        return null;
+        return accountDataService.findByName(keyword);
     }
 
     @Override
     public ArrayList<AccountPO> show() throws RemoteException {
-        return null;
+        return accountDataService.show();
     }
 }

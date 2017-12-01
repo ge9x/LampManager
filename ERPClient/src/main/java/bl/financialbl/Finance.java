@@ -9,6 +9,7 @@ import dataservice.financedataservice.FinanceDataService;
 import util.ResultMessage;
 import vo.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,16 +23,21 @@ public class Finance{
 
     private FinanceDataService financeDataService;
 
-    public String getNewReceiptID() {
-        return null;
+    public Finance(){
+        accountBill = new AccountBill();
+        cashBill = new CashBill();
     }
 
-    public String getNewPaymentID() {
-        return null;
+    public String getNewReceiptID() throws RemoteException {
+        return accountBill.getNewReceiptID();
+    }
+
+    public String getNewPaymentID() throws RemoteException {
+        return accountBill.getNewPaymentID();
     }
 
     public String getNewCashBillID() {
-        return null;
+        return cashBill.getNewCashBillID();
     }
 
     public String getUserID() {
@@ -46,8 +52,8 @@ public class Finance{
         return null;
     }
 
-    public ResultMessage submit(AccountBillVO vo) {
-        return null;
+    public ResultMessage submit(AccountBillVO vo) throws RemoteException{
+        return accountBill.submit(vo);
     }
 
     public ResultMessage submit(CashBillVO vo) {

@@ -3,6 +3,7 @@ package po;
 import util.BillState;
 import util.BillType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "accountbill")
-public class AccountBillPO extends BillPO {
+public class AccountBillPO extends BillPO implements Serializable{
 	 /**
      * 单据最后修改时间
      */

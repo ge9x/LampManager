@@ -18,6 +18,9 @@ public class CashBill {
     private UserInfo userInfo;
     private AccountInfo accountInfo;
 
+    public String getNewCashBillID(){
+        return null;
+    }
     public void addBillItem(CashBillItemVO vo){
 
     }

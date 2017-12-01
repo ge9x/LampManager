@@ -32,21 +32,21 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 	}
 
 	@Override
-	public int getNewReceiptID() throws RemoteException {
+	public String getNewReceiptID() throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int getNewPaymentID() throws RemoteException {
+	public String getNewPaymentID() throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
-	public int getNewCashBillID() throws RemoteException {
+	public String getNewCashBillID() throws RemoteException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 	@Override
@@ -67,57 +67,8 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		return null;
 	}
 
-	@Override
-	public ArrayList<BillPO> findBillByType(BillType typpe) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public BillPO findBillByID(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public ArrayList<BillPO> findBillByState(BillState state) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public ArrayList<BillPO> show() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public ArrayList<String> getAllIDByType(BillType type) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Date getDate(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getCustomer(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getSalesman(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getInventory(int ID) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

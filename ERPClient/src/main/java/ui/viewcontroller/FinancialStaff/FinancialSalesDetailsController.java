@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import ui.component.DialogFactory;
+import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
 import util.ResultMessage;
 import vo.SalesDetailVO;
 
