@@ -90,7 +90,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		if(value != null){
-			criteria.add(Restrictions.like(field, value));
+			criteria.add(Restrictions.like(field, "%" + value + "%"));
 		}
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
