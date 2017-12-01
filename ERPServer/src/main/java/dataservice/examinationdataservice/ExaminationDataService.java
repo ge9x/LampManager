@@ -13,16 +13,17 @@ import util.ResultMessage;
 public interface ExaminationDataService {
 	
 	/**
-     * 按审批时间段查找返回相应的BillVO结果
+     * 按审批时间段查找返回相应的已审批的BillVO结果
      * 
      * @param startEnd, endDate
      * @return ArrayList<BillPO>
      */
-	public ArrayList<BillPO> finds(String startDate, String endDate) throws RemoteException;
-	
-	public BillPO find(int ID) throws RemoteException;
-	
-	public ResultMessage add(BillPO po) throws RemoteException;
-	
-	public void init() throws RemoteException;
+	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
+	/**
+	 * 显示所有的申请单据
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	public ArrayList<BillPO> show() throws RemoteException;
 }

@@ -2,6 +2,8 @@ package po;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +12,10 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "goodsItem")
+@Table(name = "goodsitem")
 public class GoodsItemPO {
+	/**商品列表编号*/
+	private int ID;
 	/**商品编号*/
 	private int goodsID;
 	/**商品名称*/
@@ -27,6 +31,8 @@ public class GoodsItemPO {
 	/**备注*/
 	private String remarks;
 	
+	public GoodsItemPO(){};
+	
 	public GoodsItemPO(int goodsID,String goodsName,String model,int number,double price,
 			String remarks){
 		this.goodsID=goodsID;
@@ -37,8 +43,18 @@ public class GoodsItemPO {
 		this.sum=number*price;
 		this.remarks=remarks;
 	}
-
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public int getID(){
+		return ID;
+	}
+
+	public void setID(int ID){
+		this.ID=ID;
+	}
+	
 	@Column(name = "goodsID")
 	public int getGoodsID() {
 		return goodsID;
