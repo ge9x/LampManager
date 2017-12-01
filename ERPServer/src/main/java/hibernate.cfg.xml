@@ -27,9 +27,12 @@
 		<mapping class="po.GoodsPO" />
 		<mapping class="po.InventoryBillPO" />
 		<mapping class="po.InventoryPO" />
-		<mapping class="po.PromotionPO" />
+		<mapping class="po.PromotionCustomerPO" />
+		<mapping class="po.PromotionBargainPO" />
+		<mapping class="po.PromotionTotalPO" />
 		<mapping class="po.PurchasePO" />
 		<mapping class="po.UserPO" />
+		<mapping class="po.SalesPO" />
 
     </session-factory>
  

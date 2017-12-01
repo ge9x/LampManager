@@ -5,7 +5,7 @@ import util.PromotionType;
 
 public class PromotionPO {
 	/**促销策略编号*/
-    private int promotionID;
+    private String promotionID;
 	/**起始时间*/
 	private String startDate;
 	/**结束时间*/
@@ -19,11 +19,11 @@ public class PromotionPO {
 		this.type = type;
 	}
 
-	public int getPromotionID() {
+	public String getPromotionID() {
 		return promotionID;
 	}
 
-	public void setPromotionID(int promotionID) {
+	public void setPromotionID(String promotionID) {
 		this.promotionID = promotionID;
 	}
 
