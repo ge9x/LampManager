@@ -10,6 +10,7 @@ import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
+import util.BillState;
 
 public class TestInventory {
 
@@ -60,6 +61,13 @@ public class TestInventory {
 //				po.getNumber().put(allGoods.get((int)(Math.random()*2)), (int)(Math.random()*1024));
 //				inventoryImpl.updateInventory(po);
 //			}
+			
+			InventoryPO inpo = inventoryImpl.showInventory().get(0);
+			System.out.println(inpo.getID() + " " + inpo.getName() + " " + inpo.getNumber());
+			InventoryBillPO bill = inventoryImpl.findBill(2);
+			System.out.println(bill.getID() + " " + bill.getOrder() + " " + bill.getState() + " " + bill.getUser());
+			bill.setState(BillState.PASS);
+			inventoryImpl.updateBill(bill);
 			
 			ArrayList<GoodsPO> all = goodsImpl.show();
 			System.out.println("共有" + all.size() + "条商品记录");
