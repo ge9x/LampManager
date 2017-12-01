@@ -37,8 +37,7 @@ public class FinancialAccountController {
     private ArrayList<FXMLLoader> loaders = new ArrayList<>();
     private ArrayList<VBox> cells = new ArrayList<>();
 
-    AccountBLService accountBLService = new AccountBLService_Stub();
-    AccountBLService accountBLService2 = new AccountController();
+    AccountBLService accountBLService = new AccountController();
     FinancialViewController financialViewController;
     ArrayList<AccountVO> accounts;
 
@@ -51,13 +50,21 @@ public class FinancialAccountController {
         accountList.setHgap(50);
         accountList.setVgap(30);
         accountList.setPrefColumns(2);
-
-        showAccountList();
+        getAllAccount();
     }
 
+    /**
+     * 获得所有银行账户数据
+     */
+    public void getAllAccount(){
+        accounts = accountBLService.show();
+    }
+
+    /**
+     * 根据accounts中的数据来显示账户Cells
+     */
     public void showAccountList(){
         accountList.getChildren().clear();
-        accounts = accountBLService.show();
         for (int i = 0; i < accounts.size(); i++){
             try {
                 FXMLLoader accountLoader = new FXMLLoader();
@@ -87,8 +94,9 @@ public class FinancialAccountController {
             Pair<String,String> results = result.get();
             AccountVO account = new AccountVO(null, results.getKey(), Double.parseDouble(results.getValue()));
 
-            ResultMessage re = accountBLService2.addAccount(account);
+            ResultMessage re = accountBLService.addAccount(account);
             if (re == ResultMessage.SUCCESS){
+                getAllAccount();
                 showAccountList();
             }
         }
@@ -96,12 +104,14 @@ public class FinancialAccountController {
     public void deleteAccount(String ID){
             ResultMessage re = accountBLService.deleteAccount(ID);
         if (re == ResultMessage.SUCCESS){
+            getAllAccount();
             showAccountList();
         }
     }
     public void editAccount(AccountVO vo){
         ResultMessage re = accountBLService.updateAccount(vo);
         if (re == ResultMessage.SUCCESS){
+            getAllAccount();
             showAccountList();
         }
     }

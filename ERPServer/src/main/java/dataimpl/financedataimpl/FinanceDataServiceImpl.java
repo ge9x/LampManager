@@ -35,24 +35,26 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 	}
 
 	@Override
-	public int getNewReceiptID() throws RemoteException {
+	public String getNewReceiptID() throws RemoteException {
 		ArrayList<Criterion> criteria = new ArrayList<>();
 		criteria.add(new Criterion("type", BillType.RECEIPT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalTime.now().toString(), QueryMode.FULL));
-		return accountBillDataHelper.multiQuery(criteria).size() + 1;
+		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
+		return null;
 	}
 
 	@Override
-	public int getNewPaymentID() throws RemoteException {
+	public String getNewPaymentID() throws RemoteException {
 		ArrayList<Criterion> criteria = new ArrayList<>();
 		criteria.add(new Criterion("type", BillType.PAYMENT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalTime.now().toString(), QueryMode.FULL));
-		return accountBillDataHelper.multiQuery(criteria).size() + 1;
+		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
+		return null;
 	}
 
 	@Override
-	public int getNewCashBillID() throws RemoteException {
-		return 0;
+	public String getNewCashBillID() throws RemoteException {
+		return null;
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 package bl.financialbl;
 
 import blservice.accountblservice.AccountInfo;
+import po.AccountBillItemPO;
+import po.AccountBillPO;
+import vo.AccountBillItemVO;
 
 /**
  * Created by Kry·L on 2017/11/5.
@@ -27,6 +30,9 @@ public class AccountBillItem {
         this.account = account;
         this.transferMoney = transferMoney;
         this.remark = remark;
+    }
+
+    public void voTopo(AccountBillItemVO vo){
     }
 
 
