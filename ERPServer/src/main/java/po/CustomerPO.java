@@ -45,6 +45,8 @@ public class CustomerPO {
 	/**代金券*/
 	private double voucher;
 	
+	public CustomerPO(){};
+	
 	
 	public CustomerPO( CustomerCategory category, Level level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
