@@ -52,8 +52,12 @@ public class AccountBillPO extends BillPO {
      * 总额汇总
      */
     private double sum;
+    /**
+     * 本单据是当天同单据类型的第几张单据
+     */
+    private int turn;
 
-    public AccountBillPO(){ }
+	public AccountBillPO(){ }
 
     public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
         super(date, type, state);
@@ -168,4 +172,13 @@ public class AccountBillPO extends BillPO {
     public void setSum(double sum) {
         this.sum = sum;
     }
+
+    @Column(name = "turn")
+    public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
 }

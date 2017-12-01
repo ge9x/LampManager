@@ -13,26 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cashbill")
 public class CashBillPO extends BillPO {
-	 /**
-     * 单据最后修改时间
-     */
-    private String date;
-
-	/**
-     * 单据编号
-     */
-    private int ID;
-
-    /**
-     * 单据状态
-     */
-    private BillState state;
-
-    /**
-     * 单据类型
-     */
-    private BillType type;
-
     /**
      * 操作员
      */
@@ -116,41 +96,41 @@ public class CashBillPO extends BillPO {
     
     @Column(name = "date")
     public String getDate() {
-		return date;
+		return super.getDate();
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		super.setDate(date);
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	public int getID() {
-		return ID;
+		return super.getID();
 	}
 
 	public void setID(int iD) {
-		ID = iD;
+		super.setID(iD);
 	}
 
 	@Column(name = "state")
 	@Enumerated(EnumType.STRING)
 	public BillState getState() {
-		return state;
+		return super.getState();
 	}
 
 	public void setState(BillState state) {
-		this.state = state;
+		super.setState(state);
 	}
 
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	public BillType getType() {
-		return type;
+		return super.getType();
 	}
 
 	public void setType(BillType type) {
-		this.type = type;
+		super.setType(type);
 	}
 }

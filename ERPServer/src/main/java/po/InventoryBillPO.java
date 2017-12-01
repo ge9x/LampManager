@@ -37,9 +37,6 @@ public class InventoryBillPO extends BillPO{
 	
 	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(date, type, state);
-		super.setDate(date);
-		super.setState(state);
-		super.setType(type);
 		this.inventory = inventory;
 		this.user = user;
 		this.goodsMap = goodsMap;
@@ -54,9 +51,6 @@ public class InventoryBillPO extends BillPO{
 	@Deprecated
 	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);
-		super.setDate(date);
-		super.setState(state);
-		super.setType(type);
 		this.inventory = inventory;
 		this.user = user;
 		this.goodsMap = goodsMap;
