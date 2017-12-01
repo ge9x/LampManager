@@ -28,12 +28,6 @@ import util.BillType;
 @Entity
 @Table(name = "sales")
 public class SalesPO extends BillPO{
-	/**单据编号*/
-	private int ID;
-	/**单据类型*/
-	private BillType type;
-	/**单据状态*/
-	private BillState state;
 	/**客户*/
 	private String customer;
 	/**客户ID*/
@@ -56,8 +50,6 @@ public class SalesPO extends BillPO{
 	private double afterSum;
 	/**备注*/
 	private String remarks;
-	/**单据最后修改时间*/
-	private String date;
 	
 	public SalesPO(){};
 	
@@ -65,8 +57,8 @@ public class SalesPO extends BillPO{
 			String user, String inventory,List<GoodsItemPO> goodsItemList,
 			double allowance, double voucher, String remarks, String endDate) {
 		super( endDate, type, state);
-		this.type=type;
-		this.state=state;
+		super.setType(type);
+		super.setState(state);
 		this.customer = customer;
 		this.customerID=customerID;
 		this.salesman = salesman;
@@ -78,7 +70,7 @@ public class SalesPO extends BillPO{
 		this.voucher = voucher;
 		this.afterSum = calAfterSum();
 		this.remarks = remarks;
-		this.date=endDate;
+		super.setDate(endDate);
 	}
 	
 	@Deprecated
@@ -86,9 +78,9 @@ public class SalesPO extends BillPO{
 			String user, String inventory,List<GoodsItemPO> goodsItemList,
 			double allowance, double voucher, String remarks, String endDate) {
 		super(ID, endDate, type, state);
-		this.ID=ID;
-		this.type=type;
-		this.state=state;
+		super.setID(ID);
+		super.setType(type);
+		super.setState(state);
 		this.customer = customer;
 		this.customerID=customerID;
 		this.salesman = salesman;
@@ -100,7 +92,7 @@ public class SalesPO extends BillPO{
 		this.voucher = voucher;
 		this.afterSum = calAfterSum();
 		this.remarks = remarks;
-		this.date=endDate;
+		super.setDate(endDate);
 	}
 	
 	private double calBeforeSum(){
@@ -124,31 +116,31 @@ public class SalesPO extends BillPO{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public int getID() {
-		return ID;
+		return super.getID();
 	}
 
 	public void setID(int iD) {
-		ID = iD;
+		super.setID(iD);
 	}
 
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	public BillType getType() {
-		return type;
+		return super.getType();
 	}
 
 	public void setType(BillType type) {
-		this.type = type;
+		super.setType(type);
 	}
 
 	@Column(name="state")
 	@Enumerated(EnumType.STRING)
 	public BillState getState() {
-		return state;
+		return super.getState();
 	}
 
 	public void setState(BillState state) {
-		this.state = state;
+		super.setState(state);
 	}
 
 	@Column(name = "customer")
@@ -253,11 +245,11 @@ public class SalesPO extends BillPO{
 
 	@Column(name = "date")
 	public String getDate() {
-		return date;
+		return super.getDate();
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		super.setDate(date);
 	}
 
 
