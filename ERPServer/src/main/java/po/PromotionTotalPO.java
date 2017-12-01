@@ -3,6 +3,7 @@ package po;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -11,9 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import util.PromotionType;
 
+
+@Entity
+@Table(name = "promotiontotal")
 public class PromotionTotalPO extends PromotionPO{
 	/** 编号 */
 	private int ID;
@@ -32,6 +37,8 @@ public class PromotionTotalPO extends PromotionPO{
 	/**总价促销策略编号*/
 	private String promotionID;
 	
+	public PromotionTotalPO(){};
+	
 	public PromotionTotalPO(String startDate, String endDate, PromotionType type, double voucher, List<GoodsPO> gifts, double totalPrice) {
 		super(startDate, endDate, type);
 		this.startDate = startDate;
@@ -40,7 +47,7 @@ public class PromotionTotalPO extends PromotionPO{
 		this.voucher = voucher;
 		this.gifts = gifts;
 		this.totalPrice = totalPrice;
-		this.promotionID="PT"+Integer.toString(ID);
+		this.promotionID="PT-"+Integer.toString(getID());
 	}
 
 	@Id
@@ -112,10 +119,14 @@ public class PromotionTotalPO extends PromotionPO{
 	
 	@Column(name="promotionID")
 	public String getPromotionID(){
-		return promotionID;
+		return calPromotionID();
 	}
 	
 	public void setPromotionID(String promotionID){
-		this.promotionID=promotionID;
+		this.promotionID=calPromotionID();
+	}
+	
+	private String calPromotionID(){
+		return "PT-"+Integer.toString(ID);
 	}
 }

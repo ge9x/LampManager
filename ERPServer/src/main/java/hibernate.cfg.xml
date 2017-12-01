@@ -33,6 +33,7 @@
 		<mapping class="po.PurchasePO" />
 		<mapping class="po.UserPO" />
 		<mapping class="po.SalesPO" />
+		<mapping class="po.InitAccountPO" />
 
     </session-factory>
  

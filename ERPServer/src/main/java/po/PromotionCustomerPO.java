@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,6 +38,8 @@ public class PromotionCustomerPO extends PromotionPO {
 	private Level level;
 	/**客户促销策略编号*/
 	private String promotionID;
+	
+	public PromotionCustomerPO(){};
 
 	public PromotionCustomerPO(String startDate, String endDate, PromotionType type, double allowance,
 			List<GoodsPO> gifts, Level level) {
@@ -47,7 +50,6 @@ public class PromotionCustomerPO extends PromotionPO {
 		this.allowance = allowance;
 		this.gifts = gifts;
 		this.level = level;
-		this.promotionID="PC"+Integer.toString(ID);
 	}
 
 	@Id
@@ -120,11 +122,16 @@ public class PromotionCustomerPO extends PromotionPO {
 	
 	@Column(name="promotionID")
 	public String getPromotionID(){
-		return promotionID;
+		return calPromotionID();
 	}
 	
 	public void setPromotionID(String promotionID){
-		this.promotionID=promotionID;
+		this.promotionID=calPromotionID();
 	}
+	
+	private String calPromotionID(){
+		return "PC-"+Integer.toString(ID);
+	}
+
 
 }

@@ -12,6 +12,8 @@ public class PromotionPO {
 	private String endDate;
 	/**促销策略类型*/
 	private PromotionType type;
+	
+	public PromotionPO(){};
 
 	public PromotionPO( String startDate, String endDate, PromotionType type) {
 		this.startDate = startDate;

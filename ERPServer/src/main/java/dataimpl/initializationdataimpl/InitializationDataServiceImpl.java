@@ -33,6 +33,7 @@ public class InitializationDataServiceImpl implements InitializationDataService{
 	}
 	
 	public ResultMessage init(InitAccountPO po) {
+		/**
 		ArrayList<CustomerPO> cus=(ArrayList<CustomerPO>) po.getCustomerPOS();
 		for(CustomerPO cuspo:cus){
 			customerDataHelper.save(cuspo);
@@ -52,7 +53,7 @@ public class InitializationDataServiceImpl implements InitializationDataService{
 		for(ClassificationPO clapo:cla){
 			classificationDataHelper.save(clapo);
 		}
-		
+		*/
 		return initAccountDataHelper.save(po);
 	}
 

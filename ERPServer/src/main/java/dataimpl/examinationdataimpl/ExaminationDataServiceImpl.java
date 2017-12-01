@@ -11,7 +11,9 @@ import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.examinationdataservice.ExaminationDataService;
 import po.BillPO;
+import po.SalesPO;
 import util.BillState;
+import util.BillType;
 import util.Criterion;
 import util.QueryMode;
 
@@ -38,6 +40,7 @@ public class ExaminationDataServiceImpl implements ExaminationDataService{
 					new Criterion("state",BillState.FAILED,QueryMode.FULL)
 						)
 				);
+		//criteria.add(allBill);
 		ArrayList<BillPO> billList=billDataHelper.multiQuery(criteria);
 		for(BillPO po:billList){
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -58,6 +61,7 @@ public class ExaminationDataServiceImpl implements ExaminationDataService{
 		criteria.add(
 				new Criterion("state",BillState.SUBMITTED,QueryMode.FULL)
 				);
+		//criteria.add(allBill);
 		return billDataHelper.multiQuery(criteria);
    }
 }

@@ -40,7 +40,7 @@ public class TestSales {
 				,1,"默认仓库","阿红",goodsItemList,"满足客户需求"
 			     ,new Date().toString());
 		
-			SalesPO sal=new SalesPO(BillType.SALES, BillState.DRAFT,"阿强",3, "销售商1", "业务员1",
+			SalesPO sal=new SalesPO(BillType.SALES, BillState.SUBMITTED,"阿强",3, "销售商1", "业务员1",
 				"默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date().toString());
 	
 			salesImpl.addPurchase(pur);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -12,9 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import util.PromotionType;
 
+
+@Entity
+@Table(name = "promotionbargain")
 public class PromotionBargainPO extends PromotionPO{
 	/** 编号 */
 	private int ID;
@@ -33,6 +38,8 @@ public class PromotionBargainPO extends PromotionPO{
 	/**特价包促销策略编号*/
 	private String promotionID;
 	
+	public PromotionBargainPO(){};
+	
 	public PromotionBargainPO(String startDate, String endDate, PromotionType type, double goodsTotal, double bargainTotal, List<GoodsPO> bargains) {
 		super(startDate, endDate, type);
 		this.startDate = startDate;
@@ -41,13 +48,13 @@ public class PromotionBargainPO extends PromotionPO{
 		this.goodsTotal = goodsTotal;
 		this.bargainTotal = bargainTotal;
 		this.bargains = bargains;
-		this.promotionID="PB"+Integer.toString(ID);
+		this.promotionID="PB-"+Integer.toString(getID());
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int ID() {
+	public int getID() {
 		return ID;
 	}
 	
@@ -107,10 +114,14 @@ public class PromotionBargainPO extends PromotionPO{
 	
 	@Column(name="promotionID")
 	public String getPromotionID(){
-		return promotionID;
+		return calPromotionID();
 	}
 	
 	public void setPromotionID(String promotionID){
-		this.promotionID=promotionID;
+		this.promotionID=calPromotionID();
+	}
+	
+	private String calPromotionID(){
+		return "PB-"+Integer.toString(ID);
 	}
 }
