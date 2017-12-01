@@ -4,6 +4,7 @@ import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -17,10 +18,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -67,7 +70,16 @@ public class FinancialReceiptEditController {
     Text Total;
 
     @FXML
+    Label title;
+
+    @FXML
     ComboBox Customer;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 
     public void initialize(){
         addIcon.setText("\ue61e");
@@ -208,6 +220,30 @@ public class FinancialReceiptEditController {
         this.financialReceiptController = financialReceiptController;
     }
 
+    public void setForDetailView(AccountBillVO account){
+        BillID.setText(account.ID);
+        title.setText("收款单详情");
+        addIcon.setVisible(false);
+        String customerName = financeBLService.getCustomerNameByID(account.customerID);
+        Customer.getItems().clear();
+        Customer.getItems().add(customerName);
+        Customer.getSelectionModel().selectFirst();
+        Customer.setEditable(false);
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                financialReceiptController.showReceiptList();
+            }
+        });
+        submitButton.setVisible(false);
+        for (AccountBillItemVO accountBillItemVO:account.accountBillItems){
+            data.add(new AccountBillItemBean(accountBillItemVO.account.accountName,accountBillItemVO.transferMoney,accountBillItemVO.remark));
+            total.set(total.get()+accountBillItemVO.transferMoney);
+        }
+
+
+    }
     public class AccountBillItemBean {
         public StringProperty accountName;
         public DoubleProperty money;

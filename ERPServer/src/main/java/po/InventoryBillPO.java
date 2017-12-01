@@ -59,7 +59,12 @@ public class InventoryBillPO extends BillPO{
 		this.user = user;
 		this.goodsMap = goodsMap;
 	}
-	
+
+	/**
+	 * 请使用无需设置ID的构造方法，因为：<br>
+	 * 1、要新增的PO的ID应由数据库自动生成，而非手动填入<br>
+	 * 2、要修改的PO应从数据库中得到，而非代码生成
+	 */
 	@Deprecated
 	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);

@@ -3,6 +3,7 @@ package bl.formbl;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
+import javafx.beans.property.StringProperty;
 import util.ResultMessage;
 import vo.BillVO;
 import vo.ProfitVO;
@@ -38,7 +39,25 @@ public class FormController implements FormBLService{
         return null;
     }
 
-    public ProfitVO getProfit(Date startDate, Date endDate) {
+    public ProfitVO getProfit(String startDate,String endDate) {
+        return null;
+    }
+    public String getStartDate(){
+       return null;
+    }
+
+    @Override
+    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
+        return null;
+    }
+
+    @Override
+    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {
+        return null;
+    }
+
+    @Override
+    public ResultMessage exportProfit(ArrayList<ProfitVO> vos) {
         return null;
     }
 }

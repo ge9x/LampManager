@@ -1,20 +1,40 @@
 package po;
 
+import javax.persistence.*;
+
 import util.UserLimits;
 import util.UserPosition;
 
+@Entity
+@Table(name = "user")
 public class UserPO {
-	public String userID;
+	private int userID;
 	
-	public String password;
+	private String password;
 	
-	public String name;
+	private String name;
 	
-	public UserPosition position;
+	private UserPosition position;
 	
-	public UserLimits limit;
+	private UserLimits limit;
+	
+	public UserPO(){ }
+	
+	public UserPO(String password, String name, UserPosition position, UserLimits limit) {
+		super();
+		this.password = password;
+		this.name = name;
+		this.position = position;
+		this.limit = limit;
+	}
 
-	public UserPO(String userID, String password, String name, UserPosition position, UserLimits limit) {
+	/**
+	 * 请使用无需设置ID的构造方法，因为：<br>
+	 * 1、要新增的PO的ID应由数据库自动生成，而非手动填入<br>
+	 * 2、要修改的PO应从数据库中得到，而非代码生成
+	 */
+	@Deprecated
+	public UserPO(int userID, String password, String name, UserPosition position, UserLimits limit) {
 		super();
 		this.userID = userID;
 		this.password = password;
@@ -23,14 +43,18 @@ public class UserPO {
 		this.limit = limit;
 	}
 
-	public String getUserID() {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -39,6 +63,7 @@ public class UserPO {
 		this.password = password;
 	}
 
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -47,6 +72,8 @@ public class UserPO {
 		this.name = name;
 	}
 
+	@Column(name = "position")
+	@Enumerated(EnumType.STRING)
 	public UserPosition getPosition() {
 		return position;
 	}
@@ -55,6 +82,8 @@ public class UserPO {
 		this.position = position;
 	}
 
+	@Column(name = "userlimit")
+	@Enumerated(EnumType.STRING)
 	public UserLimits getLimit() {
 		return limit;
 	}

@@ -11,23 +11,29 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import rmi.RemoteHelper;
 import ui.viewcontroller.common.LoginViewController;
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 public class Main extends Application {
+    private RemoteHelper remoteHelper;
 
     MainUIController mainUIController;
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage){
-        Pane root = null;
+        linkToServer();
 
+        Pane root = null;
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/common/mainView.fxml"));
@@ -47,5 +53,19 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
 
+    }
+
+    private void linkToServer() {
+        try {
+            remoteHelper = RemoteHelper.getInstance();
+            remoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/DataRemoteObject"));
+            System.out.println("linked");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 }

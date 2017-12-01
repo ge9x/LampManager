@@ -1,5 +1,8 @@
 package po;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +11,7 @@ import javax.persistence.*;
  *
  */
 @Entity
+@Embeddable
 @Table(name = "inventory")
 public class InventoryPO {
 	/**
@@ -18,7 +22,12 @@ public class InventoryPO {
 	 * 仓库名字
 	 */
 	private String name;
+	/**
+	 * 仓库里每件商品的数量
+	 */
+	private Map<GoodsPO, Integer> number = new HashMap<GoodsPO, Integer>();
 	
+
 	public InventoryPO(){ }
 	
 	public InventoryPO(String name) {
@@ -39,11 +48,11 @@ public class InventoryPO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getId() {
+	public int getID() {
 		return ID;
 	}
 	
-	public void setId(int ID) {
+	public void setID(int ID) {
 		this.ID = ID;
 	}
 	
@@ -54,5 +63,17 @@ public class InventoryPO {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="inventory_goods_number")
+	@MapKeyJoinColumn(name = "GoodsPO_id")
+	@Column(name = "number")
+	public Map<GoodsPO, Integer> getNumber() {
+		return number;
+	}
+
+	public void setNumber(Map<GoodsPO, Integer> number) {
+		this.number = number;
 	}
 }

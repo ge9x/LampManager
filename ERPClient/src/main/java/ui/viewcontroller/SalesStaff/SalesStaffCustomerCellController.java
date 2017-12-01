@@ -5,10 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import util.Level;
 import vo.CustomerVO;
 
@@ -91,5 +88,9 @@ public class SalesStaffCustomerCellController {
     	}
     	salesStaffCustomerDetailViewController.setCustomer(customer);
     	salesStaffCustomerInfoViewController.showCustomerDetail(customerDetail);
+    }
+    
+    public void clickReturnButton(){
+    	salesStaffCustomerInfoViewController.clickReturnButton();
     }
 }

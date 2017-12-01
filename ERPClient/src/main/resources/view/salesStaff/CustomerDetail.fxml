@@ -22,7 +22,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffCustomerDetailViewController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="492.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="482.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
             <VBox alignment="TOP_CENTER" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
@@ -63,14 +63,14 @@
                                     <Font size="19.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="customerID" prefHeight="21.0" prefWidth="338.0" text="Label">
+                              <JFXTextField fx:id="customerID" focusColor="#1db1a4" prefHeight="32.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
                                  <font>
-                                    <Font size="17.0" />
+                                    <Font size="14.0" />
                                  </font>
-                              </Label>
+                              </JFXTextField>
                            </children>
                            <VBox.margin>
                               <Insets top="20.0" />
@@ -86,14 +86,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerType" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerType" focusColor="#1db1a4" prefHeight="32.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -106,14 +106,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerLevel" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerLevel" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -126,14 +126,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerName" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerName" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -146,14 +146,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerPhone" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerPhone" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -166,14 +166,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerAddress" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerAddress" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -186,14 +186,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerPostcode" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerPostcode" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -206,14 +206,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerMail" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerMail" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="80.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -226,14 +226,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerReceivableLimit" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerReceivableLimit" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="80.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -246,14 +246,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerReceive" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerReceive" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -266,19 +266,19 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="customerPay" prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerPay" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                            <children>
-                              <Label fx:id="customerSalesman" text="默认业务员">
+                              <Label text="默认业务员">
                                  <font>
                                     <Font size="19.0" />
                                  </font>
@@ -286,14 +286,14 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label prefHeight="21.0" prefWidth="338.0" text="Label">
-                                 <font>
-                                    <Font size="17.0" />
-                                 </font>
+                              <JFXTextField fx:id="customerSalesman" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="60.0" />
                                  </HBox.margin>
-                              </Label>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </JFXTextField>
                            </children>
                         </HBox>
                      </children>
@@ -307,12 +307,12 @@
             </VBox>
          </content>
       </ScrollPane>
-      <JFXButton layoutX="703.0" layoutY="557.0" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #1DB1A4; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #1db1a4;" text="编    辑" textFill="WHITE">
+      <JFXButton fx:id="editButton" layoutX="703.0" layoutY="550.0" onAction="#clickEditButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #1DB1A4; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #1db1a4;" text="编    辑" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="600.0" layoutY="557.0" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
+      <JFXButton fx:id="returnButton" layoutX="600.0" layoutY="550.0" onAction="#clickReturnButton" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #1db1a4; -fx-border-width: 2;" text="返   回" textFill="#1db1a4">
          <font>
             <Font size="15.0" />
          </font>

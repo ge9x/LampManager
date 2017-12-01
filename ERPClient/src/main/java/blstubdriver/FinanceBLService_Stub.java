@@ -169,8 +169,46 @@ public class FinanceBLService_Stub implements FinanceBLService {
         }
     }
 
+    @Override
+    public ArrayList<AccountBillVO> getDraftAccountBills() {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        accountBillVOS.add(billVO);
+        return accountBillVOS;
+    }
 
+    @Override
+    public ArrayList<AccountBillVO> getSubmittedAccountBills() {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        return accountBillVOS;
+    }
 
+    @Override
+    public ArrayList<AccountBillVO> getPassAccountBills() {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        return accountBillVOS;
+    }
 
+    @Override
+    public ArrayList<AccountBillVO> getFailedAccountBills() {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        accountBillVOS.add(billVO);
+        return accountBillVOS;
+    }
 
+    @Override
+    public String getCustomerNameByID(String ID) {
+        return "客户A";
+    }
 }

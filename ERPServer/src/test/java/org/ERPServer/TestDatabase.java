@@ -62,7 +62,7 @@ public class TestDatabase {
 			ArrayList<ClassificationPO> claPOs = claImpl.show();
 			System.out.println("共有" + claPOs.size() + "条商品分类记录：");
 			for(ClassificationPO po : claPOs){
-				System.out.println(po.getId() + " " + po.getName() + " " + po.getGoods());
+				System.out.println(po.getID() + " " + po.getName() + " " + po.getGoods());
 			}
 			System.out.println("查询结束");
 		} catch (RemoteException e) {
@@ -92,7 +92,7 @@ public class TestDatabase {
 			ArrayList<GoodsPO> allGoods = goodsImpl.show();
 			System.out.println("共有" + allGoods.size() + "条商品记录：");
 			for(GoodsPO po : allGoods){
-				System.out.println(po.getId() + " " + po.getName());
+				System.out.println(po.getID() + " " + po.getName());
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

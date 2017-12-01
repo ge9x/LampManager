@@ -15,6 +15,7 @@ import org.ERPClient.Main;
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
+import ui.viewcontroller.InventoryStaff.InventoryViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffViewController;
 
 import java.io.IOException;
@@ -50,6 +51,11 @@ public class MainUIController {
         resizeToPage();
         AdminViewController adminViewController = new AdminViewController(this);
     }
+    public void showInventoryView(){
+        resizeToPage();
+        InventoryViewController inventoryViewController = new InventoryViewController(this);
+    }
+
 
 
     public void showLogin(){

@@ -10,7 +10,7 @@ import vo.PromotionTotalVO;
 
 public class MockPromotionTotal extends PromotionTotal{
 	
-	private PromotionTotalVO promotionTotal = new PromotionTotalVO("000003", new Date(), new Date(), 0, new ArrayList<GoodsVO>(), 0);
+	private PromotionTotalVO promotionTotal = new PromotionTotalVO("总价促销策略","000003", new Date(), new Date(), 0, new ArrayList<GoodsVO>(), 0);
 	
 	@Override
 	public ArrayList<PromotionTotalVO> show(){

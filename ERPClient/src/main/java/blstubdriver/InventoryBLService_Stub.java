@@ -21,8 +21,9 @@ import vo.GoodsVO;
  */
 public class InventoryBLService_Stub implements InventoryBLService{
 	ArrayList<InventoryBillVO> data;
+	ArrayList<InventoryBillVO> newData = new ArrayList<>();
 	ArrayList<InventoryBillVO> alarmData;
-	ArrayList<String> inventoryName;
+	ArrayList<String> inventoryName = new ArrayList<>();
 	
 	{
 		data = new ArrayList<InventoryBillVO>();
@@ -31,12 +32,19 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
 		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
 		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		data.add(vo1);
+        InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+        newData.add(vo1);
+        newData.add(vo1);
+        newData.add(vo1);
+        newData.add(vo2);
+        newData.add(vo3);
+        data.add(vo1);
 		data.add(vo2);
 		alarmData.add(vo3);
 		data.add(vo4);
 		data.add(vo5);
+		inventoryName.add("栖霞区仓库");
+		inventoryName.add("鼓楼区仓库");
 	}
 
 	public ArrayList<String> showInventory() {
@@ -81,24 +89,20 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.FAILED;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		if(startDate==null || endDate==null || inventory==null){
 			return null;
 		}
 		else{
-			InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库", new ArrayList<InventoryViewItemVO>(), new HashMap<GoodsVO, Double>());
-			return ret;
+            InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库", new ArrayList<InventoryViewItemVO>(), new HashMap<GoodsVO, Double>());
+            System.out.println("show succeed");
+            return ret;
 		}
 	}
 
-	public InventoryCheckVO check(Date today) {
-		if(today==null){
-			return null;
-		}
-		else{
-			InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
-			return ret;
-		}
+	public InventoryCheckVO check() {
+        InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
+		return ret;
 	}
 
 	public ResultMessage exportExcel(InventoryCheckVO vo) {
@@ -249,4 +253,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.FAILED;
 	}
 
+    @Override
+    public ArrayList<InventoryBillVO> findBillByType(BillType type) {
+        return newData;
+    }
 }

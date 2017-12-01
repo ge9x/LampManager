@@ -19,14 +19,9 @@ public class AdminViewController {
             navbarLoader.setLocation(getClass().getResource("/view/admin/AdminNavBar.fxml"));
             Pane navbar = navbarLoader.load();
             adminNavBarController = navbarLoader.getController();
-
-            FXMLLoader pageLoader = new FXMLLoader();
-            pageLoader.setLocation(getClass().getResource("/view/admin/User.fxml"));
-            Pane page = pageLoader.load();
-            adminUserViewController = pageLoader.getController();
+            adminNavBarController.setAdminViewController(this);
 
             mainUIController.setLeft(navbar);
-            mainUIController.setCenter(page);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,5 +29,33 @@ public class AdminViewController {
 
         adminNavBarController.clickUserButton();
 
+    }
+    
+    public void showUserView(){
+    	mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/admin/User.fxml"));
+            Pane page = pageLoader.load();
+            adminUserViewController = pageLoader.getController();
+            adminUserViewController.setAdminViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        adminUserViewController.showUserList();
+    }
+    
+    public void showUserDetail(Pane userDetail){
+    	mainUIController.setCenter(null);
+        mainUIController.setCenter(userDetail);
+    }
+    
+    public void showUserAddView(Pane userAdd){
+    	mainUIController.setCenter(null);
+        mainUIController.setCenter(userAdd);
     }
 }

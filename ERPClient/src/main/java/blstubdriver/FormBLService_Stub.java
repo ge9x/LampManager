@@ -8,6 +8,7 @@ import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,8 +35,8 @@ public class FormBLService_Stub implements FormBLService {
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
                 200,400,900,9500,5000,
                 4000,1000,500,5500,4000);
-        SalesDetailVO salesDetailVO1 = new SalesDetailVO(new Date(),"霓虹灯", "大", 20, 35.0);
-        SalesDetailVO salesDetailVO2 = new SalesDetailVO(new Date(),"挂灯", "xxdd", 10, 35.0);
+        SalesDetailVO salesDetailVO1 = new SalesDetailVO("2017-1-1","霓虹灯", "大", 20, 35.0);
+        SalesDetailVO salesDetailVO2 = new SalesDetailVO("2017-1-1","挂灯", "xxdd", 10, 35.0);
         salesDetailVOS.add(salesDetailVO1);
         salesDetailVOS.add(salesDetailVO2);
     }
@@ -49,8 +50,14 @@ public class FormBLService_Stub implements FormBLService {
         }
     }
 
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return profitVO;
+    public ProfitVO getProfit(String startDate, String endDate) {
+        if (startDate.equals(LocalDate.of(2017, 11, 29).toString())) {
+            profitVO.salesIncome = 100.0;
+            return profitVO;
+        } else {
+            profitVO.salesIncome = 200.0;
+            return profitVO;
+        }
     }
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
         return salesDetailVOS;
@@ -76,5 +83,25 @@ public class FormBLService_Stub implements FormBLService {
             return null;
         }
     }
+    public String getStartDate(){
+        return "2017-1-1";
+    }
 
+    @Override
+    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
+        System.out.println("Export Succeed");
+        return ResultMessage.SUCCESS;
+    }
+
+    @Override
+    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {
+        System.out.println("Export Succeed");
+        return ResultMessage.SUCCESS;
+    }
+
+    @Override
+    public ResultMessage exportProfit(ArrayList<ProfitVO> vos) {
+        System.out.println("Export Succeed");
+        return ResultMessage.SUCCESS;
+    }
 }

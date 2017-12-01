@@ -12,7 +12,7 @@
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.Admin.AdminNavBarController">
    <children>
       <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="99.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
-      <AnchorPane fx:id="UserNav" layoutY="226.0" prefHeight="40.0" prefWidth="170.0">
+      <AnchorPane fx:id="UserNav" layoutY="226.0" onMouseClicked="#clickUserButton" prefHeight="40.0" prefWidth="170.0">
          <children>
             <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
             <Label fx:id="UserIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
@@ -23,4 +23,3 @@
 
    </children>
 </AnchorPane>
-
