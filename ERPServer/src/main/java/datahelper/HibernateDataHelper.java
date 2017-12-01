@@ -138,23 +138,4 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		return (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
-	@Override
-	public Long count(String propertyName, String value, String anotherProperty, String anotherValue) {
-		Criteria crit = session.createCriteria(type);
-		ProjectionList list = Projections.projectionList();
-		list.add(Projections.groupProperty("propertyName"));
-		list.add(Projections.groupProperty("anotherProperty"));
-		Long[][][] result = (Long[][][]) crit.setProjection(list).uniqueResult();
-		for(Object[][] twoD : result){
-			if(((String) twoD[0][0]).equals(value)){
-				for(Object[] oneD : twoD){
-					if(((String) oneD[1]).equals(anotherValue)){
-						return (Long) oneD[2];
-					}
-				}
-			}
-		}
-		return null;
-	}
-
 }

@@ -64,6 +64,4 @@ public interface DataHelper<T> {
 	 * @return 持久化对象的个数
 	 */
 	public Long count();
-	
-	public Long count(String propertyName, String value, String anotherProperty, String anotherValue);
 }
