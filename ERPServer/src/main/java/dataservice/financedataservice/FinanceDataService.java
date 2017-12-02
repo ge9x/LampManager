@@ -1,6 +1,8 @@
 package dataservice.financedataservice;
 
+import po.AccountBillPO;
 import po.BillPO;
+import po.CashBillPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
@@ -60,5 +62,19 @@ public interface FinanceDataService extends Remote {
      * @throws RemoteException
      */
     public ResultMessage updateBill(BillPO po) throws RemoteException;
+
+    /**
+     * 获得所有收付款单
+     * @return
+     * @throws RemoteException
+     */
+    public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException;
+
+    /**
+     * 获得所有现金费用单
+     * @return
+     * @throws RemoteException
+     */
+    public ArrayList<CashBillPO> getAllCashBills() throws RemoteException;
 
 }

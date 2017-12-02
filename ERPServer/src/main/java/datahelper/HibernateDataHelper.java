@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import util.Criterion;
@@ -77,9 +78,10 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		if(value != null){
+		if(field != null && value != null){
 			criteria.add(Restrictions.eq(field, value));
 		}
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
@@ -92,6 +94,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		if(value != null){
 			criteria.add(Restrictions.like(field, "%" + value + "%"));
 		}
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();
 		commitAndClose();
 		return ret;
@@ -104,6 +107,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		for(Criterion criterion : criteria){
 			crit.add(buildCriterion(criterion));
 		}
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		ArrayList<T> ret = (ArrayList<T>) crit.list();
 		commitAndClose();
 		return ret;
@@ -127,6 +131,11 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	
 	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion1, Criterion criterion2) {
 		return Restrictions.or(buildCriterion(criterion1), buildCriterion(criterion2));
+	}
+
+	@Override
+	public Long count() {
+		return (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 }
