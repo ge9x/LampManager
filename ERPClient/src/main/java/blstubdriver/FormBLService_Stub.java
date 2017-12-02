@@ -30,7 +30,7 @@ public class FormBLService_Stub implements FormBLService {
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
         accountBillItemVOS.add(itemVO2);
-        billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
+        billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
         profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
                 200,400,900,9500,5000,

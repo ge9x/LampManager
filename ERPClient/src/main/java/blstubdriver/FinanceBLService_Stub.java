@@ -6,6 +6,7 @@ import blservice.formblservice.SalesDetailsInput;
 import util.*;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
         cashBillItemVOS.add(itemVO3);
         cashBillItemVOS.add(itemVO4);
 
-        billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
+        billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
 
 
@@ -63,20 +64,20 @@ public class FinanceBLService_Stub implements FinanceBLService {
         accountVOS.add(vo2);
         accountVOS.add(vo3);
 
-        AccountBillVO billVO1 = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
+        AccountBillVO billVO1 = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
-        AccountBillVO billVO2 = new AccountBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
+        AccountBillVO billVO2 = new AccountBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
                 "客户甲","营业员1",accountBillItemVOS);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
+        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
         GoodsItemVO gi2=new GoodsItemVO("01", "霓虹灯",null ,20, 35.0,
                 "耐用");
         ArrayList<GoodsItemVO> goodsItemVOS = new ArrayList<GoodsItemVO>();
         goodsItemVOS.add(gi2);
         PurchaseVO billVO5=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
                 ,"00000001","默认仓库","阿红",goodsItemVOS,"满足客户需求"
-                ,new Date());
+                ,LocalDate.now().toString());
 
 
     }
