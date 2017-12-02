@@ -1,9 +1,11 @@
 package blservice.promotionblservice.promotionbargain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
@@ -23,7 +25,7 @@ public interface PromotionBargainBLService {
      * 
      * @param GoodsVO
      */
-	public void addBargain(GoodsVO vo);
+	public void addBargain(GoodsItemVO vo);
 	
 	/**
      * 设置特价包价格
@@ -37,14 +39,14 @@ public interface PromotionBargainBLService {
      * 
      * @param date
      */
-	public void setStartDate(Date date);
+	public void setStartDate(LocalDate date);
 	
 	/**
      * 设置促销策略结束时间
      * 
      * @param date
      */
-	public void setEndDate(Date date);
+	public void setEndDate(LocalDate date);
 	
 	/**
      * 提交促销策略
