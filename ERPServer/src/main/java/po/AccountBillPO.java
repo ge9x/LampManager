@@ -107,11 +107,12 @@ public class AccountBillPO extends BillPO {
 		this.customerID = customerID;
 	}
 	
-	private double calSum(){
+	public double calSum(){
         double sum = 0;
         for (int i = 0; i < accountBillItemPOS.size(); i++){
             sum += accountBillItemPOS.get(i).getMoney();
         }
+        setSum(sum);
         return sum;
     }
 
