@@ -85,6 +85,6 @@ public class BillPO {
 	}
 
 	public String buildID(){
-    	return type.getValue() + "-" + date + "-" + String.format("%5d", turn);
+    	return type.getValue() + "-" + date + "-" + String.format("%05d", turn);
     }
 }

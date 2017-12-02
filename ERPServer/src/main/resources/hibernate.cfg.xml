@@ -21,6 +21,8 @@
 		<mapping class="po.AccountBillPO" />
 		<mapping class="po.AccountPO" />
 		<mapping class="po.BillPO" />
+		<mapping class="po.CashBillItemPO" />
+		<mapping class="po.CashBillPO" />
 		<mapping class="po.ClassificationPO" />
 		<mapping class="po.CustomerPO" />
 		<mapping class="po.GoodsItemPO" />
