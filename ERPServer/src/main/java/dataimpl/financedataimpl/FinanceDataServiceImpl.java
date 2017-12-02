@@ -38,7 +38,7 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		criteria.add(new Criterion("type", BillType.RECEIPT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalTime.now().toString(), QueryMode.FULL));
 		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
-		return null;
+		return BillType.RECEIPT.getAcronym() + "-" + LocalTime.now().toString() + "-" + String.format("%5d", num);
 	}
 
 	@Override
@@ -47,12 +47,13 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		criteria.add(new Criterion("type", BillType.PAYMENT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalTime.now().toString(), QueryMode.FULL));
 		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
-		return null;
+		return BillType.PAYMENT.getAcronym() + "-" + LocalTime.now().toString() + "-" + String.format("%5d", num);
 	}
 
 	@Override
 	public String getNewCashBillID() throws RemoteException {
-		return null;
+		int num = cashBillDataHelper.fullyQuery("date", LocalTime.now().toString()).size();
+		return BillType.CASH.getAcronym() + "-" + LocalTime.now().toString() + "-" + String.format("%5d", num);
 	}
 
 	@Override
