@@ -49,8 +49,8 @@ public class FinanceDataService_Stub implements FinanceDataService {
     /**
      * 财务单据集
      */
-    AccountBillItemPO itemPO1 = new AccountBillItemPO("工商银行账户1",300,"卖出灯具20个");
-    AccountBillItemPO itemPO2 = new AccountBillItemPO("工商银行账户2",400,"卖出灯具30个");
+    AccountBillItemPO itemPO1 = new AccountBillItemPO(1,300,"卖出灯具20个");
+    AccountBillItemPO itemPO2 = new AccountBillItemPO(1,400,"卖出灯具30个");
     CashBillItemPO itemPO3 = new CashBillItemPO("打车",20,"见客户");
     CashBillItemPO itemPO4 = new CashBillItemPO("吃饭",200,"请客户吃中饭");
 

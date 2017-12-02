@@ -16,7 +16,7 @@ public class AccountBillItemPO {
 	/**
      * 银行账户名称
      */
-    private String accountName;
+    private int accountID;
 
     /**
      * 金额
@@ -30,8 +30,8 @@ public class AccountBillItemPO {
 
     public AccountBillItemPO(){ }
 
-    public AccountBillItemPO(String accountName, double money, String remark) {
-        this.accountName = accountName;
+    public AccountBillItemPO(int accountID, double money, String remark) {
+        this.accountID = accountID;
         this.money = money;
         this.remark = remark;
     }
@@ -47,13 +47,13 @@ public class AccountBillItemPO {
 		ID = iD;
 	}
 	
-	@Column(name = "accountname")
-    public String getAccountName() {
-        return accountName;
+	@Column(name = "accountid")
+    public int getAccountID() {
+        return accountID;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
     @Column(name = "money")

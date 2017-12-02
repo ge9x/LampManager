@@ -109,7 +109,9 @@ public class AdminUserAddViewController {
 			adminUserViewController.clickReturnButton();
 		}
 		else{
-			
+			Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("用户信息填写不完整");
+	        Optional result = dialog.showAndWait();
 		}
 		
 	}

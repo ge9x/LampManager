@@ -16,25 +16,6 @@ import util.BillType;
 @Entity
 @Table(name = "inventorybill")
 public class InventoryBillPO extends BillPO{
-	 /**
-     * 单据最后修改时间
-     */
-    private String date;
-
-    /**
-     * 单据编号
-     */
-    private int ID;
-
-    /**
-     * 单据状态
-     */
-    private BillState state;
-
-    /**
-     * 单据类型
-     */
-    private BillType type;
 	/**
 	 * 该单据涉及的仓库
 	 */
@@ -49,12 +30,9 @@ public class InventoryBillPO extends BillPO{
 	private Map<GoodsPO, Integer> goodsMap;
 	
 	public InventoryBillPO(){ }
-	
-	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
-		super(date, type, state);
-		this.date = date;
-		this.state = state;
-		this.type = type;
+
+	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap, int turn) {
+		super(date, type, state, turn);
 		this.inventory = inventory;
 		this.user = user;
 		this.goodsMap = goodsMap;
@@ -68,10 +46,6 @@ public class InventoryBillPO extends BillPO{
 	@Deprecated
 	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);
-		this.date = date;
-		this.ID = ID;
-		this.state = state;
-		this.type = type;
 		this.inventory = inventory;
 		this.user = user;
 		this.goodsMap = goodsMap;
@@ -79,42 +53,42 @@ public class InventoryBillPO extends BillPO{
 
 	@Column(name = "date")
 	public String getDate() {
-		return date;
+		return super.getDate();
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		super.setDate(date);
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public int getID() {
-		return ID;
+		return super.getID();
 	}
 
 	public void setID(int iD) {
-		ID = iD;
+		super.setID(iD);;
 	}
 
 	@Column(name = "state")
 	@Enumerated(EnumType.STRING)
 	public BillState getState() {
-		return state;
+		return super.getState();
 	}
 
 	public void setState(BillState state) {
-		this.state = state;
+		super.setState(state);
 	}
 
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	public BillType getType() {
-		return type;
+		return super.getType();
 	}
 
 	public void setType(BillType type) {
-		this.type = type;
+		super.setType(type);
 	}
 
 	@ManyToOne
@@ -144,6 +118,15 @@ public class InventoryBillPO extends BillPO{
 
 	public void setGoodsMap(Map<GoodsPO, Integer> goodsMap) {
 		this.goodsMap = goodsMap;
+	}
+	
+	@Column(name = "turn")
+    public int getTurn() {
+		return super.getTurn();
+	}
+
+	public void setTurn(int turn) {
+		super.setTurn(turn);
 	}
 	
 }

@@ -17,4 +17,15 @@ public enum CustomerCategory {
 	public String getValue(){
 		return value;
 	}
+	
+	public static CustomerCategory getCategory(String keywords){
+		if(keywords.equals("进货商")){
+			return CustomerCategory.PUR_AGENT;
+		}else if(keywords.equals("销售商")){
+			return CustomerCategory.SELLER;
+	}else{
+		return null;
+	}
+}
+	
 }

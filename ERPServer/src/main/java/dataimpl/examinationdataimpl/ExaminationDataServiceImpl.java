@@ -40,7 +40,7 @@ public class ExaminationDataServiceImpl implements ExaminationDataService{
 				);
 		ArrayList<BillPO> billList=billDataHelper.multiQuery(criteria);
 		for(BillPO po:billList){
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			try {
 				Date dateTime= dateFormat.parse(po.getDate());
 				if(((dateTime.compareTo(startDate))<0)||(dateTime.compareTo(endDate))>0){
