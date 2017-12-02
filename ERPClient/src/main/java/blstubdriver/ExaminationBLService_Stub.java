@@ -34,7 +34,7 @@ public class ExaminationBLService_Stub implements ExaminationBLService{
 		goodsItemList.add(gi2);
 	}
 	AccountBillVO accountBill = new AccountBillVO(new Date(), "XSFKD-20171021-00001", BillState.SUBMITTED, BillType.PAYMENT, "ZLK", "Aster",billItem);
-	PurchaseVO purchaseBill=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
+	PurchaseVO purchaseBill=new PurchaseVO(BillType.PURCHASE,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 			,"00000002","默认仓库","阿明",goodsItemList,"好看"
 			,new Date());
 	public ArrayList<BillVO> show() {

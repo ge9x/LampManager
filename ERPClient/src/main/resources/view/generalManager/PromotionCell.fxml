@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="716.0" stylesheets="@../../css/promotionCell.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerPromotionCellController">
+   <children>
+      <Label fx:id="promotionID" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="promotionName" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="5.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="promotionType" alignment="CENTER" prefHeight="26.0" prefWidth="109.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="30.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="startTime" alignment="CENTER" prefHeight="20.0" prefWidth="120.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="endTime" alignment="CENTER" prefHeight="20.0" prefWidth="120.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="detailIcon" alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="66.0" styleClass="icon-label" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin>
+      </Label>
+   </children>
+</HBox>

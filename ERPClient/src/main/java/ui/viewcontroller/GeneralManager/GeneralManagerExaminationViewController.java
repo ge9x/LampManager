@@ -9,6 +9,7 @@ import blservice.examinationblservice.ExaminationBLService;
 import blstubdriver.ExaminationBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import vo.BillVO;
@@ -86,5 +87,9 @@ public class GeneralManagerExaminationViewController {
     		}
     	}
     	generalManagerViewController.showExaminationView();
+    }
+    
+    public void showBillDetail(Pane pane){
+    	generalManagerViewController.showBillDetail(pane);
     }
 }
