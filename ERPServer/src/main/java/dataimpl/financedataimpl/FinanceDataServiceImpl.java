@@ -3,7 +3,6 @@ package dataimpl.financedataimpl;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
@@ -11,7 +10,6 @@ import dataservice.financedataservice.FinanceDataService;
 import po.AccountBillPO;
 import po.BillPO;
 import po.CashBillPO;
-import util.BillState;
 import util.BillType;
 import util.Criterion;
 import util.QueryMode;
@@ -52,25 +50,52 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 
 	@Override
 	public int getNewCashBillID() throws RemoteException {
-		return 0;
+		return cashBillDataHelper.fullyQuery("date", LocalTime.now().toString()).size() + 1;
 	}
 
 	@Override
 	public ResultMessage addBill(BillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		switch(po.getType()){
+		case RECEIPT: case PAYMENT:
+			accountBillDataHelper.save((AccountBillPO)po);
+			return ResultMessage.SUCCESS;
+		case CASH:
+			cashBillDataHelper.save((CashBillPO)po);
+			return ResultMessage.SUCCESS;
+		default:
+			System.out.println("Bug：请求添加未知类型的单据");
+			return ResultMessage.ERROR;
+		}
 	}
 
 	@Override
 	public ResultMessage deleteBill(BillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		switch(po.getType()){
+		case RECEIPT: case PAYMENT:
+			accountBillDataHelper.delete((AccountBillPO)po);
+			return ResultMessage.SUCCESS;
+		case CASH:
+			cashBillDataHelper.delete((CashBillPO)po);
+			return ResultMessage.SUCCESS;
+		default:
+			System.out.println("Bug：请求删除未知类型的单据");
+			return ResultMessage.ERROR;
+		}
 	}
 
 	@Override
 	public ResultMessage updateBill(BillPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		switch(po.getType()){
+		case RECEIPT: case PAYMENT:
+			accountBillDataHelper.update((AccountBillPO)po);
+			return ResultMessage.SUCCESS;
+		case CASH:
+			cashBillDataHelper.update((CashBillPO)po);
+			return ResultMessage.SUCCESS;
+		default:
+			System.out.println("Bug：请求修改未知类型的单据");
+			return ResultMessage.ERROR;
+		}
 	}
 
 }
