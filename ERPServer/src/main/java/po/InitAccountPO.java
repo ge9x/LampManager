@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,6 +22,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "initaccount")
 public class InitAccountPO {
+	private int ID;
     private String date;
     private List<CustomerPO> customerPOS;
     private List<AccountPO> accountPOS;
@@ -37,6 +40,16 @@ public class InitAccountPO {
     }
     
     @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+    public int getID(){
+    	return ID;
+    }
+    
+    public void setID(int ID){
+    	this.ID=ID;
+    }
+    
     @Column(name = "date")
     public String getDate() {
         return date;
@@ -46,8 +59,8 @@ public class InitAccountPO {
         this.date = date;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid")
+    @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "initAccount")
     public List<CustomerPO> getCustomerPOS() {
         return customerPOS;
     }
@@ -56,8 +69,8 @@ public class InitAccountPO {
         this.customerPOS = customerPOS;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid")
+    @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "initAccount")
     public List<AccountPO> getAccountPOS() {
         return accountPOS;
     }
@@ -66,8 +79,8 @@ public class InitAccountPO {
         this.accountPOS = accountPOS;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid")
+    @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "initAccount")
     public List<GoodsPO> getGoodsPOS() {
         return goodsPOS;
     }
@@ -76,8 +89,8 @@ public class InitAccountPO {
         this.goodsPOS = goodsPOS;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid")
+    @OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "initAccount")
     public List<ClassificationPO> getClassificationPOS() {
         return classificationPOS;
     }

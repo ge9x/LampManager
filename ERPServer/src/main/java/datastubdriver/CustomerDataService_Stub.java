@@ -52,7 +52,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
 	public ArrayList<CustomerPO> findByCustomerID(int customerID) throws RemoteException{
 		ArrayList<CustomerPO> findList=new ArrayList<CustomerPO>();
 		for(CustomerPO cus:customerData){
-			if(cus.getCustomerID()==customerID){
+			if(cus.getCustomerID().equals(customerID)){
 				findList.add(cus);
 			}
 		}
@@ -91,7 +91,7 @@ public class CustomerDataService_Stub implements CustomerDataService{
     
 	public CustomerPO getCustomerData(int ID) throws RemoteException{
 		for(CustomerPO cus:customerData){
-			if(cus.getCustomerID()==ID){
+			if(cus.getID()==ID){
 				System.out.println("Get customerData success");
 				return cus;
 			}
