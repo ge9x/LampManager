@@ -62,12 +62,12 @@ public class TestInventory {
 //				inventoryImpl.updateInventory(po);
 //			}
 			
-			InventoryPO inpo = inventoryImpl.showInventory().get(0);
-			System.out.println(inpo.getID() + " " + inpo.getName() + " " + inpo.getNumber());
-			InventoryBillPO bill = inventoryImpl.findBill(2);
-			System.out.println(bill.getID() + " " + bill.getTurn() + " " + bill.getState() + " " + bill.getUser());
-			bill.setState(BillState.PASS);
-			inventoryImpl.updateBill(bill);
+//			InventoryPO inpo = inventoryImpl.showInventory().get(0);
+//			System.out.println(inpo.getID() + " " + inpo.getName() + " " + inpo.getNumber());
+//			InventoryBillPO bill = inventoryImpl.findBill(2);
+//			System.out.println(bill.getID() + " " + bill.getTurn() + " " + bill.getState() + " " + bill.getUser());
+//			bill.setState(BillState.PASS);
+//			inventoryImpl.updateBill(bill);
 			
 			ArrayList<GoodsPO> all = goodsImpl.show();
 			System.out.println("共有" + all.size() + "条商品记录");
