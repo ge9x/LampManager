@@ -49,8 +49,8 @@ public class FinanceDataService_Stub implements FinanceDataService {
     /**
      * 财务单据集
      */
-    AccountBillItemPO itemPO1 = new AccountBillItemPO("工商银行账户1",300,"卖出灯具20个");
-    AccountBillItemPO itemPO2 = new AccountBillItemPO("工商银行账户2",400,"卖出灯具30个");
+    AccountBillItemPO itemPO1 = new AccountBillItemPO(1,300,"卖出灯具20个");
+    AccountBillItemPO itemPO2 = new AccountBillItemPO(1,400,"卖出灯具30个");
     CashBillItemPO itemPO3 = new CashBillItemPO("打车",20,"见客户");
     CashBillItemPO itemPO4 = new CashBillItemPO("吃饭",200,"请客户吃中饭");
 
@@ -60,7 +60,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
     CashBillPO billVO3;
     AccountBillPO billVO2;
     ArrayList<AccountBillPO> accountBillPOS;
-    ArrayList<CashBillPO> cashBillPOS;
+    ArrayList<CashBillPO> cashBillPOS = new ArrayList<>();
 
     public FinanceDataService_Stub(){
         inventoryBillPOS.add(po1);
@@ -88,16 +88,16 @@ public class FinanceDataService_Stub implements FinanceDataService {
         cashBillPOS.add(billVO3);
     }
 
-    public int getNewReceiptID() throws RemoteException {
-        return 1;
+    public String getNewReceiptID() throws RemoteException {
+        return null;
     }
 
-    public int getNewPaymentID() throws RemoteException {
-        return 1;
+    public String getNewPaymentID() throws RemoteException {
+        return null;
     }
 
-    public int getNewCashBillID() throws RemoteException {
-        return 1;
+    public String getNewCashBillID() throws RemoteException {
+        return null;
     }
 
     public ResultMessage addBill(BillPO po) throws RemoteException {

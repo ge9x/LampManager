@@ -13,26 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cashbill")
 public class CashBillPO extends BillPO {
-	 /**
-     * 单据最后修改时间
-     */
-    private String date;
-
-	/**
-     * 单据编号
-     */
-    private int ID;
-
-    /**
-     * 单据状态
-     */
-    private BillState state;
-
-    /**
-     * 单据类型
-     */
-    private BillType type;
-
     /**
      * 操作员
      */
@@ -54,9 +34,16 @@ public class CashBillPO extends BillPO {
     private double sum;
     
     public CashBillPO(){ }
+
+    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, int turn) {
+        super(date, type, state, turn);
+        this.userName = userName;
+        this.accountID = accountID;
+        this.cashBillItemPOS = cashBillItemPOS;
+    }
     
-    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum) {
-        super(date, type, state);
+    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum, int turn) {
+        super(date, type, state, turn);
         this.userName = userName;
         this.accountID = accountID;
         this.cashBillItemPOS = cashBillItemPOS;
@@ -103,6 +90,7 @@ public class CashBillPO extends BillPO {
 
     public void setCashBillItemPOS(List<CashBillItemPO> cashBillItemPOS) {
         this.cashBillItemPOS = cashBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")
@@ -116,41 +104,59 @@ public class CashBillPO extends BillPO {
     
     @Column(name = "date")
     public String getDate() {
-		return date;
+		return super.getDate();
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		super.setDate(date);
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	public int getID() {
-		return ID;
+		return super.getID();
 	}
 
 	public void setID(int iD) {
-		ID = iD;
+		super.setID(iD);
 	}
 
 	@Column(name = "state")
 	@Enumerated(EnumType.STRING)
 	public BillState getState() {
-		return state;
+		return super.getState();
 	}
 
 	public void setState(BillState state) {
-		this.state = state;
+		super.setState(state);
 	}
 
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	public BillType getType() {
-		return type;
+		return super.getType();
 	}
 
 	public void setType(BillType type) {
-		this.type = type;
+		super.setType(type);
+	}
+	
+    @Column(name = "turn")
+    public int getTurn() {
+		return super.getTurn();
+	}
+
+	public void setTurn(int turn) {
+		super.setTurn(turn);
+	}
+	
+	public double calSum(){
+        double sum = 0;
+        for (int i = 0; i < cashBillItemPOS.size(); i++){
+            sum += cashBillItemPOS.get(i).getMoney();
+        }
+        setSum(sum);
+        return sum;
 	}
 }

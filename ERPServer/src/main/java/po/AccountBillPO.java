@@ -3,6 +3,7 @@ package po;
 import util.BillState;
 import util.BillType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,27 +14,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "accountbill")
-public class AccountBillPO extends BillPO {
-	 /**
-     * 单据最后修改时间
-     */
-    private String date;
+public class AccountBillPO extends BillPO implements Serializable{
+	private static final long serialVersionUID = 5946613210212068530L;
 
-    /**
-     * 单据编号
-     */
-    private int ID;
-
-    /**
-     * 单据状态
-     */
-    private BillState state;
-
-    /**
-     * 单据类型
-     */
-    private BillType type;
-    /**
+	/**
      * 客户的ID
      */
     private int customerID;
@@ -53,13 +37,10 @@ public class AccountBillPO extends BillPO {
      */
     private double sum;
 
-    public AccountBillPO(){ }
+	public AccountBillPO(){ }
 
-    public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
-        super(date, type, state);
-        this.date = date;
-        this.state = state;
-        this.type = type;
+    public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS, int turn) {
+        super(date, type, state, turn);
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
@@ -74,10 +55,6 @@ public class AccountBillPO extends BillPO {
     @Deprecated
     public AccountBillPO(int ID, String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
         super(ID, date, type, state);
-        this.date = date;
-        this.ID = ID;
-        this.state = state;
-        this.type = type;
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
@@ -86,42 +63,42 @@ public class AccountBillPO extends BillPO {
     
     @Column(name = "date")
     public String getDate() {
-		return date;
+		return super.getDate();
 	}
     
 	public void setDate(String date) {
-		this.date = date;
+		super.setDate(date);
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	public int getID() {
-		return ID;
+		return super.getID();
 	}
 	
 	public void setID(int iD) {
-		ID = iD;
+		super.setID(iD);
 	}
 
     @Column(name = "state")
 	@Enumerated(EnumType.STRING)
 	public BillState getState() {
-		return state;
+		return super.getState();
 	}
 	
 	public void setState(BillState state) {
-		this.state = state;
+		super.setState(state);
 	}
 
     @Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	public BillType getType() {
-		return type;
+		return super.getType();
 	}
 	
 	public void setType(BillType type) {
-		this.type = type;
+		super.setType(type);
 	}
 
     @Column(name = "customerid")
@@ -133,11 +110,12 @@ public class AccountBillPO extends BillPO {
 		this.customerID = customerID;
 	}
 	
-	private double calSum(){
+	public double calSum(){
         double sum = 0;
         for (int i = 0; i < accountBillItemPOS.size(); i++){
             sum += accountBillItemPOS.get(i).getMoney();
         }
+        setSum(sum);
         return sum;
     }
 
@@ -158,6 +136,7 @@ public class AccountBillPO extends BillPO {
 
     public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")
@@ -168,4 +147,13 @@ public class AccountBillPO extends BillPO {
     public void setSum(double sum) {
         this.sum = sum;
     }
+
+    @Column(name = "turn")
+    public int getTurn() {
+		return super.getTurn();
+	}
+
+	public void setTurn(int turn) {
+		super.setTurn(turn);
+	}
 }

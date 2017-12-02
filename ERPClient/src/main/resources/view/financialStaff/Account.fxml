@@ -39,7 +39,7 @@
                         </Label>
                         <TextField fx:id="keywordInput" style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
                            <HBox.margin>
-                              <Insets left="330.0" />
+                              <Insets left="320.0" />
                            </HBox.margin>
                         </TextField>
                         <Label fx:id="searchIcon" onMouseClicked="#clickSearchButton" styleClass="icon-label" text="Q">
