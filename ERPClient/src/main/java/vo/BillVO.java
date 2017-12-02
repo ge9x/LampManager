@@ -12,7 +12,7 @@ public abstract class BillVO {
     /**
      * 单据最后修改时间
      */
-    public Date date;
+    public String date;
 
     /**
      * 单据编号

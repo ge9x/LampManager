@@ -1,9 +1,12 @@
 package ui.viewcontroller.GeneralManager;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import com.jfoenix.controls.JFXTextField;
 
+import bean.GoodsItemBean;
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.PromotionBargain_Stub;
@@ -20,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -30,19 +34,22 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
 import util.Money;
+import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 
 public class GeneralManagerPromotionBargainAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionBargainBLService promotionBargainService = new PromotionBargain_Stub();
+	PromotionBargainBLService promotionBargainBLService = new PromotionBargain_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
+	ArrayList<GoodsItemVO> bargains = new ArrayList<>();
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -77,7 +84,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 	Text username;
 	
 	@FXML
-	public void intialize(){
+	public void initialize(){
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
 		
@@ -145,6 +152,29 @@ public class GeneralManagerPromotionBargainAddViewController {
                 Total.setText(Money.getMoneyString(total.get()));
             }
         });
+        
+        //初始化时间选择器
+        startDate.setValue(LocalDate.now());
+        final Callback<DatePicker, DateCell> dayCellFactory = 
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+
+                            if (item.isBefore(
+                                    startDate.getValue().plusDays(1))
+                                ) {
+                                    setDisable(true);
+                            }   
+                    }
+                };
+            }
+        };
+        endDate.setDayCellFactory(dayCellFactory);
+        endDate.setValue(startDate.getValue().plusDays(1));
 
 	}
 	
@@ -166,7 +196,9 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	public void clickOKButton(){
 		if(isCompleted()){
-			
+			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
+					startDate.getValue(), endDate.getValue(), bargains);
+			promotionBargainBLService.submit(promotionBargain);
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();
@@ -192,112 +224,8 @@ public class GeneralManagerPromotionBargainAddViewController {
 
         if (result.isPresent()){
             if (result.get() == ButtonType.OK) {
-//            	salesStaffCustomerInfoViewController.clickReturnButton();
+            	generalManagerPromotionViewController.clickReturnButton();
             }
         }
 	}
-	
-	public class GoodsItemBean{
-        public StringProperty ID;
-        public StringProperty name;
-        public StringProperty model;
-        public IntegerProperty amount;
-        public DoubleProperty retailPrice;
-        public DoubleProperty totalPrice;
-        public StringProperty remark;
-
-        public GoodsItemBean(String ID, String name, String model, int amount, double retailPrice, double totalPrice, String remark) {
-        	this.ID = new SimpleStringProperty(ID);
-            this.name = new SimpleStringProperty(name);
-            this.model = new SimpleStringProperty(model);
-            this.amount = new SimpleIntegerProperty(amount);
-            this.retailPrice = new SimpleDoubleProperty(retailPrice);
-            this.totalPrice = new SimpleDoubleProperty(totalPrice);
-            this.remark = new SimpleStringProperty(remark);
-        }
-        
-        public String getID(){
-        	return ID.get();
-        }
-        
-        public StringProperty IDProperty(){
-        	return ID;
-        }
-        
-        public void setID(String ID) {
-            this.ID.set(ID);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public StringProperty nameProperty() {
-            return name;
-        }
-        
-        public void setName(String name) {
-            this.name.set(name);
-        }
-        
-        public String getModel() {
-            return model.get();
-        }
-
-        public StringProperty modelProperty() {
-            return model;
-        }
-        
-        public void setModel(String model) {
-            this.model.set(model);
-        }
-        
-        public int getAmount(){
-        	return amount.get();
-        }
-        
-        public IntegerProperty amountProperty(){
-        	return amount;
-        }
-        
-        public void setAmount(int amount){
-        	this.amount.set(amount);
-        }
-
-        public double getTotalPrice() {
-            return totalPrice.get();
-        }
-
-        public DoubleProperty totalPriceProperty() {
-            return totalPrice;
-        }
-
-        public void setTotalPrice(double totalPrice) {
-            this.totalPrice.set(totalPrice);
-        }
-        
-        public double getRetailPrice() {
-            return retailPrice.get();
-        }
-
-        public DoubleProperty retailPriceProperty() {
-            return retailPrice;
-        }
-
-        public void setRetailPrice(double retailPrice) {
-            this.retailPrice.set(retailPrice);
-        }
-
-        public String getRemark() {
-            return remark.get();
-        }
-
-        public StringProperty remarkProperty() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark.set(remark);
-        }
-    }
 }

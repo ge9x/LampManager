@@ -32,7 +32,9 @@ public class AccountBillItem {
         this.remark = remark;
     }
 
-    public void voTopo(AccountBillItemVO vo){
+    public AccountBillItemPO voTopo(AccountBillItemVO vo){
+        AccountBillItemPO accountBillItemPO = new AccountBillItemPO(Integer.parseInt(vo.account.accountID), vo.transferMoney, vo.remark);
+        return accountBillItemPO;
     }
 
 

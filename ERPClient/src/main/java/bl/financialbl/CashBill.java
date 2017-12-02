@@ -2,11 +2,14 @@ package bl.financialbl;
 
 import blservice.accountblservice.AccountInfo;
 import blservice.userblservice.UserInfo;
+import dataservice.financedataservice.FinanceDataService;
+import datastubdriver.FinanceDataService_Stub;
 import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +18,17 @@ import java.util.ArrayList;
 public class CashBill {
     CashBillVO cashBillVO;
     private ArrayList<CashBillItem> cashBillItems;
+
     private UserInfo userInfo;
     private AccountInfo accountInfo;
+    private FinanceDataService financeDataService;
 
-    public String getNewCashBillID(){
-        return null;
+    public CashBill(){
+        financeDataService = new FinanceDataService_Stub();
+    }
+
+    public String getNewCashBillID() throws RemoteException {
+        return financeDataService.getNewCashBillID();
     }
     public void addBillItem(CashBillItemVO vo){
 

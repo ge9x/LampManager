@@ -1,16 +1,18 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.Level;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 
 public class MockPromotionCustomer extends PromotionCustomer{
-	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("会员促销策略","000002", new Date(), new Date(), 0, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("会员促销策略","000002", LocalDate.now(), LocalDate.now(), 0, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 	
 	@Override
 	public ArrayList<PromotionCustomerVO> show(){
@@ -20,7 +22,7 @@ public class MockPromotionCustomer extends PromotionCustomer{
 	}
 	
 	@Override
-	public void addGift(GoodsVO vo){
+	public void addGift(GoodsItemVO vo){
 		promotionCustomer.gifts.add(vo);
 		System.out.println("Add gift success!");
 	}
@@ -44,20 +46,20 @@ public class MockPromotionCustomer extends PromotionCustomer{
 	}
 
 	@Override
-	public void setStartDate(Date date){
+	public void setStartDate(LocalDate date){
 		promotionCustomer.startDate = date;
 		System.out.println("Set start time success!");
 	}
 
 	@Override
-	public void setEndDate(Date date){
+	public void setEndDate(LocalDate date){
 		promotionCustomer.endDate = date;
 		System.out.println("Set end time success!");
 	}
 
 	@Override
 	public ResultMessage submit(PromotionCustomerVO vo){
-		if(vo.endDate.after(vo.startDate)){
+		if(vo.endDate.isAfter(vo.startDate)){
 			System.out.println("Submit success!");
 			return ResultMessage.SUCCESS;
 		}
