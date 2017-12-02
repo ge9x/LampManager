@@ -133,6 +133,7 @@ public class AccountBillPO extends BillPO {
 
     public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")

@@ -90,6 +90,7 @@ public class CashBillPO extends BillPO {
 
     public void setCashBillItemPOS(List<CashBillItemPO> cashBillItemPOS) {
         this.cashBillItemPOS = cashBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")
