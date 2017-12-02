@@ -110,11 +110,12 @@ public class AccountBillPO extends BillPO implements Serializable{
 		this.customerID = customerID;
 	}
 	
-	private double calSum(){
+	public double calSum(){
         double sum = 0;
         for (int i = 0; i < accountBillItemPOS.size(); i++){
             sum += accountBillItemPOS.get(i).getMoney();
         }
+        setSum(sum);
         return sum;
     }
 
@@ -135,6 +136,7 @@ public class AccountBillPO extends BillPO implements Serializable{
 
     public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")

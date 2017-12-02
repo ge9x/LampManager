@@ -34,6 +34,13 @@ public class CashBillPO extends BillPO {
     private double sum;
     
     public CashBillPO(){ }
+
+    public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, int turn) {
+        super(date, type, state, turn);
+        this.userName = userName;
+        this.accountID = accountID;
+        this.cashBillItemPOS = cashBillItemPOS;
+    }
     
     public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum, int turn) {
         super(date, type, state, turn);
@@ -83,6 +90,7 @@ public class CashBillPO extends BillPO {
 
     public void setCashBillItemPOS(List<CashBillItemPO> cashBillItemPOS) {
         this.cashBillItemPOS = cashBillItemPOS;
+        calSum();
     }
 
     @Column(name = "sum")
@@ -141,5 +149,14 @@ public class CashBillPO extends BillPO {
 
 	public void setTurn(int turn) {
 		super.setTurn(turn);
+	}
+	
+	public double calSum(){
+        double sum = 0;
+        for (int i = 0; i < cashBillItemPOS.size(); i++){
+            sum += cashBillItemPOS.get(i).getMoney();
+        }
+        setSum(sum);
+        return sum;
 	}
 }
