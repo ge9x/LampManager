@@ -40,6 +40,7 @@ public class CashBillPO extends BillPO {
         this.userName = userName;
         this.accountID = accountID;
         this.cashBillItemPOS = cashBillItemPOS;
+        calSum();
     }
     
     public CashBillPO(String date, BillType type, BillState state, String userName, int accountID, List<CashBillItemPO> cashBillItemPOS, double sum, int turn) {
@@ -48,6 +49,7 @@ public class CashBillPO extends BillPO {
         this.accountID = accountID;
         this.cashBillItemPOS = cashBillItemPOS;
         this.sum = sum;
+        calSum();
     }
 
 	/**
@@ -90,7 +92,6 @@ public class CashBillPO extends BillPO {
 
     public void setCashBillItemPOS(List<CashBillItemPO> cashBillItemPOS) {
         this.cashBillItemPOS = cashBillItemPOS;
-        calSum();
     }
 
     @Column(name = "sum")
@@ -151,6 +152,10 @@ public class CashBillPO extends BillPO {
 		super.setTurn(turn);
 	}
 	
+	/**
+	 * 计算当前总金额，同时更新sum变量
+	 * @return 当前总金额
+	 */
 	public double calSum(){
         double sum = 0;
         for (int i = 0; i < cashBillItemPOS.size(); i++){
