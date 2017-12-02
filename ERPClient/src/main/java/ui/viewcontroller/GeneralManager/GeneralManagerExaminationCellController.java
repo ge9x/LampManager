@@ -1,11 +1,21 @@
 package ui.viewcontroller.GeneralManager;
 
+import java.io.IOException;
+
 import com.jfoenix.controls.JFXCheckBox;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import ui.viewcontroller.FinancialStaff.FinancialCashBillEditController;
+import ui.viewcontroller.FinancialStaff.FinancialPaymentEditController;
+import ui.viewcontroller.FinancialStaff.FinancialReceiptEditController;
+import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffReturnEditViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController;
 import util.BillType;
 import util.Money;
 import vo.AccountBillVO;
@@ -19,6 +29,12 @@ public class GeneralManagerExaminationCellController {
 
 	BillVO bill;
 	GeneralManagerExaminationViewController generalManagerExaminationViewController;
+	SalesStaffSalesEditViewController salesStaffSalesEditViewController;
+	SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController;
+	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
+	FinancialCashBillEditController financialCashBillEditController;
+	FinancialPaymentEditController financialPaymentEditController;
+	FinancialReceiptEditController financialReceiptEditController;
 	
 	@FXML
 	Circle circle;
@@ -70,6 +86,7 @@ public class GeneralManagerExaminationCellController {
 	}
 	
 	public void setBill(BillVO bill){
+		this.bill = bill;
 		setBillType(bill);
 		billID.setText(bill.ID);
 		billDate.setText(String.valueOf(bill.date));
@@ -159,6 +176,109 @@ public class GeneralManagerExaminationCellController {
 	}
 	
 	public void clickDetailButton(){
-		
+		Pane pane = null;
+		if(bill.type==BillType.PURCHASE){
+			pane = showPurchaseOrderBill();
+		}
+		else if(bill.type==BillType.SALES){
+			pane = showSalesOrderBill();
+		}
+		else if(bill.type==BillType.RETURN){
+			pane = showReturnOrderBill();
+		}
+		else if(bill.type==BillType.CASH){
+			pane = showCashBill();
+		}
+		else if(bill.type==BillType.PAYMENT){
+			pane = showPaymentBill();
+		}
+		else if(bill.type==BillType.RECEIPT){
+			pane = showReceiptBill();
+		}
+		generalManagerExaminationViewController.showBillDetail(pane);
+	}
+	
+	public Pane showSalesOrderBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesOrderEdit.fxml"));
+            page = pageLoader.load();
+            salesStaffSalesEditViewController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
+	}
+	
+	public Pane showPurchaseOrderBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/PurchaseOrderEdit.fxml"));
+            page = pageLoader.load();
+            salesStaffPurchaseEditViewController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
+	}
+	
+	public Pane showReturnOrderBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrderEdit.fxml"));
+            page = pageLoader.load();
+            salesStaffReturnEditViewController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
+	}
+	
+	public Pane showCashBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBillEdit.fxml"));
+            page = pageLoader.load();
+            financialCashBillEditController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
+	}
+	
+	public Pane showPaymentBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/PaymentEdit.fxml"));
+            page = pageLoader.load();
+            financialPaymentEditController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
+	}
+	
+	public Pane showReceiptBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/ReceiptEdit.fxml"));
+            page = pageLoader.load();
+            financialReceiptEditController = pageLoader.getController();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return page;
 	}
 }

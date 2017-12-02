@@ -109,7 +109,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="38.0" prefWidth="220.0">
          <children>
-            <Label fx:id="DetailIcon" alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="72.0" text="Label">
+            <Label fx:id="DetailIcon" alignment="CENTER_RIGHT" onMouseClicked="#clickDetailButton" prefHeight="45.0" prefWidth="72.0" text="Label">
                <font>
                   <Font size="20.0" />
                </font>

@@ -45,4 +45,12 @@ public class GeneralManagerNavBarController {
     public void clickSalesDetailsButton(){
     	generalManagerViewController.showSalesDetailsView();
     }
+    
+    public void clickProfitButton(){
+    	generalManagerViewController.showProfitView();
+    }
+    
+    public void clickPromotionButton(){
+    	generalManagerViewController.showPromotionView();
+    }
 }
