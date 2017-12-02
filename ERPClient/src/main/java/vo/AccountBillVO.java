@@ -32,7 +32,7 @@ public class AccountBillVO extends BillVO{
      */
     public double sum;
 
-    public AccountBillVO(Date date, String ID, BillState state, BillType type, String customerID, String userName, ArrayList<AccountBillItemVO> items) {
+    public AccountBillVO(String date, String ID, BillState state, BillType type, String customerID, String userName, ArrayList<AccountBillItemVO> items) {
         this.date = date;
         this.ID = ID;
         this.state = state;

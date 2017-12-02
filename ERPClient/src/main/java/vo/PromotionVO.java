@@ -1,5 +1,6 @@
 package vo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import util.PromotionType;
@@ -9,9 +10,9 @@ public class PromotionVO {
 	
 	public String promotionID;
 	
-	public Date startDate;
+	public LocalDate startDate;
 	
-	public Date endDate;
+	public LocalDate endDate;
 	
 	public PromotionType type;
 	

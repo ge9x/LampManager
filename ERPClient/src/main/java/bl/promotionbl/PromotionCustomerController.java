@@ -1,11 +1,13 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import util.Level;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
 
@@ -22,7 +24,7 @@ public class PromotionCustomerController implements PromotionCustomerBLService{
 		return null;
 	}
 
-	public void addGift(GoodsVO vo) {
+	public void addGift(GoodsItemVO vo) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -42,12 +44,12 @@ public class PromotionCustomerController implements PromotionCustomerBLService{
 		
 	}
 
-	public void setStartDate(Date date) {
+	public void setStartDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setEndDate(Date date) {
+	public void setEndDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}

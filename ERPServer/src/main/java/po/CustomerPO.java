@@ -16,8 +16,10 @@ import util.CustomerCategory;
 @Entity
 @Table(name = "customer")
 public class CustomerPO {
+	/**编号*/
+	private int ID;
 	/**客户编号*/
-	private int customerID;
+	private String customerID;
 	/**客户分类:进货商、销售商*/
 	private CustomerCategory category;
 	/**客户级别:级别分一级到五级，一级普通用户，五级VIP用户*/
@@ -65,21 +67,31 @@ public class CustomerPO {
 		this.salesman = salesman;
 		this.points = points;
 		this.voucher=voucher;
+		this.customerID=Integer.toString(ID);
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getCustomerID() {
+	public int getID() {
+		return ID;
+	}
+
+
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	
+	@Column(name = "customerID")
+	public String getCustomerID(){
 		return customerID;
 	}
-
-
-	public void setCustomerID(int customerID) {
-		this.customerID = customerID;
+	
+	public void setCustomerID(String customerID){
+		this.customerID=Integer.toString(ID);
 	}
 
-	@Column
+	@Column(name = "category")
 	@Enumerated(EnumType.STRING)
 	public CustomerCategory getCategory() {
 		return category;
@@ -90,7 +102,7 @@ public class CustomerPO {
 		this.category = category;
 	}
 
-	@Column
+	@Column(name="level")
 	@Enumerated(EnumType.STRING)
 	public Level getLevel() {
 		return level;

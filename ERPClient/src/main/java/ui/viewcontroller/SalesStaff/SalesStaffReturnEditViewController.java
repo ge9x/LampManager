@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 
+import bean.GoodsItemBean;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.SalesBLService_Stub;
@@ -29,11 +30,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
-import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController.GoodsItemBean;
+import ui.component.GoodsSelecter;
+import ui.component.GoodsTable.GoodsBean;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -99,7 +104,7 @@ public class SalesStaffReturnEditViewController {
 
         //初始化表格
         itemTable = new TableView<>();
-        itemTable.setEditable(false);
+        itemTable.setEditable(true);
 
         TableColumn IDColumn = new TableColumn("商品编号");
         IDColumn.setPrefWidth(70);
@@ -110,7 +115,7 @@ public class SalesStaffReturnEditViewController {
         TableColumn modelColumn = new TableColumn("型号");
         modelColumn.setPrefWidth(60);
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn amountColumn = new TableColumn("数量");
+        TableColumn<GoodsItemBean, Integer> amountColumn = new TableColumn("数量");
         amountColumn.setPrefWidth(60);
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         TableColumn retailPriceColumn = new TableColumn("单价");
@@ -119,10 +124,37 @@ public class SalesStaffReturnEditViewController {
         TableColumn totalPriceColumn = new TableColumn("总价");
         totalPriceColumn.setPrefWidth(60);
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        TableColumn remarkColumn = new TableColumn("备注");
+        TableColumn<GoodsItemBean, String> remarkColumn = new TableColumn("备注");
         remarkColumn.setPrefWidth(78);
         remarkColumn.setCellValueFactory(new PropertyValueFactory<>("remark"));
 
+        amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
+        amountColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, Integer> t)->{
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setAmount(t.getNewValue());
+        			
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setTotalPrice(t.getNewValue() 
+        							* ((GoodsItemBean) t.getTableView().getItems().get(
+        		        					t.getTablePosition().getRow())
+        		        					).getRetailPrice()
+        							);
+        			total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).getTotalPrice());
+        		});
+        
+        remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
+        remarkColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, String> t)->{
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setRemark(t.getNewValue());
+        		});
+        
         itemTable.setItems(data);
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
@@ -143,59 +175,69 @@ public class SalesStaffReturnEditViewController {
     }
 
     public void clickAddButton(){
-        ArrayList<Label> labels = new ArrayList<>();
-        labels.add(new Label("商品编号"));
-        labels.add(new Label("条目名"));
-        labels.add(new Label("型号"));
-        labels.add(new Label("数量"));
-        labels.add(new Label("单价"));
-        labels.add(new Label("总价"));
-        labels.add(new Label("备注"));
-
-        ArrayList<Node> nodes = new ArrayList<Node>();
-        TextField IDTF = new TextField();
-        TextField nameTF = new TextField();
-        TextField modelTF = new TextField();
-        TextField amountTF = new TextField();
-        TextField retailPriceTF = new TextField();
-        TextField totalPriceTF = new TextField();
-        TextField remarkTF = new TextField();
-        nodes.add(IDTF);
-        nodes.add(nameTF);
-        nodes.add(modelTF);
-        nodes.add(amountTF);
-        nodes.add(retailPriceTF);
-        nodes.add(totalPriceTF);
-        nodes.add(remarkTF);
-
-        Dialog dialog = DialogFactory.createDialog(labels,nodes);
-        dialog.setResultConverter(dialogButton -> {
-            ArrayList<String> result = new ArrayList<>();
-            result.add(IDTF.getText());
-            result.add(nameTF.getText());
-            result.add(modelTF.getText());
-            result.add(amountTF.getText());
-            result.add(retailPriceTF.getText());
-            result.add(totalPriceTF.getText());
-            result.add(remarkTF.getText());
-            if (dialogButton == ButtonType.FINISH) {
-                return result;
-            }
-            return null;
-        });
-
-        Optional result = dialog.showAndWait();
-        if (result.isPresent()){
-            ArrayList<String> values = (ArrayList<String>)result.get();
-            Double money = Double.parseDouble(values.get(5));
-            int amount = Integer.parseInt(values.get(3));
-            double totalPrice = Double.parseDouble(values.get(5));
-            GoodsItemVO GoodsItemVO = new GoodsItemVO(values.get(0),values.get(1),values.get(2),amount,money,values.get(6));
-
-            goodsItemList.add(GoodsItemVO);
-            data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
-            total.set(total.get()+money);
-        }
+    	GoodsSelecter selecter = new GoodsSelecter();
+    	Dialog dialog = selecter.getGoodsDialog();
+    	Optional<GoodsBean> result = dialog.showAndWait();
+    	
+    	GoodsBean bean = null;
+    	if (result.isPresent()){
+    		bean = result.get();
+    	}
+    	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
+    	
+//        ArrayList<Label> labels = new ArrayList<>();
+//        labels.add(new Label("商品编号"));
+//        labels.add(new Label("条目名"));
+//        labels.add(new Label("型号"));
+//        labels.add(new Label("数量"));
+//        labels.add(new Label("单价"));
+//        labels.add(new Label("总价"));
+//        labels.add(new Label("备注"));
+//
+//        ArrayList<Node> nodes = new ArrayList<Node>();
+//        TextField IDTF = new TextField();
+//        TextField nameTF = new TextField();
+//        TextField modelTF = new TextField();
+//        TextField amountTF = new TextField();
+//        TextField retailPriceTF = new TextField();
+//        TextField totalPriceTF = new TextField();
+//        TextField remarkTF = new TextField();
+//        nodes.add(IDTF);
+//        nodes.add(nameTF);
+//        nodes.add(modelTF);
+//        nodes.add(amountTF);
+//        nodes.add(retailPriceTF);
+//        nodes.add(totalPriceTF);
+//        nodes.add(remarkTF);
+//
+//        Dialog dialog = DialogFactory.createDialog(labels,nodes);
+//        dialog.setResultConverter(dialogButton -> {
+//            ArrayList<String> result = new ArrayList<>();
+//            result.add(IDTF.getText());
+//            result.add(nameTF.getText());
+//            result.add(modelTF.getText());
+//            result.add(amountTF.getText());
+//            result.add(retailPriceTF.getText());
+//            result.add(totalPriceTF.getText());
+//            result.add(remarkTF.getText());
+//            if (dialogButton == ButtonType.FINISH) {
+//                return result;
+//            }
+//            return null;
+//        });
+//
+//        Optional result = dialog.showAndWait();
+//        if (result.isPresent()){
+//            ArrayList<String> values = (ArrayList<String>)result.get();
+//            Double money = Double.parseDouble(values.get(5));
+//            int amount = Integer.parseInt(values.get(3));
+//            double totalPrice = Double.parseDouble(values.get(5));
+//            GoodsItemVO GoodsItemVO = new GoodsItemVO(values.get(0),values.get(1),values.get(2),amount,money,values.get(6));
+//
+//            goodsItemList.add(GoodsItemVO);
+//            data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
+//            total.set(total.get()+money);
+//        }
     }
 
     public void clickSubmitButton(){
@@ -233,109 +275,5 @@ public class SalesStaffReturnEditViewController {
 
     public void setSalesStaffReturnOrderViewController(SalesStaffReturnOrderViewController salesStaffReturnOrderViewController){
         this.salesStaffReturnOrderViewController = salesStaffReturnOrderViewController;
-    }
-    
-    public class GoodsItemBean{
-        public StringProperty ID;
-        public StringProperty name;
-        public StringProperty model;
-        public IntegerProperty amount;
-        public DoubleProperty retailPrice;
-        public DoubleProperty totalPrice;
-        public StringProperty remark;
-
-        public GoodsItemBean(String ID, String name, String model, int amount, double retailPrice, double totalPrice, String remark) {
-        	this.ID = new SimpleStringProperty(ID);
-            this.name = new SimpleStringProperty(name);
-            this.model = new SimpleStringProperty(model);
-            this.amount = new SimpleIntegerProperty(amount);
-            this.retailPrice = new SimpleDoubleProperty(retailPrice);
-            this.totalPrice = new SimpleDoubleProperty(totalPrice);
-            this.remark = new SimpleStringProperty(remark);
-        }
-        
-        public String getID(){
-        	return ID.get();
-        }
-        
-        public StringProperty IDProperty(){
-        	return ID;
-        }
-        
-        public void setID(String ID) {
-            this.ID.set(ID);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public StringProperty nameProperty() {
-            return name;
-        }
-        
-        public void setName(String name) {
-            this.name.set(name);
-        }
-        
-        public String getModel() {
-            return model.get();
-        }
-
-        public StringProperty modelProperty() {
-            return model;
-        }
-        
-        public void setModel(String model) {
-            this.model.set(model);
-        }
-        
-        public int getAmount(){
-        	return amount.get();
-        }
-        
-        public IntegerProperty amountProperty(){
-        	return amount;
-        }
-        
-        public void setAmount(int amount){
-        	this.amount.set(amount);
-        }
-
-        public double getTotalPrice() {
-            return totalPrice.get();
-        }
-
-        public DoubleProperty totalPriceProperty() {
-            return totalPrice;
-        }
-
-        public void setTotalPricePrice(double totalPrice) {
-            this.totalPrice.set(totalPrice);
-        }
-        
-        public double getRetailPrice() {
-            return retailPrice.get();
-        }
-
-        public DoubleProperty retailPriceProperty() {
-            return retailPrice;
-        }
-
-        public void setRetailPrice(double retailPrice) {
-            this.retailPrice.set(retailPrice);
-        }
-
-        public String getRemark() {
-            return remark.get();
-        }
-
-        public StringProperty remarkProperty() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark.set(remark);
-        }
     }
 }

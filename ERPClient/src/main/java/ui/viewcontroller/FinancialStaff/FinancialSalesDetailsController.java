@@ -1,10 +1,10 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bean.SalesDetailsBean;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
 import blstubdriver.FormBLService_Stub;
 import com.jfoenix.controls.JFXDatePicker;
-import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,13 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 import ui.component.DialogFactory;
-import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
 import util.ResultMessage;
 import vo.SalesDetailVO;
 
-import javax.swing.event.ChangeListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -140,93 +137,5 @@ public class FinancialSalesDetailsController {
         this.financialViewController = financialViewController;
     }
 
-    public class SalesDetailsBean{
-        StringProperty date;
-        StringProperty name;
-        StringProperty model;
-        IntegerProperty amount;
-        DoubleProperty price;
-        DoubleProperty sum;
 
-        public SalesDetailsBean(String date,String name,String model,int amount,double price,double sum) {
-            this.date = new SimpleStringProperty(date);
-            this.name = new SimpleStringProperty(name);
-            this.model = new SimpleStringProperty(model);
-            this.amount = new SimpleIntegerProperty(amount);
-            this.price = new SimpleDoubleProperty(price);
-            this.sum = new SimpleDoubleProperty(sum);
-        }
-
-        public String getDate() {
-            return date.get();
-        }
-
-        public StringProperty dateProperty() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date.set(date);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public StringProperty nameProperty() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name.set(name);
-        }
-
-        public String getModel() {
-            return model.get();
-        }
-
-        public StringProperty modelProperty() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model.set(model);
-        }
-
-        public int getAmount() {
-            return amount.get();
-        }
-
-        public IntegerProperty amountProperty() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount.set(amount);
-        }
-
-        public double getPrice() {
-            return price.get();
-        }
-
-        public DoubleProperty priceProperty() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price.set(price);
-        }
-
-        public double getSum() {
-            return sum.get();
-        }
-
-        public DoubleProperty sumProperty() {
-            return sum;
-        }
-
-        public void setSum(double sum) {
-            this.sum.set(sum);
-        }
-    }
 }

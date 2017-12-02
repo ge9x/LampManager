@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerPromotionViewController">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="525.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+         <content>
+            <VBox alignment="TOP_CENTER" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                     <effect>
+                        <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                     </effect>
+                     <children>
+                        <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                        <Label fx:id="title" text="促销策略">
+                           <font>
+                              <Font name="Microsoft YaHei Bold" size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <JFXNodesList fx:id="TypeChooser" alignment="CENTER" onMouseExited="#closeTypeChooser" rotate="90.0" spacing="50.0">
+                           <children>
+                              <JFXButton onMouseClicked="#clickAddPromotionBargain" prefWidth="70.0" rotate="270.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="特价包" textFill="#1db1a4">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton onMouseClicked="#clickAddPromotionCustomer" prefWidth="70.0" rotate="270.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="会员" textFill="#1db1a4">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton onMouseClicked="#clickAddPromotionTotal" prefWidth="70.0" rotate="270.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="总价" textFill="#1db1a4">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="350.0" />
+                           </HBox.margin>
+                        </JFXNodesList>
+                        <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox prefWidth="716.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-radius: 10;">
+                     <effect>
+                        <DropShadow color="#00000059" />
+                     </effect>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="750.0">
+                           <children>
+                              <Label text="编号">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="名称">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="75.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="类型">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="开始时间">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="80.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="结束时间">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="80.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label text="操作">
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="85.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Line endX="649.0" startX="-100.0" stroke="SILVER" strokeWidth="2.0" />
+                        <VBox fx:id="promotionList" prefHeight="328.0" prefWidth="751.0">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
