@@ -38,6 +38,8 @@ public class GeneralManagerPromotionViewController {
 	PromotionTotalBLService promotionTotalBLService = new PromotionTotal_Stub();
     GeneralManagerViewController generalManagerViewController;
     GeneralManagerPromotionBargainAddViewController generalManagerPromotionBargainAddViewController;
+    GeneralManagerPromotionCustomerAddViewController generalManagerPromotionCustomerAddViewController;
+    GeneralManagerPromotionTotalAddViewController generalManagerPromotionTotalAddViewController;
 	ArrayList<PromotionVO> promotions = new ArrayList<>();
 	
 	@FXML
@@ -107,10 +109,32 @@ public class GeneralManagerPromotionViewController {
 	}
 	
 	public void clickAddPromotionCustomer(){
-		
+		Pane promotionAdd = null;
+    	try{
+	    	FXMLLoader promotionAddLoader = new FXMLLoader();
+	    	promotionAddLoader.setLocation(getClass().getResource("/view/generalManager/PromotionCustomerAdd.fxml"));
+	        promotionAdd = promotionAddLoader.load();
+	        
+	        generalManagerPromotionCustomerAddViewController = promotionAddLoader.getController();
+	        generalManagerPromotionCustomerAddViewController.setGeneralManagerPromotionViewController(this);
+    	}catch (IOException e){
+            e.printStackTrace();
+    	}
+    	generalManagerViewController.showPromotionAddView(promotionAdd);
 	}
 	
 	public void clickAddPromotionTotal(){
-		
+		Pane promotionAdd = null;
+    	try{
+	    	FXMLLoader promotionAddLoader = new FXMLLoader();
+	    	promotionAddLoader.setLocation(getClass().getResource("/view/generalManager/PromotionTotalAdd.fxml"));
+	        promotionAdd = promotionAddLoader.load();
+	        
+	        generalManagerPromotionTotalAddViewController = promotionAddLoader.getController();
+	        generalManagerPromotionTotalAddViewController.setGeneralManagerPromotionViewController(this);
+    	}catch (IOException e){
+            e.printStackTrace();
+    	}
+    	generalManagerViewController.showPromotionAddView(promotionAdd);
 	}
 }

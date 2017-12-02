@@ -2,11 +2,14 @@ package rmi;
 
 import dataservice.financedataservice.FinanceDataService;
 import datastubdriver.FinanceDataService_Stub;
+import po.AccountBillPO;
 import po.BillPO;
+import po.CashBillPO;
 import util.ResultMessage;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Created by Kry·L on 2017/12/1.
@@ -46,6 +49,16 @@ public class FinanceDataRemoteObject extends UnicastRemoteObject implements Fina
 
     @Override
     public ResultMessage updateBill(BillPO po) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<CashBillPO> getAllCashBills() throws RemoteException {
         return null;
     }
 }

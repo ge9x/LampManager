@@ -21,6 +21,7 @@ import java.util.HashMap;
  * Created by Kry·L on 2017/11/5.
  */
 public class AccountBill {
+    //TODO 草稿更新单据
 
     private AccountBillVO accountBill;
     private ArrayList<AccountBillItem> accountBillItems;
@@ -33,23 +34,12 @@ public class AccountBill {
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 
-    public ArrayList<String> getAllAccount(){
-        return null;
-    }
-
     public String getNewReceiptID() throws RemoteException {
         return financeDataService.getNewReceiptID();
     }
 
     public String getNewPaymentID() throws RemoteException {
         return financeDataService.getNewPaymentID();
-    }
-
-    public void addBillItem(AccountBillItemVO vo){
-
-    }
-    public void addAccountBill(String customer,String account){
-
     }
 
     public ResultMessage submit(AccountBillVO vo) throws RemoteException{

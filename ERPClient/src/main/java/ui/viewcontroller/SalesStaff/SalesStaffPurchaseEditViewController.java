@@ -1,5 +1,6 @@
 package ui.viewcontroller.SalesStaff;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -246,7 +247,7 @@ public class SalesStaffPurchaseEditViewController {
     public void clickSubmitButton(){
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
+        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
         salesBLService.submitPurchase(purchaseVO);
         salesStaffPurchaseOrderViewController.showPurchaseOrderList();
     }
@@ -267,7 +268,7 @@ public class SalesStaffPurchaseEditViewController {
                 if (inventory.getSelectionModel().getSelectedIndex() >= 0){
                 	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
                 }
-                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
+                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
                 salesBLService.savePurchase(purchaseVO);
             }
 

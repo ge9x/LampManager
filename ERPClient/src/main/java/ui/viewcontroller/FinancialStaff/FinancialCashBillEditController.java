@@ -25,6 +25,7 @@ import vo.AccountVO;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -147,7 +148,7 @@ public class FinancialCashBillEditController {
 
     public void clickSubmitButton(){
         String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
-        CashBillVO cashBillVO = new CashBillVO(new Date(),BillID.getText(),
+        CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
         financeBLService.submit(cashBillVO);
@@ -165,7 +166,7 @@ public class FinancialCashBillEditController {
                 if (Accounts.getSelectionModel().getSelectedIndex() >= 0){
                     accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
                 }
-                CashBillVO cashBillVO = new CashBillVO(new Date(), BillID.getText(),
+                CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.CASH,Username.getText(), accountID
                         , cashBillItems,total.get());
                 financeBLService.save(cashBillVO);
