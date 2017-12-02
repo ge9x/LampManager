@@ -33,15 +33,11 @@ public class AccountBillPO extends BillPO {
      * 总额汇总
      */
     private double sum;
-    /**
-     * 本单据是当天同单据类型的第几张单据
-     */
-    private int turn;
 
 	public AccountBillPO(){ }
 
-    public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS) {
-        super(date, type, state);
+    public AccountBillPO(String date, BillType type, BillState state, int customerID, String userName, ArrayList<AccountBillItemPO> accountBillItemPOS, int turn) {
+        super(date, type, state, turn);
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
@@ -149,10 +145,10 @@ public class AccountBillPO extends BillPO {
 
     @Column(name = "turn")
     public int getTurn() {
-		return turn;
+		return super.getTurn();
 	}
 
 	public void setTurn(int turn) {
-		this.turn = turn;
+		super.setTurn(turn);
 	}
 }
