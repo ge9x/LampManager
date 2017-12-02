@@ -55,8 +55,8 @@ public class SalesPO extends BillPO{
 	
 	public SalesPO( BillType type, BillState state, String customer,int customerID, String salesman,
 			String user, String inventory,List<GoodsItemPO> goodsItemList,
-			double allowance, double voucher, String remarks, String endDate) {
-		super( endDate, type, state);
+			double allowance, double voucher, String remarks, String endDate,int turn) {
+		super( endDate, type, state,turn);
 		super.setType(type);
 		super.setState(state);
 		this.customer = customer;
@@ -251,7 +251,13 @@ public class SalesPO extends BillPO{
 	public void setDate(String date) {
 		super.setDate(date);
 	}
+	
+	@Column(name = "turn")
+    public int getTurn() {
+		return super.getTurn();
+	}
 
-
-		
+	public void setTurn(int turn) {
+		super.setTurn(turn);
+	}
 }

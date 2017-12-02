@@ -39,8 +39,8 @@ public class PurchasePO extends BillPO{
 	
 	public PurchasePO(BillType type,BillState state,String supplier
 			,int customerID,String inventory,String user,List<GoodsItemPO> goodsItemList,String remarks
-			,String date){
-		super(date,type,state);
+			,String date,int turn){
+		super(date,type,state,turn);
 		super.setType(type);
 		super.setState(state);
 		super.setDate(date);
@@ -182,5 +182,14 @@ public class PurchasePO extends BillPO{
 	public void setSum(double sum) {
 		this.sum = sum;
 	}	
+	
+	@Column(name = "turn")
+    public int getTurn() {
+		return super.getTurn();
+	}
+
+	public void setTurn(int turn) {
+		super.setTurn(turn);
+	}
 	
 }
