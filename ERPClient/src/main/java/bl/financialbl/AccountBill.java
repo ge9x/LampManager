@@ -6,12 +6,14 @@ import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountBillItemPO;
 import po.AccountBillPO;
+import po.AccountPO;
 import rmi.FinanceRemoteHelper;
 import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,8 +27,6 @@ public class AccountBill {
     private AccountBillItem accountBillItem;
     FinanceDataService financeDataService;
 
-    private UserInfo userInfo;
-    private CustomerInfo info;
     private AccountInfo accountInfo;
 
     public AccountBill(){
@@ -58,7 +58,7 @@ public class AccountBill {
 
     }
     public ResultMessage submit(AccountBillVO vo) throws RemoteException{
-        return financeDataService.addBill(new AccountBillPO());
+        return financeDataService.addBill(voTopo(vo));
     }
     public AccountBillVO save(){
         return null;
@@ -67,6 +67,11 @@ public class AccountBill {
         return null;
     }
 
-    public void voTopo(AccountBillVO vo){
+    public AccountBillPO voTopo(AccountBillVO vo){
+        ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
+        for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
+            AccountBillItemPO accountBillItemPO = new AccountBillItemPO(accountBillItemVO.account)
+        }
+        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,vo.customerID,vo.userName,)
     }
 }

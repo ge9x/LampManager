@@ -43,7 +43,7 @@ public class FinanceDataService_Stub implements FinanceDataService {
         goodsItemList.add(gi1);
         goodsItemList.add(gi2);
     }
-    SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, 1, "销售商1", "00001", "业务员1",
+    SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, 1, "销售商1", 1, "业务员1",
             "阿强", "默认仓库", goodsItemList, 100.0, 500.0, "满足客户需求", "2017-11-30");
 
     /**
