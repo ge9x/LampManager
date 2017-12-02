@@ -46,4 +46,6 @@ public interface ExaminationBLService {
      * @return ResultMessage
      */
 	public ResultMessage approveReceipt(BillVO bill);
+	
+	public ResultMessage refuseReceipt(BillVO bill);
 }

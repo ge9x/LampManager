@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
+}
+.tree-table-view .column-header {
+    -fx-pref-height: 30px;
+}
+.input-label {
+    -fx-text-fill: #707070;
+    -fx-font-size: 14px;
+}
+.ID-label,#promotionID {
+    -fx-font-size: 18px;
+}

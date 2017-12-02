@@ -39,4 +39,10 @@ public class ExaminationController implements ExaminationBLService{
 		return null;
 	}
 
+	@Override
+	public ResultMessage refuseReceipt(BillVO bill) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -32,7 +32,6 @@ public class GeneralManagerNavBarController {
     @FXML
     public void initialize() {
         ExaminationIcon.setText("\ue697");
-        HistoryIcon.setText("\ue602");
         PromotionIcon.setText("\ue613");
         SalesDetailsIcon.setText("\ue62a");
         DocumentDetailsIcon.setText("\ue644");
@@ -42,5 +41,16 @@ public class GeneralManagerNavBarController {
     public void clickExaminationButton(){
     	generalManagerViewController.showExaminationView();
     }
-
+    
+    public void clickSalesDetailsButton(){
+    	generalManagerViewController.showSalesDetailsView();
+    }
+    
+    public void clickProfitButton(){
+    	generalManagerViewController.showProfitView();
+    }
+    
+    public void clickPromotionButton(){
+    	generalManagerViewController.showPromotionView();
+    }
 }
