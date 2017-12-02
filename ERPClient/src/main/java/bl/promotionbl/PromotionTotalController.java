@@ -1,10 +1,12 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionTotalVO;
 
@@ -21,7 +23,7 @@ public class PromotionTotalController implements PromotionTotalBLService{
 		return null;
 	}
 
-	public void addGift(GoodsVO vo) {
+	public void addGift(GoodsItemVO vo) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -36,12 +38,12 @@ public class PromotionTotalController implements PromotionTotalBLService{
 		
 	}
 
-	public void setStartDate(Date date) {
+	public void setStartDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setEndDate(Date date) {
+	public void setEndDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}

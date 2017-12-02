@@ -87,6 +87,10 @@ public class GeneralManagerPromotionViewController {
 		TypeChooser.setVisible(false);
 	}
 	
+	public void clickReturnButton(){
+		generalManagerViewController.showPromotionView();
+	}
+	
 	public void clickAddPromotionBargain(){
 		Pane promotionAdd = null;
     	try{

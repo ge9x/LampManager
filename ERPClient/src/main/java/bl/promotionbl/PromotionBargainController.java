@@ -1,10 +1,12 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
@@ -21,7 +23,7 @@ public class PromotionBargainController implements PromotionBargainBLService{
 		return null;
 	}
 
-	public void addBargain(GoodsVO vo) {
+	public void addBargain(GoodsItemVO vo) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -31,12 +33,12 @@ public class PromotionBargainController implements PromotionBargainBLService{
 		
 	}
 
-	public void setStartDate(Date date) {
+	public void setStartDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setEndDate(Date date) {
+	public void setEndDate(LocalDate date) {
 		// TODO Auto-generated method stub
 		
 	}
