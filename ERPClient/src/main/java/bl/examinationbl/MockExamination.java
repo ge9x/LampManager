@@ -1,5 +1,6 @@
 package bl.examinationbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import vo.BillVO;
 
 public class MockExamination extends Examination{
 
-	private AccountBillVO accountBill = new AccountBillVO(new Date(), "XJFKD-20171021-00001", BillState.SUBMITTED, BillType.CASH, "ZLK", "Aster",new ArrayList<AccountBillItemVO>());
+	private AccountBillVO accountBill = new AccountBillVO(LocalDate.now().toString(), "XJFKD-20171021-00001", BillState.SUBMITTED, BillType.CASH, "ZLK", "Aster",new ArrayList<AccountBillItemVO>());
 	
 	@Override
 	public ArrayList<BillVO> show(){

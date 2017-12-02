@@ -40,7 +40,12 @@ public class FinanceController implements FinanceBLService{
     }
 
     public String getNewCashBillID() {
-        return finance.getNewCashBillID();
+        try {
+            return finance.getNewCashBillID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getUserID() {
@@ -48,7 +53,7 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
-        return null;
+        return finance.getAllCustomer();
     }
 
     public ArrayList<AccountVO> getAllAccount() {

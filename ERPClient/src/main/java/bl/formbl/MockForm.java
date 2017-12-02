@@ -25,7 +25,7 @@ public class MockForm extends Form{
             ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
             accountBillItemVOS.add(itemVO1);
             accountBillItemVOS.add(itemVO2);
-            BillVO billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
+            BillVO billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
                     "客户甲","营业员1",accountBillItemVOS);
             return billVO;
         }else

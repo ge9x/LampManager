@@ -6,6 +6,7 @@ import util.ResultMessage;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,7 +29,7 @@ public class MockCashBill extends CashBill {
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         ArrayList<CashBillItemVO> cashBillItemVOS = new ArrayList<CashBillItemVO>();
         cashBillItemVOS.add(itemVO3);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
         return billVO3;
     }
@@ -43,7 +44,7 @@ public class MockCashBill extends CashBill {
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         ArrayList<CashBillItemVO> cashBillItemVOS = new ArrayList<CashBillItemVO>();
         cashBillItemVOS.add(itemVO3);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
         return billVO3;
     }

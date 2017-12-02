@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bean.CashBillItemBean;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import javafx.beans.property.DoubleProperty;
@@ -24,6 +25,7 @@ import vo.AccountVO;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -146,7 +148,7 @@ public class FinancialCashBillEditController {
 
     public void clickSubmitButton(){
         String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
-        CashBillVO cashBillVO = new CashBillVO(new Date(),BillID.getText(),
+        CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
         financeBLService.submit(cashBillVO);
@@ -164,7 +166,7 @@ public class FinancialCashBillEditController {
                 if (Accounts.getSelectionModel().getSelectedIndex() >= 0){
                     accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
                 }
-                CashBillVO cashBillVO = new CashBillVO(new Date(), BillID.getText(),
+                CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.CASH,Username.getText(), accountID
                         , cashBillItems,total.get());
                 financeBLService.save(cashBillVO);
@@ -179,51 +181,5 @@ public class FinancialCashBillEditController {
         this.financialCashBillController = financialCashBillController;
     }
 
-    public class CashBillItemBean{
-        public StringProperty name;
-        public DoubleProperty money;
-        public StringProperty remark;
 
-        public CashBillItemBean(String name,double money,String remark) {
-            this.name = new SimpleStringProperty(name);
-            this.money = new SimpleDoubleProperty(money);
-            this.remark = new SimpleStringProperty(remark);
-        }
-
-        public String getName() {
-            return name.get();
-        }
-
-        public StringProperty nameProperty() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name.set(name);
-        }
-
-        public double getMoney() {
-            return money.get();
-        }
-
-        public DoubleProperty moneyProperty() {
-            return money;
-        }
-
-        public void setMoney(double money) {
-            this.money.set(money);
-        }
-
-        public String getRemark() {
-            return remark.get();
-        }
-
-        public StringProperty remarkProperty() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark.set(remark);
-        }
-    }
 }

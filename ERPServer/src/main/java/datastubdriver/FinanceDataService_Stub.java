@@ -15,6 +15,15 @@ import java.util.HashMap;
  * Created by Kry·L on 2017/10/22.
  */
 public class FinanceDataService_Stub implements FinanceDataService {
+    @Override
+    public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<CashBillPO> getAllCashBills() throws RemoteException {
+        return null;
+    }
 
     /**
      * 库存单据集
@@ -32,7 +41,6 @@ public class FinanceDataService_Stub implements FinanceDataService {
     /**
      * 销售单据集
      */
-    ArrayList<SalesPO> salesPOS = new ArrayList<SalesPO>();
 
     GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
             "耐用");
@@ -43,14 +51,12 @@ public class FinanceDataService_Stub implements FinanceDataService {
         goodsItemList.add(gi1);
         goodsItemList.add(gi2);
     }
-    SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, 1, "销售商1", "00001", "业务员1",
-            "阿强", "默认仓库", goodsItemList, 100.0, 500.0, "满足客户需求", "2017-11-30");
 
     /**
      * 财务单据集
      */
-    AccountBillItemPO itemPO1 = new AccountBillItemPO("工商银行账户1",300,"卖出灯具20个");
-    AccountBillItemPO itemPO2 = new AccountBillItemPO("工商银行账户2",400,"卖出灯具30个");
+    AccountBillItemPO itemPO1 = new AccountBillItemPO(1,300,"卖出灯具20个");
+    AccountBillItemPO itemPO2 = new AccountBillItemPO(1,400,"卖出灯具30个");
     CashBillItemPO itemPO3 = new CashBillItemPO("打车",20,"见客户");
     CashBillItemPO itemPO4 = new CashBillItemPO("吃饭",200,"请客户吃中饭");
 
@@ -69,7 +75,6 @@ public class FinanceDataService_Stub implements FinanceDataService {
         inventoryBillPOS.add(po4);
         inventoryBillPOS.add(po5);
 
-        salesPOS.add(s1);
 
         accountBillItemPOS.add(itemPO1);
         accountBillItemPOS.add(itemPO2);

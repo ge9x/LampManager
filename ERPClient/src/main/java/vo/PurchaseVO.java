@@ -25,7 +25,7 @@ public class PurchaseVO extends BillVO{
 	
 	public PurchaseVO(BillType type,BillState state,String ID,String supplier
 			,String customerID,String inventory,String user,ArrayList<GoodsItemVO> goodsItemList,String remarks
-			,Date endDate){
+			,String endDate){
 		this.type=type;
 		this.state=state;
 		this.ID=ID;

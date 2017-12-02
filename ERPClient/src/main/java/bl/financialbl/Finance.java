@@ -1,10 +1,17 @@
 package bl.financialbl;
 
+import bl.accountbl.AccountController;
+import bl.customerbl.CustomerController;
 import bl.formbl.DocumentDetails;
 import bl.formbl.Profit;
 import bl.formbl.SalesDetails;
+import bl.userbl.MockUser;
+import bl.userbl.UserController;
+import blservice.accountblservice.AccountInfo;
+import blservice.customerblservice.CustomerInfo;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.SalesDetailsInput;
+import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
 import util.ResultMessage;
 import vo.*;
@@ -17,15 +24,23 @@ import java.util.Date;
  * Created by Kry·L on 2017/11/5.
  */
 public class Finance{
+    //TODO getAllCustomer接口未定
 
     AccountBill accountBill;
     CashBill cashBill;
 
     private FinanceDataService financeDataService;
+    UserInfo userInfo;
+    CustomerInfo customerInfo;
+    AccountInfo accountInfo;
+
 
     public Finance(){
         accountBill = new AccountBill();
         cashBill = new CashBill();
+        userInfo = new UserController();
+        customerInfo = new CustomerController();
+        accountInfo = new AccountController();
     }
 
     public String getNewReceiptID() throws RemoteException {
@@ -36,20 +51,22 @@ public class Finance{
         return accountBill.getNewPaymentID();
     }
 
-    public String getNewCashBillID() {
+    public String getNewCashBillID() throws RemoteException {
         return cashBill.getNewCashBillID();
     }
 
     public String getUserID() {
-        return null;
+        String ID = userInfo.getCurrentUserID();
+        return userInfo.getCurrentUserNameByID(ID);
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
+//        return customerInfo.
         return null;
     }
 
     public ArrayList<AccountVO> getAllAccount() {
-        return null;
+        return accountInfo.show();
     }
 
     public ResultMessage submit(AccountBillVO vo) throws RemoteException{

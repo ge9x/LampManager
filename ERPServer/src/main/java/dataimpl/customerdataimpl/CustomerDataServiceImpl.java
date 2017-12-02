@@ -8,6 +8,9 @@ import datahelper.HibernateDataHelper;
 import dataservice.customerdataservice.CustomerDataService;
 import po.CustomerPO;
 import util.Criterion;
+import util.CustomerCategory;
+import util.Level;
+import util.QueryMode;
 import util.ResultMessage;
 
 /**
@@ -41,11 +44,27 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 	}
 
 	public ArrayList<CustomerPO> findByCustomerID(int customerID) throws RemoteException {
-		return customerDataHelper.fullyQuery("id", customerID);
+		return customerDataHelper.fuzzyQuery("customerID", Integer.toString(customerID));
 	}
 
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException {
-		return customerDataHelper.fullyQuery("customerName", keywords);
+		ArrayList<Criterion> criteria=new ArrayList<Criterion>();
+		criteria.add(
+				new Criterion(
+				new Criterion("customerName",keywords,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("phone",keywords,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("address",keywords,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("mail",keywords,QueryMode.FUZZY),
+				new Criterion("salesman",keywords,QueryMode.FUZZY)									
+													)					
+											)
+									)				
+							)								
+				    );
+		return customerDataHelper.multiQuery(criteria);
 	}
 
 	public ResultMessage update(CustomerPO po) throws RemoteException {

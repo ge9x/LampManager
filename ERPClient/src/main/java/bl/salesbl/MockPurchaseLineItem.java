@@ -28,10 +28,10 @@ public class MockPurchaseLineItem extends PurchaseLineItem{
 		goodsItemList.add(gi2);
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
 			,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-		     ,new Date());
+		     ,LocalDate.now().toString());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 				,"00000002","默认仓库","阿明",goodsItemList,"好看"
-				,new Date());
+				,LocalDate.now().toString());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}

@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bean.AccountBillItemBean;
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
 import blservice.financeblservice.FinanceBLService;
@@ -31,6 +32,7 @@ import util.BillType;
 import util.Money;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -133,7 +135,7 @@ public class FinancialPaymentEditController {
 
     public void clickSubmitButton(){
         String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
-        AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
+        AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService.submit(accountBillVO);
@@ -151,7 +153,7 @@ public class FinancialPaymentEditController {
                 if (Customer.getSelectionModel().getSelectedIndex() >= 0){
                     customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
                 }
-                AccountBillVO accountBillVO = new AccountBillVO(new Date(), BillID.getText(),
+                AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.PAYMENT, customerID,
                         Username.getText(), accountBillItems);
                 financeBLService.save(accountBillVO);
@@ -207,44 +209,5 @@ public class FinancialPaymentEditController {
     public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
         this.financialPaymentController = financialPaymentController;
     }
-
-    public class AccountBillItemBean {
-        public StringProperty accountName;
-        public DoubleProperty money;
-        public StringProperty remark;
-
-        public AccountBillItemBean(String accountName, Double money, String remark) {
-            this.accountName = new SimpleStringProperty(accountName);
-            this.money = new SimpleDoubleProperty(money);
-            this.remark = new SimpleStringProperty(remark);
-        }
-
-        public String getAccountName() {
-            return accountName.get();
-        }
-
-        public void setAccountName(String accountName) {
-            this.accountName.set(accountName);
-        }
-
-        public double getMoney() {
-            return money.get();
-        }
-
-
-        public void setMoney(double money) {
-            this.money.set(money);
-        }
-
-        public String getRemark() {
-            return remark.get();
-        }
-
-
-        public void setRemark(String remark) {
-            this.remark.set(remark);
-        }
-    }
-
 
 }

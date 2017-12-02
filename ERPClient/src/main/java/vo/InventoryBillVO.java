@@ -25,7 +25,7 @@ public class InventoryBillVO extends BillVO{
 	 */
 	public HashMap<GoodsVO, Integer> goodsMap;
 	
-	public InventoryBillVO(String ID, BillType type, BillState state, Date date, String inventory, String user, HashMap<GoodsVO, Integer> goodsMap) {
+	public InventoryBillVO(String ID, BillType type, BillState state, String date, String inventory, String user, HashMap<GoodsVO, Integer> goodsMap) {
 		super();
 		this.ID = ID;
 		this.type = type;
