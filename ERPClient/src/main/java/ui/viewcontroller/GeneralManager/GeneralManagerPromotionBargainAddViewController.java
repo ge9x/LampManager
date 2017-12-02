@@ -1,15 +1,12 @@
-package ui.viewcontroller.SalesStaff;
+package ui.viewcontroller.GeneralManager;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
-import blservice.salesblservice.SalesBLService;
+import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.userblservice.UserBLService;
-import blstubdriver.SalesBLService_Stub;
+import blstubdriver.PromotionBargain_Stub;
 import blstubdriver.UserBLService_Stub;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -22,13 +19,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -38,71 +34,54 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
-import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController.GoodsItemBean;
-import util.BillState;
-import util.BillType;
 import util.Money;
-import vo.CustomerVO;
-import vo.GoodsItemVO;
-import vo.PurchaseVO;
+import vo.PromotionBargainVO;
 
-public class SalesStaffReturnEditViewController {
-	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
+public class GeneralManagerPromotionBargainAddViewController {
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
+	GeneralManagerPromotionViewController generalManagerPromotionViewController;
+	PromotionBargainBLService promotionBargainService = new PromotionBargain_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
-	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
-	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
-	ArrayList<String> inventories = new ArrayList<String>();
+	PromotionBargainVO promotionBargain;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
     DoubleProperty total = new SimpleDoubleProperty(0);
 
-    @FXML
-    Label addIcon;
-
-    @FXML
-    Label BillID;
-
-    @FXML
-    Text Username;
-
-    @FXML
-    VBox vbox;
-
-    @FXML
-    Text Total;
-    
-    @FXML
-    JFXTextArea remark;
-
-    @FXML
-    JFXComboBox supplier;
-    
-    @FXML
-    JFXComboBox inventory;
-    
-    public void initialize(){
-        addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
-        Username.setText(name);
-        suppliers = salesBLService.getAllSupplier();
-        inventories = salesBLService.getAllInventory();
-        
-
-        //初始化supplier选择框
-        ArrayList<String> supplierNames = new ArrayList<>();
-        for (CustomerVO customer : suppliers){
-            supplierNames.add(customer.customerName);
-        }
-        supplier.getItems().addAll(supplierNames);
-        
-      //初始化inventory选择框
-        inventory.getItems().addAll(inventories);
-
-        //初始化表格
+	@FXML
+	JFXTextField promotionName;
+	
+	@FXML
+	Text Total;
+	
+	@FXML
+	VBox vbox;
+	
+	@FXML
+	DatePicker startDate;
+	
+	@FXML
+	DatePicker endDate;
+	
+	@FXML
+	JFXTextField bargainTotal;
+	
+	@FXML
+	Label addIcon;
+	
+	@FXML
+	Label promotionID;
+	
+	@FXML
+	Text username;
+	
+	@FXML
+	public void intialize(){
+		addIcon.setText("\ue61e");
+		Total.setText(Money.getMoneyString(0));
+		
+		//初始化表格
         itemTable = new TableView<>();
         itemTable.setEditable(true);
 
@@ -167,15 +146,14 @@ public class SalesStaffReturnEditViewController {
             }
         });
 
-    }
-    
-    public void addReturnOrder() {
-        String ID = salesBLService.getnewReturnID();
-        BillID.setText(ID);
-    }
-
-    public void clickAddButton(){
-    	GoodsSelecter selecter = new GoodsSelecter();
+	}
+	
+	public void setGeneralManagerPromotionViewController (GeneralManagerPromotionViewController generalManagerPromotionViewController){
+		this.generalManagerPromotionViewController = generalManagerPromotionViewController;
+	}
+	
+	public void clickAddButton(){
+		GoodsSelecter selecter = new GoodsSelecter();
     	Dialog dialog = selecter.getGoodsDialog();
     	Optional<GoodsBean> result = dialog.showAndWait();
     	
@@ -184,100 +162,42 @@ public class SalesStaffReturnEditViewController {
     		bean = result.get();
     	}
     	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
-    	
-//        ArrayList<Label> labels = new ArrayList<>();
-//        labels.add(new Label("商品编号"));
-//        labels.add(new Label("条目名"));
-//        labels.add(new Label("型号"));
-//        labels.add(new Label("数量"));
-//        labels.add(new Label("单价"));
-//        labels.add(new Label("总价"));
-//        labels.add(new Label("备注"));
-//
-//        ArrayList<Node> nodes = new ArrayList<Node>();
-//        TextField IDTF = new TextField();
-//        TextField nameTF = new TextField();
-//        TextField modelTF = new TextField();
-//        TextField amountTF = new TextField();
-//        TextField retailPriceTF = new TextField();
-//        TextField totalPriceTF = new TextField();
-//        TextField remarkTF = new TextField();
-//        nodes.add(IDTF);
-//        nodes.add(nameTF);
-//        nodes.add(modelTF);
-//        nodes.add(amountTF);
-//        nodes.add(retailPriceTF);
-//        nodes.add(totalPriceTF);
-//        nodes.add(remarkTF);
-//
-//        Dialog dialog = DialogFactory.createDialog(labels,nodes);
-//        dialog.setResultConverter(dialogButton -> {
-//            ArrayList<String> result = new ArrayList<>();
-//            result.add(IDTF.getText());
-//            result.add(nameTF.getText());
-//            result.add(modelTF.getText());
-//            result.add(amountTF.getText());
-//            result.add(retailPriceTF.getText());
-//            result.add(totalPriceTF.getText());
-//            result.add(remarkTF.getText());
-//            if (dialogButton == ButtonType.FINISH) {
-//                return result;
-//            }
-//            return null;
-//        });
-//
-//        Optional result = dialog.showAndWait();
-//        if (result.isPresent()){
-//            ArrayList<String> values = (ArrayList<String>)result.get();
-//            Double money = Double.parseDouble(values.get(5));
-//            int amount = Integer.parseInt(values.get(3));
-//            double totalPrice = Double.parseDouble(values.get(5));
-//            GoodsItemVO GoodsItemVO = new GoodsItemVO(values.get(0),values.get(1),values.get(2),amount,money,values.get(6));
-//
-//            goodsItemList.add(GoodsItemVO);
-//            data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
-//            total.set(total.get()+money);
-//        }
-    }
-
-    public void clickSubmitButton(){
-        String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
-        salesBLService.submitPurchase(purchaseVO);
-        salesStaffReturnOrderViewController.showReturnOrderList();
-    }
-    
-    public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
+	}
+	
+	public void clickOKButton(){
+		if(isCompleted()){
+			
+		}
+		else{
+			Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("促销策略信息填写不完整");
+	        Optional result = dialog.showAndWait();
+		}
+	}
+	
+	public boolean isCompleted(){
+		if(promotionName.getText().length()>0&&bargainTotal.getText().length()>0){
+			return true;
+		}
+		else{
+	        return false;
+		}
+	}
+	
+	public void clickCancelButton(){
+		Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("确定放弃添加策略吗？");
         Optional result = dialog.showAndWait();
 
 
         if (result.isPresent()){
             if (result.get() == ButtonType.OK) {
-            	String supplierName = "";
-                String inventoryName = "";
-                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
-                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
-                }
-                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
-                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-                }
-                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),new Date());
-                salesBLService.savePurchase(purchaseVO);
+//            	salesStaffCustomerInfoViewController.clickReturnButton();
             }
-
-            salesStaffReturnOrderViewController.showReturnOrderList();
         }
-    }
-
-
-    public void setSalesStaffReturnOrderViewController(SalesStaffReturnOrderViewController salesStaffReturnOrderViewController){
-        this.salesStaffReturnOrderViewController = salesStaffReturnOrderViewController;
-    }
-    
-    public class GoodsItemBean{
+	}
+	
+	public class GoodsItemBean{
         public StringProperty ID;
         public StringProperty name;
         public StringProperty model;
