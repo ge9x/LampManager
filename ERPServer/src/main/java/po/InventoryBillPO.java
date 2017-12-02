@@ -28,20 +28,15 @@ public class InventoryBillPO extends BillPO{
 	 * 该单据内的商品对应的溢出/缺损数量
 	 */
 	private Map<GoodsPO, Integer> goodsMap;
-    /**
-     * 本单据是当天同单据类型的第几张单据
-     */
-    private int turn;
 	
 	public InventoryBillPO(){ }
-	
-	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
-		super(date, type, state);
+
+	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap, int turn) {
+		super(date, type, state, turn);
 		this.inventory = inventory;
 		this.user = user;
 		this.goodsMap = goodsMap;
 	}
-	
 
 	/**
 	 * 请使用无需设置ID的构造方法，因为：<br>
@@ -127,15 +122,11 @@ public class InventoryBillPO extends BillPO{
 	
 	@Column(name = "turn")
     public int getTurn() {
-		return turn;
+		return super.getTurn();
 	}
 
 	public void setTurn(int turn) {
-		this.turn = turn;
+		super.setTurn(turn);
 	}
-
-	public String buildID(){
-    	return super.getType().getValue() + "-" + super.getDate().replace("-", "") + "-" + String.format("%5d", turn);
-    }
 	
 }

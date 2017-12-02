@@ -65,7 +65,7 @@ public class TestInventory {
 			InventoryPO inpo = inventoryImpl.showInventory().get(0);
 			System.out.println(inpo.getID() + " " + inpo.getName() + " " + inpo.getNumber());
 			InventoryBillPO bill = inventoryImpl.findBill(2);
-			System.out.println(bill.getID() + " " + bill.getOrder() + " " + bill.getState() + " " + bill.getUser());
+			System.out.println(bill.getID() + " " + bill.getTurn() + " " + bill.getState() + " " + bill.getUser());
 			bill.setState(BillState.PASS);
 			inventoryImpl.updateBill(bill);
 			
