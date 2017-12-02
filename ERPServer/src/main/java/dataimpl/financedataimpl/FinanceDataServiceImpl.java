@@ -15,6 +15,11 @@ import util.Criterion;
 import util.QueryMode;
 import util.ResultMessage;
 
+/**
+ * Created on 2017/11/30
+ * @author 巽
+ *
+ */
 public class FinanceDataServiceImpl implements FinanceDataService{
 	private static FinanceDataServiceImpl financeDataServiceImpl;
 	private DataHelper<CashBillPO> cashBillDataHelper;
