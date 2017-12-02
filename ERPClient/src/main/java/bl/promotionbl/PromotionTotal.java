@@ -1,9 +1,11 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 import vo.PromotionTotalVO;
@@ -16,7 +18,7 @@ public class PromotionTotal extends Promotion{
 		return null;
 	}
 
-	public void addGift(GoodsVO vo){
+	public void addGift(GoodsItemVO vo){
 		
 	}
 
@@ -28,11 +30,11 @@ public class PromotionTotal extends Promotion{
 		
 	}
 
-	public void setStartDate(Date date){
+	public void setStartDate(LocalDate date){
 		
 	}
 
-	public void setEndDate(Date date){
+	public void setEndDate(LocalDate date){
 		
 	}
 
