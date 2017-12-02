@@ -44,7 +44,7 @@ public class AccountBillPO extends BillPO implements Serializable{
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
-        this.sum = calSum();
+        calSum();
     }
 
 	/**
@@ -58,7 +58,7 @@ public class AccountBillPO extends BillPO implements Serializable{
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
-        this.sum = calSum();
+        calSum();
     }
     
     @Column(name = "date")
@@ -109,7 +109,11 @@ public class AccountBillPO extends BillPO implements Serializable{
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
-	
+
+	/**
+	 * 计算当前总金额，同时更新sum变量
+	 * @return 当前总金额
+	 */
 	public double calSum(){
         double sum = 0;
         for (int i = 0; i < accountBillItemPOS.size(); i++){
@@ -136,7 +140,6 @@ public class AccountBillPO extends BillPO implements Serializable{
 
     public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
-        calSum();
     }
 
     @Column(name = "sum")

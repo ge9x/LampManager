@@ -49,7 +49,7 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		criteria.add(new Criterion("type", BillType.RECEIPT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
 		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.RECEIPT.getAcronym() + "-" + LocalDate.now().toString() + "-" + String.format("%05d", num);
+		return BillType.RECEIPT.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
 	}
 
 	@Override
@@ -58,13 +58,13 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		criteria.add(new Criterion("type", BillType.PAYMENT, QueryMode.FULL));
 		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
 		int num = accountBillDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.PAYMENT.getAcronym() + "-" + LocalDate.now().toString() + "-" + String.format("%05d", num);
+		return BillType.PAYMENT.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
 	}
 
 	@Override
 	public String getNewCashBillID() throws RemoteException {
-		int num = cashBillDataHelper.fullyQuery("date", LocalDate.now().toString()).size();
-		return BillType.CASH.getAcronym() + "-" + LocalDate.now().toString() + "-" + String.format("%05d", num);
+		int num = cashBillDataHelper.fullyQuery("date", LocalDate.now().toString()).size() + 1;
+		return BillType.CASH.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
 	}
 
 	@Override
@@ -130,6 +130,16 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 			System.out.println("Bug：请求修改未知类型的单据");
 			return ResultMessage.ERROR;
 		}
+	}
+
+	@Override
+	public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException {
+		return accountBillDataHelper.fullyQuery(null, null);
+	}
+
+	@Override
+	public ArrayList<CashBillPO> getAllCashBills() throws RemoteException {
+		return cashBillDataHelper.fullyQuery(null, null);
 	}
 
 }
