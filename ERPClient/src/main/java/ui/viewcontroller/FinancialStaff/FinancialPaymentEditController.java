@@ -32,6 +32,7 @@ import util.BillType;
 import util.Money;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -134,7 +135,7 @@ public class FinancialPaymentEditController {
 
     public void clickSubmitButton(){
         String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
-        AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
+        AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService.submit(accountBillVO);
@@ -152,7 +153,7 @@ public class FinancialPaymentEditController {
                 if (Customer.getSelectionModel().getSelectedIndex() >= 0){
                     customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
                 }
-                AccountBillVO accountBillVO = new AccountBillVO(new Date(), BillID.getText(),
+                AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.PAYMENT, customerID,
                         Username.getText(), accountBillItems);
                 financeBLService.save(accountBillVO);

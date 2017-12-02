@@ -1,5 +1,6 @@
 package ui.viewcontroller.SalesStaff;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -326,7 +327,7 @@ public class SalesStaffSalesEditViewController {
     public void clickSubmitButton(){
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),new Date());
+        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString());
         salesBLService.submitSales(salesVO);
         salesStaffSalesOrderViewController.showSalesOrderList();
     }
@@ -351,7 +352,7 @@ public class SalesStaffSalesEditViewController {
                 if (inventory.getSelectionModel().getSelectedIndex() >= 0){
                 	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
                 }
-                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),new Date());
+                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString());
                 salesBLService.saveSales(salesVO);
             }
 

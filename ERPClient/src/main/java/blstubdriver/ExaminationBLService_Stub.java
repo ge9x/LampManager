@@ -1,5 +1,6 @@
 package blstubdriver;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,10 +34,10 @@ public class ExaminationBLService_Stub implements ExaminationBLService{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
 	}
-	AccountBillVO accountBill = new AccountBillVO(new Date(), "XSFKD-20171021-00001", BillState.SUBMITTED, BillType.PAYMENT, "ZLK", "Aster",billItem);
+	AccountBillVO accountBill = new AccountBillVO(LocalDate.now().toString(), "XSFKD-20171021-00001", BillState.SUBMITTED, BillType.PAYMENT, "ZLK", "Aster",billItem);
 	PurchaseVO purchaseBill=new PurchaseVO(BillType.PURCHASE,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 			,"00000002","默认仓库","阿明",goodsItemList,"好看"
-			,new Date());
+			,LocalDate.now().toString());
 	public ArrayList<BillVO> show() {
 		// TODO Auto-generated method stub
 		billList.add(accountBill);

@@ -31,7 +31,7 @@ public class CashBillVO extends BillVO{
      */
     public double sum;
 
-    public CashBillVO(Date date, String ID, BillState state, BillType type, String userName, String accountName, ArrayList<CashBillItemVO> cashBillItems, double sum) {
+    public CashBillVO(String date, String ID, BillState state, BillType type, String userName, String accountName, ArrayList<CashBillItemVO> cashBillItems, double sum) {
         this.date = date;
         this.ID = ID;
         this.state = state;

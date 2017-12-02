@@ -34,7 +34,7 @@ public class SalesVO extends BillVO{
 	
 	public SalesVO( BillType type, BillState state, String billID, String customer,String customerID, String salesman,
 			String user, String inventory, ArrayList<GoodsItemVO> goodsItemList, double allowance,
-			double voucher, String remarks, Date endDate) {
+			double voucher, String remarks, String endDate) {
 		this.type = type;
 		this.state = state;
 		ID = billID;
