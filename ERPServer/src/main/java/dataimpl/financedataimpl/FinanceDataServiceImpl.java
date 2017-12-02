@@ -100,4 +100,14 @@ public class FinanceDataServiceImpl implements FinanceDataService{
 		}
 	}
 
+    @Override
+    public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<CashBillPO> getAllCashBills() throws RemoteException {
+        return null;
+    }
+
 }

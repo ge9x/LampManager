@@ -3,6 +3,7 @@ package po;
 import util.BillState;
 import util.BillType;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "cashbill")
-public class CashBillPO extends BillPO {
+public class CashBillPO extends BillPO implements Serializable {
     /**
      * 操作员
      */

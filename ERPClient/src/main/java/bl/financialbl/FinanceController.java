@@ -57,7 +57,7 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ArrayList<AccountVO> getAllAccount() {
-        return null;
+        return finance.getAllAccount();
     }
 
     public ResultMessage submit(AccountBillVO vo) {
@@ -70,15 +70,20 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ResultMessage submit(CashBillVO vo) {
-        return null;
+        try {
+            return finance.submit(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage save(AccountBillVO vo) {
-        return null;
+        return finance.save(vo);
     }
 
     public ResultMessage save(CashBillVO vo) {
-        return null;
+        return finance.save(vo);
     }
 
     public ResultMessage updateDraft(AccountBillVO vo) {

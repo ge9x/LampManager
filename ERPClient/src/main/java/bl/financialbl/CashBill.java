@@ -4,6 +4,9 @@ import blservice.accountblservice.AccountInfo;
 import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
 import datastubdriver.FinanceDataService_Stub;
+import po.AccountBillItemPO;
+import po.CashBillItemPO;
+import po.CashBillPO;
 import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.CashBillItemVO;
@@ -19,8 +22,6 @@ public class CashBill {
     CashBillVO cashBillVO;
     private ArrayList<CashBillItem> cashBillItems;
 
-    private UserInfo userInfo;
-    private AccountInfo accountInfo;
     private FinanceDataService financeDataService;
 
     public CashBill(){
@@ -36,8 +37,8 @@ public class CashBill {
     public void addCashBill(String account){
 
     }
-    public CashBillVO submit(){
-        return null;
+    public ResultMessage submit(CashBillVO vo) throws RemoteException {
+        return financeDataService.addBill(voTopo(vo));
     }
     public void calTotal(){};
     public CashBillVO save(){
@@ -45,5 +46,14 @@ public class CashBill {
     }
     public ResultMessage update(CashBillVO vo) {
         return null;
+    }
+    public CashBillPO voTopo(CashBillVO vo){
+        int turn = Integer.parseInt(vo.ID.split("-")[2]);
+        ArrayList<CashBillItemPO> itemPOS = new ArrayList<>();
+        for(CashBillItemVO itemVO : vo.cashBillItems){
+            itemPOS.add(CashBillItem.voTopo(itemVO));
+        }
+        CashBillPO po = new CashBillPO(vo.date, vo.type, vo.state, vo.userName, Integer.parseInt(vo.accountName), itemPOS, vo.sum, turn);
+        return po;
     }
 }

@@ -1,5 +1,6 @@
 package rmi;
 
+import dataimpl.financedataimpl.FinanceDataServiceImpl;
 import dataservice.financedataservice.FinanceDataService;
 import datastubdriver.FinanceDataService_Stub;
 import po.AccountBillPO;
@@ -19,22 +20,22 @@ public class FinanceDataRemoteObject extends UnicastRemoteObject implements Fina
     private FinanceDataService financeDataService;
 
     protected FinanceDataRemoteObject() throws RemoteException{
-        financeDataService = new FinanceDataService_Stub();
+        financeDataService = FinanceDataServiceImpl.getInstance();
     }
 
     @Override
     public String getNewReceiptID() throws RemoteException {
-        return null;
+        return financeDataService.getNewReceiptID();
     }
 
     @Override
     public String getNewPaymentID() throws RemoteException {
-        return null;
+        return financeDataService.getNewPaymentID();
     }
 
     @Override
     public String getNewCashBillID() throws RemoteException {
-        return null;
+        return financeDataService.getNewCashBillID();
     }
 
     @Override

@@ -61,8 +61,12 @@ public class Finance{
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
-//        return customerInfo.
-        return null;
+        ArrayList<CustomerVO> customerVOS = new ArrayList<>();
+        ArrayList<Integer> IDs = customerInfo.getAllCustomerID();
+        for (int id:IDs){
+            customerVOS.add(customerInfo.getCustomerByID());
+        }
+        return customerVOS;
     }
 
     public ArrayList<AccountVO> getAllAccount() {
@@ -73,8 +77,8 @@ public class Finance{
         return accountBill.submit(vo);
     }
 
-    public ResultMessage submit(CashBillVO vo) {
-        return null;
+    public ResultMessage submit(CashBillVO vo) throws RemoteException {
+        return cashBill.submit(vo);
     }
 
     public ResultMessage save(AccountBillVO vo) {

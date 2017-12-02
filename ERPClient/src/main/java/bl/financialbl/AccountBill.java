@@ -62,7 +62,7 @@ public class AccountBill {
     public AccountBillPO voTopo(AccountBillVO vo){
         ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
         for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
-            accountBillItemPOS.add(accountBillItem.voTopo(accountBillItemVO));
+            accountBillItemPOS.add(AccountBillItem.voTopo(accountBillItemVO));
         }
         int turn = Integer.parseInt(vo.ID.split("-")[2]);
         AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,Integer.parseInt(vo.customerID),vo.userName,accountBillItemPOS,turn);
