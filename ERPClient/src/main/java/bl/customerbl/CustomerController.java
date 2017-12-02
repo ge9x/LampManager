@@ -42,8 +42,13 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	public ResultMessage updateCustomer(CustomerVO vo) {
 		return null;
 	}
-	
-	public ArrayList<String> getAllCustomerName() {
+
+    @Override
+    public ArrayList<Integer> getAllCustomerID() {
+        return null;
+    }
+
+    public ArrayList<String> getAllCustomerName() {
 		return null;
 	}
 

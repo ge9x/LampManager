@@ -42,19 +42,19 @@ public class SalesBLService_Stub implements SalesBLService{
 	{
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
 				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-			     ,new Date());
+			     ,LocalDate.now().toString());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 					,"00000002","默认仓库","阿明",goodsItemList,"好看"
-					,new Date());
+					,LocalDate.now().toString());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
 	
 	{
 		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", LocalDate.now().toString());
 	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇", "000000004","默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+					"阿奇", "000000004","默认仓库",goodsItemList , 100,500, "满足客户需求", LocalDate.now().toString());
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

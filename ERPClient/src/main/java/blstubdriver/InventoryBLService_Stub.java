@@ -1,5 +1,6 @@
 package blstubdriver;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,11 +29,11 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	{
 		data = new ArrayList<InventoryBillVO>();
 		alarmData = new ArrayList<InventoryBillVO>();
-		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-        InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, new Date(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS,LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+        InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
         newData.add(vo1);
         newData.add(vo1);
         newData.add(vo1);
