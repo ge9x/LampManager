@@ -36,6 +36,7 @@ import util.BillType;
 import util.Money;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -148,7 +149,7 @@ public class FinancialReceiptEditController {
 
     public void clickSubmitButton(){
         String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
-        AccountBillVO accountBillVO = new AccountBillVO(new Date(),BillID.getText(),
+        AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
         financeBLService2.submit(accountBillVO);
@@ -166,7 +167,7 @@ public class FinancialReceiptEditController {
                 if (Customer.getSelectionModel().getSelectedIndex() >= 0){
                     customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
                 }
-                AccountBillVO accountBillVO = new AccountBillVO(new Date(), BillID.getText(),
+                AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.RECEIPT, customerID,
                         Username.getText(), accountBillItems);
                 financeBLService.save(accountBillVO);

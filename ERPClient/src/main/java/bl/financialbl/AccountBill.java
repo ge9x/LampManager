@@ -27,13 +27,10 @@ public class AccountBill {
     private AccountBillItem accountBillItem;
     FinanceDataService financeDataService;
 
-    private AccountInfo accountInfo;
+    ArrayList<AccountBillPO> accountBillPOS;
 
     public AccountBill(){
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
-    }
-    public HashMap<String,String> getAllCustomers(){
-        return null;
     }
 
     public ArrayList<String> getAllAccount(){
@@ -54,24 +51,31 @@ public class AccountBill {
     public void addAccountBill(String customer,String account){
 
     }
-    public void calTotal(){
 
-    }
     public ResultMessage submit(AccountBillVO vo) throws RemoteException{
         return financeDataService.addBill(voTopo(vo));
     }
-    public AccountBillVO save(){
-        return null;
+    public ResultMessage save(AccountBillVO vo) throws RemoteException {
+        return financeDataService.addBill(voTopo(vo));
     }
+
     public ResultMessage update(AccountBillVO vo){
-        return null;
+        int turn = Integer.parseInt(vo.ID.split("-")[2]);
+        for (AccountBillPO po : accountBillPOS) {
+            if (po.getID() == turn) {
+                ArrayList<AccountBillItemVO> itemVOS = vo.accountBillItems;
+            }
+        }
+        return ResultMessage.FAILED;
     }
 
     public AccountBillPO voTopo(AccountBillVO vo){
         ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
         for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
-            AccountBillItemPO accountBillItemPO = new AccountBillItemPO(accountBillItemVO.account)
+            accountBillItemPOS.add(accountBillItem.voTopo(accountBillItemVO));
         }
-        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,vo.customerID,vo.userName,)
+        int turn = Integer.parseInt(vo.ID.split("-")[2]);
+        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,Integer.parseInt(vo.customerID),vo.userName,accountBillItemPOS,turn);
+        return accountBillPO;
     }
 }

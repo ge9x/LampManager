@@ -113,7 +113,7 @@ public interface FinanceBLService extends Remote{
     public ArrayList<AccountBillVO> getPassAccountBills();
 
     /**
-     * 获得所有待审批单据
+     * 获得所有审批失败单据
      */
     public ArrayList<AccountBillVO> getFailedAccountBills();
 
