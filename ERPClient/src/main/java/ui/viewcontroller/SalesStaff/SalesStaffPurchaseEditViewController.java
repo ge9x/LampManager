@@ -62,6 +62,9 @@ public class SalesStaffPurchaseEditViewController {
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
     DoubleProperty total = new SimpleDoubleProperty(0);
+    
+    @FXML
+    Label deleteIcon;
 
     @FXML
     Label addIcon;
@@ -88,6 +91,7 @@ public class SalesStaffPurchaseEditViewController {
     JFXComboBox inventory;
     
     public void initialize(){
+    	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
         String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
         Username.setText(name);
@@ -244,6 +248,12 @@ public class SalesStaffPurchaseEditViewController {
 //        }
     }
 
+    public void clickDeleteButton(){
+    	int index = itemTable.getSelectionModel().getSelectedIndex();
+    	total.set(total.get()-data.get(index).getTotalPrice());
+    	data.remove(index);
+    }
+    
     public void clickSubmitButton(){
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());

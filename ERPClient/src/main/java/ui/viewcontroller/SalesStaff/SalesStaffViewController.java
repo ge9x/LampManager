@@ -13,6 +13,7 @@ public class SalesStaffViewController {
 	private SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
 	private SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	private SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
+	private SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
 	private MainUIController mainUIController;
 	
     public SalesStaffViewController(MainUIController mainUIController){
@@ -121,6 +122,27 @@ public class SalesStaffViewController {
     }
     
     public void showSalesOrderEditView(Pane pane){
+        mainUIController.setCenter(null);
+        mainUIController.setCenter(pane);
+    }
+    
+    public void showSalesReturnOrderView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesReturnOrder.fxml"));
+            Pane page = pageLoader.load();
+            salesStaffSalesReturnOrderViewController = pageLoader.getController();
+            salesStaffSalesReturnOrderViewController.setSalesStaffViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showSalesReturnOrderEditView(Pane pane){
         mainUIController.setCenter(null);
         mainUIController.setCenter(pane);
     }

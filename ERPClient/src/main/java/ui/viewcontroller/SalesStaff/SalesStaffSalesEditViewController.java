@@ -67,6 +67,9 @@ public class SalesStaffSalesEditViewController {
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
     
     @FXML
+    Label deleteIcon;
+    
+    @FXML
     Label addIcon;
 
     @FXML
@@ -106,6 +109,7 @@ public class SalesStaffSalesEditViewController {
     JFXComboBox promotion;
     
     public void initialize(){
+    	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
         String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
         Username.setText(name);
@@ -256,6 +260,13 @@ public class SalesStaffSalesEditViewController {
         String ID = salesBLService.getnewSalesID();
         BillID.setText(ID);
     }
+    
+    public void clickDeleteButton(){
+    	int index = itemTable.getSelectionModel().getSelectedIndex();
+    	total.set(total.get()-data.get(index).getTotalPrice());
+    	afterSum.set(afterSum.get()-data.get(index).getTotalPrice());
+    	data.remove(index);
+    }
 
     public void clickAddButton(){
     	GoodsSelecter selecter = new GoodsSelecter();
@@ -352,7 +363,7 @@ public class SalesStaffSalesEditViewController {
                 if (inventory.getSelectionModel().getSelectedIndex() >= 0){
                 	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
                 }
-                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString());
+                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString());
                 salesBLService.saveSales(salesVO);
             }
 
