@@ -53,6 +53,8 @@ public class FinancialReceiptEditController {
 
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
+    Boolean isNew;
+
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
             FXCollections.observableArrayList();
@@ -127,6 +129,7 @@ public class FinancialReceiptEditController {
     }
     public void addReceipt() {
         String ID = financeBLService2.getNewReceiptID();
+        isNew = true;
         BillID.setText(ID);
     }
 
@@ -170,7 +173,12 @@ public class FinancialReceiptEditController {
                 AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.RECEIPT, customerID,
                         Username.getText(), accountBillItems);
-                financeBLService.save(accountBillVO);
+
+                if (isNew == true){
+                    financeBLService.save(accountBillVO);
+                }else{
+                    financeBLService.updateDraft(accountBillVO);
+                }
             }
 
             financialReceiptController.showReceiptList();
