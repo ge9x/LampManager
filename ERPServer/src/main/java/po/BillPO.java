@@ -1,10 +1,14 @@
 package po;
 
+import java.io.Serializable;
+
 import util.BillState;
 import util.BillType;
 
-public class BillPO {
-	 /**
+public class BillPO implements Serializable {
+	private static final long serialVersionUID = 96614009950694909L;
+
+	/**
      * 单据最后修改时间
      */
     private String date;
@@ -85,6 +89,6 @@ public class BillPO {
 	}
 
 	public String buildID(){
-    	return type.getValue() + "-" + date + "-" + String.format("%5d", turn);
+    	return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%05d", turn);
     }
 }

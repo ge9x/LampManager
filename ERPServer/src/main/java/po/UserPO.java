@@ -1,5 +1,7 @@
 package po;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 import util.UserLimits;
@@ -7,7 +9,9 @@ import util.UserPosition;
 
 @Entity
 @Table(name = "user")
-public class UserPO {
+public class UserPO implements Serializable {
+	private static final long serialVersionUID = 7579870908035212560L;
+
 	private int userID;
 	
 	private String password;

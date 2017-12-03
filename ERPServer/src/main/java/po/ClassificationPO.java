@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "classification")
-public class ClassificationPO {
+public class ClassificationPO implements Serializable {
+	private static final long serialVersionUID = -7914858691592007808L;
 	/**
 	 * 商品分类ID
 	 */

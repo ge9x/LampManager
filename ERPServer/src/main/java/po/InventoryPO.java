@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
 @Entity
 @Embeddable
 @Table(name = "inventory")
-public class InventoryPO {
+public class InventoryPO implements Serializable {
+	private static final long serialVersionUID = 7157821248286002274L;
 	/**
 	 * 仓库名的ID
 	 */

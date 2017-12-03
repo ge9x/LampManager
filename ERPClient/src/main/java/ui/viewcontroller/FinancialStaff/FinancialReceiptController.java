@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import com.jfoenix.controls.JFXTabPane;
@@ -14,10 +15,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
+import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.BillVO;
 
+import java.awt.geom.RectangularShape;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -31,12 +35,13 @@ public class FinancialReceiptController {
     Label addIcon;
 
     @FXML
-    JFXTabPane tabPane;
+    VBox vBox;
 
     FinancialViewController financialViewController;
     FinancialReceiptEditController financialReceiptEditController;
 
     FinanceBLService financeBLService = new FinanceBLService_Stub();
+    FinanceBLService financeBLService2 = new FinanceController();
 
     ArrayList<AccountBillVO> draft;
     ArrayList<AccountBillVO> submitted;
@@ -45,57 +50,33 @@ public class FinancialReceiptController {
 
     ArrayList<VBox> billNodes = new ArrayList<>();
     ArrayList<FXMLLoader> fxmlLoaders = new ArrayList<>();
-    TilePane billPane;
+    BillPane billPane;
 
     @FXML
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = financeBLService.getDraftAccountBills();
-        submitted = financeBLService.getSubmittedAccountBills();
-        pass = financeBLService.getPassAccountBills();
-        failed = financeBLService.getFailedAccountBills();
+        draft = financeBLService2.getDraftAccountBills();
+        submitted = financeBLService2.getSubmittedAccountBills();
+        pass = financeBLService2.getPassAccountBills();
+        failed = financeBLService2.getFailedAccountBills();
 
-        initTabPane();
+        billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批不通过单据");
+        initTabs();
+        vBox.getChildren().add(billPane.getTabPane());
     }
-
-    public void initTabPane(){
-        Tab draftTab = new Tab();
-        Tab submittedTab = new Tab();
-        Tab passTab = new Tab();
-        Tab failedTab = new Tab();
-
-        draftTab.setText("草稿单据");
-        submittedTab.setText("待审批单据");
-        passTab.setText("审批通过单据");
-        failedTab.setText("审批不通过单据");
-
-
-
-        initTabs(draftTab,submittedTab,passTab,failedTab);
-        tabPane.getTabs().addAll(draftTab,submittedTab,passTab,failedTab);
-        tabPane.getSelectionModel().selectFirst();
-    }
-    public void initTabs(Tab...tabs){
-        for (int i = 0; i < tabs.length; i++){
-            tabs[i].setOnSelectionChanged(new EventHandler<Event>() {
+    public void initTabs(){
+        ArrayList<Tab> tabs = billPane.getAllTabs();
+        for (int i = 0; i < tabs.size(); i++){
+            tabs.get(i).setOnSelectionChanged(new EventHandler<Event>() {
                 @Override
                 public void handle(Event event) {
                     Tab tab = (Tab)event.getSource();
                     if (tab.isSelected()){
-                        ScrollPane scrollPane = new ScrollPane();
-                        billPane = new TilePane();
-                        billPane.setPadding(new Insets(10,7,0,10));
-                        billPane.setPrefColumns(3);
-                        billPane.setHgap(25);
-                        billPane.setVgap(20);
-                        billPane.getChildren().clear();
                         billNodes.clear();
                         fxmlLoaders.clear();
                         loadBills(tab.getText());
-                        billPane.getChildren().addAll(billNodes);
-                        scrollPane.setContent(billPane);
-                        tab.setContent(scrollPane);
+                        billPane.setContent(tab,billNodes);
                     }
                 }
             });
@@ -119,6 +100,9 @@ public class FinancialReceiptController {
                 billNodes.add(node);
                 BillController financialBillController = loader.getController();
                 financialBillController.hideCheckbox();
+                if (tab == "草稿单据"){
+                    financialBillController.showDeleteIcon();
+                }
                 financialBillController.setFinancialReceiptController(this);
                 financialBillController.setBill(bills.get(i));
             } catch (IOException e) {
@@ -155,6 +139,10 @@ public class FinancialReceiptController {
     }
 
 
-
-
+    public void deleteReceipt(AccountBillVO accountBill) {
+        ResultMessage re = financeBLService2.deleteDraftAccountBill(accountBill.ID);
+        if (re == ResultMessage.SUCCESS){
+            showReceiptList();
+        }
+    }
 }

@@ -8,6 +8,11 @@ import dataservice.userdataservice.UserDataService;
 import po.UserPO;
 import util.ResultMessage;
 
+/**
+ * Created on 2017/11/29
+ * @author 巽
+ *
+ */
 public class UserDataServiceImpl implements UserDataService{
 	private static UserDataServiceImpl userDataServiceImpl;
 	private DataHelper<UserPO> userDataHelper;

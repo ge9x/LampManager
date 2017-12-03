@@ -117,7 +117,22 @@ public interface FinanceBLService extends Remote{
      */
     public ArrayList<AccountBillVO> getFailedAccountBills();
 
+    /**
+     * 删除草稿收付款单据
+     * @return
+     */
+    public ResultMessage deleteDraftAccountBill(String ID);
 
+    /**
+     * 删除草稿现金费用单
+     */
+    public ResultMessage deleteDraftCashBill(String ID);
+    /**
+     * 根据ID获得账户名称
+     * @param accountID
+     * @return
+     */
+    String getAccountNameByID(String accountID);
 }
 
 

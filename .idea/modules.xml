@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ERPClient/ERPClient.iml" filepath="$PROJECT_DIR$/ERPClient/ERPClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ERPServer/ERPServer.iml" filepath="$PROJECT_DIR$/ERPServer/ERPServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LampManager.iml" filepath="$PROJECT_DIR$/LampManager.iml" />
+    </modules>
+  </component>
+</project>

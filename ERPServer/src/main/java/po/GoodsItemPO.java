@@ -1,5 +1,7 @@
 package po;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "goodsitem")
-public class GoodsItemPO {
+public class GoodsItemPO implements Serializable {
+	private static final long serialVersionUID = 2723361962211684993L;
 	/**商品列表编号*/
 	private int ID;
 	/**商品编号*/

@@ -3,6 +3,7 @@ package ui.viewcontroller.FinancialStaff;
 import bean.AccountBillItemBean;
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
+import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import com.jfoenix.controls.JFXComboBox;
@@ -43,7 +44,7 @@ import java.util.Optional;
 public class FinancialPaymentEditController {
 
     FinancialPaymentController financialPaymentController;
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
+    FinanceBLService financeBLService = new FinanceController();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;

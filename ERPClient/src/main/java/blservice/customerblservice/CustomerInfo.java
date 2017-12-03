@@ -23,5 +23,5 @@ public interface CustomerInfo {
 	 * 通过客户编号得到客户所有信息
 	 * @return 该客户所有信息
 	 */
-	public CustomerVO getCustomerByID();
+	public CustomerVO getCustomerByID(int ID);
 }
