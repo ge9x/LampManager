@@ -87,4 +87,9 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		return ResultMessage.FAILED;
 	}
 
+	@Override
+	public String getNewID() throws RemoteException {
+		return "01";
+	}
+
 }
