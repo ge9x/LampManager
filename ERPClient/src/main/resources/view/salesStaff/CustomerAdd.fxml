@@ -86,14 +86,11 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <JFXTextField fx:id="customerType" focusColor="#1db1a4" prefHeight="32.0" prefWidth="289.0">
+                              <JFXComboBox fx:id="customerType" focusColor="#1db1a4" prefHeight="32.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </JFXTextField>
+                              </JFXComboBox>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
@@ -106,14 +103,11 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <JFXTextField fx:id="customerLevel" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
+                              <JFXComboBox fx:id="customerLevel" focusColor="#1db1a4" prefHeight="32.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="118.0" />
                                  </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </JFXTextField>
+                              </JFXComboBox>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
