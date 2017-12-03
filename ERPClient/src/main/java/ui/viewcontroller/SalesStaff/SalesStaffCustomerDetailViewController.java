@@ -1,6 +1,7 @@
 package ui.viewcontroller.SalesStaff;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import blservice.customerblservice.CustomerBLService;
@@ -10,6 +11,7 @@ import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import util.CustomerCategory;
+import util.Level;
 import util.UserLimits;
 import vo.CustomerVO;
 
@@ -22,10 +24,10 @@ public class SalesStaffCustomerDetailViewController {
 	JFXTextField customerID;
 	
 	@FXML
-	JFXTextField customerType;
+	JFXComboBox<String> customerType;
 	
 	@FXML
-	JFXTextField customerLevel;
+	JFXComboBox<String> customerLevel;
 	
 	@FXML
 	JFXTextField customerName;
@@ -63,11 +65,21 @@ public class SalesStaffCustomerDetailViewController {
 	CustomerVO customer;
 	SalesStaffCustomerCellController salesStaffCustomerCellController;
 	
+	@FXML
+	public void initialize(){
+		//初始化类别选择器
+		customerType.getItems().addAll(CustomerCategory.PUR_AGENT.getValue(), CustomerCategory.SELLER.getValue());
+				
+		//初始化等级选择器
+		customerLevel.getItems().addAll(Level.LEVEL_ONE.getValue(), Level.LEVEL_TWO.getValue(), Level.LEVEL_THREE.getValue(), 
+				Level.LEVEL_FOUR.getValue(), Level.LEVEL_FIVE.getValue());
+	}
+	
 	public void setCustomer(CustomerVO customer){
 		this.customer = customer;
 		customerID.setText(customer.customerID);
-		customerType.setText(customer.category.getValue());
-		customerLevel.setText(customer.level.getValue());
+		customerType.getSelectionModel().select(customer.category.getValue());
+		customerLevel.getSelectionModel().select(customer.level.getValue());
 		customerName.setText(customer.customerName);
 		customerPhone.setText(customer.phone);
 		customerAddress.setText(customer.address);
@@ -78,8 +90,8 @@ public class SalesStaffCustomerDetailViewController {
 		customerPay.setText(String.valueOf(customer.pay));
 		customerSalesman.setText(customer.salesman);
 		customerID.setEditable(false);
-		customerType.setEditable(false);
-		customerLevel.setEditable(false);
+		customerType.setDisable(true);
+		customerLevel.setDisable(true);
 		customerName.setEditable(false);
 		customerPhone.setEditable(false);
 		customerAddress.setEditable(false);
@@ -101,7 +113,7 @@ public class SalesStaffCustomerDetailViewController {
 	
 	public void clickEditButton(){
 		if(!hasEdited){
-			customerType.setEditable(true);
+			customerType.setDisable(false);
 			customerName.setEditable(true);
 			customerPhone.setEditable(true);
 			customerAddress.setEditable(true);
@@ -125,10 +137,11 @@ public class SalesStaffCustomerDetailViewController {
 			customer.salesman = customerSalesman.getText();
 			customer.receivableLimit = Double.parseDouble(customerReceivableLimit.getText());
 			
-			if(customerType.getText().equals("进货商")){
+			int index = customerType.getSelectionModel().getSelectedIndex();
+			if(index==0){
 				customer.category = CustomerCategory.PUR_AGENT;
 			}
-			else if(customerType.getText().equals("销售商")){
+			else{
 				customer.category = CustomerCategory.SELLER;
 			}
 
