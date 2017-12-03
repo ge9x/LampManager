@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import blservice.customerblservice.CustomerBLService;
@@ -26,10 +27,10 @@ public class SalesStaffCustomerAddViewController {
 	JFXTextField customerID;
 	
 	@FXML
-	JFXTextField customerType;
+	JFXComboBox<String> customerType;
 	
 	@FXML
-	JFXTextField customerLevel;
+	JFXComboBox<String> customerLevel;
 	
 	@FXML
 	JFXTextField customerName;
@@ -70,11 +71,18 @@ public class SalesStaffCustomerAddViewController {
 	
 	@FXML
     public void initialize(){
-		customerLevel.setText(Level.LEVEL_ONE.getValue());
 		customerReceive.setText(Money.getMoneyString(0));
 		customerPay.setText(Money.getMoneyString(0));
+		
+		//初始化类别选择器
+		customerType.getItems().addAll(CustomerCategory.PUR_AGENT.getValue(), CustomerCategory.SELLER.getValue());
+		customerType.getSelectionModel().select(0);
+		
+		//初始化等级选择器
+		customerLevel.getItems().addAll(Level.LEVEL_ONE.getValue(), Level.LEVEL_TWO.getValue(), Level.LEVEL_THREE.getValue(), 
+				Level.LEVEL_FOUR.getValue(), Level.LEVEL_FIVE.getValue());
+		customerLevel.getSelectionModel().select(0);
 
-		customerLevel.setEditable(false);
 		customerReceive.setEditable(false);
 		customerPay.setEditable(false);
     }
@@ -110,13 +118,14 @@ public class SalesStaffCustomerAddViewController {
 	}
 	
 	public void setCustomerInfo(){
-		customer = new CustomerVO(customerID.getText(), getCustomerType(), Level.LEVEL_ONE, customerName.getText(), customerPhone.getText(),
+		customer = new CustomerVO(customerID.getText(), getCustomerType(), getCustomerLevel(), customerName.getText(), customerPhone.getText(),
 				customerAddress.getText(), customerPostcode.getText(), customerMail.getText(), Double.parseDouble(customerReceivableLimit.getText()), 0, 0, 
 				customerSalesman.getText(), 0, 0);
 	}
 	
 	public CustomerCategory getCustomerType(){
-		if(customerType.getText().equals("进货商")){
+		int index = customerType.getSelectionModel().getSelectedIndex();
+		if(index==0){
 			return CustomerCategory.PUR_AGENT;
 		}
 		else{
@@ -124,8 +133,24 @@ public class SalesStaffCustomerAddViewController {
 		}
 	}
 	
+	public Level getCustomerLevel(){
+		int index = customerLevel.getSelectionModel().getSelectedIndex();
+		switch(index){
+		case 0:
+			return Level.LEVEL_ONE;
+		case 1:
+			return Level.LEVEL_TWO;
+		case 2:
+			return Level.LEVEL_THREE;
+		case 3:
+			return Level.LEVEL_FOUR;
+		default:
+			return Level.LEVEL_FIVE;
+		}
+	}
+	
 	public boolean isCompleted(){
-		if(hasContent(customerID)&&hasContent(customerType)&&hasContent(customerName)&&hasContent(customerPhone)&&hasContent(customerReceivableLimit)
+		if(hasContent(customerID)&&hasContent(customerName)&&hasContent(customerPhone)&&hasContent(customerReceivableLimit)
 				&&hasContent(customerAddress)&&hasContent(customerPostcode)&&hasContent(customerMail)&&hasContent(customerSalesman)){
 			return true;
 		}
