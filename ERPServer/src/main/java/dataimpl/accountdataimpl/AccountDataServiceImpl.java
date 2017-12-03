@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.accountdataservice.AccountDataService;
-import po.AccountBillItemPO;
-import po.AccountBillPO;
 import po.AccountPO;
 import util.ResultMessage;
 
@@ -19,8 +17,6 @@ import util.ResultMessage;
 public class AccountDataServiceImpl implements AccountDataService{
 	private static AccountDataServiceImpl accountDataServiceImpl;
 	private DataHelper<AccountPO> accountDataHelper;
-//	private DataHelper<AccountBillPO> accountBillDataHelper;
-//	private DataHelper<AccountBillItemPO> accountBillItemDataHelper;
 	
 	public static AccountDataServiceImpl getInstance(){
 		if(accountDataServiceImpl == null){
@@ -31,8 +27,6 @@ public class AccountDataServiceImpl implements AccountDataService{
 	
 	private AccountDataServiceImpl(){
 		accountDataHelper = new HibernateDataHelper<AccountPO>(AccountPO.class);
-//		accountBillDataHelper = new HibernateDataHelper<AccountBillPO>(AccountBillPO.class);
-//		accountBillItemDataHelper = new HibernateDataHelper<AccountBillItemPO>(AccountBillItemPO.class);
 	}
 
 	@Override
