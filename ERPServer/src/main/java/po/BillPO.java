@@ -89,6 +89,6 @@ public class BillPO implements Serializable {
 	}
 
 	public String buildID(){
-    	return type.getValue() + "-" + date + "-" + String.format("%05d", turn);
+    	return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%05d", turn);
     }
 }
