@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,8 @@ import javax.persistence.*;
 @Entity
 @Embeddable
 @Table(name = "goods")
-public class GoodsPO {
+public class GoodsPO implements Serializable {
+	private static final long serialVersionUID = -3013227723821014331L;
 	/**
 	 * 商品ID
 	 */
@@ -54,13 +56,16 @@ public class GoodsPO {
 	 * 每个仓库里存的该商品的数量
 	 */
 	private Map<InventoryPO, Integer> number = new HashMap<InventoryPO, Integer>();
+	/**
+	 * 同商品分类下第几个商品
+	 */
+	private int turn;
 	
 	public GoodsPO(){ }
 
 	public GoodsPO(String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice) {
-		super();
+			double recentRetailPrice, int turn) {
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
@@ -69,6 +74,7 @@ public class GoodsPO {
 		this.retailPrice = retailPrice;
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
+		this.turn = turn;
 	}
 
 	/**
@@ -80,7 +86,6 @@ public class GoodsPO {
 	public GoodsPO(int ID, String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
-		super();
 		this.ID = ID;
 		this.name = name;
 		this.model = model;
@@ -195,5 +200,17 @@ public class GoodsPO {
 	public void setNumber(Map<InventoryPO, Integer> number) {
 		this.number = number;
 	}
+
+	@Column(name = "turn")
+	public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
 	
+	public String buildID(){
+		return String.format("%02d", classification.getID()) + String.format("%06d", turn);
+	}
 }

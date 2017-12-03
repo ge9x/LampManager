@@ -45,4 +45,10 @@ public interface ClassificationDataService {
 	 * @throws RemoteException
 	 */
 	public ResultMessage update(ClassificationPO po) throws RemoteException;
+	/**
+	 * 获取新建商品分类时自动生成的ID
+	 * @return 自动生成的ID
+	 * @throws RemoteException
+	 */
+	public String getNewID() throws RemoteException;
 }

@@ -1,5 +1,6 @@
 package bl.classificationbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,36 +23,45 @@ public class ClassificationController implements ClassificationBLService, Classi
 	}
 	
 	public ArrayList<ClassificationVO> show() {
+		try {
+			return classification.show();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public ArrayList<ClassificationVO> find(String keyword) {
-		return null;
+		return classification.find(keyword);
 	}
 
 	public ClassificationVO showDetails(String ID) {
-		return null;
+		return classification.showDetails(ID);
 	}
 
 	public ResultMessage add(ClassificationVO vo) {
-		return null;
+		return classification.add(vo);
 	}
 
 	public ResultMessage delete(String ID) {
-		return null;
+		return classification.delete(ID);
 	}
 
 	public ResultMessage update(ClassificationVO vo) {
-		return null;
+		return classification.update(vo);
 	}
 
 	public String getNewID() {
-		return null;
+		return classification.getNewID();
 	}
 
 	public HashMap<String, String> getAllClassification() {
-		return null;
+		ArrayList<ClassificationVO> all = show();
+		HashMap<String, String> ret = new HashMap<>();
+		for(ClassificationVO vo : all){
+			ret.put(vo.ID, vo.name);
+		}
+		return ret;
 	}
-	
 
 }

@@ -2,8 +2,10 @@ package bl.goodsbl;
 
 import java.util.ArrayList;
 
+import bl.classificationbl.Classification;
 import blservice.classificationblservice.ClassificationInfo;
 import dataservice.goodsdataservice.GoodsDataService;
+import po.GoodsPO;
 import util.ResultMessage;
 import vo.GoodsIdentityVO;
 import vo.GoodsVO;
@@ -42,8 +44,14 @@ public class Goods {
 		return null;
 	}
 
-	public String getNewID() {
+	public String getNewID(String classificationID) {
 		return null;
 	}
 	
+	public static GoodsVO poToVO(GoodsPO po){
+		String classificationName = po.getClassification().getName();
+		// TODO 不需要GoodsVO的Inventory成员变量
+		GoodsVO ret = new GoodsVO(po.buildID(), po.getName(), po.getModel(), classificationName, "", po.countAmount(), po.getAlarmAmount(), po.getBuyingPrice(), po.getRetailPrice(), po.getRecentBuyingPrice(), po.getRecentRetailPrice());
+		return null;
+	}
 }
