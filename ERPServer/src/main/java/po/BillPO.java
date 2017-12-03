@@ -3,7 +3,9 @@ package po;
 import util.BillState;
 import util.BillType;
 
-public class BillPO {
+import java.io.Serializable;
+
+public class BillPO implements Serializable{
 	 /**
      * 单据最后修改时间
      */

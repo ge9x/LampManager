@@ -96,7 +96,12 @@ public class FinanceController implements FinanceBLService{
 
     @Override
     public ArrayList<AccountBillVO> getDraftAccountBills() {
-        return null;
+        try {
+            return finance.getDraftAccountBills();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

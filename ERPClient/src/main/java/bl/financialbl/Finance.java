@@ -24,7 +24,6 @@ import java.util.Date;
  * Created by Kry·L on 2017/11/5.
  */
 public class Finance{
-    //TODO getAllCustomer接口未定
 
     AccountBill accountBill;
     CashBill cashBill;
@@ -64,7 +63,7 @@ public class Finance{
         ArrayList<CustomerVO> customerVOS = new ArrayList<>();
         ArrayList<Integer> IDs = customerInfo.getAllCustomerID();
         for (int id:IDs){
-            customerVOS.add(customerInfo.getCustomerByID());
+            customerVOS.add(customerInfo.getCustomerByID(id));
         }
         return customerVOS;
     }
@@ -97,5 +96,12 @@ public class Finance{
         return null;
     }
 
+    public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
+        return accountBill.getDraftAccountBills();
+    }
+    public ArrayList<AccountBillVO> getSubmittedAccountBills(){
+//        return accountBill.getSubmittedAccountBills();
+        return null;
+    }
 
 }

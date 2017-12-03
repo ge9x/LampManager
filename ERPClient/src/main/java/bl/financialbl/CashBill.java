@@ -19,8 +19,6 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/5.
  */
 public class CashBill {
-    CashBillVO cashBillVO;
-    private ArrayList<CashBillItem> cashBillItems;
 
     private FinanceDataService financeDataService;
 
@@ -31,22 +29,17 @@ public class CashBill {
     public String getNewCashBillID() throws RemoteException {
         return financeDataService.getNewCashBillID();
     }
-    public void addBillItem(CashBillItemVO vo){
-
-    }
-    public void addCashBill(String account){
-
-    }
     public ResultMessage submit(CashBillVO vo) throws RemoteException {
         return financeDataService.addBill(voTopo(vo));
     }
-    public void calTotal(){};
     public CashBillVO save(){
         return null;
     }
+
     public ResultMessage update(CashBillVO vo) {
         return null;
     }
+
     public CashBillPO voTopo(CashBillVO vo){
         int turn = Integer.parseInt(vo.ID.split("-")[2]);
         ArrayList<CashBillItemPO> itemPOS = new ArrayList<>();

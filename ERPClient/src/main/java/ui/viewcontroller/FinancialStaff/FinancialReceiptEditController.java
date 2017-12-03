@@ -126,7 +126,7 @@ public class FinancialReceiptEditController {
 
     }
     public void addReceipt() {
-        String ID = financeBLService.getNewReceiptID();
+        String ID = financeBLService2.getNewReceiptID();
         BillID.setText(ID);
     }
 
@@ -152,9 +152,6 @@ public class FinancialReceiptEditController {
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
-        if (accountBillItems.isEmpty()){
-            System.out.println("Empty");
-        }
         financeBLService2.submit(accountBillVO);
         financialReceiptController.showReceiptList();
     }
