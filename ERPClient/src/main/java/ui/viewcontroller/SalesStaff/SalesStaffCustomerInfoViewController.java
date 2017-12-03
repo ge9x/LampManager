@@ -140,4 +140,9 @@ public class SalesStaffCustomerInfoViewController {
             customerList.getChildren().add(cells.get(i));
         }
     }
+    
+    public void clickDeleteButton(String customerID){
+    	customerBLService.deleteCustomer(customerID);
+    	salesStaffViewController.showCustomerList();
+    }
 }

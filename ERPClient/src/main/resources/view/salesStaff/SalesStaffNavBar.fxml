@@ -41,7 +41,7 @@
                </Label>
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="SalesReturnNav" layoutY="386.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="SalesReturnNav" layoutY="386.0" onMouseClicked="#clickSalesReturnOrderButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="SalesReturnIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />

@@ -73,6 +73,9 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	Text Total;
 	
 	@FXML
+	Label deleteIcon;
+	
+	@FXML
 	Label addIcon;
 	
 	@FXML
@@ -85,6 +88,7 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	VBox vbox;
 	
 	public void initialize(){
+		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
 		
@@ -186,6 +190,12 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	public void setGeneralManagerPromotionViewController (GeneralManagerPromotionViewController generalManagerPromotionViewController){
 		this.generalManagerPromotionViewController = generalManagerPromotionViewController;
 	}
+	
+	public void clickDeleteButton(){
+    	int index = itemTable.getSelectionModel().getSelectedIndex();
+    	total.set(total.get()-data.get(index).getTotalPrice());
+    	data.remove(index);
+    }
 	
 	public void clickAddButton(){
 		GoodsSelecter selecter = new GoodsSelecter();
