@@ -89,15 +89,30 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ResultMessage save(CashBillVO vo) {
-        return finance.save(vo);
+        try {
+            return finance.save(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage updateDraft(AccountBillVO vo) {
-        return null;
+        try {
+            return finance.updateDraft(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage updateDraft(CashBillVO vo) {
-        return null;
+        try {
+            return finance.updateDraft(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     @Override
@@ -141,7 +156,33 @@ public class FinanceController implements FinanceBLService{
     }
 
     @Override
+    public ResultMessage deleteDraftAccountBill(String ID) {
+        try {
+            return finance.deleteAccountBill(ID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage deleteDraftCashBill(String ID) {
+        try {
+            return finance.deleteCashBill(ID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public String getAccountNameByID(String accountID) {
+        return finance.getAccountNameByID(accountID);
+    }
+
+    @Override
     public String getCustomerNameByID(String ID) {
         return finance.getCustomerNameByID(ID);
     }
+
 }

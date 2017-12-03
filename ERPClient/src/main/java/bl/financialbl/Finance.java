@@ -86,16 +86,16 @@ public class Finance{
         return accountBill.save(vo);
     }
 
-    public ResultMessage save(CashBillVO vo) {
-        return null;
+    public ResultMessage save(CashBillVO vo) throws RemoteException {
+        return cashBill.save(vo);
     }
 
-    public ResultMessage updateDraft(AccountBillVO vo) {
-        return null;
+    public ResultMessage updateDraft(AccountBillVO vo) throws RemoteException {
+        return accountBill.update(vo);
     }
 
-    public ResultMessage updateDraft(CashBillVO vo) {
-        return null;
+    public ResultMessage updateDraft(CashBillVO vo) throws RemoteException {
+        return cashBill.update(vo);
     }
 
     public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
@@ -115,5 +115,18 @@ public class Finance{
     public String getCustomerNameByID(String id) {
         CustomerVO vo = customerInfo.getCustomerByID(Integer.parseInt(id));
         return vo.customerName;
+    }
+
+    public String getAccountNameByID(String accountID) {
+        return accountInfo.getAccountByID(accountID).accountName;
+    }
+
+    public ResultMessage deleteAccountBill(String id) throws RemoteException {
+        return accountBill.deleteBill(id);
+
+    }
+
+    public ResultMessage deleteCashBill(String id) throws RemoteException {
+        return cashBill.deleteBill(id);
     }
 }

@@ -45,12 +45,12 @@ public class FinanceDataRemoteObject extends UnicastRemoteObject implements Fina
 
     @Override
     public ResultMessage deleteBill(BillPO po) throws RemoteException {
-        return null;
+        return  financeDataService.deleteBill(po);
     }
 
     @Override
     public ResultMessage updateBill(BillPO po) throws RemoteException {
-        return null;
+        return financeDataService.updateBill(po);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package bl.financialbl;
 
+import bl.accountbl.Account;
 import blservice.accountblservice.AccountInfo;
 import blservice.customerblservice.CustomerInfo;
 import blservice.userblservice.UserInfo;
@@ -54,11 +55,26 @@ public class AccountBill {
         return financeDataService.addBill(voTopo(vo));
     }
 
-    public ResultMessage update(AccountBillVO vo){
+    public ResultMessage update(AccountBillVO vo) throws RemoteException {
+        accountBillPOS = financeDataService.getAllAccountBills();
         int turn = Integer.parseInt(vo.ID.split("-")[2]);
         for (AccountBillPO po : accountBillPOS) {
-            if (po.getID() == turn) {
+            if (po.getTurn() == turn) {
+                po.setState(vo.state);
+                if (vo.customerID != ""){
+                    po.setCustomerID(Integer.parseInt(vo.customerID));
+                }else{
+                    po.setCustomerID(0);
+                }
+                po.setSum(vo.sum);
+                po.setDate(vo.date);
+                po.getAccountBillItemPOS().clear();
                 ArrayList<AccountBillItemVO> itemVOS = vo.accountBillItems;
+                for (AccountBillItemVO itemVO : itemVOS) {
+                    AccountBillItemPO itemPO = AccountBillItem.voTopo(itemVO);
+                    po.getAccountBillItemPOS().add(itemPO);
+                }
+                return financeDataService.updateBill(po);
             }
         }
         return ResultMessage.FAILED;
@@ -86,6 +102,7 @@ public class AccountBill {
                 vos.add(poTovo(po));
             }
         }
+
         return vos;
     }
     public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
@@ -134,4 +151,13 @@ public class AccountBill {
         return accountBillVO;
     }
 
+    public ResultMessage deleteBill(String id) throws RemoteException {
+        ArrayList<AccountBillPO> accountBillPOS = financeDataService.getAllAccountBills();
+        int turn = Integer.parseInt(id.split("-")[2]);
+        for (AccountBillPO po : accountBillPOS){
+            if (po.getTurn() == turn )
+                return financeDataService.deleteBill(po);
+        }
+        return ResultMessage.FAILED;
+    }
 }

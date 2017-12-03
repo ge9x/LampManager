@@ -57,6 +57,9 @@ public class BillController {
     Label DetailIcon;
 
     @FXML
+    Label DeleteIcon;
+
+    @FXML
     JFXCheckBox checkBox;
 
     @FXML
@@ -66,6 +69,8 @@ public class BillController {
         billCreaterIcon.setText("\ue609");
         billMoneyIcon.setText("\ue611");
         DetailIcon.setText("\ue89d");
+        DeleteIcon.setText("\ue619");
+        DeleteIcon.setVisible(false);
     }
 
     public void setBill(BillVO bill){
@@ -129,6 +134,12 @@ public class BillController {
                     financialReceiptController.showReceiptDetailView(accountBill);
                 }
             });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    financialReceiptController.deleteReceipt(accountBill);
+                }
+            });
 
         }
         else if(bill.type==BillType.PURCHASE){
@@ -166,6 +177,9 @@ public class BillController {
     }
     public void hideCheckbox(){
         checkBox.setVisible(false);
+    }
+    public void showDeleteIcon(){
+        DeleteIcon.setVisible(true);
     }
 
     public void setFinancialReceiptController(FinancialReceiptController financialReceiptController){

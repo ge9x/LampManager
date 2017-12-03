@@ -24,7 +24,7 @@ public class AccountBillItem {
     }
 
     public AccountBillItemVO poTovo(AccountBillItemPO po){
-        AccountBillItemVO accountBillItemVO = new AccountBillItemVO(accountInfo.getAccountByID(po.getID() + ""), po.getMoney(), po.getRemark());
+        AccountBillItemVO accountBillItemVO = new AccountBillItemVO(accountInfo.getAccountByID(po.getAccountID() + ""), po.getMoney(), po.getRemark());
         return accountBillItemVO;
     }
 

@@ -29,13 +29,13 @@ public class MockCashBill extends CashBill {
 
 
     @Override
-    public CashBillVO save() {
+    public ResultMessage save(CashBillVO vo) {
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         ArrayList<CashBillItemVO> cashBillItemVOS = new ArrayList<CashBillItemVO>();
         cashBillItemVOS.add(itemVO3);
         CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        return billVO3;
+        return ResultMessage.SUCCESS;
     }
 
     @Override

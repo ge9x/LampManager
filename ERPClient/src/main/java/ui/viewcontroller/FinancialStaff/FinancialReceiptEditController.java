@@ -135,6 +135,7 @@ public class FinancialReceiptEditController {
         //初始化Customer选择框
         ArrayList<String> customerNames = new ArrayList<>();
         customerNames.clear();
+        Customer.getItems().clear();
         for (CustomerVO customer : customers){
             customerNames.add(customer.customerName);
         }
@@ -163,7 +164,11 @@ public class FinancialReceiptEditController {
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
-        financeBLService2.submit(accountBillVO);
+        if (isNew == true){
+            financeBLService2.submit(accountBillVO);
+        }else{
+            financeBLService2.updateDraft(accountBillVO);
+        }
         financialReceiptController.showReceiptList();
     }
     public void clickCancelButton(){
@@ -261,14 +266,12 @@ public class FinancialReceiptEditController {
         Customer.getSelectionModel().selectFirst();
         Customer.setEditable(false);
 
-        /**
-         * 返回按钮需要再次询问是否保存为草稿
-         */
+
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event){
-                clickCancelButton();
+            public void handle(MouseEvent event) {
+                financialReceiptController.showReceiptList();
             }
         });
 
@@ -286,9 +289,12 @@ public class FinancialReceiptEditController {
         else{
             submitButton.setVisible(false);
         }
-        for (AccountBillItemVO accountBillItemVO:account.accountBillItems){
-            data.add(new AccountBillItemBean(accountBillItemVO.account.accountName,accountBillItemVO.transferMoney,accountBillItemVO.remark));
-            total.set(total.get()+accountBillItemVO.transferMoney);
+
+        for (AccountBillItemVO accountBillItemVO : account.accountBillItems) {
+            String accountName = financeBLService2.getAccountNameByID(accountBillItemVO.account.accountID);
+            accountBillItems.add(accountBillItemVO);
+            data.add(new AccountBillItemBean(accountName, accountBillItemVO.transferMoney, accountBillItemVO.remark));
+            total.set(total.get() + accountBillItemVO.transferMoney);
         }
     }
 
@@ -298,6 +304,7 @@ public class FinancialReceiptEditController {
      */
     public void setForEditView(){
         addIcon.setVisible(true);
+        title.setText("编辑草稿单");
 
         Customer.setEditable(true);
         initCustomerCombobox();
@@ -307,6 +314,16 @@ public class FinancialReceiptEditController {
             @Override
             public void handle(MouseEvent event) {
                 clickSubmitButton();
+            }
+        });
+
+        /**
+         * 返回按钮需要再次询问是否保存为草稿
+         */
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
             }
         });
     }
