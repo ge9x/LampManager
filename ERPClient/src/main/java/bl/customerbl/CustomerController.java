@@ -1,5 +1,6 @@
 package bl.customerbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import blservice.customerblservice.CustomerBLService;
@@ -24,43 +25,66 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	}
 
 	public ResultMessage addCustomer(CustomerVO vo) {
-		return null;
+		try {
+			return customer.addCustomer(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
 	}
 
 	public ResultMessage deleteCustomer(String customerID) {
-		return null;
+		try {
+			return customer.deleteCustomer(customerID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
 	}
 
 	public ArrayList<CustomerVO> findCustomerByKeywords(String keywords) {
-		return null;
+		try {
+			return customer.findCustomerByKeywords(keywords);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public ArrayList<CustomerVO> findCustomerByCustomerID(String customerID) {
-		return null;
+		try {
+			return customer.findCustomerByCustomerID(customerID);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return null;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public ResultMessage updateCustomer(CustomerVO vo) {
-		return null;
-	}
-
-    @Override
-    public ArrayList<Integer> getAllCustomerID() {
-        return null;
-    }
-
-    public ArrayList<String> getAllCustomerName() {
-		return null;
-	}
-
-	public CustomerVO getCustomerByName() {
-		return null;
-	}
-
-	public CustomerVO getCustomerByID() {
-		return null;
+		try {
+			return customer.updateCustomer(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
 	}
 
 	public ArrayList<CustomerVO> show() {
+		return null;
+	}
+
+	public ArrayList<Integer> getAllCustomerID(){
+		return null;
+	}
+	
+	public ArrayList<String> getAllCustomerName(){
+		return null;
+	}
+	
+	public CustomerVO getCustomerByID(int ID){
 		return null;
 	}
 	
