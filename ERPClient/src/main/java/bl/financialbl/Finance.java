@@ -1,6 +1,8 @@
 package bl.financialbl;
 
+import bl.accountbl.Account;
 import bl.accountbl.AccountController;
+import bl.customerbl.Customer;
 import bl.customerbl.CustomerController;
 import bl.formbl.DocumentDetails;
 import bl.formbl.Profit;
@@ -99,9 +101,19 @@ public class Finance{
     public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
         return accountBill.getDraftAccountBills();
     }
-    public ArrayList<AccountBillVO> getSubmittedAccountBills(){
-//        return accountBill.getSubmittedAccountBills();
-        return null;
+    public ArrayList<AccountBillVO> getSubmittedAccountBills() throws RemoteException {
+        return accountBill.getSubmittedAccountBills();
+    }
+    public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
+        return accountBill.getPassAccountBills();
+
+    }
+    public ArrayList<AccountBillVO> getFailedAccountBills() throws RemoteException {
+        return accountBill.getFailedAccountBills();
     }
 
+    public String getCustomerNameByID(String id) {
+        CustomerVO vo = customerInfo.getCustomerByID(Integer.parseInt(id));
+        return vo.customerName;
+    }
 }

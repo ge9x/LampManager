@@ -248,6 +248,7 @@ public class FinancialReceiptEditController {
      * @param account
      */
     public void setForDetailView(AccountBillVO account){
+        isNew = false;
         BillID.setText(account.ID);
 
         title.setText("收款单详情");
@@ -260,11 +261,14 @@ public class FinancialReceiptEditController {
         Customer.getSelectionModel().selectFirst();
         Customer.setEditable(false);
 
+        /**
+         * 返回按钮需要再次询问是否保存为草稿
+         */
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                financialReceiptController.showReceiptList();
+            public void handle(MouseEvent event){
+                clickCancelButton();
             }
         });
 

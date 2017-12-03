@@ -76,6 +76,42 @@ public class AccountBill {
         }
         return vos;
     }
+    public ArrayList<AccountBillVO> getSubmittedAccountBills() throws RemoteException {
+        accountBillPOS.clear();
+        ArrayList<AccountBillVO> vos = new ArrayList<>();
+        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
+        for(AccountBillPO po : pos){
+            if (po.getState() == BillState.SUBMITTED){
+                accountBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
+    public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
+        accountBillPOS.clear();
+        ArrayList<AccountBillVO> vos = new ArrayList<>();
+        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
+        for(AccountBillPO po : pos){
+            if (po.getState() == BillState.PASS){
+                accountBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
+    public ArrayList<AccountBillVO> getFailedAccountBills() throws RemoteException {
+        accountBillPOS.clear();
+        ArrayList<AccountBillVO> vos = new ArrayList<>();
+        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
+        for(AccountBillPO po : pos){
+            if (po.getState() == BillState.FAILED){
+                accountBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
 
     public AccountBillPO voTopo(AccountBillVO vo){
         ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();

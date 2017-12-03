@@ -112,21 +112,36 @@ public class FinanceController implements FinanceBLService{
 
     @Override
     public ArrayList<AccountBillVO> getSubmittedAccountBills() {
-        return null;
+        try {
+            return finance.getSubmittedAccountBills();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public ArrayList<AccountBillVO> getPassAccountBills() {
-        return null;
+        try {
+            return finance.getPassAccountBills();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public ArrayList<AccountBillVO> getFailedAccountBills() {
-        return null;
+        try {
+            return finance.getFailedAccountBills();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public String getCustomerNameByID(String ID) {
-        return null;
+        return finance.getCustomerNameByID(ID);
     }
 }
