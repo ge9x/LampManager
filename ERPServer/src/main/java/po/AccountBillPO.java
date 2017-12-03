@@ -3,7 +3,6 @@ package po;
 import util.BillState;
 import util.BillType;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "accountbill")
-public class AccountBillPO extends BillPO implements Serializable{
-	private static final long serialVersionUID = 5946613210212068530L;
+public class AccountBillPO extends BillPO{
+	private static final long serialVersionUID = -5634919115638049374L;
 
 	/**
      * 客户的ID

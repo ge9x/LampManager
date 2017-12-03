@@ -16,6 +16,7 @@ import util.BillType;
 @Entity
 @Table(name = "inventorybill")
 public class InventoryBillPO extends BillPO{
+	private static final long serialVersionUID = 1767677400033597429L;
 	/**
 	 * 该单据涉及的仓库
 	 */

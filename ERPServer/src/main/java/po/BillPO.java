@@ -1,12 +1,14 @@
 package po;
 
+import java.io.Serializable;
+
 import util.BillState;
 import util.BillType;
 
-import java.io.Serializable;
+public class BillPO implements Serializable {
+	private static final long serialVersionUID = 96614009950694909L;
 
-public class BillPO implements Serializable{
-	 /**
+	/**
      * 单据最后修改时间
      */
     private String date;

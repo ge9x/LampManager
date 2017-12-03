@@ -1,14 +1,16 @@
 package po;
 
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.*;
 
 /**
  * Created by Kry·L on 2017/10/22.
  */
 @Entity
 @Table(name = "accountbillitem")
-public class AccountBillItemPO implements Serializable{
+public class AccountBillItemPO implements Serializable {
+	private static final long serialVersionUID = 253109617379196292L;
 	/**
 	 * 条目唯一标识ID
 	 */
