@@ -3,6 +3,7 @@ package bl.financialbl;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
 import blservice.formblservice.SalesDetailsInput;
+import com.sun.org.apache.regexp.internal.RE;
 import util.ResultMessage;
 import vo.*;
 
@@ -79,7 +80,12 @@ public class FinanceController implements FinanceBLService{
     }
 
     public ResultMessage save(AccountBillVO vo) {
-        return finance.save(vo);
+        try {
+            return finance.save(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.SUCCESS;
+        }
     }
 
     public ResultMessage save(CashBillVO vo) {

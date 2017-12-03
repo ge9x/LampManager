@@ -55,11 +55,11 @@ public class FinanceDataRemoteObject extends UnicastRemoteObject implements Fina
 
     @Override
     public ArrayList<AccountBillPO> getAllAccountBills() throws RemoteException {
-        return null;
+        return financeDataService.getAllAccountBills();
     }
 
     @Override
     public ArrayList<CashBillPO> getAllCashBills() throws RemoteException {
-        return null;
+        return financeDataService.getAllCashBills();
     }
 }

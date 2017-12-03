@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
 import com.jfoenix.controls.JFXTabPane;
@@ -37,6 +38,7 @@ public class FinancialReceiptController {
     FinancialReceiptEditController financialReceiptEditController;
 
     FinanceBLService financeBLService = new FinanceBLService_Stub();
+    FinanceBLService financeBLService2 = new FinanceController();
 
     ArrayList<AccountBillVO> draft;
     ArrayList<AccountBillVO> submitted;
@@ -51,7 +53,7 @@ public class FinancialReceiptController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = financeBLService.getDraftAccountBills();
+        draft = financeBLService2.getDraftAccountBills();
         submitted = financeBLService.getSubmittedAccountBills();
         pass = financeBLService.getPassAccountBills();
         failed = financeBLService.getFailedAccountBills();

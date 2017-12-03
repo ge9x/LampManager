@@ -13,6 +13,7 @@ import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -82,7 +83,10 @@ public class AccountBill {
             accountBillItemPOS.add(AccountBillItem.voTopo(accountBillItemVO));
         }
         int turn = Integer.parseInt(vo.ID.split("-")[2]);
-        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,Integer.parseInt(vo.customerID),vo.userName,accountBillItemPOS,turn);
+        int customerID = 0;
+        if (!vo.customerID.equals(""))
+            customerID = Integer.parseInt(vo.customerID);
+        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,customerID,vo.userName,accountBillItemPOS,turn);
         return accountBillPO;
     }
     public AccountBillVO poTovo(AccountBillPO po){

@@ -152,7 +152,7 @@ public class InventoryClassificationController {
 
            //只有叶节点才可以添加商品
            if (item.isLeaf()) {
-               Dialog dialog = getAddGoodDialog();
+               Dialog dialog = getAddGoodDialog(findID(item.getValue()));
                Optional<ArrayList<String>> result = dialog.showAndWait();
                if (result.isPresent()) {
                    ArrayList<String> results = result.get();
@@ -171,7 +171,7 @@ public class InventoryClassificationController {
        }
 
     }
-    public Dialog getAddGoodDialog(){
+    public Dialog getAddGoodDialog(String classificationID){
         ArrayList<Label> labels = new ArrayList<>();
         labels.add(new Label("商品编号"));
         labels.add(new Label("商品名称"));
@@ -181,7 +181,7 @@ public class InventoryClassificationController {
         labels.add(new Label("警戒数量"));
 
         ArrayList<Node> nodes = new ArrayList<>();
-        Label ID = new Label(goodsBLService.getNewID());
+        Label ID = new Label(goodsBLService.getNewID(classificationID));
         JFXTextField nameTF = new JFXTextField();
         JFXTextField modelTF = new JFXTextField();
         JFXTextField purchaseTF = new JFXTextField();

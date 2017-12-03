@@ -80,8 +80,8 @@ public class Finance{
         return cashBill.submit(vo);
     }
 
-    public ResultMessage save(AccountBillVO vo) {
-        return null;
+    public ResultMessage save(AccountBillVO vo) throws RemoteException {
+        return accountBill.save(vo);
     }
 
     public ResultMessage save(CashBillVO vo) {

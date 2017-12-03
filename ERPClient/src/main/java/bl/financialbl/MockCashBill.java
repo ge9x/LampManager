@@ -14,15 +14,8 @@ import java.util.Date;
  * Created by Kry·L on 2017/11/7.
  */
 public class MockCashBill extends CashBill {
-    @Override
-    public void addBillItem(CashBillItemVO vo) {
 
-    }
 
-    @Override
-    public void addCashBill(String account) {
-
-    }
 
     @Override
     public ResultMessage submit(CashBillVO vo) {
@@ -34,10 +27,6 @@ public class MockCashBill extends CashBill {
         return ResultMessage.SUCCESS;
     }
 
-    @Override
-    public void calTotal() {
-
-    }
 
     @Override
     public CashBillVO save() {
