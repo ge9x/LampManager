@@ -45,7 +45,7 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 		return null;
 	}
 
-	public String getNewID() {
+	public String getNewID(String classificationID) {
 		return null;
 	}
 

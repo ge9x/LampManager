@@ -42,7 +42,7 @@ public class Goods {
 		return null;
 	}
 
-	public String getNewID() {
+	public String getNewID(String classificationID) {
 		return null;
 	}
 	

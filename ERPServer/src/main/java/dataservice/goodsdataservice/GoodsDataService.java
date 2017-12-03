@@ -45,4 +45,10 @@ public interface GoodsDataService {
 	 * @throws RemoteException
 	 */
 	public ResultMessage update(GoodsPO po) throws RemoteException;
+	/**
+	 * 获取新建商品时自动生成的ID
+	 * @return 自动生成的ID
+	 * @throws RemoteException
+	 */
+	public String getNewID(String classificationID) throws RemoteException;
 }

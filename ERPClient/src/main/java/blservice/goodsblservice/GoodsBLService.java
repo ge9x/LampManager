@@ -50,5 +50,5 @@ public interface GoodsBLService {
 	 * 得到自动生成的新商品的ID
 	 * @return 自动生成的ID
 	 */
-	public String getNewID();
+	public String getNewID(String calssificationID);
 }
