@@ -3,7 +3,6 @@ package po;
 import util.BillState;
 import util.BillType;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "accountbill")
-public class AccountBillPO extends BillPO implements Serializable{
-	private static final long serialVersionUID = 5946613210212068530L;
+public class AccountBillPO extends BillPO{
+	private static final long serialVersionUID = -5634919115638049374L;
 
 	/**
      * 客户的ID
@@ -44,7 +43,7 @@ public class AccountBillPO extends BillPO implements Serializable{
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
-        this.sum = calSum();
+        calSum();
     }
 
 	/**
@@ -58,7 +57,7 @@ public class AccountBillPO extends BillPO implements Serializable{
         this.customerID = customerID;
         this.userName = userName;
         this.accountBillItemPOS = accountBillItemPOS;
-        this.sum = calSum();
+        calSum();
     }
     
     @Column(name = "date")
@@ -109,7 +108,11 @@ public class AccountBillPO extends BillPO implements Serializable{
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
-	
+
+	/**
+	 * 计算当前总金额，同时更新sum变量
+	 * @return 当前总金额
+	 */
 	public double calSum(){
         double sum = 0;
         for (int i = 0; i < accountBillItemPOS.size(); i++){
@@ -136,7 +139,6 @@ public class AccountBillPO extends BillPO implements Serializable{
 
     public void setAccountBillItemPOS(List<AccountBillItemPO> accountBillItemPOS) {
         this.accountBillItemPOS = accountBillItemPOS;
-        calSum();
     }
 
     @Column(name = "sum")

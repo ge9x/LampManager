@@ -53,4 +53,9 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	public ResultMessage update(ClassificationPO po) throws RemoteException {
 		return classificationDataHelper.update(po);
 	}
+
+	@Override
+	public String getNewID() throws RemoteException {
+		return String.format("%02d", classificationDataHelper.count() + 1);
+	}
 }
