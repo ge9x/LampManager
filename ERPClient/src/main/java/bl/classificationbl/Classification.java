@@ -3,8 +3,6 @@ package bl.classificationbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import org.jboss.jandex.VoidType;
-
 import bl.goodsbl.Goods;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
@@ -19,8 +17,6 @@ import vo.GoodsVO;
  *
  */
 public class Classification {
-	
-	private ClassificationVO vo;
 	private ClassificationDataService classificationDataService;
 
 	public ArrayList<ClassificationVO> show() throws RemoteException {
@@ -32,28 +28,36 @@ public class Classification {
 		return ret;
 	}
 
-	public ArrayList<ClassificationVO> find(String keyword) {
-		return null;
+	public ArrayList<ClassificationVO> find(String keyword) throws RemoteException {
+		ArrayList<ClassificationPO> pos = classificationDataService.findByName(keyword);
+		ArrayList<ClassificationVO> ret = new ArrayList<>();
+		for(ClassificationPO po : pos){
+			ret.add(poToVO(po));
+		}
+		return ret;
 	}
 
-	public ClassificationVO showDetails(String ID) {
-		return null;
+	public ClassificationVO showDetails(String ID) throws NumberFormatException, RemoteException {
+		ClassificationPO found = classificationDataService.find(Integer.parseInt(ID));
+		return poToVO(found);
 	}
 
-	public ResultMessage add(ClassificationVO vo) {
-		return null;
+	public ResultMessage add(ClassificationVO vo) throws RemoteException {
+		return classificationDataService.add(voToPO(vo));
 	}
 
-	public ResultMessage delete(String ID) {
-		return null;
+	public ResultMessage delete(String ID) throws RemoteException {
+		ClassificationPO found = null;
+		return classificationDataService.delete(found);
 	}
 
-	public ResultMessage update(ClassificationVO vo) {
-		return null;
+	public ResultMessage update(ClassificationVO vo) throws RemoteException {
+		ClassificationPO found = null;
+		return classificationDataService.delete(found);
 	}
 
-	public String getNewID() {
-		return null;
+	public String getNewID() throws RemoteException {
+		return classificationDataService.getNewID();
 	}
 	
 	public static ClassificationVO poToVO(ClassificationPO po){
@@ -74,5 +78,19 @@ public class Classification {
 			ClassificationVO ret = new ClassificationVO(ID, po.getName(), father, chidren, goods);
 			return ret;
 		}
+	}
+	
+	private ClassificationPO voToPO(ClassificationVO vo) throws NumberFormatException, RemoteException {
+		ClassificationPO father  = classificationDataService.find(Integer.parseInt(vo.ID));
+		ArrayList<ClassificationPO> chidren = new ArrayList<>();
+		for(ClassificationVO child : vo.chidren){
+			chidren.add(classificationDataService.find(Integer.parseInt(child.ID)));
+		}
+		ArrayList<GoodsPO> goods = new ArrayList<>();
+		for(GoodsVO aGoods : vo.goods){
+//			goods.add(); TODO
+		}
+		ClassificationPO ret = new ClassificationPO(vo.name, father, chidren, goods);
+		return ret;
 	}
 }
