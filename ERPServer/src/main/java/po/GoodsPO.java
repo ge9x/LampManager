@@ -56,13 +56,16 @@ public class GoodsPO implements Serializable {
 	 * 每个仓库里存的该商品的数量
 	 */
 	private Map<InventoryPO, Integer> number = new HashMap<InventoryPO, Integer>();
+	/**
+	 * 同商品分类下第几个商品
+	 */
+	private int turn;
 	
 	public GoodsPO(){ }
 
 	public GoodsPO(String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice) {
-		super();
+			double recentRetailPrice, int turn) {
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
@@ -71,6 +74,7 @@ public class GoodsPO implements Serializable {
 		this.retailPrice = retailPrice;
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
+		this.turn = turn;
 	}
 
 	/**
@@ -82,7 +86,6 @@ public class GoodsPO implements Serializable {
 	public GoodsPO(int ID, String name, String model, ClassificationPO classification,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
-		super();
 		this.ID = ID;
 		this.name = name;
 		this.model = model;
@@ -197,5 +200,17 @@ public class GoodsPO implements Serializable {
 	public void setNumber(Map<InventoryPO, Integer> number) {
 		this.number = number;
 	}
+
+	@Column(name = "turn")
+	public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
 	
+	public String buildID(){
+		return String.format("%02d", classification.getID()) + String.format("%06d", turn);
+	}
 }
