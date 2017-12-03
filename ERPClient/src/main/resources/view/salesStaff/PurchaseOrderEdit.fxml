@@ -92,6 +92,11 @@
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin></Label>
+                                    <Label fx:id="deleteIcon" alignment="CENTER" onMouseClicked="#clickDeleteButton" prefHeight="22.0" prefWidth="27.0" styleClass="icon-label" text="-">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
                                  </children>
                               </HBox>
                            </children>

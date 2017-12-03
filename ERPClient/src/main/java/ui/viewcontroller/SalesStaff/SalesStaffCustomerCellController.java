@@ -33,10 +33,14 @@ public class SalesStaffCustomerCellController {
 	@FXML
 	Label DetailIcon;
 	
+	@FXML
+	Label deleteIcon;
+	
     @FXML
     public void initialize(){
         CustomerIcon.setText("\ue671");
         DetailIcon.setText("\ue89d");
+        deleteIcon.setText("\ue600");
     }
     
     public void setSalesStaffCustomerInfoViewController(SalesStaffCustomerInfoViewController salesStaffCustomerInfoViewController){
@@ -92,5 +96,9 @@ public class SalesStaffCustomerCellController {
     
     public void clickReturnButton(){
     	salesStaffCustomerInfoViewController.clickReturnButton();
+    }
+    
+    public void clickDeleteButton(){
+    	salesStaffCustomerInfoViewController.clickDeleteButton(customer.customerID);
     }
 }
