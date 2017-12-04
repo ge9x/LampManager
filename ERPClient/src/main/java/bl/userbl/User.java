@@ -1,18 +1,21 @@
 package bl.userbl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dataservice.userdataservice.UserDataService;
+import po.UserPO;
+import rmi.UserRemoteHelper;
 import util.ResultMessage;
 import vo.UserVO;
 
 public class User {
 
-	private UserVO vo;
 	private UserDataService userDataService;
+	ArrayList<UserPO> userPOs;
 	
 	public User(){
-		
+		userDataService = UserRemoteHelper.getInstance().getUserDataService();
 	}
 	
 	public ResultMessage login(String userID, String password){
@@ -31,12 +34,51 @@ public class User {
 		return null;
 	}
 	
-	public UserVO findUserByID(String UserID){
+	public HashMap<String, String> getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<UserVO> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCurrentUserID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCurrentUserNameByID(String UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<UserVO> show() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<UserVO> findUsersByID(String UserID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<UserVO> findUsersByKeywords(String keywords) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public UserVO findUserByID(String UserID) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public ArrayList<UserVO> show(){
-		return null;
+	public UserPO voTOpo(UserVO userVO){
+		return new UserPO(userVO.password, userVO.name, userVO.position, userVO.limit);
 	}
 	
+	public UserVO poTOvo(UserPO userPO){
+		return new UserVO(String.valueOf(userPO.getUserID()), userPO.getPassword(), userPO.getName(), userPO.getPosition(), userPO.getLimit());
+	}
 }
