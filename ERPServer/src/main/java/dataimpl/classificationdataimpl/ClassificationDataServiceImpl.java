@@ -58,4 +58,9 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	public String getNewID() throws RemoteException {
 		return String.format("%02d", classificationDataHelper.count() + 1);
 	}
+
+	@Override
+	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException {
+		return classificationDataHelper.fuzzyQuery("name", keyword);
+	}
 }
