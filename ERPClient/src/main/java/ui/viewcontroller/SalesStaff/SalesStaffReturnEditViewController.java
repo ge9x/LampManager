@@ -60,6 +60,9 @@ public class SalesStaffReturnEditViewController {
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
     DoubleProperty total = new SimpleDoubleProperty(0);
+    
+    @FXML
+    Label deleteIcon;
 
     @FXML
     Label addIcon;
@@ -86,6 +89,7 @@ public class SalesStaffReturnEditViewController {
     JFXComboBox inventory;
     
     public void initialize(){
+    	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
         String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
         Username.setText(name);
@@ -173,6 +177,12 @@ public class SalesStaffReturnEditViewController {
     public void addReturnOrder() {
         String ID = salesBLService.getnewReturnID();
         BillID.setText(ID);
+    }
+    
+    public void clickDeleteButton(){
+    	int index = itemTable.getSelectionModel().getSelectedIndex();
+    	total.set(total.get()-data.get(index).getTotalPrice());
+    	data.remove(index);
     }
 
     public void clickAddButton(){

@@ -17,4 +17,14 @@ public enum CustomerCategory {
 	public String getValue(){
 		return value;
 	}
+	public static CustomerCategory categoryToString(String value){
+		switch (value) {
+		case "进货商":
+			return CustomerCategory.PUR_AGENT;
+		case "销售商":
+			return CustomerCategory.SELLER;
+		default:
+			return null;
+		}
+	}
 }

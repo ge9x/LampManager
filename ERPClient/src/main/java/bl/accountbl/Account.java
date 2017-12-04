@@ -71,6 +71,15 @@ public class Account{
         return accountNames;
     }
 
+    public AccountVO getAccountByID(String id) throws RemoteException {
+        ArrayList<AccountPO> accountPOS = accountDataService.show();
+        for (AccountPO po : accountPOS){
+            if (po.getID() == Integer.parseInt(id)){
+                return poTOvo(po);
+            }
+        }
+        return null;
+    }
     public AccountPO voTopo(AccountVO accountVO){
         return new AccountPO(accountVO.accountName,accountVO.money);
     }

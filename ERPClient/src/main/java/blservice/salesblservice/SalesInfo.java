@@ -14,10 +14,6 @@ import vo.SalesVO;
 
 public interface SalesInfo {
 	/**
-	 * 得到所有进货单时间
-	 */
-	public ArrayList<Date> getAllPurchaseDate();
-	/**
 	 * 得到所有销售单时间
 	 */
 	public ArrayList<Date> getAllSalesDate();
@@ -60,41 +56,21 @@ public interface SalesInfo {
 	public ArrayList<String> getSalesOrderIDByInventory(String inventory);
 	//查看经营历程表
 	/**
-	 * 通过查看时间区间得到进货单ID
-	 */
-	public ArrayList<String> getPurchaseIDByDate(Date startDate,Date endDate);
-	/**
 	 * 通过查看时间区间得到销售单ID
 	 */
 	public ArrayList<String> getSalesIDByDate(Date startDate,Date endDate);
-	/**
-	 * 通过查找单据类型得到进货单ID
-	 */
-	public ArrayList<String> getPurchaseIDByType(BillType type);
 	/**
 	 * 通过查找单据类型得到销售单ID
 	 */
 	public ArrayList<String> getSalesIDByType(BillType type);
 	/**
-	 * 通过查找客户得到进货单ID
-	 */
-	public ArrayList<String> getPurchaseIDByCustomerID(String customerID);
-	/**
 	 * 通过查找客户得到销售单ID
 	 */
 	public ArrayList<String> getSalesIDByCustomerID(String customerID);
 	/**
-	 * 通过查找业务员得到进货单ID
-	 */
-	public ArrayList<String> getPurchaseIDBySalesman(String salesman);
-	/**
 	 * 通过查找业务员得到销售单ID
 	 */
 	public ArrayList<String> getSalesIDBySalesman(String salesman);
-	/**
-	 * 通过查找仓库得到进货单ID
-	 */
-	public ArrayList<String> getPurchaseIDByInventory(String inventory);
 	/**
 	 * 通过查找仓库得到销售单ID
 	 */

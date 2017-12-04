@@ -120,7 +120,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
 
     public ResultMessage submit(CashBillVO vo) {
         if (vo.ID != null && vo.cashBillItems != null
-                && vo.userName != null && vo.accountName != null
+                && vo.userName != null && vo.accountID != null
                 && vo.type != null){
             System.out.println("Submit succeed");
             return ResultMessage.SUCCESS;
@@ -206,6 +206,21 @@ public class FinanceBLService_Stub implements FinanceBLService {
         accountBillVOS.add(billVO);
         accountBillVOS.add(billVO);
         return accountBillVOS;
+    }
+
+    @Override
+    public ResultMessage deleteDraftAccountBill(String ID) {
+        return null;
+    }
+
+    @Override
+    public ResultMessage deleteDraftCashBill(String ID) {
+        return null;
+    }
+
+    @Override
+    public String getAccountNameByID(String accountID) {
+        return null;
     }
 
     @Override

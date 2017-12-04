@@ -20,4 +20,11 @@ public interface AccountInfo {
      * @return
      */
     public ArrayList<AccountVO> show();
+
+    /**
+     * 根据ID查找账户
+     * @param id
+     * @return
+     */
+    public AccountVO getAccountByID(String id);
 }
