@@ -3,11 +3,15 @@ package bl.salesbl;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
+import po.GoodsItemPO;
 import po.PurchasePO;
+import util.BillState;
+import util.BillType;
 import util.ResultMessage;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -50,7 +54,6 @@ public class PurchaseLineItem {
 	}
 	
 	public static PurchasePO voTopo(PurchaseVO vo){
-		return null;
+		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,(List)vo.goodsItemList,vo.remarks,vo.date,1);
 	}
-	
 }
