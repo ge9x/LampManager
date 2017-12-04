@@ -30,11 +30,17 @@ public class Customer {
 	 * 
 	 * @return customerID
 	 * @author zlk
+	 * @throws RemoteException 
 	 * 
 	 */
-	public String getNewCustomerID(){
-		return null;
-		
+	public String getNewCustomerID() throws RemoteException{
+		ArrayList<CustomerPO> cusList=customerDataService.show();
+		String res=Integer.toString(cusList.size());
+		int len=res.length();
+		for(int i=0;i<8-len;i++){
+			res="0"+res;
+		}
+		return res;		
 	}
       //管理客户的步骤
 	/**
@@ -105,7 +111,11 @@ public class Customer {
 	 * @throws RemoteException 
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo) throws RemoteException{
-		return customerDataService.update(voTopo(vo));
+		if(vo.receivableLimit!=customerDataService.getCustomerData(Integer.valueOf(vo.customerID)).getReceivableLimit()){
+			return ResultMessage.FAILED;
+		}else{
+		    return customerDataService.update(voTopo(vo));
+		}
 	}
 	
 	public ArrayList<CustomerVO> show() throws RemoteException {
