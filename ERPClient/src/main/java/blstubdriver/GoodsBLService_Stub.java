@@ -88,7 +88,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 		return ResultMessage.FAILED;
 	}
 
-	public String getNewID() {
+	public String getNewID(String classificationID) {
 		return String.format("%06d", data.size() + 1);
 	}
 
