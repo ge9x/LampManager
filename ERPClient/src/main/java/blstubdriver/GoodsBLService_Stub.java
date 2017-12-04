@@ -90,11 +90,7 @@ public class GoodsBLService_Stub implements GoodsBLService{
 
     @Override
     public String getNewID(String calssificationID) {
-        return null;
-    }
-
-    public String getNewID() {
-		return String.format("%06d", data.size() + 1);
+		return calssificationID + String.format("%06d", data.size() + 1);
 	}
 
 }

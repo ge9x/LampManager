@@ -51,4 +51,11 @@ public interface ClassificationDataService {
 	 * @throws RemoteException
 	 */
 	public String getNewID() throws RemoteException;
+	/**
+	 * 以商品分类的名称的关键字进行模糊查找
+	 * @param keyword 名称关键字
+	 * @return 查找到的商品分类的PO的集合
+	 * @throws RemoteException
+	 */
+	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException;
 }
