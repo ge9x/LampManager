@@ -73,19 +73,24 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	}
 
 	public ArrayList<CustomerVO> show() {
-		return null;
+		try {
+			return customer.show();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public ArrayList<Integer> getAllCustomerID(){
-		return null;
+		return customer.getAllCustomerID();
 	}
 	
 	public ArrayList<String> getAllCustomerName(){
-		return null;
+		return customer.getAllCustomerName();
 	}
 	
 	public CustomerVO getCustomerByID(int ID){
-		return null;
+		return customer.getCustomerByID(ID);
 	}
 	
 }
