@@ -10,7 +10,7 @@ public interface UserInfo {
 	
 	public String getCurrentUserNameByID(String UserID);
 	
-	public ArrayList<UserVO> getAllUsers();
+	public ArrayList<UserVO> show();
 	
 	public UserVO findUserByID(String UserID);
 	
