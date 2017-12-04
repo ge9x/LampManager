@@ -72,7 +72,7 @@ public class CustomerPO implements Serializable{
 		this.salesman = salesman;
 		this.points = points;
 		this.voucher=voucher;
-		this.customerID=Integer.toString(ID);
+		this.customerID=alterID(Integer.toString(ID));
 	}
 
 	@Id
@@ -93,7 +93,7 @@ public class CustomerPO implements Serializable{
 	}
 	
 	public void setCustomerID(String customerID){
-		this.customerID=Integer.toString(ID);
+		this.customerID=alterID(Integer.toString(ID));
 	}
 
 	@Column(name = "category")
@@ -226,6 +226,12 @@ public class CustomerPO implements Serializable{
 		this.voucher = voucher;
 	}
 
-
+	private String alterID(String ID){
+		int len=ID.length();
+		for(int i=0;i<8-len;i++){
+			ID="0"+ID;
+		}
+		return ID;
+	}
 	
 }
