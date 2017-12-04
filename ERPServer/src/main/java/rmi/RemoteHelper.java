@@ -16,13 +16,16 @@ public class RemoteHelper {
     public void initServer(){
         AccountDataRemoteObject accountDataRemoteObject;
         FinanceDataRemoteObject financeDataRemoteObject;
+        CustomerDataRemoteObject customerDataRemoteObject;
         try {
             accountDataRemoteObject = new AccountDataRemoteObject();
             financeDataRemoteObject = new FinanceDataRemoteObject();
+            customerDataRemoteObject=new CustomerDataRemoteObject();
             LocateRegistry.createRegistry(8080);
             Naming.bind("rmi://127.0.0.1:8080/AccountDataRemoteObject",
                     accountDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/FinanceDataRemoteObject",financeDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8080/CustomerDataRemoteObject", customerDataRemoteObject);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

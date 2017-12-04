@@ -118,15 +118,41 @@ public class Customer {
 	}
 	
 	public ArrayList<Integer> getAllCustomerID(){
+	try{	
+		ArrayList<CustomerPO> cuspoList = customerDataService.show();
+		ArrayList<Integer> IDList=new ArrayList<>();
+		for(CustomerPO po:cuspoList){
+			IDList.add(po.getID());
+		}
+		return IDList;
+	}catch (RemoteException e) {
+		e.printStackTrace();
 		return null;
+	}
 	}
 	
 	public ArrayList<String> getAllCustomerName(){
-		return null;
+		try{
+			ArrayList<CustomerPO> cuspoList = customerDataService.show();
+			ArrayList<String> nameList=new ArrayList<>();
+			for(CustomerPO po:cuspoList){
+				nameList.add(po.getCustomerName());
+			}
+			return nameList;
+		}catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public CustomerVO getCustomerByID(int ID){
-		return null;
+		try {
+			CustomerPO po=customerDataService.getCustomerData(ID);
+			return poTovo(po);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	
