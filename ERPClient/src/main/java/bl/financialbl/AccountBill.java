@@ -10,6 +10,7 @@ import po.AccountBillPO;
 import po.AccountPO;
 import rmi.FinanceRemoteHelper;
 import util.BillState;
+import util.BillType;
 import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
@@ -80,56 +81,6 @@ public class AccountBill {
         return ResultMessage.FAILED;
     }
 
-    public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
-        accountBillPOS.clear();
-        ArrayList<AccountBillVO> vos = new ArrayList<>();
-        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
-        for(AccountBillPO po : pos){
-            if (po.getState() == BillState.DRAFT){
-                accountBillPOS.add(po);
-                vos.add(poTovo(po));
-            }
-        }
-        return vos;
-    }
-    public ArrayList<AccountBillVO> getSubmittedAccountBills() throws RemoteException {
-        accountBillPOS.clear();
-        ArrayList<AccountBillVO> vos = new ArrayList<>();
-        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
-        for(AccountBillPO po : pos){
-            if (po.getState() == BillState.SUBMITTED){
-                accountBillPOS.add(po);
-                vos.add(poTovo(po));
-            }
-        }
-
-        return vos;
-    }
-    public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
-        accountBillPOS.clear();
-        ArrayList<AccountBillVO> vos = new ArrayList<>();
-        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
-        for(AccountBillPO po : pos){
-            if (po.getState() == BillState.PASS){
-                accountBillPOS.add(po);
-                vos.add(poTovo(po));
-            }
-        }
-        return vos;
-    }
-    public ArrayList<AccountBillVO> getFailedAccountBills() throws RemoteException {
-        accountBillPOS.clear();
-        ArrayList<AccountBillVO> vos = new ArrayList<>();
-        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
-        for(AccountBillPO po : pos){
-            if (po.getState() == BillState.FAILED){
-                accountBillPOS.add(po);
-                vos.add(poTovo(po));
-            }
-        }
-        return vos;
-    }
-
     public AccountBillPO voTopo(AccountBillVO vo){
         ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
         for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
@@ -160,4 +111,35 @@ public class AccountBill {
         }
         return ResultMessage.FAILED;
     }
+
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) throws RemoteException {
+        accountBillPOS.clear();
+        ArrayList<AccountBillVO> vos = new ArrayList<>();
+        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
+        for(AccountBillPO po : pos){
+            if (po.getState() == state && po.getType() == BillType.RECEIPT){
+                accountBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
+
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) throws RemoteException {
+        accountBillPOS.clear();
+        ArrayList<AccountBillVO> vos = new ArrayList<>();
+        ArrayList<AccountBillPO> pos = financeDataService.getAllAccountBills();
+        for(AccountBillPO po : pos){
+            if (po.getState() == state && po.getType() == BillType.PAYMENT){
+                accountBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
+
+
+
+
+
 }

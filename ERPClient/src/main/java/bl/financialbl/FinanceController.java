@@ -4,6 +4,7 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
 import blservice.formblservice.SalesDetailsInput;
 import com.sun.org.apache.regexp.internal.RE;
+import util.BillState;
 import util.ResultMessage;
 import vo.*;
 
@@ -179,6 +180,30 @@ public class FinanceController implements FinanceBLService{
     public String getAccountNameByID(String accountID) {
         return finance.getAccountNameByID(accountID);
     }
+
+    @Override
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) {
+        try {
+            return finance.getPaymentsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
+        try {
+            return finance.getReceiptsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 
     @Override
     public String getCustomerNameByID(String ID) {

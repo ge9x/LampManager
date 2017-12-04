@@ -1,6 +1,7 @@
 package blservice.financeblservice;
 
 import javafx.util.Pair;
+import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.*;
@@ -133,6 +134,13 @@ public interface FinanceBLService extends Remote{
      * @return
      */
     String getAccountNameByID(String accountID);
+
+    ArrayList<AccountBillVO> getReceiptsByState(BillState state);
+
+    ArrayList<AccountBillVO> getPaymentsByState(BillState state);
+
+
+
 }
 
 
