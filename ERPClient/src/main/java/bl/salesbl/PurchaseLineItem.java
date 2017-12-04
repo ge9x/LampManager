@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
+import po.PurchasePO;
 import util.ResultMessage;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -45,6 +46,10 @@ public class PurchaseLineItem {
 	}
 	
 	public ResultMessage alterCustomer(PurchaseVO vo){
+		return null;
+	}
+	
+	public static PurchasePO voTopo(PurchaseVO vo){
 		return null;
 	}
 	
