@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.CustomerBLService_Stub;
@@ -18,7 +19,7 @@ import vo.CustomerVO;
 public class SalesStaffCustomerDetailViewController {
 	private boolean hasEdited = false;
 	UserBLService userBLService = new UserBLService_Stub();
-	CustomerBLService customerBLService = new CustomerBLService_Stub();
+	CustomerBLService customerBLService = new CustomerController();
 
 	@FXML
 	JFXTextField customerID;
