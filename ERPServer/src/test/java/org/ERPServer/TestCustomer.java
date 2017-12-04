@@ -16,12 +16,12 @@ public class TestCustomer {
 		try{
 			
 //			第一次请取消这段注释，成功运行一次后再注释掉
-		/**
+		
 			cusImpl.add(new CustomerPO(CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
 					"南京仙林大学城","421000","ddl@163.com",1.0,10000.0,0.0,"业务员1",125.0,400));
 			cusImpl.add(new CustomerPO(CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商1","15247678373",
 					"南京新街口","421001","dds@163.com",1.0,0.0,2000.0,"业务员2",224.0,500));
-		*/
+	
 			ArrayList<CustomerPO> cus=cusImpl.show();
 			System.out.println("共有"+cus.size()+"条记录：");
 			for(CustomerPO po:cus){
@@ -36,6 +36,9 @@ public class TestCustomer {
 				System.out.println(po.getCustomerID()+" "+po.getCustomerName()+" "+po.getAddress());
 			}
 			System.out.println("查询结束");
+			
+			cus1.get(0).setAddress("lalala");
+			cusImpl.update(cus1.get(0));
 			
 			/**
 			cusImpl.init();

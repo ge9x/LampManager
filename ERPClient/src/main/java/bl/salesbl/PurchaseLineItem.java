@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jfoenix.controls.JFXPopup.PopupHPosition;
+
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
@@ -55,5 +57,10 @@ public class PurchaseLineItem {
 	
 	public static PurchasePO voTopo(PurchaseVO vo){
 		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,(List)vo.goodsItemList,vo.remarks,vo.date,1);
+	}
+	
+	public static PurchasePO poTovo(PurchasePO po){
+		return null;
+		//return new PurchaseVO(po.getType(), po, ID, supplier, customerID, inventory, user, goodsItemList, remarks, endDate)
 	}
 }
