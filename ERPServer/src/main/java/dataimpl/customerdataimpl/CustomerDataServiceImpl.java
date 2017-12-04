@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
+import dataservice.classificationdataservice.ClassificationDataService;
 import dataservice.customerdataservice.CustomerDataService;
 import po.CustomerPO;
+import util.BillType;
 import util.Criterion;
 import util.CustomerCategory;
 import util.Level;
@@ -49,22 +51,39 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException {
 		ArrayList<Criterion> criteria=new ArrayList<Criterion>();
-		criteria.add(
-				new Criterion(
-				new Criterion("customerName",keywords,QueryMode.FUZZY),
-				new Criterion(
-				new Criterion("phone",keywords,QueryMode.FUZZY),
-				new Criterion(
-				new Criterion("address",keywords,QueryMode.FUZZY),
-				new Criterion(
-				new Criterion("mail",keywords,QueryMode.FUZZY),
-				new Criterion("salesman",keywords,QueryMode.FUZZY)									
-													)					
-											)
-									)				
-							)								
-				    );
-		return customerDataHelper.multiQuery(criteria);
+		switch (keywords) {
+		case "进货商":
+			criteria.add(
+					new Criterion("category", CustomerCategory.PUR_AGENT,QueryMode.FULL)
+					);
+			return customerDataHelper.multiQuery(criteria);
+		case "销售商":
+			criteria.add(
+					new Criterion("category", CustomerCategory.SELLER,QueryMode.FULL)
+					);
+		default:
+			criteria.add(
+					new Criterion(
+					new Criterion("category",keywords,QueryMode.FUZZY),
+				    new Criterion(
+					new Criterion("level",keywords,QueryMode.FUZZY),
+					new Criterion(
+					new Criterion("customerName",keywords,QueryMode.FUZZY),
+					new Criterion(
+					new Criterion("phone",keywords,QueryMode.FUZZY),
+					new Criterion(
+					new Criterion("address",keywords,QueryMode.FUZZY),
+					new Criterion(
+					new Criterion("mail",keywords,QueryMode.FUZZY),
+					new Criterion("salesman",keywords,QueryMode.FUZZY)																				)
+																	)
+															)
+													)	
+					                        )
+									)
+	                      	);
+			return customerDataHelper.multiQuery(criteria);
+		}
 	}
 
 	public ResultMessage update(CustomerPO po) throws RemoteException {

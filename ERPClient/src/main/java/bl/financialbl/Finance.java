@@ -1,6 +1,8 @@
 package bl.financialbl;
 
+import bl.accountbl.Account;
 import bl.accountbl.AccountController;
+import bl.customerbl.Customer;
 import bl.customerbl.CustomerController;
 import bl.formbl.DocumentDetails;
 import bl.formbl.Profit;
@@ -24,7 +26,6 @@ import java.util.Date;
  * Created by Kry·L on 2017/11/5.
  */
 public class Finance{
-    //TODO getAllCustomer接口未定
 
     AccountBill accountBill;
     CashBill cashBill;
@@ -61,8 +62,12 @@ public class Finance{
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
-//        return customerInfo.
-        return null;
+        ArrayList<CustomerVO> customerVOS = new ArrayList<>();
+        ArrayList<Integer> IDs = customerInfo.getAllCustomerID();
+        for (int id:IDs){
+            customerVOS.add(customerInfo.getCustomerByID(id));
+        }
+        return customerVOS;
     }
 
     public ArrayList<AccountVO> getAllAccount() {
@@ -73,25 +78,55 @@ public class Finance{
         return accountBill.submit(vo);
     }
 
-    public ResultMessage submit(CashBillVO vo) {
-        return null;
+    public ResultMessage submit(CashBillVO vo) throws RemoteException {
+        return cashBill.submit(vo);
     }
 
-    public ResultMessage save(AccountBillVO vo) {
-        return null;
+    public ResultMessage save(AccountBillVO vo) throws RemoteException {
+        return accountBill.save(vo);
     }
 
-    public ResultMessage save(CashBillVO vo) {
-        return null;
+    public ResultMessage save(CashBillVO vo) throws RemoteException {
+        return cashBill.save(vo);
     }
 
-    public ResultMessage updateDraft(AccountBillVO vo) {
-        return null;
+    public ResultMessage updateDraft(AccountBillVO vo) throws RemoteException {
+        return accountBill.update(vo);
     }
 
-    public ResultMessage updateDraft(CashBillVO vo) {
-        return null;
+    public ResultMessage updateDraft(CashBillVO vo) throws RemoteException {
+        return cashBill.update(vo);
     }
 
+    public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
+        return accountBill.getDraftAccountBills();
+    }
+    public ArrayList<AccountBillVO> getSubmittedAccountBills() throws RemoteException {
+        return accountBill.getSubmittedAccountBills();
+    }
+    public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
+        return accountBill.getPassAccountBills();
 
+    }
+    public ArrayList<AccountBillVO> getFailedAccountBills() throws RemoteException {
+        return accountBill.getFailedAccountBills();
+    }
+
+    public String getCustomerNameByID(String id) {
+        CustomerVO vo = customerInfo.getCustomerByID(Integer.parseInt(id));
+        return vo.customerName;
+    }
+
+    public String getAccountNameByID(String accountID) {
+        return accountInfo.getAccountByID(accountID).accountName;
+    }
+
+    public ResultMessage deleteAccountBill(String id) throws RemoteException {
+        return accountBill.deleteBill(id);
+
+    }
+
+    public ResultMessage deleteCashBill(String id) throws RemoteException {
+        return cashBill.deleteBill(id);
+    }
 }

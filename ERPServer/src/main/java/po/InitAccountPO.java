@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "initaccount")
-public class InitAccountPO {
+public class InitAccountPO implements Serializable{
+	private static final long servialVersionUID=45345768282732L;
+	
 	private int ID;
     private String date;
     private List<CustomerPO> customerPOS;
