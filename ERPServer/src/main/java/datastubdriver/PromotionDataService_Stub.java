@@ -24,8 +24,8 @@ public class PromotionDataService_Stub implements PromotionDataService{
 	String newID = String.valueOf(count);
 	
 	List<GoodsPO> goodsList=new ArrayList<GoodsPO>();
-	GoodsPO g1 = new GoodsPO( "圣洁牌纯黑落地灯", "L", null, 700, 250, 233.3, 250, 233.3);
-	GoodsPO g2 = new GoodsPO( "圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3);
+	GoodsPO g1 = new GoodsPO( "圣洁牌纯黑落地灯", "L", null, 700, 250, 233.3, 250, 233.3,1);
+	GoodsPO g2 = new GoodsPO( "圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3,2);
 	{
 	goodsList.add(g1);
 	goodsList.add(g2);
