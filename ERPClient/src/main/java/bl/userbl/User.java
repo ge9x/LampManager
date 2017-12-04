@@ -1,5 +1,6 @@
 package bl.userbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,11 +19,14 @@ public class User {
 		userDataService = UserRemoteHelper.getInstance().getUserDataService();
 	}
 	
-	public ResultMessage login(String userID, String password){
-		return null;
+	public ResultMessage login(String userID, String password) throws RemoteException{
+		ResultMessage re = userDataService.login(userID, password);
+		return re;
 	}
 
-	public ResultMessage addUser(UserVO vo){
+	public ResultMessage addUser(UserVO vo) throws RemoteException{
+		UserPO userPO = voTOpo(vo);
+		ResultMessage re = userDataService.add(userPO);
 		return null;
 	}
 
