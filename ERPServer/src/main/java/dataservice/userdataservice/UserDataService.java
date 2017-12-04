@@ -25,4 +25,6 @@ public interface UserDataService {
 	public ResultMessage update(UserPO po) throws RemoteException;
 	
 	public void init() throws RemoteException;
+	
+	public ResultMessage login(String userID, String password) throws RemoteException;
 }
