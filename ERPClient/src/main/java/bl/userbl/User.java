@@ -13,6 +13,7 @@ import vo.UserVO;
 public class User {
 
 	private UserDataService userDataService;
+	private static String currentUserID;
 	ArrayList<UserPO> userPOs;
 	
 	public User(){
@@ -21,6 +22,9 @@ public class User {
 	
 	public ResultMessage login(String userID, String password) throws RemoteException{
 		ResultMessage re = userDataService.login(userID, password);
+		if(re==ResultMessage.SUCCESS){
+			currentUserID = userID;
+		}
 		return re;
 	}
 
@@ -30,22 +34,28 @@ public class User {
 		return null;
 	}
 
-	public ResultMessage deleteUser(String userID){
-		return null;
+	public ResultMessage deleteUser(String userID) throws RemoteException{
+		ResultMessage re = userDataService.delete(userID);
+		return re;
 	}
 
-	public ResultMessage modifyUser(UserVO vo){
-		return null;
+	public ResultMessage modifyUser(UserVO vo) throws RemoteException{
+		for(UserPO userPO:userPOs){
+			if(userPO.getUserID()==Integer.parseInt(vo.userID)){
+				userPO.setPassword(vo.password);
+				userPO.setName(vo.name);
+				userPO.setPosition(vo.position);
+				userPO.setLimit(vo.limit);
+				return userDataService.update(userPO);
+			}
+		}
+		return ResultMessage.FAILED;
 	}
 	
-	public HashMap<String, String> getCurrentUserName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<UserVO> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<String, String> getCurrentUserName() throws RemoteException{
+		HashMap<String, String> user = new HashMap<>();
+		user.put(currentUserID, userDataService.find(currentUserID).getName());
+		return user;
 	}
 
 	public String getCurrentUserID() {
