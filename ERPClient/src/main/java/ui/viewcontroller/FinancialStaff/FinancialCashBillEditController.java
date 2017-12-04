@@ -34,6 +34,7 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/25.
  */
 public class FinancialCashBillEditController {
+    Boolean isNew;
     FinancialCashBillController financialCashBillController;
 
     FinanceBLService financeBLService = new FinanceBLService_Stub();
@@ -105,6 +106,7 @@ public class FinancialCashBillEditController {
     }
     public void addCashBill() {
         String ID = financeBLService.getNewCashBillID();
+        isNew = true;
         BillID.setText(ID);
     }
 
@@ -159,7 +161,6 @@ public class FinancialCashBillEditController {
         dialog.setHeaderText("需要保存为草稿吗？");
         Optional result = dialog.showAndWait();
 
-
         if (result.isPresent()){
             if (result.get() == ButtonType.OK) {
                 String accountID = "";
@@ -169,7 +170,12 @@ public class FinancialCashBillEditController {
                 CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.CASH,Username.getText(), accountID
                         , cashBillItems,total.get());
-                financeBLService.save(cashBillVO);
+
+                if (isNew = true){
+                    financeBLService.save(cashBillVO);
+                }else{
+                    financeBLService.updateDraft(cashBillVO);
+                }
             }
 
             financialCashBillController.showCashBillList();

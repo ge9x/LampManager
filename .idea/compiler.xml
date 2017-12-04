@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/dataimpl/examinationdataimpl/ExaminationDataServiceImpl.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/SalesDataService_Stub.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestPromotion.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/ExaminationDataService_Stub.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestExamination.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestInitialization.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/dataimpl/salesdataimpl/SalesDataServiceImpl.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestFinance.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestSales.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/ClassificationDataService_Stub.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/PromotionDataService_Stub.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/GoodsDataService_Stub.java" />
+      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/goodsbl/MockGoods.java" />
+    </excludeFromCompile>
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ERPClient" />
+        <module name="ERPServer" />
+        <module name="Horizon" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="ERPClient" target="1.8" />
+      <module name="ERPServer" target="1.8" />
+      <module name="LampManager" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

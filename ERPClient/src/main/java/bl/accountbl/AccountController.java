@@ -60,6 +60,16 @@ public class AccountController implements AccountBLService, AccountInfo{
         }
     }
 
+    @Override
+    public AccountVO getAccountByID(String id) {
+        try {
+            return account.getAccountByID(id);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public ArrayList<String> getAllAccountName() {
         try {
             return account.getAllAccountName();

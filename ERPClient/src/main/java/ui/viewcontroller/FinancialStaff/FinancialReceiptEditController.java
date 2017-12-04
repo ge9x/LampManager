@@ -53,6 +53,8 @@ public class FinancialReceiptEditController {
 
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
+    Boolean isNew;
+
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
             FXCollections.observableArrayList();
@@ -89,16 +91,28 @@ public class FinancialReceiptEditController {
         addIcon.setText("\ue61e");
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService.getAllAccount();
+        accounts = financeBLService2.getAllAccount();
         customers = financeBLService.getAllCustomer();
-        //初始化Customer选择框
-        ArrayList<String> customerNames = new ArrayList<>();
-        for (CustomerVO customer : customers){
-            customerNames.add(customer.customerName);
-        }
-        Customer.getItems().addAll(customerNames);
 
-        //初始化表格
+        initCustomerCombobox();
+        initTable();
+
+        //总额Text与绑定转账金额之和绑定
+        total.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Total.setText(Money.getMoneyString(total.get()));
+            }
+        });
+
+    }
+
+    public void addReceipt() {
+        String ID = financeBLService2.getNewReceiptID();
+        isNew = true;
+        BillID.setText(ID);
+    }
+    public void initTable(){
         itemTable = new TableView<>();
         itemTable.setEditable(false);
 
@@ -115,19 +129,17 @@ public class FinancialReceiptEditController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(accountColumn,moneyColumn,remarkColumn);
         vbox.getChildren().add(itemTable);
-
-        //总额Text与绑定转账金额之和绑定
-        total.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Total.setText(Money.getMoneyString(total.get()));
-            }
-        });
-
     }
-    public void addReceipt() {
-        String ID = financeBLService.getNewReceiptID();
-        BillID.setText(ID);
+
+    public void initCustomerCombobox(){
+        //初始化Customer选择框
+        ArrayList<String> customerNames = new ArrayList<>();
+        customerNames.clear();
+        Customer.getItems().clear();
+        for (CustomerVO customer : customers){
+            customerNames.add(customer.customerName);
+        }
+        Customer.getItems().addAll(customerNames);
     }
 
     public void clickAddButton(){
@@ -152,7 +164,11 @@ public class FinancialReceiptEditController {
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
-        financeBLService2.submit(accountBillVO);
+        if (isNew == true){
+            financeBLService2.submit(accountBillVO);
+        }else{
+            financeBLService2.updateDraft(accountBillVO);
+        }
         financialReceiptController.showReceiptList();
     }
     public void clickCancelButton(){
@@ -170,7 +186,12 @@ public class FinancialReceiptEditController {
                 AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.RECEIPT, customerID,
                         Username.getText(), accountBillItems);
-                financeBLService.save(accountBillVO);
+
+                if (isNew == true){
+                    financeBLService2.save(accountBillVO);
+                }else{
+                    financeBLService2.updateDraft(accountBillVO);
+                }
             }
 
             financialReceiptController.showReceiptList();
@@ -224,15 +245,28 @@ public class FinancialReceiptEditController {
         this.financialReceiptController = financialReceiptController;
     }
 
+    /**
+     * 查看单据详情界面
+     * 有两种情况
+     * 1. 草稿单据，可编辑和删除
+     * 2. 已提交单据、审批通过单据和审批失败单据，不可编辑且不可删除
+     * @param account
+     */
     public void setForDetailView(AccountBillVO account){
+        isNew = false;
         BillID.setText(account.ID);
+
         title.setText("收款单详情");
+
         addIcon.setVisible(false);
+
         String customerName = financeBLService.getCustomerNameByID(account.customerID);
         Customer.getItems().clear();
         Customer.getItems().add(customerName);
         Customer.getSelectionModel().selectFirst();
         Customer.setEditable(false);
+
+
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -240,13 +274,58 @@ public class FinancialReceiptEditController {
                 financialReceiptController.showReceiptList();
             }
         });
-        submitButton.setVisible(false);
-        for (AccountBillItemVO accountBillItemVO:account.accountBillItems){
-            data.add(new AccountBillItemBean(accountBillItemVO.account.accountName,accountBillItemVO.transferMoney,accountBillItemVO.remark));
-            total.set(total.get()+accountBillItemVO.transferMoney);
+
+        //如果是草稿单据，就显示编辑按钮
+        if (account.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }
+        //否则隐藏提交按钮
+        else{
+            submitButton.setVisible(false);
         }
 
+        for (AccountBillItemVO accountBillItemVO : account.accountBillItems) {
+            String accountName = financeBLService2.getAccountNameByID(accountBillItemVO.account.accountID);
+            accountBillItems.add(accountBillItemVO);
+            data.add(new AccountBillItemBean(accountName, accountBillItemVO.transferMoney, accountBillItemVO.remark));
+            total.set(total.get() + accountBillItemVO.transferMoney);
+        }
+    }
 
+    /**
+     * 草稿编辑界面
+     * 将隐藏的元素重新显示
+     */
+    public void setForEditView(){
+        addIcon.setVisible(true);
+        title.setText("编辑草稿单");
+
+        Customer.setEditable(true);
+        initCustomerCombobox();
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+
+        /**
+         * 返回按钮需要再次询问是否保存为草稿
+         */
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
     }
 
 

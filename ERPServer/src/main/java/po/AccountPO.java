@@ -9,8 +9,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "account")
 public class AccountPO implements Serializable{
-    
-    /**
+	private static final long serialVersionUID = 610879225963605751L;
+	/**
      * 银行账户ID
      */
     private  int ID;

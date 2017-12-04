@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
+import dataimpl.classificationdataimpl.ClassificationDataServiceImpl;
 import dataservice.goodsdataservice.GoodsDataService;
+import po.ClassificationPO;
 import po.GoodsPO;
-import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -53,5 +54,11 @@ public class GoodsDataServiceImpl implements GoodsDataService{
 	@Override
 	public ResultMessage update(GoodsPO po) throws RemoteException {
 		return goodsDataHelper.update(po);
+	}
+
+	@Override
+	public String getNewID(String classificationID) throws RemoteException {
+		ClassificationPO classification = ClassificationDataServiceImpl.getInstance().find(Integer.parseInt(classificationID));
+		return String.format("%06d", goodsDataHelper.fullyQuery("classification", classification).size() + 1);
 	}
 }
