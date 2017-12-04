@@ -79,4 +79,9 @@ public class GoodsDataService_Stub implements GoodsDataService{
 		return ResultMessage.FAILED;
 	}
 
+	@Override
+	public String getNewID(String classificationID) throws RemoteException {
+		return classificationID + "000001";
+	}
+
 }

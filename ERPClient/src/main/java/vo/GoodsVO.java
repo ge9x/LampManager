@@ -23,10 +23,6 @@ public class GoodsVO {
 	 */
 	public String classification;
 	/**
-	 * 商品所在仓库名称
-	 */
-	public String inventory;
-	/**
 	 * 商品数量
 	 */
 	public int amount;
@@ -50,7 +46,28 @@ public class GoodsVO {
 	 * 商品最近零售价
 	 */
 	public double recentRetailPrice;
+
+	public GoodsVO(String ID, String name, String model, String classification, int amount,
+			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
+			double recentRetailPrice) {
+		super();
+		this.ID = ID;
+		this.name = name;
+		this.model = model;
+		this.classification = classification;
+		this.amount = amount;
+		this.alarmAmount = alarmAmount;
+		this.buyingPrice = buyingPrice;
+		this.retailPrice = retailPrice;
+		this.recentBuyingPrice = recentBuyingPrice;
+		this.recentRetailPrice = recentRetailPrice;
+	}
 	
+	/**
+	 * 该方法仅限Stub和Mock使用<br>
+	 * 请使用没有String inventory参数的构造方法，
+	 */
+	@Deprecated
 	public GoodsVO(String ID, String name, String model, String classification, String inventory, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
 			double recentRetailPrice) {
@@ -59,7 +76,6 @@ public class GoodsVO {
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
-		this.inventory = inventory;
 		this.amount = amount;
 		this.alarmAmount = alarmAmount;
 		this.buyingPrice = buyingPrice;

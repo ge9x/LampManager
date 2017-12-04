@@ -3,6 +3,7 @@ package ui.viewcontroller.SalesStaff;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerBLService;
 import blstubdriver.CustomerBLService_Stub;
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class SalesStaffCustomerInfoViewController {
     private ArrayList<FXMLLoader> loaders = new ArrayList<FXMLLoader>();
     private ArrayList<HBox> cells = new ArrayList<HBox>();
     
-    CustomerBLService customerBLService = new CustomerBLService_Stub();
+    CustomerBLService customerBLService = new CustomerController();
     SalesStaffViewController salesStaffViewController;
     SalesStaffCustomerAddViewController salesStaffCustomerAddViewController;
     ArrayList<CustomerVO> customers;
