@@ -16,11 +16,11 @@ public interface UserDataService {
      * @param userID
      * @return UserPO
      */
-	public UserPO find(int userID) throws RemoteException;
+	public UserPO find(String userID) throws RemoteException;
 	
 	public ResultMessage add(UserPO po) throws RemoteException;
 	
-	public ResultMessage delete(UserPO po) throws RemoteException;
+	public ResultMessage delete(String userID) throws RemoteException;
 	
 	public ResultMessage update(UserPO po) throws RemoteException;
 	
