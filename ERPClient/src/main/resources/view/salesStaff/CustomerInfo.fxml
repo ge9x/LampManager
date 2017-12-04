@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -12,7 +19,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffCustomerInfoViewController">
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffCustomerInfoViewController">
    <children>
       <ScrollPane layoutX="5.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
@@ -37,7 +44,10 @@
                               <Insets left="300.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="Filters" prefHeight="23.0" prefWidth="77.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 20; -fx-border-radius: 20;" />
+                        <ComboBox fx:id="Filters" prefHeight="23.0" prefWidth="77.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 20; -fx-border-radius: 20;">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></ComboBox>
                         <TextField fx:id="Search" style="-fx-background-color: #f6f6f7; -fx-border-radius: 20; -fx-background-radius: 20;">
                            <HBox.margin>
                               <Insets left="10.0" />
