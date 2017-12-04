@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import rmi.AccountRemoteHelper;
+import rmi.CustomerRemoteHelper;
 import rmi.FinanceRemoteHelper;
 import ui.viewcontroller.common.MainUIController;
 
@@ -22,6 +23,7 @@ import java.rmi.RemoteException;
 public class Main extends Application {
     private AccountRemoteHelper accountRemoteHelper;
     private FinanceRemoteHelper financeRemoteHelper;
+    private CustomerRemoteHelper customerRemoteHelper;
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -58,8 +60,11 @@ public class Main extends Application {
         try {
             accountRemoteHelper = AccountRemoteHelper.getInstance();
             financeRemoteHelper = FinanceRemoteHelper.getInstance();
+            customerRemoteHelper=CustomerRemoteHelper.getInstance();
+            
             accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
             financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
+            customerRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/CustomerDataRemoteObject"));
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();

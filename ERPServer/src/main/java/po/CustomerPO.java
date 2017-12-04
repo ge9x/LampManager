@@ -2,6 +2,8 @@ package po;
 
 import util.Level;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,15 +17,18 @@ import util.CustomerCategory;
 
 @Entity
 @Table(name = "customer")
-public class CustomerPO {
+public class CustomerPO implements Serializable{
+	private static final long serialVersionUID=57483897234882L;
+	
+	
 	/**编号*/
 	private int ID;
 	/**客户编号*/
 	private String customerID;
 	/**客户分类:进货商、销售商*/
-	private CustomerCategory category;
+	private String category;
 	/**客户级别:级别分一级到五级，一级普通用户，五级VIP用户*/
-	private Level level;
+	private String level;
 	/**客户姓名*/
 	private String customerName;
 	/**电话*/
@@ -50,12 +55,12 @@ public class CustomerPO {
 	public CustomerPO(){};
 	
 	
-	public CustomerPO( CustomerCategory category, Level level, String customerName, String phone,
+	public CustomerPO( CustomerCategory Category, Level Level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
 			String salesman, double points,double voucher) {
 		super();
-		this.category = category;
-		this.level = level;
+		this.category = Category.getValue();
+		this.level = Level.getValue();
 		this.customerName = customerName;
 		this.phone = phone;
 		this.address = address;
@@ -92,24 +97,22 @@ public class CustomerPO {
 	}
 
 	@Column(name = "category")
-	@Enumerated(EnumType.STRING)
-	public CustomerCategory getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
 
-	public void setCategory(CustomerCategory category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
 	@Column(name="level")
-	@Enumerated(EnumType.STRING)
-	public Level getLevel() {
+	public String getLevel() {
 		return level;
 	}
 
 
-	public void setLevel(Level level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
