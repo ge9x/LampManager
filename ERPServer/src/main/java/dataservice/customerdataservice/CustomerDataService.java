@@ -1,5 +1,6 @@
 package dataservice.customerdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import util.ResultMessage;
  *created by zlk on 2017/10/21
  */
 
-public interface CustomerDataService {
+public interface CustomerDataService extends Remote{
 	/**
 	 * 添加客户
 	 * 

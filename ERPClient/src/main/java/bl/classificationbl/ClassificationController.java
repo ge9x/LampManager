@@ -32,27 +32,66 @@ public class ClassificationController implements ClassificationBLService, Classi
 	}
 
 	public ArrayList<ClassificationVO> find(String keyword) {
-		return classification.find(keyword);
+		try {
+			return classification.find(keyword);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ClassificationVO showDetails(String ID) {
-		return classification.showDetails(ID);
+		try {
+			return classification.showDetails(ID);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ResultMessage add(ClassificationVO vo) {
-		return classification.add(vo);
+		try {
+			return classification.add(vo);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ResultMessage delete(String ID) {
-		return classification.delete(ID);
+		try {
+			return classification.delete(ID);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ResultMessage update(ClassificationVO vo) {
-		return classification.update(vo);
+		try {
+			return classification.update(vo);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getNewID() {
-		return classification.getNewID();
+		try {
+			return classification.getNewID();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public HashMap<String, String> getAllClassification() {

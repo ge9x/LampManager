@@ -1,5 +1,6 @@
 package dataservice.promotiondataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import po.PromotionBargainPO;
@@ -10,7 +11,7 @@ import util.ResultMessage;
 /** 
  * Created by Aster on 2017/10/21
  */
-public interface PromotionDataService {
+public interface PromotionDataService extends Remote{
 	/**
      * 按促销策略ID进行查找返回相应的PromotionCustomerPO结果
      * 

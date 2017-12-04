@@ -1,5 +1,6 @@
 package dataservice.initializationdataservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import po.InitAccountPO;
@@ -8,7 +9,7 @@ import util.ResultMessage;
 /**
  * Created by Kry·L on 2017/10/30.
  */
-public interface InitializationDataService {
+public interface InitializationDataService extends Remote{
 
     /**
      * 期初建账

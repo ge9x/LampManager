@@ -1,5 +1,6 @@
 package dataservice.examinationdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,7 @@ import util.ResultMessage;
 /** 
  * Created by Aster on 2017/10/21
  */
-public interface ExaminationDataService {
+public interface ExaminationDataService extends Remote{
 	
 	/**
      * 按审批时间段查找返回相应的已审批的BillVO结果

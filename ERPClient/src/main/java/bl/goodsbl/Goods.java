@@ -50,8 +50,12 @@ public class Goods {
 	
 	public static GoodsVO poToVO(GoodsPO po){
 		String classificationName = po.getClassification().getName();
-		// TODO 不需要GoodsVO的Inventory成员变量
-		GoodsVO ret = new GoodsVO(po.buildID(), po.getName(), po.getModel(), classificationName, "", po.countAmount(), po.getAlarmAmount(), po.getBuyingPrice(), po.getRetailPrice(), po.getRecentBuyingPrice(), po.getRecentRetailPrice());
-		return null;
+		GoodsVO ret = new GoodsVO(po.buildID(), po.getName(), po.getModel(), classificationName, po.countAmount(), po.getAlarmAmount(), po.getBuyingPrice(), po.getRetailPrice(), po.getRecentBuyingPrice(), po.getRecentRetailPrice());
+		return ret;
+	}
+	
+	public static GoodsPO voToPO(GoodsVO vo){	// TODO
+		GoodsPO ret = new GoodsPO();
+		return ret;
 	}
 }
