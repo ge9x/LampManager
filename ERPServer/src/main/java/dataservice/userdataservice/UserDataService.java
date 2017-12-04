@@ -1,6 +1,7 @@
 package dataservice.userdataservice;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.UserPO;
 import util.ResultMessage;
@@ -27,4 +28,10 @@ public interface UserDataService {
 	public void init() throws RemoteException;
 	
 	public ResultMessage login(String userID, String password) throws RemoteException;
+	
+	public ArrayList<UserPO> show() throws RemoteException;
+	
+	public ArrayList<UserPO> findUsersByKeyword(String keyword) throws RemoteException;
+	
+	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException;
 }
