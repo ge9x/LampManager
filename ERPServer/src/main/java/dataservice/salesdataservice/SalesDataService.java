@@ -1,5 +1,6 @@
 package dataservice.salesdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import util.ResultMessage;
  * created by zlk on 2017/10/21
  */
 
-public interface SalesDataService {
+public interface SalesDataService extends Remote{
 	/**
 	 * 通过单据编号查找进货单据
 	 * 

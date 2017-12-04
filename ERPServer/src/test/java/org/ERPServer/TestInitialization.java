@@ -42,7 +42,7 @@ public class TestInitialization {
 			        classificationPOS.add(classification1);
 			        claImpl.add(classification1);
 		
-			        GoodsPO goods1 = new GoodsPO( "后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 2000.0);
+			        GoodsPO goods1 = new GoodsPO( "后现代主义七彩霓虹灯", "LLL", null, 7, 3, 23333.3, 250000, 2000.0,1);
 			        ArrayList<GoodsPO> goodsVOS = new ArrayList<GoodsPO>();
 			        goodsVOS.add(goods1);
 			        goodsImpl.add(goods1);
@@ -60,7 +60,7 @@ public class TestInitialization {
 			        classificationPOS1.add(classification2);
 			        claImpl.add(classification2);
 			        
-			        GoodsPO goods2 = new GoodsPO("圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3);
+			        GoodsPO goods2 = new GoodsPO("圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3,2);
 			        ArrayList<GoodsPO> goodsVOS1 = new ArrayList<GoodsPO>();
 			        goodsVOS1.add(goods2);
 			        goodsImpl.add(goods2);
