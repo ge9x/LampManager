@@ -34,13 +34,7 @@ public class Customer {
 	 * 
 	 */
 	public String getNewCustomerID() throws RemoteException{
-		ArrayList<CustomerPO> cusList=customerDataService.show();
-		String res=Integer.toString(cusList.size());
-		int len=res.length();
-		for(int i=0;i<8-len;i++){
-			res="0"+res;
-		}
-		return res;		
+		return customerDataService.getNewCustomerID();		
 	}
       //管理客户的步骤
 	/**

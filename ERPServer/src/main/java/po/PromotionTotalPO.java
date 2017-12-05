@@ -22,6 +22,8 @@ import util.PromotionType;
 public class PromotionTotalPO extends PromotionPO{
 	/** 编号 */
 	private int ID;
+	/**促销策略名字*/
+	private String promotionName;
 	/** 起始时间 */
 	private String startDate;
 	/** 结束时间 */
@@ -31,7 +33,7 @@ public class PromotionTotalPO extends PromotionPO{
 	/**代金券*/
     private double voucher;
 	/**赠品*/
-	private List<GoodsPO> gifts;
+	private List<GoodsItemPO> gifts;
 	/**总价*/
 	private double totalPrice;
 	/**总价促销策略编号*/
@@ -39,8 +41,9 @@ public class PromotionTotalPO extends PromotionPO{
 	
 	public PromotionTotalPO(){};
 	
-	public PromotionTotalPO(String startDate, String endDate, PromotionType type, double voucher, List<GoodsPO> gifts, double totalPrice) {
+	public PromotionTotalPO(String promotionName,String startDate, String endDate, PromotionType type, double voucher, List<GoodsItemPO> gifts, double totalPrice) {
 		super(startDate, endDate, type);
+		this.promotionName=promotionName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.type = type;
@@ -59,6 +62,15 @@ public class PromotionTotalPO extends PromotionPO{
 
 	public void setID(int ID) {
 		this.ID = ID;
+	}
+
+	@Column(name="promotionName")
+	public String getPromotionName() {
+		return promotionName;
+	}
+
+	public void setPromotionName(String promotionName) {
+		this.promotionName = promotionName;
 	}
 
 	@Column(name = "startdate")
@@ -100,11 +112,11 @@ public class PromotionTotalPO extends PromotionPO{
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "prototal")  
-	public List<GoodsPO> getGifts() {
+	public List<GoodsItemPO> getGifts() {
 		return gifts;
 	}
 
-	public void setGifts(List<GoodsPO> gifts) {
+	public void setGifts(List<GoodsItemPO> gifts) {
 		this.gifts = gifts;
 	}
 

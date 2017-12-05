@@ -31,7 +31,7 @@ public class User {
 	public ResultMessage addUser(UserVO vo) throws RemoteException{
 		UserPO userPO = voTOpo(vo);
 		ResultMessage re = userDataService.add(userPO);
-		return null;
+		return re;
 	}
 
 	public ResultMessage deleteUser(String userID) throws RemoteException{
@@ -51,41 +51,46 @@ public class User {
 		}
 		return ResultMessage.FAILED;
 	}
+
+	public ArrayList<UserVO> show() throws RemoteException{
+		if(userDataService.show()!=null&&userDataService.show().size()>0){
+			userPOs = userDataService.show();
+			ArrayList<UserVO> userVOs = new ArrayList<>();
+			for(UserPO po:userPOs){
+				userVOs.add(poTOvo(po));
+			}
+			return userVOs;
+		}
+		else{
+			return null;
+		}
+	}
 	
-	public HashMap<String, String> getCurrentUserName() throws RemoteException{
-		HashMap<String, String> user = new HashMap<>();
-		user.put(currentUserID, userDataService.find(currentUserID).getName());
-		return user;
+	public String getCurrentUserID(){
+		return currentUserID;
 	}
 
-	public String getCurrentUserID() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<UserVO> findUsersByKeywords(String keywords) throws RemoteException{
+		ArrayList<UserPO> resultPOs = userDataService.findUsersByKeyword(keywords);
+		ArrayList<UserVO> resultVOs = new ArrayList<>();
+		for(UserPO po:resultPOs){
+			resultVOs.add(poTOvo(po));
+		}
+		return resultVOs;
 	}
 
-	public String getCurrentUserNameByID(String UserID) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<UserVO> findUsersByID(String UserID) throws RemoteException{
+		ArrayList<UserPO> resultPOs = userDataService.findUsersByID(UserID);
+		ArrayList<UserVO> resultVOs = new ArrayList<>();
+		for(UserPO po:resultPOs){
+			resultVOs.add(poTOvo(po));
+		}
+		return resultVOs;
 	}
-
-	public ArrayList<UserVO> show() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<UserVO> findUsersByID(String UserID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<UserVO> findUsersByKeywords(String keywords) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public UserVO findUserByID(String UserID) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public UserVO findUserByID(String UserID) throws RemoteException{
+		UserPO user = userDataService.find(UserID);
+		return poTOvo(user);
 	}
 	
 	public UserPO voTOpo(UserVO userVO){

@@ -2,6 +2,7 @@ package rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import dataimpl.userdataimpl.UserDataServiceImpl;
 import dataservice.userdataservice.UserDataService;
@@ -44,6 +45,24 @@ public class UserDataRemoteObject extends UnicastRemoteObject implements UserDat
 	@Override
 	public ResultMessage login(String userID, String password) throws RemoteException{
 		return userDataService.login(userID, password);
+	}
+
+	@Override
+	public ArrayList<UserPO> show() throws RemoteException {
+		// TODO Auto-generated method stub
+		return userDataService.show();
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByKeyword(String keyword) throws RemoteException {
+		// TODO Auto-generated method stub
+		return userDataService.findUsersByKeyword(keyword);
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException {
+		// TODO Auto-generated method stub
+		return userDataService.findUsersByID(userID);
 	}
 
 }

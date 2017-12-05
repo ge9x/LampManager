@@ -21,7 +21,12 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	}
 
 	public String getNewCustomerID() {
-		return null;
+		try {
+			return customer.getNewCustomerID();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public ResultMessage addCustomer(CustomerVO vo) {
