@@ -61,6 +61,6 @@ public class PurchaseLineItem {
 	
 	public static PurchasePO poTovo(PurchasePO po){
 		return null;
-		//return new PurchaseVO(po.getType(), po, ID, supplier, customerID, inventory, user, goodsItemList, remarks, endDate)
+		//return new PurchaseVO(po.getType(), po.getState(), Integer.toString(po.getID()), po.getSupplier(), Integer.toString(po.getCustomerID()), po.getInventory(), po.getUser(), po.getGoodsItemList(), po.getRemarks(), po.getDate());
 	}
 }
