@@ -1,5 +1,6 @@
 package blservice.classificationblservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import util.ResultMessage;
@@ -10,7 +11,7 @@ import vo.ClassificationVO;
  * @author 巽
  *
  */
-public interface ClassificationBLService {
+public interface ClassificationBLService extends Remote{
 	/**
 	 * 得到所有商品分类
 	 * @return 所有商品分类

@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
 
 import util.Criterion;
 import util.ResultMessage;
@@ -92,7 +93,12 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		if(value != null){
-			criteria.add(Restrictions.like(field, "%" + value + "%"));
+			if(field.equals("id")){	// 查询字段是ID，即数字类型
+				criteria.add(Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", value, StandardBasicTypes.STRING));
+			}
+			else{	// （默认）查询字段是varchar类型
+				criteria.add(Restrictions.like(field, "%" + value + "%"));
+			}
 		}
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		ArrayList<T> ret = (ArrayList<T>) criteria.list();

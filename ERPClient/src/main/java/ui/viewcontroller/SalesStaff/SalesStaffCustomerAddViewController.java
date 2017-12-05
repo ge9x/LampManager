@@ -85,6 +85,7 @@ public class SalesStaffCustomerAddViewController {
 				Level.LEVEL_FOUR.getValue(), Level.LEVEL_FIVE.getValue());
 		customerLevel.getSelectionModel().select(0);
 
+		customerID.setEditable(false);
 		customerReceive.setEditable(false);
 		customerPay.setEditable(false);
     }

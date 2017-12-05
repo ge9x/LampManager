@@ -1,5 +1,6 @@
 package blservice.inventoryblservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ import vo.InventoryViewVO;
  * @author 巽
  * 
  */
-public interface InventoryBLService {
+public interface InventoryBLService extends Remote {
 	/**
 	 * 得到所有的仓库名
 	 * @return 包含所有仓库名的链表
