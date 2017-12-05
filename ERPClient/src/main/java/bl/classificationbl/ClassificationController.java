@@ -35,7 +35,6 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.find(keyword);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -45,10 +44,8 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.showDetails(ID);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -58,37 +55,33 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.add(vo);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage delete(String ID) {
 		try {
 			return classification.delete(ID);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage update(ClassificationVO vo) {
 		try {
 			return classification.update(vo);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public String getNewID() {
 		try {
 			return classification.getNewID();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
