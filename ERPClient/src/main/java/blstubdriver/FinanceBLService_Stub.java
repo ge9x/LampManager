@@ -198,6 +198,11 @@ public class FinanceBLService_Stub implements FinanceBLService {
     }
 
     @Override
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) {
+        return null;
+    }
+
+    @Override
     public String getCustomerNameByID(String ID) {
         return "客户A";
     }
