@@ -64,28 +64,26 @@ public class AdminUserViewController {
     	UserList.getChildren().clear();
         cells.clear();
         loaders.clear();
-        if(userBLService.show()!=null){
-	        users = userBLService.show();
+	    users = userBLService.show();
 	        
-	        for (int i = 0; i < users.size(); i++){
-	            try {
-	                FXMLLoader userLoader = new FXMLLoader();
-	                userLoader.setLocation(getClass().getResource("/view/admin/UserCell.fxml"));
-	                VBox cell = userLoader.load();
-	                loaders.add(userLoader);
-	                cells.add(cell);
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
+	    for (int i = 0; i < users.size(); i++){
+	        try {
+	            FXMLLoader userLoader = new FXMLLoader();
+	            userLoader.setLocation(getClass().getResource("/view/admin/UserCell.fxml"));
+	            VBox cell = userLoader.load();
+	            loaders.add(userLoader);
+	            cells.add(cell);
+	        } catch (IOException e) {
+	            e.printStackTrace();
 	        }
+	    }
 	
-	        for (int i =0; i < users.size(); i++){
-	            AdminUserCellController userCellController = loaders.get(i).getController();
-	            userCellController.setUser(users.get(i));
-	            userCellController.setAdminUserViewController(this);
-	            UserList.getChildren().add(cells.get(i));
-	        }
-        }
+	    for (int i =0; i < users.size(); i++){
+	        AdminUserCellController userCellController = loaders.get(i).getController();
+	        userCellController.setUser(users.get(i));
+	        userCellController.setAdminUserViewController(this);
+	        UserList.getChildren().add(cells.get(i));
+	    }
     }
     
     public void showUserDetail(Pane userDetail){
