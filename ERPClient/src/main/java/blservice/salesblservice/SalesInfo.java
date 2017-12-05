@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import util.BillType;
+import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
@@ -92,4 +93,11 @@ public interface SalesInfo {
 	 * 通过ID得到总额（折让后总额）
 	 */
 	public double getSumByID(String ID);
+	/**
+	 * 审批销售单（销售出货单和销售退货单）
+	 * 
+	 * @param vo
+	 * @return
+	 */
+	public ResultMessage examine(SalesVO vo);
 }

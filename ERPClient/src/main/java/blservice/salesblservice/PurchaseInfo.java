@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import util.BillType;
+import util.ResultMessage;
+import vo.PurchaseVO;
 
 public interface PurchaseInfo {
 	/**
@@ -30,4 +32,12 @@ public interface PurchaseInfo {
 	 * 通过查找仓库得到进货单ID
 	 */
 	public ArrayList<String> getPurchaseIDByInventory(String inventory);
+	/**
+	 * 审批进货单（进货单和进货退货单）
+	 * 
+	 * @param vo
+	 * @return
+	 */
+	public ResultMessage examine(PurchaseVO vo);
+	
 }
