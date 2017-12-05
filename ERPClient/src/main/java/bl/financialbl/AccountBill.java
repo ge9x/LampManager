@@ -67,7 +67,6 @@ public class AccountBill {
                     po.setCustomerID(0);
                 }
                 po.setSum(vo.sum);
-                po.setDate(vo.date);
                 po.getAccountBillItemPOS().clear();
                 ArrayList<AccountBillItemVO> itemVOS = vo.accountBillItems;
                 for (AccountBillItemVO itemVO : itemVOS) {

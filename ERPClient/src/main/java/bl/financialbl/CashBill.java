@@ -52,7 +52,6 @@ public class CashBill {
                 else
                     po.setAccountID(0);
                 po.setSum(vo.sum);
-                po.setDate(vo.date);
                 po.getCashBillItemPOS().clear();
                 ArrayList<CashBillItemVO> itemVOS = vo.cashBillItems;
                 for (CashBillItemVO itemVO:itemVOS){
