@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
 import javafx.beans.value.ChangeListener;
@@ -16,7 +17,9 @@ import vo.UserVO;
 public class AdminUserDetailViewController {
 
 	private boolean hasEdited = false;
-	UserBLService userBLService = new UserBLService_Stub();
+	UserBLService userBLService = new UserController();
+	UserVO user;
+	AdminUserCellController adminUserCellController;
 	
 	@FXML
 	JFXTextField userID;
@@ -62,9 +65,6 @@ public class AdminUserDetailViewController {
 			
 		});
 	}
-	
-	UserVO user;
-	AdminUserCellController adminUserCellController;
 	
 	public void setUser(UserVO user){
 		this.user = user;

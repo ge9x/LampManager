@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
 import javafx.beans.value.ChangeListener;
@@ -20,7 +21,7 @@ import vo.UserVO;
 
 public class AdminUserAddViewController {
 	
-	UserBLService userBLService = new UserBLService_Stub();
+	UserBLService userBLService = new UserController();
 	UserVO user;
 	AdminUserViewController adminUserViewController;
 	
@@ -76,34 +77,35 @@ public class AdminUserAddViewController {
 	
 	public void clickOKButton(){
 		if(userID.getText().length()>0&&userPassword.getText().length()>0&&userName.getText().length()>0){
-			user.userID = userID.getText();
-			user.password = userPassword.getText();
-			user.name = userName.getText();
 				
 			int index = userPosition.getSelectionModel().getSelectedIndex();
+			UserPosition position = UserPosition.INVENTORY_STAFF;
+			UserLimits limit = UserLimits.STAFF;
 			switch(index){
 			case 0:
-				user.position = UserPosition.INVENTORY_STAFF;
+				position = UserPosition.INVENTORY_STAFF;
 				break;
 			case 1:
-				user.position = UserPosition.FINANCIAL_STAFF;
+				position = UserPosition.FINANCIAL_STAFF;
 				break;
 			case 2:
-				user.position = UserPosition.SALES_STAFF;
+				position = UserPosition.SALES_STAFF;
 				if(userLimit.getSelectionModel().isSelected(0)){
-					user.limit = UserLimits.STAFF;
+					limit = UserLimits.STAFF;
 				}
 				else{
-					user.limit = UserLimits.MANAGER;
+					limit = UserLimits.MANAGER;
 				}
 					break;
 			case 3:
-				user.position = UserPosition.GENERAL_MANAGER;
+				position = UserPosition.GENERAL_MANAGER;
 				break;
 			case 4:
-				user.position = UserPosition.ADMIN;
+				position = UserPosition.ADMIN;
 				break;
 			}
+			
+			user = new UserVO(userID.getText(), userPassword.getText(), userName.getText(), position, limit);
 			
 			userBLService.addUser(user);
 			adminUserViewController.clickReturnButton();
