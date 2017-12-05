@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.classificationblservice.ClassificationInfo;
+import po.ClassificationPO;
 import util.ResultMessage;
 import vo.ClassificationVO;
 
@@ -94,6 +95,17 @@ public class ClassificationController implements ClassificationBLService, Classi
 			ret.put(vo.ID, vo.name);
 		}
 		return ret;
+	}
+
+	@Override
+	public ClassificationPO getClassificationByName(String name) {
+		ArrayList<ClassificationPO> founds = classification.find(name);
+		for(ClassificationPO found : founds){
+			if(found.getName().equals(name)){
+				return found;
+			}
+		}
+		return null;
 	}
 
 }
