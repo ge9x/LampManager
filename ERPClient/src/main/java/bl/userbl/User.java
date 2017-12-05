@@ -53,12 +53,17 @@ public class User {
 	}
 
 	public ArrayList<UserVO> show() throws RemoteException{
-		userPOs = userDataService.show();
-		ArrayList<UserVO> userVOs = new ArrayList<>();
-		for(UserPO po:userPOs){
-			userVOs.add(poTOvo(po));
+		if(userDataService.show()!=null&&userDataService.show().size()>0){
+			userPOs = userDataService.show();
+			ArrayList<UserVO> userVOs = new ArrayList<>();
+			for(UserPO po:userPOs){
+				userVOs.add(poTOvo(po));
+			}
+			return userVOs;
 		}
-		return userVOs;
+		else{
+			return null;
+		}
 	}
 	
 	public String getCurrentUserID(){
