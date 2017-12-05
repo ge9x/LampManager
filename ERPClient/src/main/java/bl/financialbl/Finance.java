@@ -134,4 +134,9 @@ public class Finance{
     public ResultMessage examine(CashBillVO vo) throws RemoteException {
         return cashBill.examine(vo);
     }
+
+
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) throws RemoteException {
+        return cashBill.getCashBillByState(state);
+    }
 }
