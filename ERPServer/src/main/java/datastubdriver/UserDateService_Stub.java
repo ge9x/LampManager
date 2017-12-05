@@ -70,4 +70,67 @@ public class UserDateService_Stub implements UserDataService{
 		System.out.println("Initial user information success!");
 	}
 
+	@Override
+	public UserPO find(String userID) throws RemoteException {
+		for(UserPO po : userInfo){
+			if(po.getUserID() == Integer.parseInt(userID)){
+				return po;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ResultMessage delete(String userID) throws RemoteException {
+		for(UserPO po : userInfo){
+			if(po.getUserID() == Integer.parseInt(userID)){
+				userInfo.remove(po);
+				return ResultMessage.SUCCESS;
+			}
+		}
+		return ResultMessage.NOT_EXIST;
+	}
+
+	@Override
+	public ResultMessage login(String userID, String password) throws RemoteException {
+		for(UserPO po : userInfo){
+			if(po.getUserID() == Integer.parseInt(userID)){
+				if(po.getPassword().equals(password)){
+					return ResultMessage.SUCCESS;
+				}
+				else{
+					return ResultMessage.FAILED;
+				}
+			}
+		}
+		return ResultMessage.NOT_EXIST;
+	}
+
+	@Override
+	public ArrayList<UserPO> show() throws RemoteException {
+		return userInfo;
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByKeyword(String keyword) throws RemoteException {
+		ArrayList<UserPO> ret = new ArrayList<>();
+		for(UserPO po : userInfo){
+			if(po.getName().contains(keyword)){
+				ret.add(po);
+			}
+		}
+		return ret;
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException {
+		ArrayList<UserPO> ret = new ArrayList<>();
+		for(UserPO po : userInfo){
+			if(Integer.valueOf(po.getUserID()).toString().contains(userID)){
+				ret.add(po);
+			}
+		}
+		return ret;
+	}
+
 }
