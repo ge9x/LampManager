@@ -13,6 +13,13 @@ import util.ResultMessage;
 
 public interface CustomerDataService extends Remote{
 	/**
+	 * 得到新的客户ID
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	public String getNewCustomerID() throws RemoteException;
+	/**
 	 * 添加客户
 	 * 
 	 * @param po
