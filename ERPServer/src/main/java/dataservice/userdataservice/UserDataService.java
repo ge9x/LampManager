@@ -1,5 +1,6 @@
 package dataservice.userdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import util.ResultMessage;
 /** 
  * Created by Aster on 2017/10/21
  */
-public interface UserDataService {
+public interface UserDataService extends Remote{
 
 	/**
      * 按用户ID进行查找返回相应的UserPO结果
