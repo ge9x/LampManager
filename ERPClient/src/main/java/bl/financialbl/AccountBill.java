@@ -58,9 +58,8 @@ public class AccountBill {
 
     public ResultMessage update(AccountBillVO vo) throws RemoteException {
         accountBillPOS = financeDataService.getAllAccountBills();
-        int turn = Integer.parseInt(vo.ID.split("-")[2]);
         for (AccountBillPO po : accountBillPOS) {
-            if (po.getTurn() == turn) {
+            if (po.buildID().equals(vo.ID)) {
                 po.setState(vo.state);
                 if (vo.customerID != ""){
                     po.setCustomerID(Integer.parseInt(vo.customerID));
@@ -68,7 +67,6 @@ public class AccountBill {
                     po.setCustomerID(0);
                 }
                 po.setSum(vo.sum);
-                po.setDate(vo.date);
                 po.getAccountBillItemPOS().clear();
                 ArrayList<AccountBillItemVO> itemVOS = vo.accountBillItems;
                 for (AccountBillItemVO itemVO : itemVOS) {
@@ -84,10 +82,10 @@ public class AccountBill {
 
     public ResultMessage deleteBill(String id) throws RemoteException {
         ArrayList<AccountBillPO> accountBillPOS = financeDataService.getAllAccountBills();
-        int turn = Integer.parseInt(id.split("-")[2]);
         for (AccountBillPO po : accountBillPOS){
-            if (po.getTurn() == turn )
+            if (po.buildID().equals(id)){
                 return financeDataService.deleteBill(po);
+            }
         }
         return ResultMessage.FAILED;
     }
@@ -119,11 +117,12 @@ public class AccountBill {
     }
 
 
+
     public ResultMessage examine(AccountBillVO vo) throws RemoteException {
         return update(vo);
     }
 
-    public AccountBillPO voTopo(AccountBillVO vo){
+    public static AccountBillPO voTopo(AccountBillVO vo){
         ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
         for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
             accountBillItemPOS.add(AccountBillItem.voTopo(accountBillItemVO));

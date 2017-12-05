@@ -119,7 +119,7 @@ public interface FinanceBLService extends Remote{
 
     ArrayList<AccountBillVO> getPaymentsByState(BillState state);
 
-
+    ArrayList<CashBillVO> getCashBillByState(BillState state);
 
 }
 

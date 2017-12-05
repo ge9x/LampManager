@@ -31,4 +31,7 @@ public class CashBillItem {
         CashBillItemPO po = new CashBillItemPO(vo.itemName,vo.money,vo.remark);
         return po;
     }
+    public static CashBillItemVO poTovo(CashBillItemPO po){
+        return new CashBillItemVO(po.getItemName(),po.getMoney(),po.getRemark());
+    }
 }

@@ -155,6 +155,16 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
         }
     }
 
+    @Override
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) {
+        try {
+            return finance.getCashBillByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     @Override
     public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
@@ -192,5 +202,21 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
             e.printStackTrace();
             return ResultMessage.FAILED;
         }
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedReceipts() {
+        return getReceiptsByState(BillState.SUBMITTED);
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedPayments() {
+        return getPaymentsByState(BillState.SUBMITTED);
+    }
+
+
+    @Override
+    public ArrayList<CashBillVO> getAllSubmittedCashBills() {
+        return getCashBillByState(BillState.SUBMITTED);
     }
 }
