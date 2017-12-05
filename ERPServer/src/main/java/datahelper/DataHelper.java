@@ -2,7 +2,6 @@ package datahelper;
 
 import java.util.ArrayList;
 
-import javafx.util.Pair;
 import util.Criterion;
 import util.ResultMessage;
 
@@ -48,7 +47,7 @@ public interface DataHelper<T> {
 	public ArrayList<T> fullyQuery(String field, Object value);
 	/**
 	 * 模糊查询
-	 * @param field 要查询的字段
+	 * @param field 要查询的字段（若为数字类型，只支持"id"字段）
 	 * @param value 要匹配的关键字
 	 * @return 查询到的对象的集合
 	 */

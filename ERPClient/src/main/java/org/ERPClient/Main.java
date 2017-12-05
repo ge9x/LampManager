@@ -10,8 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import rmi.AccountRemoteHelper;
+import rmi.ClassificationRemoteHelper;
 import rmi.CustomerRemoteHelper;
 import rmi.FinanceRemoteHelper;
+import rmi.GoodsRemoteHelper;
+import rmi.InventoryRemoteHelper;
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
@@ -24,6 +27,9 @@ public class Main extends Application {
     private AccountRemoteHelper accountRemoteHelper;
     private FinanceRemoteHelper financeRemoteHelper;
     private CustomerRemoteHelper customerRemoteHelper;
+    private ClassificationRemoteHelper classificationRemoteHelper;
+    private GoodsRemoteHelper goodsRemoteHelper;
+    private InventoryRemoteHelper inventoryRemoteHelper;
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -61,10 +67,16 @@ public class Main extends Application {
             accountRemoteHelper = AccountRemoteHelper.getInstance();
             financeRemoteHelper = FinanceRemoteHelper.getInstance();
             customerRemoteHelper=CustomerRemoteHelper.getInstance();
+            classificationRemoteHelper = ClassificationRemoteHelper.getInstance();
+            goodsRemoteHelper = GoodsRemoteHelper.getInstance();
+            inventoryRemoteHelper = InventoryRemoteHelper.getInstance();
             
             accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
             financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
             customerRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/CustomerDataRemoteObject"));
+            classificationRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/ClassificationDataRemoteObject"));
+            goodsRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/GoodsDataRemoteObject"));
+            inventoryRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/InventoryDataRemoteObject"));
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();

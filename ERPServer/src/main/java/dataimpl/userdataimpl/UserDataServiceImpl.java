@@ -1,6 +1,7 @@
 package dataimpl.userdataimpl;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
@@ -29,8 +30,8 @@ public class UserDataServiceImpl implements UserDataService{
 	}
 
 	@Override
-	public UserPO find(int userID) throws RemoteException {
-		return userDataHelper.exactlyQuery("id", userID);
+	public UserPO find(String userID) throws RemoteException {
+		return userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
 	}
 
 	@Override
@@ -39,7 +40,8 @@ public class UserDataServiceImpl implements UserDataService{
 	}
 
 	@Override
-	public ResultMessage delete(UserPO po) throws RemoteException {
+	public ResultMessage delete(String userID) throws RemoteException {
+		UserPO po = userDataHelper.exactlyQuery("userID", userID);
 		return userDataHelper.delete(po);
 	}
 
@@ -51,6 +53,35 @@ public class UserDataServiceImpl implements UserDataService{
 	@Override
 	public void init() throws RemoteException {
 		// TODO 喵喵喵???
+	}
+
+	@Override
+	public ResultMessage login(String userID, String password) throws RemoteException {
+		UserPO po = userDataHelper.exactlyQuery("userID", userID);
+		if(po == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else if (po.getPassword().equals(password)){
+			return ResultMessage.SUCCESS;
+		}
+		else{
+			return ResultMessage.FAILED;
+		}
+	}
+
+	@Override
+	public ArrayList<UserPO> show() throws RemoteException {
+		return userDataHelper.fullyQuery(null, null);
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByKeyword(String keyword) throws RemoteException {
+		return userDataHelper.fuzzyQuery("name", keyword);
+	}
+
+	@Override
+	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException {
+		return userDataHelper.fuzzyQuery("id", userID);
 	}
 
 }
