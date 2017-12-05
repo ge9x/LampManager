@@ -104,6 +104,15 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 	public CustomerPO getCustomerData(int ID) throws RemoteException {
 		return customerDataHelper.exactlyQuery("id", ID);
 	}
+
+	public String getNewCustomerID() throws RemoteException {
+		String res=String.format("%02d", customerDataHelper.count() + 1);
+		int len=res.length();
+		for(int i=0;i<8-len;i++){
+			res="0"+res;
+		}
+		return res;		
+	}
 	
 	
 }
