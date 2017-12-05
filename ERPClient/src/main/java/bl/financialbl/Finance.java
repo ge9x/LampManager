@@ -15,6 +15,7 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.SalesDetailsInput;
 import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
+import po.AccountBillPO;
 import util.BillState;
 import util.ResultMessage;
 import vo.*;
@@ -127,4 +128,10 @@ public class Finance{
     }
 
 
+    public ResultMessage examine(AccountBillVO vo) throws RemoteException {
+        return accountBill.examine(vo);
+    }
+    public ResultMessage examine(CashBillVO vo) throws RemoteException {
+        return cashBill.examine(vo);
+    }
 }

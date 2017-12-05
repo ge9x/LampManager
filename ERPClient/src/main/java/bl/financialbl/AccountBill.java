@@ -81,26 +81,6 @@ public class AccountBill {
         return ResultMessage.FAILED;
     }
 
-    public AccountBillPO voTopo(AccountBillVO vo){
-        ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
-        for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
-            accountBillItemPOS.add(AccountBillItem.voTopo(accountBillItemVO));
-        }
-        int turn = Integer.parseInt(vo.ID.split("-")[2]);
-        int customerID = 0;
-        if (!vo.customerID.equals(""))
-            customerID = Integer.parseInt(vo.customerID);
-        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,customerID,vo.userName,accountBillItemPOS,turn);
-        return accountBillPO;
-    }
-    public AccountBillVO poTovo(AccountBillPO po){
-        ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<>();
-        for (AccountBillItemPO accountBillItemPO : po.getAccountBillItemPOS()) {
-            accountBillItemVOS.add(accountBillItem.poTovo(accountBillItemPO));
-        }
-        AccountBillVO accountBillVO = new AccountBillVO(po.getDate(), po.buildID(), po.getState(), po.getType(), String.valueOf(po.getCustomerID()), po.getUserName(), accountBillItemVOS);
-        return accountBillVO;
-    }
 
     public ResultMessage deleteBill(String id) throws RemoteException {
         ArrayList<AccountBillPO> accountBillPOS = financeDataService.getAllAccountBills();
@@ -139,7 +119,28 @@ public class AccountBill {
     }
 
 
+    public ResultMessage examine(AccountBillVO vo) throws RemoteException {
+        return update(vo);
+    }
 
-
-
+    public AccountBillPO voTopo(AccountBillVO vo){
+        ArrayList<AccountBillItemPO> accountBillItemPOS = new ArrayList<>();
+        for (AccountBillItemVO accountBillItemVO : vo.accountBillItems){
+            accountBillItemPOS.add(AccountBillItem.voTopo(accountBillItemVO));
+        }
+        int turn = Integer.parseInt(vo.ID.split("-")[2]);
+        int customerID = 0;
+        if (!vo.customerID.equals(""))
+            customerID = Integer.parseInt(vo.customerID);
+        AccountBillPO accountBillPO = new AccountBillPO(vo.date,vo.type,vo.state,customerID,vo.userName,accountBillItemPOS,turn);
+        return accountBillPO;
+    }
+    public AccountBillVO poTovo(AccountBillPO po){
+        ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<>();
+        for (AccountBillItemPO accountBillItemPO : po.getAccountBillItemPOS()) {
+            accountBillItemVOS.add(accountBillItem.poTovo(accountBillItemPO));
+        }
+        AccountBillVO accountBillVO = new AccountBillVO(po.getDate(), po.buildID(), po.getState(), po.getType(), String.valueOf(po.getCustomerID()), po.getUserName(), accountBillItemVOS);
+        return accountBillVO;
+    }
 }

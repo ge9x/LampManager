@@ -170,43 +170,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
         }
     }
 
-    @Override
-    public ArrayList<AccountBillVO> getDraftAccountBills() {
-        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
-        accountBillVOS.add(billVO);
-        return accountBillVOS;
-    }
 
-    @Override
-    public ArrayList<AccountBillVO> getSubmittedAccountBills() {
-        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        return accountBillVOS;
-    }
-
-    @Override
-    public ArrayList<AccountBillVO> getPassAccountBills() {
-        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        return accountBillVOS;
-    }
-
-    @Override
-    public ArrayList<AccountBillVO> getFailedAccountBills() {
-        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        accountBillVOS.add(billVO);
-        return accountBillVOS;
-    }
 
     @Override
     public ResultMessage deleteDraftAccountBill(String ID) {
@@ -220,6 +184,16 @@ public class FinanceBLService_Stub implements FinanceBLService {
 
     @Override
     public String getAccountNameByID(String accountID) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) {
         return null;
     }
 

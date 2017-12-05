@@ -81,4 +81,8 @@ public class CashBill {
         }
         return ResultMessage.FAILED;
     }
+
+    public ResultMessage examine(CashBillVO vo) throws RemoteException {
+        return update(vo);
+    }
 }

@@ -97,26 +97,6 @@ public interface FinanceBLService extends Remote{
      */
     public ResultMessage updateDraft(CashBillVO vo);
 
-    /**
-     * 获得所有草稿单据
-     *
-     */
-    public ArrayList<AccountBillVO> getDraftAccountBills();
-
-    /**
-     * 获得所有待审批单据
-     */
-    public ArrayList<AccountBillVO> getSubmittedAccountBills();
-
-    /**
-     * 获得所有待审批单据
-     */
-    public ArrayList<AccountBillVO> getPassAccountBills();
-
-    /**
-     * 获得所有审批失败单据
-     */
-    public ArrayList<AccountBillVO> getFailedAccountBills();
 
     /**
      * 删除草稿收付款单据
