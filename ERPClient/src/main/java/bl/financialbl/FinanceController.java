@@ -1,9 +1,12 @@
 package bl.financialbl;
 
+import blservice.financeblservice.FinanceInfo;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
 import blservice.formblservice.SalesDetailsInput;
 import com.sun.org.apache.regexp.internal.RE;
+import po.AccountBillPO;
+import util.BillState;
 import util.ResultMessage;
 import vo.*;
 
@@ -14,7 +17,7 @@ import java.util.Date;
 /**
  * Created by Kry·L on 2017/11/5.
  */
-public class FinanceController implements FinanceBLService{
+public class FinanceController implements FinanceBLService, FinanceInfo{
 
     private Finance finance;
 
@@ -115,45 +118,7 @@ public class FinanceController implements FinanceBLService{
         }
     }
 
-    @Override
-    public ArrayList<AccountBillVO> getDraftAccountBills() {
-        try {
-            return finance.getDraftAccountBills();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
-    @Override
-    public ArrayList<AccountBillVO> getSubmittedAccountBills() {
-        try {
-            return finance.getSubmittedAccountBills();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public ArrayList<AccountBillVO> getPassAccountBills() {
-        try {
-            return finance.getPassAccountBills();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public ArrayList<AccountBillVO> getFailedAccountBills() {
-        try {
-            return finance.getFailedAccountBills();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public ResultMessage deleteDraftAccountBill(String ID) {
@@ -181,8 +146,77 @@ public class FinanceController implements FinanceBLService{
     }
 
     @Override
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) {
+        try {
+            return finance.getPaymentsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) {
+        try {
+            return finance.getCashBillByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
+        try {
+            return finance.getReceiptsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+    @Override
     public String getCustomerNameByID(String ID) {
         return finance.getCustomerNameByID(ID);
     }
 
+    @Override
+    public ResultMessage examine(AccountBillVO vo) {
+        try {
+            return finance.examine(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage examine(CashBillVO vo) {
+        try {
+            return finance.examine(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedReceipts() {
+        return getReceiptsByState(BillState.SUBMITTED);
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedPayments() {
+        return getPaymentsByState(BillState.SUBMITTED);
+    }
+
+
+    @Override
+    public ArrayList<CashBillVO> getAllSubmittedCashBills() {
+        return getCashBillByState(BillState.SUBMITTED);
+    }
 }

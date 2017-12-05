@@ -92,7 +92,7 @@ public class FinancialReceiptEditController {
         String name = financeBLService.getUserID();
         Username.setText(name);
         accounts = financeBLService2.getAllAccount();
-        customers = financeBLService.getAllCustomer();
+        customers = financeBLService2.getAllCustomer();
 
         initCustomerCombobox();
         initTable();

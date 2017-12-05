@@ -23,6 +23,8 @@ import util.PromotionType;
 public class PromotionBargainPO extends PromotionPO{
 	/** 编号 */
 	private int ID;
+	/**促销策略名字*/
+	private String promotionName;
 	/** 起始时间 */
 	private String startDate;
 	/** 结束时间 */
@@ -34,14 +36,15 @@ public class PromotionBargainPO extends PromotionPO{
 	/**特价包总价*/
 	private double bargainTotal;
 	/**组合商品*/
-	private List<GoodsPO> bargains;
+	private List<GoodsItemPO> bargains;
 	/**特价包促销策略编号*/
 	private String promotionID;
 	
 	public PromotionBargainPO(){};
 	
-	public PromotionBargainPO(String startDate, String endDate, PromotionType type, double goodsTotal, double bargainTotal, List<GoodsPO> bargains) {
+	public PromotionBargainPO(String promotionName,String startDate, String endDate, PromotionType type, double goodsTotal, double bargainTotal, List<GoodsItemPO> bargains) {
 		super(startDate, endDate, type);
+		this.promotionName=promotionName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.type = type;
@@ -62,6 +65,15 @@ public class PromotionBargainPO extends PromotionPO{
 		this.ID = ID;
 	}
 	
+	@Column(name="promotionName")
+	public String getPromotionName() {
+		return promotionName;
+	}
+
+	public void setPromotionName(String promotionName) {
+		this.promotionName = promotionName;
+	}
+
 	@Column(name = "startdate")
 	public String getStartDate() {
 		return startDate;
@@ -105,10 +117,10 @@ public class PromotionBargainPO extends PromotionPO{
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "probar")  
-	public List<GoodsPO> getBargains() {
+	public List<GoodsItemPO> getBargains() {
 		return bargains;
 	}
-	public void setBargains(List<GoodsPO> bargains) {
+	public void setBargains(List<GoodsItemPO> bargains) {
 		this.bargains = bargains;
 	}
 	

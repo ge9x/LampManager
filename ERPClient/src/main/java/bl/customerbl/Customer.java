@@ -114,7 +114,16 @@ public class Customer {
 		if(vo.receivableLimit!=customerDataService.getCustomerData(Integer.valueOf(vo.customerID)).getReceivableLimit()){
 			return ResultMessage.FAILED;
 		}else{
-		    return customerDataService.update(voTopo(vo));
+			CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(vo.customerID));
+			po.setCategory(vo.category.getValue());
+			po.setLevel(vo.level.getValue());
+			po.setCustomerName(vo.customerName);
+			po.setPhone(vo.phone);
+			po.setAddress(vo.address);
+			po.setPostCode(vo.postCode);
+			po.setMail(vo.mail);
+			po.setSalesman(vo.salesman);
+		    return customerDataService.update(po);
 		}
 	}
 	
@@ -165,12 +174,19 @@ public class Customer {
 		}
 	}
 	
+	private String alterID(String ID){
+		int len=ID.length();
+		for(int i=0;i<8-len;i++){
+			ID="0"+ID;
+		}
+		return ID;
+	}
 	
 	public CustomerPO voTopo(CustomerVO vo){
 		return new CustomerPO(vo.category,vo.level,vo.customerName,vo.phone,vo.address,vo.postCode,vo.mail,vo.receivableLimit,vo.receive,vo.pay,vo.salesman,vo.points,vo.voucher);
 	}
 	
 	public CustomerVO poTovo(CustomerPO po){
-		return new CustomerVO(String.valueOf(po.getID()),CustomerCategory.categoryToString(po.getCategory()),Level.levelToString(po.getLevel()),po.getCustomerName(),po.getPhone(),po.getAddress(),po.getPostCode(),po.getMail(),po.getReceivableLimit(),po.getReceive(),po.getPay(),po.getSalesman(),po.getPoints(),po.getVoucher());
+		return new CustomerVO(alterID(String.valueOf(po.getID())),CustomerCategory.categoryToString(po.getCategory()),Level.levelToString(po.getLevel()),po.getCustomerName(),po.getPhone(),po.getAddress(),po.getPostCode(),po.getMail(),po.getReceivableLimit(),po.getReceive(),po.getPay(),po.getSalesman(),po.getPoints(),po.getVoucher());
 	}
 }

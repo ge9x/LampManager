@@ -6,8 +6,11 @@ import com.sun.org.apache.regexp.internal.RE;
 import dataservice.financedataservice.FinanceDataService;
 import datastubdriver.FinanceDataService_Stub;
 import po.AccountBillItemPO;
+import po.AccountBillPO;
 import po.CashBillItemPO;
 import po.CashBillPO;
+import util.BillState;
+import util.BillType;
 import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.CashBillItemVO;
@@ -49,7 +52,6 @@ public class CashBill {
                 else
                     po.setAccountID(0);
                 po.setSum(vo.sum);
-                po.setDate(vo.date);
                 po.getCashBillItemPOS().clear();
                 ArrayList<CashBillItemVO> itemVOS = vo.cashBillItems;
                 for (CashBillItemVO itemVO:itemVOS){
@@ -62,6 +64,35 @@ public class CashBill {
         return ResultMessage.FAILED;
     }
 
+
+
+    public ResultMessage deleteBill(String id) throws RemoteException {
+        ArrayList<CashBillPO> cashBillPOS = financeDataService.getAllCashBills();
+        int turn = Integer.parseInt(id.split("-")[2]);
+        for (CashBillPO po : cashBillPOS){
+            if (po.getTurn() == turn)
+                return financeDataService.deleteBill(po);
+        }
+        return ResultMessage.FAILED;
+    }
+
+    public ResultMessage examine(CashBillVO vo) throws RemoteException {
+        return update(vo);
+    }
+
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) throws RemoteException {
+        cashBillPOS.clear();
+        ArrayList<CashBillVO> vos = new ArrayList<>();
+        ArrayList<CashBillPO> pos = financeDataService.getAllCashBills();
+        for(CashBillPO po : pos){
+            if (po.getState() == state){
+                cashBillPOS.add(po);
+                vos.add(poTovo(po));
+            }
+        }
+        return vos;
+    }
+
     public CashBillPO voTopo(CashBillVO vo){
         int turn = Integer.parseInt(vo.ID.split("-")[2]);
         ArrayList<CashBillItemPO> itemPOS = new ArrayList<>();
@@ -72,13 +103,12 @@ public class CashBill {
         return po;
     }
 
-    public ResultMessage deleteBill(String id) throws RemoteException {
-        ArrayList<CashBillPO> cashBillPOS = financeDataService.getAllCashBills();
-        int turn = Integer.parseInt(id.split("-")[2]);
-        for (CashBillPO po : cashBillPOS){
-            if (po.getTurn() == turn)
-                return financeDataService.deleteBill(po);
+    public CashBillVO poTovo(CashBillPO po){
+        ArrayList<CashBillItemVO> itemVOS = new ArrayList<>();
+        for (CashBillItemPO itemPO : po.getCashBillItemPOS()){
+            itemVOS.add(CashBillItem.poTovo(itemPO));
         }
-        return ResultMessage.FAILED;
+        CashBillVO vo = new CashBillVO(po.getDate(),po.buildID(),po.getState(),po.getType(),po.getUserName(),String.valueOf(po.getAccountID()),itemVOS,po.getSum());
+        return vo;
     }
 }

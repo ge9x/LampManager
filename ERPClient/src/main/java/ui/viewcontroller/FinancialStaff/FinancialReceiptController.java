@@ -17,6 +17,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
+import util.BillState;
 import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.BillVO;
@@ -56,14 +57,16 @@ public class FinancialReceiptController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = financeBLService2.getDraftAccountBills();
-        submitted = financeBLService2.getSubmittedAccountBills();
-        pass = financeBLService2.getPassAccountBills();
-        failed = financeBLService2.getFailedAccountBills();
+        draft = financeBLService2.getReceiptsByState(BillState.DRAFT);
+        submitted = financeBLService2.getReceiptsByState(BillState.SUBMITTED);
+        pass = financeBLService2.getReceiptsByState(BillState.PASS);
+        failed = financeBLService2.getReceiptsByState(BillState.FAILED);
 
         billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批不通过单据");
         initTabs();
         vBox.getChildren().add(billPane.getTabPane());
+        billPane.getTabPane().getSelectionModel().selectLast();
+        billPane.getTabPane().getSelectionModel().selectFirst();
     }
     public void initTabs(){
         ArrayList<Tab> tabs = billPane.getAllTabs();

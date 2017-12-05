@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerBLService;
 import blstubdriver.CustomerBLService_Stub;
 import javafx.fxml.FXML;
@@ -66,11 +67,12 @@ public class SalesStaffCustomerAddViewController {
 	JFXButton cancelButton;
 
 	SalesStaffCustomerInfoViewController salesStaffCustomerInfoViewController;
-	CustomerBLService customerBLService = new CustomerBLService_Stub();
+	CustomerBLService customerBLService = new CustomerController();
 	CustomerVO customer;
 	
 	@FXML
     public void initialize(){
+		customerID.setText(customerBLService.getNewCustomerID());
 		customerReceive.setText(Money.getMoneyString(0));
 		customerPay.setText(Money.getMoneyString(0));
 		
