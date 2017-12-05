@@ -1,8 +1,10 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bean.CashBillItemBean;
+import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,13 +36,14 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/25.
  */
 public class FinancialCashBillEditController {
-    Boolean isNew;
     FinancialCashBillController financialCashBillController;
-
     FinanceBLService financeBLService = new FinanceBLService_Stub();
-    ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
+    FinanceBLService financeBLService2 = new FinanceController();
 
+    ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
+    Boolean isNew;
+
     TableView<CashBillItemBean> itemTable;
     ObservableList<CashBillItemBean> data =
             FXCollections.observableArrayList();
@@ -60,6 +63,15 @@ public class FinancialCashBillEditController {
 
     @FXML
     Text Total;
+
+    @FXML
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 
     @FXML
     ComboBox Accounts;
