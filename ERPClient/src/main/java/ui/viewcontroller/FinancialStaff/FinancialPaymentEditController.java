@@ -6,6 +6,7 @@ import bl.financialbl.AccountBill;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
@@ -19,10 +20,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -44,11 +47,14 @@ import java.util.Optional;
 public class FinancialPaymentEditController {
 
     FinancialPaymentController financialPaymentController;
-    FinanceBLService financeBLService = new FinanceController();
+    FinanceBLService financeBLService2 = new FinanceController();
+    FinanceBLService financeBLService = new FinanceBLService_Stub();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
+    Boolean isNew;
+
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
             FXCollections.observableArrayList();
@@ -70,7 +76,16 @@ public class FinancialPaymentEditController {
     Text Total;
 
     @FXML
+    Label title;
+
+    @FXML
     ComboBox Customer;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 
     public void initialize(){
         addIcon.setText("\ue61e");
@@ -78,14 +93,25 @@ public class FinancialPaymentEditController {
         Username.setText(name);
         accounts = financeBLService.getAllAccount();
         customers = financeBLService.getAllCustomer();
-        //初始化Customer选择框
-        ArrayList<String> customerNames = new ArrayList<>();
-        for (CustomerVO customer : customers){
-            customerNames.add(customer.customerName);
-        }
-        Customer.getItems().addAll(customerNames);
 
-        //初始化表格
+        initCustomerCombobox();
+        initTable();
+
+        //总额Text与绑定转账金额之和绑定
+        total.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Total.setText(Money.getMoneyString(total.get()));
+            }
+        });
+
+    }
+    public void addPayment() {
+        String ID = financeBLService.getNewPaymentID();
+        BillID.setText(ID);
+    }
+
+    public void initTable(){
         itemTable = new TableView<>();
         itemTable.setEditable(false);
 
@@ -102,19 +128,17 @@ public class FinancialPaymentEditController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(accountColumn,moneyColumn,remarkColumn);
         vbox.getChildren().add(itemTable);
-
-        //总额Text与绑定转账金额之和绑定
-        total.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Total.setText(Money.getMoneyString(total.get()));
-            }
-        });
-
     }
-    public void addPayment() {
-        String ID = financeBLService.getNewPaymentID();
-        BillID.setText(ID);
+
+    public void initCustomerCombobox(){
+        //初始化Customer选择框
+        ArrayList<String> customerNames = new ArrayList<>();
+        customerNames.clear();
+        Customer.getItems().clear();
+        for (CustomerVO customer : customers){
+            customerNames.add(customer.customerName);
+        }
+        Customer.getItems().addAll(customerNames);
     }
 
     public void clickAddButton(){
@@ -139,7 +163,11 @@ public class FinancialPaymentEditController {
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
                 Username.getText(),accountBillItems);
-        financeBLService.submit(accountBillVO);
+        if (isNew == true){
+            financeBLService2.submit(accountBillVO);
+        }else{
+            financeBLService2.updateDraft(accountBillVO);
+        }
         financialPaymentController.showPaymentList();
     }
     public void clickCancelButton(){
@@ -157,7 +185,12 @@ public class FinancialPaymentEditController {
                 AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
                         BillState.DRAFT, BillType.PAYMENT, customerID,
                         Username.getText(), accountBillItems);
-                financeBLService.save(accountBillVO);
+
+                if (isNew == true){
+                    financeBLService2.save(accountBillVO);
+                }else{
+                    financeBLService2.updateDraft(accountBillVO);
+                }
             }
 
             financialPaymentController.showPaymentList();
@@ -209,6 +242,76 @@ public class FinancialPaymentEditController {
 
     public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
         this.financialPaymentController = financialPaymentController;
+    }
+    public void setForDetailView(AccountBillVO account){
+        isNew = false;
+        BillID.setText(account.ID);
+
+        title.setText("付款单详情");
+
+        addIcon.setVisible(false);
+
+        String customerName = financeBLService.getCustomerNameByID(account.customerID);
+        Customer.getItems().clear();
+        Customer.getItems().add(customerName);
+        Customer.getSelectionModel().selectFirst();
+        Customer.setEditable(false);
+
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                financialPaymentController.showPaymentList();
+            }
+        });
+
+        //如果是草稿单据，就显示编辑按钮
+        if (account.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }
+        //否则隐藏提交按钮
+        else{
+            submitButton.setVisible(false);
+        }
+
+        for (AccountBillItemVO accountBillItemVO : account.accountBillItems) {
+            String accountName = financeBLService2.getAccountNameByID(accountBillItemVO.account.accountID);
+            accountBillItems.add(accountBillItemVO);
+            data.add(new AccountBillItemBean(accountName, accountBillItemVO.transferMoney, accountBillItemVO.remark));
+            total.set(total.get() + accountBillItemVO.transferMoney);
+        }
+    }
+    public void setForEditView(){
+        addIcon.setVisible(true);
+        title.setText("编辑草稿单");
+
+        Customer.setEditable(true);
+        initCustomerCombobox();
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+
+        /**
+         * 返回按钮需要再次询问是否保存为草稿
+         */
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
     }
 
 }

@@ -15,6 +15,8 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.SalesDetailsInput;
 import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
+import po.AccountBillPO;
+import util.BillState;
 import util.ResultMessage;
 import vo.*;
 
@@ -98,19 +100,6 @@ public class Finance{
         return cashBill.update(vo);
     }
 
-    public ArrayList<AccountBillVO> getDraftAccountBills() throws RemoteException {
-        return accountBill.getDraftAccountBills();
-    }
-    public ArrayList<AccountBillVO> getSubmittedAccountBills() throws RemoteException {
-        return accountBill.getSubmittedAccountBills();
-    }
-    public ArrayList<AccountBillVO> getPassAccountBills() throws RemoteException {
-        return accountBill.getPassAccountBills();
-
-    }
-    public ArrayList<AccountBillVO> getFailedAccountBills() throws RemoteException {
-        return accountBill.getFailedAccountBills();
-    }
 
     public String getCustomerNameByID(String id) {
         CustomerVO vo = customerInfo.getCustomerByID(Integer.parseInt(id));
@@ -128,5 +117,21 @@ public class Finance{
 
     public ResultMessage deleteCashBill(String id) throws RemoteException {
         return cashBill.deleteBill(id);
+    }
+
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) throws RemoteException {
+        return accountBill.getReceiptsByState(state);
+    }
+
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) throws RemoteException {
+        return accountBill.getPaymentsByState(state);
+    }
+
+
+    public ResultMessage examine(AccountBillVO vo) throws RemoteException {
+        return accountBill.examine(vo);
+    }
+    public ResultMessage examine(CashBillVO vo) throws RemoteException {
+        return cashBill.examine(vo);
     }
 }
