@@ -20,6 +20,7 @@ public class RemoteHelper {
         ClassificationDataRemoteObject classificationDataRemoteObject;
         GoodsDataRemoteObject goodsDataRemoteObject;
         InventoryDataRemoteObject inventoryDataRemoteObject;
+        SalesDataRemoteObject salesDataRemoteObject;
         try {
             accountDataRemoteObject = new AccountDataRemoteObject();
             financeDataRemoteObject = new FinanceDataRemoteObject();
@@ -27,6 +28,7 @@ public class RemoteHelper {
             classificationDataRemoteObject=new ClassificationDataRemoteObject();
             goodsDataRemoteObject=new GoodsDataRemoteObject();
             inventoryDataRemoteObject=new InventoryDataRemoteObject();
+            salesDataRemoteObject=new SalesDataRemoteObject();
             
             LocateRegistry.createRegistry(8080);
             Naming.bind("rmi://127.0.0.1:8080/AccountDataRemoteObject",
@@ -36,6 +38,7 @@ public class RemoteHelper {
             Naming.bind("rmi://127.0.0.1:8080/ClassificationDataRemoteObject", classificationDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/GoodsDataRemoteObject", goodsDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/InventoryDataRemoteObject", inventoryDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8080/SalesDataRemoteObject", salesDataRemoteObject);
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

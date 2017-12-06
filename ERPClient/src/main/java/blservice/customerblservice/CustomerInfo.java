@@ -2,6 +2,7 @@ package blservice.customerblservice;
 
 import java.util.ArrayList;
 
+import util.ResultMessage;
 import vo.CustomerVO;
 
 /**
@@ -24,4 +25,33 @@ public interface CustomerInfo {
 	 * @return 该客户所有信息
 	 */
 	public CustomerVO getCustomerByID(int ID);
+	/**
+	 * 增加客户应收
+	 * @param customerID
+	 * @param amount
+	 * @return
+	 */
+	public ResultMessage raiseCustomerReceive(int customerID,double amount);
+	/**
+	 * 减少客户应收
+	 * @param customerID
+	 * @param amount
+	 * @return
+	 */
+	public ResultMessage reduceCustomerReceive(int customerID,double amount);
+	/**
+	 * 增加客户应付
+	 * @param customerID
+	 * @param amount
+	 * @return
+	 */
+	public ResultMessage raiseCustomerPay(int customerID,double amount);
+	/**
+	 * 减少客户应付
+	 * @param customerID
+	 * @param amount
+	 * @return
+	 */
+	public ResultMessage reduceCustomerPay(int customerID,double amount);
+
 }

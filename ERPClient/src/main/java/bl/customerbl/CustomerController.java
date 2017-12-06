@@ -97,5 +97,25 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	public CustomerVO getCustomerByID(int ID){
 		return customer.getCustomerByID(ID);
 	}
+
+	public ResultMessage raiseCustomerReceive(int customerID, double amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultMessage reduceCustomerReceive(int customerID, double amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultMessage raiseCustomerPay(int customerID, double amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultMessage reduceCustomerPay(int customerID, double amount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

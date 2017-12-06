@@ -15,6 +15,7 @@ import rmi.CustomerRemoteHelper;
 import rmi.FinanceRemoteHelper;
 import rmi.GoodsRemoteHelper;
 import rmi.InventoryRemoteHelper;
+import rmi.SalesRemoteHelper;
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class Main extends Application {
     private ClassificationRemoteHelper classificationRemoteHelper;
     private GoodsRemoteHelper goodsRemoteHelper;
     private InventoryRemoteHelper inventoryRemoteHelper;
+    private SalesRemoteHelper salesRemoteHelper;
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -70,6 +72,7 @@ public class Main extends Application {
             classificationRemoteHelper = ClassificationRemoteHelper.getInstance();
             goodsRemoteHelper = GoodsRemoteHelper.getInstance();
             inventoryRemoteHelper = InventoryRemoteHelper.getInstance();
+            salesRemoteHelper=SalesRemoteHelper.getInstance();
             
             accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
             financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
@@ -77,6 +80,7 @@ public class Main extends Application {
             classificationRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/ClassificationDataRemoteObject"));
             goodsRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/GoodsDataRemoteObject"));
             inventoryRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/InventoryDataRemoteObject"));
+            salesRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/SalesDataRemoteObject"));
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();

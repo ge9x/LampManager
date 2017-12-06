@@ -34,7 +34,14 @@ public class Customer {
 	 * 
 	 */
 	public String getNewCustomerID() throws RemoteException{
-		return customerDataService.getNewCustomerID();		
+		ArrayList<CustomerPO> cusList=customerDataService.show();
+		String res=String.valueOf(cusList.get(cusList.size()-1).getID()+1);
+		int len=res.length();
+		for(int i=0;i<8-len;i++){
+			res="0"+res;
+		}
+		return res;
+		//return customerDataService.getNewCustomerID();
 	}
       //管理客户的步骤
 	/**
@@ -162,6 +169,50 @@ public class Customer {
 		try {
 			CustomerPO po=customerDataService.getCustomerData(ID);
 			return poTovo(po);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ResultMessage raiseCustomerReceive(int customerID, double amount) {
+		try {
+			CustomerPO po=customerDataService.getCustomerData(customerID);
+			po.setReceive(po.getReceive()+amount);
+			return customerDataService.update(po);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ResultMessage reduceCustomerReceive(int customerID, double amount) {
+		try {
+			CustomerPO po=customerDataService.getCustomerData(customerID);
+			po.setReceive(po.getReceive()-amount);
+			return customerDataService.update(po);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ResultMessage raiseCustomerPay(int customerID, double amount) {
+		try {
+			CustomerPO po=customerDataService.getCustomerData(customerID);
+			po.setPay(po.getPay()+amount);
+			return customerDataService.update(po);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ResultMessage reduceCustomerPay(int customerID, double amount) {
+		try {
+			CustomerPO po=customerDataService.getCustomerData(customerID);
+			po.setPay(po.getPay()-amount);
+			return customerDataService.update(po);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return null;
