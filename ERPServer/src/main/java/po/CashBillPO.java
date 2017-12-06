@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "cashbill")
-public class CashBillPO extends BillPO{
+public class CashBillPO extends BillPO {
 	private static final long serialVersionUID = -8095653272093963280L;
 
 	/**

@@ -22,7 +22,7 @@ public interface SalesDataService extends Remote{
 	 * @return 查找到的进货单据
 	 * @author zlk
 	 */
-	public PurchasePO findPurchaseByID(String ID) throws RemoteException;
+	public PurchasePO findPurchaseByID(int ID) throws RemoteException;
 	/**
 	 * 通过单据状态查找进货单据
 	 * 
@@ -30,7 +30,7 @@ public interface SalesDataService extends Remote{
 	 * @return 查找到的进货单据
 	 * @author zlk
 	 */
-	public ArrayList<PurchasePO> findPurchaseByState(BillState state) throws RemoteException;
+	public PurchasePO findPurchaseByState(BillState state) throws RemoteException;
 	/**
 	 * 通过单据编号查找销售单据
 	 * 
@@ -38,7 +38,7 @@ public interface SalesDataService extends Remote{
 	 * @return 查找到的销售单据
 	 * @author zlk
 	 */
-	public SalesPO findSlaesByID(String ID) throws RemoteException;
+	public SalesPO findSlaesByID(int ID) throws RemoteException;
 	/**
 	 * 通过单据编号查找销售单据
 	 * 
@@ -46,7 +46,7 @@ public interface SalesDataService extends Remote{
 	 * @return 查找到的销售单据
 	 * @author zlk
 	 */
-	public ArrayList<SalesPO> findSlaesByState(BillState state) throws RemoteException;
+	public SalesPO findSlaesByState(BillState state) throws RemoteException;
 	/**
 	 * 添加商品清单
 	 * 
@@ -94,7 +94,7 @@ public interface SalesDataService extends Remote{
 	 * @return 是否成功删除进货单据
 	 * @author zlk
 	 */
-	public ResultMessage deletePurchase(String ID) throws RemoteException;
+	public ResultMessage deletePurchase(int ID) throws RemoteException;
 	/**
 	 * 删除销售单据
 	 * 
@@ -102,7 +102,7 @@ public interface SalesDataService extends Remote{
 	 * @return 是否成功删除销售单据
 	 * @author zlk
 	 */
-	public ResultMessage deleteSales(String ID) throws RemoteException;
+	public ResultMessage deleteSales(int ID) throws RemoteException;
 	/**
 	 * 初始化持久化数据库
 	 * 

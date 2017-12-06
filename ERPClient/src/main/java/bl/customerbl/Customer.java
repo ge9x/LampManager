@@ -7,7 +7,6 @@ import java.util.Locale.Category;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import dataservice.customerdataservice.CustomerDataService;
-import dataservice.salesdataservice.SalesDataService;
 import po.CustomerPO;
 import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
@@ -35,14 +34,7 @@ public class Customer {
 	 * 
 	 */
 	public String getNewCustomerID() throws RemoteException{
-		ArrayList<CustomerPO> cusList=customerDataService.show();
-		String res=String.valueOf(cusList.get(cusList.size()-1).getID()+1);
-		int len=res.length();
-		for(int i=0;i<8-len;i++){
-			res="0"+res;
-		}
-		return res;
-		//return customerDataService.getNewCustomerID();
+		return customerDataService.getNewCustomerID();		
 	}
       //管理客户的步骤
 	/**
@@ -174,76 +166,6 @@ public class Customer {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	public ResultMessage raiseCustomerReceive(int customerID, double amount) {
-		try {
-			CustomerPO po=customerDataService.getCustomerData(customerID);
-			po.setReceive(po.getReceive()+amount);
-			return customerDataService.update(po);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ResultMessage reduceCustomerReceive(int customerID, double amount) {
-		try {
-			CustomerPO po=customerDataService.getCustomerData(customerID);
-			po.setReceive(po.getReceive()-amount);
-			return customerDataService.update(po);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ResultMessage raiseCustomerPay(int customerID, double amount) {
-		try {
-			CustomerPO po=customerDataService.getCustomerData(customerID);
-			po.setPay(po.getPay()+amount);
-			return customerDataService.update(po);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ResultMessage reduceCustomerPay(int customerID, double amount) {
-		try {
-			CustomerPO po=customerDataService.getCustomerData(customerID);
-			po.setPay(po.getPay()-amount);
-			return customerDataService.update(po);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public ArrayList<Integer> getAllSupplier() throws RemoteException {
-		ArrayList<CustomerPO> cusList=customerDataService.show();
-		ArrayList<Integer> cusID=new ArrayList<>();
-		for(CustomerPO po:cusList){
-			if(po.getCategory().equals("进货商")){
-				cusID.add(po.getID());
-			}
-		}
-		return cusID;
-	}
-
-	public String getCustomerNameByID(int ID) throws RemoteException {
-		return customerDataService.getCustomerData(ID).getCustomerName();
-	}
-	
-	public ArrayList<Integer> getAllSeller() throws RemoteException{
-		ArrayList<CustomerPO> cusList=customerDataService.show();
-		ArrayList<Integer> cusID=new ArrayList<>();
-		for(CustomerPO po:cusList){
-			if(po.getCategory().equals("销售商")){
-				cusID.add(po.getID());
-			}
-		}
-		return cusID;
 	}
 	
 	private String alterID(String ID){

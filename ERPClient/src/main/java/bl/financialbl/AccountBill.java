@@ -1,8 +1,6 @@
 package bl.financialbl;
 
 import bl.accountbl.Account;
-import bl.accountbl.AccountController;
-import bl.customerbl.CustomerController;
 import blservice.accountblservice.AccountInfo;
 import blservice.customerblservice.CustomerInfo;
 import blservice.userblservice.UserInfo;
@@ -33,14 +31,12 @@ public class AccountBill {
     private ArrayList<AccountBillItem> accountBillItems;
     private AccountBillItem accountBillItem;
     FinanceDataService financeDataService;
-    AccountInfo accountInfo;
 
     ArrayList<AccountBillPO> accountBillPOS;
 
     public AccountBill(){
         accountBillPOS = new ArrayList<>();
         accountBillItem = new AccountBillItem();
-        accountInfo = new AccountController();
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 
@@ -123,17 +119,7 @@ public class AccountBill {
 
 
     public ResultMessage examine(AccountBillVO vo) throws RemoteException {
-        ResultMessage re = update(vo);
-        if (vo.type == BillType.RECEIPT){
-            for (AccountBillItemVO itemVO : vo.accountBillItems){
-                accountInfo.changeMoney(itemVO.account.accountID,itemVO.transferMoney);
-            }
-        }else{
-            for (AccountBillItemVO itemVO : vo.accountBillItems){
-                accountInfo.changeMoney(itemVO.account.accountID,-itemVO.transferMoney);
-            }
-        }
-        return re;
+        return update(vo);
     }
 
     public static AccountBillPO voTopo(AccountBillVO vo){

@@ -64,8 +64,6 @@ public class FinancialPaymentController {
         billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批通过单据");
         initTabs();
         vBox.getChildren().add(billPane.getTabPane());
-        billPane.getTabPane().getSelectionModel().selectLast();
-        billPane.getTabPane().getSelectionModel().selectFirst();
     }
     public void initTabs(){
         ArrayList<Tab> tabs = billPane.getAllTabs();

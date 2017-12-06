@@ -3,12 +3,10 @@ package datastubdriver;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.PreferenceChangeListener;
 
 import org.jboss.logging.Logger.Level;
 
 import dataservice.promotiondataservice.PromotionDataService;
-import po.GoodsItemPO;
 import po.GoodsPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
@@ -25,20 +23,18 @@ public class PromotionDataService_Stub implements PromotionDataService{
 	long count = 1;
 	String newID = String.valueOf(count);
 	
-	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
-	
-	GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
-			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO(2, "挂灯",null, 10, 35.0,
-			"好看");
+	List<GoodsPO> goodsList=new ArrayList<GoodsPO>();
+	GoodsPO g1 = new GoodsPO( "圣洁牌纯黑落地灯", "L", null, 700, 250, 233.3, 250, 233.3,1);
+	GoodsPO g2 = new GoodsPO( "圣洁牌纯白落地灯", "M", null, 700, 250, 233.3, 250, 233.3,2);
 	{
-		goodsItemList.add(gi1);
-		goodsItemList.add(gi2);
-	}
+	goodsList.add(g1);
+	goodsList.add(g2);
 	
-	//PCList.add(new PromotionCustomerPO("会员促销策略","2017-11-30","2017-11-30",PromotionType.MEMBER_PROMOTION_STRATEGY,500,goodsItemList,Level.LEVEL_FOUR));
-	//PBList.add(new PromotionBargainPO("特价包","2017-12-1","2017-12-1",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsItemList));
-	//PTList.add(new PromotionTotalPO("总价促销策略","2017-12-1","2017-12-1",PromotionType.TOTAL_PROMOTION_STRATEGY,200.0,goodsItemList,300.0));
+		PCList.add(new PromotionCustomerPO("2017-11-30","2017-11-30",PromotionType.MEMBER_PROMOTION_STRATEGY,500,goodsList,null));
+		PBList.add(new PromotionBargainPO("2017-12-1","2017-12-1",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsList));
+		PTList.add(new PromotionTotalPO("2017-12-1","2017-12-1",PromotionType.TOTAL_PROMOTION_STRATEGY,200.0,goodsList,300.0));
+	
+	}
 	
 	public PromotionCustomerPO findPC(String ID) throws RemoteException {
 		for(PromotionCustomerPO po:PCList){

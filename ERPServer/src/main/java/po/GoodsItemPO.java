@@ -20,7 +20,7 @@ public class GoodsItemPO implements Serializable {
 	/**商品列表编号*/
 	private int ID;
 	/**商品编号*/
-	private String goodsID;
+	private int goodsID;
 	/**商品名称*/
 	private String goodsName;
 	/**型号*/
@@ -36,7 +36,7 @@ public class GoodsItemPO implements Serializable {
 	
 	public GoodsItemPO(){};
 	
-	public GoodsItemPO(String goodsID,String goodsName,String model,int number,double price,
+	public GoodsItemPO(int goodsID,String goodsName,String model,int number,double price,
 			String remarks){
 		this.goodsID=goodsID;
 		this.goodsName=goodsName;
@@ -59,11 +59,11 @@ public class GoodsItemPO implements Serializable {
 	}
 	
 	@Column(name = "goodsID")
-	public String getGoodsID() {
+	public int getGoodsID() {
 		return goodsID;
 	}
 
-	public void setGoodsID(String goodsID) {
+	public void setGoodsID(int goodsID) {
 		this.goodsID = goodsID;
 	}
 

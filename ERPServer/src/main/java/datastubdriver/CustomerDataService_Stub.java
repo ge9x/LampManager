@@ -105,9 +105,4 @@ public class CustomerDataService_Stub implements CustomerDataService{
 	    System.out.println("Init customerList success");
 	}
 
-	@Override
-	public String getNewCustomerID() throws RemoteException {
-		return "00000001";
-	}
-
 }
