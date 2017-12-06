@@ -34,76 +34,20 @@ public class SalesDataServiceImpl implements SalesDataService{
 		this.goodsItemDataHelper=new HibernateDataHelper<GoodsItemPO>(GoodsItemPO.class); 
 	}
 	
-	public PurchasePO findPurchaseByID(String ID) throws RemoteException {
-		String[] arr=ID.split("-");
-		ArrayList<Criterion> criteria=new ArrayList<>(); 
-		if(arr[0].equals("JHD")){
-			criteria.add(
-					new Criterion("type",BillType.PURCHASE,QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("date", addHyphen(arr[1]),QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("turn", Integer.parseInt(arr[2]),QueryMode.FULL)
-					);
-			return purchaseDataHelper.multiQuery(criteria).get(0);
-		}else{
-			criteria.add(
-					new Criterion("type",BillType.RETURN,QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("date", addHyphen(arr[1]),QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("turn", Integer.parseInt(arr[2]),QueryMode.FULL)
-					);
-			return purchaseDataHelper.multiQuery(criteria).get(0);
-		}
+	public PurchasePO findPurchaseByID(int ID) throws RemoteException {
+		return purchaseDataHelper.exactlyQuery("id", ID);
 	}
 
-	public ArrayList<PurchasePO> findPurchaseByState(BillState state) throws RemoteException {
-		ArrayList<Criterion> criteria=new ArrayList<>();
-		criteria.add(
-				new Criterion("state", state,QueryMode.FULL)
-				);
-		return purchaseDataHelper.multiQuery(criteria);
+	public PurchasePO findPurchaseByState(BillState state) throws RemoteException {
+		return purchaseDataHelper.exactlyQuery("type", state);
 	}
 
-	public SalesPO findSlaesByID(String ID) throws RemoteException {
-		String[] arr=ID.split("-");
-		ArrayList<Criterion> criteria=new ArrayList<>(); 
-		if(arr[0].equals("XSD")){
-			criteria.add(
-					new Criterion("type",BillType.SALES,QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("date", addHyphen(arr[1]),QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("turn", Integer.parseInt(arr[2]),QueryMode.FULL)
-					);
-			return salesDataHelper.multiQuery(criteria).get(0);
-		}else{
-			criteria.add(
-					new Criterion("type",BillType.SALESRETURN,QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("date", addHyphen(arr[1]),QueryMode.FULL)
-					);
-			criteria.add(
-					new Criterion("turn", Integer.parseInt(arr[2]),QueryMode.FULL)
-					);
-			return salesDataHelper.multiQuery(criteria).get(0);
-		}
+	public SalesPO findSlaesByID(int ID) throws RemoteException {
+		return salesDataHelper.exactlyQuery("id", ID);
 	}
 
-	public ArrayList<SalesPO> findSlaesByState(BillState state) throws RemoteException {
-		ArrayList<Criterion> criteria=new ArrayList<>();
-		criteria.add(
-				new Criterion("state", state,QueryMode.FULL)
-				);
-		return salesDataHelper.multiQuery(criteria);
+	public SalesPO findSlaesByState(BillState state) throws RemoteException {
+		return salesDataHelper.exactlyQuery("type", state);
 	}
 	
 	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
@@ -126,12 +70,12 @@ public class SalesDataServiceImpl implements SalesDataService{
 		return salesDataHelper.update(po);
 	}
 
-	public ResultMessage deletePurchase(String ID) throws RemoteException {
-		return purchaseDataHelper.delete(salesDataServiceImpl.findPurchaseByID(ID));
+	public ResultMessage deletePurchase(int ID) throws RemoteException {
+		return purchaseDataHelper.delete(purchaseDataHelper.exactlyQuery("id", ID));
 	}
 
-	public ResultMessage deleteSales(String ID) throws RemoteException {
-		return salesDataHelper.delete(salesDataServiceImpl.findSlaesByID(ID));
+	public ResultMessage deleteSales(int ID) throws RemoteException {
+		return salesDataHelper.delete(salesDataHelper.exactlyQuery("id", ID));
 	}
 
 	public void init() throws RemoteException {
@@ -175,15 +119,6 @@ public class SalesDataServiceImpl implements SalesDataService{
 				new Criterion("type",BillType.SALESRETURN,QueryMode.FULL)
 				);
 		return salesDataHelper.multiQuery(criterion);
-	}
-	
-	/**
-	 * 给时间增加横杠
-	 * @param date
-	 * @return
-	 */
-	private String addHyphen(String date){
-		return date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8);
 	}
 	
 }

@@ -91,8 +91,8 @@ public class FinancialPaymentEditController {
         addIcon.setText("\ue61e");
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService2.getAllAccount();
-        customers = financeBLService2.getAllCustomer();
+        accounts = financeBLService.getAllAccount();
+        customers = financeBLService.getAllCustomer();
 
         initCustomerCombobox();
         initTable();
@@ -107,8 +107,7 @@ public class FinancialPaymentEditController {
 
     }
     public void addPayment() {
-        String ID = financeBLService2.getNewPaymentID();
-        isNew = true;
+        String ID = financeBLService.getNewPaymentID();
         BillID.setText(ID);
     }
 

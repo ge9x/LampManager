@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
 import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
@@ -24,7 +23,6 @@ public class BillController {
     BillVO bill;
     FinancialReceiptController financialReceiptController;
     FinancialPaymentController financialPaymentController;
-    FinancialCashBillController financialCashBillController;
     InventorySyncController inventorySyncController;
 
     @FXML
@@ -92,18 +90,6 @@ public class BillController {
             billType.setTextFill(Color.web("#0066FF"));
             billCreater.setText(cashBill.userName);
             billMoney.setText(Money.getMoneyString(cashBill.sum));
-            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    financialCashBillController.showCashBillDetailView(cashBill);
-                }
-            });
-            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    financialCashBillController.deleteCashBill(cashBill);
-                }
-            });
         }
         else if(bill.type==BillType.GIFT){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -215,10 +201,6 @@ public class BillController {
     }
     public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
         this.financialPaymentController = financialPaymentController;
-    }
-
-    public void setFinancialCashBillController(FinancialCashBillController financialCashBillController){
-        this.financialCashBillController = financialCashBillController;
     }
     public void setInventorySyncController(InventorySyncController inventorySyncController){
         this.inventorySyncController = inventorySyncController;

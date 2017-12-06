@@ -73,14 +73,14 @@ public interface SalesBLService {
 	   * @return 得到创建后的进货单
 	   * @author zlk
 	   */
-	  public ResultMessage addPurchase(PurchaseVO vo);
+	  public PurchaseVO addPurchase(PurchaseVO vo);
 	  /**
 	   * 添加商品清单信息
 	   * 
 	   * @param item
 	   * @author zlk
 	   */
-	  public ResultMessage addGoodsItem(GoodsItemVO item);
+	  public void addGoodsItem(GoodsItemVO item);
 	  /**
 	   * 创建一个销售单
 	   * 
@@ -88,7 +88,7 @@ public interface SalesBLService {
 	   * @return 得到创建后的销售单
 	   * @author zlk
 	   */
-	  public ResultMessage addSales(SalesVO vo);
+	  public SalesVO addSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 
@@ -140,6 +140,6 @@ public interface SalesBLService {
 	   * 获得所有客户列表
 	   * @return 客户VO的列表
 	   */
-	  public ArrayList<Integer> getAllCustomer();
+	  public ArrayList<CustomerVO> getAllCustomer();
 	  
 }

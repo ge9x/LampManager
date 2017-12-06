@@ -55,10 +55,5 @@ public class CustomerDataRemoteObject extends UnicastRemoteObject implements Cus
 	public CustomerPO getCustomerData(int ID) throws RemoteException {
 		return customerDataService.getCustomerData(ID);
 	}
-
-	@Override
-	public String getNewCustomerID() throws RemoteException {
-		return customerDataService.getNewCustomerID();
-	}
 	
 }

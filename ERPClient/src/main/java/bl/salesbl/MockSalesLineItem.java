@@ -28,10 +28,10 @@ public class MockSalesLineItem extends SalesLineItem{
 	{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
-		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", 1,"销售商1", "业务员1",
-				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", LocalDate.now().toString(),"PC-1");
-	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002",2, "销售商2", "业务员2",
-					"阿奇","00000004" ,"默认仓库",goodsItemList , 100,500, "满足客户需求", LocalDate.now().toString(),"PB-1");
+		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
+				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", LocalDate.now().toString());
+	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
+					"阿奇","00000004" ,"默认仓库",goodsItemList , 100,500, "满足客户需求", LocalDate.now().toString());
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

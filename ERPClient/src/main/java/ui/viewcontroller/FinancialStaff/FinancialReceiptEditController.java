@@ -260,7 +260,7 @@ public class FinancialReceiptEditController {
 
         addIcon.setVisible(false);
 
-        String customerName = financeBLService2.getCustomerNameByID(account.customerID);
+        String customerName = financeBLService.getCustomerNameByID(account.customerID);
         Customer.getItems().clear();
         Customer.getItems().add(customerName);
         Customer.getSelectionModel().selectFirst();
