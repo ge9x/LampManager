@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bean.CashBillItemBean;
+import bl.customerbl.Customer;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -13,10 +14,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ui.component.DialogFactory;
@@ -80,15 +83,30 @@ public class FinancialCashBillEditController {
         addIcon.setText("\ue61e");
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService.getAllAccount();
+        accounts = financeBLService2.getAllAccount();
 
+        initAccountCombobox();
+        initTable();
+
+        //总额Text与绑定转账金额之和绑定
+        total.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Total.setText(Money.getMoneyString(total.get()));
+            }
+        });
+
+    }
+    public void initAccountCombobox(){
         //初始化Account选择框
         ArrayList<String> accountNames = new ArrayList<>();
         for (AccountVO account : accounts){
             accountNames.add(account.accountName);
         }
         Accounts.getItems().addAll(accountNames);
+    }
 
+    public void initTable(){
         //初始化表格
         itemTable = new TableView<>();
         itemTable.setEditable(false);
@@ -106,18 +124,9 @@ public class FinancialCashBillEditController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(nameColumn,moneyColumn,remarkColumn);
         vbox.getChildren().add(itemTable);
-
-        //总额Text与绑定转账金额之和绑定
-        total.addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Total.setText(Money.getMoneyString(total.get()));
-            }
-        });
-
     }
     public void addCashBill() {
-        String ID = financeBLService.getNewCashBillID();
+        String ID = financeBLService2.getNewCashBillID();
         isNew = true;
         BillID.setText(ID);
     }
@@ -165,7 +174,11 @@ public class FinancialCashBillEditController {
         CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
-        financeBLService.submit(cashBillVO);
+        if (isNew == true){
+            financeBLService2.submit(cashBillVO);
+        }else{
+            financeBLService2.updateDraft(cashBillVO);
+        }
         financialCashBillController.showCashBillList();
     }
     public void clickCancelButton(){
@@ -183,17 +196,79 @@ public class FinancialCashBillEditController {
                         BillState.DRAFT, BillType.CASH,Username.getText(), accountID
                         , cashBillItems,total.get());
 
-                if (isNew = true){
-                    financeBLService.save(cashBillVO);
+                if (isNew == true){
+                    financeBLService2.save(cashBillVO);
                 }else{
-                    financeBLService.updateDraft(cashBillVO);
+                    financeBLService2.updateDraft(cashBillVO);
                 }
             }
 
             financialCashBillController.showCashBillList();
         }
     }
+    public void setForDetailView(CashBillVO cashBillVO){
+        isNew = false;
+        BillID.setText(cashBillVO.ID);
+        title.setText("现金费用单详情");
+        addIcon.setVisible(false);
 
+
+        String accountName = "";
+        if (!cashBillVO.accountID.equals("0")){
+            accountName = financeBLService2.getAccountNameByID(cashBillVO.accountID);
+        }
+        Accounts.getItems().clear();
+        Accounts.getItems().add(accountName);
+        Accounts.getSelectionModel().selectFirst();
+        Accounts.setEditable(false);
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                financialCashBillController.showCashBillList();
+            }
+        });
+
+        if (cashBillVO.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }else{
+            submitButton.setVisible(false);
+        }
+        for (CashBillItemVO cashBillItemVO:cashBillVO.cashBillItems){
+            cashBillItems.add(cashBillItemVO);
+            data.add(new CashBillItemBean(cashBillItemVO.itemName,cashBillItemVO.money,cashBillItemVO.remark));
+            total.set(total.get() + cashBillItemVO.money);
+        }
+    }
+
+    public void setForEditView(){
+        addIcon.setVisible(true);
+        title.setText("编辑草稿单");
+
+        Accounts.setEditable(true);
+        initAccountCombobox();
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
 
     public void setFinancialCashBillController(FinancialCashBillController financialCashBillController){
         this.financialCashBillController = financialCashBillController;
