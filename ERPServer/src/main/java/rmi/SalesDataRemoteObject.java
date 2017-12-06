@@ -19,19 +19,19 @@ public class SalesDataRemoteObject extends UnicastRemoteObject implements SalesD
 		salesDataService=SalesDataServiceImpl.getInstance();
 	}
 	@Override
-	public PurchasePO findPurchaseByID(int ID) throws RemoteException {
+	public PurchasePO findPurchaseByID(String ID) throws RemoteException {
 		return salesDataService.findPurchaseByID(ID);
 	}
 	@Override
-	public PurchasePO findPurchaseByState(BillState state) throws RemoteException {
+	public ArrayList<PurchasePO> findPurchaseByState(BillState state) throws RemoteException {
 		return salesDataService.findPurchaseByState(state);
 	}
 	@Override
-	public SalesPO findSlaesByID(int ID) throws RemoteException {
+	public SalesPO findSlaesByID(String ID) throws RemoteException {
 		return salesDataService.findSlaesByID(ID);
 	}
 	@Override
-	public SalesPO findSlaesByState(BillState state) throws RemoteException {
+	public ArrayList<SalesPO> findSlaesByState(BillState state) throws RemoteException {
 		return salesDataService.findSlaesByState(state);
 	}
 	@Override
@@ -55,17 +55,16 @@ public class SalesDataRemoteObject extends UnicastRemoteObject implements SalesD
 		return salesDataService.updateSales(po);
 	}
 	@Override
-	public ResultMessage deletePurchase(int ID) throws RemoteException {
+	public ResultMessage deletePurchase(String ID) throws RemoteException {
 		return salesDataService.deletePurchase(ID);
 	}
 	@Override
-	public ResultMessage deleteSales(int ID) throws RemoteException {
-		return salesDataService.deleteSales(ID);
+	public ResultMessage deleteSales(String ID) throws RemoteException {
+		return salesDataService.deletePurchase(ID);
 	}
 	@Override
 	public void init() throws RemoteException {
 		salesDataService.init();
-		
 	}
 	@Override
 	public ArrayList<PurchasePO> showPurchase() throws RemoteException {
@@ -83,5 +82,6 @@ public class SalesDataRemoteObject extends UnicastRemoteObject implements SalesD
 	public ArrayList<SalesPO> showSalesReturn() throws RemoteException {
 		return salesDataService.showSalesReturn();
 	}
+	
 	
 }
