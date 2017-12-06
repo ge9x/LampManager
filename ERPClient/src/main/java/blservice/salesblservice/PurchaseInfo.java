@@ -11,7 +11,7 @@ public interface PurchaseInfo {
 	/**
 	 * 得到所有进货单时间
 	 */
-	public ArrayList<Date> getAllPurchaseDate();
+	public ArrayList<String> getAllPurchaseDate();
 	/**
 	 * 通过查看时间区间得到进货单ID
 	 */
