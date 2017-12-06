@@ -3,6 +3,7 @@ package ui.viewcontroller.Admin;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
@@ -38,10 +39,10 @@ public class AdminUserViewController {
     private ArrayList<FXMLLoader> loaders = new ArrayList<FXMLLoader>();
     private ArrayList<VBox> cells = new ArrayList<VBox>();
     
-    UserBLService userBLService = new UserBLService_Stub();
+    UserBLService userBLService = new UserController();
     AdminViewController adminViewController;
     AdminUserAddViewController adminUserAddViewController;
-    ArrayList<UserVO> users;
+    ArrayList<UserVO> users = new ArrayList<>();
     
     @FXML
     public void initialize(){
@@ -63,26 +64,26 @@ public class AdminUserViewController {
     	UserList.getChildren().clear();
         cells.clear();
         loaders.clear();
-        users = userBLService.show();
-        
-        for (int i = 0; i < users.size(); i++){
-            try {
-                FXMLLoader userLoader = new FXMLLoader();
-                userLoader.setLocation(getClass().getResource("/view/admin/UserCell.fxml"));
-                VBox cell = userLoader.load();
-                loaders.add(userLoader);
-                cells.add(cell);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        for (int i =0; i < users.size(); i++){
-            AdminUserCellController userCellController = loaders.get(i).getController();
-            userCellController.setUser(users.get(i));
-            userCellController.setAdminUserViewController(this);
-            UserList.getChildren().add(cells.get(i));
-        }
+	    users = userBLService.show();
+	        
+	    for (int i = 0; i < users.size(); i++){
+	        try {
+	            FXMLLoader userLoader = new FXMLLoader();
+	            userLoader.setLocation(getClass().getResource("/view/admin/UserCell.fxml"));
+	            VBox cell = userLoader.load();
+	            loaders.add(userLoader);
+	            cells.add(cell);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+	    for (int i =0; i < users.size(); i++){
+	        AdminUserCellController userCellController = loaders.get(i).getController();
+	        userCellController.setUser(users.get(i));
+	        userCellController.setAdminUserViewController(this);
+	        UserList.getChildren().add(cells.get(i));
+	    }
     }
     
     public void showUserDetail(Pane userDetail){

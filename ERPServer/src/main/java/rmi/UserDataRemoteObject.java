@@ -50,19 +50,19 @@ public class UserDataRemoteObject extends UnicastRemoteObject implements UserDat
 	@Override
 	public ArrayList<UserPO> show() throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return userDataService.show();
 	}
 
 	@Override
 	public ArrayList<UserPO> findUsersByKeyword(String keyword) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return userDataService.findUsersByKeyword(keyword);
 	}
 
 	@Override
 	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		return userDataService.findUsersByID(userID);
 	}
 
 }

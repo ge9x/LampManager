@@ -88,4 +88,14 @@ public class Account{
     }
 
 
+    public ResultMessage changeMoney(String id, double money) throws RemoteException {
+        ArrayList<AccountPO> accountPOS = accountDataService.show();
+        for (AccountPO po: accountPOS){
+            if (po.getID() == Integer.parseInt(id)){
+                po.setMoney(po.getMoney()+money);
+                return accountDataService.updateAccount(po);
+            }
+        }
+        return ResultMessage.FAILED;
+    }
 }
