@@ -17,7 +17,7 @@ public interface SalesInfo {
 	/**
 	 * 得到所有销售单时间
 	 */
-	public ArrayList<Date> getAllSalesDate();
+	public ArrayList<String> getAllSalesDate();
 	/**
 	 * 得到所有商品名
 	 */

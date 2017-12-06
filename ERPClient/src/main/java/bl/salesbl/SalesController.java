@@ -1,8 +1,11 @@
 package bl.salesbl;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import blservice.salesblservice.SalesBLService;
+import blservice.salesblservice.SalesInfo;
+import util.BillType;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
@@ -16,7 +19,7 @@ import vo.SalesVO;
  * Created by zlk on 2017/11/5
  */
 
-public class SalesController implements SalesBLService{
+public class SalesController implements SalesBLService,SalesInfo{
 
 	private Sales sales;
 	
@@ -59,17 +62,17 @@ public class SalesController implements SalesBLService{
 		return null;
 	}
 
-	public PurchaseVO addPurchase(PurchaseVO vo) {
+	public ResultMessage addPurchase(PurchaseVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void addGoodsItem(GoodsItemVO item) {
+	public ResultMessage addGoodsItem(GoodsItemVO item) {
 		// TODO Auto-generated method stub
-		
+		return ResultMessage.NULL;
 	}
 
-	public SalesVO addSales(SalesVO vo) {
+	public ResultMessage addSales(SalesVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -114,6 +117,120 @@ public class SalesController implements SalesBLService{
 
 	@Override
 	public ArrayList<CustomerVO> getAllCustomer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Date> getAllSalesDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getAllGoodsName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesman() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getAllCustomerID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesOrderIDByDate(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesOrderIDByGoodsName(String goodsName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesOrderIDByCustomerID(String customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesOrderIDBySalesman(String salesman) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesOrderIDByInventory(String inventory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesIDByDate(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesIDByType(BillType type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesIDByCustomerID(String customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesIDBySalesman(String salesman) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getSalesIDByInventory(String invenory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getDateByID(String ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<GoodsItemVO> getGoodsItemByID(String ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double getAllowance(String ID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getSumByID(String ID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ResultMessage examine(SalesVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -20,7 +20,7 @@ public class PurchaseList {
 		ArrayList<PurchasePO> poList=salesDataService.showPurchase();
 		ArrayList<PurchaseVO> voList=new ArrayList<>();
 		for(PurchasePO po:poList){
-			voList.add(purchase.poTovo(po));
+			voList.add(Purchase.poTovo(po));
 		}
 		return voList;
 	}
@@ -29,7 +29,7 @@ public class PurchaseList {
 		ArrayList<PurchasePO> poList=salesDataService.showReturn();
 		ArrayList<PurchaseVO> voList=new ArrayList<>();
 		for(PurchasePO po:poList){
-			voList.add(purchase.poTovo(po));
+			voList.add(Purchase.poTovo(po));
 		}
 		return voList;
 	}
