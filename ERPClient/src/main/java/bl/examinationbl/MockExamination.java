@@ -55,11 +55,4 @@ public class MockExamination extends Examination{
 		}
 	}
 	
-	@Override
-	public ArrayList<BillVO> showHistory() {
-		ArrayList<BillVO> history = new ArrayList<BillVO>();
-		history.add(accountBill);
-		return history;
-	}
-	
 }
