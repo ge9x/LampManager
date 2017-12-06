@@ -15,11 +15,8 @@ import rmi.CustomerRemoteHelper;
 import rmi.FinanceRemoteHelper;
 import rmi.GoodsRemoteHelper;
 import rmi.InventoryRemoteHelper;
-<<<<<<< HEAD
 import rmi.UserRemoteHelper;
-=======
 import rmi.SalesRemoteHelper;
->>>>>>> refs/remotes/origin/zlkDataV8
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
@@ -35,11 +32,8 @@ public class Main extends Application {
     private ClassificationRemoteHelper classificationRemoteHelper;
     private GoodsRemoteHelper goodsRemoteHelper;
     private InventoryRemoteHelper inventoryRemoteHelper;
-<<<<<<< HEAD
     private UserRemoteHelper userRemoteHelper;
-=======
     private SalesRemoteHelper salesRemoteHelper;
->>>>>>> refs/remotes/origin/zlkDataV8
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -80,11 +74,8 @@ public class Main extends Application {
             classificationRemoteHelper = ClassificationRemoteHelper.getInstance();
             goodsRemoteHelper = GoodsRemoteHelper.getInstance();
             inventoryRemoteHelper = InventoryRemoteHelper.getInstance();
-<<<<<<< HEAD
             userRemoteHelper = UserRemoteHelper.getInstance();
-=======
             salesRemoteHelper=SalesRemoteHelper.getInstance();
->>>>>>> refs/remotes/origin/zlkDataV8
             
             accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
             financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
@@ -92,11 +83,8 @@ public class Main extends Application {
             classificationRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/ClassificationDataRemoteObject"));
             goodsRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/GoodsDataRemoteObject"));
             inventoryRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/InventoryDataRemoteObject"));
-<<<<<<< HEAD
             userRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/UserDataRemoteObject"));
-=======
             salesRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/SalesDataRemoteObject"));
->>>>>>> refs/remotes/origin/zlkDataV8
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();

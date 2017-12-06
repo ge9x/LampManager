@@ -20,11 +20,9 @@ public class RemoteHelper {
         ClassificationDataRemoteObject classificationDataRemoteObject;
         GoodsDataRemoteObject goodsDataRemoteObject;
         InventoryDataRemoteObject inventoryDataRemoteObject;
-<<<<<<< HEAD
         UserDataRemoteObject userDataRemoteObject;
-=======
         SalesDataRemoteObject salesDataRemoteObject;
->>>>>>> refs/remotes/origin/zlkDataV8
+        
         try {
             accountDataRemoteObject = new AccountDataRemoteObject();
             financeDataRemoteObject = new FinanceDataRemoteObject();
@@ -32,11 +30,8 @@ public class RemoteHelper {
             classificationDataRemoteObject=new ClassificationDataRemoteObject();
             goodsDataRemoteObject=new GoodsDataRemoteObject();
             inventoryDataRemoteObject=new InventoryDataRemoteObject();
-<<<<<<< HEAD
             userDataRemoteObject = new UserDataRemoteObject();
-=======
             salesDataRemoteObject=new SalesDataRemoteObject();
->>>>>>> refs/remotes/origin/zlkDataV8
             
             LocateRegistry.createRegistry(8080);
             Naming.bind("rmi://127.0.0.1:8080/AccountDataRemoteObject",
@@ -46,11 +41,8 @@ public class RemoteHelper {
             Naming.bind("rmi://127.0.0.1:8080/ClassificationDataRemoteObject", classificationDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/GoodsDataRemoteObject", goodsDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/InventoryDataRemoteObject", inventoryDataRemoteObject);
-<<<<<<< HEAD
             Naming.bind("rmi://127.0.0.1:8080/UserDataRemoteObject", userDataRemoteObject);
-=======
             Naming.bind("rmi://127.0.0.1:8080/SalesDataRemoteObject", salesDataRemoteObject);
->>>>>>> refs/remotes/origin/zlkDataV8
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
