@@ -1,19 +1,25 @@
 package bl.examinationbl;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import dataservice.examinationdataservice.ExaminationDataService;
+import po.BillPO;
+import po.CashBillPO;
+import rmi.ExaminationRemoteHelper;
+import util.BillState;
+import util.BillType;
 import util.ResultMessage;
 import vo.BillVO;
+import vo.CashBillItemVO;
+import vo.CashBillVO;
 
 public class Examination {
 
-	private BillVO vo;
 	private ExaminationDataService examinationDataService;
+	ArrayList<BillPO> billPOs;
 	
 	public Examination(){
-		
+		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
 	}
 	
 
