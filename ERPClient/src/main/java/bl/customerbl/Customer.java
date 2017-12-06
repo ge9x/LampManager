@@ -7,6 +7,7 @@ import java.util.Locale.Category;
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import dataservice.customerdataservice.CustomerDataService;
+import dataservice.salesdataservice.SalesDataService;
 import po.CustomerPO;
 import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
@@ -217,6 +218,32 @@ public class Customer {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public ArrayList<Integer> getAllSupplier() throws RemoteException {
+		ArrayList<CustomerPO> cusList=customerDataService.show();
+		ArrayList<Integer> cusID=new ArrayList<>();
+		for(CustomerPO po:cusList){
+			if(po.getCategory().equals("进货商")){
+				cusID.add(po.getID());
+			}
+		}
+		return cusID;
+	}
+
+	public String getCustomerNameByID(int ID) throws RemoteException {
+		return customerDataService.getCustomerData(ID).getCustomerName();
+	}
+	
+	public ArrayList<Integer> getAllSeller() throws RemoteException{
+		ArrayList<CustomerPO> cusList=customerDataService.show();
+		ArrayList<Integer> cusID=new ArrayList<>();
+		for(CustomerPO po:cusList){
+			if(po.getCategory().equals("销售商")){
+				cusID.add(po.getID());
+			}
+		}
+		return cusID;
 	}
 	
 	private String alterID(String ID){

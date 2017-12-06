@@ -99,23 +99,46 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	}
 
 	public ResultMessage raiseCustomerReceive(int customerID, double amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return customer.raiseCustomerReceive(customerID, amount);
 	}
 
 	public ResultMessage reduceCustomerReceive(int customerID, double amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return customer.reduceCustomerReceive(customerID, amount);
 	}
 
 	public ResultMessage raiseCustomerPay(int customerID, double amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return customer.raiseCustomerPay(customerID, amount);
 	}
 
 	public ResultMessage reduceCustomerPay(int customerID, double amount) {
-		// TODO Auto-generated method stub
-		return null;
+		return customer.raiseCustomerPay(customerID, amount);
+	}
+
+	public ArrayList<Integer> getAllSupplier()  {
+		try {
+			return customer.getAllSupplier();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public String getCustomerNameByID(int ID) {
+		try {
+			return customer.getCustomerNameByID(ID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<Integer> getAllSeller(){
+		try {
+			return customer.getAllSeller();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }
