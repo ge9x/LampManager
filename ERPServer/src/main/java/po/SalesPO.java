@@ -50,12 +50,14 @@ public class SalesPO extends BillPO{
 	private double afterSum;
 	/**备注*/
 	private String remarks;
+	/**促销策略编号*/
+	private String promotionName;
 	
 	public SalesPO(){};
 	
 	public SalesPO( BillType type, BillState state, String customer,int customerID, String salesman,
 			String user, String inventory,List<GoodsItemPO> goodsItemList,
-			double allowance, double voucher, String remarks, String endDate,int turn) {
+			double allowance, double voucher, String remarks, String endDate,int turn,String promotionName) {
 		super( endDate, type, state,turn);
 		super.setType(type);
 		super.setState(state);
@@ -71,6 +73,7 @@ public class SalesPO extends BillPO{
 		this.afterSum = calAfterSum();
 		this.remarks = remarks;
 		super.setDate(endDate);
+		this.promotionName=promotionName;
 	}
 	
 	@Deprecated
@@ -260,4 +263,15 @@ public class SalesPO extends BillPO{
 	public void setTurn(int turn) {
 		super.setTurn(turn);
 	}
+
+	@Column(name="prommotionName")
+	public String getPromotionName() {
+		return promotionName;
+	}
+
+	public void setPromotionName(String promotionName) {
+		this.promotionName = promotionName;
+	}
+	
+	
 }

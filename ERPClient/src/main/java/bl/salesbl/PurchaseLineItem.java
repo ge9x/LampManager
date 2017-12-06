@@ -7,6 +7,11 @@ import java.util.List;
 
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import bl.promotionbl.PromotionBargainController;
+import bl.promotionbl.PromotionCustomerController;
+import bl.promotionbl.PromotionTotalController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
@@ -15,6 +20,7 @@ import po.PurchasePO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
@@ -23,12 +29,14 @@ import vo.PurchaseVO;
 public class PurchaseLineItem {
 	private PurchaseVO purchase;
 	
-	private InventoryInfo inventoryInfo;
-	private CustomerInfo customerInfo;
-	private PromotionInfo promotionInfo;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	PromotionInfo promotionInfo;
 	
 	public PurchaseLineItem(){
-		
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
+
 	}
 	
 	public String getNewPurchaseID(){
@@ -53,14 +61,5 @@ public class PurchaseLineItem {
 	
 	public ResultMessage alterCustomer(PurchaseVO vo){
 		return null;
-	}
-	
-	public static PurchasePO voTopo(PurchaseVO vo){
-		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,(List)vo.goodsItemList,vo.remarks,vo.date,1);
-	}
-	
-	public static PurchasePO poTovo(PurchasePO po){
-		return null;
-		//return new PurchaseVO(po.getType(), po.getState(), Integer.toString(po.getID()), po.getSupplier(), Integer.toString(po.getCustomerID()), po.getInventory(), po.getUser(), po.getGoodsItemList(), po.getRemarks(), po.getDate());
 	}
 }

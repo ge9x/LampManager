@@ -56,4 +56,9 @@ public class Sales {
 		return null;
 	}
 	
+	public static SalesPO voTopo(SalesVO vo){
+		return null;
+		//return new SalesPO(vo.type, vo.state, vo.salesID, vo.customer, vo.customerID, vo.salesman, vo.user, vo.inventory, vo.goodsItemList, vo.allowance, vo.voucher, vo.remarks, vo.date);
+	}
+	
 }
