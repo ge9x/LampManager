@@ -5,17 +5,15 @@
       <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestPromotion.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestExamination.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestInitialization.java" />
-      <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestFinance.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestSales.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/ClassificationDataService_Stub.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/PromotionDataService_Stub.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/GoodsDataService_Stub.java" />
       <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/goodsbl/MockGoods.java" />
-      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/rmi/UserDataRemoteObject.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/UserDateService_Stub.java" />
-      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/dataimpl/userdataimpl/UserDataServiceImpl.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/InitializationDataService_Stub.java" />
       <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestUser.java" />
+      <file url="file://$PROJECT_DIR$/ERPServer/src/main/java/datastubdriver/CustomerDataService_Stub.java" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
