@@ -1,5 +1,6 @@
 package bl.financialbl;
 
+import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountInfo;
 import blservice.userblservice.UserInfo;
 import com.sun.org.apache.regexp.internal.RE;
@@ -28,9 +29,11 @@ public class CashBill {
 
     private FinanceDataService financeDataService;
     ArrayList<CashBillPO> cashBillPOS;
+    AccountInfo accountInfo;
 
     public CashBill(){
         financeDataService = FinanceDataServiceImpl.getInstance();
+        accountInfo = new AccountController();
         cashBillPOS = new ArrayList<>();
     }
 
@@ -80,6 +83,7 @@ public class CashBill {
     }
 
     public ResultMessage examine(CashBillVO vo) throws RemoteException {
+        accountInfo.changeMoney(vo.accountID,-vo.sum);
         return update(vo);
     }
 
