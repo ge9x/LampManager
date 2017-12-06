@@ -1,6 +1,7 @@
 package blservice.accountblservice;
 
 import bl.accountbl.Account;
+import util.ResultMessage;
 import vo.AccountVO;
 
 import java.util.ArrayList;
@@ -27,4 +28,12 @@ public interface AccountInfo {
      * @return
      */
     public AccountVO getAccountByID(String id);
+
+    /**
+     * 单据审批通过，修改余额
+     * @param ID
+     * @param money
+     * @return
+     */
+    public ResultMessage changeMoney(String ID,double money);
 }

@@ -39,8 +39,8 @@ public class SalesDataService_Stub implements SalesDataService{
 	}
 	
 	{
-		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT,"阿强",1, "销售商1", "业务员1","默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1);
-	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-11-30",2);
+		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT,"阿强",1, "销售商1", "业务员1","默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1,"PB-1");
+	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-11-30",2,"PB-1");
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}

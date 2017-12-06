@@ -70,6 +70,16 @@ public class AccountController implements AccountBLService, AccountInfo{
         }
     }
 
+    @Override
+    public ResultMessage changeMoney(String ID, double money) {
+        try {
+            return account.changeMoney(ID, money);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
     public ArrayList<String> getAllAccountName() {
         try {
             return account.getAllAccountName();

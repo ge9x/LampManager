@@ -97,5 +97,48 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	public CustomerVO getCustomerByID(int ID){
 		return customer.getCustomerByID(ID);
 	}
+
+	public ResultMessage raiseCustomerReceive(int customerID, double amount) {
+		return customer.raiseCustomerReceive(customerID, amount);
+	}
+
+	public ResultMessage reduceCustomerReceive(int customerID, double amount) {
+		return customer.reduceCustomerReceive(customerID, amount);
+	}
+
+	public ResultMessage raiseCustomerPay(int customerID, double amount) {
+		return customer.raiseCustomerPay(customerID, amount);
+	}
+
+	public ResultMessage reduceCustomerPay(int customerID, double amount) {
+		return customer.raiseCustomerPay(customerID, amount);
+	}
+
+	public ArrayList<Integer> getAllSupplier()  {
+		try {
+			return customer.getAllSupplier();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public String getCustomerNameByID(int ID) {
+		try {
+			return customer.getCustomerNameByID(ID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<Integer> getAllSeller(){
+		try {
+			return customer.getAllSeller();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 }

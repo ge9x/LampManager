@@ -41,8 +41,8 @@ public class TestSales {
 			     ,"2017-12-1",1);
 		
 			SalesPO sal=new SalesPO(BillType.SALES, BillState.SUBMITTED,"阿强",3, "销售商1", "业务员1",
-				"默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1);
-			SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-12-2",2);
+				"默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1,"PC-1");
+			SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-12-2",2,"PB-1");
 			salesImpl.addPurchase(pur);
 			salesImpl.addSales(sal);
 			salesImpl.addSales(s2);
