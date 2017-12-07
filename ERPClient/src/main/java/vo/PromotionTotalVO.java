@@ -17,7 +17,7 @@ public class PromotionTotalVO extends PromotionVO{
 	
 	public double totalPrice;
 	
-	public PromotionTotalVO(String promotionName, String promotionID, LocalDate startDate, LocalDate endDate, double voucher, ArrayList<GoodsItemVO> gifts, double totalPrice){
+	public PromotionTotalVO(String promotionName, String promotionID, String startDate, String endDate, double voucher, ArrayList<GoodsItemVO> gifts, double totalPrice){
 		this.promotionName = promotionName;
 		this.promotionID = promotionID;
 		this.startDate = startDate;

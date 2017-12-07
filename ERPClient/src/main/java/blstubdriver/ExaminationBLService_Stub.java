@@ -75,16 +75,6 @@ public class ExaminationBLService_Stub implements ExaminationBLService{
 		return ResultMessage.SUCCESS;
 	}
 
-	public ArrayList<BillVO> showHistory() {
-		// TODO Auto-generated method stub
-		ArrayList<BillVO> history = new ArrayList<BillVO>();
-		accountBill.state = BillState.PASS;
-		history.add(accountBill);
-		purchaseBill.state = BillState.FAILED;
-		history.add(purchaseBill);
-		return history;
-	}
-
 	@Override
 	public ResultMessage refuseReceipt(BillVO bill) {
 		// TODO Auto-generated method stub

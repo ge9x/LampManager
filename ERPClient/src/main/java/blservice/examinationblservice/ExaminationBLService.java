@@ -17,13 +17,6 @@ public interface ExaminationBLService {
 	public ArrayList<BillVO> show();
 	
 	/**
-     * 显示历史单据
-     * 
-     * @return ArrayList<BillVO>
-     */
-	public ArrayList<BillVO> showHistory();
-	
-	/**
      * 查看单据内容
      * 
      * @param receipt
