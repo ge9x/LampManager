@@ -100,4 +100,9 @@ public interface SalesInfo {
 	 * @return
 	 */
 	public ResultMessage examine(SalesVO vo);
+	/**
+	 * 得到所有提交的销售单
+	 * @return
+	 */
+	public ArrayList<SalesVO> getAllSubmittedSales();
 }

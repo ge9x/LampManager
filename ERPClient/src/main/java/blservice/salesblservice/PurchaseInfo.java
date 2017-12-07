@@ -39,5 +39,11 @@ public interface PurchaseInfo {
 	 * @return
 	 */
 	public ResultMessage examine(PurchaseVO vo);
+	/**
+	 * 得到所有提交的进货单
+	 * @return
+	 */
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase();
+	
 	
 }

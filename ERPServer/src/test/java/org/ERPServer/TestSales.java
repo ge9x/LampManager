@@ -20,13 +20,13 @@ public class TestSales {
 		try{
 //			第一次使用请取消这段注释，成功运行一次后再注释掉
 	        
-			GoodsItemPO gi1=new GoodsItemPO(5, "霓虹灯","大", 20, 35.0,
+			GoodsItemPO gi1=new GoodsItemPO("5", "霓虹灯","大", 20, 35.0,
 					"耐用");
 			salesImpl.addGoodsItem(gi1);
-			GoodsItemPO gi2=new GoodsItemPO(6, "挂灯","小", 10, 35.0,
+			GoodsItemPO gi2=new GoodsItemPO("6", "挂灯","小", 10, 35.0,
 					"好看");
 			salesImpl.addGoodsItem(gi2);
-			GoodsItemPO gi3=new GoodsItemPO(7, "挂灯","小", 10, 35.0,
+			GoodsItemPO gi3=new GoodsItemPO("7", "挂灯","小", 10, 35.0,
 					"好看");
 			salesImpl.addGoodsItem(gi3);
 			

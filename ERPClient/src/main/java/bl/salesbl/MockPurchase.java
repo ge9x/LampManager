@@ -43,11 +43,11 @@ public class MockPurchase extends Purchase{
 		return null;
 	}
 	
-	public PurchaseVO findPurchaseByState(BillState state) {
+	public ArrayList<PurchaseVO> findPurchaseByState(BillState state) {
 		for(PurchaseVO pur:purchaseBill){
 			if(pur.state.equals(state)){
 				System.out.println("Find purchase success");
-				return pur;
+				return purchaseBill;
 			}
 		}
 		System.out.println("Find purchase failed");

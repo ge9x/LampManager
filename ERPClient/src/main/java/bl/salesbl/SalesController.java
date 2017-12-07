@@ -116,13 +116,13 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public ArrayList<CustomerVO> getAllCustomer() {
+	public ArrayList<Integer> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Date> getAllSalesDate() {
+	public ArrayList<String> getAllSalesDate() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -231,6 +231,12 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ResultMessage examine(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getAllSubmittedSales() {
 		// TODO Auto-generated method stub
 		return null;
 	}
