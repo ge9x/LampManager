@@ -98,4 +98,20 @@ public class Classification {
 		ClassificationPO ret = new ClassificationPO(vo.name, father, chidren, goods);
 		return ret;
 	}
+	
+	/**
+	 * 以商品分类的名称进行完全匹配查找
+	 * @param name 商品分类的名称
+	 * @return 找到的商品分类（默认符合条件的结果<=1）
+	 * @throws RemoteException
+	 */
+	protected ClassificationPO exactlyFindByName(String name) throws RemoteException{
+		ArrayList<ClassificationPO> pos = classificationDataService.findByName(name);
+		for(ClassificationPO po : pos){
+			if(po.getName().equals(name)){
+				return po;
+			}
+		}
+		return null;
+	}
 }
