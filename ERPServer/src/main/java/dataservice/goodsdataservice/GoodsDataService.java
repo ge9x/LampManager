@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import po.GoodsPO;
+import util.Criterion;
 import util.ResultMessage;
 /**
  * Created on 2017/10/21
@@ -51,4 +52,12 @@ public interface GoodsDataService {
 	 * @throws RemoteException
 	 */
 	public String getNewID(String classificationID) throws RemoteException;
+	/**
+	 * 自定义高级查询（详见Criterion）
+	 * @param criteria 条件列表
+	 * @return 符合条件的商品PO的列表
+	 * @throws RemoteException
+	 * @see Criterion
+	 */
+	public ArrayList<GoodsPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException;
 }

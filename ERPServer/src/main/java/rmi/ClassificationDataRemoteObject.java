@@ -29,8 +29,8 @@ public class ClassificationDataRemoteObject extends UnicastRemoteObject implemen
 	}
 
 	@Override
-	public ClassificationPO find(int ID) throws RemoteException {
-		return classificationDataService.find(ID);
+	public ClassificationPO findByID(int ID) throws RemoteException {
+		return classificationDataService.findByID(ID);
 	}
 
 	@Override
@@ -54,8 +54,13 @@ public class ClassificationDataRemoteObject extends UnicastRemoteObject implemen
 	}
 
 	@Override
-	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException {
-		return classificationDataService.findByName(keyword);
+	public ArrayList<ClassificationPO> findFuzzilyByName(String keyword) throws RemoteException {
+		return classificationDataService.findFuzzilyByName(keyword);
+	}
+
+	@Override
+	public ArrayList<ClassificationPO> findFullyByName(String name) throws RemoteException {
+		return classificationDataService.findFullyByName(name);
 	}
 
 }
