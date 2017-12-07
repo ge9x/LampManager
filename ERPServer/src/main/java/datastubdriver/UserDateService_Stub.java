@@ -11,18 +11,6 @@ import util.UserPosition;
 
 public class UserDateService_Stub implements UserDataService{
 	ArrayList<UserPO> userInfo = new ArrayList<UserPO>();
-	
-	public UserPO find(int userID) throws RemoteException {
-		// TODO Auto-generated method stub
-		for(UserPO po : userInfo){
-			if(po.getUserID() == userID){
-				System.out.println("Find user success!");
-				return po;
-			}
-		}
-		System.out.println("User doesn't exist!");
-		return null;
-	}
 
 	public ResultMessage add(UserPO po) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -73,17 +61,19 @@ public class UserDateService_Stub implements UserDataService{
 	@Override
 	public UserPO find(String userID) throws RemoteException {
 		for(UserPO po : userInfo){
-			if(po.getUserID() == Integer.parseInt(userID)){
+			if(po.getUserID().equals(userID)){
+				System.out.println("Find user success!");
 				return po;
 			}
 		}
+		System.out.println("User doesn't exist!");
 		return null;
 	}
 
 	@Override
 	public ResultMessage delete(String userID) throws RemoteException {
 		for(UserPO po : userInfo){
-			if(po.getUserID() == Integer.parseInt(userID)){
+			if(po.getUserID().equals(userID)){
 				userInfo.remove(po);
 				return ResultMessage.SUCCESS;
 			}
@@ -94,7 +84,7 @@ public class UserDateService_Stub implements UserDataService{
 	@Override
 	public ResultMessage login(String userID, String password) throws RemoteException {
 		for(UserPO po : userInfo){
-			if(po.getUserID() == Integer.parseInt(userID)){
+			if(po.getUserID().equals(userID)){
 				if(po.getPassword().equals(password)){
 					return ResultMessage.SUCCESS;
 				}
