@@ -204,7 +204,7 @@ public class SalesBLService_Stub implements SalesBLService{
 	}
 
 	@Override
-	public String getUserID() {
+	public String getUserName() {
 		// TODO Auto-generated method stub
 		UserVO user = new UserVO("0033", "1234", "SalesStaff", UserPosition.SALES_STAFF, UserLimits.STAFF);
 		return user.userID;
