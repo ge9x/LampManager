@@ -2,8 +2,12 @@ package bl.salesbl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import dataservice.salesdataservice.SalesDataService;
+import po.GoodsItemPO;
 import po.PurchasePO;
 import po.SalesPO;
 import util.BillState;
@@ -48,6 +52,20 @@ public class Sales {
 		return null;
 	}
 	
+	public ArrayList<SalesVO> getAllSalesOrder() {
+		try {
+			ArrayList<SalesPO> salpoList=salesDataService.showSales();
+			ArrayList<SalesVO> salvoList=new ArrayList<>();
+			for(SalesPO po:salpoList){
+				salvoList.add(poTovo(po));
+			}
+			return salvoList;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public void init(){
 		
 	}
@@ -58,7 +76,15 @@ public class Sales {
 	
 	public static SalesPO voTopo(SalesVO vo){
 		return null;
-		//return new SalesPO(vo.type, vo.state, vo.salesID, vo.customer, vo.customerID, vo.salesman, vo.user, vo.inventory, vo.goodsItemList, vo.allowance, vo.voucher, vo.remarks, vo.date);
+	}
+	
+	public static SalesVO poTovo(SalesPO po){
+		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
+		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
+		for(GoodsItemPO goodsItempo:goodsItempoList){
+			goodsItemvoList.add(Purchase.poTovo(goodsItempo));
+		}
+		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
 	}
 	
 }

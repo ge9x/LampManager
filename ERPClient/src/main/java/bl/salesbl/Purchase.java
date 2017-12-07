@@ -1,19 +1,18 @@
 package bl.salesbl;
 
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
-
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
+import blservice.promotionblservice.PromotionInfo;
+import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
-import javassist.expr.NewArray;
 import po.GoodsItemPO;
 import po.PurchasePO;
-import po.SalesPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
@@ -30,13 +29,19 @@ import vo.SalesVO;
  */
 
 public class Purchase {
-	private PurchaseVO vo;
-	private PurchaseList purchaseList;
+	
+	PurchaseLineItem purchaseLineItem;
+	PurchaseList purchaseList;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	PromotionInfo promotionInfo;
+	UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
-		
+		purchaseLineItem=new PurchaseLineItem();
+		purchaseList=new PurchaseList();
 	}
 	
 	public PurchaseVO findPurchaseByID(String ID) throws RemoteException {
@@ -73,26 +78,7 @@ public class Purchase {
 	}
 	
 	//blService
-	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public ArrayList<PromotionBargainVO> showBargains() {
 		// TODO Auto-generated method stub
 		return null;
@@ -212,7 +198,26 @@ public class Purchase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//purchaseList
+	public ArrayList<PurchaseVO> showPurchase() throws RemoteException{
+		return purchaseList.showPurchase();
+	}
+	
+	public ArrayList<PurchaseVO> showReturn() throws RemoteException{
+		return purchaseList.showReturn();
+	}
 
+	//purchaseLineItem
+	public String getnewPurchaseID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getnewReturnID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
     private static int getnewPurchaseTurn() throws RemoteException{
     	int turn=0;
