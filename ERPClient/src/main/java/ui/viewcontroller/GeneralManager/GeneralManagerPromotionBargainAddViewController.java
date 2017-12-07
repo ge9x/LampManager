@@ -207,7 +207,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 	public void clickOKButton(){
 		if(isCompleted()){
 			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
-					startDate.getValue(), endDate.getValue(), bargains);
+					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
 			promotionBargainBLService.submit(promotionBargain);
 		}
 		else{

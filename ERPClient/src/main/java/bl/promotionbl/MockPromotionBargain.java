@@ -10,7 +10,7 @@ import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
 public class MockPromotionBargain extends PromotionBargain{
-	private PromotionBargainVO promotionBargain = new PromotionBargainVO("特价包策略","000001", 0, 0, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+	private PromotionBargainVO promotionBargain = new PromotionBargainVO("特价包策略","000001", 0, 0, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 	
 	@Override
 	public ArrayList<PromotionBargainVO> show(){
@@ -33,20 +33,20 @@ public class MockPromotionBargain extends PromotionBargain{
 	}
 	
 	@Override
-	public void setStartDate(LocalDate date){
+	public void setStartDate(String date){
 		promotionBargain.startDate = date;
 		System.out.println("Set promotion start date success!");
 	}
 	
 	@Override
-	public void setEndDate(LocalDate date){
+	public void setEndDate(String date){
 		promotionBargain.endDate = date;
 		System.out.println("Set promotion end date success!");
 	}
 	
 	@Override
 	public ResultMessage submit(PromotionBargainVO vo){
-		if(!vo.bargains.isEmpty()&&vo.bargainTotal!=0&&vo.bargainTotal<vo.goodsTotal&&vo.endDate.isAfter(vo.startDate)){
+		if(!vo.bargains.isEmpty()&&vo.bargainTotal!=0&&vo.bargainTotal<vo.goodsTotal){
 			System.out.println("Submit success!");
 			return ResultMessage.SUCCESS;
 		}
@@ -59,9 +59,6 @@ public class MockPromotionBargain extends PromotionBargain{
 			}
 			else if(vo.bargainTotal>=vo.goodsTotal){
 				System.out.println("The price of bargains is higher than the original price!");
-			}
-			else if(!vo.endDate.isAfter(vo.startDate)){
-				System.out.println("Set time error!");
 			}
 			return ResultMessage.FAILED;
 		}

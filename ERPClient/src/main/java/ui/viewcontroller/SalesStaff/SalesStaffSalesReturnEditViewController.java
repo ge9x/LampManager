@@ -195,10 +195,15 @@ public class SalesStaffSalesReturnEditViewController {
     }
 
     public void clickSubmitButton(){
+    	goodsItemList.clear();
+    	for(GoodsItemBean bean:data){
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		goodsItemList.add(vo);
+    	}
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString());
+        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
         salesBLService.submitSales(salesVO);
         salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
     }
@@ -224,7 +229,7 @@ public class SalesStaffSalesReturnEditViewController {
                 	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
                 }
                 SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
-                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString());
+                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
                 salesBLService.saveSales(salesVO);
             }
 
