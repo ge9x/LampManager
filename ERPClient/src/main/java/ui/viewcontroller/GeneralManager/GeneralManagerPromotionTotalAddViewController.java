@@ -202,8 +202,8 @@ public class GeneralManagerPromotionTotalAddViewController {
 	
 	public void clickOKButton(){
 		if(promotionName.getText().length()>0&&targetPriceField.getText().length()>0){
-			promotionTotal = new PromotionTotalVO(promotionName.getText(), promotionID.getText(),  startDate.getValue(), 
-					endDate.getValue(), Double.parseDouble(voucherField.getText()),  gifts, Double.parseDouble(targetPriceField.getText()));
+			promotionTotal = new PromotionTotalVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
+					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()),  gifts, Double.parseDouble(targetPriceField.getText()));
 			promotionTotalBLService.submit(promotionTotal);
 		}
 		else{

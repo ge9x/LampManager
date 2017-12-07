@@ -12,7 +12,7 @@ import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 
 public class MockPromotionCustomer extends PromotionCustomer{
-	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("会员促销策略","000002", LocalDate.now(), LocalDate.now(), 0, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
+	private PromotionCustomerVO promotionCustomer = new PromotionCustomerVO("会员促销策略","000002", LocalDate.now().toString(), LocalDate.now().toString(), 0, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 	
 	@Override
 	public ArrayList<PromotionCustomerVO> show(){
@@ -46,27 +46,20 @@ public class MockPromotionCustomer extends PromotionCustomer{
 	}
 
 	@Override
-	public void setStartDate(LocalDate date){
+	public void setStartDate(String date){
 		promotionCustomer.startDate = date;
 		System.out.println("Set start time success!");
 	}
 
 	@Override
-	public void setEndDate(LocalDate date){
+	public void setEndDate(String date){
 		promotionCustomer.endDate = date;
 		System.out.println("Set end time success!");
 	}
 
 	@Override
 	public ResultMessage submit(PromotionCustomerVO vo){
-		if(vo.endDate.isAfter(vo.startDate)){
-			System.out.println("Submit success!");
-			return ResultMessage.SUCCESS;
-		}
-		else{
-			System.out.println("Set time error!");
-			return ResultMessage.FAILED;
-		}
+		return ResultMessage.SUCCESS;
 	}
 	
 	@Override

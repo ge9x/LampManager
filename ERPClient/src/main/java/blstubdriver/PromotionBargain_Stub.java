@@ -15,8 +15,8 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 	public ArrayList<PromotionBargainVO> show() {
 		// TODO Auto-generated method stub
 		ArrayList<PromotionBargainVO> promotion = new ArrayList<PromotionBargainVO>();
-		PromotionBargainVO promotion1 = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
-		PromotionBargainVO promotion2 = new PromotionBargainVO("特价包策略2","000002", 1500, 1200, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion1 = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion2 = new PromotionBargainVO("特价包策略2","000002", 1500, 1200, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 		promotion.add(promotion1);
 		promotion.add(promotion2);
 		return promotion;
@@ -31,28 +31,28 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 
 	public void setPrice(double price) {
 		// TODO Auto-generated method stub
-		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 		promotion.bargainTotal = price;
 		System.out.println("Set bargain price success!");
 	}
 
-	public void setStartDate(LocalDate date) {
+	public void setStartDate(String date) {
 		// TODO Auto-generated method stub
-		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 		promotion.startDate = date;
 		System.out.println("Set start time success!");
 	}
 
-	public void setEndDate(LocalDate date) {
+	public void setEndDate(String date) {
 		// TODO Auto-generated method stub
-		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 		promotion.endDate = date;
 		System.out.println("Set end time success!");
 	}
 
 	public ResultMessage submit(PromotionBargainVO vo) {
 		// TODO Auto-generated method stub
-		if(!vo.bargains.isEmpty()&&vo.bargainTotal!=0&&vo.bargainTotal<vo.goodsTotal&&vo.endDate.isAfter(vo.startDate)){
+		if(!vo.bargains.isEmpty()&&vo.bargainTotal!=0&&vo.bargainTotal<vo.goodsTotal){
 			System.out.println("Submit success!");
 			return ResultMessage.SUCCESS;
 		}
@@ -66,16 +66,13 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 			else if(vo.bargainTotal>=vo.goodsTotal){
 				System.out.println("The price of bargains is higher than the original price!");
 			}
-			else if(!vo.endDate.isAfter(vo.startDate)){
-				System.out.println("Set time error!");
-			}
 			return ResultMessage.FAILED;
 		}
 	}
 
 	public PromotionBargainVO findPromotionByID(String promotionID) {
 		// TODO Auto-generated method stub
-		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now(), LocalDate.now(), new ArrayList<GoodsItemVO>());
+		PromotionBargainVO promotion = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>());
 		if(promotion.promotionID.equals(promotionID)){
 			return promotion;
 		}

@@ -146,7 +146,7 @@ public class AdminUserViewController {
     }
     
     public void clickDeleteButton(UserVO user){
-    	users.remove(user);
+    	userBLService.deleteUser(user.userID);
     	adminViewController.showUserView();
     }
 }
