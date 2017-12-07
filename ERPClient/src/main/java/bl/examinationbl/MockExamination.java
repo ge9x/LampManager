@@ -23,17 +23,6 @@ public class MockExamination extends Examination{
 	}
 	
 	@Override
-	public BillVO checkReceipt(String billID){
-		if(billID.equals(accountBill.ID)){
-			return accountBill;
-		}
-		else{
-			System.out.println("Bill doesn't exist");
-			return null;
-		}
-	}
-	
-	@Override
 	public ResultMessage modifyReceipt(BillVO bill){
 		if(bill.ID.equals(accountBill.ID)){
 			accountBill = (AccountBillVO)bill;

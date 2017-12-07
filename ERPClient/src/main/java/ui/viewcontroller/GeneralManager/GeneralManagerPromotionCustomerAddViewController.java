@@ -212,8 +212,8 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	public void clickOKButton(){
 		if(promotionName.getText().length()>0){
 			Level level = getLevel();
-			promotionCustomer = new PromotionCustomerVO(promotionName.getText(), promotionID.getText(),  startDate.getValue(), 
-					endDate.getValue(), Double.parseDouble(voucherField.getText()), Double.parseDouble(allowanceField.getText()), gifts, level);
+			promotionCustomer = new PromotionCustomerVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
+					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()), Double.parseDouble(allowanceField.getText()), gifts, level);
 			promotionCustomerBLService.submit(promotionCustomer);
 		}
 		else{

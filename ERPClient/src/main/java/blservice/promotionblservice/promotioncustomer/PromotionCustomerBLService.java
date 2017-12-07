@@ -54,14 +54,14 @@ public interface PromotionCustomerBLService {
      * 
      * @param date
      */
-	public void setStartDate(LocalDate date);
+	public void setStartDate(String date);
 	
 	/**
      * 设置促销策略结束时间
      * 
      * @param date
      */
-	public void setEndDate(LocalDate date);
+	public void setEndDate(String date);
 	
 	/**
      * 提交促销策略
