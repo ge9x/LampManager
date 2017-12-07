@@ -52,7 +52,7 @@ public class Sales {
 		return null;
 	}
 	
-	public ArrayList<SalesVO> getAllSalesOrder() {
+	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) {
 		try {
 			ArrayList<SalesPO> salpoList=salesDataService.showSales();
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
