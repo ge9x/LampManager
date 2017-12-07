@@ -1,5 +1,6 @@
 package blservice.formblservice;
 
+import bean.SalesDetailsBean;
 import util.ResultMessage;
 import vo.BillVO;
 import vo.ProfitVO;
@@ -74,10 +75,9 @@ public interface FormBLService {
 
     /**
      * 导出销售明细表
-     * @param vos
      * @return
      */
-    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos);
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailsBean> beans);
 
     /**
      * 导出经营历程表
