@@ -2,6 +2,7 @@ package rmi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 import dataimpl.promotiondataimpl.PromotionDataServiceImpl;
 import dataservice.promotiondataservice.PromotionDataService;
@@ -88,6 +89,24 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 	public ResultMessage updatePT(PromotionTotalPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		return promotionDataService.updatePT(po);
+	}
+
+	@Override
+	public ArrayList<PromotionBargainPO> showPB() throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.showPB();
+	}
+
+	@Override
+	public ArrayList<PromotionCustomerPO> showPC() throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.showPC();
+	}
+
+	@Override
+	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.showPT();
 	}
 
 }

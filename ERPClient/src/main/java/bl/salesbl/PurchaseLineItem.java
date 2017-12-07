@@ -31,7 +31,6 @@ import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 
 public class PurchaseLineItem {
-	
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	PromotionInfo promotionInfo;
@@ -48,15 +47,7 @@ public class PurchaseLineItem {
 		return null;
 	}
 	
-	public ArrayList <PromotionBargainVO> showBargains(){
-	    return null;
-	}
-		 
-    public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(){
-		return null;
-    }
-		  
-    public ArrayList <PromotionTotalVO> getFitPromotionTotal(){
+	public String getnewReturnID() {
 		return null;
 	}
     
@@ -76,7 +67,7 @@ public class PurchaseLineItem {
 		return userInfo.getCurrentUserID();
 	}
 
-	public ArrayList<Integer> getAllSupplier() {
+	public ArrayList<CustomerVO> getAllSupplier() {
 		return customerInfo.getAllSupplier();
 	}
 
@@ -84,7 +75,7 @@ public class PurchaseLineItem {
 		return null;
 	}
 
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
 	}
 

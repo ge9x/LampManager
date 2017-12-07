@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.classificationblservice.ClassificationInfo;
+import po.ClassificationPO;
 import util.ResultMessage;
 import vo.ClassificationVO;
 
@@ -35,7 +36,6 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.find(keyword);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -45,10 +45,8 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.showDetails(ID);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -58,37 +56,33 @@ public class ClassificationController implements ClassificationBLService, Classi
 		try {
 			return classification.add(vo);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage delete(String ID) {
 		try {
 			return classification.delete(ID);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage update(ClassificationVO vo) {
 		try {
 			return classification.update(vo);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ResultMessage.FAILED;
 	}
 
 	public String getNewID() {
 		try {
 			return classification.getNewID();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -101,6 +95,16 @@ public class ClassificationController implements ClassificationBLService, Classi
 			ret.put(vo.ID, vo.name);
 		}
 		return ret;
+	}
+
+	@Override
+	public ClassificationPO getClassificationByName(String name) {
+		try {
+			return classification.exactlyFindByName(name);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

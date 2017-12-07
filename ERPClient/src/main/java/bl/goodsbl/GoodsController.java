@@ -1,5 +1,6 @@
 package bl.goodsbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import blservice.goodsblservice.GoodsBLService;
@@ -22,47 +23,59 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public ArrayList<GoodsVO> show() {
+		try {
+			return goods.show();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public ArrayList<GoodsVO> find(String keyword) {
-		return null;
+		return goods.find(keyword);
 	}
 
 	public GoodsVO showDetails(String ID) {
+//		return goods.showDetails(ID);
 		return null;
 	}
 
 	public ResultMessage add(GoodsVO vo) {
+//		return goods.add(vo);
 		return null;
 	}
 
 	public ResultMessage delete(String ID) {
-		return null;
+		return goods.delete(ID);
 	}
 
 	public ResultMessage update(GoodsVO vo) {
-		return null;
+		return goods.update(vo);
 	}
 
 	public String getNewID(String classificationID) {
-		return null;
+		return goods.getNewID(classificationID);
 	}
 
 	public ArrayList<GoodsVO> getAllGoods() {
-		return null;
+		return show();
 	}
 
 	public ArrayList<GoodsIdentityVO> getAllGoodsIdentity() {
-		return null;
+		ArrayList<GoodsVO> vos = show();
+		ArrayList<GoodsIdentityVO> ret = new ArrayList<>();
+		for(GoodsVO vo : vos){
+			ret.add(new GoodsIdentityVO(vo.ID, vo.name, vo.model));
+		}
+		return ret;
 	}
 
 	public Double getBuyingPriceByID(String ID) {
-		return null;
+		return showDetails(ID).buyingPrice;
 	}
 
 	public Double getRetailPriceByID(String ID) {
-		return null;
+		return showDetails(ID).retailPrice;
 	}
 
 }

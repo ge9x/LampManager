@@ -27,9 +27,9 @@ public class PromotionDataService_Stub implements PromotionDataService{
 	
 	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO(1, "霓虹灯",null, 20, 35.0,
+	GoodsItemPO gi1=new GoodsItemPO("1", "霓虹灯",null, 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO(2, "挂灯",null, 10, 35.0,
+	GoodsItemPO gi2=new GoodsItemPO("2", "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);
@@ -143,6 +143,21 @@ public class PromotionDataService_Stub implements PromotionDataService{
 			}
 		}
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ArrayList<PromotionBargainPO> showPB() throws RemoteException {
+		return PBList;
+	}
+
+	@Override
+	public ArrayList<PromotionCustomerPO> showPC() throws RemoteException {
+		return PCList;
+	}
+
+	@Override
+	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
+		return PTList;
 	}
 
 }

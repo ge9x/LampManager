@@ -15,7 +15,7 @@ public interface PurchaseInfo {
 	/**
 	 * 通过查看时间区间得到进货单ID
 	 */
-	public ArrayList<String> getPurchaseIDByDate(Date startDate,Date endDate);
+	public ArrayList<String> getPurchaseIDByDate(String startDate,String endDate);
 	/**
 	 * 通过查找单据类型得到进货单ID
 	 */
@@ -39,5 +39,11 @@ public interface PurchaseInfo {
 	 * @return
 	 */
 	public ResultMessage examine(PurchaseVO vo);
+	/**
+	 * 得到所有提交的进货单
+	 * @return
+	 */
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase();
+	
 	
 }

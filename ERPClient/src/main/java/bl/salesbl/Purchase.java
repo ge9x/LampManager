@@ -1,19 +1,18 @@
 package bl.salesbl;
 
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
-
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
+import blservice.promotionblservice.PromotionInfo;
+import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
-import javassist.expr.NewArray;
 import po.GoodsItemPO;
 import po.PurchasePO;
-import po.SalesPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
@@ -30,13 +29,19 @@ import vo.SalesVO;
  */
 
 public class Purchase {
-	private PurchaseVO vo;
-	private PurchaseList purchaseList;
+	
+	PurchaseLineItem purchaseLineItem;
+	PurchaseList purchaseList;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	PromotionInfo promotionInfo;
+	UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
-		
+		purchaseLineItem=new PurchaseLineItem();
+		purchaseList=new PurchaseList();
 	}
 	
 	public PurchaseVO findPurchaseByID(String ID) throws RemoteException {
@@ -58,7 +63,12 @@ public class Purchase {
 		po.setCustomerID(Integer.parseInt(vo.customerID));
 		po.setInventory(vo.inventory);
 		po.setUser(vo.user);
-		po.setGoodsItemList((List)vo.goodsItemList);
+		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			goodsItempoList.add(voTopo(goodsItemvo));
+		}
+		po.setGoodsItemList(goodsItempoList);
 		po.setRemarks(vo.remarks);
 		po.setSum(vo.sum);
 		return salesDataService.updatePurchase(po);
@@ -73,38 +83,16 @@ public class Purchase {
 	}
 	
 	//blService
-	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public ArrayList<PromotionBargainVO> showBargains() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -141,22 +129,19 @@ public class Purchase {
 	}
 
 	public String getUserID() {
-		return null;
+		return purchaseLineItem.getUserID();
 	}
 
 	public ArrayList<CustomerVO> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseLineItem.getAllSupplier();
 	}
 
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseLineItem.getAllInventory();
 	}
 
-	public ArrayList<Integer> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<CustomerVO> getAllCustomer() {
+		return purchaseLineItem.getAllCustomer();
 	}
 	
 	//purchaseInfo
@@ -212,7 +197,26 @@ public class Purchase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//purchaseList
+	public ArrayList<PurchaseVO> showPurchase() throws RemoteException{
+		return purchaseList.showPurchase();
+	}
+	
+	public ArrayList<PurchaseVO> showReturn() throws RemoteException{
+		return purchaseList.showReturn();
+	}
 
+	//purchaseLineItem
+	public String getnewPurchaseID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getnewReturnID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
     private static int getnewPurchaseTurn() throws RemoteException{
     	int turn=0;
@@ -251,14 +255,24 @@ public class Purchase {
     }
 	
 	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
+		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			goodsItempoList.add(voTopo(goodsItemvo));
+		}
 		if(vo.type==BillType.PURCHASE){
-			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,(List)vo.goodsItemList,vo.remarks,vo.date,getnewPurchaseTurn());
+			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getnewPurchaseTurn());
 		}else{
-		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,(List)vo.goodsItemList,vo.remarks,vo.date,getNewReturnTurn());
+		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getNewReturnTurn());
 		}
 	}
 	
 	public static PurchaseVO poTovo(PurchasePO po){
-		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),(ArrayList)po.getGoodsItemList(),po.getRemarks(),po.getDate());
+		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
+		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
+		for(GoodsItemPO goodsItempo:goodsItempoList){
+			goodsItemvoList.add(poTovo(goodsItempo));
+		}
+		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
 	}
 }

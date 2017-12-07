@@ -17,7 +17,7 @@ public class PromotionBargainVO extends PromotionVO{
 	
 	public ArrayList<GoodsItemVO> bargains;
 	
-	public PromotionBargainVO(String promotionName, String promotionID, double goodsTotal, double bargainTotal, LocalDate startDate, LocalDate endDate, ArrayList<GoodsItemVO> bargains){
+	public PromotionBargainVO(String promotionName, String promotionID, double goodsTotal, double bargainTotal, String startDate, String endDate, ArrayList<GoodsItemVO> bargains){
 		this.promotionName = promotionName;
 		this.promotionID = promotionID;
 		this.goodsTotal = goodsTotal;

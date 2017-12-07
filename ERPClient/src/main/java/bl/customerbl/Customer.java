@@ -220,30 +220,26 @@ public class Customer {
 		}
 	}
 	
-	public ArrayList<Integer> getAllSupplier() throws RemoteException {
+	public ArrayList<CustomerVO> getAllSupplier() throws RemoteException {
 		ArrayList<CustomerPO> cusList=customerDataService.show();
-		ArrayList<Integer> cusID=new ArrayList<>();
+		ArrayList<CustomerVO> cusvo=new ArrayList<>();
 		for(CustomerPO po:cusList){
 			if(po.getCategory().equals("进货商")){
-				cusID.add(po.getID());
+				cusvo.add(poTovo(po));
 			}
 		}
-		return cusID;
-	}
-
-	public String getCustomerNameByID(int ID) throws RemoteException {
-		return customerDataService.getCustomerData(ID).getCustomerName();
+		return cusvo;
 	}
 	
-	public ArrayList<Integer> getAllSeller() throws RemoteException{
+	public ArrayList<CustomerVO> getAllSeller() throws RemoteException{
 		ArrayList<CustomerPO> cusList=customerDataService.show();
-		ArrayList<Integer> cusID=new ArrayList<>();
+		ArrayList<CustomerVO> cusvo=new ArrayList<>();
 		for(CustomerPO po:cusList){
 			if(po.getCategory().equals("销售商")){
-				cusID.add(po.getID());
+				cusvo.add(poTovo(po));
 			}
 		}
-		return cusID;
+		return cusvo;
 	}
 	
 	private String alterID(String ID){

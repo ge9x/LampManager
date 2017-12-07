@@ -24,9 +24,16 @@ public class SalesLineItem {
 		
 	}
 	
-	public String getNewSalesID(){
+	public String getnewSalesID() {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getnewSalesReturnID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	public ArrayList <PromotionBargainVO> showBargains(){
 	    return null;
