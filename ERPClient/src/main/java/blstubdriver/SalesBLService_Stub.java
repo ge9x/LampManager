@@ -234,7 +234,7 @@ public class SalesBLService_Stub implements SalesBLService{
 	}
 
 	@Override
-	public ArrayList<Customer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		ArrayList<CustomerVO> customerData=new ArrayList<CustomerVO>();
 		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
