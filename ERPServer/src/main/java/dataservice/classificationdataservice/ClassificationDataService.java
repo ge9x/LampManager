@@ -23,7 +23,7 @@ public interface ClassificationDataService {
 	 * @return 找到的商品分类PO
 	 * @throws RemoteException
 	 */
-	public ClassificationPO find(int ID) throws RemoteException;
+	public ClassificationPO findByID(int ID) throws RemoteException;
 	/**
 	 * 添加商品分类
 	 * @param po 待添加的商品分类PO
@@ -57,5 +57,12 @@ public interface ClassificationDataService {
 	 * @return 查找到的商品分类的PO的集合
 	 * @throws RemoteException
 	 */
-	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException;
+	public ArrayList<ClassificationPO> findFuzzilyByName(String keyword) throws RemoteException;
+	/**
+	 * 以商品分类的名称进行精确查找
+	 * @param name 完整名称
+	 * @return 查找到的商品分类的PO的集合
+	 * @throws RemoteException
+	 */
+	public ArrayList<ClassificationPO> findFullyByName(String name) throws RemoteException;
 }

@@ -58,7 +58,7 @@ public class GoodsDataServiceImpl implements GoodsDataService{
 
 	@Override
 	public String getNewID(String classificationID) throws RemoteException {
-		ClassificationPO classification = ClassificationDataServiceImpl.getInstance().find(Integer.parseInt(classificationID));
+		ClassificationPO classification = ClassificationDataServiceImpl.getInstance().findByID(Integer.parseInt(classificationID));
 		return String.format("%06d", goodsDataHelper.fullyQuery("classification", classification).size() + 1);
 	}
 }
