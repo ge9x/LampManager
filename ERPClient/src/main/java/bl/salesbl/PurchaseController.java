@@ -28,25 +28,49 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public String getnewPurchaseID() {
+	public ArrayList<String> getAllPurchaseDate() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getnewReturnID() {
+	public ArrayList<String> getPurchaseIDByDate(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getnewSalesID() {
+	public ArrayList<String> getPurchaseIDByType(BillType type) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getnewSalesReturnID() {
+	public ArrayList<String> getPurchaseIDByCustomerID(String customerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getPurchaseIDBySalesman(String salesman) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getPurchaseIDByInventory(String inventory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage examine(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -78,7 +102,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	@Override
 	public ResultMessage addGoodsItem(GoodsItemVO item) {
 		// TODO Auto-generated method stub
-		return ResultMessage.NULL;
+		return null;
 	}
 
 	@Override
@@ -135,53 +159,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 		return null;
 	}
 
-	@Override
-	public ArrayList<String> getAllPurchaseDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByDate(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByType(BillType type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByCustomerID(String customerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDBySalesman(String salesman) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByInventory(String inventory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ResultMessage examine(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<PurchaseVO> getAllSubmittedPurchase() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	
 }

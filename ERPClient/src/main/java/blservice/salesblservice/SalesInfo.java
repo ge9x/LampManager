@@ -36,30 +36,15 @@ public interface SalesInfo {
 	public ArrayList<String> getAllCustomerID();
 	//查看销售明细表
 	/**
-	 * 通过查看时间区间得到销售出货单ID
+	 * 得到所有销售出货单
+	 * @return
 	 */
-	public ArrayList<String> getSalesOrderIDByDate(Date startDate,Date endDate);
-	/**
-	 * 通过查找商品名得到销售出货单ID
-	 */
-	public ArrayList<String> getSalesOrderIDByGoodsName(String goodsName);
-	/**
-	 * 通过查找客户得到销售出货单ID
-	 */
-	public ArrayList<String> getSalesOrderIDByCustomerID(String customerID);
-	/**
-	 * 通过查找业务员得到销售出货单ID
-	 */
-	public ArrayList<String> getSalesOrderIDBySalesman(String salesman);
-	/**
-	 * 通过查找仓库得到销售出货单ID
-	 */
-	public ArrayList<String> getSalesOrderIDByInventory(String inventory);
+	public ArrayList<SalesVO> getAllSalesOrder();
 	//查看经营历程表
 	/**
 	 * 通过查看时间区间得到销售单ID
 	 */
-	public ArrayList<String> getSalesIDByDate(Date startDate,Date endDate);
+	public ArrayList<String> getSalesIDByDate(String startDate,String endDate);
 	/**
 	 * 通过查找单据类型得到销售单ID
 	 */
@@ -80,7 +65,7 @@ public interface SalesInfo {
 	/**
 	 * 通过ID得到时间
 	 */
-	public Date getDateByID(String ID);
+	public String getDateByID(String ID);
 	/**
 	 * 通过ID得到商品名、型号、数量、单价
 	 */

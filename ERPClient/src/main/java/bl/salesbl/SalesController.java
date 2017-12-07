@@ -26,100 +26,6 @@ public class SalesController implements SalesBLService,SalesInfo{
 	public SalesController(){
 		sales=new Sales();
 	}
-	
-	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<PromotionBargainVO> showBargains() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage addPurchase(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage addGoodsItem(GoodsItemVO item) {
-		// TODO Auto-generated method stub
-		return ResultMessage.NULL;
-	}
-
-	public ResultMessage addSales(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage submitPurchase(PurchaseVO pur) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage submitSales(SalesVO sal) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage saveSales(SalesVO bill) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage savePurchase(PurchaseVO bill) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUserID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<CustomerVO> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Integer> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ArrayList<String> getAllSalesDate() {
@@ -146,37 +52,12 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public ArrayList<String> getSalesOrderIDByDate(Date startDate, Date endDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<SalesVO> getAllSalesOrder() {
+		return sales.getAllSalesOrder();
 	}
 
 	@Override
-	public ArrayList<String> getSalesOrderIDByGoodsName(String goodsName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getSalesOrderIDByCustomerID(String customerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getSalesOrderIDBySalesman(String salesman) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getSalesOrderIDByInventory(String inventory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getSalesIDByDate(Date startDate, Date endDate) {
+	public ArrayList<String> getSalesIDByDate(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -206,7 +87,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public Date getDateByID(String ID) {
+	public String getDateByID(String ID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -240,5 +121,90 @@ public class SalesController implements SalesBLService,SalesInfo{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ArrayList<PromotionBargainVO> showBargains() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage addPurchase(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemVO item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage addSales(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage submitPurchase(PurchaseVO pur) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage submitSales(SalesVO sal) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage saveSales(SalesVO bill) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage savePurchase(PurchaseVO bill) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUserID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllSupplier() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getAllInventory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Integer> getAllCustomer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }
