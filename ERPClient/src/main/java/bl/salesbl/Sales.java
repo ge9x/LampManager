@@ -1,6 +1,9 @@
 package bl.salesbl;
 
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,12 +56,15 @@ public class Sales {
 		return null;
 	}
 	
-	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) {
+	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) throws ParseException {
 		try {
 			ArrayList<SalesPO> salpoList=salesDataService.showSales();
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
 			for(SalesPO po:salpoList){
-				salvoList.add(poTovo(po));
+				Date date=stringToDate(po.getDate());
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+					salvoList.add(poTovo(po));
+				}
 			}
 			return salvoList;
 		} catch (RemoteException e) {
@@ -75,8 +81,10 @@ public class Sales {
 		return null;
 	}
 	
-	public static Date stringToDate(String date){
-		return null;
+	public static Date stringToDate(String date) throws ParseException{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date time=dateFormat.parse(date);
+		return time;
 	}
 	
 	public static SalesPO voTopo(SalesVO vo){

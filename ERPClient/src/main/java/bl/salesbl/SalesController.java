@@ -1,6 +1,7 @@
 package bl.salesbl;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import blservice.salesblservice.SalesBLService;
@@ -53,7 +54,12 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) {
-		return sales.getAllSalesOrder(startDate,endDate);
+		try {
+			return sales.getAllSalesOrder(startDate,endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
