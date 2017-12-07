@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import blservice.salesblservice.SalesBLService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -137,21 +139,22 @@ public class SalesBLService_Stub implements SalesBLService{
 		return getTotal;
 	}
 
-	public PurchaseVO addPurchase(PurchaseVO vo) {
+	public ResultMessage addPurchase(PurchaseVO vo) {
 		purchaseBill.add(vo);
 		System.out.println("add purchaseBill success");
-		return vo;
+		return ResultMessage.SUCCESS;
 	}
 
-	public void addGoodsItem(GoodsItemVO item) {
+	public ResultMessage addGoodsItem(GoodsItemVO item) {
 		goodsItemList.add(item);
 		System.out.println("add goodsItem success");
+		return ResultMessage.SUCCESS;
 	}
 
-	public SalesVO addSales(SalesVO vo) {
+	public ResultMessage addSales(SalesVO vo) {
 		salesBill.add(vo);
 		System.out.println("add salesBill success");
-		return vo;
+		return ResultMessage.SUCCESS;
 	}
 
 	public ResultMessage submitPurchase(PurchaseVO pur) {
@@ -231,7 +234,7 @@ public class SalesBLService_Stub implements SalesBLService{
 	}
 
 	@Override
-	public ArrayList<CustomerVO> getAllCustomer() {
+	public ArrayList<Integer> getAllCustomer() {
 		// TODO Auto-generated method stub
 		ArrayList<CustomerVO> customerData=new ArrayList<CustomerVO>();
 		CustomerVO c1=new CustomerVO("00000001",CustomerCategory.SELLER,Level.LEVEL_FIVE,"金主","15545786610",
@@ -244,12 +247,17 @@ public class SalesBLService_Stub implements SalesBLService{
 				"南京新街口","421001","12s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 		CustomerVO c5=new CustomerVO("00000005",CustomerCategory.SELLER,Level.LEVEL_FOUR,"金主2","15546674310",
 				"南京仙林大学城","421000","ddk@163.com",1.0,15000.0,0.0,"业务员1",150.0,500);
+		ArrayList<Integer> cus=new ArrayList<>();
+		cus.add(1);
+		cus.add(2);
+		cus.add(3);
+		cus.add(4);
 		customerData.add(c1);
 		customerData.add(c2);
 		customerData.add(c3);
 		customerData.add(c4);
 		customerData.add(c5);
-		return customerData;
+		return cus;
 	}
 	
 }

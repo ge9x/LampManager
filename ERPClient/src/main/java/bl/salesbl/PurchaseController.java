@@ -177,5 +177,11 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 		return null;
 	}
 
+	@Override
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
