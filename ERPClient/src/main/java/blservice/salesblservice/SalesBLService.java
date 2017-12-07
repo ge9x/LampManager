@@ -17,6 +17,30 @@ import vo.SalesVO;
  */
 
 public interface SalesBLService {
+	  /**
+	   * 得到新的进货单编号
+	   * @return
+	   */
+	  public String getnewPurchaseID();
+      /**
+       * 得到新的进货退货单编号
+       * @return
+       */
+	  public String getnewReturnID();
+	  /**
+	   * 得到新的销售进货单编号
+	   * @return
+	   */
+	  public String getnewSales();
+	  /**
+	   * 得到新的销售退货单编号
+	   * @return
+	   */
+	  public String getnewSalesReturn();
+	  /**
+	   * 得到合适的特价包促销策略
+	   * @return
+	   */
 	  public ArrayList <PromotionBargainVO> showBargains();
 	  /**
 	   * 得到合适的会员促销策略
