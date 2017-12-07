@@ -10,9 +10,9 @@ public class PromotionVO {
 	
 	public String promotionID;
 	
-	public LocalDate startDate;
+	public String startDate;
 	
-	public LocalDate endDate;
+	public String endDate;
 	
 	public PromotionType type;
 	
