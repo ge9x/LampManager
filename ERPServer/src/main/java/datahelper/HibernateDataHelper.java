@@ -93,7 +93,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		if(value != null){
-			if(field.equals("id")){	// 查询字段是ID，即数字类型
+			if(field.toLowerCase().equals("id")){	// 查询字段是ID，即数字类型
 				criteria.add(Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", value, StandardBasicTypes.STRING));
 			}
 			else{	// （默认）查询字段是varchar类型
@@ -124,7 +124,12 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		case FULL:
 			return Restrictions.eq(criterion.getField(), criterion.getValue());
 		case FUZZY:
-			return Restrictions.like(criterion.getField(), criterion.getValue());
+			if(criterion.getField().toLowerCase().equals("id")){
+				return Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", criterion.getValue(), StandardBasicTypes.STRING);
+			}
+			else{
+				return Restrictions.like(criterion.getField(), criterion.getValue());
+			}
 		case RANGE:
 			return Restrictions.between(criterion.getField(), criterion.getValue(), criterion.getAnotherValue());
 		case OR:

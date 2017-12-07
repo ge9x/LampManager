@@ -62,8 +62,11 @@ public class Classification {
 		if(found == null){
 			return ResultMessage.NOT_EXIST;
 		}
-		else{
+		else if(found.getChidren().isEmpty() && found.getGoods().isEmpty()){
 			return classificationDataService.delete(found);
+		}
+		else{
+			return ResultMessage.FAILED;
 		}
 	}
 
