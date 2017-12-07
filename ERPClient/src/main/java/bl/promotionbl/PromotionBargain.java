@@ -3,7 +3,12 @@ package bl.promotionbl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import po.GoodsPO;
+import po.PromotionBargainPO;
+import rmi.PromotionRemoteHelper;
+import util.PromotionType;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
@@ -11,7 +16,11 @@ import vo.PromotionBargainVO;
 
 public class PromotionBargain extends Promotion{
 	
-	private PromotionBargainVO vo;
+	ArrayList<PromotionBargainPO> promotionBargainPOs;
+	
+	public PromotionBargain(){
+		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+	}
 	
 	public ArrayList<PromotionBargainVO> show(){
 		return null;
@@ -39,5 +48,10 @@ public class PromotionBargain extends Promotion{
 	
 	public PromotionBargainVO findPromotionByID(String promotionID){
 		return null;
+	}
+	
+	public PromotionBargainPO voTOpo(PromotionBargainVO promotionBargainVO){
+		return new PromotionBargainPO(promotionBargainVO.startDate, promotionBargainVO.endDate, PromotionType.BARGAIN_STRATEGY, 
+				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, List<GoodsItemPO> bargains);
 	}
 }

@@ -115,6 +115,7 @@ public class Finance{
 
     }
 
+
     public ResultMessage deleteCashBill(String id) throws RemoteException {
         return cashBill.deleteBill(id);
     }

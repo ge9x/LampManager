@@ -15,6 +15,7 @@ import rmi.CustomerRemoteHelper;
 import rmi.FinanceRemoteHelper;
 import rmi.GoodsRemoteHelper;
 import rmi.InventoryRemoteHelper;
+import rmi.PromotionRemoteHelper;
 import rmi.UserRemoteHelper;
 import rmi.SalesRemoteHelper;
 import ui.viewcontroller.common.MainUIController;
@@ -32,6 +33,7 @@ public class Main extends Application {
     private ClassificationRemoteHelper classificationRemoteHelper;
     private GoodsRemoteHelper goodsRemoteHelper;
     private InventoryRemoteHelper inventoryRemoteHelper;
+    private PromotionRemoteHelper promotionRemoteHelper;
     private UserRemoteHelper userRemoteHelper;
     private SalesRemoteHelper salesRemoteHelper;
 
@@ -74,6 +76,7 @@ public class Main extends Application {
             classificationRemoteHelper = ClassificationRemoteHelper.getInstance();
             goodsRemoteHelper = GoodsRemoteHelper.getInstance();
             inventoryRemoteHelper = InventoryRemoteHelper.getInstance();
+            promotionRemoteHelper = PromotionRemoteHelper.getInstance();
             userRemoteHelper = UserRemoteHelper.getInstance();
             salesRemoteHelper=SalesRemoteHelper.getInstance();
             
@@ -83,6 +86,7 @@ public class Main extends Application {
             classificationRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/ClassificationDataRemoteObject"));
             goodsRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/GoodsDataRemoteObject"));
             inventoryRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/InventoryDataRemoteObject"));
+            promotionRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/PromotionDataRemoteObject"));
             userRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/UserDataRemoteObject"));
             salesRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/SalesDataRemoteObject"));
             System.out.println("linked");
