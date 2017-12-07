@@ -130,6 +130,6 @@ public interface SalesBLService {
 	   * 获得所有客户列表
 	   * @return 客户VO的列表
 	   */
-	  public ArrayList<Integer> getAllCustomer();
+	  public ArrayList<CustomerVO> getAllCustomer();
 	  
 }

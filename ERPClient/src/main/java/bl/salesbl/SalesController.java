@@ -201,7 +201,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
