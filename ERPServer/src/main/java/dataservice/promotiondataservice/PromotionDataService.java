@@ -2,6 +2,7 @@ package dataservice.promotiondataservice;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
@@ -107,5 +108,25 @@ public interface PromotionDataService extends Remote{
 	 * @throws RemoteException
 	 */
 	public ResultMessage updatePT(PromotionTotalPO po) throws RemoteException;
- 
+	/**
+	 * 展示所有的特价包
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+    public ArrayList<PromotionBargainPO> showPB() throws RemoteException;
+    /**
+     * 展示所有的会员促销策略
+     * 
+     * @return
+     * @throws RemoteException
+     */
+    public ArrayList<PromotionCustomerPO> showPC() throws RemoteException;
+    /**
+     * 展示所有的总价促销策略
+     * 
+     * @return
+     * @throws RemoteException
+     */
+    public ArrayList<PromotionTotalPO> showPT() throws RemoteException;
 }
