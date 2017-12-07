@@ -4,6 +4,7 @@ import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bean.SalesDetailsBean;
+import bl.salesbl.Sales;
 import bl.salesbl.SalesController;
 import blservice.formblservice.SalesDetailsInput;
 import blservice.salesblservice.SalesInfo;
@@ -39,6 +40,8 @@ public class SalesDetails {
             salesDetailVOS = searchBySalesman(input.keyword);
         }else if (input.filterType == FilterType.GOODS){
             salesDetailVOS = searchByGoodsName(input.keyword);
+        }else {
+            salesDetailVOS = getAllSalesDetails();
         }
         return salesDetailVOS;
     }
@@ -90,6 +93,17 @@ public class SalesDetails {
                     SalesDetailVO vo = new SalesDetailVO(salesVO.date, itemVO.goodsName, itemVO.model, itemVO.number, itemVO.price);
                     salesDetailVOS.add(vo);
                 }
+            }
+        }
+        return salesDetailVOS;
+    }
+
+    public ArrayList<SalesDetailVO> getAllSalesDetails(){
+        ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
+        for (SalesVO salesVO : salesVOS){
+            for (GoodsItemVO itemVO:salesVO.goodsItemList) {
+                SalesDetailVO vo = new SalesDetailVO(salesVO.date, itemVO.goodsName, itemVO.model, itemVO.number, itemVO.price);
+                salesDetailVOS.add(vo);
             }
         }
         return salesDetailVOS;

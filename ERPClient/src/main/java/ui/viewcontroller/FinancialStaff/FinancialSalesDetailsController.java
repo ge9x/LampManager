@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bean.SalesDetailsBean;
+import bl.formbl.FormController;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
 import blstubdriver.FormBLService_Stub;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class FinancialSalesDetailsController {
     FinancialViewController financialViewController;
     FormBLService formBLService = new FormBLService_Stub();
+    FormBLService formBLService2 = new FormController();
     ArrayList<SalesDetailVO> salesDetails = new ArrayList<>();
 
     TableView<SalesDetailsBean> table = new TableView<SalesDetailsBean>();
@@ -134,8 +136,9 @@ public class FinancialSalesDetailsController {
             case "客户": input.filterType = FilterType.CUSTOMER;break;
             case "业务员": input.filterType = FilterType.SALESMAN;break;
             case "仓库": input.filterType = FilterType.INVENTORY;break;
+            default: input.filterType = null;
         }
-        salesDetails = formBLService.getSalesDetails(input);
+        salesDetails = formBLService2.getSalesDetails(input);
 
         data.clear();
         for (SalesDetailVO vo : salesDetails){
