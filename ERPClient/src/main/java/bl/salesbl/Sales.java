@@ -14,6 +14,7 @@ import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
 import po.SalesPO;
+import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.ResultMessage;
 import vo.GoodsItemVO;
@@ -32,7 +33,7 @@ public class Sales {
 	private SalesDataService salesDataService;
 	
 	public Sales(){
-		
+		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 	}
 	
 	
