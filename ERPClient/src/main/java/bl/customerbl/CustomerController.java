@@ -114,7 +114,7 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 		return customer.raiseCustomerPay(customerID, amount);
 	}
 
-	public ArrayList<Integer> getAllSupplier()  {
+	public ArrayList<CustomerVO> getAllSupplier()  {
 		try {
 			return customer.getAllSupplier();
 		} catch (RemoteException e) {
@@ -123,16 +123,7 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 		}
 	}
 
-	public String getCustomerNameByID(int ID) {
-		try {
-			return customer.getCustomerNameByID(ID);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ArrayList<Integer> getAllSeller(){
+	public ArrayList<CustomerVO> getAllSeller(){
 		try {
 			return customer.getAllSeller();
 		} catch (RemoteException e) {

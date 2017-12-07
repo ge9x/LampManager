@@ -67,7 +67,7 @@ public class PurchaseLineItem {
 		return userInfo.getCurrentUserID();
 	}
 
-	public ArrayList<Integer> getAllSupplier() {
+	public ArrayList<CustomerVO> getAllSupplier() {
 		return customerInfo.getAllSupplier();
 	}
 
@@ -75,7 +75,7 @@ public class PurchaseLineItem {
 		return null;
 	}
 
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
 	}
 
