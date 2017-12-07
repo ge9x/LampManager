@@ -99,11 +99,10 @@ public class ClassificationController implements ClassificationBLService, Classi
 
 	@Override
 	public ClassificationPO getClassificationByName(String name) {
-		ArrayList<ClassificationPO> founds = classification.find(name);
-		for(ClassificationPO found : founds){
-			if(found.getName().equals(name)){
-				return found;
-			}
+		try {
+			return classification.exactlyFindByName(name);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

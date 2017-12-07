@@ -17,7 +17,7 @@ public interface ClassificationInfo {
 	public HashMap<String, String> getAllClassification();
 	/**
 	 * 通过商品分类的名称得到商品分类
-	 * @param name 商品分类的名称
+	 * @param name 商品分类的名称（完整名称）
 	 * @return 叫这个名字的商品分类
 	 */
 	public ClassificationPO getClassificationByName(String name);

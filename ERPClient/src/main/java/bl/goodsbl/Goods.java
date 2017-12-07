@@ -18,7 +18,6 @@ import vo.GoodsVO;
  *
  */
 public class Goods {
-	private GoodsVO vo;
 	private GoodsDataService goodsDataService;
 	private ClassificationInfo classificationInfo;
 	
@@ -70,7 +69,7 @@ public class Goods {
 	}
 	
 	private GoodsPO voToPO(GoodsVO vo){
-		ClassificationPO classification = null;
+		ClassificationPO classification = classificationInfo.getClassificationByName(vo.classification);
 		int turn = Integer.parseInt(vo.ID.substring(2));
 		GoodsPO ret = new GoodsPO(vo.name, vo.model, classification, vo.alarmAmount, vo.buyingPrice, vo.retailPrice, vo.buyingPrice, vo.retailPrice, turn);
 		return ret;

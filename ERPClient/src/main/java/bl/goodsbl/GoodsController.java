@@ -36,11 +36,13 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public GoodsVO showDetails(String ID) {
-		return goods.showDetails(ID);
+//		return goods.showDetails(ID);
+		return null;
 	}
 
 	public ResultMessage add(GoodsVO vo) {
-		return goods.add(vo);
+//		return goods.add(vo);
+		return null;
 	}
 
 	public ResultMessage delete(String ID) {
