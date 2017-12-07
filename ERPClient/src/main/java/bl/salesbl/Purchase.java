@@ -63,7 +63,12 @@ public class Purchase {
 		po.setCustomerID(Integer.parseInt(vo.customerID));
 		po.setInventory(vo.inventory);
 		po.setUser(vo.user);
-		po.setGoodsItemList((List)vo.goodsItemList);
+		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			goodsItempoList.add(voTopo(goodsItemvo));
+		}
+		po.setGoodsItemList(goodsItempoList);
 		po.setRemarks(vo.remarks);
 		po.setSum(vo.sum);
 		return salesDataService.updatePurchase(po);
@@ -127,22 +132,19 @@ public class Purchase {
 	}
 
 	public String getUserID() {
-		return null;
+		return purchaseLineItem.getUserID();
 	}
 
 	public ArrayList<CustomerVO> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseLineItem.getAllSupplier();
 	}
 
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchaseLineItem.getAllInventory();
 	}
 
-	public ArrayList<Integer> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<CustomerVO> getAllCustomer() {
+		return purchaseLineItem.getAllCustomer();
 	}
 	
 	//purchaseInfo

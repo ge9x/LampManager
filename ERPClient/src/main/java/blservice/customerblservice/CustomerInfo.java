@@ -29,18 +29,12 @@ public interface CustomerInfo {
 	 * 得到所有的供应商ID
 	 * @return
 	 */
-	public ArrayList<Integer> getAllSupplier();
+	public ArrayList<CustomerVO> getAllSupplier();
 	/**
 	 * 得到所有的销售商
 	 * @return
 	 */
-	public ArrayList<Integer> getAllSeller();
-	/**
-	 * 根据客户ID得到客户姓名
-	 * @param ID
-	 * @return
-	 */
-	public String getCustomerNameByID(int ID);
+	public ArrayList<CustomerVO> getAllSeller();
 	/**
 	 * 增加客户应收
 	 * @param customerID
