@@ -145,4 +145,19 @@ public class PromotionDataService_Stub implements PromotionDataService{
 		return ResultMessage.FAILED;
 	}
 
+	@Override
+	public ArrayList<PromotionBargainPO> showPB() throws RemoteException {
+		return PBList;
+	}
+
+	@Override
+	public ArrayList<PromotionCustomerPO> showPC() throws RemoteException {
+		return PCList;
+	}
+
+	@Override
+	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
+		return PTList;
+	}
+
 }
