@@ -251,6 +251,7 @@ public class GeneralManagerExaminationCellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialCashBillEditController.setForDetailView((CashBillVO) bill);
 		return page;
 	}
 	
@@ -265,6 +266,7 @@ public class GeneralManagerExaminationCellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialPaymentEditController.setForDetailView((AccountBillVO) bill);
 		return page;
 	}
 	
@@ -279,6 +281,7 @@ public class GeneralManagerExaminationCellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialReceiptEditController.setForDetailView((AccountBillVO) bill);
 		return page;
 	}
 }

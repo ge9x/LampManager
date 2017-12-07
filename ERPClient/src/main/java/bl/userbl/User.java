@@ -41,7 +41,7 @@ public class User {
 
 	public ResultMessage modifyUser(UserVO vo) throws RemoteException{
 		for(UserPO userPO:userPOs){
-			if(userPO.getUserID()==Integer.parseInt(vo.userID)){
+			if(userPO.getUserID().equals(vo.userID)){
 				userPO.setPassword(vo.password);
 				userPO.setName(vo.name);
 				userPO.setPosition(vo.position);
