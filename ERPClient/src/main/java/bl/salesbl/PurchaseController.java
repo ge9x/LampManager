@@ -152,7 +152,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}

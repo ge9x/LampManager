@@ -10,8 +10,6 @@ import util.UserPosition;
 public class SalesVO extends BillVO{
 	/**客户*/
 	public String customer;
-	/**客户ID*/
-	public int salesID;
 	/**客户编号*/
 	public String customerID;
 	/**业务员*/
@@ -36,13 +34,12 @@ public class SalesVO extends BillVO{
 	public String promotionName;
 	
 	
-	public SalesVO( BillType type, BillState state, String billID, int salesID,String customer,String customerID, String salesman,
+	public SalesVO( BillType type, BillState state, String billID, String customer,String customerID, String salesman,
 			String user, String inventory, ArrayList<GoodsItemVO> goodsItemList, double allowance,
 			double voucher, String remarks, String endDate,String promotionName) {
 		this.type = type;
 		this.state = state;
 		ID = billID;
-		this.salesID=salesID;
 		this.customerID=customerID;
 		this.customer = customer;
 		this.salesman = salesman;
