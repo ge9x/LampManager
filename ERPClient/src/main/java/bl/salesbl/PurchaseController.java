@@ -159,6 +159,30 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 		return null;
 	}
 
+	@Override
+	public String getnewPurchaseID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getnewReturnID() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getnewSales() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getnewSalesReturn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

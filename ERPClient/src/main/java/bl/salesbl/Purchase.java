@@ -85,17 +85,14 @@ public class Purchase {
 	//blService
 	
 	public ArrayList<PromotionBargainVO> showBargains() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
