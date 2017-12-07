@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 
+import bean.CashBillItemBean;
 import bean.GoodsItemBean;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
@@ -24,6 +26,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
@@ -36,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
@@ -45,6 +49,7 @@ import ui.component.GoodsTable.GoodsBean;
 import util.BillState;
 import util.BillType;
 import util.Money;
+import vo.CashBillItemVO;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PurchaseVO;
@@ -57,6 +62,8 @@ public class SalesStaffPurchaseEditViewController {
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
+	
+	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -82,13 +89,22 @@ public class SalesStaffPurchaseEditViewController {
     Text Total;
     
     @FXML
+    Label title;
+    
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
+    
+    @FXML
     JFXTextArea remark;
 
     @FXML
-    JFXComboBox supplier;
+    JFXComboBox<String> supplier;
     
     @FXML
-    JFXComboBox inventory;
+    JFXComboBox<String> inventory;
     
     public void initialize(){
     	deleteIcon.setText("\ue606");
@@ -179,6 +195,7 @@ public class SalesStaffPurchaseEditViewController {
     public void addPurchaseOrder() {
         String ID = salesBLService.getnewPurchaseID();
         BillID.setText(ID);
+        isNew = true;
     }
 
     public void clickAddButton(){
@@ -294,5 +311,70 @@ public class SalesStaffPurchaseEditViewController {
 
     public void setSalesStaffPurchaseOrderViewController(SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController){
         this.salesStaffPurchaseOrderViewController = salesStaffPurchaseOrderViewController;
+    }
+    
+    public void setForDetailView(PurchaseVO purchaseBill){
+    	isNew = false;
+        BillID.setText(purchaseBill.ID);
+        title.setText("进货单详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
+        remark.setEditable(false);
+
+        inventory.getSelectionModel().select(purchaseBill.inventory);
+        inventory.setDisable(true);
+        supplier.getSelectionModel().select(purchaseBill.supplier);
+        supplier.setDisable(true);
+        Username.setText(purchaseBill.user);
+        
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+            }
+        });
+
+        if (purchaseBill.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }else{
+            submitButton.setVisible(false);
+        }
+        for (GoodsItemVO goodsItemVO:purchaseBill.goodsItemList){
+            goodsItemList.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑草稿单");
+        remark.setEditable(true);
+        inventory.setDisable(false);
+        supplier.setDisable(false);
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
     }
 }

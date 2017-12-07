@@ -32,7 +32,12 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public ArrayList<GoodsVO> find(String keyword) {
-		return goods.find(keyword);
+		try {
+			return goods.find(keyword);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public GoodsVO showDetails(String ID) {

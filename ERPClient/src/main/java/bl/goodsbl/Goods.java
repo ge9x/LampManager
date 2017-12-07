@@ -9,6 +9,8 @@ import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 import rmi.GoodsRemoteHelper;
+import util.Criterion;
+import util.QueryMode;
 import util.ResultMessage;
 import vo.GoodsVO;
 
@@ -35,9 +37,20 @@ public class Goods {
 		return ret;
 	}
 
-	public ArrayList<GoodsVO> find(String keyword) {
-		// TODO use advancedQuery()
-		return null;
+	public ArrayList<GoodsVO> find(String keyword) throws RemoteException {
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(
+				new Criterion(
+						new Criterion(
+								new Criterion("ID", keyword, QueryMode.FUZZY),
+								new Criterion("name", keyword, QueryMode.FUZZY)),
+						new Criterion("model", keyword, QueryMode.FUZZY)));
+		ArrayList<GoodsPO> pos = goodsDataService.advancedQuery(criteria);
+		ArrayList<GoodsVO> ret = new ArrayList<>();
+		for(GoodsPO po : pos){
+			ret.add(poToVO(po));
+		}
+		return ret;
 	}
 
 	public GoodsVO showDetails(String ID) throws NumberFormatException, RemoteException {
@@ -47,8 +60,17 @@ public class Goods {
 	}
 
 	public ResultMessage add(GoodsVO vo) throws RemoteException {
-		GoodsPO toAdd = voToPO(vo);
-		return goodsDataService.add(toAdd);
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
+		criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
+		ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
+		if(!repeated.isEmpty()){
+			return ResultMessage.EXIST;
+		}
+		else{
+			GoodsPO toAdd = voToPO(vo);
+			return goodsDataService.add(toAdd);
+		}
 	}
 
 	public ResultMessage delete(String ID) {
