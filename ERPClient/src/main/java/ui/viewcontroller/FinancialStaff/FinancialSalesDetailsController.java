@@ -12,7 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import ui.component.DialogFactory;
+import util.FilterType;
 import util.ResultMessage;
 import vo.SalesDetailVO;
 
@@ -104,7 +108,13 @@ public class FinancialSalesDetailsController {
     }
 
     public void clickExportButton(){
-        ResultMessage re = formBLService.exportSalesDetails(salesDetails);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.showOpenDialog(new Stage());
+
+        ArrayList<SalesDetailsBean> beans = new ArrayList<>();
+        beans.addAll(data);
+        ResultMessage re = formBLService.exportSalesDetails("","",beans);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
             alert.setHeaderText("导出成功");
@@ -118,12 +128,12 @@ public class FinancialSalesDetailsController {
             filters = "";
         }
         String searchInput = Search.getText();
-        SalesDetailsInput input = new SalesDetailsInput(StartDate.getValue(),EndDate.getValue(),null,null,null,null);
-        switch(filters){
-            case "商品名": input.goodName = searchInput;break;
-            case "客户": input.customerNam = searchInput;break;
-            case "业务员": input.salesman = searchInput;break;
-            case "仓库": input.inventory = searchInput;break;
+        SalesDetailsInput input = new SalesDetailsInput(StartDate.getValue().toString(),EndDate.getValue().toString(),searchInput,null);
+        switch (filters){
+            case "商品名": input.filterType = FilterType.GOODS;break;
+            case "客户": input.filterType = FilterType.CUSTOMER;break;
+            case "业务员": input.filterType = FilterType.SALESMAN;break;
+            case "仓库": input.filterType = FilterType.INVENTORY;break;
         }
         salesDetails = formBLService.getSalesDetails(input);
 

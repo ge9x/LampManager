@@ -1,5 +1,6 @@
 package blstubdriver;
 
+import bean.SalesDetailsBean;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
@@ -88,10 +89,10 @@ public class FormBLService_Stub implements FormBLService {
     }
 
     @Override
-    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
-        System.out.println("Export Succeed");
-        return ResultMessage.SUCCESS;
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailsBean> beans) {
+        return null;
     }
+
 
     @Override
     public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {

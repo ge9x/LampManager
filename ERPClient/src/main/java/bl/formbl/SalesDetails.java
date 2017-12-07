@@ -4,10 +4,13 @@ import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bean.SalesDetailsBean;
+import bl.goodsbl.Goods;
 import bl.salesbl.SalesController;
 import blservice.formblservice.SalesDetailsInput;
 import blservice.salesblservice.SalesInfo;
+import util.FilterType;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.SalesDetailVO;
 import vo.SalesVO;
 
@@ -27,13 +30,9 @@ public class SalesDetails {
     }
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
-        if (input.inventory != null){
-            salesIDS = salesInfo.getSalesIDByInventory(input.inventory);
-        }else if (input.salesman != null){
-            salesIDS = salesInfo.getSalesIDBySalesman(input.salesman);
-        }else if (input.customerNam != null){
-            salesIDS = salesInfo.getSalesIDByCustomerID(input.customerNam);
-        }else if (input.goodName != null){
+
+        salesIDS = salesInfo.getSalesOrderIDByDate(input.startDate,input.endDate);
+        if (input.filterType == FilterType.GOODS){
 
         }
 
