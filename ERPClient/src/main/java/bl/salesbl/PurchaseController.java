@@ -1,11 +1,9 @@
 package bl.salesbl;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
-import blservice.salesblservice.SalesInfo;
 import util.BillType;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -136,7 +134,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public String getUserID() {
+	public String getUserName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -154,7 +152,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -172,13 +170,13 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public String getnewSales() {
+	public String getnewSalesID() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getnewSalesReturn() {
+	public String getnewSalesReturnID() {
 		// TODO Auto-generated method stub
 		return null;
 	}

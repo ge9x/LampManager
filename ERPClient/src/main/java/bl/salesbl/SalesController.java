@@ -52,8 +52,8 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public ArrayList<SalesVO> getAllSalesOrder() {
-		return sales.getAllSalesOrder();
+	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) {
+		return sales.getAllSalesOrder(startDate,endDate);
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public String getUserID() {
+	public String getUserName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -201,7 +201,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public ArrayList<Integer> getAllCustomer() {
+	public ArrayList<CustomerVO> getAllCustomer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -219,13 +219,13 @@ public class SalesController implements SalesBLService,SalesInfo{
 	}
 
 	@Override
-	public String getnewSales() {
+	public String getnewSalesID() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getnewSalesReturn() {
+	public String getnewSalesReturnID() {
 		// TODO Auto-generated method stub
 		return null;
 	}

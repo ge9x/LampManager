@@ -2,6 +2,7 @@ package bl.salesbl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
@@ -52,7 +53,7 @@ public class Sales {
 		return null;
 	}
 	
-	public ArrayList<SalesVO> getAllSalesOrder() {
+	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate) {
 		try {
 			ArrayList<SalesPO> salpoList=salesDataService.showSales();
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
@@ -74,6 +75,10 @@ public class Sales {
 		return null;
 	}
 	
+	public static Date stringToDate(String date){
+		return null;
+	}
+	
 	public static SalesPO voTopo(SalesVO vo){
 		return null;
 	}
@@ -84,7 +89,7 @@ public class Sales {
 		for(GoodsItemPO goodsItempo:goodsItempoList){
 			goodsItemvoList.add(Purchase.poTovo(goodsItempo));
 		}
-		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
+		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
 	}
 	
 }

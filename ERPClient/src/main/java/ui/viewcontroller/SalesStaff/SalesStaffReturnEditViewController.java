@@ -252,6 +252,11 @@ public class SalesStaffReturnEditViewController {
     }
 
     public void clickSubmitButton(){
+    	goodsItemList.clear();
+    	for(GoodsItemBean bean:data){
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		goodsItemList.add(vo);
+    	}
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());

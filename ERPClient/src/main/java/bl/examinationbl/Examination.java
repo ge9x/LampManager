@@ -15,14 +15,15 @@ import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.examinationdataservice.ExaminationDataService;
 import po.BillPO;
-import po.CashBillPO;
 import rmi.ExaminationRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.AccountBillVO;
 import vo.BillVO;
-import vo.CashBillItemVO;
 import vo.CashBillVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 public class Examination {
 
@@ -45,6 +46,8 @@ public class Examination {
 		bills.addAll(financeInfo.getAllSubmittedCashBills());
 		bills.addAll(financeInfo.getAllSubmittedPayments());
 		bills.addAll(financeInfo.getAllSubmittedReceipts());
+		bills.addAll(salesInfo.getAllSubmittedSales());
+		bills.addAll(purchaseInfo.getAllSubmittedPurchase());
 		Collections.sort(bills, new Comparator<BillVO>(){
 
 			@Override
@@ -65,19 +68,33 @@ public class Examination {
 		return bills;
 	}
 	
-	public BillVO checkReceipt(String billID){
-		return null;
-	}
-	
 	public ResultMessage modifyReceipt(BillVO bill){
-		return null;
+		if(bill.type==BillType.CASH){
+			CashBillVO cashBill = (CashBillVO) bill;
+			financeInfo.examine(cashBill);
+		}
+		else if(bill.type==BillType.PAYMENT||bill.type==BillType.RECEIPT){
+			AccountBillVO accountBill = (AccountBillVO) bill;
+			financeInfo.examine(accountBill);
+		}
+		else if(bill.type==BillType.PURCHASE||bill.type==BillType.RETURN){
+			PurchaseVO purchaseBill = (PurchaseVO) bill;
+			purchaseInfo.examine(purchaseBill);
+		}
+		else if(bill.type==BillType.SALES||bill.type==BillType.SALESRETURN){
+			SalesVO salesBill = (SalesVO) bill;
+			salesInfo.examine(salesBill);
+		}
+		return ResultMessage.SUCCESS;
 	}
 	
 	public ResultMessage approveReceipt(BillVO bill){
-		return null;
+		bill.state = BillState.PASS;
+		return modifyReceipt(bill);
 	}
 	
 	public ResultMessage refuseReceipt(BillVO bill){
-		return null;
+		bill.state = BillState.FAILED;
+		return modifyReceipt(bill);
 	}
 }

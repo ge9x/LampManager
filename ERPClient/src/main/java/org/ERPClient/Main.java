@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import rmi.AccountRemoteHelper;
 import rmi.ClassificationRemoteHelper;
 import rmi.CustomerRemoteHelper;
+import rmi.ExaminationRemoteHelper;
 import rmi.FinanceRemoteHelper;
 import rmi.GoodsRemoteHelper;
 import rmi.InventoryRemoteHelper;

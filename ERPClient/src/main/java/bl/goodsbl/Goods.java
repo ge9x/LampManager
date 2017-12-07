@@ -36,6 +36,7 @@ public class Goods {
 	}
 
 	public ArrayList<GoodsVO> find(String keyword) {
+		// TODO use advancedQuery()
 		return null;
 	}
 
@@ -58,8 +59,8 @@ public class Goods {
 		return null;
 	}
 
-	public String getNewID(String classificationID) {
-		return null;
+	public String getNewID(String classificationID) throws RemoteException {
+		return goodsDataService.getNewID(classificationID);
 	}
 	
 	public static GoodsVO poToVO(GoodsPO po){

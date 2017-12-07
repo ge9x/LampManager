@@ -41,7 +41,7 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 		return data;
 	}
 	
-	public ClassificationPO find(int ID) throws RemoteException {
+	public ClassificationPO findByID(int ID) throws RemoteException {
 		for(ClassificationPO po : data){
 			if(po.getID() == ID){
 				return po;
@@ -93,10 +93,21 @@ public class ClassificationDataService_Stub implements ClassificationDataService
 	}
 
 	@Override
-	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException {
+	public ArrayList<ClassificationPO> findFuzzilyByName(String keyword) throws RemoteException {
 		ArrayList<ClassificationPO> ret = new ArrayList<>();
 		for(ClassificationPO po : data){
 			if(po.getName().contains(keyword)){
+				ret.add(po);
+			}
+		}
+		return ret;
+	}
+
+	@Override
+	public ArrayList<ClassificationPO> findFullyByName(String name) throws RemoteException {
+		ArrayList<ClassificationPO> ret = new ArrayList<>();
+		for(ClassificationPO po : data){
+			if(po.getName().equals(name)){
 				ret.add(po);
 			}
 		}

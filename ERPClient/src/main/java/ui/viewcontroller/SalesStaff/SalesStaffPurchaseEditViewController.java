@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 
 import bean.GoodsItemBean;
+import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.SalesBLService_Stub;
@@ -52,8 +53,7 @@ public class SalesStaffPurchaseEditViewController {
 	
 	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
-	UserBLService userBLService = new UserBLService_Stub();
+	SalesBLService salesBLService = new SalesController();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -93,7 +93,7 @@ public class SalesStaffPurchaseEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
+        String name = salesBLService.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
         inventories = salesBLService.getAllInventory();
@@ -255,6 +255,11 @@ public class SalesStaffPurchaseEditViewController {
     }
     
     public void clickSubmitButton(){
+    	goodsItemList.clear();
+    	for(GoodsItemBean bean:data){
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		goodsItemList.add(vo);
+    	}
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());

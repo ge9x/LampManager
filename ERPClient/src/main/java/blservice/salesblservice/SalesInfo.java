@@ -3,6 +3,8 @@ package blservice.salesblservice;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import javax.swing.table.TableStringConverter;
+
 import util.BillType;
 import util.ResultMessage;
 import vo.GoodsItemVO;
@@ -39,7 +41,7 @@ public interface SalesInfo {
 	 * 得到所有销售出货单
 	 * @return
 	 */
-	public ArrayList<SalesVO> getAllSalesOrder();
+	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate);
 	//查看经营历程表
 	/**
 	 * 通过查看时间区间得到销售单ID

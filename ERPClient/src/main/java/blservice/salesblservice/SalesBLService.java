@@ -31,12 +31,12 @@ public interface SalesBLService {
 	   * 得到新的销售进货单编号
 	   * @return
 	   */
-	  public String getnewSales();
+	  public String getnewSalesID();
 	  /**
 	   * 得到新的销售退货单编号
 	   * @return
 	   */
-	  public String getnewSalesReturn();
+	  public String getnewSalesReturnID();
 	  /**
 	   * 得到合适的特价包促销策略
 	   * @return
@@ -115,7 +115,7 @@ public interface SalesBLService {
 	   * 获得当前用户ID
 	   * @return 当前用户ID
 	   */
-	  public String getUserID();
+	  public String getUserName();
 	  /**
 	   * 获得所有供应商列表
 	   * @return 供应商VO的列表
@@ -130,6 +130,6 @@ public interface SalesBLService {
 	   * 获得所有客户列表
 	   * @return 客户VO的列表
 	   */
-	  public ArrayList<Integer> getAllCustomer();
+	  public ArrayList<CustomerVO> getAllCustomer();
 	  
 }

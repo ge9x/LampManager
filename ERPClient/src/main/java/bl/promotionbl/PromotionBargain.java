@@ -3,18 +3,15 @@ package bl.promotionbl;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import bl.salesbl.Purchase;
 import po.GoodsItemPO;
-import po.GoodsPO;
 import po.PromotionBargainPO;
 import rmi.PromotionRemoteHelper;
 import util.PromotionType;
 import util.ResultMessage;
 import vo.GoodsItemVO;
-import vo.GoodsVO;
 import vo.PromotionBargainVO;
 
 public class PromotionBargain extends Promotion{
@@ -25,10 +22,13 @@ public class PromotionBargain extends Promotion{
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
 	}
 	
-	public ArrayList<PromotionBargainVO> show(){
+	public ArrayList<PromotionBargainVO> show() throws RemoteException{
 		ArrayList<PromotionBargainVO> promotionBargainVOs = new ArrayList<>();
-		
-		return null;
+		promotionBargainPOs = promotionDataService.showPB();
+		for(PromotionBargainPO po:promotionBargainPOs){
+			promotionBargainVOs.add(poTOvo(po));
+		}
+		return promotionBargainVOs;
 	}
 	
 	public void addBargain(GoodsItemVO vo){
@@ -39,11 +39,11 @@ public class PromotionBargain extends Promotion{
 		
 	}
 	
-	public void setStartDate(LocalDate date){
+	public void setStartDate(String date){
 		
 	}
 	
-	public void setEndDate(LocalDate date){
+	public void setEndDate(String date){
 		
 	}
 	
@@ -66,6 +66,11 @@ public class PromotionBargain extends Promotion{
 	}
 	
 	public PromotionBargainVO poTOvo (PromotionBargainPO promotionBargainPO){
-		return null;
+		ArrayList<GoodsItemVO> bargains = new ArrayList<>();
+		for(GoodsItemPO po:promotionBargainPO.getBargains()){
+			bargains.add(Purchase.poTovo(po));
+		}
+		return new PromotionBargainVO(promotionBargainPO.getPromotionName(), promotionBargainPO.getPromotionID(), promotionBargainPO.getGoodsTotal(),
+				promotionBargainPO.getBargainTotal(), promotionBargainPO.getStartDate(), promotionBargainPO.getEndDate(), bargains);
 	}
 }

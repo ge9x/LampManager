@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import dataimpl.goodsdataimpl.GoodsDataServiceImpl;
 import dataservice.goodsdataservice.GoodsDataService;
 import po.GoodsPO;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -51,6 +52,11 @@ public class GoodsDataRemoteObject extends UnicastRemoteObject implements GoodsD
 	@Override
 	public String getNewID(String classificationID) throws RemoteException {
 		return goodsDataService.getNewID(classificationID);
+	}
+
+	@Override
+	public ArrayList<GoodsPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return goodsDataService.advancedQuery(criteria);
 	}
 	
 }

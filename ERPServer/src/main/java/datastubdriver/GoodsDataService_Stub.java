@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dataservice.goodsdataservice.GoodsDataService;
 import po.GoodsPO;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -82,6 +83,14 @@ public class GoodsDataService_Stub implements GoodsDataService{
 	@Override
 	public String getNewID(String classificationID) throws RemoteException {
 		return classificationID + "000001";
+	}
+
+	/**
+	 * 后加入的方法，桩不予实现
+	 */
+	@Override
+	public ArrayList<GoodsPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return data;
 	}
 
 }
