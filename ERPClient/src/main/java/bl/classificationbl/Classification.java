@@ -72,20 +72,16 @@ public class Classification {
 		if(toUpdate == null){
 			return ResultMessage.NOT_EXIST;
 		}
-		if(toUpdate.getName().equals(vo.name)){	// 不改名
-			// TODO update PO
+		// 改名
+		ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
+		if(repeated.size() > 0){	// 重名
+			return ResultMessage.EXIST;
+		}
+		else{	// 改名以后无重名
+			toUpdate.setName(vo.name);
 			return classificationDataService.update(toUpdate);
 		}
-		else{	// 要改名
-			ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
-			if(repeated.size() > 0){
-				return ResultMessage.EXIST;
-			}
-			else{	// 改名以后无重名
-				// TODO update PO
-				return classificationDataService.update(toUpdate);
-			}
-		}
+		
 	}
 
 	public String getNewID() throws RemoteException {
