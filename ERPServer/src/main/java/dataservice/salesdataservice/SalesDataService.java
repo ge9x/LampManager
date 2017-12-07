@@ -15,6 +15,7 @@ import util.ResultMessage;
  */
 
 public interface SalesDataService extends Remote{
+	
 	/**
 	 * 通过单据编号查找进货单据
 	 * 
