@@ -54,7 +54,8 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public String getNewID(String classificationID) {
-		return goods.getNewID(classificationID);
+//		return goods.getNewID(classificationID);
+		return null;
 	}
 
 	public ArrayList<GoodsVO> getAllGoods() {
