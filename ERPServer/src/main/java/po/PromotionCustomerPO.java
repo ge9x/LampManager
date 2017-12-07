@@ -32,6 +32,8 @@ public class PromotionCustomerPO extends PromotionPO {
 	private String endDate;
 	/** 促销策略类型 */
 	private PromotionType type;
+	/**代金券*/
+	private double voucher;
 	/** 折让 */
 	private double allowance;
 	/** 赠品 */
@@ -43,13 +45,14 @@ public class PromotionCustomerPO extends PromotionPO {
 	
 	public PromotionCustomerPO(){};
 
-	public PromotionCustomerPO(String promotionName,String startDate, String endDate, PromotionType type, double allowance,
+	public PromotionCustomerPO(String promotionName,String startDate, String endDate, PromotionType type,double voucher,double allowance,
 			List<GoodsItemPO> gifts, Level level) {
 		super(startDate, endDate, type);
 		this.promotionName=promotionName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.type = type;
+		this.voucher=voucher;
 		this.allowance = allowance;
 		this.gifts = gifts;
 		this.level = level;
@@ -101,6 +104,15 @@ public class PromotionCustomerPO extends PromotionPO {
 
 	public void setType(PromotionType type) {
 		this.type = type;
+	}
+	
+	@Column(name="voucher")
+	public double getVoucher() {
+		return voucher;
+	}
+
+	public void setVoucher(double voucher) {
+		this.voucher = voucher;
 	}
 
 	@Column(name="allowance")
