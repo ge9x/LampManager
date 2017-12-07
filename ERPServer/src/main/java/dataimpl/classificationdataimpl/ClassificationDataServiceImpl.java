@@ -35,7 +35,7 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 
 	@Override
-	public ClassificationPO find(int ID) throws RemoteException {
+	public ClassificationPO findByID(int ID) throws RemoteException {
 		return classificationDataHelper.exactlyQuery("id", ID);
 	}
 
@@ -60,7 +60,12 @@ public class ClassificationDataServiceImpl implements ClassificationDataService{
 	}
 
 	@Override
-	public ArrayList<ClassificationPO> findByName(String keyword) throws RemoteException {
+	public ArrayList<ClassificationPO> findFuzzilyByName(String keyword) throws RemoteException {
 		return classificationDataHelper.fuzzyQuery("name", keyword);
+	}
+	
+	@Override
+	public ArrayList<ClassificationPO> findFullyByName(String name) throws RemoteException {
+		return classificationDataHelper.fullyQuery("name", name);
 	}
 }

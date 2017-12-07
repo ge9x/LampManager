@@ -34,7 +34,7 @@ public class Classification {
 	}
 
 	public ArrayList<ClassificationVO> find(String keyword) throws RemoteException {
-		ArrayList<ClassificationPO> pos = classificationDataService.findByName(keyword);
+		ArrayList<ClassificationPO> pos = classificationDataService.findFuzzilyByName(keyword);
 		ArrayList<ClassificationVO> ret = new ArrayList<>();
 		for(ClassificationPO po : pos){
 			ret.add(poToVO(po));
@@ -43,22 +43,45 @@ public class Classification {
 	}
 
 	public ClassificationVO showDetails(String ID) throws NumberFormatException, RemoteException {
-		ClassificationPO found = classificationDataService.find(Integer.parseInt(ID));
+		ClassificationPO found = classificationDataService.findByID(Integer.parseInt(ID));
 		return poToVO(found);
 	}
 
 	public ResultMessage add(ClassificationVO vo) throws RemoteException {
-		return classificationDataService.add(voToPO(vo));
+		ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
+		if(repeated.size() > 0){
+			return ResultMessage.EXIST;
+		}
+		else{
+			return classificationDataService.add(voToPO(vo));
+		}
 	}
 
 	public ResultMessage delete(String ID) throws RemoteException {
-		ClassificationPO found = null;
-		return classificationDataService.delete(found);
+		ClassificationPO found = classificationDataService.findByID(Integer.parseInt(ID));
+		if(found == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			return classificationDataService.delete(found);
+		}
 	}
 
 	public ResultMessage update(ClassificationVO vo) throws RemoteException {
-		ClassificationPO found = null;
-		return classificationDataService.delete(found);
+		ClassificationPO toUpdate = classificationDataService.findByID(Integer.parseInt(vo.ID));
+		if(toUpdate == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		// 改名
+		ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
+		if(repeated.size() > 0){	// 重名
+			return ResultMessage.EXIST;
+		}
+		else{	// 改名以后无重名
+			toUpdate.setName(vo.name);
+			return classificationDataService.update(toUpdate);
+		}
+		
 	}
 
 	public String getNewID() throws RemoteException {
@@ -92,7 +115,7 @@ public class Classification {
 	 * 默认尚未包含商品
 	 */
 	private ClassificationPO voToPO(ClassificationVO vo) throws NumberFormatException, RemoteException {
-		ClassificationPO father  = classificationDataService.find(Integer.parseInt(vo.ID));
+		ClassificationPO father  = classificationDataService.findByID(Integer.parseInt(vo.ID));
 		ArrayList<ClassificationPO> chidren = new ArrayList<>();	// 添加商品分类时默认尚未包含子商品分类，故为空
 		ArrayList<GoodsPO> goods = new ArrayList<>();	// 添加商品分类时默认尚未包含商品，故为空
 		ClassificationPO ret = new ClassificationPO(vo.name, father, chidren, goods);
@@ -106,12 +129,12 @@ public class Classification {
 	 * @throws RemoteException
 	 */
 	protected ClassificationPO exactlyFindByName(String name) throws RemoteException{
-		ArrayList<ClassificationPO> pos = classificationDataService.findByName(name);
-		for(ClassificationPO po : pos){
-			if(po.getName().equals(name)){
-				return po;
-			}
+		ArrayList<ClassificationPO> pos = classificationDataService.findFullyByName(name);
+		if(pos.size() > 0){
+			return pos.get(0);
 		}
-		return null;
+		else{
+			return null;
+		}
 	}
 }

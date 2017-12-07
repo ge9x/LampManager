@@ -41,7 +41,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public ResultMessage delete(String userID) throws RemoteException {
-		UserPO po = userDataHelper.exactlyQuery("userID", userID);
+		UserPO po = userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
 		return userDataHelper.delete(po);
 	}
 
@@ -57,7 +57,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public ResultMessage login(String userID, String password) throws RemoteException {
-		UserPO po = userDataHelper.exactlyQuery("userID", userID);
+		UserPO po = userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
 		if(po == null){
 			return ResultMessage.NOT_EXIST;
 		}
