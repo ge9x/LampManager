@@ -137,4 +137,8 @@ public class GeneralManagerPromotionViewController {
     	}
     	generalManagerViewController.showPromotionAddView(promotionAdd);
 	}
+	
+	public void showPromotionDetail(Pane pane){
+		generalManagerViewController.showPromotionDetail(pane);
+	}
 }
