@@ -156,7 +156,7 @@ public class PurchasePO extends BillPO{
 	}
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "claid1")   
+	@JoinColumn(name = "purchase")   
 	public List<GoodsItemPO> getGoodsItemList() {
 		return goodsItemList;
 	}

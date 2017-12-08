@@ -12,7 +12,9 @@ import util.UserPosition;
 public class UserPO implements Serializable {
 	private static final long serialVersionUID = 7579870908035212560L;
 
-	private int userID;
+	private int ID;
+	
+	private String userID;
 	
 	private String password;
 	
@@ -38,24 +40,27 @@ public class UserPO implements Serializable {
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-	public UserPO(int userID, String password, String name, UserPosition position, UserLimits limit) {
+	public UserPO(int ID, String password, String name, UserPosition position, UserLimits limit) {
 		super();
-		this.userID = userID;
+		this.ID = ID;
 		this.password = password;
 		this.name = name;
 		this.position = position;
 		this.limit = limit;
 	}
 
+	/**
+	 * @return 数据库自增长的ID
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int getUserID() {
-		return userID;
+	public int geID() {
+		return ID;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
 	@Column(name = "password")
@@ -95,6 +100,17 @@ public class UserPO implements Serializable {
 	public void setLimit(UserLimits limit) {
 		this.limit = limit;
 	}
-	
+
+	/**
+	 * @return 管理员设置的工号ID
+	 */
+	@Column(name = "userID")
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 	
 }
