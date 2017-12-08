@@ -89,4 +89,9 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
     public ArrayList<InventoryBillVO> findBillByType(BillType type) {
         return null;
     }
+
+    @Override
+    public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) {
+        return null;
+    }
 }

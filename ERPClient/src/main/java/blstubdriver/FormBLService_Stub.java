@@ -1,5 +1,6 @@
 package blstubdriver;
 
+import bean.SalesDetailsBean;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
@@ -32,7 +33,7 @@ public class FormBLService_Stub implements FormBLService {
         accountBillItemVOS.add(itemVO2);
         billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
-        profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
+        profitVO = new ProfitVO("","",10000,3000,
                 200,400,900,9500,5000,
                 4000,1000,500,5500,4000);
         SalesDetailVO salesDetailVO1 = new SalesDetailVO("2017-1-1","霓虹灯", "大", 20, 35.0);
@@ -88,10 +89,10 @@ public class FormBLService_Stub implements FormBLService {
     }
 
     @Override
-    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
-        System.out.println("Export Succeed");
-        return ResultMessage.SUCCESS;
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
+        return null;
     }
+
 
     @Override
     public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {

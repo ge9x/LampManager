@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import blservice.initializationblservice.InitInfo;
 import blservice.initializationblservice.InitializationBLService;
 import po.InitAccountPO;
 import util.ResultMessage;
@@ -8,7 +9,7 @@ import vo.InitAccountVO;
 /**
  * Created by Kry·L on 2017/11/5.
  */
-public class InitializationController implements InitializationBLService{
+public class InitializationController implements InitializationBLService,InitInfo{
     private Initialization initialization;
 
     public InitializationController(){
@@ -19,6 +20,11 @@ public class InitializationController implements InitializationBLService{
     }
 
     public InitAccountVO show() {
+        return null;
+    }
+
+    @Override
+    public String getStartDate() {
         return null;
     }
 }

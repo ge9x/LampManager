@@ -55,7 +55,7 @@ public class UserPO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public int geID() {
+	public int getID() {
 		return ID;
 	}
 
