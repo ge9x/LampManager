@@ -24,7 +24,7 @@ public class Form {
     public Form(){
         salesDetails = new SalesDetails();
         documentDetails = new DocumentDetails();
-        Profit profit = new Profit();
+        profit = new Profit();
         initInfo = new InitializationController();
     }
     public BillVO findByID(String ID) {
@@ -48,14 +48,14 @@ public class Form {
     }
 
     public ProfitVO getProfit(String startDate, String endDate) {
-        return null;
+        return profit.getProfit(startDate,endDate);
     }
 
     public String getStartDate() {
         return initInfo.getStartDate();
     }
 
-    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailsBean> beans) {
-        return salesDetails.export(filePath,filename,beans);
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
+        return salesDetails.export(filePath,filename,salesDetailVOS);
     }
 }

@@ -109,9 +109,10 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ResultMessage export(String filePath, String filename, ArrayList<SalesDetailsBean> beans){
+    public ResultMessage export(String filePath, String filename, ArrayList<SalesDetailVO> beans){
+        filename = filename.split("\\.")[0];
         ExportToExcel exporter = new ExportToExcel.Builder(filePath, filename, ExcelType.XLSX)
-                .withModel(Model.of(SalesDetailsBean.class, beans)).build();
+                .withModel(Model.of(SalesDetailVO.class, beans)).build();
         if (exporter.export())
             return ResultMessage.SUCCESS;
         else

@@ -52,8 +52,8 @@ public class FormController implements FormBLService{
     }
 
     @Override
-    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailsBean> beans) {
-        return form.exportSalesDetails(filePath,filename,beans);
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
+        return form.exportSalesDetails(filePath,filename,salesDetailVOS);
     }
 
     @Override

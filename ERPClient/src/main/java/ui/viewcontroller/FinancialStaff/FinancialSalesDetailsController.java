@@ -21,6 +21,7 @@ import util.FilterType;
 import util.ResultMessage;
 import vo.SalesDetailVO;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -111,12 +112,12 @@ public class FinancialSalesDetailsController {
 
     public void clickExportButton(){
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        fileChooser.showOpenDialog(new Stage());
+        fileChooser.setTitle("导出销售明细表");
+        fileChooser.setInitialFileName("销售明细表"+LocalDate.now().toString());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
+        File f = fileChooser.showSaveDialog(new Stage());
 
-        ArrayList<SalesDetailsBean> beans = new ArrayList<>();
-        beans.addAll(data);
-        ResultMessage re = formBLService.exportSalesDetails("","",beans);
+        ResultMessage re = formBLService2.exportSalesDetails(f.getParent(),f.getName(),salesDetails);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
             alert.setHeaderText("导出成功");

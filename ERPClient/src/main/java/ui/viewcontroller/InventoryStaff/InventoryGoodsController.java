@@ -32,7 +32,7 @@ public class InventoryGoodsController {
 
 
     @FXML
-    AnchorPane TablePane;
+    ScrollPane TablePane;
 
     @FXML
     public void initialize(){
@@ -78,7 +78,7 @@ public class InventoryGoodsController {
 
         table.getColumns().addAll(IDColumn,nameColumn,modelColumn,classificationColumn,amountColumn,alarmAmountColumn,purchaseColumn,recentPurchaseColumn,salesColumn,recentSalesColumn);
         table.setItems(data);
-        TablePane.getChildren().add(table);
+        TablePane.setContent(table);
     }
     public void showGoods(){
         goods = goodsBLService.show();

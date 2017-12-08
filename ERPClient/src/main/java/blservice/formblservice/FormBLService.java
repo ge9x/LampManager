@@ -23,24 +23,12 @@ public interface FormBLService {
 
     /**
      * 查看销售明细表
-     * @param startDate
-     * @param endDate
-     * @param goodName
-     * @param customerName
-     * @param salesman
-     * @param inventory
      * @return 商品销售记录列表
      */
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input);
 
     /**
      * 查看经营历程表
-     * @param startDate
-     * @param endDate
-     * @param billType
-     * @param customerName
-     * @param salesman
-     * @param inventory
      * @return 所有符合条件的单据列表
      */
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input);
@@ -77,7 +65,7 @@ public interface FormBLService {
      * 导出销售明细表
      * @return
      */
-    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailsBean> beans);
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS);
 
     /**
      * 导出经营历程表
