@@ -62,7 +62,7 @@ public class FormController implements FormBLService{
     }
 
     @Override
-    public ResultMessage exportProfit(ArrayList<ProfitVO> vos) {
-        return null;
+    public ResultMessage exportProfit(String filePath,String filename,ArrayList<ProfitVO> vos) {
+        return form.exportProfit(filePath,filename,vos);
     }
 }
