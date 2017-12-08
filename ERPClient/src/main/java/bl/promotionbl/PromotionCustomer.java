@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bl.salesbl.Purchase;
 import po.GoodsItemPO;
+import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import rmi.PromotionRemoteHelper;
 import util.Level;
@@ -62,6 +63,41 @@ public class PromotionCustomer extends Promotion{
 	public PromotionCustomerVO findPromotionByID(String promotionID) throws RemoteException{
 		PromotionCustomerVO vo = poTOvo(promotionDataService.findPC(promotionID));
 		return vo;
+	}
+	
+	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
+		promotionCustomerPOs.clear();
+		promotionCustomerPOs = promotionDataService.showPC();
+		for(PromotionCustomerPO po:promotionCustomerPOs){
+			if(po.getPromotionID().equals(promotionID)){
+				return promotionDataService.deletePC(po);
+			}
+		}
+		return ResultMessage.FAILED;
+	}
+	
+	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{
+		promotionCustomerPOs.clear();
+		promotionCustomerPOs = promotionDataService.showPC();
+		for(PromotionCustomerPO po:promotionCustomerPOs){
+			if(po.getPromotionID().equals(promotionCustomerVO.promotionID)){
+				po.setPromotionName(promotionCustomerVO.promotionName);
+				po.setStartDate(promotionCustomerVO.startDate);
+				po.setEndDate(promotionCustomerVO.endDate);
+				po.setLevel(promotionCustomerVO.level);
+				po.setAllowance(promotionCustomerVO.allowance);
+				po.setVoucher(promotionCustomerVO.voucher);
+				po.getGifts().clear();
+				ArrayList<GoodsItemVO> itemVOs = promotionCustomerVO.gifts;
+				for (GoodsItemVO itemVO : itemVOs) {
+                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    po.getGifts().add(itemPO);
+                }
+				return promotionDataService.updatePC(po);
+			}
+		}
+		
+		return ResultMessage.FAILED;
 	}
 	
 	public PromotionCustomerVO poTOvo(PromotionCustomerPO promotionCustomerPO){

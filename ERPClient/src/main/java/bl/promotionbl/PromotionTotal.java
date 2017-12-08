@@ -8,6 +8,7 @@ import java.util.List;
 
 import bl.salesbl.Purchase;
 import po.GoodsItemPO;
+import po.PromotionBargainPO;
 import po.PromotionTotalPO;
 import rmi.PromotionRemoteHelper;
 import util.PromotionType;
@@ -61,6 +62,39 @@ public class PromotionTotal extends Promotion{
 	public PromotionTotalVO findPromotionByID(String promotionID) throws RemoteException{
 		PromotionTotalVO vo = poTOvo(promotionDataService.findPT(promotionID));
 		return vo;
+	}
+	
+	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
+		promotionTotalPOs.clear();
+		promotionTotalPOs = promotionDataService.showPT();
+		for(PromotionTotalPO po:promotionTotalPOs){
+			if(po.getPromotionID().equals(promotionID)){
+				return promotionDataService.addPT(po);
+			}
+		}
+		return ResultMessage.FAILED;
+	}
+	
+	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{
+		promotionTotalPOs.clear();
+		promotionTotalPOs = promotionDataService.showPT();
+		for(PromotionTotalPO po:promotionTotalPOs){
+			if(po.getPromotionID().equals(promotionTotalVO.promotionID)){
+				po.setPromotionName(promotionTotalVO.promotionName);
+				po.setStartDate(promotionTotalVO.startDate);
+				po.setEndDate(promotionTotalVO.endDate);
+				po.setTotalPrice(promotionTotalVO.totalPrice);
+				po.setVoucher(promotionTotalVO.voucher);
+				po.getGifts().clear();
+				ArrayList<GoodsItemVO> itemVOs = promotionTotalVO.gifts;
+				for (GoodsItemVO itemVO : itemVOs) {
+                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    po.getGifts().add(itemPO);
+                }
+				return promotionDataService.updatePT(po);
+			}
+		}
+		return ResultMessage.FAILED;
 	}
 	
 	public PromotionTotalVO poTOvo(PromotionTotalPO promotionTotalPO){
