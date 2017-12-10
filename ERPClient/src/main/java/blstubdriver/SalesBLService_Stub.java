@@ -302,5 +302,17 @@ public class SalesBLService_Stub implements SalesBLService{
 		return salList;
 	}
 
+	@Override
+	public ResultMessage deletePurchase(PurchaseVO vo) {
+		purchaseBill.remove(vo);
+		return ResultMessage.SUCCESS;
+	}
+
+	@Override
+	public ResultMessage deleteSales(SalesVO vo) {
+		salesBill.remove(vo);
+		return ResultMessage.SUCCESS;
+	}
+
 	
 }

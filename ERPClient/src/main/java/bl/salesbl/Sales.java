@@ -16,6 +16,7 @@ import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
+import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -181,14 +182,26 @@ public class Sales {
 		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
 	}
 	
-	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) throws RemoteException {
+		ArrayList<SalesVO> salvoList=new ArrayList<>();
+		ArrayList<SalesPO> salrepoList=salesDataService.findSlaesByState(state);
+		for(SalesPO po:salrepoList){
+			if(po.getType()==BillType.SALES){
+				salvoList.add(poTovo(po));
+			}
+		}
+		return salvoList;
 	}
 
-	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) throws RemoteException {
+		ArrayList<SalesVO> salvoList=new ArrayList<>();
+		ArrayList<SalesPO> salrepoList=salesDataService.findSlaesByState(state);
+		for(SalesPO po:salrepoList){
+			if(po.getType()==BillType.SALESRETURN){
+				salvoList.add(poTovo(po));
+			}
+		}
+		return salvoList;
 	}
 	
 }
