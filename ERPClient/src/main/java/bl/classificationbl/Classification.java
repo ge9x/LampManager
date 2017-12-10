@@ -101,11 +101,14 @@ public class Classification {
 			String ID = String.format("%02d", po.getID());
 			ClassificationVO father = null;
 			if(po.getFather() != null){
-				father = poToVO(po.getFather());
+				father = new ClassificationVO();
+				father.name = po.getFather().getName();
 			}
 			ArrayList<ClassificationVO> chidren = new ArrayList<>();
-			for(ClassificationPO child : po.getChidren()){
-				chidren.add(poToVO(child));
+			for(ClassificationPO toAdd : po.getChidren()){
+				ClassificationVO child = new ClassificationVO();
+				child.name = toAdd.getName();
+				chidren.add(child);
 			}
 			ArrayList<GoodsVO> goods = new ArrayList<>();
 			for(GoodsPO aGoods : po.getGoods()){

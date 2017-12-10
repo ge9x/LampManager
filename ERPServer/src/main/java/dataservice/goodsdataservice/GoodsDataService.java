@@ -1,5 +1,6 @@
 package dataservice.goodsdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
-public interface GoodsDataService {
+public interface GoodsDataService extends Remote{
 	/**
 	 * 得到所有商品
 	 * @return 所有商品的PO

@@ -21,8 +21,8 @@ public class TestUser {
 //			userImpl.add(po2);
 //			userImpl.add(po3);
 			
-			UserPO found = userImpl.find("2");
-			System.out.println("查找ID为2的用户：");
+			UserPO found = userImpl.find("00002");
+			System.out.println("查找ID为00002的用户：");
 			System.out.println(found.getUserID() + " " + found.getName() + " " + found.getPassword());
 			ArrayList<UserPO> fuzzyFound = userImpl.findUsersByID("02");
 			System.out.println("查找ID里有02的用户：" + fuzzyFound.size() + "台");

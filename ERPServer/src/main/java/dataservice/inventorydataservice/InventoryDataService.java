@@ -1,5 +1,6 @@
 package dataservice.inventorydataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
-public interface InventoryDataService {
+public interface InventoryDataService extends Remote{
 	/**
 	 * 得到所有库存报溢单、报损单和赠送单
 	 * @return 所有库存报溢单、报损单和赠送单的PO
