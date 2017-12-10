@@ -28,7 +28,7 @@ import java.util.Optional;
  */
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
-    ClassificationBLService classificationBLService = new ClassificationBLService_Stub();
+    ClassificationBLService classificationBLService = new ClassificationController();
     GoodsBLService goodsBLService = new GoodsBLService_Stub();
 
     ArrayList<ClassificationVO> classifications;

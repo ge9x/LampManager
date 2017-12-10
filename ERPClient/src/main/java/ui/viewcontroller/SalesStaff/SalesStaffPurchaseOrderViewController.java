@@ -36,7 +36,11 @@ public class SalesStaffPurchaseOrderViewController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = salesBLService.
+        draft = salesBLService;
+        submitted = salesBLService;
+        pass = salesBLService;
+        failed = salesBLService;
+
     }
     
     public void setSalesStaffViewController(SalesStaffViewController salesStaffViewController){

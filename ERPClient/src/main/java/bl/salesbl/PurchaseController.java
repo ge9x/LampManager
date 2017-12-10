@@ -31,11 +31,10 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 		return null;
 	}
 
-	@Override
-	public ArrayList<String> getPurchaseIDByDate(String startDate, String endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate) {
+        return null;
+    }
 
 	@Override
 	public ArrayList<String> getPurchaseIDByType(BillType type) {

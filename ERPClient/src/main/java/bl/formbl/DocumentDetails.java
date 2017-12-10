@@ -41,7 +41,7 @@ public class DocumentDetails{
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        getAllBills();
+        getAllBills(input.startDate,input.endDate);
         searchByType(input.billType);
         if (input.billType == BillType.RECEIPT || input.billType == BillType.PAYMENT) {
             switch (input.filterType) {
@@ -53,6 +53,7 @@ public class DocumentDetails{
                     return searchByInventory(billVOS, input.billType, input.keyword);
             }
         }
+        return null;
     }
     public void searchByType(BillType type){
         if (type == BillType.RECEIPT){
@@ -146,7 +147,7 @@ public class DocumentDetails{
         billVOS.addAll(inventoryInfo.getInventoryBillsByDate(startDate, endDate));
         billVOS.addAll(purchaseInfo.getPurchaseByDate(startDate,endDate));
         billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
-        billVOS.addAll(salesInfo.get)
+//        billVOS.addAll(salesInfo.get)
 
 
     }
