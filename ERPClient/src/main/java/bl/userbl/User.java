@@ -89,7 +89,7 @@ public class User {
 	}
 	
 	public UserPO voTOpo(UserVO userVO){
-		return new UserPO(userVO.password, userVO.name, userVO.position, userVO.limit);
+		return new UserPO(userVO.userID, userVO.password, userVO.name, userVO.position, userVO.limit);
 	}
 	
 	public UserVO poTOvo(UserPO userPO){

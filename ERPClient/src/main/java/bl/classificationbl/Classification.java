@@ -99,7 +99,10 @@ public class Classification {
 		}
 		else{
 			String ID = String.format("%02d", po.getID());
-			ClassificationVO father = poToVO(po.getFather());
+			ClassificationVO father = null;
+			if(po.getFather() != null){
+				father = poToVO(po.getFather());
+			}
 			ArrayList<ClassificationVO> chidren = new ArrayList<>();
 			for(ClassificationPO child : po.getChidren()){
 				chidren.add(poToVO(child));
