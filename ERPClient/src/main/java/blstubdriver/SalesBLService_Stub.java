@@ -127,13 +127,13 @@ public class SalesBLService_Stub implements SalesBLService{
 		return getBargains;
 	}
 
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
 		ArrayList<PromotionCustomerVO> getCustomers=new ArrayList<PromotionCustomerVO>();
 		getCustomers.add(new PromotionCustomerVO("会员促销策略","00002", LocalDate.now().toString(), LocalDate.now().toString(), 500.0, 300.0, new ArrayList<GoodsItemVO>(), util.Level.LEVEL_ONE));
 		return getCustomers;
 	} 
 
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
 		ArrayList<PromotionTotalVO> getTotal=new ArrayList<PromotionTotalVO>();
 		getTotal.add(new PromotionTotalVO("总价促销策略","00001", LocalDate.now().toString(), LocalDate.now().toString(), 455.0, new ArrayList<GoodsItemVO>(), 700.0));
 		return getTotal;
@@ -255,5 +255,6 @@ public class SalesBLService_Stub implements SalesBLService{
 		customerData.add(c5);
 		return customerData;
 	}
+
 	
 }

@@ -2,6 +2,8 @@ package blservice.salesblservice;
 
 import java.util.ArrayList;
 
+import util.BillState;
+import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
@@ -48,14 +50,14 @@ public interface SalesBLService {
 	   * @return 会员促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer();
+	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(Level level);
 	  /**
 	   * 得到合适的总价促销策略
 	   * 
 	   * @return 总价促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionTotalVO> getFitPromotionTotal();
+	  public ArrayList <PromotionTotalVO> getFitPromotionTotal(double total);
 	  /**
 	   * 创建一个进货单
 	   * 
@@ -131,5 +133,28 @@ public interface SalesBLService {
 	   * @return 客户VO的列表
 	   */
 	  public ArrayList<CustomerVO> getAllCustomer();
-	  
+	  /**
+	   * 通过状态得到进货单据
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state);
+	  /**
+	   * 通过状态得到进货退货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<PurchaseVO> getReturnOrderByState(BillState state);
+	  /**
+	   * 通过状态得到销售出货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<SalesVO> getSalesOrderByState(BillState state);
+	  /**
+	   * 通过单据得到销售退货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state);
 }
