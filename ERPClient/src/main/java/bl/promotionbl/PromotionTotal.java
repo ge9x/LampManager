@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
@@ -88,7 +89,7 @@ public class PromotionTotal extends Promotion{
 				po.getGifts().clear();
 				ArrayList<GoodsItemVO> itemVOs = promotionTotalVO.gifts;
 				for (GoodsItemVO itemVO : itemVOs) {
-                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getGifts().add(itemPO);
                 }
 				return promotionDataService.updatePT(po);
@@ -100,7 +101,7 @@ public class PromotionTotal extends Promotion{
 	public PromotionTotalVO poTOvo(PromotionTotalPO promotionTotalPO){
 		ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 		for(GoodsItemPO po:promotionTotalPO.getGifts()){
-			gifts.add(Purchase.poTovo(po));
+			gifts.add(GoodsItem.poTovo(po));
 		}
 		return new PromotionTotalVO(promotionTotalPO.getPromotionName(), promotionTotalPO.getPromotionID(), promotionTotalPO.getStartDate(),
 				promotionTotalPO.getEndDate(), promotionTotalPO.getVoucher(), gifts, promotionTotalPO.getTotalPrice());
@@ -109,7 +110,7 @@ public class PromotionTotal extends Promotion{
 	public PromotionTotalPO voTOpo(PromotionTotalVO promotionTotalVO){
 		ArrayList<GoodsItemPO> gifts = new ArrayList<>();
 		for(GoodsItemVO vo:promotionTotalVO.gifts){
-			gifts.add(Purchase.voTopo(vo));
+			gifts.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionTotalPO(promotionTotalVO.promotionName, promotionTotalVO.startDate, promotionTotalVO.endDate, 
 				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice);
