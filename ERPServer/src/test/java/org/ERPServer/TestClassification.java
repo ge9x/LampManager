@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import dataimpl.classificationdataimpl.ClassificationDataServiceImpl;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
+import po.GoodsPO;
 
 public class TestClassification {
 
@@ -30,7 +31,15 @@ public class TestClassification {
 			ArrayList<ClassificationPO> claPOs = claImpl.show();
 			System.out.println("共有" + claPOs.size() + "条商品分类记录：");
 			for(ClassificationPO po : claPOs){
-				System.out.println(po.getID() + " " + po.getName() + " " + po.getGoods());
+				System.out.println(po.getID() + " " + po.getName());
+				System.out.println("\t内含" + po.getGoods().size() + "件商品");
+				for(GoodsPO gpo : po.getGoods()){
+					System.out.println("\t" + gpo.getID() + " " + gpo.getName() + " " + gpo.getModel());
+				}
+				System.out.println("\t共有" + po.getChidren().size() + "个子分类");
+				for(ClassificationPO child : po.getChidren()){
+					System.out.println("\t" + child.getName());
+				}
 			}
 			System.out.println("查询结束");
 		} catch (RemoteException e) {
