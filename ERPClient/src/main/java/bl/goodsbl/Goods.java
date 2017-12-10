@@ -84,8 +84,25 @@ public class Goods {
 		return null;
 	}
 
-	public ResultMessage update(GoodsVO vo) {
-		return null;
+	public ResultMessage update(GoodsVO vo) throws NumberFormatException, RemoteException {
+		GoodsPO toUpdate = goodsDataService.find(Integer.parseInt(vo.ID.substring(2)));
+		if(toUpdate == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			ArrayList<Criterion> criteria = new ArrayList<>();
+			criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
+			criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
+			ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
+			if(!repeated.isEmpty()){
+				return ResultMessage.EXIST;
+			}
+			else{
+				GoodsPO toAdd = voToPO(vo);
+				return goodsDataService.update(toUpdate);
+			}
+		}
+//		return null;
 	}
 
 	public String getNewID(String classificationID) throws RemoteException {

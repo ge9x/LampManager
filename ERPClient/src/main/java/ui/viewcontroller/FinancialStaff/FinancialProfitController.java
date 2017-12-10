@@ -11,11 +11,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import ui.component.DialogFactory;
+import util.ResultMessage;
 import vo.ProfitVO;
 
 import javax.swing.event.ChangeListener;
+import java.io.File;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -121,7 +129,20 @@ public class FinancialProfitController {
                 profitVO.giftExpense,profitVO.totalExpense,profitVO.profit);
     }
     public void clickExportButton(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("导出经营情况表");
+        fileChooser.setInitialFileName("经营情况表"+LocalDate.now().toString());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
+        File f = fileChooser.showSaveDialog(new Stage());
 
+        ArrayList<ProfitVO> profitVOS = new ArrayList<>();
+        profitVOS.add(profitVO);
+        ResultMessage re = formBLService.exportProfit(f.getParent(),f.getName(), profitVOS);
+        if (re == ResultMessage.SUCCESS){
+            Dialog alert = DialogFactory.getInformationAlert();
+            alert.setHeaderText("导出成功");
+            alert.show();
+        }
     }
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;

@@ -57,10 +57,16 @@
             <HBox prefHeight="399.0" prefWidth="764.0" spacing="20.0">
                <children>
                   <ScrollPane fx:id="TreePane" prefHeight="399.0" prefWidth="228.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
                      <padding>
                         <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                      </padding></ScrollPane>
                   <AnchorPane prefHeight="399.0" prefWidth="517.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
                      <children>
                         <ScrollPane fx:id="GoodsPane" layoutX="22.0" layoutY="65.0" prefHeight="320.0" prefWidth="477.0" />
                         <Label layoutX="22.0" layoutY="25.0" prefHeight="32.0" prefWidth="173.0" text="该分类下的所有商品">
