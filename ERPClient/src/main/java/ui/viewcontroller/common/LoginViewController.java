@@ -44,13 +44,8 @@ public class LoginViewController {
 //                case ADMIN:
 //                case FINANCIAL_STAFF: mainUIController.showFinancialStaffView();
 //            }
-<<<<<<< HEAD
-//            mainUIController.setCenter(null);
-//            mainUIController.showInventoryView();
-=======
             mainUIController.setCenter(null);
-            mainUIController.showInventoryView();
->>>>>>> refs/remotes/origin/dev
+//            mainUIController.showInventoryView();
 //            mainUIController.showFinancialStaffView();
             mainUIController.showSalesStaffView();
 //            mainUIController.showGeneralManagerView();

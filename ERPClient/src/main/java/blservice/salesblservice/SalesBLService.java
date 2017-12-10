@@ -72,6 +72,12 @@ public interface SalesBLService {
 	   */
 	  public ResultMessage deletePurchase(PurchaseVO vo);
 	  /**
+	   * 更改进货单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage updatePurchase(PurchaseVO vo);
+	  /**
 	   * 添加商品清单信息
 	   * 
 	   * @param item
@@ -92,6 +98,12 @@ public interface SalesBLService {
 	   * @return
 	   */
 	  public ResultMessage deleteSales(SalesVO vo);
+	  /**
+	   * 更改销售单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage updateSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 

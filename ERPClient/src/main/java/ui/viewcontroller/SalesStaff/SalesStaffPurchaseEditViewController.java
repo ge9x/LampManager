@@ -11,10 +11,6 @@ import com.jfoenix.controls.JFXTextArea;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
-<<<<<<< HEAD
-import bl.salesbl.Purchase;
-=======
->>>>>>> refs/remotes/origin/dev
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;

@@ -314,5 +314,16 @@ public class SalesBLService_Stub implements SalesBLService{
 		return ResultMessage.SUCCESS;
 	}
 
+	@Override
+	public ResultMessage updatePurchase(PurchaseVO vo) {
+		return null;
+	}
+
+	@Override
+	public ResultMessage updateSales(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
