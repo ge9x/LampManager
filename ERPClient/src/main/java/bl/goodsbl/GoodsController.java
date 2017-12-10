@@ -41,35 +41,54 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public GoodsVO showDetails(String ID) {
-//		return goods.showDetails(ID);
+		try {
+			return goods.showDetails(ID);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public ResultMessage add(GoodsVO vo) {
-//		return goods.add(vo);
-		return null;
+		try {
+			return goods.add(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage delete(String ID) {
 		try {
 			return goods.delete(ID);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage update(GoodsVO vo) {
-		return goods.update(vo);
+		try {
+			return goods.update(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public String getNewID(String classificationID) {
-//		return goods.getNewID(classificationID);
-		return null;
+		try {
+			return goods.getNewID(classificationID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public ArrayList<GoodsVO> getAllGoods() {
