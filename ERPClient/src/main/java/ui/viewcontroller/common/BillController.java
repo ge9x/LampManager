@@ -239,4 +239,12 @@ public class BillController {
         this.salesStaffReturnOrderViewController = salesStaffReturnOrderViewController;
     }
 
+    public void setSalesStaffSalesOrderViewController(SalesStaffSalesOrderViewController salesStaffSalesOrderViewController){
+        this.salesStaffSalesOrderViewController = salesStaffSalesOrderViewController;
+    }
+
+    public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
+        this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
+    }
+
 }

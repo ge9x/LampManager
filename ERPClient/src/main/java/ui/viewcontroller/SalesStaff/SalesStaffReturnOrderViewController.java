@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
+import util.ResultMessage;
 import vo.PurchaseVO;
 
 public class SalesStaffReturnOrderViewController {
@@ -123,6 +124,12 @@ public class SalesStaffReturnOrderViewController {
             salesStaffViewController.showReturnOrderEditView(page);
         }catch(IOException e){
             e.printStackTrace();
+        }
+    }
+    public void deleteReturn(PurchaseVO purchaseVO) {
+        ResultMessage re = salesBLService.deletePurchase(purchaseVO);
+        if (re == ResultMessage.SUCCESS){
+            showReturnOrderList();
         }
     }
 }
