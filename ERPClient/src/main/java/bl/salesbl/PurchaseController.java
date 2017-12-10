@@ -184,14 +184,22 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 
 	@Override
 	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.getPurchaseOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.getReturnOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -201,6 +209,18 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 
 	@Override
 	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		return null;
+	}
+
+	@Override
+	public ResultMessage deletePurchase(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage deleteSales(SalesVO vo) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

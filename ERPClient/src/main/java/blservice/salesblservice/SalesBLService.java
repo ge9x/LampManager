@@ -7,7 +7,6 @@ import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
-import vo.GoodsVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
@@ -67,6 +66,12 @@ public interface SalesBLService {
 	   */
 	  public ResultMessage addPurchase(PurchaseVO vo);
 	  /**
+	   * 删除进货单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage deletePurchase(PurchaseVO vo);
+	  /**
 	   * 添加商品清单信息
 	   * 
 	   * @param item
@@ -81,6 +86,12 @@ public interface SalesBLService {
 	   * @author zlk
 	   */
 	  public ResultMessage addSales(SalesVO vo);
+	  /**
+	   * 删除销售单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage deleteSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 
