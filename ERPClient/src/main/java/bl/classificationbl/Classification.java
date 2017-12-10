@@ -73,7 +73,7 @@ public class Classification {
 	/**
 	 * 约定：对商品分类的修改只能修改名字
 	 */
-	public ResultMessage update(ClassificationVO vo) throws RemoteException {
+	public ResultMessage update(ClassificationVO vo) throws NumberFormatException, RemoteException {
 		ClassificationPO toUpdate = classificationDataService.findByID(Integer.parseInt(vo.ID));
 		if(toUpdate == null){
 			return ResultMessage.NOT_EXIST;
