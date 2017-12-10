@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bl.financialbl.AccountBillItem;
+import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
 import po.AccountBillItemPO;
 import po.GoodsItemPO;
@@ -83,7 +84,7 @@ public class PromotionBargain extends Promotion{
 				po.getBargains().clear();
 				ArrayList<GoodsItemVO> itemVOs = promotionBargainVO.bargains;
 				for (GoodsItemVO itemVO : itemVOs) {
-                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getBargains().add(itemPO);
                 }
 				return promotionDataService.updatePB(po);
@@ -96,7 +97,7 @@ public class PromotionBargain extends Promotion{
 	public PromotionBargainPO voTOpo(PromotionBargainVO promotionBargainVO){
 		List<GoodsItemPO> bargains = new ArrayList<>();
 		for(GoodsItemVO vo:promotionBargainVO.bargains){
-			bargains.add(Purchase.voTopo(vo));
+			bargains.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionBargainPO(promotionBargainVO.promotionName, promotionBargainVO.startDate, promotionBargainVO.endDate, PromotionType.BARGAIN_STRATEGY, 
 				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, bargains);
@@ -105,7 +106,7 @@ public class PromotionBargain extends Promotion{
 	public PromotionBargainVO poTOvo (PromotionBargainPO promotionBargainPO){
 		ArrayList<GoodsItemVO> bargains = new ArrayList<>();
 		for(GoodsItemPO po:promotionBargainPO.getBargains()){
-			bargains.add(Purchase.poTovo(po));
+			bargains.add(GoodsItem.poTovo(po));
 		}
 		return new PromotionBargainVO(promotionBargainPO.getPromotionName(), promotionBargainPO.getPromotionID(), promotionBargainPO.getGoodsTotal(),
 				promotionBargainPO.getBargainTotal(), promotionBargainPO.getStartDate(), promotionBargainPO.getEndDate(), bargains);
