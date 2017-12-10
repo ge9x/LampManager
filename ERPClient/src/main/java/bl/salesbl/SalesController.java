@@ -197,12 +197,32 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		try {
+			return sales.getSalesOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		try {
+			return sales.getSalesreturnOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ResultMessage deletePurchase(PurchaseVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+	public ResultMessage deleteSales(SalesVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

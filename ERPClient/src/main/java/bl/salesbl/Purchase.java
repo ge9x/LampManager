@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.jfoenix.controls.JFXPopup.PopupHPosition;
+
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
@@ -282,15 +284,30 @@ public class Purchase {
 		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
 	}
 	
-	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
-		//ArrayList<PurchaseVO> purList=new ArrayList<>();
-		//ArrayList<PurchasePO> 
-		return null;
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) throws RemoteException {
+		ArrayList<PurchaseVO> purvoList=new ArrayList<>();
+		ArrayList<PurchasePO> purrepoList=salesDataService.findPurchaseByState(state);
+		for(PurchasePO po:purrepoList){
+			if(po.getType()==BillType.PURCHASE){
+				purvoList.add(poTovo(po));
+			}
+		}
+		return purvoList;
 	}
 
-	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) throws RemoteException {
+		ArrayList<PurchaseVO> purvoList=new ArrayList<>();
+		ArrayList<PurchasePO> purrepoList=salesDataService.findPurchaseByState(state);
+		for(PurchasePO po:purrepoList){
+			if(po.getType()==BillType.RETURN){
+				purvoList.add(poTovo(po));
+			}
+		}
+		return purvoList;
+	}
+	
+	public ResultMessage deletePurchase(PurchaseVO vo) {
+		return ResultMessage.NULL;
 	}
 	
 }
