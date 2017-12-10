@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import org.apache.poi.hssf.record.chart.AreaRecord;
+
 import blservice.salesblservice.SalesBLService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -254,6 +256,50 @@ public class SalesBLService_Stub implements SalesBLService{
 		customerData.add(c4);
 		customerData.add(c5);
 		return customerData;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
+		ArrayList<PurchaseVO> purList=new ArrayList<>();
+		for(PurchaseVO pur:purchaseBill){
+			if(pur.state==state&&pur.type==BillType.PURCHASE){
+				purList.add(pur);
+			}
+		}
+		return purList;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
+		ArrayList<PurchaseVO> purList=new ArrayList<>();
+		for(PurchaseVO pur:purchaseBill){
+			if(pur.state==state&&pur.type==BillType.RETURN){
+				purList.add(pur);
+			}
+		}
+		return purList;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		ArrayList<SalesVO> salList=new ArrayList<>();
+		for(SalesVO sal:salesBill){
+			if(sal.state==state&&sal.type==BillType.SALES){
+				salList.add(sal);
+			}
+		}
+		return salList;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		ArrayList<SalesVO> salList=new ArrayList<>();
+		for(SalesVO sal:salesBill){
+			if(sal.state==state&&sal.type==BillType.SALES){
+				salList.add(sal);
+			}
+		}
+		return salList;
 	}
 
 	
