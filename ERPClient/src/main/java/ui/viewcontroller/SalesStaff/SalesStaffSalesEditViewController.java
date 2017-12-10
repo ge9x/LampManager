@@ -412,7 +412,12 @@ public class SalesStaffSalesEditViewController {
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         PromotionVO promotionVO = promotions.get(promotion.getSelectionModel().getSelectedIndex());
         SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString(), promotionVO.promotionName);
-        salesBLService.submitSales(salesVO);
+        if(isNew){
+        	salesBLService.submitSales(salesVO);
+        }
+        else{
+        	salesBLService.updateSales(salesVO);
+        }
         salesStaffSalesOrderViewController.showSalesOrderList();
     }
     
