@@ -1,6 +1,7 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bl.classificationbl.ClassificationController;
+import bl.goodsbl.GoodsController;
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.ClassificationBLService_Stub;
@@ -29,7 +30,7 @@ import java.util.Optional;
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
     ClassificationBLService classificationBLService = new ClassificationController();
-    GoodsBLService goodsBLService = new GoodsBLService_Stub();
+    GoodsBLService goodsBLService = new GoodsController();
 
     ArrayList<ClassificationVO> classifications;
     ArrayList<GoodsVO> goods;
@@ -99,6 +100,7 @@ public class InventoryClassificationController {
 
     public void showTree(){
         classifications = classificationBLService.show();
+        treeItems.clear();
         for (ClassificationVO classificationVO:classifications){
             TreeItem<String> treeItem = new TreeItem<>(classificationVO.name);
             treeItem.setExpanded(true);

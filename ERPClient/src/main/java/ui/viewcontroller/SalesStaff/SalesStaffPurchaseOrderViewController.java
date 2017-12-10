@@ -131,11 +131,11 @@ public class SalesStaffPurchaseOrderViewController {
             e.printStackTrace();
         }
     }
-//    public void deleteReceipt(AccountBillVO accountBill) {
-//        ResultMessage re = salesBLService.deleteDraftAccountBill(accountBill.ID);
-//        if (re == ResultMessage.SUCCESS){
-//            showPurchaseOrderList();
-//        }
-//    }
+    public void deleteReceipt(PurchaseVO purchaseVO) {
+        ResultMessage re = salesBLService.deletePurchase(purchaseVO);
+        if (re == ResultMessage.SUCCESS){
+            showPurchaseOrderList();
+        }
+    }
     
 }
