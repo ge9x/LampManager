@@ -13,6 +13,9 @@ import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
 import ui.viewcontroller.SalesStaff.SalesStaffPurchaseOrderViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffReturnOrderViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffSalesOrderViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffSalesReturnOrderViewController;
 import util.BillType;
 import util.Money;
 import vo.*;
@@ -27,6 +30,9 @@ public class BillController {
     FinancialPaymentController financialPaymentController;
     FinancialCashBillController financialCashBillController;
     SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
+    SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
+    SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
+    SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
     InventorySyncController inventorySyncController;
 
     @FXML
@@ -227,6 +233,10 @@ public class BillController {
     }
     public void setSalesStaffPurchaseOrderViewController(SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController){
         this.salesStaffPurchaseOrderViewController = salesStaffPurchaseOrderViewController;
+    }
+
+    public void setSalesStaffReturnOrderViewController(SalesStaffReturnOrderViewController salesStaffReturnOrderViewController){
+        this.salesStaffReturnOrderViewController = salesStaffReturnOrderViewController;
     }
 
 }
