@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import bean.CashBillItemBean;
 import bean.GoodsItemBean;
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.userblservice.UserBLService;
@@ -21,6 +23,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DateCell;
@@ -32,6 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -39,9 +43,13 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
+import util.BillState;
 import util.Money;
+import vo.CashBillItemVO;
+import vo.CashBillVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
+import vo.PurchaseVO;
 
 public class GeneralManagerPromotionBargainAddViewController {
 	
@@ -50,6 +58,8 @@ public class GeneralManagerPromotionBargainAddViewController {
 	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
 	ArrayList<GoodsItemVO> bargains = new ArrayList<>();
+	
+	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -85,6 +95,15 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	@FXML
 	Text username;
+	
+    @FXML
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 	
 	@FXML
 	public void initialize(){
@@ -238,4 +257,67 @@ public class GeneralManagerPromotionBargainAddViewController {
             }
         }
 	}
+	
+    public void setForDetailView(PromotionBargainVO promotionBargainVO){
+    	isNew = false;
+        promotionID.setText(promotionBargainVO.promotionID);
+        promotionName.setText(promotionBargainVO.promotionName);
+        bargainTotal.setText(String.valueOf(promotionBargainVO.bargainTotal));
+        startDate.setValue(LocalDate.parse(promotionBargainVO.startDate));
+        endDate.setValue(LocalDate.parse(promotionBargainVO.endDate));
+        title.setText("特价包促销策略详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false); 
+        promotionName.setEditable(false);
+        bargainTotal.setEditable(false);
+        startDate.setDisable(true);
+        endDate.setDisable(true);
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                generalManagerPromotionViewController.clickReturnButton();
+            }
+        });
+        
+        submitButton.setText("编 辑");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setForEditView();
+            }
+        });
+
+        for (GoodsItemVO goodsItemVO:promotionBargainVO.bargains){
+            bargains.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑特价包促销策略");
+        promotionName.setEditable(true);
+        bargainTotal.setEditable(true);
+        startDate.setDisable(false);
+        endDate.setDisable(false);
+        
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickOKButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
 }

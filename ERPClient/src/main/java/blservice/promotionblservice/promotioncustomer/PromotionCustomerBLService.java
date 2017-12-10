@@ -72,4 +72,8 @@ public interface PromotionCustomerBLService {
 	public ResultMessage submit(PromotionCustomerVO vo);
 	
 	public PromotionCustomerVO findPromotionByID(String promotionID);
+	
+	public ResultMessage deletePromotion(String promotionID);
+	
+	public ResultMessage updatePromotion(PromotionCustomerVO vo);
 }

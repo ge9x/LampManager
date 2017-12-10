@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import bl.financialbl.AccountBillItem;
 import bl.salesbl.Purchase;
+import po.AccountBillItemPO;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import rmi.PromotionRemoteHelper;
 import util.PromotionType;
 import util.ResultMessage;
+import vo.AccountBillItemVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 
@@ -54,6 +57,40 @@ public class PromotionBargain extends Promotion{
 	public PromotionBargainVO findPromotionByID(String promotionID) throws RemoteException{
 		PromotionBargainVO promotionBargainVO = poTOvo(promotionDataService.findPB(promotionID));
 		return promotionBargainVO;
+	}
+	
+	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
+		promotionBargainPOs.clear();
+		promotionBargainPOs = promotionDataService.showPB();
+		for(PromotionBargainPO po:promotionBargainPOs){
+			if(po.getPromotionID().equals(promotionID)){
+				return promotionDataService.deletePB(po);
+			}
+		}
+		return ResultMessage.FAILED;
+	}
+	
+	public ResultMessage updatePromotion(PromotionBargainVO promotionBargainVO) throws RemoteException{
+		promotionBargainPOs.clear();
+		promotionBargainPOs = promotionDataService.showPB();
+		for(PromotionBargainPO po:promotionBargainPOs){
+			if(po.getPromotionID().equals(promotionBargainVO.promotionID)){
+				po.setPromotionName(promotionBargainVO.promotionName);
+				po.setStartDate(promotionBargainVO.startDate);
+				po.setEndDate(promotionBargainVO.endDate);
+				po.setBargainTotal(promotionBargainVO.bargainTotal);
+				po.setGoodsTotal(promotionBargainVO.goodsTotal);
+				po.getBargains().clear();
+				ArrayList<GoodsItemVO> itemVOs = promotionBargainVO.bargains;
+				for (GoodsItemVO itemVO : itemVOs) {
+                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    po.getBargains().add(itemPO);
+                }
+				return promotionDataService.updatePB(po);
+			}
+		}
+		
+		return ResultMessage.FAILED;
 	}
 	
 	public PromotionBargainPO voTOpo(PromotionBargainVO promotionBargainVO){

@@ -110,4 +110,8 @@ public class GeneralManagerViewController {
     public void showBillDetail(Pane pane){
     	mainUIController.setCenter(pane);
     }
+    
+    public void showPromotionDetail(Pane pane){
+    	mainUIController.setCenter(pane);
+    }
 }

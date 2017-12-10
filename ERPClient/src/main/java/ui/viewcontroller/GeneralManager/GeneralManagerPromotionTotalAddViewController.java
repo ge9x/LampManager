@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
@@ -15,6 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DateCell;
@@ -26,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -35,6 +38,7 @@ import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
 import util.Money;
 import vo.GoodsItemVO;
+import vo.PromotionBargainVO;
 import vo.PromotionTotalVO;
 
 public class GeneralManagerPromotionTotalAddViewController {
@@ -43,6 +47,8 @@ public class GeneralManagerPromotionTotalAddViewController {
 	PromotionTotalBLService promotionTotalBLService = new PromotionTotal_Stub();
 	PromotionTotalVO promotionTotal;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
+	
+	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -81,6 +87,15 @@ public class GeneralManagerPromotionTotalAddViewController {
 	
 	@FXML
 	VBox vbox;
+	
+    @FXML
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 	
 	@FXML
 	public void initialize(){
@@ -225,4 +240,70 @@ public class GeneralManagerPromotionTotalAddViewController {
             }
         }
 	}
+	
+    public void setForDetailView(PromotionTotalVO promotionTotalVO){
+    	isNew = false;
+        promotionID.setText(promotionTotalVO.promotionID);
+        promotionName.setText(promotionTotalVO.promotionName);
+        targetPriceField.setText(String.valueOf(promotionTotalVO.totalPrice));
+        voucherField.setText(String.valueOf(promotionTotalVO.voucher));
+        startDate.setValue(LocalDate.parse(promotionTotalVO.startDate));
+        endDate.setValue(LocalDate.parse(promotionTotalVO.endDate));
+        title.setText("进货单详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false); 
+        promotionName.setEditable(false);
+        targetPriceField.setEditable(false);
+        voucherField.setEditable(false);
+        startDate.setDisable(true);
+        endDate.setDisable(true);
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                generalManagerPromotionViewController.clickReturnButton();
+            }
+        });
+        
+        submitButton.setText("编 辑");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setForEditView();
+            }
+        });
+
+        for (GoodsItemVO goodsItemVO:promotionTotalVO.gifts){
+            gifts.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑特价包促销策略");
+        promotionName.setEditable(true);
+        targetPriceField.setEditable(true);
+        voucherField.setEditable(true);
+        startDate.setDisable(false);
+        endDate.setDisable(false);
+        
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickOKButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
 }
