@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
@@ -90,7 +91,7 @@ public class PromotionCustomer extends Promotion{
 				po.getGifts().clear();
 				ArrayList<GoodsItemVO> itemVOs = promotionCustomerVO.gifts;
 				for (GoodsItemVO itemVO : itemVOs) {
-                    GoodsItemPO itemPO = Purchase.voTopo(itemVO);
+                    GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getGifts().add(itemPO);
                 }
 				return promotionDataService.updatePC(po);
@@ -103,7 +104,7 @@ public class PromotionCustomer extends Promotion{
 	public PromotionCustomerVO poTOvo(PromotionCustomerPO promotionCustomerPO){
 		ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 		for(GoodsItemPO po:promotionCustomerPO.getGifts()){
-			gifts.add(Purchase.poTovo(po));
+			gifts.add(GoodsItem.poTovo(po));
 		}
 		return new PromotionCustomerVO(promotionCustomerPO.getPromotionName(), promotionCustomerPO.getPromotionID(), promotionCustomerPO.getStartDate(),
 				promotionCustomerPO.getEndDate(), promotionCustomerPO.getVoucher(), promotionCustomerPO.getAllowance(), gifts, promotionCustomerPO.getLevel());
@@ -112,7 +113,7 @@ public class PromotionCustomer extends Promotion{
 	public PromotionCustomerPO voTOpo(PromotionCustomerVO promotionCustomerVO){
 		ArrayList<GoodsItemPO> gifts = new ArrayList<>();
 		for(GoodsItemVO vo:promotionCustomerVO.gifts){
-			gifts.add(Purchase.voTopo(vo));
+			gifts.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionCustomerPO(promotionCustomerVO.promotionName, promotionCustomerVO.startDate, promotionCustomerVO.endDate, 
 				PromotionType.MEMBER_PROMOTION_STRATEGY, promotionCustomerVO.voucher, promotionCustomerVO.allowance, gifts, 
