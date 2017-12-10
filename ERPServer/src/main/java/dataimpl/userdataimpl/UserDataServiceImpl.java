@@ -31,7 +31,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public UserPO find(String userID) throws RemoteException {
-		return userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
+		return userDataHelper.exactlyQuery("userID", userID);
 	}
 
 	@Override

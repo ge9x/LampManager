@@ -1,5 +1,6 @@
 package dataservice.classificationdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
-public interface ClassificationDataService {
+public interface ClassificationDataService extends Remote{
 	/**
 	 * 得到所有商品分类
 	 * @return 所有商品分类的PO

@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXTextArea;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
+import bl.salesbl.Purchase;
+import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
@@ -58,7 +60,8 @@ public class SalesStaffPurchaseEditViewController {
 	
 	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
 	
-	SalesBLService salesBLService = new SalesController();
+	SalesBLService salesBLService = new PurchaseController();
+	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -109,10 +112,10 @@ public class SalesStaffPurchaseEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = salesBLService.getUserName();
+        String name = salesBLService2.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
-        inventories = salesBLService.getAllInventory();
+        inventories = salesBLService2.getAllInventory();
         
 
         //初始化supplier选择框
