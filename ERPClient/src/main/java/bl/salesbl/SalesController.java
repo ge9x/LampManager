@@ -217,7 +217,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ResultMessage deletePurchase(PurchaseVO vo) {
-		return null;
+		return ResultMessage.NULL;
 	}
 
 	@Override
