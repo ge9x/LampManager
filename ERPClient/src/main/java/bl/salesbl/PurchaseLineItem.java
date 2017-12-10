@@ -1,54 +1,27 @@
 package bl.salesbl;
 
-import java.rmi.RemoteException;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
-
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import bl.customerbl.CustomerController;
 import bl.inventorybl.InventoryController;
-import bl.promotionbl.PromotionBargainController;
-import bl.promotionbl.PromotionCustomerController;
-import bl.promotionbl.PromotionTotalController;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
-import blservice.promotionblservice.PromotionInfo;
 import blservice.userblservice.UserInfo;
-import dataservice.salesdataservice.SalesDataService;
-import po.GoodsItemPO;
-import po.PurchasePO;
-import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.CustomerVO;
-import vo.GoodsItemVO;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 
 public class PurchaseLineItem {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
-	PromotionInfo promotionInfo;
 	UserInfo userInfo;
 	
 	public PurchaseLineItem(){
 		inventoryInfo=new InventoryController();
 		customerInfo=new CustomerController();
-
 		userInfo=new UserController();
-	}
-	
-	public String getNewPurchaseID(){
-		return null;
-	}
-	
-	public String getnewReturnID() {
-		return null;
 	}
     
     public ResultMessage alterInventory(PurchaseVO vo){
@@ -63,8 +36,9 @@ public class PurchaseLineItem {
 		}
 	}
 	
-	public String getUserID() {
-		return userInfo.getCurrentUserID();
+	public String getUserName() {
+		String ID=userInfo.getCurrentUserID();
+		return userInfo.getCurrentUserNameByID(ID);
 	}
 
 	public ArrayList<CustomerVO> getAllSupplier() {

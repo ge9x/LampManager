@@ -15,7 +15,26 @@ import util.ResultMessage;
  */
 
 public interface SalesDataService extends Remote{
-	
+	/**
+	 * 得到新的进货单ID
+	 * @return
+	 */
+	public String getNewPurchaseID() throws RemoteException;
+	/**
+	 * 得到新的进货退货单ID
+	 * @return
+	 */
+	public String getNewReturnID() throws RemoteException;
+	/**
+	 * 得到新的销售单ID
+	 * @return
+	 */
+	public String getNewSalesID() throws RemoteException;
+	/**
+	 * 得到新的销售退货单ID
+	 * @return
+	 */
+	public String getNewSalesReturnID() throws RemoteException;
 	/**
 	 * 通过单据编号查找进货单据
 	 * 

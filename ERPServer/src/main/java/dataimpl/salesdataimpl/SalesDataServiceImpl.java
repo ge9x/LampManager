@@ -1,6 +1,7 @@
 package dataimpl.salesdataimpl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import datahelper.DataHelper;
@@ -184,6 +185,42 @@ public class SalesDataServiceImpl implements SalesDataService{
 	 */
 	private String addHyphen(String date){
 		return date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8);
+	}
+
+	@Override
+	public String getNewPurchaseID() throws RemoteException{
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", BillType.PURCHASE, QueryMode.FULL));
+		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
+		int num = salesDataHelper.multiQuery(criteria).size() + 1;
+		return BillType.PURCHASE.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+	}
+
+	@Override
+	public String getNewReturnID() throws RemoteException{
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", BillType.RETURN, QueryMode.FULL));
+		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
+		int num = salesDataHelper.multiQuery(criteria).size() + 1;
+		return BillType.RETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+	}
+
+	@Override
+	public String getNewSalesID() throws RemoteException{
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", BillType.SALES, QueryMode.FULL));
+		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
+		int num = salesDataHelper.multiQuery(criteria).size() + 1;
+		return BillType.SALES.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+	}
+
+	@Override
+	public String getNewSalesReturnID() throws RemoteException{
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", BillType.SALESRETURN, QueryMode.FULL));
+		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
+		int num = salesDataHelper.multiQuery(criteria).size() + 1;
+		return BillType.SALESRETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
 	}
 	
 }

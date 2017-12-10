@@ -1,6 +1,8 @@
 package bl.salesbl;
 
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,8 +15,11 @@ import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
+import po.SalesPO;
+import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
+import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
@@ -32,16 +37,19 @@ public class Purchase {
 	
 	PurchaseLineItem purchaseLineItem;
 	PurchaseList purchaseList;
-	InventoryInfo inventoryInfo;
-	CustomerInfo customerInfo;
-	PromotionInfo promotionInfo;
-	UserInfo userInfo;
+	GoodsItem goodsItem;
+	//InventoryInfo inventoryInfo;
+	//CustomerInfo customerInfo;
+	//PromotionInfo promotionInfo;
+	//UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
+		goodsItem=new GoodsItem();
+		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 	}
 	
 	public PurchaseVO findPurchaseByID(String ID) throws RemoteException {
@@ -59,6 +67,7 @@ public class Purchase {
 	
 	public ResultMessage updatePurchase(PurchaseVO vo) throws RemoteException {
 		PurchasePO po=salesDataService.findPurchaseByID(vo.ID);
+		po.setState(vo.state);
 		po.setSupplier(vo.supplier);
 		po.setCustomerID(Integer.parseInt(vo.customerID));
 		po.setInventory(vo.inventory);
@@ -66,7 +75,7 @@ public class Purchase {
 		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
 		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			goodsItempoList.add(voTopo(goodsItemvo));
+			goodsItempoList.add(GoodsItem.voTopo(goodsItemvo));
 		}
 		po.setGoodsItemList(goodsItempoList);
 		po.setRemarks(vo.remarks);
@@ -83,25 +92,17 @@ public class Purchase {
 	}
 	
 	//blService
-	
-	public ArrayList<PromotionBargainVO> showBargains() {
-		return null;
-	}
-
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		return null;
-	}
-
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		return null;
-	}
-
 	public ResultMessage addPurchase(PurchaseVO vo) throws NumberFormatException, RemoteException {
-		return salesDataService.addPurchase(voTopo(vo));
+		PurchasePO po=voTopo(vo);
+		List<GoodsItemPO> poList=po.getGoodsItemList();
+		for(GoodsItemPO goodsItemPO:poList){
+			salesDataService.addGoodsItem(goodsItemPO);
+		}
+		return salesDataService.addPurchase(po);
 	}
 
 	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
-		return salesDataService.addGoodsItem(voTopo(item));
+		return goodsItem.addGoodsItem(item);
 	}
 
 	public ResultMessage addSales(SalesVO vo) {
@@ -109,6 +110,7 @@ public class Purchase {
 	}
 
 	public ResultMessage submitPurchase(PurchaseVO pur) throws RemoteException {
+		addPurchase(pur);
 	    PurchasePO po=salesDataService.findPurchaseByID(pur.ID);
 	    po.setState(BillState.SUBMITTED);
 		return salesDataService.updatePurchase(po);
@@ -128,8 +130,8 @@ public class Purchase {
 		return salesDataService.updatePurchase(po);
 	}
 
-	public String getUserID() {
-		return purchaseLineItem.getUserID();
+	public String getUserName() {
+		return purchaseLineItem.getUserName();
 	}
 
 	public ArrayList<CustomerVO> getAllSupplier() {
@@ -167,35 +169,26 @@ public class Purchase {
 			ArrayList<PurchasePO> reList=salesDataService.showReturn();
 			ArrayList<String> dateList=new ArrayList<>();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public ArrayList<String> getPurchaseIDByType(BillType type) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<String> getPurchaseIDByCustomerID(String customerID) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
+		return updatePurchase(vo);
 	}
-
-	public ArrayList<String> getPurchaseIDBySalesman(String salesman) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<String> getPurchaseIDByInventory(String inventory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultMessage examine(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase() throws RemoteException {
+		ArrayList<PurchasePO> purpoList=salesDataService.findPurchaseByState(BillState.SUBMITTED);
+		ArrayList<PurchaseVO> purvoList=new ArrayList<>();
+		for(PurchasePO po:purpoList){
+			purvoList.add(poTovo(po));
+		}
+		return purvoList;
 	}
 	
 	//purchaseList
@@ -207,17 +200,14 @@ public class Purchase {
 		return purchaseList.showReturn();
 	}
 
-	//purchaseLineItem
-	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getnewPurchaseID() throws RemoteException {
+		return salesDataService.getNewPurchaseID();
 	}
 
-	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getnewReturnID() throws RemoteException {
+		return salesDataService.getNewReturnID();
 	}
-	
+
     private static int getnewPurchaseTurn() throws RemoteException{
     	int turn=0;
     	ArrayList<PurchasePO> purList=salesDataService.showPurchase();
@@ -246,19 +236,36 @@ public class Purchase {
 		return turn+1;
     }
     
-    public static GoodsItemPO voTopo(GoodsItemVO vo){
-    	return new GoodsItemPO(vo.ID,vo.goodsName,vo.model,vo.number,vo.price,vo.remarks);
-    }
+    public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate) throws ParseException {
+		try {
+			ArrayList<PurchasePO> purpoList=salesDataService.showPurchase();
+			ArrayList<PurchasePO> repoList=salesDataService.showReturn();
+			purpoList.addAll(repoList);
+			ArrayList<PurchaseVO> purvoList=new ArrayList<>();
+			for(PurchasePO po:purpoList){
+				Date date=stringToDate(po.getDate());
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+					purvoList.add(poTovo(po));
+				}
+			}
+			return purvoList;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
     
-    public static GoodsItemVO poTovo(GoodsItemPO po){
-    	return new GoodsItemVO(po.getGoodsID(), po.getGoodsName(), po.getModel(), po.getNumber(), po.getPrice(), po.getRemarks());
-    }
+    private static Date stringToDate(String date) throws ParseException{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date time=dateFormat.parse(date);
+		return time;
+	}
 	
 	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
 		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
 		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			goodsItempoList.add(voTopo(goodsItemvo));
+			goodsItempoList.add(GoodsItem.voTopo(goodsItemvo));
 		}
 		if(vo.type==BillType.PURCHASE){
 			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getnewPurchaseTurn());
@@ -271,8 +278,19 @@ public class Purchase {
 		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
 		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
 		for(GoodsItemPO goodsItempo:goodsItempoList){
-			goodsItemvoList.add(poTovo(goodsItempo));
+			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
 		}
 		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
 	}
+	
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
