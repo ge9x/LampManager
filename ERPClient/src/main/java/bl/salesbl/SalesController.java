@@ -217,26 +217,32 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ResultMessage deletePurchase(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		return ResultMessage.NULL;
 	}
 
 	@Override
 	public ResultMessage deleteSales(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return sales.deleteSales(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage updatePurchase(PurchaseVO vo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ResultMessage updateSales(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return sales.updateSales(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 	
 	

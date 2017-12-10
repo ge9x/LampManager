@@ -3,6 +3,7 @@ package dataimpl.salesdataimpl;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
@@ -112,10 +113,18 @@ public class SalesDataServiceImpl implements SalesDataService{
 	}
 
 	public ResultMessage addPurchase(PurchasePO po) throws RemoteException {
+	    List<GoodsItemPO> goodsItemPOs=po.getGoodsItemList();
+	    for(GoodsItemPO goodsItemPO:goodsItemPOs){
+	    	addGoodsItem(goodsItemPO);
+	    }
 		return purchaseDataHelper.save(po);
 	}
 
 	public ResultMessage addSales(SalesPO po) throws RemoteException {
+		List<GoodsItemPO> goodsItemPOs=po.getGoodsItemList();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			addGoodsItem(goodsItemPO);
+		}
 		return salesDataHelper.save(po);
 	}
 
