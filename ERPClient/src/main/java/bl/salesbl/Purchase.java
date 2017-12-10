@@ -93,12 +93,11 @@ public class Purchase {
 	
 	//blService
 	public ResultMessage addPurchase(PurchaseVO vo) throws NumberFormatException, RemoteException {
-		PurchasePO po=voTopo(vo);
-		List<GoodsItemPO> poList=po.getGoodsItemList();
-		for(GoodsItemPO goodsItemPO:poList){
-			salesDataService.addGoodsItem(goodsItemPO);
+		ArrayList<GoodsItemVO> goodsItemVOs=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsItemVOs){
+			salesDataService.addGoodsItem(GoodsItem.voTopo(goodsItemVO));
 		}
-		return salesDataService.addPurchase(po);
+		return salesDataService.addPurchase(voTopo(vo));
 	}
 
 	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
@@ -284,6 +283,8 @@ public class Purchase {
 	}
 	
 	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
+		//ArrayList<PurchaseVO> purList=new ArrayList<>();
+		//ArrayList<PurchasePO> 
 		return null;
 	}
 
