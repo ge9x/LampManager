@@ -126,7 +126,7 @@ public class Classification {
 	 * 默认尚未包含商品
 	 */
 	private ClassificationPO voToPO(ClassificationVO vo) throws NumberFormatException, RemoteException {
-		ClassificationPO father  = classificationDataService.findByID(Integer.parseInt(vo.ID));
+		ClassificationPO father  = classificationDataService.findByID(Integer.parseInt(vo.father.ID));
 		ArrayList<ClassificationPO> chidren = new ArrayList<>();	// 添加商品分类时默认尚未包含子商品分类，故为空
 		ArrayList<GoodsPO> goods = new ArrayList<>();	// 添加商品分类时默认尚未包含商品，故为空
 		ClassificationPO ret = new ClassificationPO(vo.name, father, chidren, goods);
