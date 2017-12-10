@@ -284,7 +284,6 @@ public class Purchase {
 	}
 	
 	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

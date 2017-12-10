@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.naming.spi.DirStateFactory.Result;
 
+import org.apache.poi.hssf.record.chart.AreaRecord;
+
 import blservice.salesblservice.SalesBLService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -127,13 +129,13 @@ public class SalesBLService_Stub implements SalesBLService{
 		return getBargains;
 	}
 
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
 		ArrayList<PromotionCustomerVO> getCustomers=new ArrayList<PromotionCustomerVO>();
 		getCustomers.add(new PromotionCustomerVO("会员促销策略","00002", LocalDate.now().toString(), LocalDate.now().toString(), 500.0, 300.0, new ArrayList<GoodsItemVO>(), util.Level.LEVEL_ONE));
 		return getCustomers;
 	} 
 
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
 		ArrayList<PromotionTotalVO> getTotal=new ArrayList<PromotionTotalVO>();
 		getTotal.add(new PromotionTotalVO("总价促销策略","00001", LocalDate.now().toString(), LocalDate.now().toString(), 455.0, new ArrayList<GoodsItemVO>(), 700.0));
 		return getTotal;
@@ -255,5 +257,50 @@ public class SalesBLService_Stub implements SalesBLService{
 		customerData.add(c5);
 		return customerData;
 	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
+		ArrayList<PurchaseVO> purList=new ArrayList<>();
+		for(PurchaseVO pur:purchaseBill){
+			if(pur.state==state&&pur.type==BillType.PURCHASE){
+				purList.add(pur);
+			}
+		}
+		return purList;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
+		ArrayList<PurchaseVO> purList=new ArrayList<>();
+		for(PurchaseVO pur:purchaseBill){
+			if(pur.state==state&&pur.type==BillType.RETURN){
+				purList.add(pur);
+			}
+		}
+		return purList;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		ArrayList<SalesVO> salList=new ArrayList<>();
+		for(SalesVO sal:salesBill){
+			if(sal.state==state&&sal.type==BillType.SALES){
+				salList.add(sal);
+			}
+		}
+		return salList;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		ArrayList<SalesVO> salList=new ArrayList<>();
+		for(SalesVO sal:salesBill){
+			if(sal.state==state&&sal.type==BillType.SALES){
+				salList.add(sal);
+			}
+		}
+		return salList;
+	}
+
 	
 }
