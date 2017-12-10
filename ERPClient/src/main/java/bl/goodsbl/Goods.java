@@ -73,7 +73,9 @@ public class Goods {
 		}
 	}
 
-	public ResultMessage delete(String ID) {
+	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
+		GoodsPO found = goodsDataService.find(Integer.parseInt(ID.substring(2)));
+		
 		return null;
 	}
 

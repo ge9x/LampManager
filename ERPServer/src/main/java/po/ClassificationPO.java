@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Created on 2017/10/21
  * @author 巽
@@ -90,8 +93,9 @@ public class ClassificationPO implements Serializable {
 		this.father = father;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "claid")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<ClassificationPO> getChidren() {
 		return chidren;
 	}
@@ -102,6 +106,7 @@ public class ClassificationPO implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "claid")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<GoodsPO> getGoods() {
 		return goods;
 	}
