@@ -29,6 +29,8 @@ public class ClassificationVO {
 	 */
 	public ArrayList<GoodsVO> goods;
 	
+	public ClassificationVO(){ }
+	
 	public ClassificationVO(String ID, String name, ClassificationVO father, ArrayList<ClassificationVO> chidren,
 			ArrayList<GoodsVO> goods) {
 		super();

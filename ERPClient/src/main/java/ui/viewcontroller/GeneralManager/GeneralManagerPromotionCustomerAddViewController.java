@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
@@ -16,6 +17,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DateCell;
@@ -27,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -37,6 +40,7 @@ import ui.component.GoodsTable.GoodsBean;
 import util.Level;
 import util.Money;
 import vo.GoodsItemVO;
+import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 
 public class GeneralManagerPromotionCustomerAddViewController {
@@ -45,6 +49,8 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomer_Stub();
 	PromotionCustomerVO promotionCustomer;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
+	
+	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -86,6 +92,15 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	
 	@FXML
 	VBox vbox;
+	
+    @FXML
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
 	
 	public void initialize(){
 		deleteIcon.setText("\ue606");
@@ -251,4 +266,73 @@ public class GeneralManagerPromotionCustomerAddViewController {
             }
         }
 	}
+	
+    public void setForDetailView(PromotionCustomerVO promotionCustomerVO){
+    	isNew = false;
+        promotionID.setText(promotionCustomerVO.promotionID);
+        promotionName.setText(promotionCustomerVO.promotionName);
+        customerLevel.getSelectionModel().select(promotionCustomerVO.level.getValue());
+        voucherField.setText(String.valueOf(promotionCustomerVO.voucher));
+        allowanceField.setText(String.valueOf(promotionCustomerVO.allowance));
+        startDate.setValue(LocalDate.parse(promotionCustomerVO.startDate));
+        endDate.setValue(LocalDate.parse(promotionCustomerVO.endDate));
+        title.setText("进货单详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false); 
+        promotionName.setEditable(false);
+        customerLevel.setDisable(true);
+        voucherField.setEditable(false);
+        allowanceField.setEditable(false);
+        startDate.setDisable(true);
+        endDate.setDisable(true);
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                generalManagerPromotionViewController.clickReturnButton();
+            }
+        });
+        
+        submitButton.setText("编 辑");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setForEditView();
+            }
+        });
+
+        for (GoodsItemVO goodsItemVO:promotionCustomerVO.gifts){
+            gifts.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑会员促销策略");
+        promotionName.setEditable(true);
+        customerLevel.setDisable(false);
+        voucherField.setEditable(true);
+        allowanceField.setEditable(true);
+        startDate.setDisable(false);
+        endDate.setDisable(false);
+        
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickOKButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
 }

@@ -82,4 +82,16 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		}
 	}
 
+	@Override
+	public ResultMessage deletePromotion(String promotionID) {
+		// TODO Auto-generated method stub
+		return ResultMessage.SUCCESS;
+	}
+
+	@Override
+	public ResultMessage updatePromotion(PromotionCustomerVO vo) {
+		// TODO Auto-generated method stub
+		return ResultMessage.SUCCESS;
+	}
+
 }

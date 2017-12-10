@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bean.SalesDetailsBean;
+import bl.formbl.FormController;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
 import blstubdriver.FormBLService_Stub;
@@ -12,10 +13,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import ui.component.DialogFactory;
+import util.FilterType;
 import util.ResultMessage;
 import vo.SalesDetailVO;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,6 +31,7 @@ import java.util.ArrayList;
 public class FinancialSalesDetailsController {
     FinancialViewController financialViewController;
     FormBLService formBLService = new FormBLService_Stub();
+    FormBLService formBLService2 = new FormController();
     ArrayList<SalesDetailVO> salesDetails = new ArrayList<>();
 
     TableView<SalesDetailsBean> table = new TableView<SalesDetailsBean>();
@@ -104,7 +111,13 @@ public class FinancialSalesDetailsController {
     }
 
     public void clickExportButton(){
-        ResultMessage re = formBLService.exportSalesDetails(salesDetails);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("导出销售明细表");
+        fileChooser.setInitialFileName("销售明细表"+LocalDate.now().toString());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
+        File f = fileChooser.showSaveDialog(new Stage());
+
+        ResultMessage re = formBLService2.exportSalesDetails(f.getParent(),f.getName(),salesDetails);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
             alert.setHeaderText("导出成功");
@@ -118,14 +131,15 @@ public class FinancialSalesDetailsController {
             filters = "";
         }
         String searchInput = Search.getText();
-        SalesDetailsInput input = new SalesDetailsInput(StartDate.getValue(),EndDate.getValue(),null,null,null,null);
-        switch(filters){
-            case "商品名": input.goodName = searchInput;break;
-            case "客户": input.customerNam = searchInput;break;
-            case "业务员": input.salesman = searchInput;break;
-            case "仓库": input.inventory = searchInput;break;
+        SalesDetailsInput input = new SalesDetailsInput(StartDate.getValue().toString(),EndDate.getValue().toString(),searchInput,null);
+        switch (filters){
+            case "商品名": input.filterType = FilterType.GOODS;break;
+            case "客户": input.filterType = FilterType.CUSTOMER;break;
+            case "业务员": input.filterType = FilterType.SALESMAN;break;
+            case "仓库": input.filterType = FilterType.INVENTORY;break;
+            default: input.filterType = null;
         }
-        salesDetails = formBLService.getSalesDetails(input);
+        salesDetails = formBLService2.getSalesDetails(input);
 
         data.clear();
         for (SalesDetailVO vo : salesDetails){

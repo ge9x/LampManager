@@ -9,12 +9,12 @@ public class ProfitVO {
     /**
      * 开始时间
      */
-    public Date startDate;
+    public String startDate;
 
     /**
      * 结束时间
      */
-    public Date endDate;
+    public String endDate;
 
     /**
      * 销售收入
@@ -76,7 +76,7 @@ public class ProfitVO {
      */
     public double profit;
 
-    public ProfitVO(Date startDate, Date endDate, double salesIncome, double overflowIncome, double costAdjIncome, double buyAndReturnIncome, double voucherIncome, double totalIncome, double allowance, double salescost, double lossExpense, double giftExpense, double totalExpense, double profit) {
+    public ProfitVO(String startDate, String endDate, double salesIncome, double overflowIncome, double costAdjIncome, double buyAndReturnIncome, double voucherIncome, double totalIncome, double allowance, double salescost, double lossExpense, double giftExpense, double totalExpense, double profit) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.salesIncome = salesIncome;

@@ -11,7 +11,10 @@ import com.jfoenix.controls.JFXTextArea;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
+<<<<<<< HEAD
 import bl.salesbl.Purchase;
+=======
+>>>>>>> refs/remotes/origin/dev
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
@@ -282,7 +285,7 @@ public class SalesStaffPurchaseEditViewController {
     	}
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
+        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, salesBLService2.getUserName(), inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
         salesBLService.submitPurchase(purchaseVO);
         salesStaffPurchaseOrderViewController.showPurchaseOrderList();
     }

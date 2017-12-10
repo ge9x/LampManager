@@ -83,4 +83,28 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 		}
 	}
 
+	@Override
+	public ResultMessage deletePromotion(String promotionID) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionBargain.deletePromotion(promotionID);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
+	}
+
+	@Override
+	public ResultMessage updatePromotion(PromotionBargainVO vo) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionBargain.updatePromotion(vo);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
+	}
+
 }

@@ -2,5 +2,8 @@
 <project version="4">
   <component name="ExcludeFromValidation">
     <file url="file://$PROJECT_DIR$/ERPServer/src/test/java/org/ERPServer/TestFinance.java" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/ui/viewcontroller/SalesStaff/SalesStaffSalesEditViewController.java" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/ui/viewcontroller/GeneralManager/GeneralManagerExaminationCellController.java" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/promotionbl/MockPromotionBargain.java" />
   </component>
 </project>

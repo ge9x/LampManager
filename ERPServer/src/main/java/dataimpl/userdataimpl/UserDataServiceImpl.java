@@ -41,7 +41,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public ResultMessage delete(String userID) throws RemoteException {
-		UserPO po = userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
+		UserPO po = userDataHelper.exactlyQuery("userID", userID);
 		return userDataHelper.delete(po);
 	}
 
@@ -57,7 +57,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public ResultMessage login(String userID, String password) throws RemoteException {
-		UserPO po = userDataHelper.exactlyQuery("userID", Integer.parseInt(userID));
+		UserPO po = userDataHelper.exactlyQuery("userID", userID);
 		if(po == null){
 			return ResultMessage.NOT_EXIST;
 		}
@@ -81,19 +81,7 @@ public class UserDataServiceImpl implements UserDataService{
 
 	@Override
 	public ArrayList<UserPO> findUsersByID(String userID) throws RemoteException {
-		if(!userID.isEmpty() && userID.charAt(0) == '0'){	// 对于输入“002”的情况：自己数……
-			ArrayList<UserPO> all = show();
-			ArrayList<UserPO> ret = new ArrayList<>();
-			for(UserPO po : all){
-				if(String.format("%05d", po.getUserID()).contains(userID)){
-					ret.add(po);
-				}
-			}
-			return ret;
-		}
-		else{
-			return userDataHelper.fuzzyQuery("id", userID);
-		}
+		return userDataHelper.fuzzyQuery("userID", userID);
 	}
 
 }

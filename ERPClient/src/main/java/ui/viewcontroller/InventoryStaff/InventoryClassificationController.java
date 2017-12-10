@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.classificationbl.ClassificationController;
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.ClassificationBLService_Stub;
@@ -27,7 +28,7 @@ import java.util.Optional;
  */
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
-    ClassificationBLService classificationBLService = new ClassificationBLService_Stub();
+    ClassificationBLService classificationBLService = new ClassificationController();
     GoodsBLService goodsBLService = new GoodsBLService_Stub();
 
     ArrayList<ClassificationVO> classifications;
@@ -118,11 +119,13 @@ public class InventoryClassificationController {
     }
     public void showGoods(String classificationID){
         goodsData.clear();
-        goods = classificationBLService.showDetails(classificationID).goods;
-        if (goods == null)
+        if (classificationBLService.showDetails(classificationID).goods == null) {
             return;
-        for (GoodsVO good : goods){
-            goodsData.add(new GoodsBean(good.ID,good.name,good.amount,good.recentBuyingPrice,good.recentRetailPrice,good.retailPrice,good.buyingPrice));
+        }else{
+            goods = classificationBLService.showDetails(classificationID).goods;
+            for (GoodsVO good : goods){
+                goodsData.add(new GoodsBean(good.ID,good.name,good.amount,good.recentBuyingPrice,good.recentRetailPrice,good.retailPrice,good.buyingPrice));
+            }
         }
     }
 

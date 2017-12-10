@@ -51,7 +51,16 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	public ResultMessage delete(String ID) {
-		return goods.delete(ID);
+		try {
+			return goods.delete(ID);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage update(GoodsVO vo) {

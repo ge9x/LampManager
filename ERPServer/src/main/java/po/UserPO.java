@@ -26,8 +26,9 @@ public class UserPO implements Serializable {
 	
 	public UserPO(){ }
 	
-	public UserPO(String password, String name, UserPosition position, UserLimits limit) {
+	public UserPO(String userID, String password, String name, UserPosition position, UserLimits limit) {
 		super();
+		this.userID = userID;
 		this.password = password;
 		this.name = name;
 		this.position = position;

@@ -1,5 +1,6 @@
 package bl.formbl;
 
+import bean.SalesDetailsBean;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
@@ -19,12 +20,16 @@ import java.util.Formattable;
 public class FormController implements FormBLService{
     Form form;
 
+    public FormController(){
+        form = new Form();
+    }
+
     public BillVO findByID(String ID) {
         return null;
     }
 
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return null;
+        return form.getSalesDetails(input);
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
@@ -40,15 +45,15 @@ public class FormController implements FormBLService{
     }
 
     public ProfitVO getProfit(String startDate,String endDate) {
-        return null;
+        return form.getProfit(startDate,endDate);
     }
     public String getStartDate(){
-       return null;
+        return form.getStartDate();
     }
 
     @Override
-    public ResultMessage exportSalesDetails(ArrayList<SalesDetailVO> vos) {
-        return null;
+    public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
+        return form.exportSalesDetails(filePath,filename,salesDetailVOS);
     }
 
     @Override

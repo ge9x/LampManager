@@ -57,7 +57,7 @@ public class Classification {
 		}
 	}
 
-	public ResultMessage delete(String ID) throws RemoteException {
+	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
 		ClassificationPO found = classificationDataService.findByID(Integer.parseInt(ID));
 		if(found == null){
 			return ResultMessage.NOT_EXIST;
@@ -70,12 +70,14 @@ public class Classification {
 		}
 	}
 
-	public ResultMessage update(ClassificationVO vo) throws RemoteException {
+	/**
+	 * 约定：对商品分类的修改只能修改名字
+	 */
+	public ResultMessage update(ClassificationVO vo) throws NumberFormatException, RemoteException {
 		ClassificationPO toUpdate = classificationDataService.findByID(Integer.parseInt(vo.ID));
 		if(toUpdate == null){
 			return ResultMessage.NOT_EXIST;
 		}
-		// 改名
 		ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
 		if(repeated.size() > 0){	// 重名
 			return ResultMessage.EXIST;
@@ -97,10 +99,16 @@ public class Classification {
 		}
 		else{
 			String ID = String.format("%02d", po.getID());
-			ClassificationVO father = poToVO(po.getFather());
+			ClassificationVO father = null;
+			if(po.getFather() != null){
+				father = new ClassificationVO();
+				father.name = po.getFather().getName();
+			}
 			ArrayList<ClassificationVO> chidren = new ArrayList<>();
-			for(ClassificationPO child : po.getChidren()){
-				chidren.add(poToVO(child));
+			for(ClassificationPO toAdd : po.getChidren()){
+				ClassificationVO child = new ClassificationVO();
+				child.name = toAdd.getName();
+				chidren.add(child);
 			}
 			ArrayList<GoodsVO> goods = new ArrayList<>();
 			for(GoodsPO aGoods : po.getGoods()){
