@@ -204,4 +204,8 @@ public class Sales {
 		return salvoList;
 	}
 	
+	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
+		return salesDataService.deletePurchase(vo.ID);
+	}
+
 }

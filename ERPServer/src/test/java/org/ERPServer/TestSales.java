@@ -22,13 +22,13 @@ public class TestSales {
 	        
 			GoodsItemPO gi1=new GoodsItemPO("5", "霓虹灯","大", 20, 35.0,
 					"耐用");
-			salesImpl.addGoodsItem(gi1);
+			//salesImpl.addGoodsItem(gi1);
 			GoodsItemPO gi2=new GoodsItemPO("6", "挂灯","小", 10, 35.0,
 					"好看");
-			salesImpl.addGoodsItem(gi2);
+			//salesImpl.addGoodsItem(gi2);
 			GoodsItemPO gi3=new GoodsItemPO("7", "挂灯","小", 10, 35.0,
 					"好看");
-			salesImpl.addGoodsItem(gi3);
+			//salesImpl.addGoodsItem(gi3);
 			
 			
 			List<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
@@ -44,6 +44,7 @@ public class TestSales {
 				"默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1,"PC-1");
 			SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-12-2",2,"PB-1");
 			salesImpl.addPurchase(pur);
+			System.out.println(pur.getGoodsItemList().size());
 			salesImpl.addSales(sal);
 			salesImpl.addSales(s2);
 		    

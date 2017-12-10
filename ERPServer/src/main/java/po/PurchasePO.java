@@ -2,6 +2,7 @@ package po;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -155,7 +156,7 @@ public class PurchasePO extends BillPO{
 		this.user = user;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(cascade= {CascadeType.REFRESH,CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.MERGE},fetch=FetchType.EAGER)
 	@JoinColumn(name = "purchase")   
 	public List<GoodsItemPO> getGoodsItemList() {
 		return goodsItemList;
