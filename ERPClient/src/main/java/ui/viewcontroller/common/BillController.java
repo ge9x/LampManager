@@ -12,6 +12,7 @@ import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
 import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
+import ui.viewcontroller.SalesStaff.SalesStaffPurchaseOrderViewController;
 import util.BillType;
 import util.Money;
 import vo.*;
@@ -25,6 +26,7 @@ public class BillController {
     FinancialReceiptController financialReceiptController;
     FinancialPaymentController financialPaymentController;
     FinancialCashBillController financialCashBillController;
+    SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
     InventorySyncController inventorySyncController;
 
     @FXML
@@ -222,6 +224,9 @@ public class BillController {
     }
     public void setInventorySyncController(InventorySyncController inventorySyncController){
         this.inventorySyncController = inventorySyncController;
+    }
+    public void setSalesStaffPurchaseOrderViewController(SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController){
+        this.salesStaffPurchaseOrderViewController = salesStaffPurchaseOrderViewController;
     }
 
 }
