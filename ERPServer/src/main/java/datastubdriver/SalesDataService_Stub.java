@@ -185,8 +185,27 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	@Override
 	public ArrayList<SalesPO> findSlaesByState(BillState state) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return salesBill;
+	}
+
+	@Override
+	public String getNewPurchaseID() throws RemoteException{
+		return "JHD-20171201-00001";
+	}
+
+	@Override
+	public String getNewReturnID() throws RemoteException{
+		return "JHTHD-20171201-00001";
+	}
+
+	@Override
+	public String getNewSalesID() throws RemoteException{
+		return "XSD-20171201-00001";
+	}
+
+	@Override
+	public String getNewSalesReturnID() throws RemoteException{
+		return "XSTHD-20171201-00001";
 	}
 
 }

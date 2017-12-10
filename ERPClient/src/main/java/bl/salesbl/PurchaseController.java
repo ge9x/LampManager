@@ -1,10 +1,14 @@
 package bl.salesbl;
 
+import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
+import util.BillState;
 import util.BillType;
+import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
@@ -26,161 +30,178 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	}
 
 	@Override
-	public ArrayList<String> getAllPurchaseDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-    @Override
-    public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate) {
-        return null;
-    }
-
-	@Override
-	public ArrayList<String> getPurchaseIDByType(BillType type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByCustomerID(String customerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDBySalesman(String salesman) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<String> getPurchaseIDByInventory(String inventory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ResultMessage examine(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.updatePurchase(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ArrayList<PurchaseVO> getAllSubmittedPurchase() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.getAllSubmittedPurchase();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-
+//blservice
 	@Override
 	public ArrayList<PromotionBargainVO> showBargains() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		// TODO Auto-generated method stub
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
 		return null;
 	}
 
 	@Override
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		// TODO Auto-generated method stub
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
 		return null;
 	}
 
 	@Override
 	public ResultMessage addPurchase(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.addPurchase(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage addGoodsItem(GoodsItemVO item) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.addGoodsItem(item);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage addSales(SalesVO vo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ResultMessage submitPurchase(PurchaseVO pur) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.submitPurchase(pur);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage submitSales(SalesVO sal) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ResultMessage saveSales(SalesVO bill) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ResultMessage savePurchase(PurchaseVO bill) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.savePurchase(bill);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public String getUserName() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchase.getUserName();
 	}
 
 	@Override
 	public ArrayList<CustomerVO> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchase.getAllSupplier();
 	}
 
 	@Override
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchase.getAllInventory();
 	}
 
 	@Override
 	public ArrayList<CustomerVO> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+		return purchase.getAllCustomer();
 	}
 
 	@Override
 	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.getnewPurchaseID();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.getnewReturnID();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public String getnewSalesID() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getnewSalesReturnID() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate){
+		try {
+			return purchase.getPurchaseByDate(startDate, endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Override
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		return null;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		return null;
+	}
 	
 }

@@ -16,7 +16,9 @@ import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
+import util.Level;
 import util.ResultMessage;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -29,11 +31,15 @@ import vo.SalesVO;
  */
 
 public class Sales {
-	private SalesVO vo;
 	private SalesDataService salesDataService;
+	
+	SalesLineItem salesLineItem;
+	GoodsItem goodsItem;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
+		salesLineItem=new SalesLineItem();
+		goodsItem=new GoodsItem();
 	}
 	
 	
@@ -45,12 +51,29 @@ public class Sales {
 		return null;
 	}
 	
-	public ResultMessage addSales(SalesVO vo){
-		return null;
+	public ResultMessage addSales(SalesVO vo) throws RemoteException{
+		return salesDataService.addSales(voTopo(vo));
 	}
 	
-	public ResultMessage updateSales(SalesVO vo){
-		return null;
+	public ResultMessage updateSales(SalesVO vo) throws RemoteException{
+		SalesPO po=salesDataService.findSlaesByID(vo.ID);
+		po.setState(vo.state);
+		po.setCustomer(vo.customer);
+		po.setCustomerID(Integer.parseInt(vo.customerID));
+		po.setSalesman(vo.salesman);
+		po.setUser(vo.user);
+		po.setInventory(vo.inventory);
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		ArrayList<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodItemvo:goodsItemvoList){
+			goodsItempoList.add(GoodsItem.voTopo(goodItemvo));
+		}
+		po.setGoodsItemList(goodsItempoList);
+		po.setAllowance(vo.allowance);
+		po.setVoucher(vo.voucher);
+		po.setRemarks(vo.remarks);
+		po.setPromotionName(vo.promotionName);
+		return salesDataService.updateSales(po);
 	}
 	
 	public ResultMessage deleteSales(String ID) {
@@ -78,11 +101,68 @@ public class Sales {
 		
 	}
 	
-	public ResultMessage submitSales(SalesVO vo){
-		return null;
+	public ResultMessage examine(SalesVO vo) throws RemoteException {
+		return updateSales(vo);
 	}
 	
-	public static Date stringToDate(String date) throws ParseException{
+	public ArrayList<SalesVO> getAllSubmittedSales() throws RemoteException {
+		ArrayList<SalesPO> poList=salesDataService.findSlaesByState(BillState.SUBMITTED);
+		ArrayList<SalesVO> voList=new ArrayList<>();
+		for(SalesPO po:poList){
+			voList.add(poTovo(po));
+		}
+		return voList;
+	}
+	
+	public ArrayList<PromotionBargainVO> showBargains() {
+		return salesLineItem.showBargains();
+	}
+
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
+		return salesLineItem.getFitPromotionCustomer(level);
+	}
+
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
+		return salesLineItem.getFitPromotionTotal(total);
+	}
+	
+	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
+		return goodsItem.addGoodsItem(item);
+	}
+	
+	public ResultMessage submitSales(SalesVO vo) throws RemoteException{
+		SalesPO po=salesDataService.findSlaesByID(vo.ID);
+		po.setState(BillState.SUBMITTED);
+		return salesDataService.updateSales(po);
+	}
+	
+	public ResultMessage saveSales(SalesVO bill) throws RemoteException {
+		SalesPO po=salesDataService.findSlaesByID(bill.ID);
+		po.setState(BillState.DRAFT);
+		return salesDataService.updateSales(po);
+	}
+	
+	public String getUserName() {
+		return salesLineItem.getUserName();
+	}
+	
+	public ArrayList<CustomerVO> getAllSupplier() {
+		return salesLineItem.getAllSupplier();
+	}
+	
+	public ArrayList<CustomerVO> getAllCustomer() {
+		return salesLineItem.getAllCustomer();
+	}
+	
+	public String getnewSalesID() throws RemoteException {
+		return salesDataService.getNewSalesID();
+	}
+	
+	public String getnewSalesReturnID() throws RemoteException {
+		return salesDataService.getNewSalesReturnID();
+	}
+	
+	private static Date stringToDate(String date) throws ParseException{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date time=dateFormat.parse(date);
 		return time;
@@ -96,9 +176,19 @@ public class Sales {
 		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
 		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
 		for(GoodsItemPO goodsItempo:goodsItempoList){
-			goodsItemvoList.add(Purchase.poTovo(goodsItempo));
+			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
 		}
 		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
+	}
+	
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

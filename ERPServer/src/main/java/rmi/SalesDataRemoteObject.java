@@ -82,6 +82,22 @@ public class SalesDataRemoteObject extends UnicastRemoteObject implements SalesD
 	public ArrayList<SalesPO> showSalesReturn() throws RemoteException {
 		return salesDataService.showSalesReturn();
 	}
+	@Override
+	public String getNewPurchaseID() throws RemoteException{
+		return salesDataService.getNewPurchaseID();
+	}
+	@Override
+	public String getNewReturnID() throws RemoteException{
+		return salesDataService.getNewReturnID();
+	}
+	@Override
+	public String getNewSalesID() throws RemoteException{
+		return salesDataService.getNewSalesID();
+	}
+	@Override
+	public String getNewSalesReturnID() throws RemoteException{
+		return salesDataService.getNewSalesReturnID();
+	}
 	
 	
 }
