@@ -226,6 +226,18 @@ public class SalesController implements SalesBLService,SalesInfo{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ResultMessage updatePurchase(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage updateSales(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

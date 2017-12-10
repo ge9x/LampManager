@@ -95,10 +95,6 @@ public class Purchase {
 	
 	//blService
 	public ResultMessage addPurchase(PurchaseVO vo) throws NumberFormatException, RemoteException {
-		ArrayList<GoodsItemVO> goodsItemVOs=vo.goodsItemList;
-		for(GoodsItemVO goodsItemVO:goodsItemVOs){
-			salesDataService.addGoodsItem(GoodsItem.voTopo(goodsItemVO));
-		}
 		return salesDataService.addPurchase(voTopo(vo));
 	}
 
@@ -266,7 +262,9 @@ public class Purchase {
 		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
 		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			goodsItempoList.add(GoodsItem.voTopo(goodsItemvo));
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
+			salesDataService.addGoodsItem(goodsItemPO);
+			goodsItempoList.add(goodsItemPO);
 		}
 		if(vo.type==BillType.PURCHASE){
 			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getnewPurchaseTurn());

@@ -11,7 +11,11 @@ import util.ResultMessage;
  * @author 巽
  *
  */
+<<<<<<< HEAD
+public interface ClassificationDataService extends Remote{
+=======
 public interface ClassificationDataService extends Remote {
+>>>>>>> refs/remotes/origin/dev
 	/**
 	 * 得到所有商品分类
 	 * @return 所有商品分类的PO
