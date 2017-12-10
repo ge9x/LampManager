@@ -57,7 +57,7 @@ public class Classification {
 		}
 	}
 
-	public ResultMessage delete(String ID) throws RemoteException {
+	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
 		ClassificationPO found = classificationDataService.findByID(Integer.parseInt(ID));
 		if(found == null){
 			return ResultMessage.NOT_EXIST;
@@ -70,12 +70,14 @@ public class Classification {
 		}
 	}
 
-	public ResultMessage update(ClassificationVO vo) throws RemoteException {
+	/**
+	 * 约定：对商品分类的修改只能修改名字
+	 */
+	public ResultMessage update(ClassificationVO vo) throws NumberFormatException, RemoteException {
 		ClassificationPO toUpdate = classificationDataService.findByID(Integer.parseInt(vo.ID));
 		if(toUpdate == null){
 			return ResultMessage.NOT_EXIST;
 		}
-		// 改名
 		ArrayList<ClassificationPO> repeated = classificationDataService.findFullyByName(vo.name);
 		if(repeated.size() > 0){	// 重名
 			return ResultMessage.EXIST;
