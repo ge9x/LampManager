@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -24,6 +25,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
@@ -35,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
@@ -66,6 +69,8 @@ public class SalesStaffSalesEditViewController {
             FXCollections.observableArrayList();
     DoubleProperty total = new SimpleDoubleProperty(0);
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
+    
+    boolean isNew;
     
     @FXML
     Label deleteIcon;
@@ -101,13 +106,22 @@ public class SalesStaffSalesEditViewController {
     JFXTextField voucher;
     
     @FXML
-    JFXComboBox inventory;
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
     
     @FXML
-    JFXComboBox customer;
+    JFXComboBox<String> inventory;
     
     @FXML
-    JFXComboBox promotion;
+    JFXComboBox<String> customer;
+    
+    @FXML
+    JFXComboBox<String> promotion;
     
     public void initialize(){
     	deleteIcon.setText("\ue606");
@@ -117,8 +131,8 @@ public class SalesStaffSalesEditViewController {
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
-        promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_FIVE));
-        promotions.addAll(salesBLService.getFitPromotionTotal(2000));
+        promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
+        promotions.addAll(salesBLService.getFitPromotionTotal(0));
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
@@ -197,11 +211,18 @@ public class SalesStaffSalesEditViewController {
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
 
-        //折让前总额Text与商品总额金额之和绑定
+        //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 beforeSum.setText(Money.getMoneyString(total.get()));
+                
+                int customerIndex = customer.getSelectionModel().getSelectedIndex();
+				promotions.clear();
+				promotions.addAll(salesBLService.showBargains());
+		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
+		        initializeCustomerComboBox();
             }
         });
         
@@ -216,6 +237,7 @@ public class SalesStaffSalesEditViewController {
         	
         });
         
+        //折让与总额绑定
         allowance.textProperty().addListener(new ChangeListener<String>(){
 
 			@Override
@@ -235,7 +257,8 @@ public class SalesStaffSalesEditViewController {
 				}
 			}      	
         });
-
+        
+        //代金券与总额绑定
         voucher.textProperty().addListener(new ChangeListener<String>(){
 
 			@Override
@@ -255,9 +278,52 @@ public class SalesStaffSalesEditViewController {
 				}
 			}      	
         });
+        
+        //客户与促销策略绑定
+        customer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int customerIndex = customer.getSelectionModel().getSelectedIndex();
+				promotions.clear();
+				promotions.addAll(salesBLService.showBargains());
+		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
+		        initializeCustomerComboBox();
+			}
+        	
+        });
+        
+    }
+    
+    public void initializeCustomerComboBox(){
+    	//初始化promotion选择框
+    	promotion.getItems().clear();
+        ArrayList<String> promotionNames = new ArrayList<String>();
+        for (PromotionVO temp : promotions){
+            promotionNames.add(temp.promotionName);
+        }
+        promotion.getItems().addAll(promotionNames);
+    }
+    
+    private Level getCustomerLevel(int index){
+    	switch(index){
+    	case 0:
+    		return Level.LEVEL_ONE;
+    	case 1:
+    		return Level.LEVEL_TWO;
+    	case 2:
+    		return Level.LEVEL_THREE;
+    	case 3:
+    		return Level.LEVEL_FOUR;
+    	default:
+    		return Level.LEVEL_FIVE;
+    	}
     }
     
     public void addSalesOrder() {
+    	isNew = true;
         String ID = salesBLService.getnewSalesID();
         BillID.setText(ID);
     }
@@ -387,4 +453,75 @@ public class SalesStaffSalesEditViewController {
         this.salesStaffSalesOrderViewController = salesStaffSalesOrderViewController;
     }
     
+    public void setForDetailView(SalesVO salesBill){
+    	isNew = false;
+        BillID.setText(salesBill.ID);
+        title.setText("销售单详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
+        remark.setEditable(false);
+        voucher.setEditable(false);
+        allowance.setEditable(false);
+
+        inventory.getSelectionModel().select(salesBill.inventory);
+        inventory.setDisable(true);
+        customer.getSelectionModel().select(salesBill.customer);
+        customer.setDisable(true);
+        promotion.getSelectionModel().select(salesBill.promotionName);
+        promotion.setDisable(true);
+        Username.setText(salesBill.user);
+        
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                salesStaffSalesOrderViewController.showSalesOrderList();
+            }
+        });
+
+        if (salesBill.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }else{
+            submitButton.setVisible(false);
+        }
+        for (GoodsItemVO goodsItemVO:salesBill.goodsItemList){
+            goodsItemList.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑草稿单");
+        remark.setEditable(true);
+        voucher.setEditable(true);
+        allowance.setEditable(true);
+        inventory.setDisable(false);
+        customer.setDisable(false);
+        promotion.setDisable(false);
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
 }
