@@ -131,7 +131,7 @@ public class SalesStaffPurchaseOrderViewController {
             e.printStackTrace();
         }
     }
-    public void deleteReceipt(PurchaseVO purchaseVO) {
+    public void deletePurchase(PurchaseVO purchaseVO) {
         ResultMessage re = salesBLService.deletePurchase(purchaseVO);
         if (re == ResultMessage.SUCCESS){
             showPurchaseOrderList();
