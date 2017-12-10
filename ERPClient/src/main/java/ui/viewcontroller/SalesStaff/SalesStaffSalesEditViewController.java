@@ -43,6 +43,7 @@ import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
 import util.BillState;
 import util.BillType;
+import util.Level;
 import util.Money;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
@@ -116,8 +117,8 @@ public class SalesStaffSalesEditViewController {
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
-        promotions.addAll(salesBLService.getFitPromotionCustomer());
-        promotions.addAll(salesBLService.getFitPromotionTotal());
+        promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_FIVE));
+        promotions.addAll(salesBLService.getFitPromotionTotal(2000));
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
