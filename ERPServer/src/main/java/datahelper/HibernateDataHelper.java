@@ -146,7 +146,10 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 
 	@Override
 	public Long count() {
-		return (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
+		initSession();
+		Long ret = (Long) session.createCriteria(type).setProjection(Projections.rowCount()).uniqueResult();
+		commitAndClose();
+		return ret;
 	}
 
 }
