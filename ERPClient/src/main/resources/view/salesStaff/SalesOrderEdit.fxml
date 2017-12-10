@@ -115,12 +115,12 @@
                         </VBox>
                         <HBox alignment="CENTER_RIGHT" layoutX="530.0" layoutY="442.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                               <JFXButton onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
+                               <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
                                    <font>
                                        <Font name="Microsoft YaHei" size="17.0" />
                                    </font>
                                </JFXButton>
-                               <JFXButton onMouseClicked="#clickCancelButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-width: 2px; -fx-border-color: #1db1a4; -fx-border-radius: 5;" text="取 消" textFill="#1DB1A5">
+                               <JFXButton fx:id="cancelButton" onMouseClicked="#clickCancelButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-width: 2px; -fx-border-color: #1db1a4; -fx-border-radius: 5;" text="取 消" textFill="#1DB1A5">
                                    <font>
                                        <Font name="Microsoft YaHei" size="17.0" />
                                    </font>

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -19,6 +20,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -28,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
@@ -40,6 +43,7 @@ import util.Money;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionVO;
+import vo.PurchaseVO;
 import vo.SalesVO;
 
 public class SalesStaffSalesReturnEditViewController {
@@ -51,6 +55,8 @@ public class SalesStaffSalesReturnEditViewController {
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
 	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
+	
+	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -80,12 +86,21 @@ public class SalesStaffSalesReturnEditViewController {
     
     @FXML
     JFXTextArea remark;
-
-    @FXML
-    JFXComboBox inventory;
     
     @FXML
-    JFXComboBox customer;
+    Label title;
+
+    @FXML
+    JFXButton submitButton;
+
+    @FXML
+    JFXButton cancelButton;
+
+    @FXML
+    JFXComboBox<String> inventory;
+    
+    @FXML
+    JFXComboBox<String> customer;
     
     public void initialize(){
     	deleteIcon.setText("\ue606");
@@ -172,6 +187,7 @@ public class SalesStaffSalesReturnEditViewController {
     }
     
     public void addSalesReturnOrder() {
+    	isNew = true;
         String ID = salesBLService.getnewSalesReturnID();
         BillID.setText(ID);
     }
@@ -204,7 +220,12 @@ public class SalesStaffSalesReturnEditViewController {
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
         		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
-        salesBLService.submitSales(salesVO);
+        if(isNew){
+        	salesBLService.submitSales(salesVO);
+        }
+        else{
+        	salesBLService.updateSales(salesVO);
+        }
         salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
     }
     
@@ -240,5 +261,71 @@ public class SalesStaffSalesReturnEditViewController {
 
     public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
         this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
+    }
+    
+    public void setForDetailView(SalesVO salesBill){
+    	isNew = false;
+        BillID.setText(salesBill.ID);
+        title.setText("销售退货单详情");
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
+        remark.setEditable(false);
+
+        inventory.getSelectionModel().select(salesBill.inventory);
+        inventory.setDisable(true);
+        customer.getSelectionModel().select(salesBill.customer);
+        customer.setDisable(true);
+        Username.setText(salesBill.user);
+        Salesman.setText(salesBill.salesman);
+        
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+            }
+        });
+
+        if (salesBill.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }else{
+            submitButton.setVisible(false);
+        }
+        for (GoodsItemVO goodsItemVO:salesBill.goodsItemList){
+            goodsItemList.add(goodsItemVO);
+            data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+            		goodsItemVO.sum, goodsItemVO.remarks));
+            total.set(total.get() + goodsItemVO.sum);
+        }
+    }
+    
+    public void setForEditView(){
+    	addIcon.setVisible(true);
+    	deleteIcon.setVisible(true);
+        title.setText("编辑草稿单");
+        remark.setEditable(true);
+        inventory.setDisable(false);
+        customer.setDisable(false);
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
     }
 }

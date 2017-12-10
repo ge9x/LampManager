@@ -16,7 +16,6 @@ import java.util.Date;
  */
 public class MockForm extends Form{
 
-    @Override
     public BillVO findByID(String ID){
         if (ID.equals("SKD-20171022-00001")){
             System.out.println("Submit succeed");
