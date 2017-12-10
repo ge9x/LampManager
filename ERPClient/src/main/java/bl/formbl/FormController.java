@@ -33,7 +33,7 @@ public class FormController implements FormBLService{
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return null;
+        return form.getDocumentDetails(input);
     }
 
     public ResultMessage redCover(BillVO billVO) {

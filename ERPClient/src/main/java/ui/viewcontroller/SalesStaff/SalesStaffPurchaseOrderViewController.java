@@ -1,29 +1,42 @@
 package ui.viewcontroller.SalesStaff;
 
-import java.io.IOException;
-
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import blservice.salesblservice.SalesBLService;
+import blstubdriver.SalesBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import ui.component.BillPane;
+import vo.SalesVO;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class SalesStaffPurchaseOrderViewController {
 	
 	SalesStaffViewController salesStaffViewController;
-	SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController;
-	
-	@FXML
+    SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController;
+
+    SalesBLService salesBLService = new SalesBLService_Stub();
+
+    ArrayList<SalesVO> draft;
+    ArrayList<SalesVO> submitted;
+    ArrayList<SalesVO> pass;
+    ArrayList<SalesVO> failed;
+
+    ArrayList<VBox> billNodes = new ArrayList<>();
+    ArrayList<FXMLLoader> fxmlLoaders = new ArrayList<>();
+    BillPane billPane;
+
+    @FXML
     Label addIcon;
 
     @FXML
     public void initialize(){
         addIcon.setText("\ue61e");
+
+        draft = salesBLService.
     }
     
     public void setSalesStaffViewController(SalesStaffViewController salesStaffViewController){
