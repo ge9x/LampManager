@@ -26,7 +26,7 @@ public class TestGoods {
 	//	
 	//	session = setUp();
 		try {
-			System.out.println(goodsImpl.getNewID("01"));
+			System.out.println(goodsImpl.getNewID("03"));
 			ArrayList<GoodsPO> allGoods = goodsImpl.show();
 			System.out.println("共有" + allGoods.size() + "条商品记录：");
 			for(GoodsPO po : allGoods){

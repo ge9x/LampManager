@@ -21,14 +21,12 @@ public class Form {
     private DocumentDetails documentDetails;
     private Profit profit;
     InitInfo initInfo;
+
     public Form(){
         salesDetails = new SalesDetails();
         documentDetails = new DocumentDetails();
         profit = new Profit();
         initInfo = new InitializationController();
-    }
-    public BillVO findByID(String ID) {
-        return null;
     }
 
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
@@ -36,7 +34,7 @@ public class Form {
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return null;
+        return documentDetails.getDocumentDetails(input);
     }
 
     public ResultMessage redCover(BillVO billVO) {
@@ -57,5 +55,8 @@ public class Form {
 
     public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
         return salesDetails.export(filePath,filename,salesDetailVOS);
+    }
+    public ResultMessage exportProfit(String filePath, String filename, ArrayList<ProfitVO> profitVOS){
+        return profit.export(filePath,filename,profitVOS);
     }
 }

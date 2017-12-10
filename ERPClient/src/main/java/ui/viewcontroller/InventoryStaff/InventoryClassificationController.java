@@ -1,6 +1,7 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bl.classificationbl.ClassificationController;
+import bl.goodsbl.GoodsController;
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.ClassificationBLService_Stub;
@@ -29,7 +30,7 @@ import java.util.Optional;
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
     ClassificationBLService classificationBLService = new ClassificationController();
-    GoodsBLService goodsBLService = new GoodsBLService_Stub();
+    GoodsBLService goodsBLService = new GoodsController();
 
     ArrayList<ClassificationVO> classifications;
     ArrayList<GoodsVO> goods;
@@ -99,19 +100,21 @@ public class InventoryClassificationController {
 
     public void showTree(){
         classifications = classificationBLService.show();
-        for (ClassificationVO classification : classifications){
-            TreeItem<String> treeItem = new TreeItem<>(classification.name);
+        treeItems.clear();
+        for (ClassificationVO classificationVO:classifications){
+            TreeItem<String> treeItem = new TreeItem<>(classificationVO.name);
             treeItem.setExpanded(true);
-
             treeItems.add(treeItem);
-            if (classification.father == null){
-                root = treeItem;
+        }
+        for (int i = 0; i < treeItems.size(); i++){
+            if (classifications.get(i).father == null){
+                root = treeItems.get(i);
                 tree.setRoot(root);
             }
             else {
                 for (TreeItem treeItem1 : treeItems){
-                    if (treeItem1.getValue().toString().equals(classification.father.name)){
-                        treeItem1.getChildren().add(treeItem);
+                    if (treeItem1.getValue().toString().equals(classifications.get(i).father.name)){
+                        treeItem1.getChildren().add(treeItems.get(i));
                     }
                 }
             }
@@ -134,7 +137,7 @@ public class InventoryClassificationController {
         if (item != null){
             ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
             //必须是不含商品的节点
-            if (classificationVO.goods == null) {
+            if (classificationVO.goods == null || classificationVO.goods.isEmpty()) {
                 Dialog dialog = DialogFactory.getTextInputDialog();
                 dialog.setHeaderText("请输入新的分类名称");
                 Optional<String> result = dialog.showAndWait();
@@ -146,6 +149,10 @@ public class InventoryClassificationController {
                         showTree();
                     }
                 }
+            }else {
+                Dialog dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("该分类有商品，不能添加子分类");
+                dialog.showAndWait();
             }
         }
     }
@@ -160,7 +167,7 @@ public class InventoryClassificationController {
                if (result.isPresent()) {
                    ArrayList<String> results = result.get();
                    ResultMessage re = goodsBLService.add(new GoodsVO(results.get(0), results.get(1), results.get(2),
-                           item.getValue(), null, 0, Integer.parseInt(results.get(3)), Double.parseDouble(results.get(4)),
+                           item.getValue(), 0, Integer.parseInt(results.get(3)), Double.parseDouble(results.get(4)),
                            Double.parseDouble(results.get(5)), Double.parseDouble(results.get(4)), Double.parseDouble(results.get(5))));
                    if (re == ResultMessage.SUCCESS) {
                        showGoods(findID(item.toString()));
@@ -231,7 +238,7 @@ public class InventoryClassificationController {
         TreeItem<String> item = tree.getSelectionModel().getSelectedItem();
         if (item == null){
             Dialog dialog = DialogFactory.getInformationAlert();
-            dialog.setHeaderText("请先选择父分类");
+            dialog.setHeaderText("请先选择分类");
             dialog.showAndWait();
             return null;
         }

@@ -79,7 +79,7 @@ public interface FormBLService {
      * @param vos
      * @return
      */
-    public ResultMessage exportProfit(ArrayList<ProfitVO> vos);
+    public ResultMessage exportProfit(String filePath,String filename,ArrayList<ProfitVO> vos);
 
 
 }
