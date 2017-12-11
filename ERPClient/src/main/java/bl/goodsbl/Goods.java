@@ -38,17 +38,12 @@ public class Goods {
 	}
 
 	public ArrayList<GoodsVO> find(String keyword) throws RemoteException {
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(
-				new Criterion(
-						new Criterion(
-								new Criterion("ID", keyword, QueryMode.FUZZY),	// TODO 带分类ID查找
-								new Criterion("name", keyword, QueryMode.FUZZY)),
-						new Criterion("model", keyword, QueryMode.FUZZY)));
-		ArrayList<GoodsPO> pos = goodsDataService.advancedQuery(criteria);
+		ArrayList<GoodsPO> pos = goodsDataService.show();
 		ArrayList<GoodsVO> ret = new ArrayList<>();
 		for(GoodsPO po : pos){
-			ret.add(poToVO(po));
+			if(po.buildID().contains(keyword) || po.getName().contains(keyword) || po.getModel().contains(keyword)){
+				ret.add(poToVO(po));
+			}
 		}
 		return ret;
 	}
