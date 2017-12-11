@@ -98,6 +98,23 @@ public class Sales {
 		}
 	}
 	
+	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate, String endDate) throws ParseException {
+		try {
+			ArrayList<SalesPO> salpoList=salesDataService.showSalesReturn();
+			ArrayList<SalesVO> salvoList=new ArrayList<>();
+			for(SalesPO po:salpoList){
+				Date date=stringToDate(po.getDate());
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+					salvoList.add(poTovo(po));
+				}
+			}
+			return salvoList;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public void init(){
 		
 	}
@@ -207,5 +224,5 @@ public class Sales {
 	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
 		return salesDataService.deletePurchase(vo.ID);
 	}
-
+	
 }

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.hibernate.internal.util.beans.BeanInfoHelper.ReturningBeanInfoDelegate;
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
 import blservice.salesblservice.SalesBLService;
 import blservice.salesblservice.SalesInfo;
@@ -242,6 +243,16 @@ public class SalesController implements SalesBLService,SalesInfo{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate, String endDate) {
+		try {
+			return sales.getAllSalesReturnOrder(startDate, endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
