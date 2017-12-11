@@ -42,7 +42,7 @@ public class Goods {
 		criteria.add(
 				new Criterion(
 						new Criterion(
-								new Criterion("ID", keyword, QueryMode.FUZZY),
+								new Criterion("ID", keyword, QueryMode.FUZZY),	// TODO 带分类ID查找
 								new Criterion("name", keyword, QueryMode.FUZZY)),
 						new Criterion("model", keyword, QueryMode.FUZZY)));
 		ArrayList<GoodsPO> pos = goodsDataService.advancedQuery(criteria);
@@ -79,30 +79,37 @@ public class Goods {
 			return ResultMessage.NOT_EXIST;
 		}
 		else{
-			
+			// TODO 询问Sales是否有账单关联
 		}
 		return null;
 	}
 
+	/**
+	 * 约定：对商品的修改只能修改：<br>
+	 * 名字(name)、型号(model)、警戒数量(alarmAmount)、进价(buyingPrice)和零售价(retailPrice)
+	 */
 	public ResultMessage update(GoodsVO vo) throws NumberFormatException, RemoteException {
 		GoodsPO toUpdate = goodsDataService.find(Integer.parseInt(vo.ID.substring(2)));
 		if(toUpdate == null){
 			return ResultMessage.NOT_EXIST;
 		}
 		else{
-			ArrayList<Criterion> criteria = new ArrayList<>();
-			criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
-			criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
-			ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
-			if(!repeated.isEmpty()){
-				return ResultMessage.EXIST;
+			if(!toUpdate.getName().equals(vo.name) || !toUpdate.getModel().equals(vo.model)){	// 若要改名
+				ArrayList<Criterion> criteria = new ArrayList<>();
+				criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
+				criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
+				ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
+				if(!repeated.isEmpty()){	// 重名
+					return ResultMessage.EXIST;
+				}
 			}
-			else{
-				GoodsPO toAdd = voToPO(vo);
-				return goodsDataService.update(toUpdate);
-			}
+			toUpdate.setName(vo.name);
+			toUpdate.setModel(vo.model);
+			toUpdate.setAlarmAmount(vo.alarmAmount);
+			toUpdate.setBuyingPrice(vo.buyingPrice);
+			toUpdate.setRetailPrice(vo.retailPrice);
+			return goodsDataService.update(toUpdate);
 		}
-//		return null;
 	}
 
 	public String getNewID(String classificationID) throws RemoteException {
