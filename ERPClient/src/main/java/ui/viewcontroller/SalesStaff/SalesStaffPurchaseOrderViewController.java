@@ -137,5 +137,9 @@ public class SalesStaffPurchaseOrderViewController {
             showPurchaseOrderList();
         }
     }
+    public void showPurchaseDetailView(PurchaseVO purchaseVO){
+        showPurchaseEditView();
+        salesStaffPurchaseEditViewController.setForDetailView(purchaseVO);
+    }
     
 }

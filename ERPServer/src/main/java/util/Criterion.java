@@ -1,12 +1,15 @@
 package util;
 
+import java.io.Serializable;
+
 /**
  * 枚举各种查询数据库的方式
  * Created on 2017/11/23
  * @author 巽
  *
  */
-public class Criterion {
+public class Criterion implements Serializable{
+	private static final long serialVersionUID = 5601567725235351942L;
 	/**
 	 * 要约束的字段
 	 */

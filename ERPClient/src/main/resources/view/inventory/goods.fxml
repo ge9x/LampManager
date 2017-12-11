@@ -49,10 +49,13 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-            <AnchorPane  prefHeight="425.0" prefWidth="764.0">
+            <AnchorPane prefHeight="425.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <effect>
+                    <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                </effect>
                <children>
-                  <TextField layoutX="526.0" layoutY="32.0" />
-                  <Label layoutX="699.0" layoutY="36.0" text="Q" />
+                  <TextField fx:id="SearchField" layoutX="529.0" layoutY="32.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #eeeeee;" />
+                  <Label fx:id="searchIcon" layoutX="701.0" layoutY="31.0" onMouseClicked="#clickSearchButton" prefHeight="23.0" prefWidth="23.0" styleClass="icon-label" text="Q" />
                   <ScrollPane fx:id="TablePane" layoutX="26.0" layoutY="73.0" prefHeight="317.0" prefWidth="707.0" />
                </children>
             </AnchorPane>
