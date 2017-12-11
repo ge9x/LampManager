@@ -170,7 +170,7 @@ public class InventoryClassificationController {
                            item.getValue(), 0, Integer.parseInt(results.get(3)), Double.parseDouble(results.get(4)),
                            Double.parseDouble(results.get(5)), Double.parseDouble(results.get(4)), Double.parseDouble(results.get(5))));
                    if (re == ResultMessage.SUCCESS) {
-                       showGoods(findID(item.toString()));
+                       showGoods(findID(item.getValue()));
                    }
                }
            }else {
@@ -231,6 +231,7 @@ public class InventoryClassificationController {
                 ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
                 classificationVO.name = result.get();
                 classificationBLService.update(classificationVO);
+                showTree();
             }
         }
     }

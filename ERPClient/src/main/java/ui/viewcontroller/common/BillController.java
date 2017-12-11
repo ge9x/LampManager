@@ -185,6 +185,17 @@ public class BillController {
             billType.setTextFill(Color.web("#FFCCFF"));
             billCreater.setText(purchaseBill.user);
             billMoney.setText(Money.getMoneyString(purchaseBill.sum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffPurchaseOrderViewController.showPurchaseDetailView(purchaseBill);               }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffPurchaseOrderViewController.deletePurchase(purchaseBill);
+                }
+            });
         }
         else if(bill.type==BillType.RETURN){
             PurchaseVO purchaseBill = (PurchaseVO) bill;

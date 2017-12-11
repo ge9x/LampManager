@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.GoodsBLService_Stub;
 import com.jfoenix.controls.JFXTextField;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/27.
  */
 public class InventoryGoodsController {
-    GoodsBLService goodsBLService = new GoodsBLService_Stub();
+    GoodsBLService goodsBLService = new GoodsController();
 
     InventoryViewController inventoryViewController;
     ArrayList<GoodsVO> goods;
@@ -35,8 +36,17 @@ public class InventoryGoodsController {
     ScrollPane TablePane;
 
     @FXML
+    Label searchIcon;
+
+    @FXML
+    TextField SearchField;
+
+    @FXML
     public void initialize(){
+        searchIcon.setText("\ue69d");
+
         initTable();
+        goods = goodsBLService.show();
         showGoods();
     }
 
@@ -81,7 +91,7 @@ public class InventoryGoodsController {
         TablePane.setContent(table);
     }
     public void showGoods(){
-        goods = goodsBLService.show();
+        data.clear();
         if (goods == null)
             return ;
         for (GoodsVO good : goods){
@@ -104,7 +114,11 @@ public class InventoryGoodsController {
                 goodsVO.retailPrice = Double.parseDouble(results.get(4));
                 ResultMessage re = goodsBLService.update(goodsVO);
                 if (re == ResultMessage.SUCCESS){
-                    showGoods();
+                    bean.setName(goodsVO.name);
+                    bean.setModel(goodsVO.model);
+                    bean.setAlarmAmount(goodsVO.alarmAmount);
+                    bean.setPurchasePrice(goodsVO.buyingPrice);
+                    bean.setSalesPrice(goodsVO.retailPrice);
                 }
             }
         }
@@ -121,7 +135,7 @@ public class InventoryGoodsController {
         ArrayList<Node> nodes = new ArrayList<>();
         Label ID = new Label(bean.getID());
         JFXTextField nameTF = new JFXTextField(bean.getName());
-        JFXTextField modelTF = new JFXTextField(bean.getName());
+        JFXTextField modelTF = new JFXTextField(bean.getModel());
         JFXTextField purchaseTF = new JFXTextField(bean.getPurchasePrice()+"");
         JFXTextField salesTF = new JFXTextField(bean.getSalesPrice()+"");
         JFXTextField alarmTF = new JFXTextField(bean.getAlarmAmount()+"");
@@ -149,6 +163,12 @@ public class InventoryGoodsController {
         });
         return dialog;
     }
+
+    public void clickSearchButton(){
+        String keyword = SearchField.getText();
+        goods = goodsBLService.find(keyword);
+        showGoods();
+    }
     public GoodsBean getSelectedItem(){
         GoodsBean goodsBean = table.getSelectionModel().getSelectedItem();
         if(goodsBean == null){
@@ -159,6 +179,7 @@ public class InventoryGoodsController {
         }
         return goodsBean;
     }
+
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
     }
