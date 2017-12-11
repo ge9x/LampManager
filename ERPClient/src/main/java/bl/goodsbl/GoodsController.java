@@ -87,8 +87,8 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 			return goods.getNewID(classificationID);
 		} catch (RemoteException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 	public ArrayList<GoodsVO> getAllGoods() {
