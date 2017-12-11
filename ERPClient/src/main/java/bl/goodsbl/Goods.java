@@ -118,6 +118,9 @@ public class Goods {
 		return ret;
 	}
 	
+	/**
+	 * 仅限增加商品时调用
+	 */
 	private GoodsPO voToPO(GoodsVO vo){
 		ClassificationPO classification = classificationInfo.getClassificationByName(vo.classification);
 		int turn = Integer.parseInt(vo.ID.substring(2));
