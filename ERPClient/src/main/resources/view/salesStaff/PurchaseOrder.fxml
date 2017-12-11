@@ -49,11 +49,6 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                        <TilePane fx:id="PurchaseOrderList" minWidth="716.0" prefHeight="274.0" prefWidth="716.0">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </TilePane>
                     </children>
                     <padding>
                         <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />

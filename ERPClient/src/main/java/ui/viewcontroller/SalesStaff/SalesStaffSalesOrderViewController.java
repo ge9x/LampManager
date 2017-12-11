@@ -136,4 +136,8 @@ public class SalesStaffSalesOrderViewController {
             showSalesOrderList();
         }
     }
+    public void showSalesOrderDetailView(SalesVO salesVO){
+        showSalesEditView();
+        salesStaffSalesEditViewController.setForDetailView(salesVO);
+    }
 }
