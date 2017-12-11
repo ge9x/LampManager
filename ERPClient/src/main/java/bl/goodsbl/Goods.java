@@ -127,4 +127,9 @@ public class Goods {
 		GoodsPO ret = new GoodsPO(vo.name, vo.model, classification, vo.alarmAmount, vo.buyingPrice, vo.retailPrice, vo.buyingPrice, vo.retailPrice, turn);
 		return ret;
 	}
+	
+	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
+		int poID = Integer.parseInt(ID.substring(2));
+		return goodsDataService.find(poID);
+	}
 }

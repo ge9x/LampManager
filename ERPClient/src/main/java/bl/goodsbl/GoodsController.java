@@ -115,6 +115,13 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 
 	@Override
 	public GoodsPO getGoodsByID(String ID) {
+		try {
+			return goods.getGoodsByID(ID);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
