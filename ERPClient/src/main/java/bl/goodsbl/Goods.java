@@ -75,8 +75,9 @@ public class Goods {
 		}
 		else{
 			// TODO 询问Sales是否有账单关联
+//			return goodsDataService.delete(found);
 		}
-		return null;
+		return ResultMessage.ERROR;
 	}
 
 	/**
