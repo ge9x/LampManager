@@ -133,4 +133,8 @@ public class SalesStaffSalesReturnOrderViewController {
             showSalesReturnOrderList();
         }
     }
+    public void showSalesReturnDetailView(SalesVO salesVO){
+        showSalesEditView();
+        salesStaffSalesReturnEditViewController.setForDetailView(salesVO);
+    }
 }

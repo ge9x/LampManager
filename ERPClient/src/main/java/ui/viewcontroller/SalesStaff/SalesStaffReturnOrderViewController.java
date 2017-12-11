@@ -131,5 +131,10 @@ public class SalesStaffReturnOrderViewController {
         if (re == ResultMessage.SUCCESS){
             showReturnOrderList();
         }
+
+    }
+    public void showReturnDetailView(PurchaseVO purchaseVO){
+        showReturnEditView();
+        salesStaffReturnEditViewController.setForDetailView(purchaseVO);
     }
 }
