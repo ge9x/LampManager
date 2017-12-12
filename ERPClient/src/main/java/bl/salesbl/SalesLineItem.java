@@ -10,7 +10,6 @@ import bl.promotionbl.PromotionTotalController;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
-import blservice.promotionblservice.PromotionInfo;
 import blservice.promotionblservice.promotionTotal.PromotionTotalInfo;
 import blservice.promotionblservice.promotionbargain.PromotionBargainInfo;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerInfo;
@@ -22,7 +21,6 @@ import vo.CustomerVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
-import vo.PurchaseVO;
 import vo.SalesVO;
 
 public class SalesLineItem {

@@ -9,6 +9,7 @@ import java.io.Serializable;
  *
  */
 public class Criterion implements Serializable{
+	private static final long serialVersionUID = 5601567725235351942L;
 	/**
 	 * 要约束的字段
 	 */

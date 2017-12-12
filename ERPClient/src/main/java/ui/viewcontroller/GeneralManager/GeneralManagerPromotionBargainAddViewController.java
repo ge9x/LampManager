@@ -205,6 +205,12 @@ public class GeneralManagerPromotionBargainAddViewController {
 		this.generalManagerPromotionViewController = generalManagerPromotionViewController;
 	}
 	
+	public void addPromotionBargain(){
+		isNew = true;
+		String ID = promotionBargainBLService.getNewPromotionBargainID();
+		promotionID.setText(ID);
+	}
+	
 	public void clickDeleteButton(){
     	int index = itemTable.getSelectionModel().getSelectedIndex();
     	total.set(total.get()-data.get(index).getTotalPrice());
@@ -227,7 +233,12 @@ public class GeneralManagerPromotionBargainAddViewController {
 		if(isCompleted()){
 			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
-			promotionBargainBLService.submit(promotionBargain);
+			if(isNew){
+				promotionBargainBLService.submit(promotionBargain);
+			}
+			else{
+				promotionBargainBLService.updatePromotion(promotionBargain);
+			}
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

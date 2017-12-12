@@ -8,26 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
-
-import blservice.customerblservice.CustomerInfo;
-import blservice.inventoryblservice.InventoryInfo;
-import blservice.promotionblservice.PromotionInfo;
-import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
-import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
-import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
 
@@ -40,10 +29,6 @@ public class Purchase {
 	PurchaseLineItem purchaseLineItem;
 	PurchaseList purchaseList;
 	GoodsItem goodsItem;
-	//InventoryInfo inventoryInfo;
-	//CustomerInfo customerInfo;
-	//PromotionInfo promotionInfo;
-	//UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
@@ -95,11 +80,12 @@ public class Purchase {
 	
 	//blService
 	public ResultMessage addPurchase(PurchaseVO vo) throws NumberFormatException, RemoteException {
-		return salesDataService.addPurchase(voTopo(vo));
+		PurchasePO po = voTopo(vo);
+		return salesDataService.addPurchase(po);
 	}
-
+	
 	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
-		return goodsItem.addGoodsItem(item);
+		return salesDataService.addGoodsItem(GoodsItem.voTopo(item));
 	}
 
 	public ResultMessage addSales(SalesVO vo) {
@@ -259,11 +245,10 @@ public class Purchase {
 	}
 	
 	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
-		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
 		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodsItemvo:goodsItemvoList){
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
-			salesDataService.addGoodsItem(goodsItemPO);
 			goodsItempoList.add(goodsItemPO);
 		}
 		if(vo.type==BillType.PURCHASE){
@@ -304,8 +289,8 @@ public class Purchase {
 		return purvoList;
 	}
 	
-	public ResultMessage deletePurchase(PurchaseVO vo) {
-		return ResultMessage.NULL;
+	public ResultMessage deletePurchase(PurchaseVO vo) throws RemoteException{
+		return salesDataService.deletePurchase(vo.ID);
 	}
 	
 }

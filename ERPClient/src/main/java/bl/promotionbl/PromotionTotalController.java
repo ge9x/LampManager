@@ -116,4 +116,16 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 		}
 	}
 
+	@Override
+	public String getNewPromotionTotalID() {
+		// TODO Auto-generated method stub
+		try {
+			return promotionTotal.getNewPromotionTotalID();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

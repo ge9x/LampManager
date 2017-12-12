@@ -109,4 +109,19 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 		return promotionDataService.showPT();
 	}
 
+	@Override
+	public String getNewPromotionBargainID() throws RemoteException {
+		return promotionDataService.getNewPromotionBargainID();
+	}
+
+	@Override
+	public String getNewPromotionCustomerID() throws RemoteException {
+		return promotionDataService.getNewPromotionCustomerID();
+	}
+
+	@Override
+	public String getNewPromotionTotalID() throws RemoteException {
+		return promotionDataService.getNewPromotionTotalID();
+	}
+
 }

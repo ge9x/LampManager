@@ -94,4 +94,10 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		return ResultMessage.SUCCESS;
 	}
 
+	@Override
+	public String getNewPromotionCustomerID() {
+		// TODO Auto-generated method stub
+		return "PC-0001";
+	}
+
 }

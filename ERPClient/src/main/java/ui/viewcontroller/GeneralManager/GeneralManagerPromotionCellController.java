@@ -100,6 +100,7 @@ public class GeneralManagerPromotionCellController {
             e.printStackTrace();
         }
 		generalManagerPromotionBargainAddViewController.setForDetailView((PromotionBargainVO) promotion);
+		generalManagerPromotionBargainAddViewController.addPromotionBargain();
 		return page;
 	}
 	
@@ -116,6 +117,7 @@ public class GeneralManagerPromotionCellController {
             e.printStackTrace();
         }
 		generalManagerPromotionCustomerAddViewController.setForDetailView((PromotionCustomerVO) promotion);
+		generalManagerPromotionCustomerAddViewController.addPromotionCustomer();
 		return page;
 	}
 	
@@ -132,6 +134,7 @@ public class GeneralManagerPromotionCellController {
             e.printStackTrace();
         }
 		generalManagerPromotionTotalAddViewController.setForDetailView((PromotionTotalVO) promotion);
+		generalManagerPromotionTotalAddViewController.addPromotionTotal();
 		return page;
 	}
 }

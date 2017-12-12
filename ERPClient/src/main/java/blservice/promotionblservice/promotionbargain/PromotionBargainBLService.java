@@ -61,4 +61,6 @@ public interface PromotionBargainBLService {
 	public ResultMessage deletePromotion(String promotionID);
 	
 	public ResultMessage updatePromotion(PromotionBargainVO vo);
+	
+	public String getNewPromotionBargainID();
 }

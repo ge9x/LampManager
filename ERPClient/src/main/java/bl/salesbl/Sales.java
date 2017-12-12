@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
-
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
-import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
@@ -24,7 +21,6 @@ import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
-import vo.PurchaseVO;
 import vo.SalesVO;
 
 /**
@@ -98,6 +94,23 @@ public class Sales {
 		}
 	}
 	
+	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate, String endDate) throws ParseException {
+		try {
+			ArrayList<SalesPO> salpoList=salesDataService.showSalesReturn();
+			ArrayList<SalesVO> salvoList=new ArrayList<>();
+			for(SalesPO po:salpoList){
+				Date date=stringToDate(po.getDate());
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+					salvoList.add(poTovo(po));
+				}
+			}
+			return salvoList;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public void init(){
 		
 	}
@@ -128,7 +141,7 @@ public class Sales {
 	}
 	
 	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
-		return goodsItem.addGoodsItem(item);
+		return salesDataService.addGoodsItem(GoodsItem.voTopo(item));
 	}
 	
 	public ResultMessage submitSales(SalesVO vo) throws RemoteException{
@@ -202,6 +215,10 @@ public class Sales {
 			}
 		}
 		return salvoList;
+	}
+	
+	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
+		return salesDataService.deletePurchase(vo.ID);
 	}
 	
 }
