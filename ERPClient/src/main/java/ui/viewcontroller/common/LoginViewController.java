@@ -7,11 +7,15 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import util.UserPosition;
@@ -39,8 +43,24 @@ public class LoginViewController {
     public void initialize(){
         userIcon.setText("\ue608");
         passwordIcon.setText("\ue620");
+
+        username.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER){
+                    clickLoginButton();
+                }
+            }
+        });
+        password.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER){
+                    clickLoginButton();
+                }
+            }
+        });
     }
-//很奇怪。。。controller中构造方法与initialize方法无法共存
 
     public void login(String userID,String password){
         ResultMessage re = userBLService.login(userID,password);
@@ -83,6 +103,12 @@ public class LoginViewController {
     }
 
     public void clickLoginButton(){
-        login(username.getText(),password.getText());
+        if (username.getText().isEmpty() || password.getText().isEmpty()){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("用户名或密码不能为空");
+            dialog.showAndWait();
+        }else{
+            login(username.getText(),password.getText());
+        }
     }
 }

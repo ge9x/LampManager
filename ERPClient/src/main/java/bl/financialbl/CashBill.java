@@ -83,7 +83,9 @@ public class CashBill {
     }
 
     public ResultMessage examine(CashBillVO vo) throws RemoteException {
-        accountInfo.changeMoney(vo.accountID,-vo.sum);
+        if(vo.state == BillState.PASS){
+            accountInfo.changeMoney(vo.accountID, -vo.sum);
+        }
         return update(vo);
     }
 
