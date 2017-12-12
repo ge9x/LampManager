@@ -7,6 +7,7 @@ import blservice.customerblservice.CustomerBLService;
 import blservice.customerblservice.CustomerInfo;
 import util.ResultMessage;
 import vo.CustomerVO;
+import vo.UserVO;
 
 /**
  * Created by zlk on 2017/11/5
@@ -130,6 +131,11 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public ArrayList<UserVO> getAllSalesman() {
+		return customer.getAllSalesman();
 	}
 	
 }

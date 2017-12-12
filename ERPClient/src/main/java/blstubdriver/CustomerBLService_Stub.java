@@ -3,11 +3,15 @@ package blstubdriver;
 import java.util.ArrayList;
 
 import blservice.customerblservice.CustomerBLService;
+import po.UserPO;
 import util.CustomerCategory;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
+import util.UserPosition;
 import vo.CustomerAddVO;
 import vo.CustomerVO;
+import vo.UserVO;
 
 public class CustomerBLService_Stub implements CustomerBLService{
 	ArrayList<CustomerVO> customerData=new ArrayList<CustomerVO>();
@@ -28,6 +32,12 @@ public class CustomerBLService_Stub implements CustomerBLService{
 		customerData.add(c4);
 		customerData.add(c5);
 	}
+	    ArrayList<UserVO> userList=new ArrayList<>();
+	    UserVO po1=new UserVO("00002", "123", "bobule", UserPosition.SALES_STAFF, UserLimits.MANAGER);
+	    {
+	       userList.add(po1);
+	    }
+	  
 	
 	public String getNewCustomerID() {
 		int len=customerData.size();
@@ -101,6 +111,11 @@ public class CustomerBLService_Stub implements CustomerBLService{
 	public ArrayList<CustomerVO> show() {
 		// TODO Auto-generated method stub
 		return customerData;
+	}
+
+	@Override
+	public ArrayList<UserVO> getAllSalesman() {
+		return userList;
 	}
 	
 }
