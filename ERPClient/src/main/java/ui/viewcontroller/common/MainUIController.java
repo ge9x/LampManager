@@ -2,7 +2,6 @@ package ui.viewcontroller.common;
 
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
-import com.jfoenix.controls.JFXSnackbar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
