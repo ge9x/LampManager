@@ -1,0 +1,11 @@
+.tab {
+    -fx-background-color: #1db1a4;
+}
+.tab-header-background {
+    -fx-background-color: #1db1a4;
+}
+
+.tab-pane {
+    -fx-effect: null;
+    -fx-stroke-width: 0;
+}
