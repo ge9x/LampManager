@@ -93,17 +93,17 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public ArrayList<PromotionBargainPO> showPB() throws RemoteException {
-		return promotionBargainDataHelper.fullyQuery(null, null);
+		return promotionBargainDataHelper.multiQuery(new ArrayList<>());
 	}
 
 	@Override
 	public ArrayList<PromotionCustomerPO> showPC() throws RemoteException {
-		return promotionCustomerDataHelper.fullyQuery(null, null);
+		return promotionCustomerDataHelper.multiQuery(new ArrayList<>());
 	}
 
 	@Override
 	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
-		return promotionTotalDataHelper.fullyQuery(null, null);
+		return promotionTotalDataHelper.multiQuery(new ArrayList<>());
 	}
 
 	@Override
