@@ -2,12 +2,14 @@ package dataimpl.promotiondataimpl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.promotiondataservice.PromotionDataService;
+import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import po.PromotionTotalPO;
@@ -20,6 +22,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	private DataHelper<PromotionCustomerPO> promotionCustomerDataHelper;
 	private DataHelper<PromotionBargainPO> promotionBargainDataHelper;
 	private DataHelper<PromotionTotalPO> promotionTotalDataHelper;
+	private DataHelper<GoodsItemPO> goodsItemDataHelper;
 	
 	public static PromotionDataServiceImpl getInstance(){
 		if(promotionDataServiceImpl == null){
@@ -50,14 +53,26 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	}
 
 	public ResultMessage addPC(PromotionCustomerPO po) throws RemoteException {
+		List<GoodsItemPO> goodsItemPOs=po.getGifts();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionCustomerDataHelper.save(po);
 	}
 	
 	public ResultMessage addPB(PromotionBargainPO po) throws RemoteException{
+		List<GoodsItemPO> goodsItemPOs=po.getBargains();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionBargainDataHelper.save(po);
 	}
 	
 	public ResultMessage addPT(PromotionTotalPO po) throws RemoteException{
+		List<GoodsItemPO> goodsItemPOs=po.getGifts();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionTotalDataHelper.save(po);
 	}
 
