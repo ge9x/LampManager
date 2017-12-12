@@ -44,7 +44,7 @@ public class PromotionBargainPO extends PromotionPO implements Serializable{
 	
 	public PromotionBargainPO(){};
 	
-	public PromotionBargainPO(String promotionName,String startDate, String endDate, PromotionType type, double goodsTotal, double bargainTotal, List<GoodsItemPO> bargains) {
+	public PromotionBargainPO(String promotionName,String startDate, String endDate, PromotionType type, double goodsTotal, double bargainTotal, List<GoodsItemPO> bargains,String promotionID) {
 		super(startDate, endDate, type);
 		this.promotionName=promotionName;
 		this.startDate = startDate;
@@ -53,7 +53,7 @@ public class PromotionBargainPO extends PromotionPO implements Serializable{
 		this.goodsTotal = goodsTotal;
 		this.bargainTotal = bargainTotal;
 		this.bargains = bargains;
-		this.promotionID="PB-"+Integer.toString(getID());
+		this.promotionID = promotionID;
 	}
 	
 	@Id
@@ -128,14 +128,12 @@ public class PromotionBargainPO extends PromotionPO implements Serializable{
 	
 	@Column(name="promotionID")
 	public String getPromotionID(){
-		return calPromotionID();
+		return promotionID;
 	}
 	
 	public void setPromotionID(String promotionID){
-		this.promotionID=calPromotionID();
+		this.promotionID=promotionID;
 	}
 	
-	private String calPromotionID(){
-		return "PB-"+Integer.toString(ID);
-	}
+	
 }

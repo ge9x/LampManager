@@ -43,7 +43,7 @@ public class PromotionTotalPO extends PromotionPO implements Serializable {
 	
 	public PromotionTotalPO(){};
 	
-	public PromotionTotalPO(String promotionName,String startDate, String endDate, PromotionType type, double voucher, List<GoodsItemPO> gifts, double totalPrice) {
+	public PromotionTotalPO(String promotionName,String startDate, String endDate, PromotionType type, double voucher, List<GoodsItemPO> gifts, double totalPrice,String promotionID) {
 		super(startDate, endDate, type);
 		this.promotionName=promotionName;
 		this.startDate = startDate;
@@ -52,7 +52,7 @@ public class PromotionTotalPO extends PromotionPO implements Serializable {
 		this.voucher = voucher;
 		this.gifts = gifts;
 		this.totalPrice = totalPrice;
-		this.promotionID="PT-"+Integer.toString(getID());
+		this.promotionID=promotionID;
 	}
 
 	@Id
@@ -133,14 +133,10 @@ public class PromotionTotalPO extends PromotionPO implements Serializable {
 	
 	@Column(name="promotionID")
 	public String getPromotionID(){
-		return calPromotionID();
+		return promotionID;
 	}
 	
 	public void setPromotionID(String promotionID){
-		this.promotionID=calPromotionID();
-	}
-	
-	private String calPromotionID(){
-		return "PT-"+Integer.toString(ID);
+		this.promotionID=promotionID;
 	}
 }

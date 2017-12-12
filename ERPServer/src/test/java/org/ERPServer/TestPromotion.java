@@ -24,7 +24,7 @@ public class TestPromotion {
 		SalesDataService salesImpl=SalesDataServiceImpl.getInstance();
 		
 		try{
-			/**
+			
 			ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 			
 			GoodsItemPO gi1=new GoodsItemPO("1", "霓虹灯",null, 20, 35.0,
@@ -42,9 +42,9 @@ public class TestPromotion {
 //			第一次请取消这段注释，成功运行一次后再注释掉
 		
 			
-				proImpl.addPC(new PromotionCustomerPO("会员促销策略","2017-11-30","2017-11-30",PromotionType.MEMBER_PROMOTION_STRATEGY,300,500,goodsItemList,Level.LEVEL_FOUR));
-				proImpl.addPB(new PromotionBargainPO("特价包","2017-12-1","2017-12-1",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsItemList));
-				proImpl.addPT(new PromotionTotalPO("总价促销策略","2017-12-1","2017-12-1",PromotionType.TOTAL_PROMOTION_STRATEGY,200.0,goodsItemList,300.0));
+				proImpl.addPC(new PromotionCustomerPO("会员促销策略","2017-11-30","2017-11-30",PromotionType.MEMBER_PROMOTION_STRATEGY,300,500,goodsItemList,Level.LEVEL_FOUR,"PB-1"));
+				proImpl.addPB(new PromotionBargainPO("特价包","2017-12-1","2017-12-1",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsItemList,"PC-1"));
+				proImpl.addPT(new PromotionTotalPO("总价促销策略","2017-12-1","2017-12-1",PromotionType.TOTAL_PROMOTION_STRATEGY,200.0,goodsItemList,300.0,"PT-1"));
 			
 			PromotionCustomerPO PC=proImpl.findPC("PC-1");	
 			System.out.println(PC.getStartDate()+" "+PC.getAllowance()+" "+PC.getLevel());
