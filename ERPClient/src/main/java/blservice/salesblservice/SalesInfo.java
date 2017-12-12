@@ -22,6 +22,13 @@ public interface SalesInfo {
 	 */
 	public ArrayList<SalesVO> getAllSalesOrder(String startDate,String endDate);
 	/**
+	 * 得到所有销售退货单
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate,String endDate);
+	/**
 	 * 审批销售单（销售出货单和销售退货单）
 	 * 
 	 * @param vo
