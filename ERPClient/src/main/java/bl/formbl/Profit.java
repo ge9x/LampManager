@@ -120,7 +120,7 @@ public class Profit {
     }
 
     public void getPurchaseBills(String startDate, String endDate){
-//        purchaseVOS = purchaseInfo.
+        purchaseVOS = purchaseInfo.getPurchaseByDate(startDate,endDate);
     }
     public void handlePurchaseBills(){
         for (PurchaseVO purchaseVO:purchaseVOS){
