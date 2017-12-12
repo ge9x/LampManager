@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/classification.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryClassificationController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutY="50.0" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+        <VBox alignment="TOP_CENTER" prefHeight="594.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
             <children>
                 <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <effect>
@@ -54,7 +54,7 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-            <HBox prefHeight="399.0" prefWidth="764.0" spacing="20.0">
+            <HBox prefHeight="472.0" prefWidth="764.0" spacing="20.0">
                <children>
                   <ScrollPane fx:id="TreePane" prefHeight="399.0" prefWidth="228.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                       <effect>
@@ -68,7 +68,7 @@
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
                      <children>
-                        <ScrollPane fx:id="GoodsPane" layoutX="22.0" layoutY="65.0" prefHeight="320.0" prefWidth="477.0" />
+                        <ScrollPane fx:id="GoodsPane" layoutX="22.0" layoutY="65.0" prefHeight="378.0" prefWidth="477.0" />
                         <Label layoutX="22.0" layoutY="25.0" prefHeight="32.0" prefWidth="173.0" text="该分类下的所有商品">
                            <font>
                               <Font size="16.0" />
