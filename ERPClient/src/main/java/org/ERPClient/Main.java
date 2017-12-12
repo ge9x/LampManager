@@ -9,16 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import rmi.AccountRemoteHelper;
-import rmi.ClassificationRemoteHelper;
-import rmi.CustomerRemoteHelper;
-import rmi.ExaminationRemoteHelper;
-import rmi.FinanceRemoteHelper;
-import rmi.GoodsRemoteHelper;
-import rmi.InventoryRemoteHelper;
-import rmi.PromotionRemoteHelper;
-import rmi.UserRemoteHelper;
-import rmi.SalesRemoteHelper;
+import rmi.*;
 import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
@@ -28,15 +19,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class Main extends Application {
-    private AccountRemoteHelper accountRemoteHelper;
-    private FinanceRemoteHelper financeRemoteHelper;
-    private CustomerRemoteHelper customerRemoteHelper;
-    private ClassificationRemoteHelper classificationRemoteHelper;
-    private GoodsRemoteHelper goodsRemoteHelper;
-    private InventoryRemoteHelper inventoryRemoteHelper;
-    private PromotionRemoteHelper promotionRemoteHelper;
-    private UserRemoteHelper userRemoteHelper;
-    private SalesRemoteHelper salesRemoteHelper;
+    Network network;
 
     MainUIController mainUIController;
     public static void main(String[] args) {
@@ -71,25 +54,8 @@ public class Main extends Application {
 
     private void linkToServer() {
         try {
-            accountRemoteHelper = AccountRemoteHelper.getInstance();
-            financeRemoteHelper = FinanceRemoteHelper.getInstance();
-            customerRemoteHelper=CustomerRemoteHelper.getInstance();
-            classificationRemoteHelper = ClassificationRemoteHelper.getInstance();
-            goodsRemoteHelper = GoodsRemoteHelper.getInstance();
-            inventoryRemoteHelper = InventoryRemoteHelper.getInstance();
-            promotionRemoteHelper = PromotionRemoteHelper.getInstance();
-            userRemoteHelper = UserRemoteHelper.getInstance();
-            salesRemoteHelper=SalesRemoteHelper.getInstance();
-            
-            accountRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/AccountDataRemoteObject"));
-            financeRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/FinanceDataRemoteObject"));
-            customerRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/CustomerDataRemoteObject"));
-            classificationRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/ClassificationDataRemoteObject"));
-            goodsRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/GoodsDataRemoteObject"));
-            inventoryRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/InventoryDataRemoteObject"));
-            promotionRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/PromotionDataRemoteObject"));
-            userRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/UserDataRemoteObject"));
-            salesRemoteHelper.setRemote(Naming.lookup("rmi://127.0.0.1:8080/SalesDataRemoteObject"));
+            network = new Network("127.0.0.1",8080);
+            network.initNetwork();
             System.out.println("linked");
         } catch (MalformedURLException e) {
             e.printStackTrace();
