@@ -111,19 +111,16 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 
 	@Override
 	public String getNewPromotionBargainID() throws RemoteException {
-		// TODO Auto-generated method stub
 		return promotionDataService.getNewPromotionBargainID();
 	}
 
 	@Override
 	public String getNewPromotionCustomerID() throws RemoteException {
-		// TODO Auto-generated method stub
 		return promotionDataService.getNewPromotionCustomerID();
 	}
 
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
-		// TODO Auto-generated method stub
 		return promotionDataService.getNewPromotionTotalID();
 	}
 
