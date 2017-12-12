@@ -17,29 +17,35 @@ import vo.GoodsVO;
 
 /**
  * Created on 2017/10/22
+ * 
  * @author 巽
  *
  */
-public class InventoryBLService_Stub implements InventoryBLService{
+public class InventoryBLService_Stub implements InventoryBLService {
 	ArrayList<InventoryBillVO> data;
 	ArrayList<InventoryBillVO> newData = new ArrayList<>();
 	ArrayList<InventoryBillVO> alarmData;
 	ArrayList<String> inventoryName = new ArrayList<>();
-	
+
 	{
 		data = new ArrayList<InventoryBillVO>();
 		alarmData = new ArrayList<InventoryBillVO>();
-		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS,LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-        InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
-        newData.add(vo1);
-        newData.add(vo1);
-        newData.add(vo1);
-        newData.add(vo2);
-        newData.add(vo3);
-        data.add(vo1);
+		InventoryBillVO vo1 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS,
+				LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo2 = new InventoryBillVO("BSD-20171022-00000", BillType.LOSS, BillState.PASS,
+				LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo3 = new InventoryBillVO("BJD-20171022-00000", BillType.ALARM, BillState.PASS,
+				LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo4 = new InventoryBillVO("ZSD-20171022-00000", BillType.GIFT, BillState.PASS,
+				LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		InventoryBillVO vo5 = new InventoryBillVO("JHD-20171022-00000", BillType.PURCHASE, BillState.PASS,
+				LocalDate.now().toString(), "栖霞区仓库", "王二小", new HashMap<GoodsVO, Integer>());
+		newData.add(vo1);
+		newData.add(vo1);
+		newData.add(vo1);
+		newData.add(vo2);
+		newData.add(vo3);
+		data.add(vo1);
 		data.add(vo2);
 		alarmData.add(vo3);
 		data.add(vo4);
@@ -53,8 +59,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage addInventory(String inventory) {
-		for(String s : inventoryName){
-			if(s.equals(inventory)){
+		for (String s : inventoryName) {
+			if (s.equals(inventory)) {
 				System.out.println("add inventory failed");
 				return ResultMessage.FAILED;
 			}
@@ -65,8 +71,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage deleteInventory(String inventory) {
-		for(String s : inventoryName){
-			if(s.equals(inventory)){
+		for (String s : inventoryName) {
+			if (s.equals(inventory)) {
 				inventoryName.remove(s);
 				System.out.println("delete inventory success");
 				return ResultMessage.SUCCESS;
@@ -78,8 +84,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage updateInventory(String before, String after) {
-		for(String s : inventoryName){
-			if(s.equals(before)){
+		for (String s : inventoryName) {
+			if (s.equals(before)) {
 				inventoryName.remove(s);
 				inventoryName.add(after);
 				System.out.println("update inventory success");
@@ -91,27 +97,26 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public InventoryViewVO show(String startDate, String endDate, String inventory) {
-		if(startDate==null || endDate==null || inventory==null){
+		if (startDate == null || endDate == null || inventory == null) {
 			return null;
-		}
-		else{
-            InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库", new ArrayList<InventoryViewItemVO>(), new HashMap<GoodsVO, Double>());
-            System.out.println("show succeed");
-            return ret;
+		} else {
+			InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库",
+					new ArrayList<InventoryViewItemVO>(), new HashMap<GoodsVO, Double>());
+			System.out.println("show succeed");
+			return ret;
 		}
 	}
 
 	public InventoryCheckVO check() {
-        InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
+		InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
 		return ret;
 	}
 
 	public ResultMessage exportExcel(InventoryCheckVO vo) {
-		if(vo==null){
+		if (vo == null) {
 			System.out.println("export Excel failed");
 			return ResultMessage.FAILED;
-		}
-		else{
+		} else {
 			System.out.println("export Excel success");
 			return ResultMessage.SUCCESS;
 		}
@@ -125,32 +130,18 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return alarmData;
 	}
 
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String ID,
-			String keyword) {
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {
 		ArrayList<InventoryBillVO> ret = new ArrayList<InventoryBillVO>();
-		for(InventoryBillVO vo : data){
-			if(vo.ID.equals(ID)){
-				ret.add(vo);
-			}
-			else {
-				for(GoodsVO gvo : vo.goodsMap.keySet()){
-					if(gvo.name.contains(keyword)){
-						ret.add(vo);
-					}
-					break;
+		if (type == BillType.ALARM) {
+			for (InventoryBillVO vo : alarmData) {
+				if (vo.state == state) {
+					ret.add(vo);
 				}
 			}
-		}
-		for(InventoryBillVO vo : alarmData){
-			if(vo.ID.equals(ID)){
-				ret.add(vo);
-			}
-			else {
-				for(GoodsVO gvo : vo.goodsMap.keySet()){
-					if(gvo.name.contains(keyword)){
-						ret.add(vo);
-					}
-					break;
+		} else {
+			for (InventoryBillVO vo : data) {
+				if (vo.type == type && vo.state == state) {
+					ret.add(vo);
 				}
 			}
 		}
@@ -158,18 +149,17 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage addBill(InventoryBillVO vo) {
-		if(vo.type==BillType.ALARM){
-			for(InventoryBillVO ivo : alarmData){
-				if(ivo.ID.equals(vo.ID)){
+		if (vo.type == BillType.ALARM) {
+			for (InventoryBillVO ivo : alarmData) {
+				if (ivo.ID.equals(vo.ID)) {
 					System.out.println("add bill failed");
 					return ResultMessage.FAILED;
 				}
 			}
 			alarmData.add(vo);
-		}
-		else{
-			for(InventoryBillVO ivo : data){
-				if(ivo.ID.equals(vo.ID)){
+		} else {
+			for (InventoryBillVO ivo : data) {
+				if (ivo.ID.equals(vo.ID)) {
 					System.out.println("add bill failed");
 					return ResultMessage.FAILED;
 				}
@@ -181,15 +171,15 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage deleteBill(String ID) {
-		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(ID)){
+		for (InventoryBillVO ivo : alarmData) {
+			if (ivo.ID.equals(ID)) {
 				alarmData.remove(ivo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
-		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(ID)){
+		for (InventoryBillVO ivo : data) {
+			if (ivo.ID.equals(ID)) {
 				data.remove(ivo);
 				System.out.println("delete bill success");
 				return ResultMessage.SUCCESS;
@@ -200,19 +190,18 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public ResultMessage updateBill(InventoryBillVO vo) {
-		if(vo.type==BillType.ALARM){
-			for(InventoryBillVO ivo : alarmData){
-				if(ivo.ID.equals(vo.ID)){
+		if (vo.type == BillType.ALARM) {
+			for (InventoryBillVO ivo : alarmData) {
+				if (ivo.ID.equals(vo.ID)) {
 					alarmData.remove(ivo);
 					alarmData.add(vo);
 					System.out.println("update bill success");
 					return ResultMessage.SUCCESS;
 				}
 			}
-		}
-		else{
-			for(InventoryBillVO ivo : data){
-				if(ivo.ID.equals(vo.ID)){
+		} else {
+			for (InventoryBillVO ivo : data) {
+				if (ivo.ID.equals(vo.ID)) {
 					data.remove(ivo);
 					data.add(vo);
 					System.out.println("update bill success");
@@ -225,28 +214,28 @@ public class InventoryBLService_Stub implements InventoryBLService{
 	}
 
 	public InventoryBillVO showBillDetails(String ID) {
-		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(ID)){
+		for (InventoryBillVO ivo : alarmData) {
+			if (ivo.ID.equals(ID)) {
 				return ivo;
 			}
 		}
-		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(ID)){
+		for (InventoryBillVO ivo : data) {
+			if (ivo.ID.equals(ID)) {
 				return ivo;
 			}
 		}
 		return null;
 	}
 
-	public ResultMessage submitBill(String ID) {
-		for(InventoryBillVO ivo : alarmData){
-			if(ivo.ID.equals(ID)){
+	public ResultMessage submitBill(InventoryBillVO vo) {
+		for (InventoryBillVO ivo : alarmData) {
+			if (ivo.ID.equals(vo.ID)) {
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
-		for(InventoryBillVO ivo : data){
-			if(ivo.ID.equals(ID)){
+		for (InventoryBillVO ivo : data) {
+			if (ivo.ID.equals(vo.ID)) {
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}
@@ -254,8 +243,8 @@ public class InventoryBLService_Stub implements InventoryBLService{
 		return ResultMessage.FAILED;
 	}
 
-    @Override
-    public ArrayList<InventoryBillVO> findBillByType(BillType type) {
-        return newData;
-    }
+	@Override
+	public ArrayList<InventoryBillVO> findBillByType(BillType type) {
+		return newData;
+	}
 }

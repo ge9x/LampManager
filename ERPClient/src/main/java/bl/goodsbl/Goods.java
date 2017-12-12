@@ -118,10 +118,18 @@ public class Goods {
 		return ret;
 	}
 	
+	/**
+	 * 仅限增加商品时调用
+	 */
 	private GoodsPO voToPO(GoodsVO vo){
 		ClassificationPO classification = classificationInfo.getClassificationByName(vo.classification);
 		int turn = Integer.parseInt(vo.ID.substring(2));
 		GoodsPO ret = new GoodsPO(vo.name, vo.model, classification, vo.alarmAmount, vo.buyingPrice, vo.retailPrice, vo.buyingPrice, vo.retailPrice, turn);
 		return ret;
+	}
+	
+	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
+		int poID = Integer.parseInt(ID.substring(2));
+		return goodsDataService.find(poID);
 	}
 }
