@@ -100,5 +100,17 @@ public class UserController implements UserBLService, UserInfo{
 			return null;
 		}
 	}
+
+	@Override
+	public ArrayList<UserVO> getAllSalesmen() {
+		// TODO Auto-generated method stub
+		try {
+			return user.getAllSalesmen();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 		
 }

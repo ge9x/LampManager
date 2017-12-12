@@ -14,4 +14,6 @@ public interface UserInfo {
 	
 	public UserVO findUserByID(String UserID);
 	
+	public ArrayList<UserVO> getAllSalesmen();
+	
 }
