@@ -82,6 +82,7 @@ public class InventorySyncController {
             });
         }
     }
+
     public void loadBills(String tab){
         ArrayList<InventoryBillVO> bills = new ArrayList<>();
         switch (tab){
