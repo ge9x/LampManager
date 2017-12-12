@@ -1,5 +1,6 @@
 package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,8 @@ import util.PromotionType;
 
 @Entity
 @Table(name = "promotionbargain")
-public class PromotionBargainPO extends PromotionPO{
+public class PromotionBargainPO extends PromotionPO implements Serializable{
+	private static final long serialVersionUID = 473563454384937534L;
 	/** 编号 */
 	private int ID;
 	/**促销策略名字*/
