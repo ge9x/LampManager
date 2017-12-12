@@ -3,6 +3,7 @@ package ui.viewcontroller.SalesStaff;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bl.salesbl.PurchaseController;
 import blservice.salesblservice.SalesBLService;
 import blstubdriver.SalesBLService_Stub;
 import javafx.event.Event;
@@ -23,7 +24,7 @@ public class SalesStaffReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
 
-    SalesBLService salesBLService = new SalesBLService_Stub();
+    SalesBLService salesBLService = new PurchaseController();
 
     ArrayList<PurchaseVO> draft;
     ArrayList<PurchaseVO> submitted;

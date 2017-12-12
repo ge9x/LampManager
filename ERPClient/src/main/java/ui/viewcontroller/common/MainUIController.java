@@ -24,8 +24,6 @@ public class MainUIController {
     @FXML
     BorderPane borderPane;
 
-
-    UserBLService userBLService = new UserBLService_Stub();
     Stage primaryStage;
 
     public MainUIController(){
@@ -53,6 +51,7 @@ public class MainUIController {
     }
     public void showInventoryView(){
         resizeToPage();
+        showStateBar();
         InventoryViewController inventoryViewController = new InventoryViewController(this);
     }
 

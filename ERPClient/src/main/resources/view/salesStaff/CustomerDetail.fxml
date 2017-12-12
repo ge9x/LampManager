@@ -280,14 +280,11 @@
                                     <Insets left="40.0" />
                                  </HBox.margin>
                               </Label>
-                              <JFXTextField fx:id="customerSalesman" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
+                              <JFXComboBox fx:id="customerSalesman" focusColor="#1db1a4" prefHeight="23.0" prefWidth="289.0">
                                  <HBox.margin>
                                     <Insets left="60.0" />
                                  </HBox.margin>
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </JFXTextField>
+                              </JFXComboBox>
                            </children>
                         </HBox>
                      </children>

@@ -124,13 +124,15 @@ public class AccountBill {
 
     public ResultMessage examine(AccountBillVO vo) throws RemoteException {
         ResultMessage re = update(vo);
-        if (vo.type == BillType.RECEIPT){
-            for (AccountBillItemVO itemVO : vo.accountBillItems){
-                accountInfo.changeMoney(itemVO.account.accountID,itemVO.transferMoney);
-            }
-        }else{
-            for (AccountBillItemVO itemVO : vo.accountBillItems){
-                accountInfo.changeMoney(itemVO.account.accountID,-itemVO.transferMoney);
+        if (vo.state == BillState.PASS){
+            if (vo.type == BillType.RECEIPT){
+                for (AccountBillItemVO itemVO : vo.accountBillItems){
+                    accountInfo.changeMoney(itemVO.account.accountID,itemVO.transferMoney);
+                }
+            }else{
+                for (AccountBillItemVO itemVO : vo.accountBillItems){
+                    accountInfo.changeMoney(itemVO.account.accountID,-itemVO.transferMoney);
+                }
             }
         }
         return re;

@@ -3,9 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +13,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/sync.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventorySyncEditController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutY="50.0" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
             <children>
                 <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <effect>
@@ -45,38 +43,18 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-            <AnchorPane prefHeight="371.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+            <AnchorPane prefHeight="464.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                 <effect>
                     <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                 </effect>
                <children>
-                  <Label layoutX="44.0" layoutY="66.0" text="商品名称">
+                  <Label layoutX="44.0" layoutY="99.0" text="仓库">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label layoutX="190.0" layoutY="66.0" text="仓库">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="513.0" layoutY="66.0" text="数量">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="345.0" layoutY="66.0" text="型号">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <JFXComboBox layoutX="44.0" layoutY="113.0" prefHeight="23.0" prefWidth="128.0" />
-                  <JFXComboBox layoutX="190.0" layoutY="113.0" prefHeight="23.0" prefWidth="128.0" />
-                  <JFXComboBox layoutX="345.0" layoutY="113.0" prefHeight="23.0" prefWidth="120.0" />
-                  <TextField layoutX="548.0" layoutY="108.0" prefHeight="30.0" prefWidth="30.0" />
-                  <Button layoutX="514.0" layoutY="107.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="+" />
-                  <Button layoutX="585.0" layoutY="107.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" text="-" />
-                   <HBox alignment="CENTER_RIGHT" layoutX="514.0" layoutY="298.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                  <JFXComboBox layoutX="44.0" layoutY="134.0" prefHeight="23.0" prefWidth="128.0" />
+                   <HBox alignment="CENTER_RIGHT" layoutX="529.0" layoutY="401.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
                        <children>
                            <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
                                <font>
@@ -90,6 +68,32 @@
                            </JFXButton>
                        </children>
                    </HBox>
+                  <Label layoutX="44.0" layoutY="190.0" text="操作员">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="38.0" layoutY="34.0" prefHeight="31.0" prefWidth="77.0" styleClass="ID-label" text="单据编号" />
+                  <Label fx:id="BillID" layoutX="136.0" layoutY="34.0" prefHeight="31.0" prefWidth="347.0" text="BYD-20171022-00001" />
+                  <Label layoutX="44.0" layoutY="219.0" text="胡本霖">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="vbox" layoutX="268.0" layoutY="101.0" prefHeight="237.0" prefWidth="448.0" spacing="10.0">
+                     <children>
+                        <HBox prefHeight="50.0" prefWidth="448.0">
+                           <children>
+                              <Label styleClass="input-label" text="商品列表" />
+                              <Label fx:id="addIcon" alignment="CENTER" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
             </children>

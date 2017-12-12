@@ -1,5 +1,6 @@
 package ui.viewcontroller.SalesStaff;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerBLService;
+import blservice.salesblservice.SalesBLService;
 import blstubdriver.CustomerBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
@@ -21,6 +23,7 @@ import util.Level;
 import util.Money;
 import vo.CashBillVO;
 import vo.CustomerVO;
+import vo.UserVO;
 
 public class SalesStaffCustomerAddViewController {
 	
@@ -58,7 +61,7 @@ public class SalesStaffCustomerAddViewController {
 	JFXTextField customerPay;
 	
 	@FXML
-	JFXTextField customerSalesman;
+	JFXComboBox<String> customerSalesman;
 	
 	@FXML
 	JFXButton OKButton;
@@ -88,6 +91,14 @@ public class SalesStaffCustomerAddViewController {
 		customerID.setEditable(false);
 		customerReceive.setEditable(false);
 		customerPay.setEditable(false);
+		
+		//初始化业务员选择器
+		ArrayList<String> salesmenName = new ArrayList<>();
+		ArrayList<UserVO> salesmen = customerBLService.getAllSalesman();
+		for(UserVO vo:salesmen){
+			salesmenName.add(vo.name);
+		}
+		customerSalesman.getItems().addAll(salesmenName);
     }
 	
 	public void setSalesStaffCustomerInfoViewController(SalesStaffCustomerInfoViewController salesStaffCustomerInfoViewController){
@@ -123,7 +134,7 @@ public class SalesStaffCustomerAddViewController {
 	public void setCustomerInfo(){
 		customer = new CustomerVO(customerID.getText(), getCustomerType(), getCustomerLevel(), customerName.getText(), customerPhone.getText(),
 				customerAddress.getText(), customerPostcode.getText(), customerMail.getText(), Double.parseDouble(customerReceivableLimit.getText()), 0, 0, 
-				customerSalesman.getText(), 0, 0);
+				customerSalesman.getValue(), 0, 0);
 	}
 	
 	public CustomerCategory getCustomerType(){
@@ -154,7 +165,7 @@ public class SalesStaffCustomerAddViewController {
 	
 	public boolean isCompleted(){
 		if(hasContent(customerID)&&hasContent(customerName)&&hasContent(customerPhone)&&hasContent(customerReceivableLimit)
-				&&hasContent(customerAddress)&&hasContent(customerPostcode)&&hasContent(customerMail)&&hasContent(customerSalesman)){
+				&&hasContent(customerAddress)&&hasContent(customerPostcode)&&hasContent(customerMail)&&!customerSalesman.getSelectionModel().isEmpty()){
 			return true;
 		}
 		else{
