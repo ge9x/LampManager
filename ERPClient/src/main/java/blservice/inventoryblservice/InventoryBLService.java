@@ -2,8 +2,8 @@ package blservice.inventoryblservice;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
-import java.util.Date;
 
+import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.InventoryBillVO;
@@ -51,15 +51,12 @@ public interface InventoryBLService extends Remote {
 	 */
 	public ArrayList<InventoryBillVO> showAlarmBills();
 	/**
-	 * 搜索符合条件的库存单据
-	 * @param startDate 开始时间点
-	 * @param endDate 结束时间点
-	 * @param inventory 仓库名
-	 * @param id 单据ID
-	 * @param keyword 关键字
-	 * @return 符合条件的库存单据的VO
+	 * 根据单据类型和状态查找单据
+	 * @param type 单据类型
+	 * @param state 单据状态
+	 * @return 符合条件的单据的集合
 	 */
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id, String keyword);
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state);
 	/**
 	 * 新增仓库名
 	 * @param inventory 等待新增的仓库名
@@ -93,7 +90,7 @@ public interface InventoryBLService extends Remote {
 	public ResultMessage updateInventory(String before, String after);
 	/**
 	 * 修改库存单据
-	 * @param vo
+	 * @param 单据vo
 	 * @return 是否成功修改
 	 */
 	public ResultMessage updateBill(InventoryBillVO vo);
@@ -105,10 +102,10 @@ public interface InventoryBLService extends Remote {
 	public InventoryBillVO showBillDetails(String ID);
 	/**
 	 * 将单据草稿提交给总经理审批，改变单据状态为未审核状态
-	 * @param ID 单据ID
+	 * @param vo 单据vo
 	 * @return 是否成功提交
 	 */
-	public ResultMessage submitBill(String ID);
+	public ResultMessage submitBill(InventoryBillVO vo);
 
     /**
      * 根据单据类型查找单据

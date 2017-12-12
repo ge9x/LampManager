@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import blservice.goodsblservice.GoodsBLService;
 import blservice.goodsblservice.GoodsInfo;
+import po.GoodsPO;
 import util.ResultMessage;
 import vo.GoodsIdentityVO;
 import vo.GoodsVO;
@@ -110,6 +111,18 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 
 	public Double getRetailPriceByID(String ID) {
 		return showDetails(ID).retailPrice;
+	}
+
+	@Override
+	public GoodsPO getGoodsByID(String ID) {
+		try {
+			return goods.getGoodsByID(ID);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

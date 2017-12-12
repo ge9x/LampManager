@@ -95,4 +95,9 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	public ResultMessage updateBill(InventoryBillPO po) throws RemoteException {
 		return inventoryBillDataHelper.update(po);
 	}
+
+	@Override
+	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return inventoryBillDataHelper.multiQuery(criteria);
+	}
 }

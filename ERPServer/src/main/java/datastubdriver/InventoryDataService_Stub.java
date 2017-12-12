@@ -11,6 +11,7 @@ import po.InventoryPO;
 import po.GoodsPO;
 import util.BillState;
 import util.BillType;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -175,6 +176,14 @@ public class InventoryDataService_Stub implements InventoryDataService{
 		}
 		System.out.println("update bill failed");
 		return ResultMessage.FAILED;
+	}
+
+	/**
+	 * 后加入接口，桩不予实现
+	 */
+	@Override
+	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return null;
 	}
 
 }

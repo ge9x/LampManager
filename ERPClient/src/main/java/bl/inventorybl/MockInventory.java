@@ -84,9 +84,8 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id,
-			String keyword) {
-		if(id.equals("0100001")){
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {
+		if(type==BillType.ALARM && state==BillState.DRAFT){
 			HashMap<GoodsVO, Integer> goodsMap = new HashMap<GoodsVO, Integer>();
 			GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
 			goodsMap.put(goodsVO, 25);
@@ -181,8 +180,8 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ResultMessage submitBill(String ID) {
-		if(ID.equals("BYD-20171107-00001")){
+	public ResultMessage submitBill(InventoryBillVO vo) {
+		if(vo.ID.equals("BYD-20171107-00001")){
 			System.out.println("Submit inventory bill succeed");
 			return ResultMessage.SUCCESS;
 		}

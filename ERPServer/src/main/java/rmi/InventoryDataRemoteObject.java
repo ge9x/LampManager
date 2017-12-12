@@ -8,6 +8,7 @@ import dataimpl.inventorydataimpl.InventoryDataServiceImpl;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.InventoryBillPO;
 import po.InventoryPO;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -72,6 +73,11 @@ public class InventoryDataRemoteObject extends UnicastRemoteObject implements In
 	@Override
 	public ResultMessage updateBill(InventoryBillPO po) throws RemoteException {
 		return inventoryDataService.updateBill(po);
+	}
+
+	@Override
+	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return inventoryDataService.advancedQuery(criteria);
 	}
 
 }
