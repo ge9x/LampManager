@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bl.salesbl.Sales;
+import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blstubdriver.SalesBLService_Stub;
 import javafx.event.Event;
@@ -26,7 +27,7 @@ public class SalesStaffSalesOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffSalesEditViewController salesStaffSalesEditViewController;
 
-    SalesBLService salesBLService = new SalesBLService_Stub();
+    SalesBLService salesBLService = new SalesController();
 
     ArrayList<SalesVO> draft;
     ArrayList<SalesVO> submitted;

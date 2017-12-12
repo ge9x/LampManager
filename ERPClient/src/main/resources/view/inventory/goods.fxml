@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/goods.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryGoodsController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutY="50.0" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
             <children>
                 <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <effect>
@@ -49,14 +49,14 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-            <AnchorPane prefHeight="425.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+            <AnchorPane prefHeight="460.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                 <effect>
                     <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                 </effect>
                <children>
                   <TextField fx:id="SearchField" layoutX="529.0" layoutY="32.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #eeeeee;" />
                   <Label fx:id="searchIcon" layoutX="701.0" layoutY="31.0" onMouseClicked="#clickSearchButton" prefHeight="23.0" prefWidth="23.0" styleClass="icon-label" text="Q" />
-                  <ScrollPane fx:id="TablePane" layoutX="26.0" layoutY="73.0" prefHeight="317.0" prefWidth="707.0" />
+                  <ScrollPane fx:id="TablePane" layoutX="26.0" layoutY="73.0" prefHeight="369.0" prefWidth="707.0" />
                </children>
             </AnchorPane>
             </children>
