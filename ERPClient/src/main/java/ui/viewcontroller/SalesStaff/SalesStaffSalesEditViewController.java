@@ -44,6 +44,7 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Level;
@@ -56,6 +57,7 @@ import vo.SalesVO;
 
 public class SalesStaffSalesEditViewController {
 	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
+	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesBLService_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
@@ -70,6 +72,7 @@ public class SalesStaffSalesEditViewController {
     DoubleProperty total = new SimpleDoubleProperty(0);
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
     
+    boolean isExamine = false;
     boolean isNew;
     
     @FXML
@@ -97,7 +100,7 @@ public class SalesStaffSalesEditViewController {
     Text beforeSum;
     
     @FXML
-    JFXTextArea remark;
+    JFXTextField remark;
     
     @FXML
     JFXTextField allowance;
@@ -323,6 +326,7 @@ public class SalesStaffSalesEditViewController {
     }
     
     public void addSalesOrder() {
+    	isExamine = false;
     	isNew = true;
         String ID = salesBLService.getnewSalesID();
         BillID.setText(ID);
@@ -422,40 +426,59 @@ public class SalesStaffSalesEditViewController {
     }
     
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-            	String customerName = "";
-                String inventoryName = "";
-                String customerID = "";
-                String customerSalesman = "";
-                String promotionName = "";
-                if (customer.getSelectionModel().getSelectedIndex() >= 0){
-                    customerName = customers.get(customer.getSelectionModel().getSelectedIndex()).customerName;
-                    customerID = customers.get(customer.getSelectionModel().getSelectedIndex()).customerID;
-                    customerSalesman = customers.get(customer.getSelectionModel().getSelectedIndex()).salesman;
-                }
-                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
-                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-                }
-                if(promotion.getSelectionModel().getSelectedIndex() >= 0){
-                	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
-                }
-                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString(), promotionName);
-                salesBLService.saveSales(salesVO);
-            }
-
-            salesStaffSalesOrderViewController.showSalesOrderList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	String customerName = "";
+	                String inventoryName = "";
+	                String customerID = "";
+	                String customerSalesman = "";
+	                String promotionName = "";
+	                if (customer.getSelectionModel().getSelectedIndex() >= 0){
+	                    customerName = customers.get(customer.getSelectionModel().getSelectedIndex()).customerName;
+	                    customerID = customers.get(customer.getSelectionModel().getSelectedIndex()).customerID;
+	                    customerSalesman = customers.get(customer.getSelectionModel().getSelectedIndex()).salesman;
+	                }
+	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	                }
+	                if(promotion.getSelectionModel().getSelectedIndex() >= 0){
+	                	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
+	                }
+	                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString(), promotionName);
+	                salesBLService.saveSales(salesVO);
+	            }
+	
+	            salesStaffSalesOrderViewController.showSalesOrderList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
 
 
     public void setSalesStaffSalesOrderViewController(SalesStaffSalesOrderViewController salesStaffSalesOrderViewController){
         this.salesStaffSalesOrderViewController = salesStaffSalesOrderViewController;
+    }
+    
+    public void setGeneralManagerExaminationCellController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
     }
     
     public void setForDetailView(SalesVO salesBill){
@@ -481,11 +504,17 @@ public class SalesStaffSalesEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                salesStaffSalesOrderViewController.showSalesOrderList();
+            	if(!isExamine){
+            		salesStaffSalesOrderViewController.showSalesOrderList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if (salesBill.state == BillState.DRAFT){
+        if (salesBill.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -528,5 +557,9 @@ public class SalesStaffSalesEditViewController {
                 clickCancelButton();
             }
         });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
 import util.BillState;
-import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;

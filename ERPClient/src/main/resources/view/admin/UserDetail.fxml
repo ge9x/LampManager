@@ -22,7 +22,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.Admin.AdminUserDetailViewController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="482.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" prefHeight="538.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
             <VBox alignment="TOP_CENTER" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
@@ -51,7 +51,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <VBox prefHeight="337.0" prefWidth="750.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                  <VBox prefHeight="359.0" prefWidth="750.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                            <children>

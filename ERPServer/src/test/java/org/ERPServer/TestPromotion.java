@@ -24,7 +24,7 @@ public class TestPromotion {
 		SalesDataService salesImpl=SalesDataServiceImpl.getInstance();
 		
 		try{
-			
+			/**
 			ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 			
 			GoodsItemPO gi1=new GoodsItemPO("1", "霓虹灯",null, 20, 35.0,
@@ -58,6 +58,11 @@ public class TestPromotion {
 			proImpl.updatePB(PB);
 			System.out.println("查询结束！");
 			*/
+			List<PromotionBargainPO> pbList=proImpl.showPB();
+			for(int i=0;i<pbList.size();i++){
+				System.out.println(pbList.get(i).getPromotionID()+" "+pbList.get(i).getBargainTotal());
+			}
+			System.out.println("查询结束！");
 			} catch (RemoteException e) {
 				System.out.println("Exception!");
 				e.printStackTrace();

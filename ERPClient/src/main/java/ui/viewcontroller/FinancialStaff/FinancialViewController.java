@@ -17,6 +17,7 @@ public class FinancialViewController {
     private FinancialPaymentController financialPaymentController;
     private FinancialCashBillController financialCashBillController;
     private FinancialSalesDetailsController financialSalesDetailsController;
+    private FinancialDocumentDetailsController financialDocumentDetailsController;
     private FinancialProfitController financialProfitController;
 
     private MainUIController mainUIController;
@@ -136,7 +137,19 @@ public class FinancialViewController {
         }
     }
     public void showDocumentDetailsView(){
+        mainUIController.setCenter(null);
 
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/DocumentDetails.fxml"));
+            Pane page = pageLoader.load();
+            financialDocumentDetailsController = pageLoader.getController();
+            financialDocumentDetailsController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void showProfitView(){
         mainUIController.setCenter(null);

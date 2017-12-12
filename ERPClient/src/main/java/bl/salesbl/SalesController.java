@@ -1,16 +1,12 @@
 package bl.salesbl;
 
 import java.rmi.RemoteException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import org.hibernate.internal.util.beans.BeanInfoHelper.ReturningBeanInfoDelegate;
 
 import blservice.salesblservice.SalesBLService;
 import blservice.salesblservice.SalesInfo;
 import util.BillState;
-import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -242,6 +238,16 @@ public class SalesController implements SalesBLService,SalesInfo{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate, String endDate) {
+		try {
+			return sales.getAllSalesReturnOrder(startDate, endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

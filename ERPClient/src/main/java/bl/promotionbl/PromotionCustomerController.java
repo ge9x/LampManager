@@ -123,4 +123,16 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 		}
 	}
 
+	@Override
+	public String getNewPromotionCustomerID() {
+		// TODO Auto-generated method stub
+		try {
+			return promotionCustomer.getNewPromotionCustomerID();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

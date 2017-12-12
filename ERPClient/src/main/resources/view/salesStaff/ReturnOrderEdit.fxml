@@ -23,9 +23,9 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseEdit.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffReturnEditViewController">
     <children>
-        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="539.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="566.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -52,7 +52,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                  <AnchorPane fx:id="BillPane" prefHeight="445.0" prefWidth="744.0">
+                  <AnchorPane fx:id="BillPane" prefHeight="417.0" prefWidth="744.0">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
@@ -101,7 +101,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER_RIGHT" layoutX="510.0" layoutY="330.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="510.0" layoutY="345.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
                            <children>
                                <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
                                    <font>
@@ -116,7 +116,7 @@
                            </children>
                         </HBox>
                         <Label layoutX="262.0" layoutY="295.0" styleClass="input-label" text="总备注" />
-                        <JFXTextArea fx:id="remark" focusColor="#1db1a4" layoutX="311.0" layoutY="293.0" prefHeight="22.0" prefWidth="372.0" />
+                        <JFXTextField fx:id="remark" focusColor="#1db1a4" layoutX="326.0" layoutY="293.0" prefHeight="23.0" prefWidth="382.0" />
                      </children>
                   </AnchorPane>
 

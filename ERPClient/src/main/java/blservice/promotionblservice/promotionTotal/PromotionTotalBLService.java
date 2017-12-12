@@ -68,4 +68,6 @@ public interface PromotionTotalBLService {
 	public ResultMessage deletePromotion(String promotionID);
 	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO);
+	
+	public String getNewPromotionTotalID();
 }

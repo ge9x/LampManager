@@ -107,4 +107,16 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 		}
 	}
 
+	@Override
+	public String getNewPromotionBargainID() {
+		// TODO Auto-generated method stub
+		try {
+			return promotionBargain.getNewPromotionBargainID();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

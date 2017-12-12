@@ -219,4 +219,14 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
     public ArrayList<CashBillVO> getAllSubmittedCashBills() {
         return getCashBillByState(BillState.SUBMITTED);
     }
+
+    @Override
+    public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) {
+        return null;
+    }
 }

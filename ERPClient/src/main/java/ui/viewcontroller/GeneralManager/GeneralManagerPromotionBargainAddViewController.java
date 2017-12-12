@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionBargainController;
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.PromotionBargain_Stub;
@@ -54,7 +55,7 @@ import vo.PurchaseVO;
 public class GeneralManagerPromotionBargainAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionBargainBLService promotionBargainBLService = new PromotionBargain_Stub();
+	PromotionBargainBLService promotionBargainBLService = new PromotionBargainController();
 	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
 	ArrayList<GoodsItemVO> bargains = new ArrayList<>();
@@ -205,6 +206,12 @@ public class GeneralManagerPromotionBargainAddViewController {
 		this.generalManagerPromotionViewController = generalManagerPromotionViewController;
 	}
 	
+	public void addPromotionBargain(){
+		isNew = true;
+		String ID = promotionBargainBLService.getNewPromotionBargainID();
+		promotionID.setText(ID);
+	}
+	
 	public void clickDeleteButton(){
     	int index = itemTable.getSelectionModel().getSelectedIndex();
     	total.set(total.get()-data.get(index).getTotalPrice());
@@ -227,7 +234,12 @@ public class GeneralManagerPromotionBargainAddViewController {
 		if(isCompleted()){
 			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
-			promotionBargainBLService.submit(promotionBargain);
+			if(isNew){
+				promotionBargainBLService.submit(promotionBargain);
+			}
+			else{
+				promotionBargainBLService.updatePromotion(promotionBargain);
+			}
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

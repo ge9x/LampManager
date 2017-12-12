@@ -30,7 +30,7 @@ public class DocumentDetails{
     InventoryInfo inventoryInfo;
     CustomerInfo customerInfo;
 
-    ArrayList<BillVO> billVOS;
+    ArrayList<BillVO> billVOS = new ArrayList<>();
 
     public DocumentDetails(){
         salesInfo = new SalesController();
@@ -53,13 +53,13 @@ public class DocumentDetails{
                     return searchByInventory(billVOS, input.billType, input.keyword);
             }
         }
-        return null;
+        return billVOS;
     }
     public void searchByType(BillType type){
-        if (type == BillType.RECEIPT){
+        if (type != null){
             ArrayList<BillVO> newArr = new ArrayList<>();
             for (BillVO billVO:billVOS){
-                if (billVO.type == BillType.RECEIPT)
+                if (billVO.type == type)
                     newArr.add(billVO);
             }
             billVOS.clear();
@@ -147,8 +147,7 @@ public class DocumentDetails{
         billVOS.addAll(inventoryInfo.getInventoryBillsByDate(startDate, endDate));
         billVOS.addAll(purchaseInfo.getPurchaseByDate(startDate,endDate));
         billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
-//        billVOS.addAll(salesInfo.get)
-
-
+        billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
+        billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
     }
 }

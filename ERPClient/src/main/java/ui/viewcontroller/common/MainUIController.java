@@ -2,16 +2,13 @@ package ui.viewcontroller.common;
 
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
-import com.sun.scenario.effect.impl.prism.PrImage;
+import com.jfoenix.controls.JFXSnackbar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.ERPClient.Main;
-
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
@@ -32,23 +29,27 @@ public class MainUIController {
     UserBLService userBLService = new UserBLService_Stub();
     Stage primaryStage;
 
-    public MainUIController() {
-
+    public MainUIController(){
     }
+
     public void showFinancialStaffView(){
         resizeToPage();
+        showStateBar();
         FinancialViewController financialViewController = new FinancialViewController(this);
     }
     public void showSalesStaffView(){
         resizeToPage();
+        showStateBar();
         SalesStaffViewController salesStaffViewController = new SalesStaffViewController(this);
     }
     public void showGeneralManagerView(){
         resizeToPage();
+        showStateBar();
         GeneralManagerViewController generalManagerViewController = new GeneralManagerViewController(this);
     }
     public void showAdminView(){
         resizeToPage();
+        showStateBar();
         AdminViewController adminViewController = new AdminViewController(this);
     }
     public void showInventoryView(){
@@ -89,14 +90,28 @@ public class MainUIController {
      * 将界面大小调整为适合工作页界面
      */
     public void resizeToPage(){
-        primaryStage.setMinHeight(600);
+        primaryStage.setMinHeight(650);
         primaryStage.setMinWidth(1000);
     }
 
-    public void showAlert(){
-//        AlertPane.setVisible(true);
-    }
+    public void showStateBar(){
+        try {
+            FXMLLoader stateBarLoader = new FXMLLoader();
+            stateBarLoader.setLocation(getClass().getResource("/view/common/StateBar.fxml"));
+            Pane stateBar = stateBarLoader.load();
+            StateBarController stateBarController = stateBarLoader.getController();
+            stateBarController.setMainUIController(this);
 
+
+            setTop(stateBar);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void close(){
+        primaryStage.close();
+    }
     public void setCenter(Node node){
         borderPane.setCenter(node);
     }
@@ -105,9 +120,12 @@ public class MainUIController {
         borderPane.setLeft(node);
     }
 
+    public void setTop(Node node){
+        borderPane.setTop(node);
+    }
+
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
     }
-
 
 }
