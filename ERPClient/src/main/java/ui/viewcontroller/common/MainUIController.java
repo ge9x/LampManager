@@ -39,14 +39,17 @@ public class MainUIController {
     }
     public void showSalesStaffView(){
         resizeToPage();
+        showStateBar();
         SalesStaffViewController salesStaffViewController = new SalesStaffViewController(this);
     }
     public void showGeneralManagerView(){
         resizeToPage();
+        showStateBar();
         GeneralManagerViewController generalManagerViewController = new GeneralManagerViewController(this);
     }
     public void showAdminView(){
         resizeToPage();
+        showStateBar();
         AdminViewController adminViewController = new AdminViewController(this);
     }
     public void showInventoryView(){

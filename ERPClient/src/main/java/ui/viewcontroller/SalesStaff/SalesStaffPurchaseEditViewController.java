@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
@@ -47,6 +48,7 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -58,6 +60,7 @@ import vo.PurchaseVO;
 public class SalesStaffPurchaseEditViewController {
 	
 	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
+	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new PurchaseController();
 	SalesBLService salesBLService2 = new SalesBLService_Stub();
@@ -66,6 +69,7 @@ public class SalesStaffPurchaseEditViewController {
 	ArrayList<String> inventories = new ArrayList<String>();
 	
 	boolean isNew;
+	boolean isExamine = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -100,7 +104,7 @@ public class SalesStaffPurchaseEditViewController {
     JFXButton cancelButton;
     
     @FXML
-    JFXTextArea remark;
+    JFXTextField remark;
 
     @FXML
     JFXComboBox<String> supplier;
@@ -198,6 +202,7 @@ public class SalesStaffPurchaseEditViewController {
         String ID = salesBLService.getnewPurchaseID();
         BillID.setText(ID);
         isNew = true;
+        isExamine = false;
     }
 
     public void clickAddButton(){
@@ -292,32 +297,51 @@ public class SalesStaffPurchaseEditViewController {
     }
     
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-            	String supplierName = "";
-                String inventoryName = "";
-                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
-                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
-                }
-                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
-                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-                }
-                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
-                salesBLService.savePurchase(purchaseVO);
-            }
-
-            salesStaffPurchaseOrderViewController.showPurchaseOrderList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	String supplierName = "";
+	                String inventoryName = "";
+	                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
+	                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+	                }
+	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	                }
+	                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
+	                salesBLService.savePurchase(purchaseVO);
+	            }
+	
+	            salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
 
 
     public void setSalesStaffPurchaseOrderViewController(SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController){
         this.salesStaffPurchaseOrderViewController = salesStaffPurchaseOrderViewController;
+    }
+    
+    public void setGeneralManagerExaminationCellViewController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
     }
     
     public void setForDetailView(PurchaseVO purchaseBill){
@@ -339,11 +363,17 @@ public class SalesStaffPurchaseEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+            	if(!isExamine){
+            		salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if (purchaseBill.state == BillState.DRAFT){
+        if (purchaseBill.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -383,5 +413,9 @@ public class SalesStaffPurchaseEditViewController {
                 clickCancelButton();
             }
         });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

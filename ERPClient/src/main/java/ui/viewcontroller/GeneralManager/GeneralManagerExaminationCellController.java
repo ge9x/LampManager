@@ -16,6 +16,7 @@ import ui.viewcontroller.FinancialStaff.FinancialReceiptEditController;
 import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffReturnEditViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController;
+import ui.viewcontroller.SalesStaff.SalesStaffSalesReturnEditViewController;
 import util.BillType;
 import util.Money;
 import vo.AccountBillVO;
@@ -30,6 +31,7 @@ public class GeneralManagerExaminationCellController {
 	BillVO bill;
 	GeneralManagerExaminationViewController generalManagerExaminationViewController;
 	SalesStaffSalesEditViewController salesStaffSalesEditViewController;
+	SalesStaffSalesReturnEditViewController salesStaffSalesReturnEditViewController;
 	SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController;
 	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
 	FinancialCashBillEditController financialCashBillEditController;
@@ -175,6 +177,10 @@ public class GeneralManagerExaminationCellController {
 		}
 	}
 	
+	public void clickReturnButton(){
+		generalManagerExaminationViewController.clickReturnButton();
+	}
+	
 	public void clickDetailButton(){
 		Pane pane = null;
 		if(bill.type==BillType.PURCHASE){
@@ -205,10 +211,31 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesOrderEdit.fxml"));
             page = pageLoader.load();
             salesStaffSalesEditViewController = pageLoader.getController();
+            salesStaffSalesEditViewController.setGeneralManagerExaminationCellController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+		salesStaffSalesEditViewController.isExamine();
+		salesStaffSalesEditViewController.setForDetailView((SalesVO) bill);
+		
+		return page;
+	}
+	
+	public Pane showSalesReturnOrderBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesReturnOrderEdit.fxml"));
+            page = pageLoader.load();
+            salesStaffSalesReturnEditViewController = pageLoader.getController();
+            salesStaffSalesReturnEditViewController.setGeneralManagerExaminationCellController(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		salesStaffSalesReturnEditViewController.isExamine();
+		salesStaffSalesReturnEditViewController.setForDetailView((SalesVO) bill);
 		return page;
 	}
 	
@@ -219,10 +246,13 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/salesStaff/PurchaseOrderEdit.fxml"));
             page = pageLoader.load();
             salesStaffPurchaseEditViewController = pageLoader.getController();
+            salesStaffPurchaseEditViewController.setGeneralManagerExaminationCellViewController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+		salesStaffPurchaseEditViewController.isExamine();
+		salesStaffPurchaseEditViewController.setForDetailView((PurchaseVO) bill);
 		return page;
 	}
 	
@@ -237,6 +267,8 @@ public class GeneralManagerExaminationCellController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		salesStaffReturnEditViewController.isExamine();
+		salesStaffReturnEditViewController.setForDetailView((PurchaseVO) bill);
 		return page;
 	}
 	

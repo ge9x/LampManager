@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
 import blservice.salesblservice.SalesBLService;
@@ -43,6 +44,7 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -52,6 +54,7 @@ import vo.PurchaseVO;
 
 public class SalesStaffReturnEditViewController {
 	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
+	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesBLService_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
@@ -60,6 +63,7 @@ public class SalesStaffReturnEditViewController {
 	ArrayList<String> inventories = new ArrayList<String>();
 	
 	boolean isNew;
+	boolean isExamine = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -94,7 +98,7 @@ public class SalesStaffReturnEditViewController {
     JFXButton cancelButton;
     
     @FXML
-    JFXTextArea remark;
+    JFXTextField remark;
 
     @FXML
     JFXComboBox<String> supplier;
@@ -189,6 +193,8 @@ public class SalesStaffReturnEditViewController {
     }
     
     public void addReturnOrder() {
+    	isNew = true;
+    	isExamine = false;
         String ID = salesBLService.getnewReturnID();
         BillID.setText(ID);
     }
@@ -284,27 +290,42 @@ public class SalesStaffReturnEditViewController {
     }
     
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-            	String supplierName = "";
-                String inventoryName = "";
-                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
-                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
-                }
-                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
-                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-                }
-                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
-                salesBLService.savePurchase(purchaseVO);
-            }
-
-            salesStaffReturnOrderViewController.showReturnOrderList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	String supplierName = "";
+	                String inventoryName = "";
+	                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
+	                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+	                }
+	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	                }
+	                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
+	                salesBLService.savePurchase(purchaseVO);
+	            }
+	
+	            salesStaffReturnOrderViewController.showReturnOrderList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
 
 
@@ -312,10 +333,14 @@ public class SalesStaffReturnEditViewController {
         this.salesStaffReturnOrderViewController = salesStaffReturnOrderViewController;
     }
     
+    public void setGeneralManagerExaminationCellViewController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
+    }
+    
     public void setForDetailView(PurchaseVO purchaseBill){
     	isNew = false;
         BillID.setText(purchaseBill.ID);
-        title.setText("进货单详情");
+        title.setText("进货退货单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
         remark.setEditable(false);
@@ -331,11 +356,17 @@ public class SalesStaffReturnEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                salesStaffReturnOrderViewController.showReturnOrderList();
+            	if(!isExamine){
+            		salesStaffReturnOrderViewController.showReturnOrderList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if (purchaseBill.state == BillState.DRAFT){
+        if (purchaseBill.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -375,5 +406,9 @@ public class SalesStaffReturnEditViewController {
                 clickCancelButton();
             }
         });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

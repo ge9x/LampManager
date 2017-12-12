@@ -35,6 +35,10 @@ public class PromotionBargain extends Promotion{
 		return promotionBargainVOs;
 	}
 	
+	public String getNewPromotionBargainID() throws RemoteException{
+		return promotionDataService.getNewPromotionBargainID();
+	}
+	
 	public void addBargain(GoodsItemVO vo){
 		
 	}

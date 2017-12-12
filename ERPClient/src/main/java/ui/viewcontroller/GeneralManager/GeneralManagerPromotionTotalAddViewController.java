@@ -197,6 +197,12 @@ public class GeneralManagerPromotionTotalAddViewController {
 		this.generalManagerPromotionViewController = generalManagerPromotionViewController;
 	}
 	
+	public void addPromotionTotal(){
+		String ID = promotionTotalBLService.getNewPromotionTotalID();
+		promotionID.setText(ID);
+		isNew = true;
+	}
+	
 	public void clickDeleteButton(){
     	int index = itemTable.getSelectionModel().getSelectedIndex();
     	total.set(total.get()-data.get(index).getTotalPrice());
@@ -219,7 +225,12 @@ public class GeneralManagerPromotionTotalAddViewController {
 		if(promotionName.getText().length()>0&&targetPriceField.getText().length()>0){
 			promotionTotal = new PromotionTotalVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
 					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()),  gifts, Double.parseDouble(targetPriceField.getText()));
-			promotionTotalBLService.submit(promotionTotal);
+			if(isNew){
+				promotionTotalBLService.submit(promotionTotal);
+			}
+			else{
+				promotionTotalBLService.updatePromotion(promotionTotal);
+			}
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();
