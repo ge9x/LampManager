@@ -227,15 +227,15 @@ public class InventoryBLService_Stub implements InventoryBLService {
 		return null;
 	}
 
-	public ResultMessage submitBill(String ID) {
+	public ResultMessage submitBill(InventoryBillVO vo) {
 		for (InventoryBillVO ivo : alarmData) {
-			if (ivo.ID.equals(ID)) {
+			if (ivo.ID.equals(vo.ID)) {
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		for (InventoryBillVO ivo : data) {
-			if (ivo.ID.equals(ID)) {
+			if (ivo.ID.equals(vo.ID)) {
 				System.out.println("submit bill success");
 				return ResultMessage.SUCCESS;
 			}

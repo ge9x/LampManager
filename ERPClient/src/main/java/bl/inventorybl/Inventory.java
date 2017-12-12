@@ -123,7 +123,7 @@ public class Inventory {
 		return null;
 	}
 
-	public ResultMessage updateBill(InventoryBillVO vo) throws NumberFormatException, RemoteException {	// TODO first
+	public ResultMessage updateBill(InventoryBillVO vo) throws NumberFormatException, RemoteException {
 		ArrayList<Criterion> criteria = new ArrayList<>();
 		int turn = Integer.parseInt(vo.ID.split("-")[2]);
 		criteria.add(new Criterion("type", vo.type, QueryMode.FULL));
@@ -138,13 +138,16 @@ public class Inventory {
 				System.out.println("警告：数据库中出现重复的单据：" + vo.ID);
 			}
 			InventoryBillPO toUpdate = found.get(0);
-			toUpdate.setState(vo.state);
-			InventoryPO inventory = null;	// TODO
-			toUpdate.setInventory(inventory);
-			HashMap<GoodsPO, Integer> goodsMap = new HashMap<>();
-			for(GoodsVO goodsVO : vo.goodsMap.keySet()){
-				
+			InventoryPO inventory = this.getInventoryByName(vo.inventory);
+			HashMap<GoodsVO, Integer> voMap = vo.goodsMap;
+			HashMap<GoodsPO, Integer> poMap = new HashMap<>();
+			for(GoodsVO goodsVO : voMap.keySet()){
+				GoodsPO goodsPO = goodsInfo.getGoodsByID(goodsVO.ID);
+				poMap.put(goodsPO, voMap.get(goodsVO));
 			}
+			toUpdate.setState(vo.state);
+			toUpdate.setInventory(inventory);
+			toUpdate.setGoodsMap(poMap);
 			return inventoryDataService.updateBill(toUpdate);
 		}
 	}
@@ -153,25 +156,8 @@ public class Inventory {
 		return null;
 	}
 
-	public ResultMessage submitBill(String ID) throws RemoteException {	// TODO second
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		String[] identity = ID.split("-");
-		int turn = Integer.parseInt(identity[2]);
-		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));
-		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));
-		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
-		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
-		if(found.isEmpty()){
-			return ResultMessage.NOT_EXIST;
-		}
-		else{
-			if(found.size()>1){
-				System.out.println("警告：数据库中出现重复的单据：" + ID);
-			}
-			InventoryBillPO toSubmit = found.get(0);
-			// TODO update what?
-			return inventoryDataService.updateBill(toSubmit);
-		}
+	public ResultMessage submitBill(InventoryBillVO vo) throws RemoteException {
+		return this.addBill(vo);
 	}
 
 	private InventoryBillVO billToVO(InventoryBillPO po) {
@@ -190,7 +176,7 @@ public class Inventory {
 	 * 仅限增加单据时调用
 	 */
 	private InventoryBillPO billToPO(InventoryBillVO vo) throws RemoteException {
-		InventoryPO inventory = null;
+		InventoryPO inventory = this.getInventoryByName(vo.inventory);
 		HashMap<GoodsPO, Integer> poMap = new HashMap<>();
 		for (GoodsVO goods : vo.goodsMap.keySet()) {
 			poMap.put(goodsInfo.getGoodsByID(goods.ID), poMap.get(goods));
@@ -203,5 +189,15 @@ public class Inventory {
 
 		InventoryBillPO ret = new InventoryBillPO(vo.date, vo.type, vo.state, inventory, vo.user, poMap, turn);
 		return ret;
+	}
+	
+	protected InventoryPO getInventoryByName(String name) throws RemoteException {
+		ArrayList<InventoryPO> all = inventoryDataService.showInventory();
+		for(InventoryPO po : all){
+			if(po.getName().equals(name)){
+				return po;
+			}
+		}
+		return null;
 	}
 }

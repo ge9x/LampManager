@@ -2,7 +2,6 @@ package blservice.inventoryblservice;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
-import java.util.Date;
 
 import util.BillState;
 import util.BillType;
@@ -91,7 +90,7 @@ public interface InventoryBLService extends Remote {
 	public ResultMessage updateInventory(String before, String after);
 	/**
 	 * 修改库存单据
-	 * @param vo
+	 * @param 单据vo
 	 * @return 是否成功修改
 	 */
 	public ResultMessage updateBill(InventoryBillVO vo);
@@ -103,10 +102,10 @@ public interface InventoryBLService extends Remote {
 	public InventoryBillVO showBillDetails(String ID);
 	/**
 	 * 将单据草稿提交给总经理审批，改变单据状态为未审核状态
-	 * @param ID 单据ID
+	 * @param vo 单据vo
 	 * @return 是否成功提交
 	 */
-	public ResultMessage submitBill(String ID);
+	public ResultMessage submitBill(InventoryBillVO vo);
 
     /**
      * 根据单据类型查找单据

@@ -180,8 +180,8 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ResultMessage submitBill(String ID) {
-		if(ID.equals("BYD-20171107-00001")){
+	public ResultMessage submitBill(InventoryBillVO vo) {
+		if(vo.ID.equals("BYD-20171107-00001")){
 			System.out.println("Submit inventory bill succeed");
 			return ResultMessage.SUCCESS;
 		}

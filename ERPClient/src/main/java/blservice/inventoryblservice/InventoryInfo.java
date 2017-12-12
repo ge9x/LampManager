@@ -4,6 +4,8 @@ import vo.InventoryBillVO;
 
 import java.util.ArrayList;
 
+import po.InventoryPO;
+
 /**
  * Created on 2017/11/5
  * 
@@ -27,4 +29,12 @@ public interface InventoryInfo {
 	 * @return 所有仓库的名字
 	 */
 	public ArrayList<String> getAllInventoryName();
+
+	/**
+	 * 通过仓库名字得到仓库的持久化对象
+	 * 
+	 * @param name 仓库的名字
+	 * @return 仓库的PO
+	 */
+	public InventoryPO getInventoryByName(String name);
 }
