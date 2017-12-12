@@ -11,29 +11,29 @@
 
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffNavBarController">
    <children>
-      <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="49.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
-      <AnchorPane fx:id="CustomerNav" layoutY="176.0" onMouseClicked="#clickCustomerButton" prefHeight="40.0" prefWidth="170.0">
+      <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="63.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
+      <AnchorPane fx:id="CustomerNav" layoutY="190.0" onMouseClicked="#clickCustomerButton" prefHeight="40.0" prefWidth="170.0">
          <children>
             <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
             <Label fx:id="CustomerIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
             <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="客户管理" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="PurchaseOrderNav" layoutY="216.0" onMouseClicked="#clickPurchaseOrderButton" prefHeight="40.0" prefWidth="170.0">
+      <AnchorPane fx:id="PurchaseOrderNav" layoutY="230.0" onMouseClicked="#clickPurchaseOrderButton" prefHeight="40.0" prefWidth="170.0">
          <children>
             <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
             <Label fx:id="PurchaseOrderIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
             <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="制定进货单" />
          </children>
       </AnchorPane>
-       <AnchorPane fx:id="ReturnOrderNav" layoutY="256.0" onMouseClicked="#clickReturnOrderButton" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="ReturnOrderNav" layoutY="270.0" onMouseClicked="#clickReturnOrderButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="ReturnOrderIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
                <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="进货退货单" />
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="SalesNav" layoutY="296.0" onMouseClicked="#clickSalesOrderButton" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="SalesNav" layoutY="310.0" onMouseClicked="#clickSalesOrderButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="SalesIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
@@ -41,7 +41,7 @@
                </Label>
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="SalesReturnNav" layoutY="336.0" onMouseClicked="#clickSalesReturnOrderButton" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="SalesReturnNav" layoutY="350.0" onMouseClicked="#clickSalesReturnOrderButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="SalesReturnIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
@@ -49,6 +49,7 @@
                </Label>
            </children>
        </AnchorPane>
+      <Label fx:id="userName" layoutX="46.0" layoutY="128.0" prefHeight="33.0" prefWidth="80.0" text="名字" />
 
 
    </children>
