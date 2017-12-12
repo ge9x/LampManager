@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" stylesheets="@../../css/stateBar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.StateBarController">
+<AnchorPane fx:id="container" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" stylesheets="@../../css/stateBar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.StateBarController">
    <children>
       <Label fx:id="exitIcon" layoutX="964.0" layoutY="12.0" onMouseClicked="#clickCloseButton" styleClass="icon-label" text="X" />
       <Rectangle fill="#272727" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="170.0" />

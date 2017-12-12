@@ -87,9 +87,14 @@ public class FinancialReceiptEditController {
     @FXML
     JFXButton cancelButton;
 
+    @FXML
+    Label deleteIcon;
+
     public void initialize(){
         addIcon.setText("\ue61e");
-        String name = financeBLService.getUserID();
+        deleteIcon.setText("\ue606");
+
+        String name = financeBLService2.getUserID();
         Username.setText(name);
         accounts = financeBLService2.getAllAccount();
         customers = financeBLService2.getAllCustomer();
@@ -157,6 +162,12 @@ public class FinancialReceiptEditController {
             data.add(new AccountBillItemBean(account.accountName,money,remark));
             total.set(total.get()+money);
         }
+    }
+
+    public void clickDeleteButton(){
+        int index = itemTable.getSelectionModel().getSelectedIndex();
+        total.setValue(total.get() - data.get(index).getMoney());
+        data.remove(index);
     }
 
     public void clickSubmitButton(){
@@ -259,6 +270,7 @@ public class FinancialReceiptEditController {
         title.setText("收款单详情");
 
         addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
 
         String customerName = financeBLService2.getCustomerNameByID(account.customerID);
         Customer.getItems().clear();
@@ -304,6 +316,7 @@ public class FinancialReceiptEditController {
      */
     public void setForEditView(){
         addIcon.setVisible(true);
+        deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
 
         Customer.setEditable(true);

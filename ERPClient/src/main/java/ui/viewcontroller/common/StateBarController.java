@@ -1,7 +1,11 @@
 package ui.viewcontroller.common;
 
+import com.jfoenix.controls.JFXSnackbar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Pane;
 import org.ERPClient.Main;
 
 /**
@@ -9,14 +13,25 @@ import org.ERPClient.Main;
  */
 public class StateBarController {
     MainUIController mainUIController;
+
     @FXML
     Label exitIcon;
 
     @FXML
+    Pane container;
+
+    JFXSnackbar snackbar;
+
+    @FXML
     public void initialize(){
         exitIcon.setText("\ue72c");
+        snackbar = new JFXSnackbar(container);
+//        showMessage("导出成功");
     }
 
+    public void showMessage(String message){
+        snackbar.show(message,3000);
+    }
     public void clickCloseButton(){
         mainUIController.close();
     }
