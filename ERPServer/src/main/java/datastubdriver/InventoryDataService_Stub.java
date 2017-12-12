@@ -186,4 +186,14 @@ public class InventoryDataService_Stub implements InventoryDataService{
 		return null;
 	}
 
+	@Override
+	public InventoryPO findInventoryByName(String name) throws RemoteException {
+		for(InventoryPO po : inventory){
+			if(po.getName().equals(name)){
+				return po;
+			}
+		}
+		return null;
+	}
+
 }

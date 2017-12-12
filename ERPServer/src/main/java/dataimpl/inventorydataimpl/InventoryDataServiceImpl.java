@@ -100,4 +100,9 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
 		return inventoryBillDataHelper.multiQuery(criteria);
 	}
+
+	@Override
+	public InventoryPO findInventoryByName(String name) throws RemoteException {
+		return inventoryDataHelper.exactlyQuery("name", name);
+	}
 }

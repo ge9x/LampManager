@@ -2,7 +2,6 @@ package bl.inventorybl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.inventoryblservice.InventoryInfo;
@@ -28,6 +27,11 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 	
 	public ArrayList<String> showInventory() {
+		try {
+			return inventory.showInventory();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -44,14 +48,29 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public ArrayList<InventoryBillVO> showBills() {
+		try {
+			return inventory.showBills();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public ArrayList<InventoryBillVO> showAlarmBills() {
+		try {
+			return inventory.showAlarmBills();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {
+		try {
+			return inventory.findBillByStateAndType(type, state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -60,7 +79,12 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public ResultMessage addBill(InventoryBillVO vo) {
-		return null;
+		try {
+			return inventory.addBill(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.ERROR;
 	}
 
 	public ResultMessage deleteInventory(String inventory) {
@@ -76,7 +100,14 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public ResultMessage updateBill(InventoryBillVO vo) {
-		return null;
+		try {
+			return inventory.updateBill(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.ERROR;
 	}
 
 	public InventoryBillVO showBillDetails(String ID) {
@@ -84,7 +115,12 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public ResultMessage submitBill(InventoryBillVO vo) {
-		return null;
+		try {
+			return inventory.submitBill(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.ERROR;
 	}
 
     @Override

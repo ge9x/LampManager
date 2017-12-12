@@ -80,4 +80,9 @@ public class InventoryDataRemoteObject extends UnicastRemoteObject implements In
 		return inventoryDataService.advancedQuery(criteria);
 	}
 
+	@Override
+	public InventoryPO findInventoryByName(String name) throws RemoteException {
+		return inventoryDataService.findInventoryByName(name);
+	}
+
 }
