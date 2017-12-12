@@ -8,6 +8,7 @@ import dataservice.userdataservice.UserDataService;
 import po.UserPO;
 import rmi.UserRemoteHelper;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.UserVO;
 
 public class User {
@@ -86,6 +87,17 @@ public class User {
 	public UserVO findUserByID(String UserID) throws RemoteException{
 		UserPO user = userDataService.find(UserID);
 		return poTOvo(user);
+	}
+	
+	public ArrayList<UserVO> getAllSalesmen() throws RemoteException{
+		userPOs = userDataService.show();
+		ArrayList<UserVO> salesmen = new ArrayList<>();
+		for(UserPO po:userPOs){
+			if(po.getPosition() == UserPosition.SALES_STAFF){
+				salesmen.add(poTOvo(po));
+			}
+		}
+		return salesmen;
 	}
 	
 	public UserPO voTOpo(UserVO userVO){

@@ -237,6 +237,7 @@ public class Purchase {
 			return null;
 		}
 	}
+  
     
     private static Date stringToDate(String date) throws ParseException{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

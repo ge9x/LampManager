@@ -6,6 +6,8 @@ import java.util.Locale.Category;
 
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import dataservice.customerdataservice.CustomerDataService;
 import dataservice.salesdataservice.SalesDataService;
 import po.CustomerPO;
@@ -14,6 +16,7 @@ import util.CustomerCategory;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
+import vo.UserVO;
 
 /**
  * Created by zlk on 2017/11/5
@@ -21,9 +24,11 @@ import vo.CustomerVO;
 
 public class Customer {
 	private CustomerDataService customerDataService;
+	UserInfo userInfo;
 	
 	public Customer(){
 		customerDataService=CustomerRemoteHelper.getInstance().getCustomerDataService();
+		userInfo=new UserController(); 
 	}
 	
 	/**
@@ -256,5 +261,9 @@ public class Customer {
 	
 	public CustomerVO poTovo(CustomerPO po){
 		return new CustomerVO(alterID(String.valueOf(po.getID())),CustomerCategory.categoryToString(po.getCategory()),Level.levelToString(po.getLevel()),po.getCustomerName(),po.getPhone(),po.getAddress(),po.getPostCode(),po.getMail(),po.getReceivableLimit(),po.getReceive(),po.getPay(),po.getSalesman(),po.getPoints(),po.getVoucher());
+	}
+	
+	public ArrayList<UserVO> getAllSalesman() {
+		return userInfo.getAllSalesmen();
 	}
 }

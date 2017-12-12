@@ -1,5 +1,7 @@
 package ui.viewcontroller.SalesStaff;
 
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -15,6 +17,7 @@ import util.CustomerCategory;
 import util.Level;
 import util.UserLimits;
 import vo.CustomerVO;
+import vo.UserVO;
 
 public class SalesStaffCustomerDetailViewController {
 	private boolean hasEdited = false;
@@ -55,7 +58,7 @@ public class SalesStaffCustomerDetailViewController {
 	JFXTextField customerPay;
 	
 	@FXML
-	JFXTextField customerSalesman;
+	JFXComboBox<String> customerSalesman;
 	
 	@FXML
 	JFXButton editButton;
@@ -74,6 +77,14 @@ public class SalesStaffCustomerDetailViewController {
 		//初始化等级选择器
 		customerLevel.getItems().addAll(Level.LEVEL_ONE.getValue(), Level.LEVEL_TWO.getValue(), Level.LEVEL_THREE.getValue(), 
 				Level.LEVEL_FOUR.getValue(), Level.LEVEL_FIVE.getValue());
+		
+		//初始化业务员选择器
+		ArrayList<String> salesmenName = new ArrayList<>();
+		ArrayList<UserVO> salesmen = customerBLService.getAllSalesman();
+		for(UserVO vo:salesmen){
+			salesmenName.add(vo.name);
+		}
+		customerSalesman.getItems().addAll(salesmenName);
 	}
 	
 	public void setCustomer(CustomerVO customer){
@@ -89,7 +100,7 @@ public class SalesStaffCustomerDetailViewController {
 		customerReceivableLimit.setText(String.valueOf(customer.receivableLimit));
 		customerReceive.setText(String.valueOf(customer.receive));
 		customerPay.setText(String.valueOf(customer.pay));
-		customerSalesman.setText(customer.salesman);
+		customerSalesman.getSelectionModel().select(customer.salesman);
 		customerID.setEditable(false);
 		customerType.setDisable(true);
 		customerLevel.setDisable(true);
@@ -101,7 +112,7 @@ public class SalesStaffCustomerDetailViewController {
 		customerReceivableLimit.setEditable(false);
 		customerReceive.setEditable(false);
 		customerPay.setEditable(false);
-		customerSalesman.setEditable(false);
+		customerSalesman.setDisable(true);
 	}
 	
 	public void setSalesStaffCustomerCellController(SalesStaffCustomerCellController salesStaffCustomerCellController){
@@ -120,7 +131,7 @@ public class SalesStaffCustomerDetailViewController {
 			customerAddress.setEditable(true);
 			customerPostcode.setEditable(true);
 			customerMail.setEditable(true);
-			customerSalesman.setEditable(true);
+			customerSalesman.setDisable(false);
 			if(userBLService.findUserByID(userBLService.getCurrentUserID()).limit==UserLimits.MANAGER){
 				customerReceivableLimit.setEditable(true);
 			}
@@ -135,7 +146,7 @@ public class SalesStaffCustomerDetailViewController {
 			customer.address = customerAddress.getText();
 			customer.postCode = customerPostcode.getText();
 			customer.mail = customerMail.getText();
-			customer.salesman = customerSalesman.getText();
+			customer.salesman = customerSalesman.getValue();
 			customer.receivableLimit = Double.parseDouble(customerReceivableLimit.getText());
 			
 			int index = customerType.getSelectionModel().getSelectedIndex();

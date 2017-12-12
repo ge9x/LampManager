@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import po.InventoryBillPO;
 import po.InventoryPO;
+import util.Criterion;
 import util.ResultMessage;
 /**
  * Created on 2017/10/21
@@ -80,4 +81,12 @@ public interface InventoryDataService extends Remote{
 	 * @throws RemoteException
 	 */
 	public ResultMessage updateBill(InventoryBillPO po) throws RemoteException;
+	/**
+	 * 自定义库存类单据高级查询（详见Criterion）
+	 * @param criteria 条件列表
+	 * @return 符合条件的库存类单据PO的列表
+	 * @throws RemoteException
+	 * @see Criterion
+	 */
+	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException;
 }

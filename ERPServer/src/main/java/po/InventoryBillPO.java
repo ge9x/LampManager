@@ -26,7 +26,7 @@ public class InventoryBillPO extends BillPO{
 	 */
 	private String user;
 	/**
-	 * 该单据内的商品对应的溢出/缺损数量
+	 * 该单据内的商品对应的溢出/缺损/赠送/报警数量（报警数量为商品警戒数量，要得到该商品实际数量应通过商品PO）
 	 */
 	private Map<GoodsPO, Integer> goodsMap;
 	
