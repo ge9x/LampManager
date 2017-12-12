@@ -23,7 +23,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/customerInfo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerPromotionViewController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" layoutY="50.0" prefHeight="525.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+      <ScrollPane hbarPolicy="NEVER" layoutX="5.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
          <content>
             <VBox alignment="TOP_CENTER" prefWidth="820.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                <children>
@@ -137,7 +137,7 @@
                            </children>
                         </HBox>
                         <Line endX="649.0" startX="-100.0" stroke="SILVER" strokeWidth="2.0" />
-                        <VBox fx:id="promotionList" prefHeight="328.0" prefWidth="751.0">
+                        <VBox fx:id="promotionList" prefHeight="381.0" prefWidth="751.0">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>

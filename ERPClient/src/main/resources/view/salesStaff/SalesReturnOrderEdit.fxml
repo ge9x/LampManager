@@ -23,7 +23,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseEdit.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffSalesReturnEditViewController">
     <children>
-        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
                 <VBox alignment="TOP_CENTER" prefHeight="624.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
@@ -138,7 +138,7 @@
                            </children>
                         </HBox>
                         <Label layoutX="249.0" layoutY="350.0" styleClass="input-label" text="总备注" />
-                        <JFXTextArea fx:id="remark" focusColor="#1db1a4" layoutX="300.0" layoutY="351.0" prefHeight="16.0" prefWidth="420.0" />
+                        <JFXTextField fx:id="remark" focusColor="#1db1a4" layoutX="310.0" layoutY="348.0" prefHeight="23.0" prefWidth="411.0" />
                      </children>
                   </AnchorPane>
 

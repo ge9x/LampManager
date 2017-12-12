@@ -86,4 +86,10 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 		return ResultMessage.SUCCESS;
 	}
 
+	@Override
+	public String getNewPromotionTotalID() {
+		// TODO Auto-generated method stub
+		return "PT-0001";
+	}
+
 }
