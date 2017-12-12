@@ -37,6 +37,7 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable.GoodsBean;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -48,6 +49,7 @@ import vo.SalesVO;
 
 public class SalesStaffSalesReturnEditViewController {
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
+	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesBLService_Stub();
 	UserBLService userBLService = new UserBLService_Stub();
@@ -56,6 +58,7 @@ public class SalesStaffSalesReturnEditViewController {
 	ArrayList<String> inventories = new ArrayList<String>();
 	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
 	
+	boolean isExamine = false;
 	boolean isNew;
 	
 	TableView<GoodsItemBean> itemTable;
@@ -85,7 +88,7 @@ public class SalesStaffSalesReturnEditViewController {
     Text Total;
     
     @FXML
-    JFXTextArea remark;
+    JFXTextField remark;
     
     @FXML
     Label title;
@@ -230,37 +233,56 @@ public class SalesStaffSalesReturnEditViewController {
     }
     
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-            	String customerName = "";
-                String inventoryName = "";
-                String customerID = "";
-                String customerSalesman = "";
-                if (customer.getSelectionModel().getSelectedIndex() >= 0){
-                    customerName = customers.get(customer.getSelectionModel().getSelectedIndex()).customerName;
-                    customerID = customers.get(customer.getSelectionModel().getSelectedIndex()).customerID;
-                    customerSalesman = customers.get(customer.getSelectionModel().getSelectedIndex()).salesman;
-                }
-                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
-                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-                }
-                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
-                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
-                salesBLService.saveSales(salesVO);
-            }
-
-            salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	String customerName = "";
+	                String inventoryName = "";
+	                String customerID = "";
+	                String customerSalesman = "";
+	                if (customer.getSelectionModel().getSelectedIndex() >= 0){
+	                    customerName = customers.get(customer.getSelectionModel().getSelectedIndex()).customerName;
+	                    customerID = customers.get(customer.getSelectionModel().getSelectedIndex()).customerID;
+	                    customerSalesman = customers.get(customer.getSelectionModel().getSelectedIndex()).salesman;
+	                }
+	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	                }
+	                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
+	                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
+	                salesBLService.saveSales(salesVO);
+	            }
+	
+	            salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
 
 
     public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
         this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
+    }
+    
+    public void setGeneralManagerExaminationCellController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
     }
     
     public void setForDetailView(SalesVO salesBill){
@@ -283,7 +305,13 @@ public class SalesStaffSalesReturnEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+            	if(!isExamine){
+            		salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
@@ -327,5 +355,9 @@ public class SalesStaffSalesReturnEditViewController {
                 clickCancelButton();
             }
         });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

@@ -23,7 +23,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseEdit.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController">
     <children>
-        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
                 <VBox alignment="TOP_CENTER" prefHeight="539.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
@@ -128,7 +128,6 @@
                            </children>
                         </HBox>
                         <Label layoutX="277.0" layoutY="336.0" styleClass="input-label" text="总备注" />
-                        <JFXTextArea fx:id="remark" focusColor="#1db1a4" layoutX="323.0" layoutY="334.0" prefHeight="16.0" prefWidth="398.0" />
                         <VBox layoutX="160.0" layoutY="146.0" prefHeight="377.0" prefWidth="101.0" spacing="10.0">
                            <children>
                               <Label styleClass="input-label" text="仓库" />
@@ -164,6 +163,7 @@
                         </VBox>
                         <Label layoutX="40.0" layoutY="72.0" styleClass="input-label" text="促销策略" />
                         <JFXComboBox fx:id="promotion" layoutX="40.0" layoutY="100.0" prefHeight="23.0" prefWidth="219.0" />
+                        <JFXTextField fx:id="remark" focusColor="#1db1a4" layoutX="337.0" layoutY="334.0" prefHeight="23.0" prefWidth="370.0" />
                      </children>
                   </AnchorPane>
 

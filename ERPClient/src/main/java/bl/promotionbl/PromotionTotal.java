@@ -35,6 +35,10 @@ public class PromotionTotal extends Promotion{
 		}
 		return promotionTotalVOs;
 	}
+	
+	public String getNewPromotionTotalID() throws RemoteException{
+		return promotionDataService.getNewPromotionTotalID();
+	}
 
 	public void addGift(GoodsItemVO vo){
 		

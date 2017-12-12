@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" stylesheets="@../../css/stateBar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.StateBarController">
+   <children>
+      <Label fx:id="exitIcon" layoutX="964.0" layoutY="12.0" onMouseClicked="#clickCloseButton" styleClass="icon-label" text="X" />
+      <Rectangle fill="#272727" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="170.0" />
+      <ImageView fitHeight="45.0" fitWidth="200.0" layoutX="179.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/logo2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -76,4 +76,6 @@ public interface PromotionCustomerBLService {
 	public ResultMessage deletePromotion(String promotionID);
 	
 	public ResultMessage updatePromotion(PromotionCustomerVO vo);
+	
+	public String getNewPromotionCustomerID();
 }

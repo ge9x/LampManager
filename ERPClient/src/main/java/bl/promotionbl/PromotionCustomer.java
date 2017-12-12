@@ -33,6 +33,10 @@ public class PromotionCustomer extends Promotion{
 		return promotionCustomerVOs;
 	}
 	
+	public String getNewPromotionCustomerID() throws RemoteException{
+		return promotionDataService.getNewPromotionCustomerID();
+	}
+	
 	public void addGift(GoodsItemVO vo){
 		
 	}

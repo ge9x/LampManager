@@ -3,9 +3,12 @@ package ui.viewcontroller.FinancialStaff;
 import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountBLService;
 import blstubdriver.AccountBLService_Stub;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -51,6 +54,15 @@ public class FinancialAccountController {
         accountList.setVgap(30);
         accountList.setPrefColumns(2);
         getAllAccount();
+
+        keywordInput.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER){
+                    searchAccount(keywordInput.getText());
+                }
+            }
+        });
     }
 
     /**

@@ -105,4 +105,10 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 		return ResultMessage.SUCCESS;
 	}
 
+	@Override
+	public String getNewPromotionBargainID() {
+		// TODO Auto-generated method stub
+		return "PB-0001";
+	}
+
 }
