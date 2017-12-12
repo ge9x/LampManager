@@ -39,6 +39,7 @@ public class BillPane {
         tabPane.getSelectionModel().selectFirst();
 
         initScrollPane();
+        tabPane.getStylesheets().add(getClass().getResource("/css/BillPane.css").toExternalForm());
     }
 
     public void initScrollPane(){
@@ -46,6 +47,7 @@ public class BillPane {
         tilePane = new TilePane();
         tilePane.setPadding(new Insets(10,7,0,10));
         tilePane.setPrefColumns(3);
+        tilePane.setPrefHeight(400);
         tilePane.setHgap(25);
         tilePane.setVgap(20);
         scrollPane.setContent(tilePane);
