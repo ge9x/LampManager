@@ -5,6 +5,7 @@ import java.util.Date;
 
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.inventoryblservice.InventoryInfo;
+import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.InventoryBillVO;
@@ -48,8 +49,7 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id,
-			String keyword) {
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {
 		return null;
 	}
 
@@ -94,4 +94,9 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
     public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) {
         return null;
     }
+
+	@Override
+	public ArrayList<String> getAllInventoryName() {
+		return this.showInventory();
+	}
 }
