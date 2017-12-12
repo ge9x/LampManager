@@ -1,9 +1,12 @@
 package po;
 
+import java.io.Serializable;
+
 import util.PromotionType;
 
 
-public class PromotionPO {
+public class PromotionPO implements Serializable{
+	private static final long serialVersionUID = -3567657562223345L;
 	/**促销策略编号*/
     private String promotionID;
 	/**起始时间*/
