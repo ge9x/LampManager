@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import bean.CashBillItemBean;
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionBargainController;
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.PromotionBargain_Stub;
@@ -54,7 +55,7 @@ import vo.PurchaseVO;
 public class GeneralManagerPromotionBargainAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionBargainBLService promotionBargainBLService = new PromotionBargain_Stub();
+	PromotionBargainBLService promotionBargainBLService = new PromotionBargainController();
 	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
 	ArrayList<GoodsItemVO> bargains = new ArrayList<>();

@@ -3,7 +3,10 @@ package ui.viewcontroller.common;
 import com.jfoenix.controls.JFXSnackbar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import org.ERPClient.Main;
 
 /**
  * Created by Kry·L on 2017/12/12.
