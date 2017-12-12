@@ -7,8 +7,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import org.ERPClient.Main;
-import org.controlsfx.control.NotificationPane;
-import org.controlsfx.control.Notifications;
 
 /**
  * Created by Kry·L on 2017/12/12.
