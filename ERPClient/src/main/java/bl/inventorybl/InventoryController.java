@@ -1,10 +1,14 @@
 package bl.inventorybl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.inventoryblservice.InventoryInfo;
+import po.InventoryPO;
+import util.BillState;
+import util.BillType;
 import util.ResultMessage;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -27,11 +31,11 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check() {
 		return null;
 	}
 
@@ -47,8 +51,7 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id,
-			String keyword) {
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {
 		return null;
 	}
 
@@ -80,7 +83,32 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		return null;
 	}
 
-	public ResultMessage submitBill(String ID) {
+	public ResultMessage submitBill(InventoryBillVO vo) {
+		return null;
+	}
+
+    @Override
+    public ArrayList<InventoryBillVO> findBillByType(BillType type) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) {
+        return null;
+    }
+
+	@Override
+	public ArrayList<String> getAllInventoryName() {
+		return this.showInventory();
+	}
+
+	@Override
+	public InventoryPO getInventoryByName(String name) {
+		try {
+			return inventory.getInventoryByName(name);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

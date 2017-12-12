@@ -1,30 +1,22 @@
 package bl.salesbl;
 
-import java.util.ArrayList;
-
+import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
+import po.GoodsItemPO;
 import vo.GoodsItemVO;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
 
 public class GoodsItem {
-	private GoodsItemVO goodsItemVO;
-	
-	private GoodsInfo goodsInfo;
+    GoodsInfo goodsInfo;
 	
 	public GoodsItem(){
-		
-	}
-	public void addGoodsItem(GoodsItemVO item){
-		
+		goodsInfo=new GoodsController();
 	}
 	
-	public String getGoodsID(String goodsName){
-		return null;
+    public static GoodsItemPO voTopo(GoodsItemVO vo){
+	  	return new GoodsItemPO(vo.ID,vo.goodsName,vo.model,vo.number,vo.price,vo.remarks);
 	}
-	
-	public String getModel(String goodsName){
-		return null;
-	}
+	    
+    public static GoodsItemVO poTovo(GoodsItemPO po){
+	   	return new GoodsItemVO(po.getGoodsID(), po.getGoodsName(), po.getModel(), po.getNumber(), po.getPrice(), po.getRemarks());
+    }
 }

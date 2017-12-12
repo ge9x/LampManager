@@ -78,7 +78,7 @@ public class MockGoods extends Goods {
 	}
 
 	@Override
-	public String getNewID() {
+	public String getNewID(String classificationID) {
 		return "0100002";
 	}
 

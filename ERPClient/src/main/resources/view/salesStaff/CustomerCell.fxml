@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox minHeight="120.0" minWidth="716.0" prefHeight="120.0" prefWidth="716.0" spacing="20.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #ffffff;" stylesheets="@../../css/customerCell.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffCustomerCellController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="100.0" prefWidth="90.0">
+         <children>
+            <Label fx:id="CustomerIcon" alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="73.0" text="icon" />
+         </children>
+      </VBox>
+      <VBox maxWidth="582.0" minWidth="484.0" prefHeight="110.0" prefWidth="484.0">
+         <children>
+            <Label fx:id="CustomerName" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="500.0" text="name">
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="12.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="567.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="85.0" text="客户编号：" />
+                  <Label fx:id="CustomerID" prefHeight="7.0" prefWidth="436.0" text="Label" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="81.0" text="客户类型：" />
+                  <Label fx:id="CustomerType" prefHeight="0.0" prefWidth="432.0" text="Label" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label fx:id="deleteIcon" alignment="CENTER_RIGHT" contentDisplay="CENTER" onMouseClicked="#clickDeleteButton" prefHeight="36.0" prefWidth="41.0" styleClass="icon-label" text="Label">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <VBox alignment="TOP_RIGHT" minWidth="50.0" prefHeight="106.0" prefWidth="50.0">
+         <children>
+            <Label fx:id="CustomerLevel" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" text="Label" textAlignment="CENTER" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="DetailIcon" contentDisplay="CENTER" onMouseClicked="#clickDetailButton" text="Label">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children></VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <effect>
+      <DropShadow color="#00000059" />
+   </effect>
+</HBox>

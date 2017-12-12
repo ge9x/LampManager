@@ -1,43 +1,27 @@
 package bl.salesbl;
 
-import java.rmi.RemoteException;
-import java.sql.Date;
 import java.util.ArrayList;
 
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
-import blservice.promotionblservice.PromotionInfo;
+import blservice.userblservice.UserInfo;
+import util.BillType;
 import util.ResultMessage;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
+import vo.CustomerVO;
 import vo.PurchaseVO;
 
 public class PurchaseLineItem {
-	private PurchaseVO purchase;
-	
-	private InventoryInfo inventoryInfo;
-	private CustomerInfo customerInfo;
-	private PromotionInfo promotionInfo;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	UserInfo userInfo;
 	
 	public PurchaseLineItem(){
-		
-	}
-	
-	public String getNewPurchaseID(){
-		return null;
-	}
-	
-	public ArrayList <PromotionBargainVO> showBargains(){
-	    return null;
-	}
-		 
-    public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(){
-		return null;
-    }
-		  
-    public ArrayList <PromotionTotalVO> getFitPromotionTotal(){
-		return null;
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
+		userInfo=new UserController();
 	}
     
     public ResultMessage alterInventory(PurchaseVO vo){
@@ -45,7 +29,28 @@ public class PurchaseLineItem {
 	}
 	
 	public ResultMessage alterCustomer(PurchaseVO vo){
-		return null;
+		if(vo.type==BillType.PURCHASE){
+			return customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+		}else{
+			return customerInfo.reduceCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+		}
 	}
 	
+	public String getUserName() {
+		String ID=userInfo.getCurrentUserID();
+		return userInfo.getCurrentUserNameByID(ID);
+	}
+
+	public ArrayList<CustomerVO> getAllSupplier() {
+		return customerInfo.getAllSupplier();
+	}
+
+	public ArrayList<String> getAllInventory() {
+		return null;
+	}
+
+	public ArrayList<CustomerVO> getAllCustomer() {
+		return customerInfo.getAllSeller();
+	}
+
 }

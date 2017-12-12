@@ -6,6 +6,7 @@ import util.ResultMessage;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,39 +14,28 @@ import java.util.Date;
  * Created by Kry·L on 2017/11/7.
  */
 public class MockCashBill extends CashBill {
-    @Override
-    public void addBillItem(CashBillItemVO vo) {
 
-    }
+
 
     @Override
-    public void addCashBill(String account) {
-
-    }
-
-    @Override
-    public CashBillVO submit() {
+    public ResultMessage submit(CashBillVO vo) {
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         ArrayList<CashBillItemVO> cashBillItemVOS = new ArrayList<CashBillItemVO>();
         cashBillItemVOS.add(itemVO3);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        return billVO3;
+        return ResultMessage.SUCCESS;
     }
 
-    @Override
-    public void calTotal() {
-
-    }
 
     @Override
-    public CashBillVO save() {
+    public ResultMessage save(CashBillVO vo) {
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         ArrayList<CashBillItemVO> cashBillItemVOS = new ArrayList<CashBillItemVO>();
         cashBillItemVOS.add(itemVO3);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED, BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        return billVO3;
+        return ResultMessage.SUCCESS;
     }
 
     @Override

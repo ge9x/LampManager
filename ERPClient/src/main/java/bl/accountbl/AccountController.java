@@ -5,12 +5,14 @@ import blservice.accountblservice.AccountInfo;
 import util.ResultMessage;
 import vo.AccountVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Created by Kry·L on 2017/11/5.
  */
 public class AccountController implements AccountBLService, AccountInfo{
+    //TODO deleteAccount
 
     private Account account;
 
@@ -19,30 +21,71 @@ public class AccountController implements AccountBLService, AccountInfo{
     }
 
     public ResultMessage addAccount(AccountVO accountVO) {
-        return null;
+        try {
+            return account.addAccount(accountVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
     }
 
-    public ResultMessage deleteAccount(String name) {
+    public ResultMessage deleteAccount(String ID) {
         return null;
     }
 
     public ArrayList<AccountVO> findAccountByName(String keyword) {
-        return null;
+        try {
+            return account.findAccountByName(keyword);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public ResultMessage updateAccount(AccountVO accountVO) {
-        return null;
+        try {
+            return account.updateAccount(accountVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
     }
 
     public ArrayList<AccountVO> show() {
-        return null;
+        try {
+            return account.show();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public AccountVO getAccountByID(String id) {
+        try {
+            return account.getAccountByID(id);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public ResultMessage changeMoney(String ID, double money) {
+        try {
+            return account.changeMoney(ID, money);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ArrayList<String> getAllAccountName() {
-        return null;
-    }
-
-    public ArrayList<AccountVO> getAllAccount() {
-        return null;
+        try {
+            return account.getAllAccountName();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

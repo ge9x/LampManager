@@ -1,5 +1,6 @@
 package dataservice.classificationdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -10,7 +11,9 @@ import util.ResultMessage;
  * @author 巽
  *
  */
-public interface ClassificationDataService {
+
+public interface ClassificationDataService extends Remote {
+
 	/**
 	 * 得到所有商品分类
 	 * @return 所有商品分类的PO
@@ -23,7 +26,7 @@ public interface ClassificationDataService {
 	 * @return 找到的商品分类PO
 	 * @throws RemoteException
 	 */
-	public ClassificationPO find(String ID) throws RemoteException;
+	public ClassificationPO findByID(int ID) throws RemoteException;
 	/**
 	 * 添加商品分类
 	 * @param po 待添加的商品分类PO
@@ -45,4 +48,24 @@ public interface ClassificationDataService {
 	 * @throws RemoteException
 	 */
 	public ResultMessage update(ClassificationPO po) throws RemoteException;
+	/**
+	 * 获取新建商品分类时自动生成的ID
+	 * @return 自动生成的ID
+	 * @throws RemoteException
+	 */
+	public String getNewID() throws RemoteException;
+	/**
+	 * 以商品分类的名称的关键字进行模糊查找
+	 * @param keyword 名称关键字
+	 * @return 查找到的商品分类的PO的集合
+	 * @throws RemoteException
+	 */
+	public ArrayList<ClassificationPO> findFuzzilyByName(String keyword) throws RemoteException;
+	/**
+	 * 以商品分类的名称进行精确查找
+	 * @param name 完整名称
+	 * @return 查找到的商品分类的PO的集合
+	 * @throws RemoteException
+	 */
+	public ArrayList<ClassificationPO> findFullyByName(String name) throws RemoteException;
 }

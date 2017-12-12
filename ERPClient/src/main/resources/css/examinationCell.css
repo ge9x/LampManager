@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 25px;
+    -fx-text-fill: #1db1a4;
+}
+
+#DetailIcon{
+	-fx-font-family: iconfont;
+    -fx-font-size: 30px;
+    -fx-text-fill: #1db1a4;
+}

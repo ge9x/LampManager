@@ -14,7 +14,7 @@ public class AccountDataService_Stub implements AccountDataService {
     ArrayList<AccountPO> accountPOS;
     public AccountDataService_Stub(){
         accountPOS = new ArrayList<AccountPO>();
-        AccountPO accountPO = new AccountPO("工商银行账户",3000);
+        AccountPO accountPO = new AccountPO(1,"工商银行账户",3000);
         accountPOS.add(accountPO);
     }
     public ResultMessage addAccount(AccountPO po) throws RemoteException {

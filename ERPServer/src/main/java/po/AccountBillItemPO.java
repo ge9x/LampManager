@@ -1,13 +1,25 @@
 package po;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
 /**
  * Created by Kry·L on 2017/10/22.
  */
-public class AccountBillItemPO {
-    /**
+@Entity
+@Table(name = "accountbillitem")
+public class AccountBillItemPO implements Serializable {
+	private static final long serialVersionUID = 253109617379196292L;
+	/**
+	 * 条目唯一标识ID
+	 */
+	private int ID;
+
+	/**
      * 银行账户名称
      */
-    private String accountName;
+    private int accountID;
 
     /**
      * 金额
@@ -19,21 +31,35 @@ public class AccountBillItemPO {
      */
     private String remark;
 
+    public AccountBillItemPO(){ }
 
-    public AccountBillItemPO(String accountName, double money, String remark) {
-        this.accountName = accountName;
+    public AccountBillItemPO(int accountID, double money, String remark) {
+        this.accountID = accountID;
         this.money = money;
         this.remark = remark;
     }
 
-    public String getAccountName() {
-        return accountName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+	
+	@Column(name = "accountid")
+    public int getAccountID() {
+        return accountID;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
+    @Column(name = "money")
     public double getMoney() {
         return money;
     }
@@ -42,6 +68,7 @@ public class AccountBillItemPO {
         this.money = money;
     }
 
+    @Column(name = "remark")
     public String getRemark() {
         return remark;
     }

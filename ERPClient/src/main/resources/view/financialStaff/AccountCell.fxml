@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="345.0" style="-fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #ffffff;" stylesheets="@../../css/accountCell.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialAccountCellController">
+   <padding>
+      <Insets bottom="20.0" left="30.0" right="20.0" top="20.0" />
+   </padding>
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="300.0">
+         <children>
+            <Label fx:id="EditIcon" onMouseClicked="#clickEditButton" prefHeight="14.0" prefWidth="26.0" styleClass="icon-label" text="Label" />
+            <Label fx:id="DeleteIcon" onMouseClicked="#clickDeleteButton" styleClass="icon-label" text="delete" />
+         </children>
+      </HBox>
+      <HBox prefHeight="34.0" prefWidth="204.0">
+         <children>
+            <Label fx:id="BankIcon" prefHeight="14.0" prefWidth="24.0" styleClass="icon-label" text="icon" />
+            <Label fx:id="BankName" prefHeight="22.0" prefWidth="171.0" styleClass="bank-name" text="name">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="37.0" prefWidth="45.0">
+         <children>
+            <Text fx:id="Balance" fill="#e51b23" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 1,500" wrappingWidth="243.240234375">
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin></Text>
+         </children>
+      </HBox>
+   </children>
+   <effect>
+      <DropShadow color="#00000065" />
+   </effect>
+</VBox>

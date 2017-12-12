@@ -1,10 +1,24 @@
 package po;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * created by zlk on 2017/10/20
  */
 
-public class GoodsItemPO {
+@Entity
+@Table(name = "goodsitem")
+public class GoodsItemPO implements Serializable {
+	private static final long serialVersionUID = 2723361962211684993L;
+	/**商品列表编号*/
+	private int ID;
 	/**商品编号*/
 	private String goodsID;
 	/**商品名称*/
@@ -20,6 +34,8 @@ public class GoodsItemPO {
 	/**备注*/
 	private String remarks;
 	
+	public GoodsItemPO(){};
+	
 	public GoodsItemPO(String goodsID,String goodsName,String model,int number,double price,
 			String remarks){
 		this.goodsID=goodsID;
@@ -30,7 +46,19 @@ public class GoodsItemPO {
 		this.sum=number*price;
 		this.remarks=remarks;
 	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public int getID(){
+		return ID;
+	}
 
+	public void setID(int ID){
+		this.ID=ID;
+	}
+	
+	@Column(name = "goodsID")
 	public String getGoodsID() {
 		return goodsID;
 	}
@@ -39,6 +67,7 @@ public class GoodsItemPO {
 		this.goodsID = goodsID;
 	}
 
+	@Column(name = "goodsName")
 	public String getGoodsName() {
 		return goodsName;
 	}
@@ -47,6 +76,7 @@ public class GoodsItemPO {
 		this.goodsName = goodsName;
 	}
 
+	@Column(name = "model")
 	public String getModel() {
 		return model;
 	}
@@ -55,6 +85,7 @@ public class GoodsItemPO {
 		this.model = model;
 	}
 
+	@Column(name = "number")
 	public int getNumber() {
 		return number;
 	}
@@ -63,6 +94,7 @@ public class GoodsItemPO {
 		this.number = number;
 	}
 
+	@Column(name = "price")
 	public double getPrice() {
 		return price;
 	}
@@ -71,6 +103,7 @@ public class GoodsItemPO {
 		this.price = price;
 	}
 
+	@Column(name = "sum")
 	public double getSum() {
 		return sum;
 	}
@@ -79,6 +112,7 @@ public class GoodsItemPO {
 		this.sum = sum;
 	}
 
+	@Column(name = "remarks")
 	public String getRemarks() {
 		return remarks;
 	}

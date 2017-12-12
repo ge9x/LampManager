@@ -1,9 +1,15 @@
 package bl.salesbl;
 
+import java.rmi.RemoteException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
+import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
+import util.BillState;
+import util.Level;
 import util.ResultMessage;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -15,80 +21,224 @@ import vo.SalesVO;
  * Created by zlk on 2017/11/5
  */
 
-public class PurchaseController implements SalesBLService{
+public class PurchaseController implements SalesBLService,PurchaseInfo{
 	private Purchase purchase;
 	
 	public PurchaseController(){
 		purchase=new Purchase();
 	}
 
-	public String getnewPurchaseID() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public ResultMessage examine(PurchaseVO vo) {
+		try {
+			return purchase.updatePurchase(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
-	public String getnewReturnID() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public ArrayList<PurchaseVO> getAllSubmittedPurchase() {
+		try {
+			return purchase.getAllSubmittedPurchase();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-
-	public String getnewSalesID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getnewSalesReturnID() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+//blservice
+	@Override
 	public ArrayList<PromotionBargainVO> showBargains() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer() {
-		// TODO Auto-generated method stub
+	@Override
+	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
 		return null;
 	}
 
-	public ArrayList<PromotionTotalVO> getFitPromotionTotal() {
-		// TODO Auto-generated method stub
+	@Override
+	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
 		return null;
 	}
 
-	public PurchaseVO addPurchase(PurchaseVO vo) {
-		// TODO Auto-generated method stub
+	@Override
+	public ResultMessage addPurchase(PurchaseVO vo) {
+		try {
+			return purchase.addPurchase(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemVO item) {
+		try {
+			return purchase.addGoodsItem(item);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage addSales(SalesVO vo) {
 		return null;
 	}
 
-	public void addGoodsItem(GoodsItemVO item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public SalesVO addSales(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	@Override
 	public ResultMessage submitPurchase(PurchaseVO pur) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.submitPurchase(pur);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
+	@Override
 	public ResultMessage submitSales(SalesVO sal) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public ResultMessage saveSales(SalesVO bill) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public ResultMessage savePurchase(PurchaseVO bill) {
-		// TODO Auto-generated method stub
+		try {
+			return purchase.savePurchase(bill);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public String getUserName() {
+		return purchase.getUserName();
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllSupplier() {
+		return purchase.getAllSupplier();
+	}
+
+	@Override
+	public ArrayList<String> getAllInventory() {
+		return purchase.getAllInventory();
+	}
+
+	@Override
+	public ArrayList<CustomerVO> getAllCustomer() {
+		return purchase.getAllCustomer();
+	}
+
+	@Override
+	public String getnewPurchaseID() {
+		try {
+			return purchase.getnewPurchaseID();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String getnewReturnID() {
+		try {
+			return purchase.getnewReturnID();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String getnewSalesID() {
 		return null;
 	}
+
+	@Override
+	public String getnewSalesReturnID() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate){
+		try {
+			return purchase.getPurchaseByDate(startDate, endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) {
+		try {
+			return purchase.getPurchaseOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getReturnOrderByState(BillState state) {
+		try {
+			return purchase.getReturnOrderByState(state);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesOrderByState(BillState state) {
+		return null;
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state) {
+		return null;
+	}
+
+	@Override
+	public ResultMessage deletePurchase(PurchaseVO vo) {
+		try {
+			return purchase.deletePurchase(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage deleteSales(SalesVO vo) {
+		return null;
+	}
+
+	@Override
+	public ResultMessage updatePurchase(PurchaseVO vo) {
+		try {
+			return purchase.updatePurchase(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage updateSales(SalesVO vo) {
+		return null;
+	}
+	
 }

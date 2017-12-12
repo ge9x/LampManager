@@ -30,11 +30,13 @@ public class SalesVO extends BillVO{
 	public double afterSum;
 	/**备注*/
 	public String remarks;
+	/**促销策略名称*/
+	public String promotionName;
 	
 	
 	public SalesVO( BillType type, BillState state, String billID, String customer,String customerID, String salesman,
 			String user, String inventory, ArrayList<GoodsItemVO> goodsItemList, double allowance,
-			double voucher, String remarks, Date endDate) {
+			double voucher, String remarks, String endDate,String promotionName) {
 		this.type = type;
 		this.state = state;
 		ID = billID;
@@ -50,6 +52,7 @@ public class SalesVO extends BillVO{
 		this.afterSum = calAfterSum();
 		this.remarks = remarks;
 		this.date = endDate;
+		this.promotionName=promotionName;
 	}
 	
 	private double calBeforeSum(){

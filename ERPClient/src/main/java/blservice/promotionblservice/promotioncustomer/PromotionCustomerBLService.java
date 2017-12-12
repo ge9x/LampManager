@@ -1,10 +1,12 @@
 package blservice.promotionblservice.promotioncustomer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.Level;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
 
@@ -24,7 +26,7 @@ public interface PromotionCustomerBLService {
      * 
      * @param GoodsVO
      */
-	public void addGift(GoodsVO vo);
+	public void addGift(GoodsItemVO vo);
 	
 	/**
      * 添加代金券到促销策略中
@@ -52,14 +54,14 @@ public interface PromotionCustomerBLService {
      * 
      * @param date
      */
-	public void setStartDate(Date date);
+	public void setStartDate(String date);
 	
 	/**
      * 设置促销策略结束时间
      * 
      * @param date
      */
-	public void setEndDate(Date date);
+	public void setEndDate(String date);
 	
 	/**
      * 提交促销策略
@@ -70,4 +72,10 @@ public interface PromotionCustomerBLService {
 	public ResultMessage submit(PromotionCustomerVO vo);
 	
 	public PromotionCustomerVO findPromotionByID(String promotionID);
+	
+	public ResultMessage deletePromotion(String promotionID);
+	
+	public ResultMessage updatePromotion(PromotionCustomerVO vo);
+	
+	public String getNewPromotionCustomerID();
 }

@@ -1,5 +1,6 @@
 package bl.salesbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,10 +24,10 @@ public class MockPurchase extends Purchase{
 		goodsItemList.add(gi2);
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
 			,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-		     ,new Date());
+		     , LocalDate.now().toString());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 				,"00000002","默认仓库","阿明",goodsItemList,"好看"
-				,new Date());
+				,LocalDate.now().toString());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
@@ -42,11 +43,11 @@ public class MockPurchase extends Purchase{
 		return null;
 	}
 	
-	public PurchaseVO findPurchaseByState(BillState state) {
+	public ArrayList<PurchaseVO> findPurchaseByState(BillState state) {
 		for(PurchaseVO pur:purchaseBill){
 			if(pur.state.equals(state)){
 				System.out.println("Find purchase success");
-				return pur;
+				return purchaseBill;
 			}
 		}
 		System.out.println("Find purchase failed");

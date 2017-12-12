@@ -1,5 +1,6 @@
 package vo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,9 +15,10 @@ public class PromotionBargainVO extends PromotionVO{
 	
 	public double bargainTotal;
 	
-	public ArrayList<GoodsVO> bargains;
+	public ArrayList<GoodsItemVO> bargains;
 	
-	public PromotionBargainVO(String promotionID, double goodsTotal, double bargainTotal, Date startDate, Date endDate, ArrayList<GoodsVO> bargains){
+	public PromotionBargainVO(String promotionName, String promotionID, double goodsTotal, double bargainTotal, String startDate, String endDate, ArrayList<GoodsItemVO> bargains){
+		this.promotionName = promotionName;
 		this.promotionID = promotionID;
 		this.goodsTotal = goodsTotal;
 		this.bargainTotal = bargainTotal;

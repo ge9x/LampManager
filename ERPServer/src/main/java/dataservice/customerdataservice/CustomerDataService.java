@@ -1,5 +1,6 @@
 package dataservice.customerdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -10,7 +11,14 @@ import util.ResultMessage;
  *created by zlk on 2017/10/21
  */
 
-public interface CustomerDataService {
+public interface CustomerDataService extends Remote{
+	/**
+	 * 得到新的客户ID
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	public String getNewCustomerID() throws RemoteException;
 	/**
 	 * 添加客户
 	 * 
@@ -34,7 +42,7 @@ public interface CustomerDataService {
 	 * @return 查找到符合条件的客户po
 	 * @author zlk
 	 */
-	public ArrayList<CustomerPO> findByCustomerID(String customerID) throws RemoteException;
+	public ArrayList<CustomerPO> findByCustomerID(int customerID) throws RemoteException;
 	/**
 	 * 通过关键字查找客户
 	 * 
@@ -71,6 +79,6 @@ public interface CustomerDataService {
 	 * @return 
 	 * @author zlk
 	 */
-	public CustomerPO getCustomerData(String ID) throws RemoteException;
+	public CustomerPO getCustomerData(int ID) throws RemoteException;
 
 }

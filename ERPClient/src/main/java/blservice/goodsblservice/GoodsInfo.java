@@ -1,8 +1,8 @@
 package blservice.goodsblservice;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import po.GoodsPO;
 import vo.GoodsIdentityVO;
 import vo.GoodsVO;
 
@@ -34,4 +34,10 @@ public interface GoodsInfo {
 	 * @return 商品销售价
 	 */
 	public Double getRetailPriceByID(String ID);
+	/**
+	 * 根据商品ID得到商品
+	 * @param ID 商品的ID
+	 * @return 商品
+	 */
+	public GoodsPO getGoodsByID(String ID);
 }

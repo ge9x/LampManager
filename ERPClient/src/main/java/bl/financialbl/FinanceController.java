@@ -1,18 +1,23 @@
 package bl.financialbl;
 
-import blservice.financeblservice.DocumentDetailsInput;
+import blservice.financeblservice.FinanceInfo;
+import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
-import blservice.financeblservice.SalesDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
+import com.sun.org.apache.regexp.internal.RE;
+import po.AccountBillPO;
+import util.BillState;
 import util.ResultMessage;
 import vo.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/11/5.
  */
-public class FinanceController implements FinanceBLService{
+public class FinanceController implements FinanceBLService, FinanceInfo{
 
     private Finance finance;
 
@@ -21,74 +26,207 @@ public class FinanceController implements FinanceBLService{
     }
 
     public String getNewReceiptID() {
-        return null;
+        try {
+            return finance.getNewReceiptID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getNewPaymentID() {
-        return null;
+        try {
+            return finance.getNewPaymentID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getNewCashBillID() {
-        return null;
+        try {
+            return finance.getNewCashBillID();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getUserID() {
-        return null;
+        return finance.getUserID();
     }
 
     public ArrayList<CustomerVO> getAllCustomer() {
-        return null;
+        return finance.getAllCustomer();
     }
 
     public ArrayList<AccountVO> getAllAccount() {
-        return null;
+        return finance.getAllAccount();
     }
 
     public ResultMessage submit(AccountBillVO vo) {
-        return null;
+        try {
+            return finance.submit(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
     }
 
     public ResultMessage submit(CashBillVO vo) {
-        return null;
+        try {
+            return finance.submit(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage save(AccountBillVO vo) {
-        return null;
+        try {
+            return finance.save(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.SUCCESS;
+        }
     }
 
     public ResultMessage save(CashBillVO vo) {
-        return null;
+        try {
+            return finance.save(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage updateDraft(AccountBillVO vo) {
-        return null;
+        try {
+            return finance.updateDraft(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ResultMessage updateDraft(CashBillVO vo) {
+        try {
+            return finance.updateDraft(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+
+
+    @Override
+    public ResultMessage deleteDraftAccountBill(String ID) {
+        try {
+            return finance.deleteAccountBill(ID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage deleteDraftCashBill(String ID) {
+        try {
+            return finance.deleteCashBill(ID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public String getAccountNameByID(String accountID) {
+        return finance.getAccountNameByID(accountID);
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) {
+        try {
+            return finance.getPaymentsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) {
+        try {
+            return finance.getCashBillByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
+        try {
+            return finance.getReceiptsByState(state);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+    @Override
+    public String getCustomerNameByID(String ID) {
+        return finance.getCustomerNameByID(ID);
+    }
+
+    @Override
+    public ResultMessage examine(AccountBillVO vo) {
+        try {
+            return finance.examine(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage examine(CashBillVO vo) {
+        try {
+            return finance.examine(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedReceipts() {
+        return getReceiptsByState(BillState.SUBMITTED);
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAllSubmittedPayments() {
+        return getPaymentsByState(BillState.SUBMITTED);
+    }
+
+
+    @Override
+    public ArrayList<CashBillVO> getAllSubmittedCashBills() {
+        return getCashBillByState(BillState.SUBMITTED);
+    }
+
+    @Override
+    public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) {
         return null;
     }
 
-    public BillVO findByID(String ID) {
-        return null;
-    }
-
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return null;
-    }
-
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return null;
-    }
-
-    public ResultMessage redCover(BillVO billVO) {
-        return null;
-    }
-
-    public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return null;
-    }
-
-    public ProfitVO getProfit(Date startDate, Date endDate) {
+    @Override
+    public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) {
         return null;
     }
 }

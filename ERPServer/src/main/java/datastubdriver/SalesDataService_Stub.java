@@ -2,7 +2,6 @@ package datastubdriver;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
@@ -11,7 +10,6 @@ import po.SalesPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
-import util.UserPosition;
 
 
 public class SalesDataService_Stub implements SalesDataService{
@@ -19,49 +17,37 @@ public class SalesDataService_Stub implements SalesDataService{
 	ArrayList<SalesPO> salesBill=new ArrayList<SalesPO>();
 	ArrayList<GoodsItemPO> goodsItemList=new ArrayList<GoodsItemPO>();
 	
-	GoodsItemPO gi1=new GoodsItemPO("01", "霓虹灯",null, 20, 35.0,
+	GoodsItemPO gi1=new GoodsItemPO("1", "霓虹灯",null, 20, 35.0,
 			"耐用");
-	GoodsItemPO gi2=new GoodsItemPO("02", "挂灯",null, 10, 35.0,
+	GoodsItemPO gi2=new GoodsItemPO("2", "挂灯",null, 10, 35.0,
 			"好看");
 	{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
 	}
 	{
-		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
-				,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-			     ,new Date());
-		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
-					,"00000002","默认仓库","阿明",goodsItemList,"好看"
-					,new Date());
+		
+		
+		PurchasePO p1=new PurchasePO(BillType.PURCHASE,BillState.PASS,"供应商1"
+				,1,"默认仓库","阿红",goodsItemList,"满足客户需求"
+			     ,"2017-11-30",1);
+		PurchasePO p2=new PurchasePO(BillType.RETURN,BillState.SUBMITTED,"供应商2"
+					,2,"默认仓库","阿明",goodsItemList,"好看"
+					,"2017-11-30",2);
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
 	
 	{
-		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强", "00000003","默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
-	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇","00000004", "默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+		SalesPO s1=new SalesPO(BillType.SALES, BillState.DRAFT,"阿强",1, "销售商1", "业务员1","默认仓库",goodsItemList , 100,500,  "满足客户需求", "2017-11-30",1,"PB-1");
+	    SalesPO s2=new SalesPO(BillType.SALES, BillState.FAILED,"阿奇", 2, "销售商2", "业务员2", "默认仓库",goodsItemList , 100,500, "满足客户需求", "2017-11-30",2,"PB-1");
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}
 
-
 	public PurchasePO findPurchaseByID(String ID) throws RemoteException {
 		for(PurchasePO pur:purchaseBill){
-			if(pur.getID().equals(ID)){
-				System.out.println("Find purchase success");
-				return pur;
-			}
-		}
-		System.out.println("Find purchase failed");
-		return null;
-	}
-
-	public PurchasePO findPurchaseByState(BillState state) throws RemoteException {
-		for(PurchasePO pur:purchaseBill){
-			if(pur.getState().equals(state)){
+			if(pur.getID()==Integer.parseInt(ID)){
 				System.out.println("Find purchase success");
 				return pur;
 			}
@@ -72,7 +58,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public SalesPO findSlaesByID(String ID) throws RemoteException {
 		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(ID)){
+			if(sal.getID()==Integer.parseInt(ID)){
 				System.out.println("Find sales success");
 				return sal;
 			}
@@ -80,21 +66,15 @@ public class SalesDataService_Stub implements SalesDataService{
 		System.out.println("Find sales failed");
 		return null;
 	}
-
-	public SalesPO findSlaesByState(BillState state) throws RemoteException {
-		for(SalesPO sal:salesBill){
-			if(sal.getState().equals(state)){
-				System.out.println("Find sales success");
-				return sal;
-			}
-		}
-		System.out.println("Find sales failed");
-		return null;
+	
+	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
+		goodsItemList.add(po);
+		return ResultMessage.SUCCESS;
 	}
 
 	public ResultMessage addPurchase(PurchasePO po) {
 		for(PurchasePO pur:purchaseBill){
-			if(pur.getID().equals(po.getID())){
+			if(pur.getID()==po.getID()){
 				System.out.println("Add purchase failed");
 				return ResultMessage.FAILED;
 			}
@@ -106,7 +86,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ResultMessage addSales(SalesPO po) {
 		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(po.getID())){
+			if(sal.getID()==po.getID()){
 				System.out.println("Add sales failed");
 				return ResultMessage.FAILED;
 			}
@@ -118,7 +98,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ResultMessage updatePurchase(PurchasePO po) {
 		for(PurchasePO pur:purchaseBill){
-			if(pur.getID().equals(po.getID())){
+			if(pur.getID()==po.getID()){
 				System.out.println("Update purchase success");
 				purchaseBill.remove(pur);
 				purchaseBill.add(po);
@@ -132,7 +112,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ResultMessage updateSales(SalesPO po) {
 		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(po.getID())){
+			if(sal.getID()==po.getID()){
 				System.out.println("Update sales success");
 				salesBill.remove(sal);
 				salesBill.add(po);
@@ -147,7 +127,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ResultMessage deletePurchase(String ID) throws RemoteException {
 		for(PurchasePO pur:purchaseBill){
-			if(pur.getID().equals(ID)){
+			if(pur.getID()==Integer.parseInt(ID)){
 				purchaseBill.remove(pur);
 				System.out.println("Delete purchase success");
 				return ResultMessage.SUCCESS;
@@ -159,7 +139,7 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ResultMessage deleteSales(String ID) throws RemoteException {
 		for(SalesPO sal:salesBill){
-			if(sal.getID().equals(ID)){
+			if(sal.getID()==Integer.parseInt(ID)){
 				salesBill.remove(sal);
 				System.out.println("Delete sales success");
 				return ResultMessage.SUCCESS;
@@ -181,6 +161,51 @@ public class SalesDataService_Stub implements SalesDataService{
 
 	public ArrayList<SalesPO> showSales() {
 		return salesBill;
+	}
+
+	public ArrayList<PurchasePO> showReturn() throws RemoteException {
+		return purchaseBill;
+	}
+
+	public ArrayList<SalesPO> showSalesReturn() throws RemoteException {
+		return salesBill;
+	}
+
+	@Override
+	public ArrayList<PurchasePO> findPurchaseByState(BillState state) throws RemoteException {
+		for(SalesPO sal:salesBill){
+			if(sal.getState().equals(state)){
+				System.out.println("Find sales success");
+				return purchaseBill;
+			}
+		}
+		System.out.println("Find sales failed");
+		return null;
+	}
+
+	@Override
+	public ArrayList<SalesPO> findSlaesByState(BillState state) throws RemoteException {
+		return salesBill;
+	}
+
+	@Override
+	public String getNewPurchaseID() throws RemoteException{
+		return "JHD-20171201-00001";
+	}
+
+	@Override
+	public String getNewReturnID() throws RemoteException{
+		return "JHTHD-20171201-00001";
+	}
+
+	@Override
+	public String getNewSalesID() throws RemoteException{
+		return "XSD-20171201-00001";
+	}
+
+	@Override
+	public String getNewSalesReturnID() throws RemoteException{
+		return "XSTHD-20171201-00001";
 	}
 
 }

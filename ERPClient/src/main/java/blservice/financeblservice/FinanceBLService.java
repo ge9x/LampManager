@@ -1,16 +1,19 @@
 package blservice.financeblservice;
 
+import javafx.util.Pair;
+import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.*;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/10/21.
  */
-public interface FinanceBLService {
+public interface FinanceBLService extends Remote{
 
     /**
      * 获得新建的收款单单据编号
@@ -36,11 +39,19 @@ public interface FinanceBLService {
      */
     public String getUserID();
 
+
     /**
      * 获得所有客户列表
      * @return 客户VO的列表
      */
     public ArrayList<CustomerVO> getAllCustomer();
+
+    /**
+     * 根据ID的到客户名字
+     * @param ID
+     * @return
+     */
+    public String getCustomerNameByID(String ID);
 
     /**
      * 获得所有银行账户列表
@@ -86,58 +97,30 @@ public interface FinanceBLService {
      */
     public ResultMessage updateDraft(CashBillVO vo);
 
+
     /**
-     * 根据ID查找单据
-     * @param ID
+     * 删除草稿收付款单据
      * @return
      */
-    public BillVO findByID(String ID);
+    public ResultMessage deleteDraftAccountBill(String ID);
 
     /**
-     * 查看销售明细表
-     * @param startDate
-     * @param endDate
-     * @param goodName
-     * @param customerName
-     * @param salesman
-     * @param inventory
-     * @return 商品销售记录列表
+     * 删除草稿现金费用单
      */
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input);
-
+    public ResultMessage deleteDraftCashBill(String ID);
     /**
-     * 查看经营历程表
-     * @param startDate
-     * @param endDate
-     * @param billType
-     * @param customerName
-     * @param salesman
-     * @param inventory
-     * @return 所有符合条件的单据列表
+     * 根据ID获得账户名称
+     * @param accountID
+     * @return
      */
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input);
+    String getAccountNameByID(String accountID);
 
-    /**
-     * 红冲单据
-     * @param billVO
-     * @return 是否成功
-     */
-    public ResultMessage redCover(BillVO billVO);
+    ArrayList<AccountBillVO> getReceiptsByState(BillState state);
 
-    /**
-     * 红冲并复制单据
-     * @param billVO
-     * @return 是否成功
-     */
-    public ResultMessage redCoverAndCopy(BillVO billVO);
+    ArrayList<AccountBillVO> getPaymentsByState(BillState state);
 
-    /**
-     * 查看经营情况表
-     * @param startDate
-     * @param endDate
-     * @return 经营情况表
-     */
-    public ProfitVO getProfit(Date startDate, Date endDate);
+    ArrayList<CashBillVO> getCashBillByState(BillState state);
+
 }
 
 

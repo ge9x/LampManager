@@ -1,5 +1,6 @@
 package dataservice.examinationdataservice;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,19 +11,20 @@ import util.ResultMessage;
 /** 
  * Created by Aster on 2017/10/21
  */
-public interface ExaminationDataService {
+public interface ExaminationDataService extends Remote{
 	
 	/**
-     * 按审批时间段查找返回相应的BillVO结果
+     * 按审批时间段查找返回相应的已审批的BillVO结果
      * 
      * @param startEnd, endDate
      * @return ArrayList<BillPO>
      */
 	public ArrayList<BillPO> finds(Date startDate, Date endDate) throws RemoteException;
-	
-	public BillPO find(String ID) throws RemoteException;
-	
-	public ResultMessage add(BillPO po) throws RemoteException;
-	
-	public void init() throws RemoteException;
+	/**
+	 * 显示所有的申请单据
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	public ArrayList<BillPO> show() throws RemoteException;
 }

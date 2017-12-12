@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/receipt.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialPaymentController">
+    <children>
+        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="497.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" text="我的付款单">
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                                    <HBox.margin>
+                                        <Insets left="15.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

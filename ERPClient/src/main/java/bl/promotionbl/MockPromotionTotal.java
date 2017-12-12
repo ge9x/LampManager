@@ -1,16 +1,18 @@
 package bl.promotionbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionBargainVO;
 import vo.PromotionTotalVO;
 
 public class MockPromotionTotal extends PromotionTotal{
 	
-	private PromotionTotalVO promotionTotal = new PromotionTotalVO("000003", new Date(), new Date(), 0, new ArrayList<GoodsVO>(), 0);
+	private PromotionTotalVO promotionTotal = new PromotionTotalVO("总价促销策略","000003", LocalDate.now().toString(), LocalDate.now().toString(), 0, new ArrayList<GoodsItemVO>(), 0);
 	
 	@Override
 	public ArrayList<PromotionTotalVO> show(){
@@ -20,7 +22,7 @@ public class MockPromotionTotal extends PromotionTotal{
 	}
 
 	@Override
-	public void addGift(GoodsVO vo){
+	public void addGift(GoodsItemVO vo){
 		promotionTotal.gifts.add(vo);
 		System.out.println("Add gift success!");
 	}
@@ -38,27 +40,20 @@ public class MockPromotionTotal extends PromotionTotal{
 	}
 
 	@Override
-	public void setStartDate(Date date){
+	public void setStartDate(String date){
 		promotionTotal.startDate = date;
 		System.out.println("Set start time success!");
 	}
 
 	@Override
-	public void setEndDate(Date date){
+	public void setEndDate(String date){
 		promotionTotal.endDate = date;
 		System.out.println("Set end time success!");
 	}
 
 	@Override
 	public ResultMessage submit(PromotionTotalVO vo){
-		if(vo.endDate.after(vo.startDate)){
-			System.out.println("Submit success!");
-			return ResultMessage.SUCCESS;
-		}
-		else{
-			System.out.println("Set time error!");
-			return ResultMessage.FAILED;
-		}
+		return ResultMessage.SUCCESS;
 	}
 	
 	@Override

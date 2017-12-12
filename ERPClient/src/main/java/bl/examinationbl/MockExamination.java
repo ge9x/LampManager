@@ -1,5 +1,6 @@
 package bl.examinationbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,24 +13,13 @@ import vo.BillVO;
 
 public class MockExamination extends Examination{
 
-	private AccountBillVO accountBill = new AccountBillVO(new Date(), "XJFKD-20171021-00001", BillState.SUBMITTED, BillType.CASH, "ZLK", "Aster",new ArrayList<AccountBillItemVO>());
+	private AccountBillVO accountBill = new AccountBillVO(LocalDate.now().toString(), "XJFKD-20171021-00001", BillState.SUBMITTED, BillType.CASH, "ZLK", "Aster",new ArrayList<AccountBillItemVO>());
 	
 	@Override
 	public ArrayList<BillVO> show(){
 		ArrayList<BillVO> bill = new ArrayList<BillVO>();
 		bill.add(accountBill);
 		return bill;
-	}
-	
-	@Override
-	public BillVO checkReceipt(String billID){
-		if(billID.equals(accountBill.ID)){
-			return accountBill;
-		}
-		else{
-			System.out.println("Bill doesn't exist");
-			return null;
-		}
 	}
 	
 	@Override
@@ -52,13 +42,6 @@ public class MockExamination extends Examination{
 		else{
 			return ResultMessage.NOT_EXIST;
 		}
-	}
-	
-	@Override
-	public ArrayList<BillVO> showHistory() {
-		ArrayList<BillVO> history = new ArrayList<BillVO>();
-		history.add(accountBill);
-		return history;
 	}
 	
 }

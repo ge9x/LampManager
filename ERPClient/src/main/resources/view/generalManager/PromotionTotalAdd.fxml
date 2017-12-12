@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/PromotionAdd.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.GeneralManager.GeneralManagerPromotionTotalAddViewController">
+    <children>
+        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox alignment="TOP_CENTER" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" text="总价促销策略">
+                                    <font>
+                                        <Font name="Microsoft YaHei Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                  <AnchorPane prefHeight="415.0" prefWidth="744.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-radius: 10;">
+                     <effect>
+                        <DropShadow color="#00000059" />
+                     </effect>
+                     <children>
+                        <Label fx:id="promotionID" layoutX="172.0" layoutY="14.0" prefHeight="31.0" prefWidth="347.0" text="00001" />
+                        <Label layoutX="39.0" layoutY="14.0" prefHeight="31.0" prefWidth="110.0" styleClass="ID-label" text="促销策略编号" />
+                        <VBox layoutX="39.0" layoutY="68.0" prefHeight="191.0" prefWidth="150.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="input-label" text="策略名称" />
+                              <JFXTextField fx:id="promotionName">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <Label styleClass="input-label" text="目标总价" />
+                              <JFXTextField fx:id="targetPriceField">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin></JFXTextField>
+                              <Label styleClass="input-label" text="代金券" />
+                              <JFXTextField fx:id="voucherField">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <Label styleClass="input-label" text="操作员">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <Text fx:id="username" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <Label styleClass="input-label" text="赠品原价总额" />
+                              <Text fx:id="Total" fill="#e83a3f" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="vbox" layoutX="261.0" layoutY="100.0" prefHeight="240.0" prefWidth="448.0" spacing="10.0">
+                           <children>
+                              <HBox prefHeight="50.0" prefWidth="448.0">
+                                 <children>
+                                    <Label styleClass="input-label" text="赠品列表" />
+                                    <Label fx:id="addIcon" alignment="CENTER" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="deleteIcon" alignment="CENTER" onMouseClicked="#clickDeleteButton" prefHeight="22.0" prefWidth="26.0" styleClass="icon-label" text="-">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Label layoutX="261.0" layoutY="68.0" styleClass="input-label" text="开始时间" />
+                        <Label layoutX="506.0" layoutY="68.0" styleClass="input-label" text="结束时间" />
+                        <DatePicker fx:id="startDate" layoutX="330.0" layoutY="66.0" prefHeight="23.0" prefWidth="133.0" />
+                        <DatePicker fx:id="endDate" layoutX="576.0" layoutY="66.0" prefHeight="23.0" prefWidth="133.0" />
+                        <HBox alignment="CENTER_RIGHT" layoutX="509.0" layoutY="353.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <JFXButton fx:id="submitButton" onMouseClicked="#clickOKButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="确 定" textFill="WHITE">
+                                 <font>
+                                    <Font name="Microsoft YaHei" size="17.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton fx:id="cancelButton" onMouseClicked="#clickCancelButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-width: 2px; -fx-border-color: #1db1a4; -fx-border-radius: 5;" text="取 消" textFill="#1DB1A5">
+                                 <font>
+                                    <Font name="Microsoft YaHei" size="17.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                    </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

@@ -1,7 +1,7 @@
 package bl.userbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import blservice.userblservice.UserBLService;
 import blservice.userblservice.UserInfo;
@@ -17,48 +17,100 @@ public class UserController implements UserBLService, UserInfo{
 	}
 
 	public ResultMessage login(String userID, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+            return user.login(userID, password);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
 	}
 
 	public ResultMessage addUser(UserVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+            return user.addUser(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
 	}
 
 	public ResultMessage deleteUser(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+            return user.deleteUser(userID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
 	}
 
 	public ResultMessage modifyUser(UserVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public HashMap<String, String> getCurrentUserName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<UserVO> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public UserVO findUserByID(String UserID) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+            return user.modifyUser(vo);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.ERROR;
+        }
 	}
 
 	public String getCurrentUserID() {
-		// TODO Auto-generated method stub
-		return null;
+		return user.getCurrentUserID();
 	}
 
 	public String getCurrentUserNameByID(String UserID) {
+		try {
+			return user.findUserByID(UserID).name;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<UserVO> show() {
+		try {
+			return user.show();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<UserVO> findUsersByID(String UserID) {
+		try {
+			return user.findUsersByID(UserID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public ArrayList<UserVO> findUsersByKeywords(String keywords) {
+		try {
+			return user.findUsersByKeywords(keywords);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public UserVO findUserByID(String UserID) {
+		try {
+			return user.findUserByID(UserID);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<UserVO> getAllSalesmen() {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			return user.getAllSalesmen();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 		
 }

@@ -1,20 +1,22 @@
 package po;
 
-import java.util.Date;
+import java.io.Serializable;
 
 import util.BillState;
 import util.BillType;
 
-public class BillPO {
-	 /**
+public class BillPO implements Serializable {
+	private static final long serialVersionUID = 96614009950694909L;
+
+	/**
      * 单据最后修改时间
      */
-    private Date date;
+    private String date;
 
     /**
      * 单据编号
      */
-    private String ID;
+    private int ID;
 
     /**
      * 单据状态
@@ -25,27 +27,40 @@ public class BillPO {
      * 单据类型
      */
     private BillType type;
+    /**
+     * 本单据是当天同单据类型的第几张单据
+     */
+    private int turn;
     
-    public BillPO(String ID, Date date, BillType type, BillState state){
+    public BillPO(){ }
+    
+    public BillPO(String date, BillType type, BillState state, int turn){
+    	this.date = date;
+    	this.type = type;
+    	this.state = state;
+    	this.turn = turn;
+    }
+    
+    public BillPO(int ID, String date, BillType type, BillState state){
     	this.ID = ID;
     	this.date = date;
     	this.type = type;
     	this.state = state;
     }
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 
-	public void setID(String iD) {
+	public void setID(int iD) {
 		ID = iD;
 	}
 
@@ -65,5 +80,15 @@ public class BillPO {
 		this.type = type;
 	}
     
-    
+    public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+
+	public String buildID(){
+    	return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%05d", turn);
+    }
 }

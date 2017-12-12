@@ -1,11 +1,12 @@
 package blstubdriver;
 
-import blservice.financeblservice.DocumentDetailsInput;
+import blservice.formblservice.DocumentDetailsInput;
 import blservice.financeblservice.FinanceBLService;
-import blservice.financeblservice.SalesDetailsInput;
+import blservice.formblservice.SalesDetailsInput;
 import util.*;
 import vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,8 +19,8 @@ public class FinanceBLService_Stub implements FinanceBLService {
     ArrayList<CustomerVO> customerVOS;
     ArrayList<AccountVO> accountVOS;
     AccountBillVO billVO;
-    ArrayList<SalesDetailVO> salesDetailVOS;
-    ProfitVO profitVO;
+
+
     ArrayList<BillVO> billVOS;
 
     public FinanceBLService_Stub(){
@@ -30,19 +31,16 @@ public class FinanceBLService_Stub implements FinanceBLService {
         CustomerVO c3=new CustomerVO("00000003",CustomerCategory.PUR_AGENT,Level.LEVEL_FIVE,"进货商2","15244358373",
                 "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,400);
 
-        AccountVO vo1 = new AccountVO("工商银行账户1",2000);
-        AccountVO vo2 = new AccountVO("工商银行账户2",1000);
-        AccountVO vo3 = new AccountVO("工商银行账户3",4000);
+        AccountVO vo1 = new AccountVO("001","工商银行账户1",2000);
+        AccountVO vo2 = new AccountVO("001","工商银行账户2",1000);
+        AccountVO vo3 = new AccountVO("001","工商银行账户3",4000);
 
         AccountBillItemVO itemVO1 = new AccountBillItemVO(vo1,300,"卖出灯具20个");
         AccountBillItemVO itemVO2 = new AccountBillItemVO(vo2,400,"卖出灯具30个");
         CashBillItemVO itemVO3 = new CashBillItemVO("打车",20,"见客户");
         CashBillItemVO itemVO4 = new CashBillItemVO("吃饭",200,"请客户吃中饭");
 
-        SalesDetailVO salesDetailVO1 = new SalesDetailVO(new Date(),"霓虹灯", "大", 20, 35.0);
-        SalesDetailVO salesDetailVO2 = new SalesDetailVO(new Date(),"挂灯", "xxdd", 10, 35.0);
-        salesDetailVOS.add(salesDetailVO1);
-        salesDetailVOS.add(salesDetailVO2);
+
 
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
@@ -52,7 +50,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
         cashBillItemVOS.add(itemVO3);
         cashBillItemVOS.add(itemVO4);
 
-        billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
+        billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
 
 
@@ -66,24 +64,22 @@ public class FinanceBLService_Stub implements FinanceBLService {
         accountVOS.add(vo2);
         accountVOS.add(vo3);
 
-        AccountBillVO billVO1 = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
+        AccountBillVO billVO1 = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT,BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
-        AccountBillVO billVO2 = new AccountBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
+        AccountBillVO billVO2 = new AccountBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.PAYMENT,
                 "客户甲","营业员1",accountBillItemVOS);
-        CashBillVO billVO3 = new CashBillVO(new Date(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
+        CashBillVO billVO3 = new CashBillVO(LocalDate.now().toString(),"FKD-20171022-00001", BillState.SUBMITTED,BillType.CASH,
                 "营业员1","工商银行账户",cashBillItemVOS,220);
-        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, new Date(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
+        InventoryBillVO billVO4 = new InventoryBillVO("BYD-20171022-00000", BillType.OVERFLOW, BillState.PASS, LocalDate.now().toString(), "栖霞区仓库","王某",new HashMap<GoodsVO, Integer>());
         GoodsItemVO gi2=new GoodsItemVO("01", "霓虹灯",null ,20, 35.0,
                 "耐用");
         ArrayList<GoodsItemVO> goodsItemVOS = new ArrayList<GoodsItemVO>();
         goodsItemVOS.add(gi2);
         PurchaseVO billVO5=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
                 ,"00000001","默认仓库","阿红",goodsItemVOS,"满足客户需求"
-                ,new Date());
+                ,LocalDate.now().toString());
 
-        profitVO = new ProfitVO(new Date(),new Date(),10000,3000,
-                200,400,900,9500,5000,
-                4000,1000,500,5500,4000);
+
     }
 
     public String getNewReceiptID() {
@@ -112,7 +108,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
 
     public ResultMessage submit(AccountBillVO vo) {
         if (vo.ID != null && vo.accountBillItems != null
-                && vo.userName != null && vo.customerName != null
+                && vo.userName != null && vo.customerID != null
                 && vo.type != null){
             System.out.println("Submit succeed");
             return ResultMessage.SUCCESS;
@@ -124,7 +120,7 @@ public class FinanceBLService_Stub implements FinanceBLService {
 
     public ResultMessage submit(CashBillVO vo) {
         if (vo.ID != null && vo.cashBillItems != null
-                && vo.userName != null && vo.accountName != null
+                && vo.userName != null && vo.accountID != null
                 && vo.type != null){
             System.out.println("Submit succeed");
             return ResultMessage.SUCCESS;
@@ -174,43 +170,40 @@ public class FinanceBLService_Stub implements FinanceBLService {
         }
     }
 
-    public BillVO findByID(String ID) {
-        if (ID.equals("SKD-20171022-00001")){
-            return billVO;
-        }else{
-            return null;
-        }
+
+
+    @Override
+    public ResultMessage deleteDraftAccountBill(String ID) {
+        return null;
     }
 
-    public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return salesDetailVOS;
+    @Override
+    public ResultMessage deleteDraftCashBill(String ID) {
+        return null;
     }
 
-    public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return billVOS;
+    @Override
+    public String getAccountNameByID(String accountID) {
+        return null;
     }
 
-    public ResultMessage redCover(BillVO vo) {
-        if (vo.ID.equals(billVO.ID)){
-            System.out.println("RedCover succeed");
-            return ResultMessage.SUCCESS;
-        }else{
-            System.out.println("RedCover failed");
-            return ResultMessage.FAILED;
-        }
+    @Override
+    public ArrayList<AccountBillVO> getReceiptsByState(BillState state) {
+        return null;
     }
 
-    public ResultMessage redCoverAndCopy(BillVO vo) {
-        if (vo.ID.equals(billVO.ID)){
-            System.out.println("RedCoverAndCopy succeed");
-            return ResultMessage.SUCCESS;
-        }else{
-            System.out.println("RedCoverAndCopy failed");
-            return ResultMessage.FAILED;
-        }
+    @Override
+    public ArrayList<AccountBillVO> getPaymentsByState(BillState state) {
+        return null;
     }
 
-    public ProfitVO getProfit(Date startDate, Date endDate) {
-        return profitVO;
+    @Override
+    public ArrayList<CashBillVO> getCashBillByState(BillState state) {
+        return null;
+    }
+
+    @Override
+    public String getCustomerNameByID(String ID) {
+        return "客户A";
     }
 }

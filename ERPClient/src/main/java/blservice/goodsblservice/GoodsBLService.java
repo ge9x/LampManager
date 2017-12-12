@@ -1,5 +1,6 @@
 package blservice.goodsblservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import util.ResultMessage;
@@ -10,7 +11,7 @@ import vo.GoodsVO;
  * @author 巽
  *
  */
-public interface GoodsBLService {
+public interface GoodsBLService extends Remote {
 	/**
 	 * 展示所有商品
 	 * @return 所有商品
@@ -50,5 +51,5 @@ public interface GoodsBLService {
 	 * 得到自动生成的新商品的ID
 	 * @return 自动生成的ID
 	 */
-	public String getNewID();
+	public String getNewID(String calssificationID);
 }

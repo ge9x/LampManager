@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/receiptEdit.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialCashBillEditController">
+    <children>
+        <ScrollPane layoutX="8.0" prefHeight="593.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="539.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" text="制定现金费用单">
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <AnchorPane fx:id="BillPane" prefHeight="445.0" prefWidth="744.0">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Label layoutX="40.0" layoutY="31.0" prefHeight="31.0" prefWidth="77.0" styleClass="ID-label" text="单据编号" />
+                                <Label fx:id="BillID" layoutX="126.0" layoutY="31.0" prefHeight="31.0" prefWidth="347.0" text="SKD-20171022-00001" />
+                                <VBox layoutX="40.0" layoutY="72.0" prefHeight="191.0" prefWidth="150.0" spacing="10.0">
+                                    <children>
+                                        <Label styleClass="input-label" text="银行账户" />
+                                        <JFXComboBox fx:id="Accounts" prefHeight="23.0" prefWidth="154.0">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin></JFXComboBox>
+                                        <Label styleClass="input-label" text="操作员" />
+                                        <Text fx:id="Username" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font></Text>
+                                        <Label styleClass="input-label" text="总额汇总" />
+                                        <Text fx:id="Total" fill="#e83a3f" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font></Text>
+                                    </children>
+                                </VBox>
+                                <VBox fx:id="vbox" layoutX="262.0" layoutY="72.0" prefHeight="237.0" prefWidth="448.0" spacing="10.0">
+                                    <children>
+                                        <HBox prefHeight="50.0" prefWidth="448.0">
+                                            <children>
+                                                <Label styleClass="input-label" text="条目清单" />
+                                                <Label fx:id="addIcon" alignment="CENTER" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0" />
+                                                    </HBox.margin></Label>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <HBox alignment="CENTER_RIGHT" layoutX="510.0" layoutY="330.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                                    <children>
+                                        <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
+                                            <font>
+                                                <Font name="Microsoft YaHei" size="17.0" />
+                                            </font>
+                                        </JFXButton>
+                                        <JFXButton fx:id="cancelButton" onMouseClicked="#clickCancelButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 5; -fx-border-width: 2px; -fx-border-color: #1db1a4; -fx-border-radius: 5;" text="取 消" textFill="#1DB1A5">
+                                            <font>
+                                                <Font name="Microsoft YaHei" size="17.0" />
+                                            </font>
+                                        </JFXButton>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

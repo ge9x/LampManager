@@ -8,6 +8,7 @@ import vo.AccountBillVO;
 import vo.AccountVO;
 import vo.BillVO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,53 +18,21 @@ import java.util.HashMap;
  */
 public class MockAccountBill extends AccountBill {
 
+
+
     @Override
-    public HashMap<String, String> getAllCustomers() {
-        HashMap<String,String> map = new HashMap<String, String>();
-        map.put("00000001","老李");
-        return map;
+    public ResultMessage submit(AccountBillVO vo) {
+        return ResultMessage.SUCCESS;
     }
 
     @Override
-    public ArrayList<String> getAllAccount() {
-        ArrayList<String> account = new ArrayList<String>();
-        account.add("工商银行账户1");
-        return account;
-    }
-
-    @Override
-    public void addBillItem(AccountBillItemVO vo) {
-
-    }
-
-    @Override
-    public void addAccountBill(String customer, String account) {
-
-    }
-
-    @Override
-    public void calTotal() {
-
-    }
-
-    @Override
-    public AccountBillVO submit() {
-        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00),300,"卖出灯具20个");
+    public ResultMessage save(AccountBillVO vo) {
+        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("001","工商银行账户",2000.00),300,"卖出灯具20个");
         ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
         accountBillItemVOS.add(itemVO1);
-        AccountBillVO billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.SUBMITTED, BillType.RECEIPT,
+        AccountBillVO billVO = new AccountBillVO(LocalDate.now().toString(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
                 "客户甲","营业员1",accountBillItemVOS);
-        return billVO;
-    }
-
-    @Override
-    public AccountBillVO save() {
-        AccountBillItemVO itemVO1 = new AccountBillItemVO(new AccountVO("工商银行账户",2000.00),300,"卖出灯具20个");
-        ArrayList<AccountBillItemVO> accountBillItemVOS = new ArrayList<AccountBillItemVO>();
-        accountBillItemVOS.add(itemVO1);
-        AccountBillVO billVO = new AccountBillVO(new Date(),"SKD-20171022-00001", BillState.DRAFT, BillType.RECEIPT,
-                "客户甲","营业员1",accountBillItemVOS);
-        return billVO;
+        return ResultMessage.SUCCESS;
     }
 
     @Override
@@ -74,4 +43,5 @@ public class MockAccountBill extends AccountBill {
         }
         return ResultMessage.NOT_EXIST;
     }
+
 }

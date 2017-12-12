@@ -1,5 +1,6 @@
 package bl.salesbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,9 +29,9 @@ public class MockSalesLineItem extends SalesLineItem{
 		goodsItemList.add(gi1);
 		goodsItemList.add(gi2);
 		SalesVO s1=new SalesVO(BillType.SALES, BillState.DRAFT, "XSD-20171022-00001", "销售商1", "业务员1",
-				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", new Date());
+				"阿强","00000003", "默认仓库",goodsItemList , 100,500,  "满足客户需求", LocalDate.now().toString(),"PC-1");
 	    SalesVO s2=new SalesVO(BillType.SALES, BillState.FAILED, "XSTHD-20171022-00002", "销售商2", "业务员2",
-					"阿奇","00000004" ,"默认仓库",goodsItemList , 100,500, "满足客户需求", new Date());
+					"阿奇","00000004" ,"默认仓库",goodsItemList , 100,500, "满足客户需求", LocalDate.now().toString(),"PB-1");
 	    salesBill.add(s1);
 	    salesBill.add(s2);
 	}
@@ -41,19 +42,19 @@ public class MockSalesLineItem extends SalesLineItem{
 	
 	public ArrayList <PromotionBargainVO> showBargains(){
 		ArrayList<PromotionBargainVO> getBargains=new ArrayList<PromotionBargainVO>();
-		getBargains.add(new PromotionBargainVO("00001", 5000.0, 500.0, new Date(), new Date(), new ArrayList<GoodsVO>()));
+		getBargains.add(new PromotionBargainVO("特价包策略","00001", 5000.0, 500.0, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>()));
 		return getBargains;
 	}
 		 
     public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(){
     	ArrayList<PromotionCustomerVO> getCustomers=new ArrayList<PromotionCustomerVO>();
-		getCustomers.add(new PromotionCustomerVO("00002", new Date(), new Date(), 500.0, 300.0, new ArrayList<GoodsVO>(), util.Level.LEVEL_ONE));
+		getCustomers.add(new PromotionCustomerVO("会员促销策略","00002", LocalDate.now().toString(), LocalDate.now().toString(), 500.0, 300.0, new ArrayList<GoodsItemVO>(), util.Level.LEVEL_ONE));
 		return getCustomers;
     }
 		  
     public ArrayList <PromotionTotalVO> getFitPromotionTotal(){
     	ArrayList<PromotionTotalVO> getTotal=new ArrayList<PromotionTotalVO>();
-		getTotal.add(new PromotionTotalVO("00001", new Date(), new Date(), 455.0, new ArrayList<GoodsVO>(), 700.0));
+		getTotal.add(new PromotionTotalVO("总价促销策略","00001", LocalDate.now().toString(), LocalDate.now().toString(), 455.0, new ArrayList<GoodsItemVO>(), 700.0));
 		return getTotal;
 	}
     

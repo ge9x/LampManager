@@ -2,12 +2,13 @@ package blservice.accountblservice;
 import util.ResultMessage;
 import vo.AccountVO;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 /**
  * Created by Kry·L on 2017/10/20.
  */
-public interface AccountBLService {
+public interface AccountBLService extends Remote {
 
     /**
      * 添加银行账户

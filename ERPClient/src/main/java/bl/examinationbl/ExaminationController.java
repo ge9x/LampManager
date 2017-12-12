@@ -15,28 +15,19 @@ public class ExaminationController implements ExaminationBLService{
 	}
 
 	public ArrayList<BillVO> show() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public BillVO checkReceipt(String billID) {
-		// TODO Auto-generated method stub
-		return null;
+		return examination.show();
 	}
 
 	public ResultMessage modifyReceipt(BillVO bill) {
-		// TODO Auto-generated method stub
-		return null;
+		return examination.modifyReceipt(bill);
 	}
 
 	public ResultMessage approveReceipt(BillVO bill) {
-		// TODO Auto-generated method stub
-		return null;
+		return examination.approveReceipt(bill);
 	}
 
-	public ArrayList<BillVO> showHistory() {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultMessage refuseReceipt(BillVO bill) {
+		return examination.refuseReceipt(bill);
 	}
 
 }

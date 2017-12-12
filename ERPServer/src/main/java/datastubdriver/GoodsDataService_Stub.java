@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dataservice.goodsdataservice.GoodsDataService;
 import po.GoodsPO;
+import util.Criterion;
 import util.ResultMessage;
 
 /**
@@ -17,11 +18,11 @@ public class GoodsDataService_Stub implements GoodsDataService{
 	
 	{
 		data = new ArrayList<GoodsPO>();
-		GoodsPO g1 = new GoodsPO("02000001", "圣洁牌纯黑落地灯", "L", "落地灯", "栖霞区仓库", 700, 250, 233.3, 250, new ArrayList<Double>(), new ArrayList<Double>());
-		GoodsPO g2 = new GoodsPO("02000002", "圣洁牌纯白落地灯", "M", "落地灯", "鼓楼区仓库", 700, 250, 233.3, 250, new ArrayList<Double>(), new ArrayList<Double>());
-		GoodsPO g3 = new GoodsPO("03000003", "圣洁牌简洁黑白配台灯", "S", "台灯", "鼓楼区仓库", 7000, 2500, 233.3, 250, new ArrayList<Double>(), new ArrayList<Double>());
-		GoodsPO g4 = new GoodsPO("04000004", "圣洁牌古典吊灯", "LL", "吊灯", "栖霞区仓库", 70, 250, 2333.3, 2500, new ArrayList<Double>(), new ArrayList<Double>());
-		GoodsPO g5 = new GoodsPO("05000005", "圣洁牌后现代主义七彩霓虹灯", "LLL", "霓虹灯", "栖霞区仓库", 7, 3, 23333.3, 250000, new ArrayList<Double>(), new ArrayList<Double>());
+		GoodsPO g1 = new GoodsPO(1, "圣洁牌纯黑落地灯", "L", null, 250, 233.3, 250, 233.3, 250);
+		GoodsPO g2 = new GoodsPO(2, "圣洁牌纯白落地灯", "M", null, 250, 233.3, 250, 233.3, 250);
+		GoodsPO g3 = new GoodsPO(3, "圣洁牌简洁黑白配台灯", "S", null, 2500, 233.3, 250, 233.3, 250);
+		GoodsPO g4 = new GoodsPO(4, "圣洁牌古典吊灯", "LL", null, 250, 2333.3, 2500, 2333.3, 2500);
+		GoodsPO g5 = new GoodsPO(5, "圣洁牌后现代主义七彩霓虹灯", "LLL", null, 3, 23333.3, 250000, 23333.3, 250000);
 		data.add(g1);
 		data.add(g2);
 		data.add(g3);
@@ -33,9 +34,9 @@ public class GoodsDataService_Stub implements GoodsDataService{
 		return data;
 	}
 
-	public GoodsPO find(String ID) throws RemoteException {
+	public GoodsPO find(int ID) throws RemoteException {
 		for(GoodsPO po : data){
-			if(po.getId().endsWith(ID)){
+			if(po.getID() == ID){
 				return po;
 			}
 		}
@@ -44,7 +45,7 @@ public class GoodsDataService_Stub implements GoodsDataService{
 
 	public ResultMessage add(GoodsPO po) throws RemoteException {
 		for(GoodsPO gpo : data){
-			if(gpo.getId().equals(po.getId())){
+			if(gpo.getID() == po.getID()){
 				System.out.println("add goods failed");
 				return ResultMessage.FAILED;
 			}
@@ -56,7 +57,7 @@ public class GoodsDataService_Stub implements GoodsDataService{
 
 	public ResultMessage delete(GoodsPO po) throws RemoteException {
 		for(GoodsPO gpo : data){
-			if(gpo.getId().equals(po.getId())){
+			if(gpo.getID() == po.getID()){
 				data.remove(gpo);
 				System.out.println("delete goods success");
 				return ResultMessage.SUCCESS;
@@ -68,7 +69,7 @@ public class GoodsDataService_Stub implements GoodsDataService{
 
 	public ResultMessage update(GoodsPO po) throws RemoteException {
 		for(GoodsPO gpo : data){
-			if(gpo.getId().equals(po.getId())){
+			if(gpo.getID() == po.getID()){
 				data.remove(gpo);
 				data.add(po);
 				System.out.println("update goods success");
@@ -77,6 +78,19 @@ public class GoodsDataService_Stub implements GoodsDataService{
 		}
 		System.out.println("update goods failed");
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public String getNewID(String classificationID) throws RemoteException {
+		return classificationID + "000001";
+	}
+
+	/**
+	 * 后加入的方法，桩不予实现
+	 */
+	@Override
+	public ArrayList<GoodsPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return data;
 	}
 
 }

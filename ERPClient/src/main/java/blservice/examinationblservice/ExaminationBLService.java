@@ -17,21 +17,6 @@ public interface ExaminationBLService {
 	public ArrayList<BillVO> show();
 	
 	/**
-     * 显示历史单据
-     * 
-     * @return ArrayList<BillVO>
-     */
-	public ArrayList<BillVO> showHistory();
-	
-	/**
-     * 查看单据内容
-     * 
-     * @param receipt
-     * @return ResultMessage
-     */
-	public BillVO checkReceipt(String billID);
-	
-	/**
      * 修改单据内容
      * 
      * @param receipt
@@ -46,4 +31,6 @@ public interface ExaminationBLService {
      * @return ResultMessage
      */
 	public ResultMessage approveReceipt(BillVO bill);
+	
+	public ResultMessage refuseReceipt(BillVO bill);
 }

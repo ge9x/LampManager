@@ -2,9 +2,11 @@ package blservice.salesblservice;
 
 import java.util.ArrayList;
 
+import util.BillState;
+import util.Level;
 import util.ResultMessage;
+import vo.CustomerVO;
 import vo.GoodsItemVO;
-import vo.GoodsVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
@@ -16,39 +18,29 @@ import vo.SalesVO;
  */
 
 public interface SalesBLService {
-     /**
-      * 创建进货单时得到进货单编号
-      * 	
-      * @return 进货单编号
-      * @author zlk
-      */
-	  public String getnewPurchaseID();
 	  /**
-	   * 创建进货退货单时得到进货退货单编号
-	   * 
-	   * @return 进货退货单编号
-	   * @author zlk
+	   * 得到新的进货单编号
+	   * @return
 	   */
+	  public String getnewPurchaseID();
+      /**
+       * 得到新的进货退货单编号
+       * @return
+       */
 	  public String getnewReturnID();
 	  /**
-	   * 创建销售单时得到销售单编号
-	   * 
-	   * @return 得到销售单编号
-	   * @author zlk
+	   * 得到新的销售进货单编号
+	   * @return
 	   */
 	  public String getnewSalesID();
 	  /**
-	   * 创建销售退货单时得到销售退货单编号
-	   * 
-	   * @return 得到销售退货单编号
-	   * @author zlk
+	   * 得到新的销售退货单编号
+	   * @return
 	   */
 	  public String getnewSalesReturnID();
 	  /**
-	   * 展示促销策略
-	   * 
-	   * @return 得到促销策略
-	   * @author zlk
+	   * 得到合适的特价包促销策略
+	   * @return
 	   */
 	  public ArrayList <PromotionBargainVO> showBargains();
 	  /**
@@ -57,14 +49,14 @@ public interface SalesBLService {
 	   * @return 会员促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer();
+	  public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(Level level);
 	  /**
 	   * 得到合适的总价促销策略
 	   * 
 	   * @return 总价促销策略
 	   * @author zlk
 	   */
-	  public ArrayList <PromotionTotalVO> getFitPromotionTotal();
+	  public ArrayList <PromotionTotalVO> getFitPromotionTotal(double total);
 	  /**
 	   * 创建一个进货单
 	   * 
@@ -72,14 +64,26 @@ public interface SalesBLService {
 	   * @return 得到创建后的进货单
 	   * @author zlk
 	   */
-	  public PurchaseVO addPurchase(PurchaseVO vo);
+	  public ResultMessage addPurchase(PurchaseVO vo);
+	  /**
+	   * 删除进货单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage deletePurchase(PurchaseVO vo);
+	  /**
+	   * 更改进货单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage updatePurchase(PurchaseVO vo);
 	  /**
 	   * 添加商品清单信息
 	   * 
 	   * @param item
 	   * @author zlk
 	   */
-	  public void addGoodsItem(GoodsItemVO item);
+	  public ResultMessage addGoodsItem(GoodsItemVO item);
 	  /**
 	   * 创建一个销售单
 	   * 
@@ -87,7 +91,19 @@ public interface SalesBLService {
 	   * @return 得到创建后的销售单
 	   * @author zlk
 	   */
-	  public SalesVO addSales(SalesVO vo);
+	  public ResultMessage addSales(SalesVO vo);
+	  /**
+	   * 删除销售单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage deleteSales(SalesVO vo);
+	  /**
+	   * 更改销售单据
+	   * @param vo
+	   * @return
+	   */
+	  public ResultMessage updateSales(SalesVO vo);
 	  /**
 	   * 提交进货单
 	   * 
@@ -120,5 +136,48 @@ public interface SalesBLService {
 	   * @author zlk
 	   */
 	  public ResultMessage savePurchase(PurchaseVO bill);
-	  
+	  /**
+	   * 获得当前用户ID
+	   * @return 当前用户ID
+	   */
+	  public String getUserName();
+	  /**
+	   * 获得所有供应商列表
+	   * @return 供应商VO的列表
+	   */
+	  public ArrayList<CustomerVO> getAllSupplier();
+	  /**
+	   * 获得所有仓库列表
+	   * @return 仓库VO的列表
+	   */
+	  public ArrayList<String> getAllInventory();
+	  /**
+	   * 获得所有客户列表
+	   * @return 客户VO的列表
+	   */
+	  public ArrayList<CustomerVO> getAllCustomer();
+	  /**
+	   * 通过状态得到进货单据
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state);
+	  /**
+	   * 通过状态得到进货退货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<PurchaseVO> getReturnOrderByState(BillState state);
+	  /**
+	   * 通过状态得到销售出货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<SalesVO> getSalesOrderByState(BillState state);
+	  /**
+	   * 通过单据得到销售退货单
+	   * @param state
+	   * @return
+	   */
+	  public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state);
 }

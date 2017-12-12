@@ -1,11 +1,13 @@
 package blstubdriver;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import util.Level;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.PromotionCustomerVO;
 
@@ -14,70 +16,63 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 	public ArrayList<PromotionCustomerVO> show() {
 		// TODO Auto-generated method stub
 		ArrayList<PromotionCustomerVO> promotion = new ArrayList<PromotionCustomerVO>();
-		PromotionCustomerVO promotion1 = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
-		PromotionCustomerVO promotion2 = new PromotionCustomerVO("000004", new Date(), new Date(), 0, 500, new ArrayList<GoodsVO>(), Level.LEVEL_FIVE);
+		PromotionCustomerVO promotion1 = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion2 = new PromotionCustomerVO("会员促销策略2","000004", LocalDate.now().toString(), LocalDate.now().toString(), 0, 500, new ArrayList<GoodsItemVO>(), Level.LEVEL_FIVE);
 		promotion.add(promotion1);
 		promotion.add(promotion2);
 		return promotion;
 	}
 
-	public void addGift(GoodsVO vo) {
+	public void addGift(GoodsItemVO vo) {
 		// TODO Auto-generated method stub
-		ArrayList<GoodsVO> gifts = new ArrayList<GoodsVO>();
+		ArrayList<GoodsItemVO> gifts = new ArrayList<GoodsItemVO>();
 		gifts.add(vo);
 		System.out.println("Add gift success!");
 	}
 
 	public void addVoucher(double price) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		promotion.voucher = price;
 		System.out.println("Set voucher success!");
 	}
 
 	public void addAllowance(double price) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		promotion.allowance = price;
 		System.out.println("Set allowance success!");
 	}
 
-	public void setStartDate(Date date) {
+	public void setStartDate(String date) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		promotion.startDate = date;
 		System.out.println("Set start time success!");
 	}
 
-	public void setEndDate(Date date) {
+	public void setEndDate(String date) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		promotion.endDate = date;
 		System.out.println("Set end time success!");
 	}
 
 	public ResultMessage submit(PromotionCustomerVO vo) {
 		// TODO Auto-generated method stub
-		if(vo.endDate.after(vo.startDate)){
-			System.out.println("Submit success!");
-			return ResultMessage.SUCCESS;
-		}
-		else{
-			System.out.println("Set time error!");
-			return ResultMessage.FAILED;
-		}
+		return ResultMessage.SUCCESS;
 	}
 
 	public void setCustomer(Level level) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		promotion.level = level;
 		System.out.println("Set customer level success!");
 	}
 
 	public PromotionCustomerVO findPromotionByID(String promotionID) {
 		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("000003", new Date(), new Date(), 1000, 0, new ArrayList<GoodsVO>(), Level.LEVEL_THREE);
+		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
 		if(promotion.promotionID.equals(promotionID)){
 			return promotion;
 		}
@@ -85,6 +80,24 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 			System.out.println("Can't find promotion!");
 			return null;
 		}
+	}
+
+	@Override
+	public ResultMessage deletePromotion(String promotionID) {
+		// TODO Auto-generated method stub
+		return ResultMessage.SUCCESS;
+	}
+
+	@Override
+	public ResultMessage updatePromotion(PromotionCustomerVO vo) {
+		// TODO Auto-generated method stub
+		return ResultMessage.SUCCESS;
+	}
+
+	@Override
+	public String getNewPromotionCustomerID() {
+		// TODO Auto-generated method stub
+		return "PC-0001";
 	}
 
 }

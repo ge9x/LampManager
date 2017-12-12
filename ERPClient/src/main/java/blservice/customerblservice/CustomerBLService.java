@@ -1,16 +1,18 @@
 package blservice.customerblservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import util.ResultMessage;
 import vo.CustomerAddVO;
 import vo.CustomerVO;
+import vo.UserVO;
 
 /**
  * created by zlk on 2017/10/21
  */
 
-public interface CustomerBLService {
+public interface CustomerBLService extends Remote{
 	  //管理客户界面得到客户编号
 	/**
 	 * 创建客户时得到客户编号
@@ -61,5 +63,14 @@ public interface CustomerBLService {
 	 * @author zlk
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo);
-	
+	/**
+	 * 展示所有客户
+	 * @return
+	 */
+	public ArrayList<CustomerVO> show();
+	/**
+	 * 得到所有业务员
+	 * @return
+	 */
+	public ArrayList<UserVO> getAllSalesman();
 }

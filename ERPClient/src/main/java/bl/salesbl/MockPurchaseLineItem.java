@@ -1,5 +1,6 @@
 package bl.salesbl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,10 +28,10 @@ public class MockPurchaseLineItem extends PurchaseLineItem{
 		goodsItemList.add(gi2);
 		PurchaseVO p1=new PurchaseVO(BillType.PURCHASE,BillState.PASS,"JHD-20171022-00001","供应商1"
 			,"00000001","默认仓库","阿红",goodsItemList,"满足客户需求"
-		     ,new Date());
+		     ,LocalDate.now().toString());
 		PurchaseVO p2=new PurchaseVO(BillType.RETURN,BillState.SUBMITTED,"JHTHD-20171022-00002","供应商2"
 				,"00000002","默认仓库","阿明",goodsItemList,"好看"
-				,new Date());
+				,LocalDate.now().toString());
 		purchaseBill.add(p1);
 		purchaseBill.add(p2);
 	}
@@ -41,19 +42,19 @@ public class MockPurchaseLineItem extends PurchaseLineItem{
 	
 	public ArrayList <PromotionBargainVO> showBargains(){
 		ArrayList<PromotionBargainVO> getBargains=new ArrayList<PromotionBargainVO>();
-		getBargains.add(new PromotionBargainVO("00001", 5000.0, 500.0, new Date(), new Date(), new ArrayList<GoodsVO>()));
+		getBargains.add(new PromotionBargainVO("特价包策略","00001", 5000.0, 500.0, LocalDate.now().toString(), LocalDate.now().toString(), new ArrayList<GoodsItemVO>()));
 		return getBargains;
 	}
 		 
     public ArrayList <PromotionCustomerVO> getFitPromotionCustomer(){
     	ArrayList<PromotionCustomerVO> getCustomers=new ArrayList<PromotionCustomerVO>();
-		getCustomers.add(new PromotionCustomerVO("00002", new Date(), new Date(), 500.0, 300.0, new ArrayList<GoodsVO>(), util.Level.LEVEL_ONE));
+		getCustomers.add(new PromotionCustomerVO("会员促销策略","00002", LocalDate.now().toString(), LocalDate.now().toString(), 500.0, 300.0, new ArrayList<GoodsItemVO>(), util.Level.LEVEL_ONE));
 		return getCustomers;
     }
 		  
     public ArrayList <PromotionTotalVO> getFitPromotionTotal(){
     	ArrayList<PromotionTotalVO> getTotal=new ArrayList<PromotionTotalVO>();
-		getTotal.add(new PromotionTotalVO("00001", new Date(), new Date(), 455.0, new ArrayList<GoodsVO>(), 700.0));
+		getTotal.add(new PromotionTotalVO("总价促销策略","00001", LocalDate.now().toString(), LocalDate.now().toString(), 455.0, new ArrayList<GoodsItemVO>(), 700.0));
 		return getTotal;
 	}
     
