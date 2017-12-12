@@ -3,8 +3,6 @@ package vo;
 import util.BillState;
 import util.BillType;
 
-import java.util.Date;
-
 /**
  * Created by Kry·L on 2017/10/21.
  */

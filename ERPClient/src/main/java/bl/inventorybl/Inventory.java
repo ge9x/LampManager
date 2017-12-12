@@ -15,6 +15,8 @@ import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
+import util.BillState;
+import util.BillType;
 import util.Criterion;
 import util.QueryMode;
 import util.ResultMessage;
@@ -81,9 +83,16 @@ public class Inventory {
 		return ret;
 	}
 
-	public ArrayList<InventoryBillVO> findBill(Date startDate, Date endDate, String inventory, String id,
-			String keyword) {
-		return null;
+	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) throws RemoteException {
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", type, QueryMode.FULL));
+		criteria.add(new Criterion("state", state, QueryMode.FULL));
+		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		for(InventoryBillPO po : pos){
+			ret.add(this.billToVO(po));
+		}
+		return ret;
 	}
 
 	public ResultMessage addInventory(String inventory) throws RemoteException {
@@ -114,16 +123,55 @@ public class Inventory {
 		return null;
 	}
 
-	public ResultMessage updateBill(InventoryBillVO vo) {
-		return null;
+	public ResultMessage updateBill(InventoryBillVO vo) throws NumberFormatException, RemoteException {	// TODO first
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		int turn = Integer.parseInt(vo.ID.split("-")[2]);
+		criteria.add(new Criterion("type", vo.type, QueryMode.FULL));
+		criteria.add(new Criterion("date", vo.date, QueryMode.FULL));
+		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
+		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+		if(found.isEmpty()){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			if(found.size()>1){
+				System.out.println("警告：数据库中出现重复的单据：" + vo.ID);
+			}
+			InventoryBillPO toUpdate = found.get(0);
+			toUpdate.setState(vo.state);
+			InventoryPO inventory = null;	// TODO
+			toUpdate.setInventory(inventory);
+			HashMap<GoodsPO, Integer> goodsMap = new HashMap<>();
+			for(GoodsVO goodsVO : vo.goodsMap.keySet()){
+				
+			}
+			return inventoryDataService.updateBill(toUpdate);
+		}
 	}
 
 	public InventoryBillVO showBillDetails(String ID) {
 		return null;
 	}
 
-	public ResultMessage submitBill(String ID) {
-		return null;
+	public ResultMessage submitBill(String ID) throws RemoteException {	// TODO second
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		String[] identity = ID.split("-");
+		int turn = Integer.parseInt(identity[2]);
+		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));
+		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));
+		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
+		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+		if(found.isEmpty()){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			if(found.size()>1){
+				System.out.println("警告：数据库中出现重复的单据：" + ID);
+			}
+			InventoryBillPO toSubmit = found.get(0);
+			// TODO update what?
+			return inventoryDataService.updateBill(toSubmit);
+		}
 	}
 
 	private InventoryBillVO billToVO(InventoryBillPO po) {
@@ -149,8 +197,8 @@ public class Inventory {
 		}
 		// 查询数据库以知晓这是当天该种类型单据的第几张
 		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("date", vo.date, QueryMode.FULL));
 		criteria.add(new Criterion("type", vo.type, QueryMode.FULL));
+		criteria.add(new Criterion("date", vo.date, QueryMode.FULL));
 		int turn = inventoryDataService.advancedQuery(criteria).size() + 1;
 
 		InventoryBillPO ret = new InventoryBillPO(vo.date, vo.type, vo.state, inventory, vo.user, poMap, turn);
