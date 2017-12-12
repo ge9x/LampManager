@@ -18,3 +18,7 @@
 #SalesReturnIcon {
 	-fx-font-size: 28px;
 }
+#userName {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}

@@ -46,4 +46,17 @@ public interface FinanceInfo {
      * @return
      */
     public ArrayList<CashBillVO> getAllSubmittedCashBills();
+
+    /**
+     * 获得所有审批通过的收付款单
+     */
+    public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate,String endDate);
+
+    /**
+     * 获得所有审批通过的现金费用单
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public ArrayList<CashBillVO> getCashBillsByDate(String startDate,String endDate);
 }

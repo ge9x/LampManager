@@ -1,8 +1,13 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 
 /**
@@ -10,6 +15,7 @@ import javafx.scene.control.Label;
  */
 public class FinancialNavbarController {
     private FinancialViewController financialViewController;
+    UserInfo userInfo = new UserController();
     @FXML
     Label AccountIcon;
 
@@ -34,6 +40,12 @@ public class FinancialNavbarController {
     @FXML
     Label InitIcon;
 
+    @FXML
+    Circle avatar;
+
+    @FXML
+    Label userName;
+
 
     @FXML
     public void initialize() {
@@ -45,6 +57,11 @@ public class FinancialNavbarController {
         DocumentDetailsIcon.setText("\ue644");
         ProfitIcon.setText("\ue677");
         InitIcon.setText("\ue6eb");
+
+        Image img = new Image("./images/avatar/financial.jpg");
+        avatar.setFill(new ImagePattern(img));
+        String userID = userInfo.getCurrentUserID();
+        userName.setText(userInfo.getCurrentUserNameByID(userID));
     }
 
     public void clickAccountButton(){
