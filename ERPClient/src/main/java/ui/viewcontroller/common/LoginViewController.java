@@ -44,6 +44,22 @@ public class LoginViewController {
 
     public void login(String userID,String password){
         ResultMessage re = userBLService.login(userID,password);
+<<<<<<< HEAD
+//        if (re == ResultMessage.SUCCESS){
+//            UserVO user = userBLService.findUserByID(username.getText());
+//            UserPosition position = user.position;
+//            switch (position){
+//                case ADMIN:
+//                case FINANCIAL_STAFF: mainUIController.showFinancialStaffView();
+//            }
+            mainUIController.setCenter(null);
+//            mainUIController.showInventoryView();
+//            mainUIController.showFinancialStaffView();
+//            mainUIController.showSalesStaffView();
+          mainUIController.showGeneralManagerView();
+//            mainUIController.showAdminView();
+//        }
+=======
         if (re == ResultMessage.SUCCESS){
             UserVO user = userBLService.findUserByID(userID);
             UserPosition position = user.position;
@@ -75,6 +91,7 @@ public class LoginViewController {
 	        dialog.setHeaderText("该用户不存在");
 	        Optional result = dialog.showAndWait();
         }
+>>>>>>> refs/remotes/origin/dev
     }
 
     public void setMainUIController(MainUIController mainUIController){

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import util.ResultMessage;
 import vo.CustomerAddVO;
 import vo.CustomerVO;
+import vo.UserVO;
 
 /**
  * created by zlk on 2017/10/21
@@ -62,7 +63,14 @@ public interface CustomerBLService extends Remote{
 	 * @author zlk
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo);
-	
+	/**
+	 * 展示所有客户
+	 * @return
+	 */
 	public ArrayList<CustomerVO> show();
-	
+	/**
+	 * 得到所有业务员
+	 * @return
+	 */
+	public ArrayList<UserVO> getAllSalesman();
 }
