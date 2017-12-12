@@ -40,7 +40,7 @@ public class Inventory {
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		salesInfo = new SalesController();
+//		salesInfo = new SalesController();
 		goodsInfo = new GoodsController();
 	}
 

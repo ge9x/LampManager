@@ -16,9 +16,9 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/salesDetails.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialSalesDetailsController">
     <children>
-        <ScrollPane layoutX="8.0" layoutY="50.0" prefHeight="552.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" prefHeight="590.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="541.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="586.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -52,7 +52,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                  <AnchorPane fx:id="TablePane" prefHeight="404.0" prefWidth="744.0">
+                  <AnchorPane fx:id="TablePane" prefHeight="440.0" prefWidth="744.0">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
@@ -72,10 +72,10 @@
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Label fx:id="searchIcon" onMouseClicked="#clickSearchButton" alignment="CENTER" styleClass="icon-label" text="Q" />
+                              <Label fx:id="searchIcon" alignment="CENTER" onMouseClicked="#clickSearchButton" styleClass="icon-label" text="Q" />
                            </children>
                         </HBox>
-                        <ScrollPane fx:id="TableScrollPane" layoutX="33.0" layoutY="77.0" prefHeight="293.0" prefWidth="681.0" style="-fx-background-color: #ffffff;" />
+                        <ScrollPane fx:id="TableScrollPane" layoutX="33.0" layoutY="77.0" prefHeight="345.0" prefWidth="681.0" style="-fx-background-color: #ffffff;" />
                      </children>
                   </AnchorPane>
 
