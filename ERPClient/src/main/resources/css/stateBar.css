@@ -7,3 +7,20 @@
     -fx-font-size: 20px;
     -fx-text-fill: #707070;
 }
+.jfx-snackbar-content {
+    -fx-background-color: #1db1a4;
+    -fx-opacity: 85%;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-spacing: 5;
+    -fx-font-size: 12px;
+    -fx-pref-height: 50px;
+}
+
+.jfx-snackbar-toast {
+    -fx-text-fill: WHITE;
+}
+
+.jfx-snackbar-action {
+    -fx-text-fill: #ff4081;
+}
