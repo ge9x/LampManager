@@ -160,4 +160,19 @@ public class PromotionDataService_Stub implements PromotionDataService{
 		return PTList;
 	}
 
+	@Override
+	public String getNewPromotionBargainID() throws RemoteException {
+		return "PB-1";
+	}
+
+	@Override
+	public String getNewPromotionCustomerID() throws RemoteException {
+		return "PC-1";
+	}
+
+	@Override
+	public String getNewPromotionTotalID() throws RemoteException {
+		return "PT-1";
+	}
+
 }

@@ -129,4 +129,25 @@ public interface PromotionDataService extends Remote{
      * @throws RemoteException
      */
     public ArrayList<PromotionTotalPO> showPT() throws RemoteException;
+    /**
+     * 得到新的特价包编号
+     * 
+     * @return
+     * @throws RemoteException
+     */
+    public String getNewPromotionBargainID() throws RemoteException;
+    /**
+     * 得到新的会员促销编号
+     * 
+     * @return
+     * @throws RemoteException
+     */
+    public String getNewPromotionCustomerID() throws RemoteException;
+    /**
+     * 得到新的总价促销编号
+     * 
+     * @return
+     * @throws RemoteException
+     */
+    public String getNewPromotionTotalID() throws RemoteException;
 }

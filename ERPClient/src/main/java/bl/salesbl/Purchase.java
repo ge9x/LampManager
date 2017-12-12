@@ -8,26 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
-
-import blservice.customerblservice.CustomerInfo;
-import blservice.inventoryblservice.InventoryInfo;
-import blservice.promotionblservice.PromotionInfo;
-import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
-import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
-import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
 
@@ -94,9 +83,9 @@ public class Purchase {
 		PurchasePO po = voTopo(vo);
 		return salesDataService.addPurchase(po);
 	}
-
+	
 	public ResultMessage addGoodsItem(GoodsItemVO item) throws RemoteException {
-		return goodsItem.addGoodsItem(item);
+		return salesDataService.addGoodsItem(GoodsItem.voTopo(item));
 	}
 
 	public ResultMessage addSales(SalesVO vo) {

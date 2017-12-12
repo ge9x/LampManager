@@ -3,6 +3,8 @@ package dataimpl.promotiondataimpl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
 import datahelper.DataHelper;
 import datahelper.HibernateDataHelper;
 import dataservice.promotiondataservice.PromotionDataService;
@@ -102,6 +104,21 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	@Override
 	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
 		return promotionTotalDataHelper.multiQuery(new ArrayList<Criterion>());
+	}
+
+	@Override
+	public String getNewPromotionBargainID() throws RemoteException {
+		return "PB-"+String.valueOf(showPB().size()+1);
+	}
+
+	@Override
+	public String getNewPromotionCustomerID() throws RemoteException {
+		return "PC-"+String.valueOf(showPC().size()+1);
+	}
+
+	@Override
+	public String getNewPromotionTotalID() throws RemoteException {
+		return "PT-"+String.valueOf(showPT().size()+1);
 	}
 
 }

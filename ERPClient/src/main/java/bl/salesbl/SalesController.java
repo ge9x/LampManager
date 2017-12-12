@@ -1,17 +1,12 @@
 package bl.salesbl;
 
 import java.rmi.RemoteException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import org.hibernate.internal.util.beans.BeanInfoHelper.ReturningBeanInfoDelegate;
-import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
 import blservice.salesblservice.SalesBLService;
 import blservice.salesblservice.SalesInfo;
 import util.BillState;
-import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import dataservice.salesdataservice.SalesDataService;
 import po.PurchasePO;
-import vo.PromotionBargainVO;
 import vo.PurchaseVO;
 
 public class PurchaseList {
