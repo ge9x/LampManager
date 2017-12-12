@@ -40,7 +40,7 @@ public class Inventory {
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		salesInfo = new SalesController();
+//		salesInfo = new SalesController();	// TODO
 		goodsInfo = new GoodsController();
 	}
 
@@ -53,15 +53,15 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {	// TODO
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check(Date today) {	// TODO
 		return null;
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
+	public ResultMessage exportExcel(InventoryCheckVO vo) {	// TODO
 		return null;
 	}
 
@@ -111,16 +111,28 @@ public class Inventory {
 		return inventoryDataService.addBill(toAdd);
 	}
 
-	public ResultMessage deleteInventory(String inventory) {
+	public ResultMessage deleteInventory(String inventory) throws RemoteException {
+		InventoryPO found = this.getInventoryByName(inventory);
+		if(found==null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			return inventoryDataService.deleteInventory(found);
+		}
+	}
+
+	public ResultMessage deleteBill(String ID) {	// TODO
 		return null;
 	}
 
-	public ResultMessage deleteBill(String ID) {
-		return null;
-	}
-
-	public ResultMessage updateInventory(String before, String after) {
-		return null;
+	public ResultMessage updateInventory(String before, String after) throws RemoteException {
+		InventoryPO found = this.getInventoryByName(before);
+		if(found==null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			return inventoryDataService.deleteInventory(found);
+		}
 	}
 
 	public ResultMessage updateBill(InventoryBillVO vo) throws NumberFormatException, RemoteException {
@@ -152,10 +164,17 @@ public class Inventory {
 		}
 	}
 
-	public InventoryBillVO showBillDetails(String ID) {
+	public InventoryBillVO showBillDetails(String ID) {	// TODO
+		String[] identity = ID.split("-");
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));
+		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));
 		return null;
 	}
 
+	/**
+	 * 约定：和addBill方法逻辑相同（仅在使用情境和语义上有所区别）
+	 */
 	public ResultMessage submitBill(InventoryBillVO vo) throws RemoteException {
 		return this.addBill(vo);
 	}
@@ -192,12 +211,6 @@ public class Inventory {
 	}
 	
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
-		ArrayList<InventoryPO> all = inventoryDataService.showInventory();
-		for(InventoryPO po : all){
-			if(po.getName().equals(name)){
-				return po;
-			}
-		}
-		return null;
+		return inventoryDataService.findInventoryByName(name);
 	}
 }
