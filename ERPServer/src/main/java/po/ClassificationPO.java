@@ -1,7 +1,5 @@
 package po;
 
-import org.hibernate.annotations.IndexColumn;
-
 import java.io.Serializable;
 import java.util.List;
 
