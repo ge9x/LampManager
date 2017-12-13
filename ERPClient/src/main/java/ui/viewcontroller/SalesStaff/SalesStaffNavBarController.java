@@ -21,6 +21,9 @@ public class SalesStaffNavBarController {
 	@FXML
 	Label SalesReturnIcon;
 	
+	@FXML
+	Label userName;
+	
     @FXML
     public void initialize() {
         CustomerIcon.setText("\ue634");

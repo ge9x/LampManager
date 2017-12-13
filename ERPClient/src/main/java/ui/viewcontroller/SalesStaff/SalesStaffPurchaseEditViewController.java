@@ -357,6 +357,7 @@ public class SalesStaffPurchaseEditViewController {
         supplier.getSelectionModel().select(purchaseBill.supplier);
         supplier.setDisable(true);
         Username.setText(purchaseBill.user);
+        remark.setText(purchaseBill.remarks);
         
 
         cancelButton.setText("返 回");
