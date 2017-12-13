@@ -169,12 +169,21 @@ public class Inventory {
 		}
 	}
 
-	public InventoryBillVO showBillDetails(String ID) throws NumberFormatException, RemoteException { // TODO
+	public InventoryBillVO showBillDetails(String ID) throws NumberFormatException, RemoteException {
 		String[] identity = ID.split("-");
+		BillType type = BillType.getEnumByAcronym(identity[0]);
+		String date = identity[1];
+		if(date.length() != 8){
+			System.out.println("Inventory.showBillDetails: 非法的日期：" + date);
+			return null;
+		}
+		else{
+			date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6);
+		}
 		int turn = Integer.parseInt(identity[2]);
 		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));	// TODO
-		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));	// TODO
+		criteria.add(new Criterion("type", type, QueryMode.FULL));
+		criteria.add(new Criterion("date", date, QueryMode.FULL));
 		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
 		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
 		if (found.isEmpty()) {
