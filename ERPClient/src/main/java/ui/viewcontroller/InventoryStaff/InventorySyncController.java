@@ -18,6 +18,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
+import util.BillState;
 import util.BillType;
 import vo.AccountBillVO;
 import vo.InventoryBillVO;
@@ -55,9 +56,9 @@ public class InventorySyncController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
-        loss = inventoryBLService.findBillByType(BillType.LOSS);
-        gift = inventoryBLService.findBillByType(BillType.GIFT);
+        overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
+        loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
+        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT,BillState.DRAFT);
 
         billPane = new BillPane("报溢单","报损单","赠送单");
         initTabs();
