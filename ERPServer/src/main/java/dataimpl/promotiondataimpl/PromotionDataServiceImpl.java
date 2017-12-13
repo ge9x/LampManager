@@ -56,7 +56,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPC(PromotionCustomerPO po) throws RemoteException {
 		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionCustomerDataHelper.save(po);
 	}
@@ -64,7 +64,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPB(PromotionBargainPO po) throws RemoteException{
 		List<GoodsItemPO> goodsItemPOs=po.getBargains();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionBargainDataHelper.save(po);
 	}
@@ -72,7 +72,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPT(PromotionTotalPO po) throws RemoteException{
 		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionTotalDataHelper.save(po);
 	}
@@ -141,6 +141,11 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
 		return "PT-"+String.valueOf(showPT().size()+1);
+	}
+
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
+		return goodsItemDataHelper.save(po);
 	}
 
 }

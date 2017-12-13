@@ -175,4 +175,9 @@ public class PromotionDataService_Stub implements PromotionDataService{
 		return "PT-1";
 	}
 
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
+		return ResultMessage.SUCCESS;
+	}
+
 }
