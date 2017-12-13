@@ -99,7 +99,6 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 			GoodsItemPO goodsItemPO2=goodsItemDataHelper.exactlyQuery("id", po.getID());
 			goodsItemPO2.setGoodsID(goodsItemPO.getGoodsID());
 			goodsItemPO2.setGoodsName(goodsItemPO.getGoodsName());
-			
 		}
 		return promotionCustomerDataHelper.update(po);
 	}
