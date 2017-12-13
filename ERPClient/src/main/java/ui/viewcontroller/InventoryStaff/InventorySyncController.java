@@ -63,7 +63,11 @@ public class InventorySyncController {
 
         overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
         loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
-        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT,BillState.DRAFT);
+        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT, BillState.DRAFT);
+
+//        overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
+//        loss = inventoryBLService.findBillByType(BillType.LOSS);
+//        gift = inventoryBLService.findBillByType(BillType.GIFT);
 
         billPane = new BillPane("报溢单","报损单","赠送单");
         initTabs();
@@ -103,10 +107,13 @@ public class InventorySyncController {
                 VBox node = loader.load();
                 fxmlLoaders.add(loader);
                 billNodes.add(node);
-                BillController financialBillController = loader.getController();
-                financialBillController.hideCheckbox();
-                financialBillController.setInventorySyncController(this);
-                financialBillController.setBill(bills.get(i));
+                BillController billController = loader.getController();
+                if (bills.get(i).state == BillState.DRAFT){
+                    billController.showDeleteIcon();
+                }
+                billController.hideCheckbox();
+                billController.setInventorySyncController(this);
+                billController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -116,12 +123,13 @@ public class InventorySyncController {
         TypeChooser.setVisible(true);
     }
     public void clickAddOverflow(){
-        addBill(BillType.OVERFLOW);
+        showBillAddView(BillType.OVERFLOW);
+        inventorySyncEditController.addInventoryBill();
     }
     public void clickAddLoss(){
-        addBill(BillType.LOSS);
+        showBillAddView(BillType.LOSS);
     }
-    public void addBill(BillType type){
+    public void showBillAddView(BillType type){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/SyncEdit.fxml"));
@@ -142,10 +150,20 @@ public class InventorySyncController {
         TypeChooser.setVisible(false);
     }
 
+    public void setDetailView(InventoryBillVO vo){
+        showBillAddView(vo.type);
+        inventorySyncEditController.setForDetailView(vo);
+    }
+
     public void showInventoryBills(){
         inventoryViewController.showSyncView();
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
+    }
+
+    public void deleteBill(InventoryBillVO inventoryBill) {
+        inventoryBLService.deleteBill(inventoryBill.ID);
+        showInventoryBills();
     }
 }
