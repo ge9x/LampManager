@@ -121,6 +121,6 @@ public class PromotionCustomer extends Promotion{
 		}
 		return new PromotionCustomerPO(promotionCustomerVO.promotionName, promotionCustomerVO.startDate, promotionCustomerVO.endDate, 
 				PromotionType.MEMBER_PROMOTION_STRATEGY, promotionCustomerVO.voucher, promotionCustomerVO.allowance, gifts, 
-				promotionCustomerVO.level);
+				promotionCustomerVO.level, promotionCustomerVO.promotionID);
 	}
 }

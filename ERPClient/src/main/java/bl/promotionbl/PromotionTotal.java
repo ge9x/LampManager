@@ -117,6 +117,6 @@ public class PromotionTotal extends Promotion{
 			gifts.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionTotalPO(promotionTotalVO.promotionName, promotionTotalVO.startDate, promotionTotalVO.endDate, 
-				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice);
+				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice, promotionTotalVO.promotionID);
 	}
 }
