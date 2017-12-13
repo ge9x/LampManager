@@ -2,7 +2,6 @@ package bl.inventorybl;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,11 +53,11 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) { // TODO
+	public InventoryViewVO show(String startDate, String endDate, String inventory) { // TODO
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) { // TODO
+	public InventoryCheckVO check() { // TODO
 		return null;
 	}
 
