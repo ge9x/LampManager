@@ -232,7 +232,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	public void clickOKButton(){
 		if(isCompleted()){
-			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
+			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), total.get(), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
 			if(isNew){
 				promotionBargainBLService.submit(promotionBargain);
@@ -240,6 +240,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 			else{
 				promotionBargainBLService.updatePromotion(promotionBargain);
 			}
+			generalManagerPromotionViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

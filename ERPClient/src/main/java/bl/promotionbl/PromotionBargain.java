@@ -76,7 +76,6 @@ public class PromotionBargain extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionBargainVO promotionBargainVO) throws RemoteException{
-		promotionBargainPOs.clear();
 		promotionBargainPOs = promotionDataService.showPB();
 		for(PromotionBargainPO po:promotionBargainPOs){
 			if(po.getPromotionID().equals(promotionBargainVO.promotionID)){
@@ -104,7 +103,7 @@ public class PromotionBargain extends Promotion{
 			bargains.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionBargainPO(promotionBargainVO.promotionName, promotionBargainVO.startDate, promotionBargainVO.endDate, PromotionType.BARGAIN_STRATEGY, 
-				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, bargains);
+				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, bargains, promotionBargainVO.promotionID);
 	}
 	
 	public PromotionBargainVO poTOvo (PromotionBargainPO promotionBargainPO){
