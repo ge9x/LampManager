@@ -129,6 +129,11 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
     }
 
     @Override
+    public String getNewBillIDByType(BillType type) {
+        return null;
+    }
+
+    @Override
     public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) {
         return null;
     }
