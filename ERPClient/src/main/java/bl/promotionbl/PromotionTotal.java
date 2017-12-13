@@ -8,6 +8,8 @@ import java.util.List;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionTotalPO;
@@ -22,9 +24,11 @@ import vo.PromotionTotalVO;
 public class PromotionTotal extends Promotion{
 	
 	private ArrayList<PromotionTotalPO> promotionTotalPOs;
+	UserInfo userInfo;
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionTotalVO> show() throws RemoteException{
@@ -118,5 +122,9 @@ public class PromotionTotal extends Promotion{
 		}
 		return new PromotionTotalPO(promotionTotalVO.promotionName, promotionTotalVO.startDate, promotionTotalVO.endDate, 
 				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice, promotionTotalVO.promotionID);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }

@@ -128,4 +128,10 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 		}
 	}
 
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionTotal.getCurrentUserName();
+	}
+
 }

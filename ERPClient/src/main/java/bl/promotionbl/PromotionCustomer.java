@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
@@ -19,9 +21,11 @@ import vo.PromotionCustomerVO;
 public class PromotionCustomer extends Promotion{
 	
 	ArrayList<PromotionCustomerPO> promotionCustomerPOs;
+	UserInfo userInfo;
 	
 	public PromotionCustomer(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionCustomerVO> show() throws RemoteException{
@@ -122,5 +126,9 @@ public class PromotionCustomer extends Promotion{
 		return new PromotionCustomerPO(promotionCustomerVO.promotionName, promotionCustomerVO.startDate, promotionCustomerVO.endDate, 
 				PromotionType.MEMBER_PROMOTION_STRATEGY, promotionCustomerVO.voucher, promotionCustomerVO.allowance, gifts, 
 				promotionCustomerVO.level, promotionCustomerVO.promotionID);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }
