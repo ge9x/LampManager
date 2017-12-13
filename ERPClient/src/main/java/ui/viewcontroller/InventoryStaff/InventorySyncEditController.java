@@ -7,12 +7,15 @@ import bl.inventorybl.InventoryController;
 import bl.userbl.UserController;
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.userblservice.UserInfo;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
@@ -60,6 +63,15 @@ public class InventorySyncEditController {
 
     @FXML
     VBox vbox;
+
+    @FXML
+    Label title;
+
+    @FXML
+    JFXButton cancelButton;
+
+    @FXML
+    JFXButton submitButton;
 
     @FXML
     public void initialize(){
@@ -150,5 +162,47 @@ public class InventorySyncEditController {
     }
     public void setType(BillType type){
         this.type = type;
+    }
+
+    public void setForDetailView(InventoryBillVO vo) {
+        addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
+
+        title.setText("单据详情");
+        isNew = false;
+        BillID.setText(vo.ID);
+
+        String inventory = vo.inventory;
+        Inventory.getItems().clear();
+        Inventory.setEditable(false);
+        Inventory.getItems().add(inventory);
+        Inventory.getSelectionModel().selectFirst();
+
+        Username.setText(vo.user);
+
+        cancelButton.setText("返 回");
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                inventorySyncController.showInventoryBills();
+            }
+        });
+
+        if(vo.state == BillState.DRAFT){
+            submitButton.setText("编 辑");
+            submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    setForEditView();
+                }
+            });
+        }
+    }
+    public void setForEditView(){
+        addIcon.setVisible(true);
+        deleteIcon.setVisible(true);
+        title.setText("编辑草稿单");
+        Inventory.setEditable(true);
+//        initInventoryBox();
     }
 }

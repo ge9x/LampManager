@@ -136,6 +136,18 @@ public class BillController {
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
             billMoney.setText(Money.getMoneyString(0.0));
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.PAYMENT){
             AccountBillVO accountBill = (AccountBillVO) bill;
