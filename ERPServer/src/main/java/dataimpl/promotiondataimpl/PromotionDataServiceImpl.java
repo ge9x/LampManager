@@ -35,6 +35,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 		this.promotionCustomerDataHelper = new HibernateDataHelper<PromotionCustomerPO>(PromotionCustomerPO.class);
 		this.promotionBargainDataHelper=new HibernateDataHelper<PromotionBargainPO>(PromotionBargainPO.class);
 		this.promotionTotalDataHelper=new HibernateDataHelper<PromotionTotalPO>(PromotionTotalPO.class);
+		this.goodsItemDataHelper=new HibernateDataHelper<GoodsItemPO>(GoodsItemPO.class);
 	}
 
 	@Override
@@ -93,6 +94,12 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public ResultMessage updatePC(PromotionCustomerPO po) throws RemoteException {
+		ArrayList<GoodsItemPO> goodsItemPOs=new ArrayList<>();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			GoodsItemPO goodsItemPO2=goodsItemDataHelper.exactlyQuery("id", po.getID());
+			goodsItemPO2.setGoodsID(goodsItemPO.getGoodsID());
+			goodsItemPO2.setGoodsName(goodsItemPO.getGoodsName());
+		}
 		return promotionCustomerDataHelper.update(po);
 	}
 
