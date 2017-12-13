@@ -30,7 +30,7 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
 		InventoryViewItemVO itemVO = new InventoryViewItemVO(goodsVO, InventoryListItemType.IN, 250, 2500);
 		ArrayList<InventoryViewItemVO> item = new ArrayList<InventoryViewItemVO>();
@@ -42,7 +42,7 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check() {
 		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
 		HashMap<GoodsVO, Double> averagePrice = new HashMap<GoodsVO, Double>();
 		averagePrice.put(goodsVO, 250.0);
