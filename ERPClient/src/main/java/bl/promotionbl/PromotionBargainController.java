@@ -119,4 +119,12 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 		}
 	}
 
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionBargain.getCurrentUserName();
+	}
+	
+	
+
 }

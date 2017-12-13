@@ -111,4 +111,10 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 		return "PB-0001";
 	}
 
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
 }
