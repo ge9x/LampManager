@@ -113,4 +113,7 @@ public interface InventoryBLService extends Remote {
      * @return
      */
 	public ArrayList<InventoryBillVO> findBillByType(BillType type);
+
+	public String getNewBillIDByType(BillType type);
+
 }

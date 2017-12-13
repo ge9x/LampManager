@@ -247,4 +247,9 @@ public class InventoryBLService_Stub implements InventoryBLService {
 	public ArrayList<InventoryBillVO> findBillByType(BillType type) {
 		return newData;
 	}
+
+    @Override
+    public String getNewBillIDByType(BillType type) {
+        return null;
+    }
 }
