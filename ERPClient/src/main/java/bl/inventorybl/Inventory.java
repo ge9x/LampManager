@@ -86,8 +86,12 @@ public class Inventory {
 
 	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) throws RemoteException {
 		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", type, QueryMode.FULL));
-		criteria.add(new Criterion("state", state, QueryMode.FULL));
+		if (type != null) {
+			criteria.add(new Criterion("type", type, QueryMode.FULL));
+		}
+		if (state != null) {
+			criteria.add(new Criterion("state", state, QueryMode.FULL));
+		}
 		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
 		for (InventoryBillPO po : pos) {
@@ -165,12 +169,23 @@ public class Inventory {
 		}
 	}
 
-	public InventoryBillVO showBillDetails(String ID) { // TODO
+	public InventoryBillVO showBillDetails(String ID) throws NumberFormatException, RemoteException { // TODO
 		String[] identity = ID.split("-");
+		int turn = Integer.parseInt(identity[2]);
 		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));
-		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));
-		return null;
+		criteria.add(new Criterion("type", identity[0], QueryMode.FULL));	// TODO
+		criteria.add(new Criterion("date", identity[1], QueryMode.FULL));	// TODO
+		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
+		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+		if (found.isEmpty()) {
+			return null;
+		}
+		else {
+			if (found.size() > 1) {
+				System.out.println("警告：数据库中出现重复的单据：" + ID);
+			}
+			return this.billToVO(found.get(0));
+		}
 	}
 
 	/**
@@ -180,9 +195,20 @@ public class Inventory {
 		return this.addBill(vo);
 	}
 
+	public ArrayList<InventoryBillVO> findBillByType(BillType type) throws RemoteException {
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", type, QueryMode.FULL));
+		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		for (InventoryBillPO po : pos) {
+			ret.add(this.billToVO(po));
+		}
+		return ret;
+	}
+
 	private InventoryBillVO billToVO(InventoryBillPO po) {
 		String inventory = po.getInventory().getName();
-		Map<GoodsPO, Integer> poMap =  po.getGoodsMap();
+		Map<GoodsPO, Integer> poMap = po.getGoodsMap();
 		HashMap<GoodsVO, Integer> voMap = new HashMap<>();
 		for (GoodsPO goods : poMap.keySet()) {
 			voMap.put(Goods.poToVO(goods), poMap.get(goods));
@@ -197,9 +223,10 @@ public class Inventory {
 	 */
 	private InventoryBillPO billToPO(InventoryBillVO vo) throws RemoteException {
 		InventoryPO inventory = this.getInventoryByName(vo.inventory);
+		HashMap<GoodsVO, Integer> voMap = vo.goodsMap;
 		HashMap<GoodsPO, Integer> poMap = new HashMap<>();
-		for (GoodsVO goods : vo.goodsMap.keySet()) {
-			poMap.put(goodsInfo.getGoodsByID(goods.ID), poMap.get(goods));
+		for (GoodsVO goods : voMap.keySet()) {
+			poMap.put(goodsInfo.getGoodsByID(goods.ID), voMap.get(goods));
 		}
 		// 查询数据库以知晓这是当天该种类型单据的第几张
 		ArrayList<Criterion> criteria = new ArrayList<>();
