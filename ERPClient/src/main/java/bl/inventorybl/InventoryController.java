@@ -36,15 +36,15 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public InventoryViewVO show(String startDate, String endDate, String inventory) {
-		return null;
+		return this.inventory.show(startDate, endDate, inventory);
 	}
 
 	public InventoryCheckVO check() {
-		return null;
+		return inventory.check();
 	}
 
 	public ResultMessage exportExcel(InventoryCheckVO vo) {
-		return null;
+		return inventory.exportExcel(vo);
 	}
 
 	public ArrayList<InventoryBillVO> showBills() {
@@ -75,7 +75,13 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 	}
 
 	public ResultMessage addInventory(String inventory) {
-		return null;
+		try {
+			return this.inventory.addInventory(inventory);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage addBill(InventoryBillVO vo) {
@@ -84,19 +90,31 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return ResultMessage.ERROR;
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage deleteInventory(String inventory) {
-		return null;
+		try {
+			return this.inventory.deleteInventory(inventory);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage deleteBill(String ID) {
-		return null;
+		return inventory.deleteBill(ID);
 	}
 
 	public ResultMessage updateInventory(String before, String after) {
-		return null;
+		try {
+			return inventory.updateInventory(before, after);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage updateBill(InventoryBillVO vo) {
@@ -107,10 +125,19 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return ResultMessage.ERROR;
+		return ResultMessage.FAILED;
 	}
 
 	public InventoryBillVO showBillDetails(String ID) {
+		try {
+			return inventory.showBillDetails(ID);
+		}
+		catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -120,27 +147,34 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return ResultMessage.ERROR;
+		return ResultMessage.FAILED;
 	}
 
     @Override
     public ArrayList<InventoryBillVO> findBillByType(BillType type) {
         try {
-            return inventory.findBillByType(type);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-        }
+			return inventory.findBillByType(type);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
     }
 
     @Override
     public String getNewBillIDByType(BillType type) {
+        try {
+			return inventory.getNewBillIDByType(type);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
         return null;
     }
 
     @Override
     public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) {
-        return null;
+        return null; // TODO
     }
 
 	@Override

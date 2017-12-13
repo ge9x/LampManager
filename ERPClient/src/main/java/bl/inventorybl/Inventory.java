@@ -1,8 +1,8 @@
 package bl.inventorybl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,11 +54,11 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) { // TODO
+	public InventoryViewVO show(String startDate, String endDate, String inventory) { // TODO
 		return null;
 	}
 
-	public InventoryCheckVO check(Date today) { // TODO
+	public InventoryCheckVO check() { // TODO
 		return null;
 	}
 
@@ -214,6 +214,15 @@ public class Inventory {
 		}
 		return ret;
 	}
+	
+    public String getNewBillIDByType(BillType type) throws RemoteException {
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		String date = LocalDate.now().toString();
+		criteria.add(new Criterion("type", type, QueryMode.FULL));
+		criteria.add(new Criterion("date", date, QueryMode.FULL));
+		int turn = inventoryDataService.advancedQuery(criteria).size() + 1;
+		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%06d", turn);
+    }
 
 	private InventoryBillVO billToVO(InventoryBillPO po) {
 		String inventory = po.getInventory().getName();

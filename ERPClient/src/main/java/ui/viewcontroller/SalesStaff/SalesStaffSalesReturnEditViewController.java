@@ -254,6 +254,11 @@ public class SalesStaffSalesReturnEditViewController {
 	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
 	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	                }
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
 	                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
 	                salesBLService.saveSales(salesVO);
