@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import com.jfoenix.controls.JFXNodesList;
 
 import bl.promotionbl.PromotionBargainController;
+import bl.promotionbl.PromotionCustomerController;
+import bl.promotionbl.PromotionTotalController;
 import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import blservice.promotionblservice.promotionbargain.PromotionBargainBLService;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
@@ -35,8 +37,8 @@ public class GeneralManagerPromotionViewController {
     private ArrayList<HBox> cells = new ArrayList<>();
 
 	PromotionBargainBLService promotionBargainBLService = new PromotionBargainController();
-	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomer_Stub();
-	PromotionTotalBLService promotionTotalBLService = new PromotionTotal_Stub();
+	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomerController();
+	PromotionTotalBLService promotionTotalBLService = new PromotionTotalController();
     GeneralManagerViewController generalManagerViewController;
     GeneralManagerPromotionBargainAddViewController generalManagerPromotionBargainAddViewController;
     GeneralManagerPromotionCustomerAddViewController generalManagerPromotionCustomerAddViewController;

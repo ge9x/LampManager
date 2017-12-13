@@ -77,15 +77,16 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
 		try {
 			ArrayList<PromotionTotalVO> VOs = show();
+			ArrayList<PromotionTotalVO> result = show();
 			for(PromotionTotalVO vo:VOs){
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 				Date startDate = sd.parse(vo.startDate);
 				Date endDate = sd.parse(vo.endDate);
 				if(new Date().before(startDate)||new Date().after(endDate)||total<vo.totalPrice){
-					VOs.remove(vo);
+					result.remove(vo);
 				}
 			}
-			return VOs;
+			return result;
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
@@ -126,6 +127,12 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionTotal.getCurrentUserName();
 	}
 
 }

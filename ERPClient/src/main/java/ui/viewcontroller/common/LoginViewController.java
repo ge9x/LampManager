@@ -52,6 +52,8 @@ public class LoginViewController {
 
         try {
             file = new File(getClass().getResource("/login-info").getPath());
+            if (!file.exists())
+                file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String  line = "";
             if ((line = reader.readLine()) != null){

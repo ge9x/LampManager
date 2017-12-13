@@ -8,6 +8,8 @@ import java.util.List;
 import bl.financialbl.AccountBillItem;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.AccountBillItemPO;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
@@ -17,13 +19,16 @@ import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
+import vo.UserVO;
 
 public class PromotionBargain extends Promotion{
 	
 	ArrayList<PromotionBargainPO> promotionBargainPOs;
+	UserInfo userInfo;
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionBargainVO> show() throws RemoteException{
@@ -113,5 +118,9 @@ public class PromotionBargain extends Promotion{
 		}
 		return new PromotionBargainVO(promotionBargainPO.getPromotionName(), promotionBargainPO.getPromotionID(), promotionBargainPO.getGoodsTotal(),
 				promotionBargainPO.getBargainTotal(), promotionBargainPO.getStartDate(), promotionBargainPO.getEndDate(), bargains);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }

@@ -158,7 +158,12 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 		catch (RemoteException e) {
 			e.printStackTrace();
 		}
-        return null;
+		return null;
+    }
+
+    @Override
+    public String getNewBillIDByType(BillType type) {
+        return null;	// TODO
     }
 
     @Override

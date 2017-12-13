@@ -4,6 +4,7 @@ import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -53,12 +54,20 @@ public class InventorySyncController {
     VBox vBox;
 
     @FXML
+    JFXNodesList TypeChooser;
+
+    @FXML
     public void initialize(){
         addIcon.setText("\ue61e");
+        TypeChooser.setVisible(false);
 
         overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
         loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
-        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT,BillState.DRAFT);
+        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT, BillState.DRAFT);
+
+//        overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
+//        loss = inventoryBLService.findBillByType(BillType.LOSS);
+//        gift = inventoryBLService.findBillByType(BillType.GIFT);
 
         billPane = new BillPane("报溢单","报损单","赠送单");
         initTabs();
@@ -98,19 +107,29 @@ public class InventorySyncController {
                 VBox node = loader.load();
                 fxmlLoaders.add(loader);
                 billNodes.add(node);
-                BillController financialBillController = loader.getController();
-                financialBillController.hideCheckbox();
-                if (tab == "草稿单据"){
-                    financialBillController.showDeleteIcon();
+                BillController billController = loader.getController();
+                if (bills.get(i).state == BillState.DRAFT){
+                    billController.showDeleteIcon();
                 }
-                financialBillController.setInventorySyncController(this);
-                financialBillController.setBill(bills.get(i));
+                billController.hideCheckbox();
+                billController.setInventorySyncController(this);
+                billController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
     public void clickAddButton(){
+        TypeChooser.setVisible(true);
+    }
+    public void clickAddOverflow(){
+        showBillAddView(BillType.OVERFLOW);
+        inventorySyncEditController.addInventoryBill();
+    }
+    public void clickAddLoss(){
+        showBillAddView(BillType.LOSS);
+    }
+    public void showBillAddView(BillType type){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/SyncEdit.fxml"));
@@ -118,13 +137,33 @@ public class InventorySyncController {
 
             inventorySyncEditController = loader.getController();
             inventorySyncEditController.setInventorySyncController(this);
+            inventorySyncEditController.setType(type);
+            inventorySyncEditController.addInventoryBill();
 
             inventoryViewController.showSyncEditView(page);
         }catch (IOException e){
             e.printStackTrace();
         }
     }
+
+    public void closeTypeChooser(){
+        TypeChooser.setVisible(false);
+    }
+
+    public void setDetailView(InventoryBillVO vo){
+        showBillAddView(vo.type);
+        inventorySyncEditController.setForDetailView(vo);
+    }
+
+    public void showInventoryBills(){
+        inventoryViewController.showSyncView();
+    }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
+    }
+
+    public void deleteBill(InventoryBillVO inventoryBill) {
+        inventoryBLService.deleteBill(inventoryBill.ID);
+        showInventoryBills();
     }
 }

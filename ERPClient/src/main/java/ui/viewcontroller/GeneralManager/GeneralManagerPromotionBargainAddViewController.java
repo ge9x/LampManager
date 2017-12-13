@@ -56,7 +56,6 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
 	PromotionBargainBLService promotionBargainBLService = new PromotionBargainController();
-	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
 	ArrayList<GoodsItemVO> bargains = new ArrayList<>();
 	
@@ -111,6 +110,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
+		username.setText(promotionBargainBLService.getCurrentUserName());
 		
 		//初始化表格
         itemTable = new TableView<>();
@@ -232,6 +232,11 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	public void clickOKButton(){
 		if(isCompleted()){
+			bargains.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+				bargains.add(goodsItemVO);
+			}
 			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), total.get(), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
 			if(isNew){
