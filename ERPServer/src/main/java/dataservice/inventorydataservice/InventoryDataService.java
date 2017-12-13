@@ -89,4 +89,11 @@ public interface InventoryDataService extends Remote{
 	 * @see Criterion
 	 */
 	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException;
+	/**
+	 * 通过仓库名字得到仓库
+	 * @param name 仓库名字
+	 * @return 仓库PO
+	 * @throws RemoteException
+	 */
+	public InventoryPO findInventoryByName(String name) throws RemoteException;
 }
