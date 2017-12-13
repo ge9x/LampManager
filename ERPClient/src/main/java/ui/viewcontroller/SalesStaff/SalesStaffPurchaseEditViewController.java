@@ -115,7 +115,7 @@ public class SalesStaffPurchaseEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = salesBLService2.getUserName();
+        String name = salesBLService.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
         inventories = salesBLService2.getAllInventory();
