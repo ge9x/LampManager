@@ -125,7 +125,12 @@ public class InventoryController implements InventoryBLService, InventoryInfo{
 
     @Override
     public ArrayList<InventoryBillVO> findBillByType(BillType type) {
-        return null;
+        try {
+            return inventory.findBillByType(type);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

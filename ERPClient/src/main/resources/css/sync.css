@@ -11,3 +11,10 @@
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
+.input-label {
+    -fx-text-fill: #707070;
+    -fx-font-size: 14px;
+}
+.ID-label,#BillID {
+    -fx-font-size: 18px;
+}
