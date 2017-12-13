@@ -4,6 +4,7 @@ import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -53,8 +54,12 @@ public class InventorySyncController {
     VBox vBox;
 
     @FXML
+    JFXNodesList TypeChooser;
+
+    @FXML
     public void initialize(){
         addIcon.setText("\ue61e");
+        TypeChooser.setVisible(false);
 
         overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
         loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
@@ -100,9 +105,6 @@ public class InventorySyncController {
                 billNodes.add(node);
                 BillController financialBillController = loader.getController();
                 financialBillController.hideCheckbox();
-                if (tab == "草稿单据"){
-                    financialBillController.showDeleteIcon();
-                }
                 financialBillController.setInventorySyncController(this);
                 financialBillController.setBill(bills.get(i));
             } catch (IOException e) {
@@ -111,6 +113,15 @@ public class InventorySyncController {
         }
     }
     public void clickAddButton(){
+        TypeChooser.setVisible(true);
+    }
+    public void clickAddOverflow(){
+        addBill(BillType.OVERFLOW);
+    }
+    public void clickAddLoss(){
+        addBill(BillType.LOSS);
+    }
+    public void addBill(BillType type){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/inventory/SyncEdit.fxml"));
@@ -118,11 +129,21 @@ public class InventorySyncController {
 
             inventorySyncEditController = loader.getController();
             inventorySyncEditController.setInventorySyncController(this);
+            inventorySyncEditController.setType(type);
+            inventorySyncEditController.addInventoryBill();
 
             inventoryViewController.showSyncEditView(page);
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void closeTypeChooser(){
+        TypeChooser.setVisible(false);
+    }
+
+    public void showInventoryBills(){
+        inventoryViewController.showSyncView();
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
