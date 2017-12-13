@@ -31,4 +31,34 @@ public enum BillType {
     public String getAcronym(){
     	return acronym;
     }
+    
+    public static BillType getEnumByAcronym(String acronym){
+    	switch(acronym){
+    	case "BYD":
+    		return BillType.OVERFLOW;
+    	case "BSD":
+    		return BillType.LOSS;
+    	case "BJD":
+    		return BillType.ALARM;
+    	case "ZSD":
+    		return BillType.GIFT;
+    	case "JHD":
+    		return BillType.PURCHASE;
+    	case "JHTHD":
+    		return BillType.RETURN;
+    	case "XSD":
+    		return BillType.SALES;
+    	case "XSTHD":
+    		return BillType.SALESRETURN;
+    	case "SKD":
+    		return BillType.RECEIPT;
+    	case "FKD":
+    		return BillType.PAYMENT;
+    	case "XJFYD":
+    		return BillType.CASH;
+    	default:
+    		System.out.println("错误：不存在的单据类型缩写：" + acronym);
+    		return null;
+    	}
+    }
 }
