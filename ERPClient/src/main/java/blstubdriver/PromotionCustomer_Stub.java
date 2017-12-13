@@ -100,4 +100,10 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		return "PC-0001";
 	}
 
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
 }
