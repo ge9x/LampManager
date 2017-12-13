@@ -14,6 +14,7 @@ import util.Level;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
 
 public class PromotionCustomerController implements PromotionCustomerBLService, PromotionCustomerInfo{
 
@@ -85,15 +86,16 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
 		try {
 			ArrayList<PromotionCustomerVO> VOs = show();
+			ArrayList<PromotionCustomerVO> result = show();
 			for(PromotionCustomerVO vo:VOs){
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 				Date startDate = sd.parse(vo.startDate);
 				Date endDate = sd.parse(vo.endDate);
 				if(new Date().before(startDate)||new Date().after(endDate)||level.ordinal()<vo.level.ordinal()){
-					VOs.remove(vo);
+					result.remove(vo);
 				}
 			}
-			return VOs;
+			return result;
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;

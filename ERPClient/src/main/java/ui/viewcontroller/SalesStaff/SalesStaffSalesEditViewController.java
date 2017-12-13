@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.SalesBLService_Stub;
@@ -59,8 +60,8 @@ public class SalesStaffSalesEditViewController {
 	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
-	UserBLService userBLService = new UserBLService_Stub();
+	SalesBLService salesBLService = new SalesController();
+	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -129,10 +130,10 @@ public class SalesStaffSalesEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
+        String name = salesBLService.getUserName();
         Username.setText(name);
         customers = salesBLService.getAllCustomer();
-        inventories = salesBLService.getAllInventory();
+        inventories = salesBLService2.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
         promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
         promotions.addAll(salesBLService.getFitPromotionTotal(0));

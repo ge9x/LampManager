@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.salesbl.PurchaseController;
+import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
 import blstubdriver.SalesBLService_Stub;
@@ -56,8 +58,8 @@ public class SalesStaffReturnEditViewController {
 	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
-	UserBLService userBLService = new UserBLService_Stub();
+	SalesBLService salesBLService = new PurchaseController();
+	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -109,10 +111,10 @@ public class SalesStaffReturnEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
+        String name = salesBLService.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
-        inventories = salesBLService.getAllInventory();
+        inventories = salesBLService2.getAllInventory();
         
 
         //初始化supplier选择框

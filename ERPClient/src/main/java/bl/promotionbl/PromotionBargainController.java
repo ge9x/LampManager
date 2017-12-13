@@ -12,6 +12,7 @@ import blservice.promotionblservice.promotionbargain.PromotionBargainInfo;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
+import vo.PromotionTotalVO;
 
 public class PromotionBargainController implements PromotionBargainBLService, PromotionBargainInfo{
 
@@ -68,15 +69,16 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 	public ArrayList<PromotionBargainVO> getFitPromotionBargain() {
 		try {
 			ArrayList<PromotionBargainVO> VOs = show();
+			ArrayList<PromotionBargainVO> result = show();
 			for(PromotionBargainVO vo:VOs){
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 				Date startDate = sd.parse(vo.startDate);
 				Date endDate = sd.parse(vo.endDate);
 				if(new Date().before(startDate)||new Date().after(endDate)){
-					VOs.remove(vo);
+					result.remove(vo);
 				}
 			}
-			return VOs;
+			return result;
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
