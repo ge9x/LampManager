@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionCustomerController;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import blstubdriver.PromotionCustomer_Stub;
 import javafx.beans.property.DoubleProperty;
@@ -46,7 +47,7 @@ import vo.PromotionCustomerVO;
 public class GeneralManagerPromotionCustomerAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomer_Stub();
+	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomerController();
 	PromotionCustomerVO promotionCustomer;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 	
@@ -106,6 +107,7 @@ public class GeneralManagerPromotionCustomerAddViewController {
 		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
+		username.setText(promotionCustomerBLService.getCurrentUserName());
 		
 		//初始化等级comboBox
 		customerLevel.getItems().addAll(Level.LEVEL_ONE.getValue(), Level.LEVEL_TWO.getValue(), Level.LEVEL_THREE.getValue(), 
@@ -241,6 +243,7 @@ public class GeneralManagerPromotionCustomerAddViewController {
 			else{
 				promotionCustomerBLService.updatePromotion(promotionCustomer);
 			}
+			generalManagerPromotionViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionTotalController;
 import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import blstubdriver.PromotionTotal_Stub;
 import javafx.beans.property.DoubleProperty;
@@ -44,7 +45,7 @@ import vo.PromotionTotalVO;
 public class GeneralManagerPromotionTotalAddViewController {
 
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionTotalBLService promotionTotalBLService = new PromotionTotal_Stub();
+	PromotionTotalBLService promotionTotalBLService = new PromotionTotalController();
 	PromotionTotalVO promotionTotal;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 	
@@ -102,6 +103,7 @@ public class GeneralManagerPromotionTotalAddViewController {
 		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
+		username.setText(promotionTotalBLService.getCurrentUserName());
 		
 		//初始化表格
         itemTable = new TableView<>();
@@ -231,6 +233,7 @@ public class GeneralManagerPromotionTotalAddViewController {
 			else{
 				promotionTotalBLService.updatePromotion(promotionTotal);
 			}
+			generalManagerPromotionViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

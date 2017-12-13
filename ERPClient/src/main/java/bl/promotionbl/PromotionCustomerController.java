@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import bl.userbl.User;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerInfo;
 import util.Level;
@@ -133,6 +134,12 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionCustomer.getCurrentUserName();
 	}
 
 }
