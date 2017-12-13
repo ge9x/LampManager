@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import bl.goodsbl.Goods;
 import bl.goodsbl.GoodsController;
@@ -181,7 +182,7 @@ public class Inventory {
 
 	private InventoryBillVO billToVO(InventoryBillPO po) {
 		String inventory = po.getInventory().getName();
-		HashMap<GoodsPO, Integer> poMap = (HashMap<GoodsPO, Integer>) po.getGoodsMap();
+		Map<GoodsPO, Integer> poMap =  po.getGoodsMap();
 		HashMap<GoodsVO, Integer> voMap = new HashMap<>();
 		for (GoodsPO goods : poMap.keySet()) {
 			voMap.put(Goods.poToVO(goods), poMap.get(goods));
