@@ -46,6 +46,9 @@ public class GoodsVO {
 	 * 商品最近零售价
 	 */
 	public double recentRetailPrice;
+	public GoodsVO(String ID){
+	    this.ID = ID;
+    }
 
 	public GoodsVO(String ID, String name, String model, String classification, int amount,
 			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
