@@ -44,7 +44,7 @@ import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;

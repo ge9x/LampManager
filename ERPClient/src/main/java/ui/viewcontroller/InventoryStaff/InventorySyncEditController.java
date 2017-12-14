@@ -2,21 +2,23 @@ package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
 import bean.GoodsItemBean;
-import bl.goodsbl.Goods;
 import bl.inventorybl.InventoryController;
 import bl.userbl.UserController;
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.userblservice.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.GoodsTable;
@@ -94,17 +96,33 @@ public class InventorySyncEditController {
         table.setEditable(false);
 
         TableColumn nameColumn = new TableColumn("商品名称");
-        nameColumn.setPrefWidth(128);
+        nameColumn.setPrefWidth(140);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(128);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("money"));
-        TableColumn currentAmountColumn = new TableColumn("当前数量");
-        currentAmountColumn.setPrefWidth(190);
-        currentAmountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        modelColumn.setPrefWidth(140);
+        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        TableColumn amountColumn = new TableColumn("当前数量");
+        amountColumn.setPrefWidth(82);
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        TableColumn<GoodsBean, Integer> newAmountColumn = new TableColumn("调整数量");
+        newAmountColumn.setPrefWidth(85);
+        newAmountColumn.setCellValueFactory(new PropertyValueFactory<>("newAmount"));
+
+        newAmountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        newAmountColumn.setOnEditCommit(
+                (TableColumn.CellEditEvent<GoodsBean, Integer> t)->{
+                    GoodsBean bean =  (GoodsBean) t.getTableView().getItems().get(
+                            t.getTablePosition().getRow());
+                    bean.setAmount(t.getNewValue());
+                    for (GoodsVO goodsVO:goodsItems.keySet()){
+                        if (goodsVO.ID == bean.getID()){
+                            goodsItems.put(goodsVO,t.getNewValue());
+                        }
+                    }
+                });
 
         table.setItems(data);
-        table.getColumns().addAll(nameColumn,modelColumn,currentAmountColumn);
+        table.getColumns().addAll(nameColumn,modelColumn,amountColumn,newAmountColumn);
         vbox.getChildren().add(table);
     }
     public void setInventorySyncController(InventorySyncController inventorySyncController){
@@ -113,11 +131,13 @@ public class InventorySyncEditController {
     public void clickAddButton(){
         GoodsSelecter selecter = new GoodsSelecter();
         Dialog dialog = selecter.getGoodsDialog();
-        Optional<GoodsTable.GoodsBean> result = dialog.showAndWait();
+        Optional<GoodsBean> result = dialog.showAndWait();
 
-        GoodsTable.GoodsBean bean = null;
+        GoodsBean bean = null;
         if (result.isPresent()){
             bean = result.get();
+            data.add(bean);
+            goodsItems.put(new GoodsVO(bean.getID()),0);
         }
 
     }
@@ -202,7 +222,24 @@ public class InventorySyncEditController {
         addIcon.setVisible(true);
         deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
+
         Inventory.setEditable(true);
-//        initInventoryBox();
+        Inventory.getItems().clear();
+        Inventory.getItems().addAll(inventoryBLService.showInventory());
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
     }
 }

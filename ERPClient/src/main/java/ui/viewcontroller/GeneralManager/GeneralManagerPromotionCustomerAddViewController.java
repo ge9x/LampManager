@@ -37,7 +37,7 @@ import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import util.Level;
 import util.Money;
 import vo.GoodsItemVO;

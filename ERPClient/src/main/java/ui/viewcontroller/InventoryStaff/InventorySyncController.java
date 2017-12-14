@@ -146,7 +146,7 @@ public class InventorySyncController {
         }
     }
 
-    public void closeTypeChooser(){
+    public void closeTypeChooser(Event event){
         TypeChooser.setVisible(false);
     }
 
