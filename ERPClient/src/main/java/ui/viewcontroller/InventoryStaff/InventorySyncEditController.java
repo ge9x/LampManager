@@ -159,7 +159,7 @@ public class InventorySyncEditController {
                 if (Inventory.getSelectionModel().getSelectedIndex() >= 0){
                     inventory = Inventory.getSelectionModel().getSelectedItem().toString();
                 }
-                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
+                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.DRAFT, LocalDate.now().toString(),
                         inventory,userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
                         goodsItems);
 
@@ -174,7 +174,17 @@ public class InventorySyncEditController {
         }
     }
     public void clickDeleteButton(){
-
+        ObservableList<Integer> deleteList = table.getSelectionModel().getSelectedIndices();
+        for (int i:deleteList){
+            String ID = data.get(i).getID();
+            for(GoodsVO goodsVO:goodsItems.keySet()){
+                if (goodsVO.ID == ID){
+                    goodsItems.remove(goodsVO);
+                    break;
+                }
+            }
+            data.remove(i);
+        }
     }
     public void setType(BillType type){
         this.type = type;
@@ -209,7 +219,7 @@ public class InventorySyncEditController {
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    setForEditView();
+                    setForEditView(vo.inventory);
                 }
             });
         }else{
@@ -222,7 +232,7 @@ public class InventorySyncEditController {
         }
         goodsItems = vo.goodsMap;
     }
-    public void setForEditView(){
+    public void setForEditView(String inventory){
         addIcon.setVisible(true);
         deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
@@ -230,6 +240,8 @@ public class InventorySyncEditController {
         Inventory.setEditable(true);
         Inventory.getItems().clear();
         Inventory.getItems().addAll(inventoryBLService.showInventory());
+        if (!inventory.isEmpty())
+            Inventory.getSelectionModel().select(inventory);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

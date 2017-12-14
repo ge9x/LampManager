@@ -120,6 +120,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FFCC00"));
             billCreater.setText(inventoryBill.user);
             billMoney.setText(Money.getMoneyString(0.0));
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.LOSS){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -128,6 +140,18 @@ public class BillController {
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
             billMoney.setText(Money.getMoneyString(0.0));
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.OVERFLOW){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
