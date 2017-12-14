@@ -46,10 +46,10 @@ public class SalesStaffSalesReturnOrderViewController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = salesBLService.getSalesOrderByState(BillState.DRAFT);
-        submitted = salesBLService.getSalesOrderByState(BillState.SUBMITTED);
-        pass = salesBLService.getSalesOrderByState(BillState.PASS);
-        failed = salesBLService.getSalesOrderByState(BillState.FAILED);
+        draft = salesBLService.getSalesreturnOrderByState(BillState.DRAFT);
+        submitted = salesBLService.getSalesreturnOrderByState(BillState.SUBMITTED);
+        pass = salesBLService.getSalesreturnOrderByState(BillState.PASS);
+        failed = salesBLService.getSalesreturnOrderByState(BillState.FAILED);
 
         billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批不通过单据");
         initTabs();

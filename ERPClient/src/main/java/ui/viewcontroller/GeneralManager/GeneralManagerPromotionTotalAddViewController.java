@@ -225,6 +225,12 @@ public class GeneralManagerPromotionTotalAddViewController {
 	
 	public void clickOKButton(){
 		if(promotionName.getText().length()>0&&targetPriceField.getText().length()>0){
+			gifts.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(),
+						bean.getRetailPrice(), bean.getRemark());
+				gifts.add(goodsItemVO);
+			}
 			promotionTotal = new PromotionTotalVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
 					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()),  gifts, Double.parseDouble(targetPriceField.getText()));
 			if(isNew){

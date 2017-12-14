@@ -451,6 +451,11 @@ public class SalesStaffSalesEditViewController {
 	                if(promotion.getSelectionModel().getSelectedIndex() >= 0){
 	                	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
 	                }
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString(), promotionName);
 	                salesBLService.saveSales(salesVO);
 	            }

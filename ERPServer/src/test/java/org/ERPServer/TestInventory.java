@@ -85,6 +85,11 @@ public class TestInventory {
 					System.out.println('\t' + ipo.getName() + " " + po.getNumber().get(ipo));
 				}
 			}
+			ArrayList<InventoryBillPO> allBill = inventoryImpl.show();
+			System.out.println("共有" + allBill.size() + "条库存类单据记录：");
+			for(InventoryBillPO po : allBill){
+				System.out.println(po.buildID() + " " + po.getUser() + " " + po.getInventory().getName());
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

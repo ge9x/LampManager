@@ -285,8 +285,9 @@ public class SalesStaffPurchaseEditViewController {
     		goodsItemList.add(vo);
     	}
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+        String supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, salesBLService2.getUserName(), inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
+        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
         if(isNew){
         	salesBLService.submitPurchase(purchaseVO);
         }
@@ -307,13 +308,20 @@ public class SalesStaffPurchaseEditViewController {
 	            if (result.get() == ButtonType.OK) {
 	            	String supplierName = "";
 	                String inventoryName = "";
+	                String supplierID = "";
 	                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
 	                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+	                    supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
 	                }
 	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
 	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	                }
-	                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
+	                goodsItemList.clear();
+	                for(GoodsItemBean bean:data){
+	                	GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	                	goodsItemList.add(goodsItemVO);
+	                }
+	                PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.DRAFT, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
 	                salesBLService.savePurchase(purchaseVO);
 	            }
 	

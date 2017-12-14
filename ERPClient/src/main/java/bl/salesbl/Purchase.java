@@ -108,6 +108,7 @@ public class Purchase {
 	}
 
 	public ResultMessage savePurchase(PurchaseVO bill) throws RemoteException {
+		addPurchase(bill);
 		PurchasePO po=salesDataService.findPurchaseByID(bill.ID);
 		po.setState(BillState.DRAFT);
 		return salesDataService.updatePurchase(po);

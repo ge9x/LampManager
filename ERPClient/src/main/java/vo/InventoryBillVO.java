@@ -31,6 +31,8 @@ public class InventoryBillVO extends BillVO{
 		this.type = type;
 		this.state = state;
 		this.date = date;
+		this.inventory = inventory;
+		this.user = user;
 		this.goodsMap = goodsMap;
 	}
 

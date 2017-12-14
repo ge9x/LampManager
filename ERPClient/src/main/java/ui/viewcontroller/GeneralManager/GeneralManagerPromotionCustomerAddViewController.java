@@ -235,6 +235,12 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	public void clickOKButton(){
 		if(promotionName.getText().length()>0){
 			Level level = getLevel();
+			gifts.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), 
+						bean.getRetailPrice(), bean.getRemark());
+				gifts.add(goodsItemVO);
+			}
 			promotionCustomer = new PromotionCustomerVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
 					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()), Double.parseDouble(allowanceField.getText()), gifts, level);
 			if(isNew){

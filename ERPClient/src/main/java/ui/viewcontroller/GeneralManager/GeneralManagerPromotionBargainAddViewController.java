@@ -192,7 +192,7 @@ public class GeneralManagerPromotionBargainAddViewController {
                                     startDate.getValue().plusDays(1))
                                 ) {
                                     setDisable(true);
-                            }   
+                            }
                     }
                 };
             }
@@ -232,6 +232,11 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	public void clickOKButton(){
 		if(isCompleted()){
+			bargains.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+				bargains.add(goodsItemVO);
+			}
 			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), total.get(), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
 			if(isNew){

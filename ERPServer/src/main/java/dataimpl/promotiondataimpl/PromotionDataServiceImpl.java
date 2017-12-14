@@ -13,6 +13,7 @@ import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import po.PromotionTotalPO;
+import rmi.GoodsDataRemoteObject;
 import util.Criterion;
 import util.PromotionType;
 import util.ResultMessage;
@@ -56,7 +57,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPC(PromotionCustomerPO po) throws RemoteException {
 		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionCustomerDataHelper.save(po);
 	}
@@ -64,7 +65,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPB(PromotionBargainPO po) throws RemoteException{
 		List<GoodsItemPO> goodsItemPOs=po.getBargains();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionBargainDataHelper.save(po);
 	}
@@ -72,7 +73,7 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	public ResultMessage addPT(PromotionTotalPO po) throws RemoteException{
 		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			goodsItemDataHelper.save(goodsItemPO);
+			addGoodsItem(goodsItemPO);
 		}
 		return promotionTotalDataHelper.save(po);
 	}
@@ -94,22 +95,28 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public ResultMessage updatePC(PromotionCustomerPO po) throws RemoteException {
-		ArrayList<GoodsItemPO> goodsItemPOs=new ArrayList<>();
+		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			GoodsItemPO goodsItemPO2=goodsItemDataHelper.exactlyQuery("id", po.getID());
-			goodsItemPO2.setGoodsID(goodsItemPO.getGoodsID());
-			goodsItemPO2.setGoodsName(goodsItemPO.getGoodsName());
+			goodsItemDataHelper.save(goodsItemPO);
 		}
 		return promotionCustomerDataHelper.update(po);
 	}
 
 	@Override
 	public ResultMessage updatePB(PromotionBargainPO po) throws RemoteException {
+		List<GoodsItemPO> newGoodsItemPOs=po.getBargains();
+		for(GoodsItemPO goodsItemPO:newGoodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionBargainDataHelper.update(po);
 	}
 
 	@Override
 	public ResultMessage updatePT(PromotionTotalPO po) throws RemoteException {
+		List<GoodsItemPO> goodsItemPOs=po.getGifts();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionTotalDataHelper.update(po);
 	}
 
@@ -130,17 +137,40 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public String getNewPromotionBargainID() throws RemoteException {
-		return "PB-"+String.valueOf(showPB().size()+1);
+		ArrayList<PromotionBargainPO> pBList=showPB();
+		int size=pBList.size();
+		if(size==0){
+			return "PB-1";
+		}else{
+		    return "PB-"+String.valueOf(pBList.get(pBList.size()-1).getID()+1);
+		}
 	}
 
 	@Override
 	public String getNewPromotionCustomerID() throws RemoteException {
-		return "PC-"+String.valueOf(showPC().size()+1);
+		ArrayList<PromotionCustomerPO> pCList=showPC();
+		int size=pCList.size();
+		if(size==0){
+			return "PC-1";
+		}else{
+		    return "PC-"+String.valueOf(pCList.get(pCList.size()-1).getID()+1);
+		}
 	}
 
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
-		return "PT-"+String.valueOf(showPT().size()+1);
+		ArrayList<PromotionTotalPO> pTList=showPT();
+		int size=pTList.size();
+		if(size==0){
+			return "PT-1";
+		}else{
+		    return "PT-"+String.valueOf(pTList.get(pTList.size()-1).getID()+1);
+		}
+	}
+
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
+		return goodsItemDataHelper.save(po);
 	}
 
 }
