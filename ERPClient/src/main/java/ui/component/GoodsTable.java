@@ -1,6 +1,7 @@
 package ui.component;
 
 import bean.GoodsBean;
+import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.GoodsBLService_Stub;
 import javafx.collections.FXCollections;
@@ -17,7 +18,7 @@ public class GoodsTable {
 	TableView<GoodsBean> table;
 	ArrayList<GoodsVO> goods;
 	ObservableList<GoodsBean> data = FXCollections.observableArrayList();
-	GoodsBLService goodsBLService = new GoodsBLService_Stub();
+	GoodsBLService goodsBLService = new GoodsController();
 	
 	public GoodsTable(){
 		
@@ -66,7 +67,7 @@ public class GoodsTable {
 	        if (goods == null)
 	            return ;
 	        for (GoodsVO good : goods){
-	            data.add(new GoodsBean(good.ID,good.name,good.model,good.classification,good.amount,good.alarmAmount,good.recentBuyingPrice,good.recentRetailPrice,good.buyingPrice,good.retailPrice));
+	            data.add(new GoodsBean(good.ID,good.name,good.model,good.classification,good.alarmAmount,good.amount,good.recentBuyingPrice,good.recentRetailPrice,good.buyingPrice,good.retailPrice));
 	        }
 	}
 	public TableView getTable(){

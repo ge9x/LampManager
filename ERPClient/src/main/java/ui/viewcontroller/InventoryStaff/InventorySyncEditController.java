@@ -1,14 +1,12 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
-import bean.GoodsItemBean;
 import bl.inventorybl.InventoryController;
 import bl.userbl.UserController;
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.userblservice.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,15 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable;
 import util.BillState;
 import util.BillType;
-import vo.AccountBillVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -93,7 +88,7 @@ public class InventorySyncEditController {
     }
     public void initTable(){
         table = new TableView<>();
-        table.setEditable(false);
+        table.setEditable(true);
 
         TableColumn nameColumn = new TableColumn("商品名称");
         nameColumn.setPrefWidth(140);
@@ -113,7 +108,7 @@ public class InventorySyncEditController {
                 (TableColumn.CellEditEvent<GoodsBean, Integer> t)->{
                     GoodsBean bean =  (GoodsBean) t.getTableView().getItems().get(
                             t.getTablePosition().getRow());
-                    bean.setAmount(t.getNewValue());
+                    bean.setNewAmount(t.getNewValue());
                     for (GoodsVO goodsVO:goodsItems.keySet()){
                         if (goodsVO.ID == bean.getID()){
                             goodsItems.put(goodsVO,t.getNewValue());
@@ -150,6 +145,7 @@ public class InventorySyncEditController {
         }else {
             inventoryBLService.updateBill(vo);
         }
+        inventorySyncController.showInventoryBills();
     }
     public void clickCancelButton(){
         Dialog dialog = DialogFactory.getConfirmationAlert();
@@ -216,7 +212,15 @@ public class InventorySyncEditController {
                     setForEditView();
                 }
             });
+        }else{
+            submitButton.setVisible(false);
         }
+        for (GoodsVO goodsVO:vo.goodsMap.keySet()){
+            GoodsBean bean = (new GoodsBean(goodsVO.ID,goodsVO.name,goodsVO.model,goodsVO.classification,goodsVO.alarmAmount,goodsVO.amount,goodsVO.recentBuyingPrice,goodsVO.recentRetailPrice,goodsVO.retailPrice,goodsVO.buyingPrice));
+            bean.setNewAmount(vo.goodsMap.get(goodsVO));
+            data.add(bean);
+        }
+        goodsItems = vo.goodsMap;
     }
     public void setForEditView(){
         addIcon.setVisible(true);

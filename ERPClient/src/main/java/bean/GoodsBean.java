@@ -13,7 +13,7 @@ public class GoodsBean {
     DoubleProperty purchasePrice;
     DoubleProperty recentSalesPrice;
     DoubleProperty salesPrice;
-    IntegerProperty newAmount;
+    IntegerProperty newAmount = new SimpleIntegerProperty(0);
 
     public GoodsBean(String ID, String name, String model,String classification,Integer alarmAmount,Integer amount, Double recentPurchasePrice, Double recentSalesPrice, Double salesPrice,Double purchasePrice) {
         this.ID = new SimpleStringProperty(ID);
