@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
 import util.BillState;
+import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -239,6 +240,20 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	@Override
 	public ResultMessage updateSales(SalesVO vo) {
 		return null;
+	}
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) {
+		try {
+			return purchase.getPurchaseByDateAndInventory(startDate, endDate, inventory, type);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }
