@@ -127,7 +127,7 @@ public class MockInventoryBill extends InventoryBill {
 		return "BYD-20171214-00001";
     }
 
-	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException{
+	public ArrayList<InventoryBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException{
     	if(startDate.equals("2017-12-14") || endDate.equals("2017-12-14")){
 			ArrayList<InventoryBillVO> ret = new ArrayList<>();
 			HashMap<GoodsVO, Integer> goodsMap = new HashMap<>();
