@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import po.PromotionTotalPO;
@@ -150,4 +151,11 @@ public interface PromotionDataService extends Remote{
      * @throws RemoteException
      */
     public String getNewPromotionTotalID() throws RemoteException;
+    /**
+     * 增加商品清单
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException;
 }

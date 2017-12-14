@@ -108,6 +108,7 @@ public class Purchase {
 	}
 
 	public ResultMessage savePurchase(PurchaseVO bill) throws RemoteException {
+		addPurchase(bill);
 		PurchasePO po=salesDataService.findPurchaseByID(bill.ID);
 		po.setState(BillState.DRAFT);
 		return salesDataService.updatePurchase(po);
@@ -130,36 +131,6 @@ public class Purchase {
 	}
 	
 	//purchaseInfo
-	public ArrayList<String> getAllPurchaseDate() {
-        try {
-			ArrayList<PurchasePO> purList=salesDataService.showPurchase();
-			ArrayList<PurchasePO> reList=salesDataService.showReturn();
-			ArrayList<String> dateList=new ArrayList<>();
-			purList.addAll(reList);
-			for(PurchasePO po:purList){
-				dateList.add(po.getDate());
-			}
-			return dateList;
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ArrayList<String> getPurchaseIDByDate(Date startDate, Date endDate) {
-		try {
-			ArrayList<PurchasePO> purList=salesDataService.showPurchase();
-			ArrayList<PurchasePO> reList=salesDataService.showReturn();
-			ArrayList<String> dateList=new ArrayList<>();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public ArrayList<String> getPurchaseIDByType(BillType type) {
-		return null;
-	}
 
 	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
 		return updatePurchase(vo);
@@ -293,5 +264,24 @@ public class Purchase {
 	public ResultMessage deletePurchase(PurchaseVO vo) throws RemoteException{
 		return salesDataService.deletePurchase(vo.ID);
 	}
+	
+	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) throws RemoteException, ParseException {
+		ArrayList<PurchasePO> purList=new ArrayList<>();
+		ArrayList<PurchaseVO> getList=new ArrayList<>();
+		if(type==BillType.PURCHASE){
+			purList=salesDataService.showPurchase();
+		}else{
+			purList=salesDataService.showReturn();
+		}
+		for(PurchasePO po:purList){
+			Date date=stringToDate(po.getDate());
+			if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getInventory().equals(inventory)&&po.getState()==BillState.PASS){
+				getList.add(poTovo(po));
+			}
+		}
+		return getList;
+	}
+	
 	
 }
