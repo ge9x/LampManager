@@ -1,7 +1,6 @@
 package bl.inventorybl;
 
 import java.rmi.RemoteException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,16 +11,14 @@ import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
-import po.GoodsItemPO;
 import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
-import util.Criterion;
-import util.QueryMode;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -137,27 +134,44 @@ public class Inventory {
 	public ArrayList<InventoryBillVO> findBillByType(BillType type) throws RemoteException {
 		return inventoryBill.findByType(type);
 	}
-	
-    public String getNewBillIDByType(BillType type) throws RemoteException {
-		return inventoryBill.getNewIDByType(type);
-    }
 
-    public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
-        return inventoryBill.getBillsByDate(startDate, endDate);
-    }
+	public String getNewBillIDByType(BillType type) throws RemoteException {
+		return inventoryBill.getNewIDByType(type);
+	}
+
+	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
+		return inventoryBill.getBillsByDate(startDate, endDate);
+	}
 
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
 		return inventoryDataService.findInventoryByName(name);
 	}
 
-	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+	public ResultMessage raiseInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
+
+		for (GoodsItemVO itemVO : goodsItems) {
+			InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+			if (inventoryPO == null) {
+				return ResultMessage.FAILED;
+			}
+			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+			for (GoodsPO goods : map.keySet()) {
+				if (goods.buildID().equals(itemVO.ID)) {
+					int number = map.get(goods) + itemVO.number;
+					map.put(goods, number);
+					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
+					if (ret != ResultMessage.SUCCESS) {
+						return ret;
+					}
+				}
+			}
+		}
+		return ResultMessage.SUCCESS;
+	}
+
+	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

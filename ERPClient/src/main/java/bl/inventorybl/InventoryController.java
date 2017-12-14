@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.inventoryblservice.InventoryInfo;
-import po.GoodsItemPO;
 import po.InventoryPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
@@ -216,12 +216,18 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 	}
 
 	@Override
-	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
-		return this.inventory.raiseInventory(goodsItems, inventory);
+	public ResultMessage raiseInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) {
+		try {
+			return this.inventory.raiseInventory(goodsItems, inventory);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	@Override
-	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) {
 		return this.inventory.reduceInventory(goodsItems, inventory);
 	}
 }

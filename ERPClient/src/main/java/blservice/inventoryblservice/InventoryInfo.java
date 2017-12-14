@@ -1,10 +1,10 @@
 package blservice.inventoryblservice;
 
+import vo.GoodsItemVO;
 import vo.InventoryBillVO;
 
 import java.util.ArrayList;
 
-import po.GoodsItemPO;
 import po.InventoryPO;
 import util.ResultMessage;
 
@@ -47,7 +47,7 @@ public interface InventoryInfo {
 	 * @param inventory 仓库名字
 	 * @return 是否成功增加
 	 */
-	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory);
+	public ResultMessage raiseInventory(ArrayList<GoodsItemVO> goodsItems, String inventory);
 
 	/**
 	 * 减少库存
@@ -56,5 +56,5 @@ public interface InventoryInfo {
 	 * @param inventory 仓库名字
 	 * @return 是否成功减少
 	 */
-	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory);
+	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory);
 }
