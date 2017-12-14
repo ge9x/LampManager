@@ -13,6 +13,7 @@ import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import po.PromotionTotalPO;
+import rmi.GoodsDataRemoteObject;
 import util.Criterion;
 import util.PromotionType;
 import util.ResultMessage;
@@ -94,17 +95,21 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public ResultMessage updatePC(PromotionCustomerPO po) throws RemoteException {
-		ArrayList<GoodsItemPO> goodsItemPOs=new ArrayList<>();
-		for(GoodsItemPO goodsItemPO:goodsItemPOs){
-			GoodsItemPO goodsItemPO2=goodsItemDataHelper.exactlyQuery("id", po.getID());
-			goodsItemPO2.setGoodsID(goodsItemPO.getGoodsID());
-			goodsItemPO2.setGoodsName(goodsItemPO.getGoodsName());
-		}
 		return promotionCustomerDataHelper.update(po);
 	}
 
 	@Override
 	public ResultMessage updatePB(PromotionBargainPO po) throws RemoteException {
+		/**
+		ArrayList<GoodsItemPO> goodsItemPOs=goodsItemDataHelper.fullyQuery("probar", String.valueOf(po.getID()));
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			goodsItemDataHelper.delete(goodsItemPO);
+		}
+		*/
+		List<GoodsItemPO> newGoodsItemPOs=po.getBargains();
+		for(GoodsItemPO goodsItemPO:newGoodsItemPOs){
+			goodsItemDataHelper.save(goodsItemPO);
+		}
 		return promotionBargainDataHelper.update(po);
 	}
 
@@ -130,17 +135,20 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public String getNewPromotionBargainID() throws RemoteException {
-		return "PB-"+String.valueOf(showPB().size()+1);
+		ArrayList<PromotionBargainPO> pBList=showPB();
+		return "PB-"+String.valueOf(pBList.get(pBList.size()-1).getID()+1);
 	}
 
 	@Override
 	public String getNewPromotionCustomerID() throws RemoteException {
-		return "PC-"+String.valueOf(showPC().size()+1);
+		ArrayList<PromotionCustomerPO> pCList=showPC();
+		return "PC-"+String.valueOf(pCList.get(pCList.size()-1).getID()+1);
 	}
 
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
-		return "PT-"+String.valueOf(showPT().size()+1);
+		ArrayList<PromotionTotalPO> pTList=showPT();
+		return "PT-"+String.valueOf(pTList.get(pTList.size()-1).getID()+1);
 	}
 
 	@Override
