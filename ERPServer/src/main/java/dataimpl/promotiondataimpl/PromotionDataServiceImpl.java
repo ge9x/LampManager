@@ -138,19 +138,34 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	@Override
 	public String getNewPromotionBargainID() throws RemoteException {
 		ArrayList<PromotionBargainPO> pBList=showPB();
-		return "PB-"+String.valueOf(pBList.get(pBList.size()-1).getID()+1);
+		int size=pBList.size();
+		if(size==0){
+			return "PB-1";
+		}else{
+		    return "PB-"+String.valueOf(pBList.get(pBList.size()-1).getID()+1);
+		}
 	}
 
 	@Override
 	public String getNewPromotionCustomerID() throws RemoteException {
 		ArrayList<PromotionCustomerPO> pCList=showPC();
-		return "PC-"+String.valueOf(pCList.get(pCList.size()-1).getID()+1);
+		int size=pCList.size();
+		if(size==0){
+			return "PC-1";
+		}else{
+		    return "PC-"+String.valueOf(pCList.get(pCList.size()-1).getID()+1);
+		}
 	}
 
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
 		ArrayList<PromotionTotalPO> pTList=showPT();
-		return "PT-"+String.valueOf(pTList.get(pTList.size()-1).getID()+1);
+		int size=pTList.size();
+		if(size==0){
+			return "PT-1";
+		}else{
+		    return "PT-"+String.valueOf(pTList.get(pTList.size()-1).getID()+1);
+		}
 	}
 
 	@Override
