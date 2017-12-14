@@ -20,6 +20,7 @@ import vo.InventoryViewVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class MockInventory extends Inventory {
 
 	@Override
