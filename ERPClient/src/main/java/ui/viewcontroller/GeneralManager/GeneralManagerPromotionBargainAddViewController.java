@@ -192,7 +192,7 @@ public class GeneralManagerPromotionBargainAddViewController {
                                     startDate.getValue().plusDays(1))
                                 ) {
                                     setDisable(true);
-                            }   
+                            }
                     }
                 };
             }
