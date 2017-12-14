@@ -4,7 +4,9 @@ import vo.InventoryBillVO;
 
 import java.util.ArrayList;
 
+import po.GoodsItemPO;
 import po.InventoryPO;
+import util.ResultMessage;
 
 /**
  * Created on 2017/11/5
@@ -37,4 +39,22 @@ public interface InventoryInfo {
 	 * @return 仓库的PO
 	 */
 	public InventoryPO getInventoryByName(String name);
+
+	/**
+	 * 增加库存
+	 * 
+	 * @param goodsItems 要增加的商品条目
+	 * @param inventory 仓库名字
+	 * @return 是否成功增加
+	 */
+	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory);
+
+	/**
+	 * 减少库存
+	 * 
+	 * @param goodsItems 要减少的商品条目
+	 * @param inventory 仓库名字
+	 * @return 是否成功减少
+	 */
+	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory);
 }

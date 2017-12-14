@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.inventoryblservice.InventoryInfo;
+import po.GoodsItemPO;
 import po.InventoryPO;
 import util.BillState;
 import util.BillType;
@@ -110,7 +111,13 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 	}
 
 	public ResultMessage deleteBill(String ID) {
-		return inventory.deleteBill(ID);
+		try {
+			return inventory.deleteBill(ID);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 
 	public ResultMessage updateInventory(String before, String after) {
@@ -206,5 +213,15 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+		return this.inventory.raiseInventory(goodsItems, inventory);
+	}
+
+	@Override
+	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+		return this.inventory.reduceInventory(goodsItems, inventory);
 	}
 }

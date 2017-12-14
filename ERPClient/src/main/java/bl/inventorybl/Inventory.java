@@ -12,6 +12,7 @@ import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
+import po.GoodsItemPO;
 import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
@@ -104,7 +105,7 @@ public class Inventory {
 		}
 	}
 
-	public ResultMessage deleteBill(String ID) {
+	public ResultMessage deleteBill(String ID) throws RemoteException {
 		return inventoryBill.delete(ID);
 	}
 
@@ -142,11 +143,21 @@ public class Inventory {
     }
 
     public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
-        return inventoryBill.getInventoryBillsByDate(startDate, endDate);
+        return inventoryBill.getBillsByDate(startDate, endDate);
     }
 
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
 		return inventoryDataService.findInventoryByName(name);
+	}
+
+	public ResultMessage raiseInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultMessage reduceInventory(ArrayList<GoodsItemPO> goodsItems, String inventory) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
