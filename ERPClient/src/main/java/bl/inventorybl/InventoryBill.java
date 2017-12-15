@@ -19,8 +19,6 @@ import util.BillType;
 import util.Criterion;
 import util.QueryMode;
 import util.ResultMessage;
-import vo.AccountBillItemVO;
-import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -163,8 +161,14 @@ public class InventoryBill {
 	}
 
 	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException{
-		
-		return null;
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("type", BillState.SUBMITTED, QueryMode.FULL));
+		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		for(InventoryBillPO po : pos){
+			ret.add(this.poToVO(po));
+		}
+		return ret;
 	}
 
 	private InventoryBillVO poToVO(InventoryBillPO po) {
@@ -245,14 +249,11 @@ public class InventoryBill {
 	
 	private ResultMessage changeInventory(HashMap<GoodsVO, Integer> goodsMap, String inventory, int sign)throws RemoteException{
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
-		for (GoodsVO goodsVO : goodsMap.keySet()) {
-			if (inventoryPO == null) {
-				return ResultMessage.FAILED;
-			}
-			else{
-				GoodsPO goodsPO = goodsInfo.getGoodsByID(goodsVO.ID);
-//				HashMap<InventoryPO, Integer> goodsMap = goodsPO.getNumber();
-			}
+		if (inventoryPO == null) {
+			return ResultMessage.FAILED;
+		}
+		else{
+			// TODO
 //			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
 //			for (GoodsPO goods : map.keySet()) {
 //				if (goods.buildID().equals(itemVO.ID)) {
@@ -264,7 +265,7 @@ public class InventoryBill {
 //					}
 //				}
 //			}
+			return ResultMessage.SUCCESS;
 		}
-		return ResultMessage.SUCCESS;
 	}
 }
