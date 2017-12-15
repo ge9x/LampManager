@@ -143,8 +143,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return sales.getAllInventory();
 	}
 
 	@Override
@@ -264,6 +263,11 @@ public class SalesController implements SalesBLService,SalesInfo{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
+		return sales.alterInventoryAndCustomerBySales(vo);
 	}
 	
 	
