@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionTotal;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
@@ -50,8 +51,12 @@ import util.BillState;
 import util.BillType;
 import util.Level;
 import util.Money;
+import util.PromotionType;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
+import vo.PromotionBargainVO;
+import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
 import vo.PromotionVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
@@ -230,16 +235,16 @@ public class SalesStaffSalesEditViewController {
         vbox.getChildren().add(itemTable);
         
         bargainItemTable = new TableView<>();
-        bargainItemTable.setEditable(true);
-        bargainItemTable.setItems(data);
+        bargainItemTable.setEditable(false);
+        bargainItemTable.setItems(bargainData);
         bargainItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
-        bargainVbox.getChildren().add(itemTable);
+        bargainVbox.getChildren().add(bargainItemTable);
         
         giftItemTable = new TableView<>();
-        giftItemTable.setEditable(true);
-        giftItemTable.setItems(data);
+        giftItemTable.setEditable(false);
+        giftItemTable.setItems(giftData);
         giftItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
-        giftVbox.getChildren().add(itemTable);
+        giftVbox.getChildren().add(giftItemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
@@ -324,6 +329,38 @@ public class SalesStaffSalesEditViewController {
 			}
         	
         });
+        
+        promotion.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int promotionIndex = promotion.getSelectionModel().getSelectedIndex();
+				bargainData.clear();
+				giftData.clear();
+				
+				if(promotions.get(promotionIndex).type==PromotionType.BARGAIN_STRATEGY){
+					PromotionBargainVO promotionBargainVO = (PromotionBargainVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionBargainVO.bargains){
+						bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+				else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
+					PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionCustomerVO.gifts){
+						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+				else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
+					PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionTotalVO.gifts){
+						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+			}
+
+			
+		});
         
     }
     
