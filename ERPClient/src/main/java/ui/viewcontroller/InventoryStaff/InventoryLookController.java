@@ -212,6 +212,10 @@ public class InventoryLookController {
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
     }
+    public void clickAddButton(){
+        Dialog dialog = DialogFactory.getTextInputDialog();
+        dialog.setHeaderText("");
+    }
     public class AlarmBean{
         StringProperty ID;
         StringProperty name;
