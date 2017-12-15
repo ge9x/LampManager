@@ -91,7 +91,7 @@ public class  InventoryCheckController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
         File f = fileChooser.showSaveDialog(new Stage());
 
-        ResultMessage re = inventoryBLService.exportExcel(f.getParent(),f.getName(),inventoryCheck);
+        ResultMessage re = inventoryBLService.exportExcel(inventoryCheck);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
             alert.setHeaderText("导出成功");

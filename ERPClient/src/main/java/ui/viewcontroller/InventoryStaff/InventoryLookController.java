@@ -160,6 +160,8 @@ public class InventoryLookController {
         salesItemTable.setEditable(false);
         inventoryItemTable.setEditable(false);
 
+
+
         TableColumn dateColumn = new TableColumn("时间");
         TableColumn nameColumn = new TableColumn("商品名称");
         TableColumn isInColumn = new TableColumn("I/O");
