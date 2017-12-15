@@ -10,6 +10,7 @@ import java.util.List;
 
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
+import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
@@ -21,6 +22,7 @@ import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
+import vo.PurchaseVO;
 import vo.SalesVO;
 
 /**
@@ -219,6 +221,25 @@ public class Sales {
 	
 	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
 		return salesDataService.deletePurchase(vo.ID);
+	}
+	
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) throws ParseException, RemoteException {
+		ArrayList<SalesPO> salList=new ArrayList<>();
+		ArrayList<SalesVO> getList=new ArrayList<>();
+		if(type==BillType.PURCHASE){
+			salList=salesDataService.showSales();
+		}else{
+			salList=salesDataService.showSalesReturn();
+		}
+		for(SalesPO po:salList){
+			Date date=stringToDate(po.getDate());
+			if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getInventory().equals(inventory)&&po.getState()==BillState.PASS){
+				getList.add(poTovo(po));
+			}
+		}
+		return getList;
+
 	}
 	
 }
