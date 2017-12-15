@@ -296,6 +296,7 @@ public class SalesStaffSalesReturnEditViewController {
         title.setText("销售退货单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);

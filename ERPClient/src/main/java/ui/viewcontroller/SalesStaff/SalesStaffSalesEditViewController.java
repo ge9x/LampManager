@@ -492,8 +492,11 @@ public class SalesStaffSalesEditViewController {
         title.setText("销售单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
+        voucher.setText(String.valueOf(salesBill.voucher));
         voucher.setEditable(false);
+        allowance.setText(String.valueOf(salesBill.allowance));
         allowance.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);
