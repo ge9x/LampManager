@@ -160,6 +160,8 @@ public class InventoryLookController {
         salesItemTable.setEditable(false);
         inventoryItemTable.setEditable(false);
 
+
+
         TableColumn dateColumn = new TableColumn("时间");
         TableColumn nameColumn = new TableColumn("商品名称");
         TableColumn isInColumn = new TableColumn("I/O");
@@ -211,6 +213,10 @@ public class InventoryLookController {
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
+    }
+    public void clickAddButton(){
+        Dialog dialog = DialogFactory.getTextInputDialog();
+        dialog.setHeaderText("");
     }
     public class AlarmBean{
         StringProperty ID;

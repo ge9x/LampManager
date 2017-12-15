@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
 import javafx.beans.property.*;
@@ -10,25 +11,30 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ui.component.DialogFactory;
+import ui.component.Table;
 import ui.viewcontroller.FinancialStaff.FinancialSalesDetailsController;
 import util.Money;
 import util.ResultMessage;
 import vo.GoodsVO;
 import vo.InventoryCheckVO;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 /**
  * Created by Kry·L on 2017/11/27.
  */
-public class InventoryCheckController {
-    InventoryBLService inventoryBLService = new InventoryBLService_Stub();
+public class  InventoryCheckController {
+    InventoryBLService inventoryBLService = new InventoryController();
     InventoryViewController inventoryViewController;
     InventoryCheckVO inventoryCheck;
 
-    TableView<InventoryCheckBean> table;
-    ObservableList<InventoryCheckBean> data = FXCollections.observableArrayList();
+    Table<InventoryCheckBean> table;
+    ObservableList<InventoryCheckBean> data;
     int totalNum;
     double totalValue;
     double avgValue;
@@ -68,33 +74,23 @@ public class InventoryCheckController {
 
     }
     public void initTable(){
-        table = new TableView<>();
+        table = new Table<>();
         table.setEditable(false);
-
-        TableColumn lineColumn = new TableColumn("行号");
-        lineColumn.setPrefWidth(67);
-        lineColumn.setCellValueFactory(new PropertyValueFactory<>("line"));
-        TableColumn IDColumn = new TableColumn("编号");
-        IDColumn.setPrefWidth(150);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        TableColumn nameColumn = new TableColumn("商品名称");
-        nameColumn.setPrefWidth(160);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(150);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn amountColumn = new TableColumn("库存数量");
-        amountColumn.setPrefWidth(80);
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn avgColumn = new TableColumn("商品均价");
-        avgColumn.setPrefWidth(80);
-        avgColumn.setCellValueFactory(new PropertyValueFactory<>("avg"));
-
-        table.setItems(data);
-        table.getColumns().addAll(lineColumn,IDColumn,nameColumn,modelColumn,amountColumn,avgColumn);
-        TablePane.setContent(table);
+        table.addColumn("行号","line",100);
+        table.addColumn("商品编号","ID",100);
+        table.addColumn("商品名称","name",100);
+        table.addColumn("型号","model",100);
+        table.addColumn("库存均价","avg",100);
+        TablePane.setContent(table.getTable());
+        data = table.data;
     }
     public void clickExportButton(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("导出库存盘点");
+        fileChooser.setInitialFileName("库存盘点"+ LocalDate.now().toString());
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
+        File f = fileChooser.showSaveDialog(new Stage());
+
         ResultMessage re = inventoryBLService.exportExcel(inventoryCheck);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
