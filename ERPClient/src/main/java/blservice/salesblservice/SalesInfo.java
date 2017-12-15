@@ -29,7 +29,7 @@ public interface SalesInfo {
 	 */
 	public ArrayList<SalesVO> getAllSalesReturnOrder(String startDate,String endDate);
 	/**
-	 * 审批销售单（销售出货单和销售退货单）
+	 * 审批销售单（销售出货单和销售退货单），如果通过， 更改库存数据和客户的应收应付数据
 	 * 
 	 * @param vo
 	 * @return
@@ -47,11 +47,5 @@ public interface SalesInfo {
 	 * @return
 	 */
 	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate,String endDate,String inventory,BillType type);
-	/**
-	 * 更改库存数据和客户的应收应付数据
-	 * @param vo
-	 * @return
-	 */
-	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo);
 	
 }

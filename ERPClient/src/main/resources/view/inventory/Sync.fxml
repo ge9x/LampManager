@@ -2,7 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXNodesList?>
-<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -14,51 +14,52 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/sync.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventorySyncController">
     <children>
-        <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+        <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="814.0" spacing="15.0" style="-fx-background-color: #f6f6f7;">
             <children>
-                <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="80.0" minWidth="716.0" prefHeight="80.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                     <effect>
                         <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                     </effect>
                     <children>
-                        <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
-                        <Label fx:id="title" text="同步库存">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                            <padding>
-                                <Insets left="10.0" />
-                            </padding>
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                        <JFXNodesList fx:id="TypeChooser" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onMouseExited="#closeTypeChooser" prefHeight="29.0" prefWidth="62.0">
-                            <children>
-                        <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
-                           <children>
-                                      <JFXButton onMouseClicked="#clickAddOverflow" prefWidth="70.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="报溢单" textFill="#1db1a4">
-                                          <font>
-                                              <Font name="Microsoft YaHei Bold" size="12.0" />
-                                          </font>
-                                      </JFXButton>
-                                      <JFXButton onMouseClicked="#clickAddLoss" prefWidth="70.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="报损单" textFill="#1db1a4">
-                                          <font>
-                                              <Font name="Microsoft YaHei Bold" size="12.0" />
-                                          </font>
-                                      </JFXButton>
-                           </children>
-                        </HBox>
-                            </children>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </JFXNodesList>
+                  <HBox alignment="CENTER_LEFT" prefHeight="97.0">
+                     <children>
+                              <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                              <Label fx:id="title" text="同步库存">
+                                  <font>
+                                      <Font name="System Bold" size="24.0" />
+                                  </font>
+                                  <padding>
+                                      <Insets left="10.0" />
+                                  </padding>
+                              </Label>
+                              <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                              </Label>
+                              <JFXNodesList fx:id="TypeChooser" alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onMouseExited="#closeTypeChooser" prefHeight="29.0" prefWidth="62.0">
+                                  <children>
+                              <HBox prefHeight="30.0" prefWidth="160.0" spacing="10.0">
+                                 <children>
+                                            <JFXButton onMouseClicked="#clickAddOverflow" prefWidth="70.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="报溢单" textFill="#1db1a4">
+                                                <font>
+                                                    <Font name="Microsoft YaHei Bold" size="12.0" />
+                                                </font>
+                                            </JFXButton>
+                                            <JFXButton onMouseClicked="#clickAddLoss" prefWidth="70.0" style="-fx-border-color: #1db1a4; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-color: #ffffff; -fx-background-radius: 10;" text="报损单" textFill="#1db1a4">
+                                                <font>
+                                                    <Font name="Microsoft YaHei Bold" size="12.0" />
+                                                </font>
+                                            </JFXButton>
+                                 </children>
+                              </HBox>
+                                  </children>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                              </JFXNodesList>
+                     </children>
+                  </HBox>
                     </children>
                     <opaqueInsets>
                         <Insets />
@@ -70,7 +71,27 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </HBox>
-            <JFXTabPane fx:id="tabPane" />
+            <AnchorPane minHeight="78.0" prefHeight="78.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                <effect>
+                    <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                </effect>
+               <children>
+                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="11.0" prefHeight="53.0" prefWidth="510.0" spacing="10.0">
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="72.0" text="筛选单据">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <JFXRadioButton fx:id="All" selectedColor="#1db1a5" text="全部" />
+                        <JFXRadioButton fx:id="Draft" selectedColor="#1db1a5" text="草稿" />
+                        <JFXRadioButton fx:id="Submitted" selectedColor="#1db1a5" text="已提交" />
+                        <JFXRadioButton fx:id="Pass" selectedColor="#1db1a5" text="审批通过" />
+                        <JFXRadioButton fx:id="Failed" selectedColor="#1db1a5" text="审批失败" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
             </children>
             <padding>
                 <Insets bottom="20.0" left="30.0" right="20.0" top="10.0" />

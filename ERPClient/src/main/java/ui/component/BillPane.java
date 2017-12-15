@@ -72,5 +72,8 @@ public class BillPane {
     public ArrayList<Tab> getAllTabs(){
         return tabs;
     }
+    public String getSelected(){
+        return tabPane.getSelectionModel().getSelectedItem().getText();
+    }
 
 }
