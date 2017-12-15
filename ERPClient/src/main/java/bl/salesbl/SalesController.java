@@ -264,11 +264,6 @@ public class SalesController implements SalesBLService,SalesInfo{
 			return null;
 		}
 	}
-
-	@Override
-	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
-		return sales.alterInventoryAndCustomerBySales(vo);
-	}
 	
 	
 }

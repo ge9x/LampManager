@@ -61,7 +61,6 @@ public class SalesStaffSalesEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -70,6 +69,15 @@ public class SalesStaffSalesEditViewController {
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> bargainItemTable;
+    ObservableList<GoodsItemBean> bargainData =
+            FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> giftItemTable;
+    ObservableList<GoodsItemBean> giftData =
+            FXCollections.observableArrayList();
+    
     DoubleProperty total = new SimpleDoubleProperty(0);
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
     
@@ -93,6 +101,12 @@ public class SalesStaffSalesEditViewController {
 
     @FXML
     VBox vbox;
+    
+    @FXML
+    VBox bargainVbox;
+    
+    @FXML
+    VBox giftVbox;
 
     @FXML
     Text Total;
@@ -133,7 +147,7 @@ public class SalesStaffSalesEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         customers = salesBLService.getAllCustomer();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
         promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
         promotions.addAll(salesBLService.getFitPromotionTotal(0));
@@ -214,6 +228,18 @@ public class SalesStaffSalesEditViewController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
+        
+        bargainItemTable = new TableView<>();
+        bargainItemTable.setEditable(true);
+        bargainItemTable.setItems(data);
+        bargainItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        bargainVbox.getChildren().add(itemTable);
+        
+        giftItemTable = new TableView<>();
+        giftItemTable.setEditable(true);
+        giftItemTable.setItems(data);
+        giftItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        giftVbox.getChildren().add(itemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
@@ -493,8 +519,11 @@ public class SalesStaffSalesEditViewController {
         title.setText("销售单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
+        voucher.setText(String.valueOf(salesBill.voucher));
         voucher.setEditable(false);
+        allowance.setText(String.valueOf(salesBill.allowance));
         allowance.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);
