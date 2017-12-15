@@ -255,10 +255,4 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 			return null;
 		}
 	}
-
-	@Override
-	public ResultMessage alterInventoryAndCustomerByPurchase(PurchaseVO vo) {
-		return purchase.alterInventoryAndCustomerByPurchase(vo);
-	}
-	
 }
