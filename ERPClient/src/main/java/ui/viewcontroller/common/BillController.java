@@ -119,7 +119,7 @@ public class BillController {
             billType.setText("赠");
             billType.setTextFill(Color.web("#FFCC00"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -139,7 +139,7 @@ public class BillController {
             billType.setText("损");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -159,7 +159,7 @@ public class BillController {
             billType.setText("溢");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -240,6 +240,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FFCCFF"));
             billCreater.setText(purchaseBill.user);
             billMoney.setText(Money.getMoneyString(purchaseBill.sum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffReturnOrderViewController.showReturnDetailView(purchaseBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffReturnOrderViewController.deleteReturn(purchaseBill);
+                }
+            });
         }
         else if(bill.type==BillType.SALES){
             SalesVO salesBill = (SalesVO) bill;
@@ -248,6 +260,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FF0033"));
             billCreater.setText(salesBill.user);
             billMoney.setText(Money.getMoneyString(salesBill.afterSum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesOrderViewController.showSalesOrderDetailView(salesBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesOrderViewController.deleteSales(salesBill);
+                }
+            });
         }
         else if(bill.type==BillType.SALESRETURN){
             SalesVO salesBill = (SalesVO) bill;
@@ -256,6 +280,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FF0033"));
             billCreater.setText(salesBill.user);
             billMoney.setText(Money.getMoneyString(salesBill.afterSum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesReturnOrderViewController.showSalesReturnDetailView(salesBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesReturnOrderViewController.deleteSalesReturn(salesBill);
+                }
+            });
         }
     }
     public void hideCheckbox(){
