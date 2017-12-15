@@ -1,11 +1,12 @@
 package ui.component;
 
 
+import bean.GoodsBean;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TableView;
-import ui.component.GoodsTable.GoodsBean;
+
 
 public class GoodsSelecter {
 

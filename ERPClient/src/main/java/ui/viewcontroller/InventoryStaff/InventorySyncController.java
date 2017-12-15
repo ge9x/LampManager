@@ -61,13 +61,13 @@ public class InventorySyncController {
         addIcon.setText("\ue61e");
         TypeChooser.setVisible(false);
 
-        overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
-        loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
-        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT, BillState.DRAFT);
+//        overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW, BillState.DRAFT);
+//        loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,BillState.DRAFT);
+//        gift = inventoryBLService.findBillByStateAndType(BillType.GIFT, BillState.DRAFT);
 
-//        overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
-//        loss = inventoryBLService.findBillByType(BillType.LOSS);
-//        gift = inventoryBLService.findBillByType(BillType.GIFT);
+        overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
+        loss = inventoryBLService.findBillByType(BillType.LOSS);
+        gift = inventoryBLService.findBillByType(BillType.GIFT);
 
         billPane = new BillPane("报溢单","报损单","赠送单");
         initTabs();
@@ -146,7 +146,7 @@ public class InventorySyncController {
         }
     }
 
-    public void closeTypeChooser(){
+    public void closeTypeChooser(Event event){
         TypeChooser.setVisible(false);
     }
 
