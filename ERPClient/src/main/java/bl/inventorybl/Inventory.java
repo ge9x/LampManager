@@ -1,11 +1,15 @@
 package bl.inventorybl;
 
+import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ExcelUtil.enums.ExcelType;
+import ExcelUtil.impl.ExportToExcel;
+import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
 import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
@@ -20,6 +24,7 @@ import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
+import vo.InventoryCheckItemVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
 
@@ -60,15 +65,29 @@ public class Inventory {
 		LocalDate date = LocalDate.now();
 		ArrayList<GoodsVO> goods = goodsInfo.getAllGoods();
 		HashMap<GoodsVO, Double> averagePrice = new HashMap<>();
-		for(GoodsVO vo : goods){
+		for (GoodsVO vo : goods) {
 			averagePrice.put(vo, vo.buyingPrice);
 		}
 		InventoryCheckVO check = new InventoryCheckVO(date.toString(), averagePrice);
 		return check;
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) { // TODO
-		return null;
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) { // TODO
+		fileName = fileName.split("\\.")[0];
+		ArrayList<InventoryCheckItemVO> items = new ArrayList<>();
+		HashMap<GoodsVO, Double> map = vo.averagePrice;
+		for (GoodsVO goodsVO : map.keySet()) {
+			double averagePrice = map.get(goodsVO);
+			items.add(new InventoryCheckItemVO(goodsVO.ID, goodsVO.name, goodsVO.model, goodsVO.amount, averagePrice));
+		}
+		ExportToExcel exporter = new ExportToExcel.Builder(filePath, fileName, ExcelType.XLSX)
+				.withModel(Model.of(InventoryCheckItemVO.class, items)).build();
+		if (exporter.export()) {
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
 	}
 
 	public ArrayList<InventoryBillVO> showBills() throws RemoteException {
@@ -159,6 +178,14 @@ public class Inventory {
 
 	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
 		return this.changeInventory(goodsItems, inventory, -1);
+	}
+
+	public ResultMessage examine(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.examine(vo);
+	}
+
+	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() throws RemoteException {
+		return inventoryBill.getAllSubmittedBill();
 	}
 
 	/**

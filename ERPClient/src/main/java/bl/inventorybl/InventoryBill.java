@@ -19,6 +19,8 @@ import util.BillType;
 import util.Criterion;
 import util.QueryMode;
 import util.ResultMessage;
+import vo.AccountBillItemVO;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -146,6 +148,24 @@ public class InventoryBill {
 	public ArrayList<InventoryBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
 		return null; // TODO
 	}
+	
+	public ResultMessage examine(InventoryBillVO vo) throws RemoteException{
+        ResultMessage ret = this.update(vo);
+        if (vo.state == BillState.PASS){
+        	HashMap<GoodsVO, Integer> goodsMap = vo.goodsMap;
+            if (vo.type == BillType.OVERFLOW){
+            	this.changeInventory(goodsMap, vo.inventory, 1);
+            }else{	// BillType = LOSS
+            	this.changeInventory(goodsMap, vo.inventory, -1);
+            }
+        }
+        return ret;
+	}
+
+	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException{
+		
+		return null;
+	}
 
 	private InventoryBillVO poToVO(InventoryBillPO po) {
 		if (po == null) {
@@ -221,5 +241,30 @@ public class InventoryBill {
 			}
 			return found.get(0);
 		}
+	}
+	
+	private ResultMessage changeInventory(HashMap<GoodsVO, Integer> goodsMap, String inventory, int sign)throws RemoteException{
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		for (GoodsVO goodsVO : goodsMap.keySet()) {
+			if (inventoryPO == null) {
+				return ResultMessage.FAILED;
+			}
+			else{
+				GoodsPO goodsPO = goodsInfo.getGoodsByID(goodsVO.ID);
+//				HashMap<InventoryPO, Integer> goodsMap = goodsPO.getNumber();
+			}
+//			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+//			for (GoodsPO goods : map.keySet()) {
+//				if (goods.buildID().equals(itemVO.ID)) {
+//					int number = map.get(goods) + sign * itemVO.number;
+//					map.put(goods, number);
+//					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
+//					if (ret != ResultMessage.SUCCESS) {
+//						return ret;
+//					}
+//				}
+//			}
+		}
+		return ResultMessage.SUCCESS;
 	}
 }
