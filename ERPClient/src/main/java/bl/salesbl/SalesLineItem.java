@@ -66,16 +66,19 @@ public class SalesLineItem {
 	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
 	}
-    
-    public ResultMessage alterInventory(SalesVO vo){
-		return null;
+	
+	public ArrayList<String> getAllInventory() {
+		return inventoryInfo.getAllInventoryName();
 	}
 	
-	public ResultMessage alterCustomer(SalesVO vo){
+	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
 		if(vo.type==BillType.SALES){
-			return customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
 		}else{
-			return customerInfo.reduceCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
 		}
+		return ResultMessage.SUCCESS;
 	}
 }

@@ -29,5 +29,11 @@ public interface PurchaseInfo {
 	 * @return
 	 */
 	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate,String endDate,String inventory,BillType type);
+	/**
+	 * 更改库存数据和客户的应收应付数据
+	 * @param vo
+	 * @return
+	 */
+	public ResultMessage alterInventoryAndCustomerByPurchase(PurchaseVO vo);
 	
 }

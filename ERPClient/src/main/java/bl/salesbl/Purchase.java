@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import dataservice.salesdataservice.SalesDataService;
+import javafx.geometry.VPos;
 import po.GoodsItemPO;
 import po.PurchasePO;
 import rmi.SalesRemoteHelper;
@@ -59,12 +60,12 @@ public class Purchase {
 		po.setCustomerID(Integer.parseInt(vo.customerID));
 		po.setInventory(vo.inventory);
 		po.setUser(vo.user);
-		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
-		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			goodsItempoList.add(GoodsItem.voTopo(goodsItemvo));
+		po.getGoodsItemList().clear();
+		ArrayList<GoodsItemVO> goodsItemVOs=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsItemVOs){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemVO);
+			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setGoodsItemList(goodsItempoList);
 		po.setRemarks(vo.remarks);
 		po.setSum(vo.sum);
 		return salesDataService.updatePurchase(po);
@@ -93,10 +94,8 @@ public class Purchase {
 	}
 
 	public ResultMessage submitPurchase(PurchaseVO pur) throws RemoteException {
-		addPurchase(pur);
-	    PurchasePO po=salesDataService.findPurchaseByID(pur.ID);
-	    po.setState(BillState.SUBMITTED);
-		return salesDataService.updatePurchase(po);
+		pur.state=BillState.SUBMITTED;
+		return addPurchase(pur);
 	}
 
 	public ResultMessage submitSales(SalesVO sal) {
@@ -281,6 +280,10 @@ public class Purchase {
 			}
 		}
 		return getList;
+	}
+	
+	public ResultMessage alterInventoryAndCustomerByPurchase(PurchaseVO vo) {
+		return purchaseLineItem.alterInventoryAndCustomerByPurchase(vo);
 	}
 	
 	
