@@ -10,6 +10,10 @@ import java.util.List;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -36,11 +40,15 @@ public class Sales {
 	
 	SalesLineItem salesLineItem;
 	GoodsItem goodsItem;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 		salesLineItem=new SalesLineItem();
 		goodsItem=new GoodsItem();
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
 	}
 	
 	
@@ -120,6 +128,15 @@ public class Sales {
 	}
 	
 	public ResultMessage examine(SalesVO vo) throws RemoteException {
+		if(vo.state==BillState.PASS){
+		if(vo.type==BillType.SALES){
+			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+		}else{
+			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+		}
+		}
 		return updateSales(vo);
 	}
 	
@@ -286,8 +303,5 @@ public class Sales {
 		return salesLineItem.getAllInventory();
 	}
 	
-	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
-		return salesLineItem.alterInventoryAndCustomerBySales(vo);
-	}
 	
 }

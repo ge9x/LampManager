@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import bl.userbl.UserController;
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
+import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import javafx.geometry.VPos;
 import po.GoodsItemPO;
@@ -30,10 +36,16 @@ public class Purchase {
 	PurchaseLineItem purchaseLineItem;
 	PurchaseList purchaseList;
 	GoodsItem goodsItem;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
+		userInfo=new UserController();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
 		goodsItem=new GoodsItem();
@@ -130,10 +142,6 @@ public class Purchase {
 	}
 	
 	//purchaseInfo
-
-	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
-		return updatePurchase(vo);
-	}
 	
 	public ArrayList<PurchaseVO> getAllSubmittedPurchase() throws RemoteException {
 		ArrayList<PurchasePO> purpoList=salesDataService.findPurchaseByState(BillState.SUBMITTED);
@@ -282,9 +290,16 @@ public class Purchase {
 		return getList;
 	}
 	
-	public ResultMessage alterInventoryAndCustomerByPurchase(PurchaseVO vo) {
-		return purchaseLineItem.alterInventoryAndCustomerByPurchase(vo);
+	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
+	    if(vo.state==BillState.PASS){
+		     if(vo.type==BillType.PURCHASE){
+			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+		     }else{
+			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+		     }
+		 }
+	    return updatePurchase(vo);
 	}
-	
-	
 }

@@ -71,14 +71,4 @@ public class SalesLineItem {
 		return inventoryInfo.getAllInventoryName();
 	}
 	
-	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
-		if(vo.type==BillType.SALES){
-			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
-			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
-		}else{
-			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
-			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
-		}
-		return ResultMessage.SUCCESS;
-	}
 }
