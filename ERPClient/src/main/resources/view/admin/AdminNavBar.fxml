@@ -19,7 +19,7 @@
             <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="用户管理" />
          </children>
       </AnchorPane>
-      <Label fx:id="userName" layoutX="46.0" layoutY="128.0" prefHeight="33.0" prefWidth="80.0" text="名字" />
+      <Label fx:id="userName" alignment="CENTER" layoutX="46.0" layoutY="128.0" prefHeight="33.0" prefWidth="80.0" text="名字" />
 
 
    </children>

@@ -53,7 +53,6 @@ public class SalesStaffSalesReturnEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -112,7 +111,7 @@ public class SalesStaffSalesReturnEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         customers = salesBLService.getAllCustomer();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
