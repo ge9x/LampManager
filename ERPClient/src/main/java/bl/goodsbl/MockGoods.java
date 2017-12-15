@@ -10,6 +10,7 @@ import vo.GoodsVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class MockGoods extends Goods {
 
 	@Override

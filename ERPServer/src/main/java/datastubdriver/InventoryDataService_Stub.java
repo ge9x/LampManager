@@ -2,7 +2,6 @@ package datastubdriver;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import dataservice.inventorydataservice.InventoryDataService;
@@ -19,6 +18,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class InventoryDataService_Stub implements InventoryDataService{
 	ArrayList<InventoryBillPO> data;
 	ArrayList<InventoryBillPO> alarmData;
