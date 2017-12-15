@@ -86,7 +86,6 @@ public class PromotionCustomer extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{
-		promotionCustomerPOs.clear();
 		promotionCustomerPOs = promotionDataService.showPC();
 		for(PromotionCustomerPO po:promotionCustomerPOs){
 			if(po.getPromotionID().equals(promotionCustomerVO.promotionID)){

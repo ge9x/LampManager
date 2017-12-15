@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
+import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
@@ -21,6 +24,7 @@ import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
+import vo.PurchaseVO;
 import vo.SalesVO;
 
 /**
@@ -28,7 +32,7 @@ import vo.SalesVO;
  */
 
 public class Sales {
-	private SalesDataService salesDataService;
+	private static SalesDataService salesDataService;
 	
 	SalesLineItem salesLineItem;
 	GoodsItem goodsItem;
@@ -145,12 +149,12 @@ public class Sales {
 	}
 	
 	public ResultMessage submitSales(SalesVO vo) throws RemoteException{
-		SalesPO po=salesDataService.findSlaesByID(vo.ID);
-		po.setState(BillState.SUBMITTED);
-		return salesDataService.updateSales(po);
+		vo.state=BillState.SUBMITTED;
+		return addSales(vo);
 	}
 	
 	public ResultMessage saveSales(SalesVO bill) throws RemoteException {
+		addSales(bill);
 		SalesPO po=salesDataService.findSlaesByID(bill.ID);
 		po.setState(BillState.DRAFT);
 		return salesDataService.updateSales(po);
@@ -182,8 +186,46 @@ public class Sales {
 		return time;
 	}
 	
-	public static SalesPO voTopo(SalesVO vo){
-		return null;
+	 private static int getnewSalesTurn() throws RemoteException{
+	    	int turn=0;
+	    	ArrayList<SalesPO> salList=salesDataService.showSales();
+	    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+	    	Date date=new Date();  
+	    	String str=sdf.format(date);  
+	    	for(SalesPO po:salList){
+	    		if(po.getDate().equals(str)){
+	    			turn++;
+	    		}
+	    	}
+			return turn+1;
+		}
+	    
+	    private static int getNewSalesReturnTurn() throws RemoteException{
+	    	int turn=0;
+	    	ArrayList<SalesPO> retList=salesDataService.showSalesReturn();
+	    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+	    	Date date=new Date(); 
+	    	String str=sdf.format(date);  
+	    	for(SalesPO po:retList){
+	    		if(po.getDate().equals(str)){
+	    			turn++;
+	    		}
+	    	}
+			return turn+1;
+	    }
+	
+	public static SalesPO voTopo(SalesVO vo) throws NumberFormatException, RemoteException{
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
+			goodsItempoList.add(goodsItemPO);
+		}
+		if(vo.type==BillType.SALES){
+			return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, getnewSalesTurn(), vo.promotionName);
+		}else{
+		    return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, getNewSalesReturnTurn(), vo.promotionName);
+		}
 	}
 	
 	public static SalesVO poTovo(SalesPO po){
@@ -219,6 +261,33 @@ public class Sales {
 	
 	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
 		return salesDataService.deletePurchase(vo.ID);
+	}
+	
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) throws ParseException, RemoteException {
+		ArrayList<SalesPO> salList=new ArrayList<>();
+		ArrayList<SalesVO> getList=new ArrayList<>();
+		if(type==BillType.PURCHASE){
+			salList=salesDataService.showSales();
+		}else{
+			salList=salesDataService.showSalesReturn();
+		}
+		for(SalesPO po:salList){
+			Date date=stringToDate(po.getDate());
+			if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getInventory().equals(inventory)&&po.getState()==BillState.PASS){
+				getList.add(poTovo(po));
+			}
+		}
+		return getList;
+
+	}
+	
+	public ArrayList<String> getAllInventory() {
+		return salesLineItem.getAllInventory();
+	}
+	
+	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
+		return salesLineItem.alterInventoryAndCustomerBySales(vo);
 	}
 	
 }

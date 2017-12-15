@@ -85,7 +85,6 @@ public class PromotionTotal extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{
-		promotionTotalPOs.clear();
 		promotionTotalPOs = promotionDataService.showPT();
 		for(PromotionTotalPO po:promotionTotalPOs){
 			if(po.getPromotionID().equals(promotionTotalVO.promotionID)){

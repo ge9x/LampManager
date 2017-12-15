@@ -2,7 +2,6 @@ package bl.inventorybl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import util.BillState;
@@ -20,6 +19,7 @@ import vo.InventoryViewVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class MockInventory extends Inventory {
 
 	@Override
@@ -37,7 +37,7 @@ public class MockInventory extends Inventory {
 		item.add(itemVO);
 		HashMap<GoodsVO, Double> total = new HashMap<GoodsVO, Double>();
 		total.put(goodsVO, 2500.0);
-		InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库", item, total);
+		InventoryViewVO ret = new InventoryViewVO(LocalDate.now().toString(), LocalDate.now().toString(), "栖霞区仓库", item, total);
 		return ret;
 	}
 
@@ -46,7 +46,7 @@ public class MockInventory extends Inventory {
 		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
 		HashMap<GoodsVO, Double> averagePrice = new HashMap<GoodsVO, Double>();
 		averagePrice.put(goodsVO, 250.0);
-		InventoryCheckVO ret = new InventoryCheckVO(new Date(), averagePrice);
+		InventoryCheckVO ret = new InventoryCheckVO(LocalDate.now().toString(), averagePrice);
 		return ret;
 	}
 

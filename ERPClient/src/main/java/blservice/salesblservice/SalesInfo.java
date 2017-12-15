@@ -40,4 +40,18 @@ public interface SalesInfo {
 	 * @return
 	 */
 	public ArrayList<SalesVO> getAllSubmittedSales();
+	/**
+	 * 通过时间区间、仓库得到通过的销售单据的商品信息
+	 * @param inventory
+	 * @param type
+	 * @return
+	 */
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate,String endDate,String inventory,BillType type);
+	/**
+	 * 更改库存数据和客户的应收应付数据
+	 * @param vo
+	 * @return
+	 */
+	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo);
+	
 }

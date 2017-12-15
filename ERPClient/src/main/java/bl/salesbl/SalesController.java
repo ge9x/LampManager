@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import blservice.salesblservice.SalesBLService;
 import blservice.salesblservice.SalesInfo;
 import util.BillState;
+import util.BillType;
 import util.Level;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -142,8 +143,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return sales.getAllInventory();
 	}
 
 	@Override
@@ -249,6 +249,25 @@ public class SalesController implements SalesBLService,SalesInfo{
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) {
+		try {
+			return sales.getSalesByDateAndInventory(startDate, endDate, inventory, type);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public ResultMessage alterInventoryAndCustomerBySales(SalesVO vo) {
+		return sales.alterInventoryAndCustomerBySales(vo);
 	}
 	
 	

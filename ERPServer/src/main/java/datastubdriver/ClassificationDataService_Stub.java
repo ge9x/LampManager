@@ -13,6 +13,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class ClassificationDataService_Stub implements ClassificationDataService{
 	ArrayList<ClassificationPO> data;
 	{
