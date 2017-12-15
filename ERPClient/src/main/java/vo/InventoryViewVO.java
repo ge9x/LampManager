@@ -1,7 +1,6 @@
 package vo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -13,11 +12,11 @@ public class InventoryViewVO {
 	/**
 	 * 开始时间点
 	 */
-	public Date startDate;
+	public String startDate;
 	/**
 	 * 截止时间点
 	 */
-	public Date endDate;
+	public String endDate;
 	/**
 	 * 仓库
 	 */
@@ -31,7 +30,7 @@ public class InventoryViewVO {
 	 */
 	public HashMap<GoodsVO, Double> total;
 	
-	public InventoryViewVO(Date startDate, Date endDate, String inventory, ArrayList<InventoryViewItemVO> item,
+	public InventoryViewVO(String startDate, String endDate, String inventory, ArrayList<InventoryViewItemVO> item,
 			HashMap<GoodsVO, Double> total) {
 		super();
 		this.startDate = startDate;

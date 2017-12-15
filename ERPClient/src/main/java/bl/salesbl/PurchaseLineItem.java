@@ -23,10 +23,6 @@ public class PurchaseLineItem {
 		customerInfo=new CustomerController();
 		userInfo=new UserController();
 	}
-    
-    public ResultMessage alterInventory(PurchaseVO vo){
-		return null;
-	}
 	
 	public ResultMessage alterCustomer(PurchaseVO vo){
 		if(vo.type==BillType.PURCHASE){
@@ -46,11 +42,22 @@ public class PurchaseLineItem {
 	}
 
 	public ArrayList<String> getAllInventory() {
-		return null;
+		return inventoryInfo.getAllInventoryName();
 	}
 
 	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
+	}
+	
+	public ResultMessage alterInventoryAndCustomerByPurchase(PurchaseVO vo) {
+		if(vo.type==BillType.PURCHASE){
+			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+		}else{
+			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+		}
+		return ResultMessage.SUCCESS;
 	}
 
 }
