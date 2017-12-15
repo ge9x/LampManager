@@ -69,6 +69,15 @@ public class SalesStaffSalesEditViewController {
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> bargainItemTable;
+    ObservableList<GoodsItemBean> bargainData =
+            FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> giftItemTable;
+    ObservableList<GoodsItemBean> giftData =
+            FXCollections.observableArrayList();
+    
     DoubleProperty total = new SimpleDoubleProperty(0);
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
     
@@ -92,6 +101,12 @@ public class SalesStaffSalesEditViewController {
 
     @FXML
     VBox vbox;
+    
+    @FXML
+    VBox bargainVbox;
+    
+    @FXML
+    VBox giftVbox;
 
     @FXML
     Text Total;
@@ -213,6 +228,18 @@ public class SalesStaffSalesEditViewController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
+        
+        bargainItemTable = new TableView<>();
+        bargainItemTable.setEditable(true);
+        bargainItemTable.setItems(data);
+        bargainItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        bargainVbox.getChildren().add(itemTable);
+        
+        giftItemTable = new TableView<>();
+        giftItemTable.setEditable(true);
+        giftItemTable.setItems(data);
+        giftItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        giftVbox.getChildren().add(itemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
