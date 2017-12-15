@@ -46,8 +46,8 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 		return inventory.check();
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
-		return inventory.exportExcel(vo);
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
+		return inventory.exportExcel(filePath, fileName, vo);
 	}
 
 	public ArrayList<InventoryBillVO> showBills() {
@@ -235,5 +235,27 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 			e.printStackTrace();
 		}
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ResultMessage examine(InventoryBillVO vo) {
+		try {
+			return inventory.examine(vo);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() {
+		try {
+			return inventory.getAllSubmittedInventoryBill();
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

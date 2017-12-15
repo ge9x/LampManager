@@ -51,7 +51,7 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
 		if(vo==null){
 			return null;
 		}
