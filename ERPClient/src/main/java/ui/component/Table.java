@@ -7,9 +7,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
 /**
  * Created by Kry·L on 2017/12/15.
  */
