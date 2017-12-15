@@ -7,29 +7,29 @@
 
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryNavbarController">
     <children>
-        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="99.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
-        <AnchorPane fx:id="ViewNav" layoutY="226.0" onMouseClicked="#clickViewButton" prefHeight="40.0" prefWidth="170.0">
+        <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="63.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
+        <AnchorPane fx:id="ViewNav" layoutY="190.0" onMouseClicked="#clickViewButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="ViewIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="查看库存" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="CheckNav" layoutY="266.0" onMouseClicked="#clickCheckButton" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="CheckNav" layoutY="230.0" onMouseClicked="#clickCheckButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="CheckIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="盘点库存" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="SyncNav" layoutY="306.0" onMouseClicked="#clicSyncButton" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="SyncNav" layoutY="270.0" onMouseClicked="#clicSyncButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="SyncIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="同步库存" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="ClassificationNav" layoutY="346.0" onMouseClicked="#clickClassificationButton" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="ClassificationNav" layoutY="310.0" onMouseClicked="#clickClassificationButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="ClassificationIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
@@ -37,7 +37,7 @@
                 </Label>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="GoodsNav" layoutY="386.0" onMouseClicked="#clickGoodsButton" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="GoodsNav" layoutY="350.0" onMouseClicked="#clickGoodsButton" prefHeight="40.0" prefWidth="170.0">
             <children>
                 <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="GoodsIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
