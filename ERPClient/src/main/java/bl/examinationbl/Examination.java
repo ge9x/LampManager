@@ -8,9 +8,12 @@ import java.util.Comparator;
 import java.util.Date;
 
 import bl.financialbl.FinanceController;
+import bl.inventorybl.Inventory;
+import bl.inventorybl.InventoryController;
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.financeblservice.FinanceInfo;
+import blservice.inventoryblservice.InventoryInfo;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.examinationdataservice.ExaminationDataService;
@@ -32,12 +35,14 @@ public class Examination {
 	FinanceInfo financeInfo;
 	SalesInfo salesInfo;
 	PurchaseInfo purchaseInfo;
+	InventoryInfo inventoryInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
 		financeInfo = new FinanceController();
 		salesInfo = new SalesController();
 		purchaseInfo = new PurchaseController();
+		inventoryInfo = new InventoryController();
 	}
 	
 

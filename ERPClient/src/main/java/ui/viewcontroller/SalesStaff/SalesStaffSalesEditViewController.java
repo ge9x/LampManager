@@ -61,7 +61,6 @@ public class SalesStaffSalesEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -133,7 +132,7 @@ public class SalesStaffSalesEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         customers = salesBLService.getAllCustomer();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
         promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
         promotions.addAll(salesBLService.getFitPromotionTotal(0));
