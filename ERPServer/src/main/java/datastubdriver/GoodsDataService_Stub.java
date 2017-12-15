@@ -13,6 +13,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class GoodsDataService_Stub implements GoodsDataService{
 	ArrayList<GoodsPO> data;
 	

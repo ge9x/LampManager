@@ -11,6 +11,7 @@ import vo.GoodsVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class GoodsBLService_Stub implements GoodsBLService{
 	ArrayList<GoodsVO> data;
 	
