@@ -228,6 +228,12 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 
 	@Override
 	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) {
-		return this.inventory.reduceInventory(goodsItems, inventory);
+		try {
+			return this.inventory.reduceInventory(goodsItems, inventory);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 }

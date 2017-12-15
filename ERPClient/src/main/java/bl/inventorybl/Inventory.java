@@ -1,18 +1,17 @@
 package bl.inventorybl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import bl.goodsbl.Goods;
 import bl.goodsbl.GoodsController;
 import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
-import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
@@ -57,8 +56,15 @@ public class Inventory {
 		return null;
 	}
 
-	public InventoryCheckVO check() { // TODO
-		return null;
+	public InventoryCheckVO check() {
+		LocalDate date = LocalDate.now();
+		ArrayList<GoodsVO> goods = goodsInfo.getAllGoods();
+		HashMap<GoodsVO, Double> averagePrice = new HashMap<>();
+		for(GoodsVO vo : goods){
+			averagePrice.put(vo, vo.buyingPrice);
+		}
+		InventoryCheckVO check = new InventoryCheckVO(date.toString(), averagePrice);
+		return check;
 	}
 
 	public ResultMessage exportExcel(InventoryCheckVO vo) { // TODO
@@ -148,7 +154,20 @@ public class Inventory {
 	}
 
 	public ResultMessage raiseInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
+		return this.changeInventory(goodsItems, inventory, 1);
+	}
 
+	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
+		return this.changeInventory(goodsItems, inventory, -1);
+	}
+
+	/**
+	 * 改变库存（增加或减少）
+	 * 
+	 * @param sign 符号（增加：1，减少：-1）
+	 */
+	private ResultMessage changeInventory(ArrayList<GoodsItemVO> goodsItems, String inventory, int sign)
+			throws RemoteException {
 		for (GoodsItemVO itemVO : goodsItems) {
 			InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 			if (inventoryPO == null) {
@@ -157,7 +176,7 @@ public class Inventory {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
 			for (GoodsPO goods : map.keySet()) {
 				if (goods.buildID().equals(itemVO.ID)) {
-					int number = map.get(goods) + itemVO.number;
+					int number = map.get(goods) + sign * itemVO.number;
 					map.put(goods, number);
 					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
 					if (ret != ResultMessage.SUCCESS) {
@@ -167,11 +186,6 @@ public class Inventory {
 			}
 		}
 		return ResultMessage.SUCCESS;
-	}
-
-	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
