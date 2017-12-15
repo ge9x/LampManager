@@ -46,6 +46,8 @@ public class RemoteHelper {
             Naming.bind("rmi://127.0.0.1:8080/PromotionDataRemoteObject", promotionDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/UserDataRemoteObject", userDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8080/SalesDataRemoteObject", salesDataRemoteObject);
+
+            System.out.println("start successfully");
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
