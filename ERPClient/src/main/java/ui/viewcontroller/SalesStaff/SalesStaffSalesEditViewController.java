@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionTotal;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import blservice.userblservice.UserBLService;
@@ -50,8 +51,12 @@ import util.BillState;
 import util.BillType;
 import util.Level;
 import util.Money;
+import util.PromotionType;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
+import vo.PromotionBargainVO;
+import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
 import vo.PromotionVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
@@ -69,6 +74,15 @@ public class SalesStaffSalesEditViewController {
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> bargainItemTable;
+    ObservableList<GoodsItemBean> bargainData =
+            FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> giftItemTable;
+    ObservableList<GoodsItemBean> giftData =
+            FXCollections.observableArrayList();
+    
     DoubleProperty total = new SimpleDoubleProperty(0);
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
     
@@ -92,6 +106,12 @@ public class SalesStaffSalesEditViewController {
 
     @FXML
     VBox vbox;
+    
+    @FXML
+    VBox bargainVbox;
+    
+    @FXML
+    VBox giftVbox;
 
     @FXML
     Text Total;
@@ -213,6 +233,18 @@ public class SalesStaffSalesEditViewController {
         itemTable.setItems(data);
         itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
         vbox.getChildren().add(itemTable);
+        
+        bargainItemTable = new TableView<>();
+        bargainItemTable.setEditable(false);
+        bargainItemTable.setItems(bargainData);
+        bargainItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        bargainVbox.getChildren().add(bargainItemTable);
+        
+        giftItemTable = new TableView<>();
+        giftItemTable.setEditable(false);
+        giftItemTable.setItems(giftData);
+        giftItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        giftVbox.getChildren().add(giftItemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
@@ -297,6 +329,38 @@ public class SalesStaffSalesEditViewController {
 			}
         	
         });
+        
+        promotion.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int promotionIndex = promotion.getSelectionModel().getSelectedIndex();
+				bargainData.clear();
+				giftData.clear();
+				
+				if(promotions.get(promotionIndex).type==PromotionType.BARGAIN_STRATEGY){
+					PromotionBargainVO promotionBargainVO = (PromotionBargainVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionBargainVO.bargains){
+						bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+				else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
+					PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionCustomerVO.gifts){
+						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+				else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
+					PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
+					for(GoodsItemVO vo:promotionTotalVO.gifts){
+						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					}
+				}
+			}
+
+			
+		});
         
     }
     
@@ -492,8 +556,11 @@ public class SalesStaffSalesEditViewController {
         title.setText("销售单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
+        voucher.setText(String.valueOf(salesBill.voucher));
         voucher.setEditable(false);
+        allowance.setText(String.valueOf(salesBill.allowance));
         allowance.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);

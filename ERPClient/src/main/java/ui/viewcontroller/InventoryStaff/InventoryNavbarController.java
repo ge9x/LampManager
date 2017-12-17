@@ -1,7 +1,12 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 
 /**
@@ -9,6 +14,8 @@ import ui.viewcontroller.FinancialStaff.FinancialViewController;
  */
 public class InventoryNavbarController {
     private InventoryViewController inventoryViewController;
+    private UserInfo userInfo;
+
     @FXML
     Label ViewIcon;
 
@@ -24,15 +31,30 @@ public class InventoryNavbarController {
     @FXML
     Label GoodsIcon;
 
+    @FXML
+    Circle avatar;
+
+    @FXML
+    Label userName;
+
+
+
 
 
     @FXML
     public void initialize() {
+        userInfo = new UserController();
+
         ViewIcon.setText("\ue678");
         CheckIcon.setText("\ue803");
         SyncIcon.setText("\ue603");
         ClassificationIcon.setText("\ue64c");
         GoodsIcon.setText("\ue68d");
+
+        String username = userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
+        userName.setText(username);
+        Image img = new Image("./images/avatar/inventory.jpg");
+        avatar.setFill(new ImagePattern(img));
     }
 
     public void clickViewButton(){
