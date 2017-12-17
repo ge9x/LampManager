@@ -155,8 +155,6 @@ public class SalesStaffSalesEditViewController {
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
-        promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
-        promotions.addAll(salesBLService.getFitPromotionTotal(0));
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
@@ -237,9 +235,9 @@ public class SalesStaffSalesEditViewController {
                 int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+		        promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
-		        initializeCustomerComboBox();
+		        initializePromotionComboBox();
             }
         });
         
@@ -305,9 +303,9 @@ public class SalesStaffSalesEditViewController {
 				int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+		        promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
-		        initializeCustomerComboBox();
+		        initializePromotionComboBox();
 			}
         	
         });
@@ -321,22 +319,24 @@ public class SalesStaffSalesEditViewController {
 				bargainData.clear();
 				giftData.clear();
 				
-				if(promotions.get(promotionIndex).type==PromotionType.BARGAIN_STRATEGY){
-					PromotionBargainVO promotionBargainVO = (PromotionBargainVO)promotions.get(promotionIndex);
-					for(GoodsItemVO vo:promotionBargainVO.bargains){
-						bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+				if(promotionIndex!=-1){
+					if(promotions.get(promotionIndex).type==PromotionType.BARGAIN_STRATEGY){
+						PromotionBargainVO promotionBargainVO = (PromotionBargainVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionBargainVO.bargains){
+							bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
 					}
-				}
-				else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
-					PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
-					for(GoodsItemVO vo:promotionCustomerVO.gifts){
-						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
+						PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionCustomerVO.gifts){
+							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
 					}
-				}
-				else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
-					PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
-					for(GoodsItemVO vo:promotionTotalVO.gifts){
-						giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+					else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
+						PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionTotalVO.gifts){
+							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
 					}
 				}
 			}
@@ -346,7 +346,7 @@ public class SalesStaffSalesEditViewController {
         
     }
     
-    public void initializeCustomerComboBox(){
+    public void initializePromotionComboBox(){
     	//初始化promotion选择框
     	promotion.getItems().clear();
         ArrayList<String> promotionNames = new ArrayList<String>();
