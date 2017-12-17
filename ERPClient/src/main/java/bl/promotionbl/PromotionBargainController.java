@@ -67,22 +67,7 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 
 	@Override
 	public ArrayList<PromotionBargainVO> getFitPromotionBargain() {
-		try {
-			ArrayList<PromotionBargainVO> VOs = show();
-			ArrayList<PromotionBargainVO> result = show();
-			for(PromotionBargainVO vo:VOs){
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-				Date startDate = sd.parse(vo.startDate);
-				Date endDate = sd.parse(vo.endDate);
-				if(new Date().before(startDate)||new Date().after(endDate)){
-					result.remove(vo);
-				}
-			}
-			return result;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return show();
 	}
 
 	@Override
