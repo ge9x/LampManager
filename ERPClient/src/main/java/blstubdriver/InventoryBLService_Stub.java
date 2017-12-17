@@ -111,7 +111,7 @@ public class InventoryBLService_Stub implements InventoryBLService {
 		return ret;
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
 		if (vo == null) {
 			System.out.println("export Excel failed");
 			return ResultMessage.FAILED;
@@ -249,6 +249,11 @@ public class InventoryBLService_Stub implements InventoryBLService {
 
     @Override
     public String getNewBillIDByType(BillType type) {
-        return null;
+    	if(type == BillType.OVERFLOW){
+    		return "BYD-20171215-00001";
+    	}
+    	else{
+    		return null;
+    	}
     }
 }
