@@ -1,7 +1,11 @@
 package dataimpl.promotiondataimpl;
 
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
@@ -122,17 +126,56 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 
 	@Override
 	public ArrayList<PromotionBargainPO> showPB() throws RemoteException {
-		return promotionBargainDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionBargainPO> proList=promotionBargainDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionBargainPO> resList=new ArrayList<>();
+		Date newdate=new Date();
+		try {
+			for(PromotionBargainPO promotionBargainPO:proList){
+				if(newdate.compareTo(stringToDate(promotionBargainPO.getStartDate()))>=0&&newdate.compareTo(stringToDate(promotionBargainPO.getEndDate()))<=0){
+					resList.add(promotionBargainPO);
+				}
+			}
+			return resList;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public ArrayList<PromotionCustomerPO> showPC() throws RemoteException {
-		return promotionCustomerDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionCustomerPO> proList=promotionCustomerDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionCustomerPO> resList=new ArrayList<>();
+		Date newdate=new Date();
+		try {
+			for(PromotionCustomerPO promotionCustomerPO:proList){
+				if(newdate.compareTo(stringToDate(promotionCustomerPO.getStartDate()))>=0&&newdate.compareTo(stringToDate(promotionCustomerPO.getEndDate()))<=0){
+					resList.add(promotionCustomerPO);
+				}
+			}
+			return resList;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public ArrayList<PromotionTotalPO> showPT() throws RemoteException {
-		return promotionTotalDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionTotalPO> proList=promotionTotalDataHelper.multiQuery(new ArrayList<>());
+		ArrayList<PromotionTotalPO> resList=new ArrayList<>();
+		Date newdate=new Date();
+		try {
+			for(PromotionTotalPO promotionTotalPO:proList){
+				if(newdate.compareTo(stringToDate(promotionTotalPO.getStartDate()))>=0&&newdate.compareTo(stringToDate(promotionTotalPO.getEndDate()))<=0){
+					resList.add(promotionTotalPO);
+				}
+			}
+			return resList;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -173,4 +216,9 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 		return goodsItemDataHelper.save(po);
 	}
 
+	 private static Date stringToDate(String date) throws ParseException{
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date time=dateFormat.parse(date);
+			return time;
+		}
 }
