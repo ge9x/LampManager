@@ -45,6 +45,7 @@ import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
+import ui.component.SalesBillTable;
 import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
@@ -175,75 +176,56 @@ public class SalesStaffSalesEditViewController {
         promotion.getItems().addAll(promotionNames);
 
         //初始化表格
+        SalesBillTable ItemTable = new SalesBillTable();
         itemTable = new TableView<>();
         itemTable.setEditable(true);
-
-        TableColumn IDColumn = new TableColumn("商品编号");
-        IDColumn.setPrefWidth(70);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        TableColumn nameColumn = new TableColumn("条目名");
-        nameColumn.setPrefWidth(60);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(60);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn<GoodsItemBean, Integer> amountColumn = new TableColumn("数量");
-        amountColumn.setPrefWidth(60);
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn retailPriceColumn = new TableColumn("单价");
-        retailPriceColumn.setPrefWidth(60);
-        retailPriceColumn.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        TableColumn totalPriceColumn = new TableColumn("总价");
-        totalPriceColumn.setPrefWidth(60);
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        TableColumn<GoodsItemBean, String> remarkColumn = new TableColumn("备注");
-        remarkColumn.setPrefWidth(78);
-        remarkColumn.setCellValueFactory(new PropertyValueFactory<>("remark"));
-
-        amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
-        amountColumn.setOnEditCommit(
-        		(CellEditEvent<GoodsItemBean, Integer> t)->{
-        			((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).setAmount(t.getNewValue());
-        			
-        			((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).setTotalPrice(t.getNewValue() 
-        							* ((GoodsItemBean) t.getTableView().getItems().get(
-        		        					t.getTablePosition().getRow())
-        		        					).getRetailPrice()
-        							);
-        			total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
-        			afterSum.set(afterSum.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
-        		});
-        
-        remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
-        remarkColumn.setOnEditCommit(
-        		(CellEditEvent<GoodsItemBean, String> t)->{
-        			((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).setRemark(t.getNewValue());
-        		});
-        
+        ItemTable.amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
+        ItemTable.amountColumn.setOnEditCommit(
+      	  	  (CellEditEvent<GoodsItemBean, Integer> t)->{
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setAmount(t.getNewValue());
+      			
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setTotalPrice(t.getNewValue() 
+      							  * ((GoodsItemBean) t.getTableView().getItems().get(
+      		        					  t.getTablePosition().getRow())
+      		        					  ).getRetailPrice()
+      							  );
+      			  total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).getTotalPrice());
+      			  afterSum.set(afterSum.get()+((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).getTotalPrice());
+      		  });
+      
+        ItemTable.remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
+        ItemTable.remarkColumn.setOnEditCommit(
+      		  (CellEditEvent<GoodsItemBean, String> t)->{
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setRemark(t.getNewValue());
+      		  });
         itemTable.setItems(data);
-        itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        itemTable.getColumns().addAll(ItemTable.IDColumn, ItemTable.nameColumn, ItemTable.modelColumn, ItemTable.amountColumn, ItemTable.retailPriceColumn, ItemTable.totalPriceColumn, ItemTable.remarkColumn);
         vbox.getChildren().add(itemTable);
         
+        SalesBillTable BargainItemTable = new SalesBillTable();
         bargainItemTable = new TableView<>();
         bargainItemTable.setEditable(false);
         bargainItemTable.setItems(bargainData);
-        bargainItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        bargainItemTable.getColumns().addAll(BargainItemTable.IDColumn, BargainItemTable.nameColumn, BargainItemTable.modelColumn, 
+        		BargainItemTable.amountColumn, BargainItemTable.retailPriceColumn, BargainItemTable.totalPriceColumn, BargainItemTable.remarkColumn);
         bargainVbox.getChildren().add(bargainItemTable);
         
+        SalesBillTable GiftItemTable = new SalesBillTable();
         giftItemTable = new TableView<>();
         giftItemTable.setEditable(false);
         giftItemTable.setItems(giftData);
-        giftItemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        giftItemTable.getColumns().addAll(GiftItemTable.IDColumn, GiftItemTable.nameColumn, GiftItemTable.modelColumn, GiftItemTable.amountColumn
+        		, GiftItemTable.retailPriceColumn, GiftItemTable.totalPriceColumn, GiftItemTable.remarkColumn);
         giftVbox.getChildren().add(giftItemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
@@ -413,61 +395,6 @@ public class SalesStaffSalesEditViewController {
     		bean = result.get();
     	}
     	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
-    	
-//        ArrayList<Label> labels = new ArrayList<>();
-//        labels.add(new Label("商品编号"));
-//        labels.add(new Label("条目名"));
-//        labels.add(new Label("型号"));
-//        labels.add(new Label("数量"));
-//        labels.add(new Label("单价"));
-//        labels.add(new Label("总价"));
-//        labels.add(new Label("备注"));
-//
-//        ArrayList<Node> nodes = new ArrayList<Node>();
-//        TextField IDTF = new TextField();
-//        TextField nameTF = new TextField();
-//        TextField modelTF = new TextField();
-//        TextField amountTF = new TextField();
-//        TextField retailPriceTF = new TextField();
-//        TextField totalPriceTF = new TextField();
-//        TextField remarkTF = new TextField();
-//        nodes.add(IDTF);
-//        nodes.add(nameTF);
-//        nodes.add(modelTF);
-//        nodes.add(amountTF);
-//        nodes.add(retailPriceTF);
-//        nodes.add(totalPriceTF);
-//        nodes.add(remarkTF);
-//
-//        Dialog dialog = DialogFactory.createDialog(labels,nodes);
-//        dialog.setResultConverter(dialogButton -> {
-//            ArrayList<String> result = new ArrayList<>();
-//            result.add(IDTF.getText());
-//            result.add(nameTF.getText());
-//            result.add(modelTF.getText());
-//            result.add(amountTF.getText());
-//            result.add(retailPriceTF.getText());
-//            result.add(totalPriceTF.getText());
-//            result.add(remarkTF.getText());
-//            if (dialogButton == ButtonType.FINISH) {
-//                return result;
-//            }
-//            return null;
-//        });
-//
-//        Optional result = dialog.showAndWait();
-//        if (result.isPresent()){
-//            ArrayList<String> values = (ArrayList<String>)result.get();
-//            Double money = Double.parseDouble(values.get(5));
-//            int amount = Integer.parseInt(values.get(3));
-//            double totalPrice = Double.parseDouble(values.get(5));
-//            GoodsItemVO GoodsItemVO = new GoodsItemVO(values.get(0),values.get(1),values.get(2),amount,money,values.get(6));
-//
-//            goodsItemList.add(GoodsItemVO);
-//            data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
-//            total.set(total.get()+money);
-//            afterSum.set(afterSum.get()+money);
-//        }
     }
 
     public void clickSubmitButton(){
