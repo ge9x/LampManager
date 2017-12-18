@@ -19,6 +19,7 @@ public class FinancialViewController {
     private FinancialSalesDetailsController financialSalesDetailsController;
     private FinancialDocumentDetailsController financialDocumentDetailsController;
     private FinancialProfitController financialProfitController;
+    private FinancialInitController financialInitController;
 
     private MainUIController mainUIController;
 
@@ -151,6 +152,7 @@ public class FinancialViewController {
             e.printStackTrace();
         }
     }
+
     public void showProfitView(){
         mainUIController.setCenter(null);
 
@@ -166,5 +168,22 @@ public class FinancialViewController {
             e.printStackTrace();
         }
     }
+    public void showInitView(){
+        mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/InitAccount.fxml"));
+            Pane page = pageLoader.load();
+
+            financialInitController = pageLoader.getController();
+            financialInitController.setFinancialViewController(this);
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

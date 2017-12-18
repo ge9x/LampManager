@@ -20,7 +20,7 @@ public class InitializationController implements InitializationBLService,InitInf
     }
 
     public InitAccountVO show() {
-        return null;
+        return initialization.show();
     }
 
     @Override

@@ -79,7 +79,7 @@ public class FinancialPaymentEditController {
     Text Total;
 
     @FXML
-    Label title;
+    Label title, deleteIcon;
 
     @FXML
     ComboBox Customer;
@@ -92,6 +92,8 @@ public class FinancialPaymentEditController {
 
     public void initialize(){
         addIcon.setText("\ue61e");
+        deleteIcon.setText("\ue606");
+
         String name = financeBLService.getUserID();
         Username.setText(name);
         accounts = financeBLService2.getAllAccount();
@@ -270,10 +272,12 @@ public class FinancialPaymentEditController {
     public void setForDetailView(AccountBillVO account){
         isNew = false;
         BillID.setText(account.ID);
+        Username.setText(account.userName);
 
         title.setText("付款单详情");
 
         addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
 
         String customerName = financeBLService.getCustomerNameByID(account.customerID);
         Customer.getItems().clear();
@@ -343,7 +347,12 @@ public class FinancialPaymentEditController {
             }
         });
     }
-
+    public void clickDeleteButton(){
+        int index = itemTable.getSelectionModel().getSelectedIndex();
+        total.setValue(total.getValue() - data.get(index).getMoney());
+        data.remove(index);
+        accountBillItems.remove(index);
+    }
     public void isExamine(){
     	isExamine = true;
     }
