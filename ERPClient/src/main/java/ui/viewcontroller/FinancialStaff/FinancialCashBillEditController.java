@@ -60,7 +60,7 @@ public class FinancialCashBillEditController {
     Label addIcon;
 
     @FXML
-    Label BillID;
+    Label BillID, deleteIcon;
 
     @FXML
     Text Username;
@@ -85,6 +85,8 @@ public class FinancialCashBillEditController {
 
     public void initialize(){
         addIcon.setText("\ue61e");
+        deleteIcon.setText("\ue606");
+
         String name = financeBLService.getUserID();
         Username.setText(name);
         accounts = financeBLService.getAllAccount();
@@ -229,8 +231,11 @@ public class FinancialCashBillEditController {
     public void setForDetailView(CashBillVO cashBillVO){
         isNew = false;
         BillID.setText(cashBillVO.ID);
+        Username.setText(cashBillVO.userName);
         title.setText("现金费用单详情");
+
         addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
 
 
         String accountName = "";
@@ -276,6 +281,7 @@ public class FinancialCashBillEditController {
 
     public void setForEditView(){
         addIcon.setVisible(true);
+        deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
 
         Accounts.setEditable(true);
@@ -303,7 +309,12 @@ public class FinancialCashBillEditController {
     public void setGeneralManagerExaminationCellController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
     	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
     }
-
+    public void clickDeleteButton(){
+        int index = itemTable.getSelectionModel().getSelectedIndex();
+        total.setValue(total.getValue() - data.get(index).getMoney());
+        data.remove(index);
+        cashBillItems.remove(index);
+    }
     public void isExamine() {
 		isExamine = true;
 	}

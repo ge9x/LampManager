@@ -174,6 +174,7 @@ public class FinancialReceiptEditController {
         int index = itemTable.getSelectionModel().getSelectedIndex();
         total.setValue(total.get() - data.get(index).getMoney());
         data.remove(index);
+        accountBillItems.remove(index);
     }
 
     public void clickSubmitButton(){
@@ -291,6 +292,7 @@ public class FinancialReceiptEditController {
     public void setForDetailView(AccountBillVO account){
         isNew = false;
         BillID.setText(account.ID);
+        Username.setText(account.userName);
 
         title.setText("收款单详情");
 
