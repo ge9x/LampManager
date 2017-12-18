@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Locale.Category;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import bl.userbl.UserController;
@@ -41,12 +43,16 @@ public class Customer {
 	 */
 	public String getNewCustomerID() throws RemoteException{
 		ArrayList<CustomerPO> cusList=customerDataService.show();
+		if(cusList.size()==0){
+			return "00000001";
+		}else{
 		String res=String.valueOf(cusList.get(cusList.size()-1).getID()+1);
 		int len=res.length();
 		for(int i=0;i<8-len;i++){
 			res="0"+res;
 		}
 		return res;
+		}
 		//return customerDataService.getNewCustomerID();
 	}
       //管理客户的步骤
