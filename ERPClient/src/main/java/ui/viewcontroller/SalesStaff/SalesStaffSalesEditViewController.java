@@ -84,8 +84,16 @@ public class SalesStaffSalesEditViewController {
     ObservableList<GoodsItemBean> giftData =
             FXCollections.observableArrayList();
     
+    //商品原价总额
     DoubleProperty total = new SimpleDoubleProperty(0);
+    //商品原价与特价包总额
+    DoubleProperty bargainAndGoods = new SimpleDoubleProperty(0);
+    //折让与代金券后总额
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
+    //特价包价格
+    DoubleProperty bargainPrice = new SimpleDoubleProperty(0);
+    //折让、代金券、特价包总额
+    DoubleProperty allTotal = new SimpleDoubleProperty(0);
     
     boolean isExamine = false;
     boolean isNew;
@@ -119,6 +127,9 @@ public class SalesStaffSalesEditViewController {
     
     @FXML
     Text beforeSum;
+    
+    @FXML
+    Text bargainPriceText, goodsTotalText;
     
     @FXML
     JFXTextField remark;
@@ -155,6 +166,8 @@ public class SalesStaffSalesEditViewController {
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
+        bargainPriceText.setText(Money.getMoneyString(0));
+        goodsTotalText.setText(Money.getMoneyString(0));
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
@@ -230,7 +243,8 @@ public class SalesStaffSalesEditViewController {
         total.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                beforeSum.setText(Money.getMoneyString(total.get()));
+            	bargainAndGoods.set(bargainPrice.get()+total.get());
+            	goodsTotalText.setText(Money.getMoneyString(total.get()));
                 
                 int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
@@ -247,10 +261,41 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				// TODO Auto-generated method stub
-				Total.setText(Money.getMoneyString(afterSum.get()));
+				allTotal.set(afterSum.get()+bargainPrice.get());
 			}
         	
         });
+        
+        bargainPrice.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				allTotal.set(afterSum.get()+bargainPrice.get());
+				bargainAndGoods.set(total.get()+bargainPrice.get());
+				bargainPriceText.setText(Money.getMoneyString(bargainPrice.get()));
+			}
+        	
+		});
+        
+        allTotal.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				Total.setText(Money.getMoneyString(allTotal.get()));
+			}
+        	
+		});
+        
+        bargainAndGoods.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				beforeSum.setText(Money.getMoneyString(bargainAndGoods.get()));
+			}
+		});
         
         //折让与总额绑定
         allowance.textProperty().addListener(new ChangeListener<String>(){
@@ -325,18 +370,24 @@ public class SalesStaffSalesEditViewController {
 						for(GoodsItemVO vo:promotionBargainVO.bargains){
 							bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
+						bargainPrice.set(promotionBargainVO.bargainTotal);
+						allowance.setText("0");
 					}
 					else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
 						PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
 						for(GoodsItemVO vo:promotionCustomerVO.gifts){
 							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
+						bargainPrice.set(0);
+						allowance.setText(String.valueOf(promotionCustomerVO.allowance));
 					}
 					else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
 						PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
 						for(GoodsItemVO vo:promotionTotalVO.gifts){
 							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
+						bargainPrice.set(0);
+						allowance.setText("0");
 					}
 				}
 			}
