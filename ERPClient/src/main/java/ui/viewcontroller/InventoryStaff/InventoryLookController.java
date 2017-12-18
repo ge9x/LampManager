@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
 import com.jfoenix.controls.JFXComboBox;
@@ -20,6 +21,7 @@ import vo.InventoryViewItemVO;
 import vo.InventoryViewVO;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.xml.transform.Result;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -51,7 +53,7 @@ public class InventoryLookController {
     TilePane tilePane;
 
     @FXML
-    Label AlertIcon;
+    Label AlertIcon, addIcon;
 
     @FXML
     ScrollPane AlarmTablePane;
@@ -72,14 +74,15 @@ public class InventoryLookController {
     @FXML
     public void initialize(){
         AlertIcon.setText("\ue6be");
+        addIcon.setText("\ue61e");
         tilePane.setPrefColumns(2);
 
         getInfos();
-            initAlarmTable();
-            initItemTable();
+        initAlarmTable();
+        initItemTable();
 
-            showAlarmTable();
-            showItemTable();
+        showAlarmTable();
+        showItemTable();
     }
 
     public boolean getInfos(){
@@ -216,7 +219,11 @@ public class InventoryLookController {
     }
     public void clickAddButton(){
         Dialog dialog = DialogFactory.getTextInputDialog();
-        dialog.setHeaderText("");
+        dialog.setHeaderText("请输入新的仓库名称");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            inventoryBLService.addInventory(result.get());
+        }
     }
     public class AlarmBean{
         StringProperty ID;

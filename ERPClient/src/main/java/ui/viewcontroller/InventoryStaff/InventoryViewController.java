@@ -1,6 +1,8 @@
 package ui.viewcontroller.InventoryStaff;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import ui.viewcontroller.common.MainUIController;
 
@@ -19,7 +21,7 @@ public class InventoryViewController {
     InventorySyncController inventorySyncController;
     MainUIController mainUIController;
 
-    public InventoryViewController(MainUIController mainUIController){
+       public InventoryViewController(MainUIController mainUIController){
         this.mainUIController = mainUIController;
 
         try {
