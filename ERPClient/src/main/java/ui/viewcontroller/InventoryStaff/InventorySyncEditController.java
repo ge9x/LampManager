@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import vo.GoodsVO;
@@ -28,16 +29,20 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Optional;
 
+import javax.sound.midi.VoiceStatus;
+
 /**
  * Created by Kry·L on 2017/11/30.
  */
 public class InventorySyncEditController {
 
     InventorySyncController inventorySyncController;
+    GeneralManagerExaminationCellController generalManagerExaminationCellController;
     InventoryBLService inventoryBLService = new InventoryController();
     HashMap<GoodsVO,Integer> goodsItems = new HashMap<>();
     UserInfo userInfo = new UserController();
     Boolean isNew;
+    boolean isExamine = false;
     BillType type;
 
     ObservableList<GoodsBean> data = FXCollections.observableArrayList();
@@ -84,6 +89,7 @@ public class InventorySyncEditController {
     public void addInventoryBill(){
         String ID = inventoryBLService.getNewBillIDByType(type);
         isNew = true;
+        isExamine = false;
         BillID.setText(ID);
     }
     public void initTable(){
@@ -123,6 +129,10 @@ public class InventorySyncEditController {
     public void setInventorySyncController(InventorySyncController inventorySyncController){
         this.inventorySyncController = inventorySyncController;
     }
+    
+    public void setGeneralManagerExaminationCellController (GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
+    }
     public void clickAddButton(){
         GoodsSelecter selecter = new GoodsSelecter();
         Dialog dialog = selecter.getGoodsDialog();
@@ -148,30 +158,45 @@ public class InventorySyncEditController {
         inventorySyncController.showInventoryBills();
     }
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-                String inventory = "";
-                if (Inventory.getSelectionModel().getSelectedIndex() >= 0){
-                    inventory = Inventory.getSelectionModel().getSelectedItem().toString();
-                }
-                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.DRAFT, LocalDate.now().toString(),
-                        inventory,userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
-                        goodsItems);
-
-                if (isNew == true){
-                    inventoryBLService.addBill(vo);
-                }else{
-                    inventoryBLService.updateBill(vo);
-                }
-            }
-
-            inventorySyncController.showInventoryBills();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	                String inventory = "";
+	                if (Inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                    inventory = Inventory.getSelectionModel().getSelectedItem().toString();
+	                }
+	                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.DRAFT, LocalDate.now().toString(),
+	                        inventory,userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
+	                        goodsItems);
+	
+	                if (isNew == true){
+	                    inventoryBLService.addBill(vo);
+	                }else{
+	                    inventoryBLService.updateBill(vo);
+	                }
+	            }
+	
+	            inventorySyncController.showInventoryBills();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
     public void clickDeleteButton(){
         ObservableList<Integer> deleteList = table.getSelectionModel().getSelectedIndices();
@@ -210,11 +235,17 @@ public class InventorySyncEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                inventorySyncController.showInventoryBills();
+            	if(!isExamine){
+            		inventorySyncController.showInventoryBills();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if(vo.state == BillState.DRAFT){
+        if(vo.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -257,5 +288,9 @@ public class InventorySyncEditController {
                 clickCancelButton();
             }
         });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

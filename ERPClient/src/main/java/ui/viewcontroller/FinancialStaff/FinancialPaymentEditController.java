@@ -31,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -47,6 +48,7 @@ import java.util.Optional;
 public class FinancialPaymentEditController {
 
     FinancialPaymentController financialPaymentController;
+    GeneralManagerExaminationCellController generalManagerExaminationCellController;
     FinanceBLService financeBLService2 = new FinanceController();
     FinanceBLService financeBLService = new FinanceBLService_Stub();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
@@ -54,6 +56,7 @@ public class FinancialPaymentEditController {
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
     Boolean isNew;
+    boolean isExamine = false;
 
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
@@ -109,6 +112,7 @@ public class FinancialPaymentEditController {
     public void addPayment() {
         String ID = financeBLService2.getNewPaymentID();
         isNew = true;
+        isExamine = false;
         BillID.setText(ID);
     }
 
@@ -172,30 +176,45 @@ public class FinancialPaymentEditController {
         financialPaymentController.showPaymentList();
     }
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-                String customerID = "";
-                if (Customer.getSelectionModel().getSelectedIndex() >= 0){
-                    customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
-                }
-                AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
-                        BillState.DRAFT, BillType.PAYMENT, customerID,
-                        Username.getText(), accountBillItems);
-
-                if (isNew == true){
-                    financeBLService2.save(accountBillVO);
-                }else{
-                    financeBLService2.updateDraft(accountBillVO);
-                }
-            }
-
-            financialPaymentController.showPaymentList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	                String customerID = "";
+	                if (Customer.getSelectionModel().getSelectedIndex() >= 0){
+	                    customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
+	                }
+	                AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(), BillID.getText(),
+	                        BillState.DRAFT, BillType.PAYMENT, customerID,
+	                        Username.getText(), accountBillItems);
+	
+	                if (isNew == true){
+	                    financeBLService2.save(accountBillVO);
+	                }else{
+	                    financeBLService2.updateDraft(accountBillVO);
+	                }
+	            }
+	
+	            financialPaymentController.showPaymentList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
     public  Dialog getAccountBillItemDialog(){
         JFXComboBox name = new JFXComboBox();
@@ -244,6 +263,10 @@ public class FinancialPaymentEditController {
     public void setFinancialPaymentController(FinancialPaymentController financialPaymentController){
         this.financialPaymentController = financialPaymentController;
     }
+    
+    public void setGeneralManagerExaminationCellController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
+    }
     public void setForDetailView(AccountBillVO account){
         isNew = false;
         BillID.setText(account.ID);
@@ -263,12 +286,18 @@ public class FinancialPaymentEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                financialPaymentController.showPaymentList();
+            	if(!isExamine){
+            		financialPaymentController.showPaymentList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
         //如果是草稿单据，就显示编辑按钮
-        if (account.state == BillState.DRAFT){
+        if (account.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -315,4 +344,8 @@ public class FinancialPaymentEditController {
         });
     }
 
+    public void isExamine(){
+    	isExamine = true;
+    }
+    
 }
