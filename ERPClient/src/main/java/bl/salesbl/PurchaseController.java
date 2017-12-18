@@ -32,7 +32,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	@Override
 	public ResultMessage examine(PurchaseVO vo) {
 		try {
-			return purchase.updatePurchase(vo);
+			return purchase.examine(vo);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return ResultMessage.NULL;
