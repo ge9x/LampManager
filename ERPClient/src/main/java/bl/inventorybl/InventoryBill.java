@@ -144,7 +144,20 @@ public class InventoryBill {
 	}
 
 	public ArrayList<InventoryBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
-		return null; // TODO
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		while(!start.equals(end)){	// TODO Optimize
+			ArrayList<Criterion> criteria = new ArrayList<>();
+			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
+			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+			ArrayList<InventoryBillVO> vos = new ArrayList<>();
+			for(InventoryBillPO po : found){
+				vos.add(this.poToVO(po));
+			}
+			ret.addAll(vos);
+		}
+		return ret;
 	}
 	
 	public ResultMessage examine(InventoryBillVO vo) throws RemoteException{

@@ -15,10 +15,13 @@ import blservice.goodsblservice.GoodsInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
+import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
+import util.Criterion;
+import util.QueryMode;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
@@ -42,7 +45,7 @@ public class Inventory {
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		// salesInfo = new SalesController(); // TODO
+		// salesInfo = new SalesController();
 		goodsInfo = new GoodsController();
 		inventoryBill = new InventoryBill();
 	}
@@ -57,6 +60,19 @@ public class Inventory {
 	}
 
 	public InventoryViewVO show(String startDate, String endDate, String inventory) { // TODO
+//		LocalDate start = LocalDate.parse(startDate);
+//		LocalDate end = LocalDate.parse(endDate);
+//		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+//		while(!start.equals(end)){	// TODO Optimize
+//			ArrayList<Criterion> criteria = new ArrayList<>();
+//			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
+//			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+//			ArrayList<InventoryBillVO> vos = new ArrayList<>();
+//			for(InventoryBillPO po : found){
+//				vos.add(this.poToVO(po));
+//			}
+//			ret.addAll(vos);
+//		}
 		return null;
 	}
 
@@ -71,7 +87,7 @@ public class Inventory {
 		return check;
 	}
 
-	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) { // TODO
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
 		fileName = fileName.split("\\.")[0];
 		ArrayList<InventoryCheckItemVO> items = new ArrayList<>();
 		HashMap<GoodsVO, Double> map = vo.averagePrice;
@@ -194,24 +210,24 @@ public class Inventory {
 	 */
 	private ResultMessage changeInventory(ArrayList<GoodsItemVO> goodsItems, String inventory, int sign)
 			throws RemoteException {
-		for (GoodsItemVO itemVO : goodsItems) {
-			InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
-			if (inventoryPO == null) {
-				return ResultMessage.FAILED;
-			}
-			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
-			for (GoodsPO goods : map.keySet()) {
-				if (goods.buildID().equals(itemVO.ID)) {
-					int number = map.get(goods) + sign * itemVO.number;
-					map.put(goods, number);
-					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
-					if (ret != ResultMessage.SUCCESS) {
-						return ret;
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		System.out.println("changeInventory method is called");
+		if (inventoryPO == null) {
+			return ResultMessage.FAILED;
+		}
+		else{
+			for (GoodsItemVO itemVO : goodsItems) {
+				Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+				for (GoodsPO goods : map.keySet()) {
+					if (goods.buildID().equals(itemVO.ID)) {
+						int number = map.get(goods) + sign * itemVO.number;
+						map.put(goods, number);
 					}
 				}
 			}
+			System.out.println("Here to change Inventory");
+			return inventoryDataService.updateInventory(inventoryPO);
 		}
-		return ResultMessage.SUCCESS;
 	}
 
 }
