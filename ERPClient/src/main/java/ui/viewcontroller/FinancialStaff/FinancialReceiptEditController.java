@@ -178,16 +178,22 @@ public class FinancialReceiptEditController {
     }
 
     public void clickSubmitButton(){
-        String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
+    	String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
-        if (isNew == true){
-            financeBLService2.submit(accountBillVO);
-        }else{
-            financeBLService2.updateDraft(accountBillVO);
-        }
-        financialReceiptController.showReceiptList();
+    	if(!isExamine){
+	        if (isNew == true){
+	            financeBLService2.submit(accountBillVO);
+	        }else{
+	            financeBLService2.updateDraft(accountBillVO);
+	        }
+	        financialReceiptController.showReceiptList();
+    	}
+    	else{
+    		financeBLService2.updateDraft(accountBillVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
     	if(!isExamine){

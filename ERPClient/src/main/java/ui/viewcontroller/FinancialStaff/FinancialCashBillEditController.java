@@ -177,16 +177,22 @@ public class FinancialCashBillEditController {
     }
 
     public void clickSubmitButton(){
-        String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
+    	String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
         CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
-        if (isNew == true){
-            financeBLService.submit(cashBillVO);
-        }else{
-            financeBLService.updateDraft(cashBillVO);
-        }
-        financialCashBillController.showCashBillList();
+    	if(!isExamine){
+	        if (isNew == true){
+	            financeBLService.submit(cashBillVO);
+	        }else{
+	            financeBLService.updateDraft(cashBillVO);
+	        }
+	        financialCashBillController.showCashBillList();
+    	}
+    	else{
+    		financeBLService.updateDraft(cashBillVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
     	if(!isExamine){
