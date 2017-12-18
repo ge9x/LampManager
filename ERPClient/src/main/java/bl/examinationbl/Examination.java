@@ -25,6 +25,7 @@ import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.BillVO;
 import vo.CashBillVO;
+import vo.InventoryBillVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
 
@@ -48,6 +49,7 @@ public class Examination {
 
 	public ArrayList<BillVO> show(){
 		ArrayList<BillVO> bills = new ArrayList<>();
+		bills.addAll(inventoryInfo.getAllSubmittedInventoryBill());
 		bills.addAll(financeInfo.getAllSubmittedCashBills());
 		bills.addAll(financeInfo.getAllSubmittedPayments());
 		bills.addAll(financeInfo.getAllSubmittedReceipts());
@@ -89,6 +91,10 @@ public class Examination {
 		else if(bill.type==BillType.SALES||bill.type==BillType.SALESRETURN){
 			SalesVO salesBill = (SalesVO) bill;
 			salesInfo.examine(salesBill);
+		}
+		else if(bill.type==BillType.LOSS||bill.type==BillType.OVERFLOW){
+			InventoryBillVO inventoryBillVO = (InventoryBillVO) bill;
+			inventoryInfo.examine(inventoryBillVO);
 		}
 		return ResultMessage.SUCCESS;
 	}
