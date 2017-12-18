@@ -166,16 +166,22 @@ public class FinancialPaymentEditController {
     }
 
     public void clickSubmitButton(){
-        String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
+    	String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
                 Username.getText(),accountBillItems);
-        if (isNew == true){
-            financeBLService2.submit(accountBillVO);
-        }else{
-            financeBLService2.updateDraft(accountBillVO);
-        }
-        financialPaymentController.showPaymentList();
+    	if(!isExamine){
+	        if (isNew == true){
+	            financeBLService2.submit(accountBillVO);
+	        }else{
+	            financeBLService2.updateDraft(accountBillVO);
+	        }
+	        financialPaymentController.showPaymentList();
+    	}
+    	else{
+    		financeBLService2.updateDraft(accountBillVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
     	if(!isExamine){

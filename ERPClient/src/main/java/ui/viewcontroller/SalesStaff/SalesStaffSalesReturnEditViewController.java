@@ -216,20 +216,27 @@ public class SalesStaffSalesReturnEditViewController {
     public void clickSubmitButton(){
     	goodsItemList.clear();
     	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+    				bean.getRemark());
     		goodsItemList.add(vo);
     	}
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
         		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
-        if(isNew){
-        	salesBLService.submitSales(salesVO);
-        }
-        else{
-        	salesBLService.updateSales(salesVO);
-        }
-        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	if(!isExamine){
+	        if(isNew){
+	        	salesBLService.submitSales(salesVO);
+	        }
+	        else{
+	        	salesBLService.updateSales(salesVO);
+	        }
+	        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	}
+    	else{
+    		salesBLService.updateSales(salesVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     
     public void clickCancelButton(){

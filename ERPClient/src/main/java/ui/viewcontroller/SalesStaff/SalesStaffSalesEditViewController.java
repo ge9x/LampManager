@@ -451,20 +451,29 @@ public class SalesStaffSalesEditViewController {
     public void clickSubmitButton(){
     	goodsItemList.clear();
     	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+    				bean.getRemark());
     		goodsItemList.add(vo);
     	}
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         PromotionVO promotionVO = promotions.get(promotion.getSelectionModel().getSelectedIndex());
-        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString(), promotionVO.promotionName);
-        if(isNew){
-        	salesBLService.submitSales(salesVO);
-        }
-        else{
-        	salesBLService.updateSales(salesVO);
-        }
-        salesStaffSalesOrderViewController.showSalesOrderList();
+        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), 
+        		Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString(), promotionVO.promotionName);
+    	if(!isExamine){
+	        if(isNew){
+	        	salesBLService.submitSales(salesVO);
+	        }
+	        else{
+	        	salesBLService.updateSales(salesVO);
+	        }
+	        salesStaffSalesOrderViewController.showSalesOrderList();
+    	}
+    	else{
+    		salesBLService.updateSales(salesVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     
     public void clickCancelButton(){

@@ -147,15 +147,21 @@ public class InventorySyncEditController {
 
     }
     public void clickSubmitButton(){
-        InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
+    	InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
                 Inventory.getSelectionModel().getSelectedItem().toString(),userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
                 goodsItems);
-        if (isNew == true){
-            inventoryBLService.submitBill(vo);
-        }else {
-            inventoryBLService.updateBill(vo);
-        }
-        inventorySyncController.showInventoryBills();
+    	if(!isExamine){
+	        if (isNew == true){
+	            inventoryBLService.submitBill(vo);
+	        }else {
+	            inventoryBLService.updateBill(vo);
+	        }
+	        inventorySyncController.showInventoryBills();
+    	}
+    	else{
+    		inventoryBLService.updateBill(vo);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
     	if(!isExamine){
