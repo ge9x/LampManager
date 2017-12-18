@@ -40,8 +40,7 @@ import java.util.Optional;
  */
 public class FinancialCashBillEditController {
     FinancialCashBillController financialCashBillController;
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
-    FinanceBLService financeBLService2 = new FinanceController();
+    FinanceBLService financeBLService = new FinanceController();
 
     ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
@@ -83,7 +82,7 @@ public class FinancialCashBillEditController {
         addIcon.setText("\ue61e");
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService2.getAllAccount();
+        accounts = financeBLService.getAllAccount();
 
         initAccountCombobox();
         initTable();
@@ -126,7 +125,7 @@ public class FinancialCashBillEditController {
         vbox.getChildren().add(itemTable);
     }
     public void addCashBill() {
-        String ID = financeBLService2.getNewCashBillID();
+        String ID = financeBLService.getNewCashBillID();
         isNew = true;
         BillID.setText(ID);
     }
@@ -175,9 +174,9 @@ public class FinancialCashBillEditController {
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
         if (isNew == true){
-            financeBLService2.submit(cashBillVO);
+            financeBLService.submit(cashBillVO);
         }else{
-            financeBLService2.updateDraft(cashBillVO);
+            financeBLService.updateDraft(cashBillVO);
         }
         financialCashBillController.showCashBillList();
     }
@@ -197,9 +196,9 @@ public class FinancialCashBillEditController {
                         , cashBillItems,total.get());
 
                 if (isNew == true){
-                    financeBLService2.save(cashBillVO);
+                    financeBLService.save(cashBillVO);
                 }else{
-                    financeBLService2.updateDraft(cashBillVO);
+                    financeBLService.updateDraft(cashBillVO);
                 }
             }
 
@@ -215,7 +214,7 @@ public class FinancialCashBillEditController {
 
         String accountName = "";
         if (!cashBillVO.accountID.equals("0")){
-            accountName = financeBLService2.getAccountNameByID(cashBillVO.accountID);
+            accountName = financeBLService.getAccountNameByID(cashBillVO.accountID);
         }
         Accounts.getItems().clear();
         Accounts.getItems().add(accountName);
