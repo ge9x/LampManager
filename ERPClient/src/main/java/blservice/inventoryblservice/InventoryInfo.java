@@ -59,10 +59,10 @@ public interface InventoryInfo {
 	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory);
 
 	/**
-	 * 审批通过的单据要发挥作用
+	 * 审批通过的单据要对库存产生影响
 	 * 
 	 * @param vo 审批通过的库存报溢单或库存报损单
-	 * @return 是否成功对库存发挥作用
+	 * @return 是否成功对库存产生影响
 	 */
 	public ResultMessage examine(InventoryBillVO vo);
 

@@ -19,8 +19,6 @@ import util.BillType;
 import util.Criterion;
 import util.QueryMode;
 import util.ResultMessage;
-import vo.AccountBillItemVO;
-import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -163,8 +161,14 @@ public class InventoryBill {
 	}
 
 	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException{
-		
-		return null;
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		criteria.add(new Criterion("state", BillState.SUBMITTED, QueryMode.FULL));
+		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		for(InventoryBillPO po : pos){
+			ret.add(this.poToVO(po));
+		}
+		return ret;
 	}
 
 	private InventoryBillVO poToVO(InventoryBillPO po) {
@@ -245,26 +249,21 @@ public class InventoryBill {
 	
 	private ResultMessage changeInventory(HashMap<GoodsVO, Integer> goodsMap, String inventory, int sign)throws RemoteException{
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
-		for (GoodsVO goodsVO : goodsMap.keySet()) {
-			if (inventoryPO == null) {
-				return ResultMessage.FAILED;
-			}
-			else{
-				GoodsPO goodsPO = goodsInfo.getGoodsByID(goodsVO.ID);
-//				HashMap<InventoryPO, Integer> goodsMap = goodsPO.getNumber();
-			}
-//			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
-//			for (GoodsPO goods : map.keySet()) {
-//				if (goods.buildID().equals(itemVO.ID)) {
-//					int number = map.get(goods) + sign * itemVO.number;
-//					map.put(goods, number);
-//					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
-//					if (ret != ResultMessage.SUCCESS) {
-//						return ret;
-//					}
-//				}
-//			}
+		if (inventoryPO == null) {
+			return ResultMessage.FAILED;
 		}
-		return ResultMessage.SUCCESS;
+		else{
+			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+			for(GoodsVO vo : goodsMap.keySet()){
+				for(GoodsPO po : map.keySet()){
+					if(vo.ID.equals(po.buildID())){
+						map.put(po, map.get(po) + sign * goodsMap.get(vo));
+						inventoryPO.setNumber(map);
+						break;
+					}
+				}
+			}
+			return inventoryDataService.updateInventory(inventoryPO);
+		}
 	}
 }

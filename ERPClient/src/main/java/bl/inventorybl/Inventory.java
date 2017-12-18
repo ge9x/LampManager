@@ -1,6 +1,5 @@
 package bl.inventorybl;
 
-import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
