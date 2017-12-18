@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
@@ -109,6 +110,7 @@ public class MainUIController {
     }
     public void close(){
         primaryStage.close();
+        System.exit(0);
     }
     public void setCenter(Node node){
         borderPane.setCenter(node);

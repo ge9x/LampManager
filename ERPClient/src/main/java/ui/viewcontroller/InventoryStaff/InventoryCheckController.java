@@ -68,7 +68,7 @@ public class  InventoryCheckController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
         File f = fileChooser.showSaveDialog(new Stage());
 
-        ResultMessage re = inventoryBLService.exportExcel("","",inventoryCheck);
+        ResultMessage re = inventoryBLService.exportExcel(f.getParent(),f.getName(),inventoryCheck);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
             alert.setHeaderText("导出成功");
@@ -87,6 +87,7 @@ public class  InventoryCheckController {
             totalValue += good.amount * avg;
             avgValue += avg;
         }
+        avgValue /= inventoryCheck.averagePrice.keySet().size();
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
