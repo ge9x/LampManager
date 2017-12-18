@@ -162,7 +162,7 @@ public class InventoryBill {
 
 	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException{
 		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", BillState.SUBMITTED, QueryMode.FULL));
+		criteria.add(new Criterion("state", BillState.SUBMITTED, QueryMode.FULL));
 		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
 		for(InventoryBillPO po : pos){
@@ -253,19 +253,17 @@ public class InventoryBill {
 			return ResultMessage.FAILED;
 		}
 		else{
-			// TODO
-//			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
-//			for (GoodsPO goods : map.keySet()) {
-//				if (goods.buildID().equals(itemVO.ID)) {
-//					int number = map.get(goods) + sign * itemVO.number;
-//					map.put(goods, number);
-//					ResultMessage ret = inventoryDataService.updateInventory(inventoryPO);
-//					if (ret != ResultMessage.SUCCESS) {
-//						return ret;
-//					}
-//				}
-//			}
-			return ResultMessage.SUCCESS;
+			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+			for(GoodsVO vo : goodsMap.keySet()){
+				for(GoodsPO po : map.keySet()){
+					if(vo.ID.equals(po.buildID())){
+						map.put(po, map.get(po) + sign * goodsMap.get(vo));
+						inventoryPO.setNumber(map);
+						break;
+					}
+				}
+			}
+			return inventoryDataService.updateInventory(inventoryPO);
 		}
 	}
 }
