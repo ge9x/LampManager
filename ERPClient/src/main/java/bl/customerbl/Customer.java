@@ -124,9 +124,6 @@ public class Customer {
 	 * @throws RemoteException 
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo) throws RemoteException{
-		if(vo.receivableLimit!=customerDataService.getCustomerData(Integer.valueOf(vo.customerID)).getReceivableLimit()){
-			return ResultMessage.FAILED;
-		}else{
 			CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(vo.customerID));
 			po.setCategory(vo.category.getValue());
 			po.setLevel(vo.level.getValue());
@@ -136,8 +133,8 @@ public class Customer {
 			po.setPostCode(vo.postCode);
 			po.setMail(vo.mail);
 			po.setSalesman(vo.salesman);
+			po.setReceivableLimit(vo.receivableLimit);
 		    return customerDataService.update(po);
-		}
 	}
 	
 	public ArrayList<CustomerVO> show() throws RemoteException {
