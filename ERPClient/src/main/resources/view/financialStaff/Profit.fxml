@@ -76,15 +76,15 @@
                               <Label prefWidth="80.0" text="代金券收入" />
                            </children>
                            <padding>
-                              <Insets left="50.0" />
+                              <Insets left="49.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="37.0" layoutY="85.0" prefHeight="32.0" prefWidth="670.0" spacing="50.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="37.0" layoutY="85.0" prefHeight="32.0" prefWidth="670.0" spacing="5.0">
                            <children>
-                              <Label fx:id="SalesIncome" prefWidth="50.0" text="销售收入" />
-                              <Label fx:id="OverflowIncome" prefWidth="80.0" text="商品报溢收入" />
-                              <Label fx:id="CostAdjIncome" prefHeight="15.0" prefWidth="88.0" text="成本调价收入" />
-                              <Label fx:id="BuyAndReturnIncome" prefWidth="80.0" text="进货退货差价" />
+                              <Label fx:id="SalesIncome" prefHeight="15.0" prefWidth="97.0" text="销售收入" />
+                              <Label fx:id="OverflowIncome" prefHeight="15.0" prefWidth="124.0" text="商品报溢收入" />
+                              <Label fx:id="CostAdjIncome" prefHeight="15.0" prefWidth="134.0" text="成本调价收入" />
+                              <Label fx:id="BuyAndReturnIncome" prefHeight="15.0" prefWidth="125.0" text="进货退货差价" />
                               <Label fx:id="VoucherIncome" prefWidth="80.0" text="代金券收入" />
                            </children>
                            <padding>
@@ -113,10 +113,10 @@
                               <Insets left="50.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="42.0" layoutY="88.0" prefHeight="32.0" prefWidth="670.0" spacing="50.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="42.0" layoutY="88.0" prefHeight="32.0" prefWidth="670.0" spacing="5.0">
                            <children>
-                              <Label fx:id="SalesExpense" prefWidth="60.0" text="销售成本" />
-                              <Label fx:id="LossExpense" prefWidth="90.0" text="商品报损支出" />
+                              <Label fx:id="SalesExpense" prefHeight="15.0" prefWidth="104.0" text="销售成本" />
+                              <Label fx:id="LossExpense" prefHeight="15.0" prefWidth="135.0" text="商品报损支出" />
                               <Label fx:id="GiftExpense" prefHeight="15.0" prefWidth="88.0" text="商品赠送支出" />
                            </children>
                            <padding>
@@ -145,12 +145,12 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="Profit" layoutX="577.0" layoutY="21.0" text="利润：">
+                        <Label fx:id="Profit" layoutX="577.0" layoutY="21.0" text="利润：" textFill="#eb2323">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="Allowance" layoutX="267.0" layoutY="21.0" text="折让：">
+                        <Label fx:id="Allowance" layoutX="254.0" layoutY="21.0" text="折让：">
                            <font>
                               <Font size="16.0" />
                            </font>

@@ -105,7 +105,7 @@ public class Profit {
         handlePurchaseBills();
         totalIncome = salesIncome + overflowIncome + buyAndReturnIncome + voucherIncome - allowance;
         totalExpense = salescost + lossExpense + giftExpense;
-        profit = totalIncome = totalExpense;
+        profit = totalIncome - totalExpense;
         return new ProfitVO(startDate, endDate, salesIncome, overflowIncome,
                 0,buyAndReturnIncome,voucherIncome,totalIncome,
                 allowance,salescost,lossExpense,giftExpense,totalExpense,profit);

@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.formbl.FormController;
 import blservice.formblservice.FormBLService;
 import blstubdriver.FormBLService_Stub;
 import com.jfoenix.controls.JFXDatePicker;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ui.component.DialogFactory;
+import util.Money;
 import util.ResultMessage;
 import vo.ProfitVO;
 
@@ -31,7 +33,7 @@ import java.util.Date;
  */
 public class FinancialProfitController {
     FinancialViewController financialViewController;
-    FormBLService formBLService = new FormBLService_Stub();
+    FormBLService formBLService = new FormController();
     ProfitVO profitVO;
     ObservableList<Double> data = FXCollections.observableArrayList();
 
@@ -106,18 +108,18 @@ public class FinancialProfitController {
     }
     public void showData(){
         if (!data.isEmpty()){
-            SalesIncome.setText(data.get(0).toString());
-            OverflowIncome.setText(data.get(1).toString());
-            CostAdjIncome.setText(data.get(2).toString());
-            BuyAndReturnIncome.setText(data.get(3).toString());
-            VoucherIncome.setText(data.get(4).toString());
-            TotalIncome.setText(data.get(5).toString());
-            Allowance.setText(data.get(6).toString());
-            SalesExpense.setText(data.get(7).toString());
-            LossExpense.setText(data.get(8).toString());
-            GiftExpense.setText(data.get(9).toString());
-            TotalExpense.setText(data.get(10).toString());
-            Profit.setText(data.get(11).toString());
+            SalesIncome.setText(Money.getMoneyString(data.get(0)));
+            OverflowIncome.setText(Money.getMoneyString(data.get(1)));
+            CostAdjIncome.setText(Money.getMoneyString(data.get(2)));
+            BuyAndReturnIncome.setText(Money.getMoneyString(data.get(3)));
+            VoucherIncome.setText(Money.getMoneyString(data.get(4)));
+            TotalIncome.setText("总收入: "+Money.getMoneyString(data.get(5)));
+            Allowance.setText("折让: "+Money.getMoneyString(data.get(6)));
+            SalesExpense.setText(Money.getMoneyString(data.get(7)));
+            LossExpense.setText(Money.getMoneyString(data.get(8)));
+            GiftExpense.setText(Money.getMoneyString(data.get(9)));
+            TotalExpense.setText("总支出: "+Money.getMoneyString(data.get(10)));
+            Profit.setText("利润: " + Money.getMoneyString(data.get(11)));
         }
     }
     public void showProfit(){
