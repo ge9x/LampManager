@@ -41,6 +41,11 @@ public class PromotionCustomer extends Promotion{
 		return promotionDataService.getNewPromotionCustomerID();
 	}
 	
+	public PromotionCustomerVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionCustomerVO promotionCustomerVO = poTOvo(promotionDataService.findPCByName(promotionName));
+		return promotionCustomerVO;
+	}
+	
 	public void addGift(GoodsItemVO vo){
 		
 	}

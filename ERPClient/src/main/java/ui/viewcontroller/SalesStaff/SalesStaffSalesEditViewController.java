@@ -457,10 +457,21 @@ public class SalesStaffSalesEditViewController {
     	}
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PromotionVO promotionVO = promotions.get(promotion.getSelectionModel().getSelectedIndex());
+        double allowancePrice = 0;
+        double voucherPrice = 0;
+        String promotionName = "";
+        if(allowance.getText().length()>0){
+        	allowancePrice = Double.parseDouble(allowance.getText());
+        }
+        if(voucher.getText().length()>0){
+        	voucherPrice = Double.parseDouble(voucher.getText());
+        }
+        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
+        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
+        }
         SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), 
-        		Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString(), promotionVO.promotionName);
+        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
+        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
     	if(!isExamine){
 	        if(isNew){
 	        	salesBLService.submitSales(salesVO);
@@ -554,7 +565,12 @@ public class SalesStaffSalesEditViewController {
         inventory.setDisable(true);
         customer.getSelectionModel().select(salesBill.customer);
         customer.setDisable(true);
-        promotion.getSelectionModel().select(salesBill.promotionName);
+        if(!salesBill.promotionName.equals("")){
+        	promotion.getSelectionModel().select(salesBill.promotionName);
+        }
+        else{
+        	promotion.getSelectionModel().clearSelection();
+        }
         promotion.setDisable(true);
         Username.setText(salesBill.user);
         
@@ -584,6 +600,7 @@ public class SalesStaffSalesEditViewController {
         }else{
             submitButton.setVisible(false);
         }
+        
         for (GoodsItemVO goodsItemVO:salesBill.goodsItemList){
             goodsItemList.add(goodsItemVO);
             data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 

@@ -136,4 +136,16 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 		return promotionCustomer.getCurrentUserName();
 	}
 
+	@Override
+	public PromotionCustomerVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionCustomer.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

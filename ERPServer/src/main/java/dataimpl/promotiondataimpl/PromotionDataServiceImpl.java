@@ -221,4 +221,19 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 			Date time=dateFormat.parse(date);
 			return time;
 		}
+
+	@Override
+	public PromotionCustomerPO findPCByName(String name) throws RemoteException {
+		return promotionCustomerDataHelper.exactlyQuery("promotionName", name);
+	}
+
+	@Override
+	public PromotionBargainPO findPBByName(String name) throws RemoteException {
+		return promotionBargainDataHelper.exactlyQuery("promotionName", name);
+	}
+
+	@Override
+	public PromotionTotalPO findPTByName(String name) throws RemoteException {
+		return promotionTotalDataHelper.exactlyQuery("promotionName", name);
+	}
 }

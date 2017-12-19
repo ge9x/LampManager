@@ -106,4 +106,10 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		return "";
 	}
 
+	@Override
+	public PromotionCustomerVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
