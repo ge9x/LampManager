@@ -180,4 +180,34 @@ public class PromotionDataService_Stub implements PromotionDataService{
 		return ResultMessage.SUCCESS;
 	}
 
+	@Override
+	public PromotionCustomerPO findPCByName(String name) throws RemoteException {
+		for(PromotionCustomerPO po:PCList){
+			if(po.getPromotionName().equals(name)){
+				return po;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public PromotionBargainPO findPBByName(String name) throws RemoteException {
+		for(PromotionBargainPO po:PBList){
+			if(po.getPromotionName().equals(name)){
+				return po;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public PromotionTotalPO findPTByName(String name) throws RemoteException {
+		for(PromotionTotalPO po:PTList){
+			if(po.getPromotionName().equals(name)){
+				return po;
+			}
+		}
+		return null;
+	}
+
 }
