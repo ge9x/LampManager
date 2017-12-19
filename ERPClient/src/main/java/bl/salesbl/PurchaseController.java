@@ -255,4 +255,19 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 			return null;
 		}
 	}
+
+	@Override
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return null;
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return null;
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return null;
+	}
 }
