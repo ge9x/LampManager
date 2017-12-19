@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
+import java.util.function.DoubleToLongFunction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -560,6 +561,12 @@ public class SalesStaffSalesEditViewController {
         voucher.setEditable(false);
         allowance.setText(String.valueOf(salesBill.allowance));
         allowance.setEditable(false);
+        total.set(0);
+        bargainAndGoods.set(0);
+        afterSum.set(0);
+        bargainPrice.set(0);
+        allTotal.set(0);
+        itemTable.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);
         inventory.setDisable(true);
@@ -601,12 +608,43 @@ public class SalesStaffSalesEditViewController {
             submitButton.setVisible(false);
         }
         
+        goodsItemList.clear();
+        data.clear();
         for (GoodsItemVO goodsItemVO:salesBill.goodsItemList){
             goodsItemList.add(goodsItemVO);
             data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
             		goodsItemVO.sum, goodsItemVO.remarks));
             total.set(total.get() + goodsItemVO.sum);
         }
+        
+        bargainData.clear();
+        giftData.clear();
+        if(!salesBill.promotionName.equals("")){
+        	if(salesBLService.findPromotionBargainByName(salesBill.promotionName)!=null){
+        		PromotionBargainVO promotionBargainVO = salesBLService.findPromotionBargainByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionBargainVO.bargains){
+                    bargainData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        		bargainPrice.set(promotionBargainVO.bargainTotal);
+        	}
+        	else if(salesBLService.findPromotionCustomerByName(salesBill.promotionName)!=null){
+        		PromotionCustomerVO promotionCustomerVO = salesBLService.findPromotionCustomerByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionCustomerVO.gifts){
+                    giftData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        	}
+        	else if(salesBLService.findPromotionTotalByName(salesBill.promotionName)!=null){
+        		PromotionTotalVO promotionTotalVO = salesBLService.findPromotionTotalByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionTotalVO.gifts){
+                    giftData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        	}
+        }
+        
+        afterSum.set(total.get()-Double.parseDouble(voucher.getText())-Double.parseDouble(allowance.getText()));
     }
     
     public void setForEditView(){
@@ -619,6 +657,7 @@ public class SalesStaffSalesEditViewController {
         inventory.setDisable(false);
         customer.setDisable(false);
         promotion.setDisable(false);
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
