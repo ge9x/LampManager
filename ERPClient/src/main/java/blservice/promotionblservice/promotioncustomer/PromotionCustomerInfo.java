@@ -9,4 +9,5 @@ public interface PromotionCustomerInfo {
 
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level);
 	
+	public PromotionCustomerVO findPromotionByName(String promotionName);
 }
