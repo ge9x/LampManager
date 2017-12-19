@@ -264,6 +264,21 @@ public class SalesController implements SalesBLService,SalesInfo{
 			return null;
 		}
 	}
+
+	@Override
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return sales.findPromotionCustomerByName(name);
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return sales.findPromotionBargainByName(name);
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return sales.findPromotionTotalByName(name);
+	}
 	
 	
 }
