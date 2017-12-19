@@ -23,6 +23,14 @@ public interface PromotionDataService extends Remote{
      */
 	public PromotionCustomerPO findPC(String ID) throws RemoteException;
 	/**
+	 * 按促销策略名字进行查找返回相应的PromotionCustomerPO结果
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public PromotionCustomerPO findPCByName(String name) throws RemoteException;
+	/**
 	 * 按促销策略ID进行查找返回相应的PromotionBargainPO结果
 	 * 
 	 * @param ID
@@ -31,6 +39,14 @@ public interface PromotionDataService extends Remote{
 	 */
 	public PromotionBargainPO findPB(String ID) throws RemoteException;
 	/**
+	 * 按促销策略名字进行查找返回相应的PromotionBargainPO结果
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public PromotionBargainPO findPBByName(String name) throws RemoteException;
+	/**
 	 * 按促销策略ID进行查找返回相应的PromotionTotalPO结果
 	 * 
 	 * @param ID
@@ -38,6 +54,14 @@ public interface PromotionDataService extends Remote{
 	 * @throws RemoteException
 	 */
 	public PromotionTotalPO findPT(String ID) throws RemoteException;
+	/**
+	 * 按促销策略名字进行查找返回相应的PromotionTotalPO结果
+	 * 
+	 * @param name
+	 * @return
+	 * @throws RemoteException
+	 */
+	public PromotionTotalPO findPTByName(String name) throws RemoteException;
 	/**
 	 * 添加会员促销策略
 	 * 
@@ -159,4 +183,5 @@ public interface PromotionDataService extends Remote{
      * @throws RemoteException
      */
     public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException;
+  
 }

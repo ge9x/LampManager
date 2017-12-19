@@ -131,4 +131,22 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 		return promotionDataService.addGoodsItem(po);
 	}
 
+	@Override
+	public PromotionCustomerPO findPCByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPCByName(name);
+	}
+
+	@Override
+	public PromotionBargainPO findPBByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPBByName(name);
+	}
+
+	@Override
+	public PromotionTotalPO findPTByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPTByName(name);
+	}
+
 }
