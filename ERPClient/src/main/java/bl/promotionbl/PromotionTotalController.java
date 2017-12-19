@@ -127,4 +127,16 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 		return promotionTotal.getCurrentUserName();
 	}
 
+	@Override
+	public PromotionTotalVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionTotal.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

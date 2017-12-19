@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.loader.custom.EntityFetchReturn;
+
 import bl.financialbl.AccountBillItem;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
@@ -42,6 +44,11 @@ public class PromotionBargain extends Promotion{
 	
 	public String getNewPromotionBargainID() throws RemoteException{
 		return promotionDataService.getNewPromotionBargainID();
+	}
+	
+	public PromotionBargainVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionBargainVO promotionBargainVO = poTOvo(promotionDataService.findPBByName(promotionName));
+		return promotionBargainVO;
 	}
 	
 	public void addBargain(GoodsItemVO vo){

@@ -111,6 +111,18 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 		// TODO Auto-generated method stub
 		return promotionBargain.getCurrentUserName();
 	}
+
+	@Override
+	public PromotionBargainVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionBargain.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 
