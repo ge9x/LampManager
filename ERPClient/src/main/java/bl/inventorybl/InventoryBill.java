@@ -147,7 +147,7 @@ public class InventoryBill {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		while(!start.equals(end)){	// TODO Optimize
+		do{	// TODO Optimize
 			ArrayList<Criterion> criteria = new ArrayList<>();
 			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
 			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
@@ -156,7 +156,8 @@ public class InventoryBill {
 				vos.add(this.poToVO(po));
 			}
 			ret.addAll(vos);
-		}
+			start = start.plusDays(1);
+		}while(!start.isAfter(end));
 		return ret;
 	}
 	
