@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Created by Kry·L on 2017/11/25.
@@ -120,6 +121,9 @@ public class FinancialProfitController {
             GiftExpense.setText(Money.getMoneyString(data.get(9)));
             TotalExpense.setText("总支出: "+Money.getMoneyString(data.get(10)));
             Profit.setText("利润: " + Money.getMoneyString(data.get(11)));
+
+            profitVO = new ProfitVO(StartDate.getValue().toString(),EndDate.getValue().toString(),data.get(0),data.get(1),data.get(2),
+                    data.get(3),data.get(4),data.get(5),data.get(6),data.get(7),data.get(8),data.get(9),data.get(10),data.get(11));
         }
     }
     public void showProfit(){
@@ -137,13 +141,15 @@ public class FinancialProfitController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
         File f = fileChooser.showSaveDialog(new Stage());
 
-        ArrayList<ProfitVO> profitVOS = new ArrayList<>();
-        profitVOS.add(profitVO);
-        ResultMessage re = formBLService.exportProfit(f.getParent(),f.getName(), profitVOS);
-        if (re == ResultMessage.SUCCESS){
-            Dialog alert = DialogFactory.getInformationAlert();
-            alert.setHeaderText("导出成功");
-            alert.show();
+        if (f != null) {
+            ArrayList<ProfitVO> profitVOS = new ArrayList<>();
+            profitVOS.add(profitVO);
+            ResultMessage re = formBLService.exportProfit(f.getParent(), f.getName(), profitVOS);
+            if (re == ResultMessage.SUCCESS) {
+                Dialog alert = DialogFactory.getInformationAlert();
+                alert.setHeaderText("导出成功");
+                alert.show();
+            }
         }
     }
     public void setFinancialViewController(FinancialViewController financialViewController){

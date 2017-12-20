@@ -5,10 +5,16 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
 import bl.inventorybl.InventoryController;
+import bl.promotionbl.*;
+import bl.salesbl.GoodsItem;
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.promotionblservice.PromotionInfo;
+import blservice.promotionblservice.promotionTotal.PromotionTotalInfo;
+import blservice.promotionblservice.promotionbargain.PromotionBargainInfo;
+import blservice.promotionblservice.promotioncustomer.PromotionCustomerInfo;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import util.BillType;
@@ -65,6 +71,8 @@ public class Profit {
     PurchaseInfo purchaseInfo;
     InventoryInfo inventoryInfo;
     GoodsInfo goodsInfo;
+    PromotionTotalInfo promotionTotalInfo;
+    PromotionCustomerInfo promotionCustomerInfo;
     ArrayList<SalesVO> salesVOS;
     ArrayList<InventoryBillVO> inventoryBillVOS;
     ArrayList<PurchaseVO> purchaseVOS;
@@ -78,6 +86,8 @@ public class Profit {
         inventoryInfo = new InventoryController();
         goodsInfo = new GoodsController();
         purchaseInfo = new PurchaseController();
+        promotionTotalInfo = new PromotionTotalController();
+        promotionCustomerInfo = new PromotionCustomerController();
 
         salesVOS = new ArrayList<>();
         inventoryBillVOS = new ArrayList<>();
@@ -131,6 +141,21 @@ public class Profit {
                 if (salesVO.voucher > salesVO.beforeSum) {
                     voucherIncome += (salesVO.voucher - salesVO.beforeSum);
                 }
+                String promotionName = salesVO.promotionName;
+                PromotionTotalVO totalVO = promotionTotalInfo.findPromotionByName(promotionName);
+                PromotionCustomerVO customerVO = promotionCustomerInfo.findPromotionByName(promotionName);
+                ArrayList<GoodsItemVO> items = null;
+                if (totalVO != null){
+                    items = totalVO.gifts;
+                }
+                if (customerVO != null){
+                   items = customerVO.gifts;
+                }
+                if (items != null){
+                    for (GoodsItemVO itemVO : items){
+                        giftExpense += itemVO.sum;
+                    }
+                }
             }
         }
     }
@@ -144,10 +169,6 @@ public class Profit {
             } else if (inventoryBillVO.type == BillType.LOSS) {
                 for (GoodsVO goodsVO : inventoryBillVO.goodsMap.keySet()) {
                     lossExpense += goodsVO.recentBuyingPrice;
-                }
-            } else if (inventoryBillVO.type == BillType.GIFT) {
-                for (GoodsVO goodsVO : inventoryBillVO.goodsMap.keySet()) {
-                    giftExpense += goodsVO.recentRetailPrice;
                 }
             }
         }
