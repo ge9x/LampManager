@@ -32,7 +32,6 @@ public class InventoryViewVO {
 	
 	public InventoryViewVO(String startDate, String endDate, String inventory, ArrayList<InventoryViewItemVO> item,
 			HashMap<GoodsVO, Double> total) {
-		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.inventory = inventory;

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bl.goodsbl.Goods;
-import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
@@ -32,9 +31,9 @@ public class InventoryBill {
 	private InventoryDataService inventoryDataService;
 	private GoodsInfo goodsInfo;
 
-	public InventoryBill() {
+	public InventoryBill(GoodsInfo goodsInfo) {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		goodsInfo = new GoodsController();
+		this.goodsInfo = goodsInfo;
 	}
 
 	/**
@@ -269,14 +268,20 @@ public class InventoryBill {
 		else{
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
 			for(GoodsVO vo : goodsMap.keySet()){
+				boolean isExistent = false;
 				for(GoodsPO po : map.keySet()){
 					if(vo.ID.equals(po.buildID())){
 						map.put(po, map.get(po) + sign * goodsMap.get(vo));
-						inventoryPO.setNumber(map);
+						isExistent = true;
 						break;
 					}
 				}
+				if(!isExistent){	// 如果本来仓库里没有这种商品
+					GoodsPO goodsPO = goodsInfo.getGoodsByID(vo.ID);
+					map.put(goodsPO, goodsMap.get(vo));
+				}
 			}
+			inventoryPO.setNumber(map);
 			return inventoryDataService.updateInventory(inventoryPO);
 		}
 	}
