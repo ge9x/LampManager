@@ -71,4 +71,16 @@ public class SalesLineItem {
 		return inventoryInfo.getAllInventoryName();
 	}
 	
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return promotionCustomerInfo.findPromotionByName(name);
+	}
+	
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return promotionBargainInfo.findPromotionByName(name);
+	}
+	
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return promotionTotalInfo.findPromotionByName(name);
+	}
+	
 }

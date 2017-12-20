@@ -322,7 +322,25 @@ public class SalesBLService_Stub implements SalesBLService{
 	@Override
 	public ResultMessage updateSales(SalesVO vo) {
 		// TODO Auto-generated method stub
-		return null;
+		return ResultMessage.SUCCESS;
+	}
+
+	@Override
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		PromotionCustomerVO promotion1 = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
+		return promotion1;
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		PromotionBargainVO promotion1 = new PromotionBargainVO("特价包策略1","000001", 1000, 900, LocalDate.now().toString(), LocalDate.now().toString(), goodsItemList);
+		return promotion1;
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		PromotionTotalVO promotion1 = new PromotionTotalVO("总价促销策略1","000005", LocalDate.now().toString(), LocalDate.now().toString(), 500, new ArrayList<GoodsItemVO>(), 10000);
+		return promotion1;
 	}
 
 	

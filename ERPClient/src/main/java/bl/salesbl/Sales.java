@@ -303,5 +303,15 @@ public class Sales {
 		return salesLineItem.getAllInventory();
 	}
 	
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return salesLineItem.findPromotionCustomerByName(name);
+	}
 	
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return salesLineItem.findPromotionBargainByName(name);
+	}
+	
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return salesLineItem.findPromotionTotalByName(name);
+	}
 }
