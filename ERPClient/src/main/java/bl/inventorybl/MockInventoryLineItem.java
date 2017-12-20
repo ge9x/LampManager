@@ -1,6 +1,5 @@
 package bl.inventorybl;
 
-import blservice.salesblservice.SalesInfo;
 import util.InventoryListItemType;
 
 /**
@@ -10,9 +9,9 @@ import util.InventoryListItemType;
  */
 public class MockInventoryLineItem extends InventoryLineItem {
 
-	public MockInventoryLineItem(SalesInfo salesInfo, InventoryListItemType inventoryListItemType, String goodsName,
+	public MockInventoryLineItem(InventoryListItemType inventoryListItemType, String goodsName,
 			int numberDifference, int totalPrice){
-		super(salesInfo, inventoryListItemType, goodsName, numberDifference, totalPrice);
+		super(inventoryListItemType, goodsName, numberDifference, totalPrice);
 	}
 
 }
