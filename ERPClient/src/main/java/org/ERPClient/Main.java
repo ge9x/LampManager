@@ -54,7 +54,7 @@ public class Main extends Application {
 
     private void linkToServer() {
         try {
-            network = new Network("127.0.0.1",8080);
+            network = new Network("127.0.0.1",8000);
             network.initNetwork();
             System.out.println("linked");
         } catch (MalformedURLException e) {
