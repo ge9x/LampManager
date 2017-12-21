@@ -9,16 +9,22 @@ import util.InventoryListItemType;
  *
  */
 public class InventoryLineItem {
+	String date;
 	String goodsID;
-	InventoryListItemType inventoryListItemType;
 	String goodsName;
+	String goodsModel;
+	InventoryListItemType inventoryListItemType;
 	int numberDifference;
-	int totalPrice;
-
-	public InventoryLineItem(InventoryListItemType inventoryListItemType, String goodsName, int numberDifference,
-			int totalPrice) {
-		this.inventoryListItemType = inventoryListItemType;
+	double totalPrice;
+	
+	public InventoryLineItem(String date, String goodsID, String goodsName, String goodsModel,
+			InventoryListItemType inventoryListItemType, int numberDifference, double totalPrice) {
+		super();
+		this.date = date;
+		this.goodsID = goodsID;
 		this.goodsName = goodsName;
+		this.goodsModel = goodsModel;
+		this.inventoryListItemType = inventoryListItemType;
 		this.numberDifference = numberDifference;
 		this.totalPrice = totalPrice;
 	}
