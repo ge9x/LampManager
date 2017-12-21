@@ -54,7 +54,8 @@ public class Inventory {
 	}
 
 	public InventoryViewVO show(String startDate, String endDate, String inventory){
-		return inventoryList.show(startDate, endDate, inventory);
+		ArrayList<InventoryBillVO> inventoryBillVOs = inventoryBill.getPassBillsByDateAndInventory(startDate, endDate, inventory);
+		return inventoryList.show(startDate, endDate, inventory, inventoryBillVOs);
 	}
 
 	public InventoryCheckVO check() {

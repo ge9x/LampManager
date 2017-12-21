@@ -160,6 +160,19 @@ public class InventoryBill {
 		return ret;
 	}
 	
+	/**
+	 * 通过日期和仓库得到已通过(PASS)的库存报溢单和库存报损单
+	 * @param startDate 开始日期
+	 * @param endDate 结束日期
+	 * @param inventory 仓库名
+	 * @return 查找到的单据VO的集合
+	 */
+	public ArrayList<InventoryBillVO> getPassBillsByDateAndInventory(String startDate, String endDate, String inventory){
+		ArrayList<InventoryBillVO> ret = new ArrayList<>();
+		// TODO
+		return ret;
+	}
+	
 	public ResultMessage examine(InventoryBillVO vo) throws RemoteException{
         ResultMessage ret = this.update(vo);
         if (vo.state == BillState.PASS){
