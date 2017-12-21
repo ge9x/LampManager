@@ -11,6 +11,7 @@ import util.BillType;
 import util.InventoryListItemType;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
+import vo.InventoryBillVO;
 import vo.InventoryViewItemVO;
 import vo.InventoryViewVO;
 import vo.PurchaseVO;
@@ -31,7 +32,8 @@ public class InventoryList {
 		inventoryLineItems = new ArrayList<InventoryLineItem>();
 	}
 
-	public InventoryViewVO show(String startDate, String endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory,
+			ArrayList<InventoryBillVO> inventoryBillVOs) {
 		// 初始化
 		if (salesInfo == null) {
 			salesInfo = new SalesController();
@@ -62,6 +64,21 @@ public class InventoryList {
 		for (PurchaseVO vo : purchaseReturnVOs) {
 			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.IN);
 		}
+		for (InventoryBillVO vo : inventoryBillVOs) {
+			InventoryListItemType type = null;
+			switch (vo.type) {
+			case OVERFLOW:
+				type = InventoryListItemType.IN;
+				break;
+			case LOSS:
+				type = InventoryListItemType.OUT;
+				break;
+			default:
+				System.out.println("InventoryList.show:不应出现的单据类型：" + vo.type.getValue());
+				break;
+			}
+			this.addAll(vo.date, vo.goodsMap, type);
+		}
 		HashMap<GoodsVO, Double> total = new HashMap<>();
 		ArrayList<InventoryViewItemVO> viewItemVOs = new ArrayList<>();
 		for (InventoryLineItem lineItem : inventoryLineItems) {
@@ -87,6 +104,14 @@ public class InventoryList {
 		for (GoodsItemVO itemVO : goodsItemList) {
 			InventoryLineItem item = new InventoryLineItem(date, itemVO.ID, itemVO.goodsName, itemVO.model,
 					inventoryListItemType, itemVO.number, itemVO.sum);
+			inventoryLineItems.add(item);
+		}
+	}
+
+	private void addAll(String date, HashMap<GoodsVO, Integer> goodsMap, InventoryListItemType inventoryListItemType) {
+		for (GoodsVO goodsVO : goodsMap.keySet()) {
+			InventoryLineItem item = new InventoryLineItem(date, goodsVO.ID, goodsVO.name, goodsVO.model,
+					inventoryListItemType, goodsMap.get(goodsVO), goodsVO.buyingPrice * goodsMap.get(goodsVO));
 			inventoryLineItems.add(item);
 		}
 	}
