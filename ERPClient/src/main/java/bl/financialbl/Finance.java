@@ -141,7 +141,7 @@ public class Finance{
         return cashBill.getCashBillByState(state);
     }
 
-    public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) {
+    public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) throws RemoteException {
         return accountBill.getBillsByDate(startDate,endDate);
     }
 }

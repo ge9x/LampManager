@@ -222,7 +222,12 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
 
     @Override
     public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) {
-        return finance.getAccountBillsByDate(startDate, endDate);
+        try {
+            return finance.getAccountBillsByDate(startDate, endDate);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
