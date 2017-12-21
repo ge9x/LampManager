@@ -88,12 +88,8 @@ public class InventoryLookController {
 
         showAlarmTable();
         showItemTable();
-        showSummary();
     }
 
-    public void showSummary(){
-
-    }
     public boolean getInfos(){
         inventories = inventoryBLService.showInventory();
 
@@ -182,15 +178,24 @@ public class InventoryLookController {
         ArrayList<InventoryViewItemVO> items = inventoryViewVO.item;
         for (InventoryViewItemVO item : items){
             if (item.type == InventoryListItemType.IN){
-                inventoryItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"I",item.amount,item.price));
+                inventoryItemTable.addRow(new ItemBean(item.date,item.goods.name,"I",item.amount,item.price));
+                stringAdd(inNum,item.amount);
+                stringAdd(inMoney,item.price);
             }else if (item.type == InventoryListItemType.OUT){
-                inventoryItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"O",item.amount,item.price));
+                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                stringAdd(outNum,item.amount);
+                stringAdd(outMoney,item.price);
             }else if (item.type == InventoryListItemType.PURCHASE){
-                salesItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"I",item.amount,item.price));
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
+                stringAdd(purNum,item.amount);
+                stringAdd(purMoney,item.price);
             }else if (item.type == InventoryListItemType.SALES){
-                salesItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"O",item.amount,item.price));
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                stringAdd(salNum,item.amount);
+                stringAdd(salMoney,item.price);
             }
         }
+
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
@@ -206,7 +211,9 @@ public class InventoryLookController {
 
 
 
-    private double stringAdd(String label, double a){
-        return Double.parseDouble(label) + a;
+    private void stringAdd(Label label, double a){
+        if (label.getText() == "")
+            label.setText("0.00");
+        label.setText((Double.parseDouble(label.getText()) + a)+"");
     }
 }
