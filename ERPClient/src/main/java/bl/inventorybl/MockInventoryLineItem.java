@@ -9,9 +9,9 @@ import util.InventoryListItemType;
  */
 public class MockInventoryLineItem extends InventoryLineItem {
 
-	public MockInventoryLineItem(InventoryListItemType inventoryListItemType, String goodsName,
-			int numberDifference, int totalPrice){
-		super(inventoryListItemType, goodsName, numberDifference, totalPrice);
+	public MockInventoryLineItem(String date, String goodsID, String goodsName, String goodsModel, InventoryListItemType inventoryListItemType,
+			int numberDifference, double totalPrice){
+		super(date, goodsID, goodsName, goodsModel, inventoryListItemType, numberDifference, totalPrice);
 	}
 
 }
