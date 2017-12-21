@@ -39,7 +39,13 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 	}
 
 	public InventoryViewVO show(String startDate, String endDate, String inventory) {
-		return this.inventory.show(startDate, endDate, inventory);
+		try {
+			return this.inventory.show(startDate, endDate, inventory);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public InventoryCheckVO check() {

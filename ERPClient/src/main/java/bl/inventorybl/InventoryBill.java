@@ -166,10 +166,29 @@ public class InventoryBill {
 	 * @param endDate 结束日期
 	 * @param inventory 仓库名
 	 * @return 查找到的单据VO的集合
+	 * @throws RemoteException 
 	 */
-	public ArrayList<InventoryBillVO> getPassBillsByDateAndInventory(String startDate, String endDate, String inventory){
+	public ArrayList<InventoryBillVO> getPassBillsByDateAndInventory(String startDate, String endDate, InventoryPO inventory) throws RemoteException{
+		LocalDate start = LocalDate.parse(startDate);
+		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		// TODO
+		do{	// TODO Optimize
+			ArrayList<Criterion> criteria = new ArrayList<>();
+			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
+			criteria.add(new Criterion("inventory", inventory, QueryMode.FULL));
+			criteria.add(new Criterion("state", BillState.PASS, QueryMode.FULL));
+			criteria.add(
+					new Criterion(
+							new Criterion("type", BillType.OVERFLOW, QueryMode.FULL),
+							new Criterion("type", BillType.LOSS, QueryMode.FULL)));
+			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
+			ArrayList<InventoryBillVO> vos = new ArrayList<>();
+			for(InventoryBillPO po : found){
+				vos.add(this.poToVO(po));
+			}
+			ret.addAll(vos);
+			start = start.plusDays(1);
+		}while(!start.isAfter(end));
 		return ret;
 	}
 	

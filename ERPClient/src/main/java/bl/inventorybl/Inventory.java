@@ -53,8 +53,10 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(String startDate, String endDate, String inventory){
-		ArrayList<InventoryBillVO> inventoryBillVOs = inventoryBill.getPassBillsByDateAndInventory(startDate, endDate, inventory);
+	public InventoryViewVO show(String startDate, String endDate, String inventory) throws RemoteException {
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		ArrayList<InventoryBillVO> inventoryBillVOs = inventoryBill.getPassBillsByDateAndInventory(startDate, endDate,
+				inventoryPO);
 		return inventoryList.show(startDate, endDate, inventory, inventoryBillVOs);
 	}
 
@@ -115,7 +117,7 @@ public class Inventory {
 	}
 
 	public ResultMessage deleteInventory(String inventory) throws RemoteException {
-		InventoryPO found = this.getInventoryByName(inventory);
+		InventoryPO found = inventoryDataService.findInventoryByName(inventory);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -129,7 +131,7 @@ public class Inventory {
 	}
 
 	public ResultMessage updateInventory(String before, String after) throws RemoteException {
-		InventoryPO found = this.getInventoryByName(before);
+		InventoryPO found = inventoryDataService.findInventoryByName(before);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -197,7 +199,7 @@ public class Inventory {
 		if (inventoryPO == null) {
 			return ResultMessage.FAILED;
 		}
-		else{
+		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
 			for (GoodsItemVO itemVO : goodsItems) {
 				boolean isExistent = false;
@@ -208,7 +210,7 @@ public class Inventory {
 						break;
 					}
 				}
-				if(!isExistent){	// 如果本来仓库里没有这种商品
+				if (!isExistent) { // 如果本来仓库里没有这种商品
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
 					map.put(goodsPO, itemVO.number);
 				}
