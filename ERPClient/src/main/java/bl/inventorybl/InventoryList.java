@@ -17,54 +17,77 @@ import vo.PurchaseVO;
 import vo.SalesVO;
 
 /**
- * 库存变动情况的清单
- * Created on 2017/11/5
+ * 库存变动情况的清单 Created on 2017/11/5
+ * 
  * @author 巽
  *
  */
 public class InventoryList {
-	private ArrayList<InventoryLineItem> inventoryLineItem;
+	private ArrayList<InventoryLineItem> inventoryLineItems;
 	private SalesInfo salesInfo;
 	private PurchaseInfo purchaseInfo;
-	
-	public InventoryList(){
-		inventoryLineItem = new ArrayList<InventoryLineItem>();
+
+	public InventoryList() {
+		inventoryLineItems = new ArrayList<InventoryLineItem>();
 	}
-	
-	public InventoryViewVO show(String startDate, String endDate, String inventory){
+
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		// 初始化
-		if(salesInfo == null){
+		if (salesInfo == null) {
 			salesInfo = new SalesController();
 		}
-		if(purchaseInfo == null){
+		if (purchaseInfo == null) {
 			purchaseInfo = new PurchaseController();
 		}
-		inventoryLineItem.clear();
+		inventoryLineItems.clear();
 		// 获取数据
-		ArrayList<SalesVO> salesVOs = salesInfo.getSalesByDateAndInventory(startDate, endDate, inventory, BillType.SALES);
-		ArrayList<SalesVO> salesReturnVOs = salesInfo.getSalesByDateAndInventory(startDate, endDate, inventory, BillType.SALESRETURN);
-		ArrayList<PurchaseVO> purchaseVOs = purchaseInfo.getPurchaseByDateAndInventory(startDate, endDate, inventory, BillType.PURCHASE);
-		ArrayList<PurchaseVO> purchaseReturnVOs = purchaseInfo.getPurchaseByDateAndInventory(startDate, endDate, inventory, BillType.RETURN);
+		ArrayList<SalesVO> salesVOs = salesInfo.getSalesByDateAndInventory(startDate, endDate, inventory,
+				BillType.SALES);
+		ArrayList<SalesVO> salesReturnVOs = salesInfo.getSalesByDateAndInventory(startDate, endDate, inventory,
+				BillType.SALESRETURN);
+		ArrayList<PurchaseVO> purchaseVOs = purchaseInfo.getPurchaseByDateAndInventory(startDate, endDate, inventory,
+				BillType.PURCHASE);
+		ArrayList<PurchaseVO> purchaseReturnVOs = purchaseInfo.getPurchaseByDateAndInventory(startDate, endDate,
+				inventory, BillType.RETURN);
 		// 处理
-		for(SalesVO vo : salesVOs){
-			this.addAll(vo.goodsItemList, InventoryListItemType.SALES);
+		for (SalesVO vo : salesVOs) {
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.SALES);
 		}
-		for(SalesVO vo : salesReturnVOs){
-			this.addAll(vo.goodsItemList, InventoryListItemType.SALES);
+		for (SalesVO vo : salesReturnVOs) {
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.OUT);
 		}
-		for(PurchaseVO vo : purchaseVOs){
-			this.addAll(vo.goodsItemList, InventoryListItemType.SALES);
+		for (PurchaseVO vo : purchaseVOs) {
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.PURCHASE);
 		}
-		for(PurchaseVO vo : purchaseReturnVOs){
-			this.addAll(vo.goodsItemList, InventoryListItemType.SALES);
+		for (PurchaseVO vo : purchaseReturnVOs) {
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.IN);
 		}
-		ArrayList<InventoryViewItemVO> item = new ArrayList<>();
 		HashMap<GoodsVO, Double> total = new HashMap<>();
-		InventoryViewVO ret = new InventoryViewVO(startDate, endDate, inventory, item, total);
+		ArrayList<InventoryViewItemVO> viewItemVOs = new ArrayList<>();
+		for (InventoryLineItem lineItem : inventoryLineItems) {
+			GoodsVO goodsVO = new GoodsVO(lineItem.goodsID);
+			goodsVO.name = lineItem.goodsName;
+			goodsVO.model = goodsVO.model;
+			InventoryViewItemVO viewItemVO = new InventoryViewItemVO(lineItem.date, goodsVO,
+					lineItem.inventoryListItemType, lineItem.numberDifference, lineItem.totalPrice);
+			viewItemVOs.add(viewItemVO);
+			if (total.containsKey(goodsVO)) {
+				total.put(goodsVO, total.get(goodsVO) + lineItem.totalPrice);
+			}
+			else {
+				total.put(goodsVO, lineItem.totalPrice);
+			}
+		}
+		InventoryViewVO ret = new InventoryViewVO(startDate, endDate, inventory, viewItemVOs, total);
 		return ret;
 	}
-	
-	private void addAll(ArrayList<GoodsItemVO> goodsItemList, InventoryListItemType inventoryListItemType){
-		
+
+	private void addAll(String date, ArrayList<GoodsItemVO> goodsItemList,
+			InventoryListItemType inventoryListItemType) {
+		for (GoodsItemVO itemVO : goodsItemList) {
+			InventoryLineItem item = new InventoryLineItem(date, itemVO.ID, itemVO.goodsName, itemVO.model,
+					inventoryListItemType, itemVO.number, itemVO.sum);
+			inventoryLineItems.add(item);
+		}
 	}
 }
