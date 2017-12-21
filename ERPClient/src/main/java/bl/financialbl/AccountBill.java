@@ -18,6 +18,7 @@ import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -157,5 +158,22 @@ public class AccountBill {
         }
         AccountBillVO accountBillVO = new AccountBillVO(po.getDate(), po.buildID(), po.getState(), po.getType(), String.valueOf(po.getCustomerID()), po.getUserName(), accountBillItemVOS);
         return accountBillVO;
+    }
+
+    public ArrayList<AccountBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        if (accountBillPOS == null || accountBillPOS.isEmpty()) {
+            accountBillPOS = financeDataService.getAllAccountBills();
+        }
+        for (AccountBillPO po : accountBillPOS) {
+            LocalDate billDate = LocalDate.parse(po.getDate());
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            if (billDate.isBefore(end) && billDate.isAfter(start)) {
+                accountBillVOS.add(poTovo(po));
+            }
+        }
+        return accountBillVOS;
     }
 }

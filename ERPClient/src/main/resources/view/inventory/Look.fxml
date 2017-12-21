@@ -93,12 +93,12 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0">
                            <children>
-                              <Label text="入库数量" />
-                              <Label text="出库数量" />
-                              <Label text="入库金额" />
-                              <Label text="出库金额" />
-                              <Label text="出入数量合计" />
-                              <Label text="出入金额合计" />
+                              <Label fx:id="inNum" text="入库数量" />
+                              <Label fx:id="outNum" text="出库数量" />
+                              <Label fx:id="inMoney" text="入库金额" />
+                              <Label fx:id="outMoney" text="出库金额" />
+                              <Label fx:id="inoutNumTotal" text="出入数量合计" />
+                              <Label fx:id="inoutMoneyTotal" text="出入金额合计" />
                            </children>
                            <padding>
                               <Insets left="60.0" />
@@ -119,12 +119,12 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="724.0" spacing="50.0">
                            <children>
-                              <Label text="进货数量" />
-                              <Label text="销售数量" />
-                              <Label text="进货金额" />
-                              <Label text="销售金额" />
-                              <Label text="进货数量合计" />
-                              <Label text="销售金额合计" />
+                              <Label fx:id="purNum" text="进货数量" />
+                              <Label fx:id="salNum" text="销售数量" />
+                              <Label fx:id="purMoney" text="进货金额" />
+                              <Label fx:id="salMoney" text="销售金额" />
+                              <Label fx:id="pursalNumTotal" text="进货数量合计" />
+                              <Label fx:id="pursalMoneyTotal" text="销售金额合计" />
                            </children>
                            <padding>
                               <Insets left="60.0" />
