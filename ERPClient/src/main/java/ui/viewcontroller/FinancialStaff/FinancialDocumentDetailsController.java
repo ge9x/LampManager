@@ -51,7 +51,7 @@ public class FinancialDocumentDetailsController {
     VBox vBox;
     @FXML
     public void initialize(){
-        input = new DocumentDetailsInput("2017-2-2","2017-10-22",null,null,null);
+        input = new DocumentDetailsInput("2017-02-02","2017-10-22",null,null,null);
         billPane = new BillPane("全部","库存报溢单","库存报损单","库存赠送单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
