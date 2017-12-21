@@ -146,71 +146,72 @@ public class InventoryBill {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		do{	// TODO Optimize
+		do { // TODO Optimize
 			ArrayList<Criterion> criteria = new ArrayList<>();
 			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
 			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
 			ArrayList<InventoryBillVO> vos = new ArrayList<>();
-			for(InventoryBillPO po : found){
+			for (InventoryBillPO po : found) {
 				vos.add(this.poToVO(po));
 			}
 			ret.addAll(vos);
 			start = start.plusDays(1);
-		}while(!start.isAfter(end));
+		} while (!start.isAfter(end));
 		return ret;
 	}
-	
+
 	/**
 	 * 通过日期和仓库得到已通过(PASS)的库存报溢单和库存报损单
+	 * 
 	 * @param startDate 开始日期
 	 * @param endDate 结束日期
 	 * @param inventory 仓库名
 	 * @return 查找到的单据VO的集合
-	 * @throws RemoteException 
+	 * @throws RemoteException
 	 */
-	public ArrayList<InventoryBillVO> getPassBillsByDateAndInventory(String startDate, String endDate, InventoryPO inventory) throws RemoteException{
+	public ArrayList<InventoryBillVO> getPassBillsByDateAndInventory(String startDate, String endDate,
+			InventoryPO inventory) throws RemoteException {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		do{	// TODO Optimize
+		do { // TODO Optimize
 			ArrayList<Criterion> criteria = new ArrayList<>();
 			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
 			criteria.add(new Criterion("inventory", inventory, QueryMode.FULL));
 			criteria.add(new Criterion("state", BillState.PASS, QueryMode.FULL));
-			criteria.add(
-					new Criterion(
-							new Criterion("type", BillType.OVERFLOW, QueryMode.FULL),
-							new Criterion("type", BillType.LOSS, QueryMode.FULL)));
+			criteria.add(new Criterion(new Criterion("type", BillType.OVERFLOW, QueryMode.FULL),
+					new Criterion("type", BillType.LOSS, QueryMode.FULL)));
 			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
 			ArrayList<InventoryBillVO> vos = new ArrayList<>();
-			for(InventoryBillPO po : found){
+			for (InventoryBillPO po : found) {
 				vos.add(this.poToVO(po));
 			}
 			ret.addAll(vos);
 			start = start.plusDays(1);
-		}while(!start.isAfter(end));
+		} while (!start.isAfter(end));
 		return ret;
 	}
-	
-	public ResultMessage examine(InventoryBillVO vo) throws RemoteException{
-        ResultMessage ret = this.update(vo);
-        if (vo.state == BillState.PASS){
-        	HashMap<GoodsVO, Integer> goodsMap = vo.goodsMap;
-            if (vo.type == BillType.OVERFLOW){
-            	this.changeInventory(goodsMap, vo.inventory, 1);
-            }else{	// BillType = LOSS
-            	this.changeInventory(goodsMap, vo.inventory, -1);
-            }
-        }
-        return ret;
+
+	public ResultMessage examine(InventoryBillVO vo) throws RemoteException {
+		ResultMessage ret = this.update(vo);
+		if (vo.state == BillState.PASS) {
+			HashMap<GoodsVO, Integer> goodsMap = vo.goodsMap;
+			if (vo.type == BillType.OVERFLOW) {
+				this.changeInventory(goodsMap, vo.inventory, 1);
+			}
+			else { // BillType = LOSS
+				this.changeInventory(goodsMap, vo.inventory, -1);
+			}
+		}
+		return ret;
 	}
 
-	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException{
+	public ArrayList<InventoryBillVO> getAllSubmittedBill() throws RemoteException {
 		ArrayList<Criterion> criteria = new ArrayList<>();
 		criteria.add(new Criterion("state", BillState.SUBMITTED, QueryMode.FULL));
 		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		for(InventoryBillPO po : pos){
+		for (InventoryBillPO po : pos) {
 			ret.add(this.poToVO(po));
 		}
 		return ret;
@@ -291,24 +292,25 @@ public class InventoryBill {
 			return found.get(0);
 		}
 	}
-	
-	private ResultMessage changeInventory(HashMap<GoodsVO, Integer> goodsMap, String inventory, int sign)throws RemoteException{
+
+	private ResultMessage changeInventory(HashMap<GoodsVO, Integer> goodsMap, String inventory, int sign)
+			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		if (inventoryPO == null) {
 			return ResultMessage.FAILED;
 		}
-		else{
+		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
-			for(GoodsVO vo : goodsMap.keySet()){
+			for (GoodsVO vo : goodsMap.keySet()) {
 				boolean isExistent = false;
-				for(GoodsPO po : map.keySet()){
-					if(vo.ID.equals(po.buildID())){
+				for (GoodsPO po : map.keySet()) {
+					if (vo.ID.equals(po.buildID())) {
 						map.put(po, map.get(po) + sign * goodsMap.get(vo));
 						isExistent = true;
 						break;
 					}
 				}
-				if(!isExistent){	// 如果本来仓库里没有这种商品
+				if (!isExistent) { // 如果本来仓库里没有这种商品
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(vo.ID);
 					map.put(goodsPO, goodsMap.get(vo));
 				}
