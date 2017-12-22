@@ -56,10 +56,10 @@ public class InitGoodsPO implements Serializable {
 	/**
 	 * 商品所属分类
 	 */
-	private InitClassificationPO initClassificationPO;
+	private String classificationName;
 	
 	public InitGoodsPO(int iD, String name, String model, double buyingPrice,
-			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber,InitClassificationPO initClassificationPO) {
+			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber,String classificationName) {
 		super();
 		ID = iD;
 		this.name = name;
@@ -69,7 +69,7 @@ public class InitGoodsPO implements Serializable {
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 		this.goodsNumber = goodsNumber;
-		this.initClassificationPO=initClassificationPO;
+		this.classificationName=classificationName;
 	}
 	@Id
 	@Column(name = "id")
@@ -128,13 +128,13 @@ public class InitGoodsPO implements Serializable {
 	public void setGoodsNumber(int goodsNumber) {
 		this.goodsNumber = goodsNumber;
 	}
-	@ManyToOne
-	@JoinColumn(name = "initclassification")
-	public InitClassificationPO getInitClassificationPO() {
-		return initClassificationPO;
+	@Column(name="classificationName")
+	public String getClassificationName() {
+		return classificationName;
 	}
-	public void setInitClassificationPO(InitClassificationPO initClassificationPO) {
-		this.initClassificationPO = initClassificationPO;
+	public void setClassificationName(String classificationName) {
+		this.classificationName = classificationName;
 	}
+	
 	
 }
