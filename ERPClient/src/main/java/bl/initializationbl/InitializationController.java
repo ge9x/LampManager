@@ -5,6 +5,7 @@ import blservice.initializationblservice.InitializationBLService;
 import po.InitAccountPO;
 import util.ResultMessage;
 import vo.InitAccountVO;
+import vo.InitializationVO;
 
 /**
  * Created by Kry·L on 2017/11/5.
@@ -15,16 +16,20 @@ public class InitializationController implements InitializationBLService,InitInf
     public InitializationController(){
         initialization = new Initialization();
     }
-    public InitAccountVO init() {
-        return null;
+    public ResultMessage init(InitializationVO vo) {
+        return initialization.init(vo);
     }
 
-    public InitAccountVO show() {
-        return initialization.show();
+    public InitializationVO show(String date) {
+        return initialization.show(date);
     }
 
     @Override
     public String getStartDate() {
-        return "2017-01-01";
+        if (initialization.getRecentInitDate() == null){
+            return "2017-01-01";
+        }
+        else
+            return initialization.getRecentInitDate();
     }
 }
