@@ -232,6 +232,12 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
 
     @Override
     public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) {
-        return null;
+        try {
+            return finance.getCashBillsByDate(startDate, endDate);
+        }catch(RemoteException e){
+            e.printStackTrace();;
+            return null;
+        }
+
     }
 }

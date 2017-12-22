@@ -170,7 +170,7 @@ public class AccountBill {
             LocalDate start = LocalDate.parse(startDate);
             LocalDate end = LocalDate.parse(endDate);
 
-            if (billDate.isBefore(end) && billDate.isAfter(start)) {
+            if (billDate.isBefore(end) && billDate.isAfter(start) && po.getState() == BillState.PASS) {
                 accountBillVOS.add(poTovo(po));
             }
         }
