@@ -144,4 +144,8 @@ public class Finance{
     public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) throws RemoteException {
         return accountBill.getBillsByDate(startDate,endDate);
     }
+
+    public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) throws RemoteException {
+        return cashBill.getBillsByDate(startDate,endDate);
+    }
 }
