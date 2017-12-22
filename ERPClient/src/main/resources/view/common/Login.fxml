@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="826.0" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.LoginViewController">
+<AnchorPane prefHeight="500.0" prefWidth="826.0" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.LoginViewController">
    <children>
       <ImageView fitHeight="500.0" fitWidth="413.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -52,6 +58,7 @@
             <Label fx:id="userIcon" layoutX="334.0" layoutY="207.0" prefHeight="14.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
             <Label fx:id="passwordIcon" layoutX="335.0" layoutY="295.0" prefHeight="15.0" prefWidth="19.0" styleClass="icon-label" textFill="#95989a" />
             <JFXCheckBox fx:id="rememberBox" checkedColor="#1db1a5" layoutX="71.0" layoutY="335.0" text="记住用户名和密码" unCheckedColor="BLACK" />
+            <Label fx:id="exitButton" alignment="CENTER" layoutX="369.0" layoutY="6.0" onMouseClicked="#close" prefHeight="35.0" prefWidth="37.0" text="Label" />
          </children>
       </AnchorPane>
    </children>

@@ -5,6 +5,7 @@ import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ public class MainUIController {
 
     @FXML
     BorderPane borderPane;
-
+ 
     Stage primaryStage;
 
     public MainUIController(){
