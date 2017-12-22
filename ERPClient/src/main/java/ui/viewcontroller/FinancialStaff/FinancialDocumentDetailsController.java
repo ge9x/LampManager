@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
+import util.BillState;
 import util.BillType;
 import vo.*;
 
@@ -70,13 +71,12 @@ public class FinancialDocumentDetailsController {
         String initDate = formBLService.getStartDate();
         StartDate.setValue(LocalDate.parse(initDate));
         EndDate.setValue(LocalDate.now());
-        redButton.setText("\ue635");
-        redCopyButton.setText("\ue68c");
+
 
 
         input = new DocumentDetailsInput(StartDate.getValue().toString(), EndDate.getValue().toString(), null, null, null);
 
-        billPane = new BillPane("全部","库存报溢单","库存报损单","库存赠送单",
+        billPane = new BillPane("全部","库存报溢单","库存报损单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
         initTabs();
@@ -96,18 +96,34 @@ public class FinancialDocumentDetailsController {
                         fxmlLoaders.clear();
                         loadBills(tab.getText());
                         billPane.setContent(tab,billNodes);
+                        changeFilterItems(BillType.valueOf(tab.getText()));
                     }
                 }
             });
         }
     }
+    public void changeFilterItems(BillType type){
+        filterType.getItems().clear();
+        switch (type){
+            case RECEIPT:
+            case PAYMENT:
 
+            case PURCHASE:
+            case RETURN:filterType.getItems().add("");
+            case SALES:
+            case SALESRETURN: filterType.getItems().add("业务员");
+
+            case CASH:
+            case OVERFLOW:
+            case LOSS:
+        }
+
+    }
     public void loadBills(String tab){
         switch (tab){
-            case "全部": break;
+            case "全部": input.billType = null; break;
             case "库存报溢单": input.billType = BillType.OVERFLOW;break;
             case "库存报损单": input.billType = BillType.LOSS; break;
-            case "库存赠送单": input.billType = BillType.GIFT; break;
             case "进货单": input.billType = BillType.PURCHASE; ;break;
             case "进货退货单": input.billType = BillType.RETURN;break;
             case "销售单": input.billType = BillType.SALES;break;
