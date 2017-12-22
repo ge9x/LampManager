@@ -10,7 +10,7 @@ import po.UserPO;
 import util.ResultMessage;
 
 public class UserDataRemoteObject extends UnicastRemoteObject implements UserDataService{
-	
+	private static final long serialVersionUID = 3764916821656980191L;
 	private UserDataService userDataService;
 	
 	protected UserDataRemoteObject() throws RemoteException{

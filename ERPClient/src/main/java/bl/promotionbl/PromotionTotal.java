@@ -43,6 +43,11 @@ public class PromotionTotal extends Promotion{
 	public String getNewPromotionTotalID() throws RemoteException{
 		return promotionDataService.getNewPromotionTotalID();
 	}
+	
+	public PromotionTotalVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionTotalVO promotionTotalVO = poTOvo(promotionDataService.findPTByName(promotionName));
+		return promotionTotalVO;
+	}
 
 	public void addGift(GoodsItemVO vo){
 		
@@ -85,7 +90,6 @@ public class PromotionTotal extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{
-		promotionTotalPOs.clear();
 		promotionTotalPOs = promotionDataService.showPT();
 		for(PromotionTotalPO po:promotionTotalPOs){
 			if(po.getPromotionID().equals(promotionTotalVO.promotionID)){

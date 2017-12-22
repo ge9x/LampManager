@@ -8,7 +8,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import bl.userbl.UserController;
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
+import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
+import javafx.geometry.VPos;
 import po.GoodsItemPO;
 import po.PurchasePO;
 import rmi.SalesRemoteHelper;
@@ -29,10 +36,16 @@ public class Purchase {
 	PurchaseLineItem purchaseLineItem;
 	PurchaseList purchaseList;
 	GoodsItem goodsItem;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
+	UserInfo userInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
+		userInfo=new UserController();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
 		goodsItem=new GoodsItem();
@@ -59,12 +72,12 @@ public class Purchase {
 		po.setCustomerID(Integer.parseInt(vo.customerID));
 		po.setInventory(vo.inventory);
 		po.setUser(vo.user);
-		List<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
-		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			goodsItempoList.add(GoodsItem.voTopo(goodsItemvo));
+		po.getGoodsItemList().clear();
+		ArrayList<GoodsItemVO> goodsItemVOs=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsItemVOs){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemVO);
+			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setGoodsItemList(goodsItempoList);
 		po.setRemarks(vo.remarks);
 		po.setSum(vo.sum);
 		return salesDataService.updatePurchase(po);
@@ -93,10 +106,8 @@ public class Purchase {
 	}
 
 	public ResultMessage submitPurchase(PurchaseVO pur) throws RemoteException {
-		addPurchase(pur);
-	    PurchasePO po=salesDataService.findPurchaseByID(pur.ID);
-	    po.setState(BillState.SUBMITTED);
-		return salesDataService.updatePurchase(po);
+		pur.state=BillState.SUBMITTED;
+		return addPurchase(pur);
 	}
 
 	public ResultMessage submitSales(SalesVO sal) {
@@ -131,40 +142,6 @@ public class Purchase {
 	}
 	
 	//purchaseInfo
-	public ArrayList<String> getAllPurchaseDate() {
-        try {
-			ArrayList<PurchasePO> purList=salesDataService.showPurchase();
-			ArrayList<PurchasePO> reList=salesDataService.showReturn();
-			ArrayList<String> dateList=new ArrayList<>();
-			purList.addAll(reList);
-			for(PurchasePO po:purList){
-				dateList.add(po.getDate());
-			}
-			return dateList;
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public ArrayList<String> getPurchaseIDByDate(Date startDate, Date endDate) {
-		try {
-			ArrayList<PurchasePO> purList=salesDataService.showPurchase();
-			ArrayList<PurchasePO> reList=salesDataService.showReturn();
-			ArrayList<String> dateList=new ArrayList<>();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public ArrayList<String> getPurchaseIDByType(BillType type) {
-		return null;
-	}
-
-	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
-		return updatePurchase(vo);
-	}
 	
 	public ArrayList<PurchaseVO> getAllSubmittedPurchase() throws RemoteException {
 		ArrayList<PurchasePO> purpoList=salesDataService.findPurchaseByState(BillState.SUBMITTED);
@@ -295,4 +272,34 @@ public class Purchase {
 		return salesDataService.deletePurchase(vo.ID);
 	}
 	
+	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) throws RemoteException, ParseException {
+		ArrayList<PurchasePO> purList=new ArrayList<>();
+		ArrayList<PurchaseVO> getList=new ArrayList<>();
+		if(type==BillType.PURCHASE){
+			purList=salesDataService.showPurchase();
+		}else{
+			purList=salesDataService.showReturn();
+		}
+		for(PurchasePO po:purList){
+			Date date=stringToDate(po.getDate());
+			if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getInventory().equals(inventory)&&po.getState()==BillState.PASS){
+				getList.add(poTovo(po));
+			}
+		}
+		return getList;
+	}
+	
+	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
+	    if(vo.state==BillState.PASS){
+		     if(vo.type==BillType.PURCHASE){
+			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+		     }else{
+			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+		     }
+		 }
+	    return updatePurchase(vo);
+	}
 }

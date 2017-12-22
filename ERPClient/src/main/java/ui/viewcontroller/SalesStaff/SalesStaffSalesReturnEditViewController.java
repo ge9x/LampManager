@@ -37,7 +37,7 @@ import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
@@ -53,7 +53,6 @@ public class SalesStaffSalesReturnEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new SalesController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -112,7 +111,7 @@ public class SalesStaffSalesReturnEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         customers = salesBLService.getAllCustomer();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
@@ -217,20 +216,27 @@ public class SalesStaffSalesReturnEditViewController {
     public void clickSubmitButton(){
     	goodsItemList.clear();
     	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+    				bean.getRemark());
     		goodsItemList.add(vo);
     	}
         CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
         		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
-        if(isNew){
-        	salesBLService.submitSales(salesVO);
-        }
-        else{
-        	salesBLService.updateSales(salesVO);
-        }
-        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	if(!isExamine){
+	        if(isNew){
+	        	salesBLService.submitSales(salesVO);
+	        }
+	        else{
+	        	salesBLService.updateSales(salesVO);
+	        }
+	        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	}
+    	else{
+    		salesBLService.updateSales(salesVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     
     public void clickCancelButton(){
@@ -254,6 +260,11 @@ public class SalesStaffSalesReturnEditViewController {
 	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
 	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	                }
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
 	                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
 	                salesBLService.saveSales(salesVO);
@@ -292,6 +303,7 @@ public class SalesStaffSalesReturnEditViewController {
         title.setText("销售退货单详情");
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);

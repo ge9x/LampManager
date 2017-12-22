@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 import util.BillType;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.PurchaseVO;
 
 public interface PurchaseInfo {
 	public ArrayList<PurchaseVO> getPurchaseByDate(String startDate,String endDate);
 	/**
-	 * 审批进货单（进货单和进货退货单）
+	 * 审批进货单（进货单和进货退货单），如果通过，更改库存数据和客户的应收应付数据
 	 * 
 	 * @param vo
 	 * @return
@@ -21,6 +22,11 @@ public interface PurchaseInfo {
 	 * @return
 	 */
 	public ArrayList<PurchaseVO> getAllSubmittedPurchase();
-	
-	
+	/**
+	 * 通过时间区间、仓库得到通过的进货单据的商品信息
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate,String endDate,String inventory,BillType type);
 }

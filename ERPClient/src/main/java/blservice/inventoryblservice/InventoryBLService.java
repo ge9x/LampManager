@@ -36,10 +36,12 @@ public interface InventoryBLService extends Remote {
 	public InventoryCheckVO check();
 	/**
 	 * 导出库存盘点到本地
+	 * @param filePath 文件导出路径
+	 * @param fileName 文件名
 	 * @param vo 当天的库存盘点
 	 * @return 是否成功导出
 	 */
-	public ResultMessage exportExcel(InventoryCheckVO vo);
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo);
 	/**
 	 * 得到所有库存报溢/报损单和赠送单
 	 * @return 所有库存报溢/报损单和赠送单的VO
@@ -113,7 +115,11 @@ public interface InventoryBLService extends Remote {
      * @return
      */
 	public ArrayList<InventoryBillVO> findBillByType(BillType type);
-
+	/**
+	 * 根据单据类型得到新单据的ID
+	 * @param type 单据类型
+	 * @return 新单据的完整ID
+	 */
 	public String getNewBillIDByType(BillType type);
 
 }

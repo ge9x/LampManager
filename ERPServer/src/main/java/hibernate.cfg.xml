@@ -20,7 +20,8 @@
 		<mapping class="po.AccountBillItemPO" />
 		<mapping class="po.AccountBillPO" />
 		<mapping class="po.AccountPO" />
-		<mapping class="po.BillPO" />
+		<mapping class="po.CashBillItemPO" />
+		<mapping class="po.CashBillPO" />
 		<mapping class="po.ClassificationPO" />
 		<mapping class="po.CustomerPO" />
 		<mapping class="po.GoodsItemPO" />
@@ -33,7 +34,11 @@
 		<mapping class="po.PurchasePO" />
 		<mapping class="po.UserPO" />
 		<mapping class="po.SalesPO" />
+		<mapping class="po.InitializationPO" />
 		<mapping class="po.InitAccountPO" />
+		<mapping class="po.InitCustomerPO" />
+		<mapping class="po.InitGoodsPO" />
+		<mapping class="po.InitClassificationPO" />
 
 	</session-factory>
 

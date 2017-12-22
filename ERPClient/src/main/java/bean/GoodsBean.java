@@ -13,6 +13,7 @@ public class GoodsBean {
     DoubleProperty purchasePrice;
     DoubleProperty recentSalesPrice;
     DoubleProperty salesPrice;
+    IntegerProperty newAmount = new SimpleIntegerProperty(0);
 
     public GoodsBean(String ID, String name, String model,String classification,Integer alarmAmount,Integer amount, Double recentPurchasePrice, Double recentSalesPrice, Double salesPrice,Double purchasePrice) {
         this.ID = new SimpleStringProperty(ID);
@@ -145,5 +146,17 @@ public class GoodsBean {
 
     public void setSalesPrice(double salesPrice) {
         this.salesPrice.set(salesPrice);
+    }
+
+    public int getNewAmount() {
+        return newAmount.get();
+    }
+
+    public IntegerProperty newAmountProperty() {
+        return newAmount;
+    }
+
+    public void setNewAmount(int newAmount) {
+        this.newAmount.set(newAmount);
     }
 }

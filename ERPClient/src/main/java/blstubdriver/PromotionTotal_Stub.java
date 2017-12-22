@@ -98,4 +98,10 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 		return "";
 	}
 
+	@Override
+	public PromotionTotalVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

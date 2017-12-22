@@ -41,6 +41,11 @@ public class PromotionCustomer extends Promotion{
 		return promotionDataService.getNewPromotionCustomerID();
 	}
 	
+	public PromotionCustomerVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionCustomerVO promotionCustomerVO = poTOvo(promotionDataService.findPCByName(promotionName));
+		return promotionCustomerVO;
+	}
+	
 	public void addGift(GoodsItemVO vo){
 		
 	}
@@ -86,7 +91,6 @@ public class PromotionCustomer extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{
-		promotionCustomerPOs.clear();
 		promotionCustomerPOs = promotionDataService.showPC();
 		for(PromotionCustomerPO po:promotionCustomerPOs){
 			if(po.getPromotionID().equals(promotionCustomerVO.promotionID)){

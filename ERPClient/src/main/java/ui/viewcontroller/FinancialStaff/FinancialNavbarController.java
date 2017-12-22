@@ -85,7 +85,7 @@ public class FinancialNavbarController {
     public void clickProfitView(){
         financialViewController.showProfitView();
     }
-
+    public void clickInitView(){ financialViewController.showInitView();}
 
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;

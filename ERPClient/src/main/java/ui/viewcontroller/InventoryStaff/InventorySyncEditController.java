@@ -1,8 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
-import bean.GoodsItemBean;
-import bl.goodsbl.Goods;
 import bl.inventorybl.InventoryController;
 import bl.userbl.UserController;
 import blservice.inventoryblservice.InventoryBLService;
@@ -15,21 +13,23 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
-import vo.AccountBillVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+
+import javax.sound.midi.VoiceStatus;
 
 /**
  * Created by Kry·L on 2017/11/30.
@@ -37,10 +37,12 @@ import java.util.Optional;
 public class InventorySyncEditController {
 
     InventorySyncController inventorySyncController;
+    GeneralManagerExaminationCellController generalManagerExaminationCellController;
     InventoryBLService inventoryBLService = new InventoryController();
     HashMap<GoodsVO,Integer> goodsItems = new HashMap<>();
     UserInfo userInfo = new UserController();
     Boolean isNew;
+    boolean isExamine = false;
     BillType type;
 
     ObservableList<GoodsBean> data = FXCollections.observableArrayList();
@@ -87,78 +89,133 @@ public class InventorySyncEditController {
     public void addInventoryBill(){
         String ID = inventoryBLService.getNewBillIDByType(type);
         isNew = true;
+        isExamine = false;
         BillID.setText(ID);
     }
     public void initTable(){
         table = new TableView<>();
-        table.setEditable(false);
+        table.setEditable(true);
 
         TableColumn nameColumn = new TableColumn("商品名称");
-        nameColumn.setPrefWidth(128);
+        nameColumn.setPrefWidth(140);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(128);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("money"));
-        TableColumn currentAmountColumn = new TableColumn("当前数量");
-        currentAmountColumn.setPrefWidth(190);
-        currentAmountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        modelColumn.setPrefWidth(140);
+        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
+        TableColumn amountColumn = new TableColumn("当前数量");
+        amountColumn.setPrefWidth(82);
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        TableColumn<GoodsBean, Integer> newAmountColumn = new TableColumn("调整数量");
+        newAmountColumn.setPrefWidth(85);
+        newAmountColumn.setCellValueFactory(new PropertyValueFactory<>("newAmount"));
+
+        newAmountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        newAmountColumn.setOnEditCommit(
+                (TableColumn.CellEditEvent<GoodsBean, Integer> t)->{
+                    GoodsBean bean =  (GoodsBean) t.getTableView().getItems().get(
+                            t.getTablePosition().getRow());
+                    bean.setNewAmount(t.getNewValue());
+                    for (GoodsVO goodsVO:goodsItems.keySet()){
+                        if (goodsVO.ID == bean.getID()){
+                            goodsItems.put(goodsVO,t.getNewValue());
+                        }
+                    }
+                });
 
         table.setItems(data);
-        table.getColumns().addAll(nameColumn,modelColumn,currentAmountColumn);
+        table.getColumns().addAll(nameColumn,modelColumn,amountColumn,newAmountColumn);
         vbox.getChildren().add(table);
     }
     public void setInventorySyncController(InventorySyncController inventorySyncController){
         this.inventorySyncController = inventorySyncController;
     }
+    
+    public void setGeneralManagerExaminationCellController (GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
+    }
     public void clickAddButton(){
         GoodsSelecter selecter = new GoodsSelecter();
         Dialog dialog = selecter.getGoodsDialog();
-        Optional<GoodsTable.GoodsBean> result = dialog.showAndWait();
+        Optional<GoodsBean> result = dialog.showAndWait();
 
-        GoodsTable.GoodsBean bean = null;
+        GoodsBean bean = null;
         if (result.isPresent()){
             bean = result.get();
+            data.add(bean);
+            goodsItems.put(new GoodsVO(bean.getID()),0);
         }
 
     }
     public void clickSubmitButton(){
-        InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
+    	InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
                 Inventory.getSelectionModel().getSelectedItem().toString(),userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
                 goodsItems);
-        if (isNew == true){
-            inventoryBLService.submitBill(vo);
-        }else {
-            inventoryBLService.updateBill(vo);
-        }
+    	if(!isExamine){
+	        if (isNew == true){
+	            inventoryBLService.submitBill(vo);
+	        }else {
+	            inventoryBLService.updateBill(vo);
+	        }
+	        inventorySyncController.showInventoryBills();
+    	}
+    	else{
+    		inventoryBLService.updateBill(vo);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-                String inventory = "";
-                if (Inventory.getSelectionModel().getSelectedIndex() >= 0){
-                    inventory = Inventory.getSelectionModel().getSelectedItem().toString();
-                }
-                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
-                        inventory,userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
-                        goodsItems);
-
-                if (isNew == true){
-                    inventoryBLService.addBill(vo);
-                }else{
-                    inventoryBLService.updateBill(vo);
-                }
-            }
-
-            inventorySyncController.showInventoryBills();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	                String inventory = "";
+	                if (Inventory.getSelectionModel().getSelectedIndex() >= 0){
+	                    inventory = Inventory.getSelectionModel().getSelectedItem().toString();
+	                }
+	                InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.DRAFT, LocalDate.now().toString(),
+	                        inventory,userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
+	                        goodsItems);
+	
+	                if (isNew == true){
+	                    inventoryBLService.addBill(vo);
+	                }else{
+	                    inventoryBLService.updateBill(vo);
+	                }
+	            }
+	
+	            inventorySyncController.showInventoryBills();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
     public void clickDeleteButton(){
-
+        ObservableList<Integer> deleteList = table.getSelectionModel().getSelectedIndices();
+        for (int i:deleteList){
+            String ID = data.get(i).getID();
+            for(GoodsVO goodsVO:goodsItems.keySet()){
+                if (goodsVO.ID == ID){
+                    goodsItems.remove(goodsVO);
+                    break;
+                }
+            }
+            data.remove(i);
+        }
     }
     public void setType(BillType type){
         this.type = type;
@@ -184,25 +241,62 @@ public class InventorySyncEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                inventorySyncController.showInventoryBills();
+            	if(!isExamine){
+            		inventorySyncController.showInventoryBills();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if(vo.state == BillState.DRAFT){
+        if(vo.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    setForEditView();
+                    setForEditView(vo.inventory);
                 }
             });
+        }else{
+            submitButton.setVisible(false);
         }
+        for (GoodsVO goodsVO:vo.goodsMap.keySet()){
+            GoodsBean bean = (new GoodsBean(goodsVO.ID,goodsVO.name,goodsVO.model,goodsVO.classification,goodsVO.alarmAmount,goodsVO.amount,goodsVO.recentBuyingPrice,goodsVO.recentRetailPrice,goodsVO.retailPrice,goodsVO.buyingPrice));
+            bean.setNewAmount(vo.goodsMap.get(goodsVO));
+            data.add(bean);
+        }
+        goodsItems = vo.goodsMap;
     }
-    public void setForEditView(){
+    public void setForEditView(String inventory){
         addIcon.setVisible(true);
         deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
+
         Inventory.setEditable(true);
-//        initInventoryBox();
+        Inventory.getItems().clear();
+        Inventory.getItems().addAll(inventoryBLService.showInventory());
+        if (!inventory.isEmpty())
+            Inventory.getSelectionModel().select(inventory);
+
+        submitButton.setText("提 交");
+        submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clickSubmitButton();
+            }
+        });
+
+        cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event){
+                clickCancelButton();
+            }
+        });
+    }
+    
+    public void isExamine(){
+    	isExamine = true;
     }
 }

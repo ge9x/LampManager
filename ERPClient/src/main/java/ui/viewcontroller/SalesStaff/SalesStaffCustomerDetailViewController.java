@@ -135,6 +135,9 @@ public class SalesStaffCustomerDetailViewController {
 			if(userBLService.findUserByID(userBLService.getCurrentUserID()).limit==UserLimits.MANAGER){
 				customerReceivableLimit.setEditable(true);
 			}
+			else{
+				customerReceivableLimit.setEditable(false);
+			}
 			
 			editButton.setText("完    成");
 			hasEdited = true;

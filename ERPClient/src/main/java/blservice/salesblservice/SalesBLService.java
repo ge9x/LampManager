@@ -180,4 +180,22 @@ public interface SalesBLService {
 	   * @return
 	   */
 	  public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state);
+	  /**
+	   * 通过名字查找会员促销策略
+	   * @param name
+	   * @return
+	   */
+	  public PromotionCustomerVO findPromotionCustomerByName(String name);
+	  /**
+	   * 通过名字查找特价包
+	   * @param name
+	   * @return
+	   */
+	  public PromotionBargainVO findPromotionBargainByName(String name);
+	  /**
+	   * 通过名字查找总价促销策略
+	   * @param name
+	   * @return
+	   */
+	  public PromotionTotalVO findPromotionTotalByName(String name);
 }

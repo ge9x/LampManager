@@ -45,7 +45,7 @@ import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
@@ -59,7 +59,6 @@ public class SalesStaffReturnEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new PurchaseController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -114,7 +113,7 @@ public class SalesStaffReturnEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
         
 
         //初始化supplier选择框
@@ -276,19 +275,28 @@ public class SalesStaffReturnEditViewController {
     public void clickSubmitButton(){
     	goodsItemList.clear();
     	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(),
+    				bean.getRemark());
     		goodsItemList.add(vo);
     	}
         String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+        String supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
-        if(isNew){
-        	salesBLService.submitPurchase(purchaseVO);
-        }
-        else{
-        	salesBLService.updatePurchase(purchaseVO);
-        }
-        salesStaffReturnOrderViewController.showReturnOrderList();
+        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, 
+        		inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
+    	if(!isExamine){
+	        if(isNew){
+	        	salesBLService.submitPurchase(purchaseVO);
+	        }
+	        else{
+	        	salesBLService.updatePurchase(purchaseVO);
+	        }
+	        salesStaffReturnOrderViewController.showReturnOrderList();
+    	}
+    	else{
+    		salesBLService.updatePurchase(purchaseVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     
     public void clickCancelButton(){
@@ -302,13 +310,20 @@ public class SalesStaffReturnEditViewController {
 	            if (result.get() == ButtonType.OK) {
 	            	String supplierName = "";
 	                String inventoryName = "";
+	                String supplierID = "";
 	                if (supplier.getSelectionModel().getSelectedIndex() >= 0){
 	                    supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+	                    supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
 	                }
 	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
 	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	                }
-	                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, "", inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
+	                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
 	                salesBLService.savePurchase(purchaseVO);
 	            }
 	

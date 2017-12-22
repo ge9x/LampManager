@@ -1,9 +1,11 @@
 package bl.initializationbl;
 
+import bl.classificationbl.Classification;
 import dataservice.initializationdataservice.InitializationDataService;
 import util.ResultMessage;
 import vo.InitAccountVO;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -19,6 +21,10 @@ public class Initialization{
     private InitializationDataService initializationDataService;
 
     public Initialization(){
+        goodsList = new GoodsList();
+        customerList = new CustomerList();
+        accountList = new AccountList();
+        classificationList = new ClassificationList();
 
     }
     public InitAccountVO init() {
@@ -26,6 +32,6 @@ public class Initialization{
     }
 
     public InitAccountVO show() {
-        return null;
+        return new InitAccountVO(LocalDate.now().toString(),accountList.getAccounts(),customerList.getCustomers(),goodsList.getGoods(),classificationList.getClassifications());
     }
 }

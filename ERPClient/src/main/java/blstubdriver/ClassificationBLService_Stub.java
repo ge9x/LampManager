@@ -12,6 +12,7 @@ import vo.GoodsVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class ClassificationBLService_Stub implements ClassificationBLService{
 
 	ArrayList<ClassificationVO> dataSet;

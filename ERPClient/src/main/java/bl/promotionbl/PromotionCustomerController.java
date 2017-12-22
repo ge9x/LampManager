@@ -84,22 +84,14 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 
 	@Override
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
-		try {
-			ArrayList<PromotionCustomerVO> VOs = show();
-			ArrayList<PromotionCustomerVO> result = show();
-			for(PromotionCustomerVO vo:VOs){
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-				Date startDate = sd.parse(vo.startDate);
-				Date endDate = sd.parse(vo.endDate);
-				if(new Date().before(startDate)||new Date().after(endDate)||level.ordinal()<vo.level.ordinal()){
-					result.remove(vo);
-				}
+		ArrayList<PromotionCustomerVO> VOs = show();
+		ArrayList<PromotionCustomerVO> result = new ArrayList<>();
+		for(PromotionCustomerVO vo:VOs){
+			if(level.ordinal()>=vo.level.ordinal()){
+				result.add(vo);
 			}
-			return result;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
 		}
+		return result;
 	}
 
 	@Override
@@ -142,6 +134,18 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 	public String getCurrentUserName() {
 		// TODO Auto-generated method stub
 		return promotionCustomer.getCurrentUserName();
+	}
+
+	@Override
+	public PromotionCustomerVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionCustomer.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

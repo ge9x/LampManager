@@ -8,4 +8,5 @@ public interface PromotionBargainInfo {
 
 	public ArrayList<PromotionBargainVO> getFitPromotionBargain();
 	
+	public PromotionBargainVO findPromotionByName(String promotionName);
 }

@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ui.component.DialogFactory;
+import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -35,17 +36,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.sound.midi.VoiceStatus;
+
 /**
  * Created by Kry·L on 2017/11/25.
  */
 public class FinancialCashBillEditController {
     FinancialCashBillController financialCashBillController;
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
-    FinanceBLService financeBLService2 = new FinanceController();
+    GeneralManagerExaminationCellController generalManagerExaminationCellController;
+    FinanceBLService financeBLService = new FinanceController();
 
     ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
     Boolean isNew;
+    boolean isExamine = false;
 
     TableView<CashBillItemBean> itemTable;
     ObservableList<CashBillItemBean> data =
@@ -56,7 +60,7 @@ public class FinancialCashBillEditController {
     Label addIcon;
 
     @FXML
-    Label BillID;
+    Label BillID, deleteIcon;
 
     @FXML
     Text Username;
@@ -81,9 +85,11 @@ public class FinancialCashBillEditController {
 
     public void initialize(){
         addIcon.setText("\ue61e");
+        deleteIcon.setText("\ue606");
+
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService2.getAllAccount();
+        accounts = financeBLService.getAllAccount();
 
         initAccountCombobox();
         initTable();
@@ -126,8 +132,9 @@ public class FinancialCashBillEditController {
         vbox.getChildren().add(itemTable);
     }
     public void addCashBill() {
-        String ID = financeBLService2.getNewCashBillID();
+        String ID = financeBLService.getNewCashBillID();
         isNew = true;
+        isExamine = false;
         BillID.setText(ID);
     }
 
@@ -170,52 +177,76 @@ public class FinancialCashBillEditController {
     }
 
     public void clickSubmitButton(){
-        String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
+    	String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
         CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
                 ,cashBillItems,total.get());
-        if (isNew == true){
-            financeBLService2.submit(cashBillVO);
-        }else{
-            financeBLService2.updateDraft(cashBillVO);
-        }
-        financialCashBillController.showCashBillList();
+    	if(!isExamine){
+	        if (isNew == true){
+	            financeBLService.submit(cashBillVO);
+	        }else{
+	            financeBLService.updateDraft(cashBillVO);
+	        }
+	        financialCashBillController.showCashBillList();
+    	}
+    	else{
+    		financeBLService.updateDraft(cashBillVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     public void clickCancelButton(){
-        Dialog dialog = DialogFactory.getConfirmationAlert();
-        dialog.setHeaderText("需要保存为草稿吗？");
-        Optional result = dialog.showAndWait();
-
-        if (result.isPresent()){
-            if (result.get() == ButtonType.OK) {
-                String accountID = "";
-                if (Accounts.getSelectionModel().getSelectedIndex() >= 0){
-                    accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
-                }
-                CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(), BillID.getText(),
-                        BillState.DRAFT, BillType.CASH,Username.getText(), accountID
-                        , cashBillItems,total.get());
-
-                if (isNew == true){
-                    financeBLService2.save(cashBillVO);
-                }else{
-                    financeBLService2.updateDraft(cashBillVO);
-                }
-            }
-
-            financialCashBillController.showCashBillList();
-        }
+    	if(!isExamine){
+	        Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("需要保存为草稿吗？");
+	        Optional result = dialog.showAndWait();
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	                String accountID = "";
+	                if (Accounts.getSelectionModel().getSelectedIndex() >= 0){
+	                    accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
+	                }
+	                CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(), BillID.getText(),
+	                        BillState.DRAFT, BillType.CASH,Username.getText(), accountID
+	                        , cashBillItems,total.get());
+	
+	                if (isNew == true){
+	                    financeBLService.save(cashBillVO);
+	                }else{
+	                    financeBLService.updateDraft(cashBillVO);
+	                }
+	            }
+	
+	            financialCashBillController.showCashBillList();
+	        }
+    	}
+    	else{
+    		Dialog dialog = DialogFactory.getConfirmationAlert();
+	        dialog.setHeaderText("确定放弃修改吗？");
+	        Optional result = dialog.showAndWait();
+	
+	
+	        if (result.isPresent()){
+	            if (result.get() == ButtonType.OK) {
+	            	generalManagerExaminationCellController.clickReturnButton();
+	            	isExamine = false;
+	            }
+	        }
+    	}
     }
     public void setForDetailView(CashBillVO cashBillVO){
         isNew = false;
         BillID.setText(cashBillVO.ID);
+        Username.setText(cashBillVO.userName);
         title.setText("现金费用单详情");
+
         addIcon.setVisible(false);
+        deleteIcon.setVisible(false);
 
 
         String accountName = "";
         if (!cashBillVO.accountID.equals("0")){
-            accountName = financeBLService2.getAccountNameByID(cashBillVO.accountID);
+            accountName = financeBLService.getAccountNameByID(cashBillVO.accountID);
         }
         Accounts.getItems().clear();
         Accounts.getItems().add(accountName);
@@ -226,11 +257,17 @@ public class FinancialCashBillEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                financialCashBillController.showCashBillList();
+            	if(!isExamine){
+            		financialCashBillController.showCashBillList();
+            	}
+            	else{
+            		generalManagerExaminationCellController.clickReturnButton();
+            		isExamine = false;
+            	}
             }
         });
 
-        if (cashBillVO.state == BillState.DRAFT){
+        if (cashBillVO.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -250,6 +287,7 @@ public class FinancialCashBillEditController {
 
     public void setForEditView(){
         addIcon.setVisible(true);
+        deleteIcon.setVisible(true);
         title.setText("编辑草稿单");
 
         Accounts.setEditable(true);
@@ -273,6 +311,17 @@ public class FinancialCashBillEditController {
     public void setFinancialCashBillController(FinancialCashBillController financialCashBillController){
         this.financialCashBillController = financialCashBillController;
     }
-
-
+    
+    public void setGeneralManagerExaminationCellController(GeneralManagerExaminationCellController generalManagerExaminationCellController){
+    	this.generalManagerExaminationCellController = generalManagerExaminationCellController;
+    }
+    public void clickDeleteButton(){
+        int index = itemTable.getSelectionModel().getSelectedIndex();
+        total.setValue(total.getValue() - data.get(index).getMoney());
+        data.remove(index);
+        cashBillItems.remove(index);
+    }
+    public void isExamine() {
+		isExamine = true;
+	}
 }

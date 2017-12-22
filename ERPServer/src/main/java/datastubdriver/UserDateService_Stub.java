@@ -9,6 +9,7 @@ import util.ResultMessage;
 import util.UserLimits;
 import util.UserPosition;
 
+@SuppressWarnings("deprecation")
 public class UserDateService_Stub implements UserDataService{
 	ArrayList<UserPO> userInfo = new ArrayList<UserPO>();
 

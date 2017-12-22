@@ -129,6 +129,10 @@ public class SalesDataServiceImpl implements SalesDataService{
 	}
 
 	public ResultMessage updatePurchase(PurchasePO po) throws RemoteException {
+		List<GoodsItemPO> goodsItemPOs=po.getGoodsItemList();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			addGoodsItem(goodsItemPO);
+		}
 		return purchaseDataHelper.update(po);
 	}
 

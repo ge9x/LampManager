@@ -2,7 +2,6 @@ package blstubdriver;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import blservice.inventoryblservice.InventoryBLService;
@@ -100,7 +99,7 @@ public class InventoryBLService_Stub implements InventoryBLService {
 		if (startDate == null || endDate == null || inventory == null) {
 			return null;
 		} else {
-			InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库",
+			InventoryViewVO ret = new InventoryViewVO(LocalDate.now().toString(), LocalDate.now().toString(), "栖霞区仓库",
 					new ArrayList<InventoryViewItemVO>(), new HashMap<GoodsVO, Double>());
 			System.out.println("show succeed");
 			return ret;
@@ -108,11 +107,11 @@ public class InventoryBLService_Stub implements InventoryBLService {
 	}
 
 	public InventoryCheckVO check() {
-		InventoryCheckVO ret = new InventoryCheckVO(new Date(), new HashMap<GoodsVO, Double>());
+		InventoryCheckVO ret = new InventoryCheckVO(LocalDate.now().toString(), new HashMap<GoodsVO, Double>());
 		return ret;
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
 		if (vo == null) {
 			System.out.println("export Excel failed");
 			return ResultMessage.FAILED;
@@ -250,6 +249,11 @@ public class InventoryBLService_Stub implements InventoryBLService {
 
     @Override
     public String getNewBillIDByType(BillType type) {
-        return null;
+    	if(type == BillType.OVERFLOW){
+    		return "BYD-20171215-00001";
+    	}
+    	else{
+    		return null;
+    	}
     }
 }

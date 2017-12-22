@@ -75,22 +75,14 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 
 	@Override
 	public ArrayList<PromotionTotalVO> getFitPromotionTotal(double total) {
-		try {
-			ArrayList<PromotionTotalVO> VOs = show();
-			ArrayList<PromotionTotalVO> result = show();
-			for(PromotionTotalVO vo:VOs){
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-				Date startDate = sd.parse(vo.startDate);
-				Date endDate = sd.parse(vo.endDate);
-				if(new Date().before(startDate)||new Date().after(endDate)||total<vo.totalPrice){
-					result.remove(vo);
-				}
+		ArrayList<PromotionTotalVO> VOs = show();
+		ArrayList<PromotionTotalVO> result = new ArrayList<>();
+		for(PromotionTotalVO vo:VOs){
+			if(total>=vo.totalPrice){
+				result.add(vo);
 			}
-			return result;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
 		}
+		return result;
 	}
 
 	@Override
@@ -133,6 +125,18 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 	public String getCurrentUserName() {
 		// TODO Auto-generated method stub
 		return promotionTotal.getCurrentUserName();
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionTotal.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

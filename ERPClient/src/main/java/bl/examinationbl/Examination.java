@@ -8,9 +8,12 @@ import java.util.Comparator;
 import java.util.Date;
 
 import bl.financialbl.FinanceController;
+import bl.inventorybl.Inventory;
+import bl.inventorybl.InventoryController;
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
 import blservice.financeblservice.FinanceInfo;
+import blservice.inventoryblservice.InventoryInfo;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.examinationdataservice.ExaminationDataService;
@@ -22,6 +25,7 @@ import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.BillVO;
 import vo.CashBillVO;
+import vo.InventoryBillVO;
 import vo.PurchaseVO;
 import vo.SalesVO;
 
@@ -32,17 +36,20 @@ public class Examination {
 	FinanceInfo financeInfo;
 	SalesInfo salesInfo;
 	PurchaseInfo purchaseInfo;
+	InventoryInfo inventoryInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
 		financeInfo = new FinanceController();
 		salesInfo = new SalesController();
 		purchaseInfo = new PurchaseController();
+		inventoryInfo = new InventoryController();
 	}
 	
 
 	public ArrayList<BillVO> show(){
 		ArrayList<BillVO> bills = new ArrayList<>();
+		bills.addAll(inventoryInfo.getAllSubmittedInventoryBill());
 		bills.addAll(financeInfo.getAllSubmittedCashBills());
 		bills.addAll(financeInfo.getAllSubmittedPayments());
 		bills.addAll(financeInfo.getAllSubmittedReceipts());
@@ -84,6 +91,10 @@ public class Examination {
 		else if(bill.type==BillType.SALES||bill.type==BillType.SALESRETURN){
 			SalesVO salesBill = (SalesVO) bill;
 			salesInfo.examine(salesBill);
+		}
+		else if(bill.type==BillType.LOSS||bill.type==BillType.OVERFLOW){
+			InventoryBillVO inventoryBillVO = (InventoryBillVO) bill;
+			inventoryInfo.examine(inventoryBillVO);
 		}
 		return ResultMessage.SUCCESS;
 	}

@@ -72,4 +72,6 @@ public interface PromotionTotalBLService {
 	public String getNewPromotionTotalID();
 	
 	public String getCurrentUserName();
+	
+	public PromotionTotalVO findPromotionByName(String promotionName);
 }

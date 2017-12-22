@@ -47,7 +47,7 @@ import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
@@ -63,7 +63,6 @@ public class SalesStaffPurchaseEditViewController {
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
 	SalesBLService salesBLService = new PurchaseController();
-	SalesBLService salesBLService2 = new SalesBLService_Stub();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -118,7 +117,7 @@ public class SalesStaffPurchaseEditViewController {
         String name = salesBLService.getUserName();
         Username.setText(name);
         suppliers = salesBLService.getAllSupplier();
-        inventories = salesBLService2.getAllInventory();
+        inventories = salesBLService.getAllInventory();
         
 
         //初始化supplier选择框
@@ -288,13 +287,19 @@ public class SalesStaffPurchaseEditViewController {
         String supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
         String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
         PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
-        if(isNew){
-        	salesBLService.submitPurchase(purchaseVO);
-        }
-        else{
-        	salesBLService.updatePurchase(purchaseVO);
-        }
-        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+    	if(!isExamine){
+	        if(isNew){
+	        	salesBLService.submitPurchase(purchaseVO);
+	        }
+	        else{
+	        	salesBLService.updatePurchase(purchaseVO);
+	        }
+	        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+    	}
+    	else{
+    		salesBLService.updatePurchase(purchaseVO);
+    		generalManagerExaminationCellController.clickReturnButton();
+    	}
     }
     
     public void clickCancelButton(){
