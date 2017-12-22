@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import dataimpl.userdataimpl.UserDataServiceImpl;
 import dataservice.userdataservice.UserDataService;
 import po.UserPO;
-import util.UserLimits;
-import util.UserPosition;
 
 public class TestUser {
 
