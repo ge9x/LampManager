@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
 import ui.viewcontroller.FinancialStaff.FinancialProfitController;
 import ui.viewcontroller.FinancialStaff.FinancialSalesDetailsController;
 import ui.viewcontroller.common.MainUIController;
@@ -15,6 +16,7 @@ public class GeneralManagerViewController {
 	private GeneralManagerPromotionViewController generalManagerPromotionViewController;
 	private FinancialSalesDetailsController financialSalesDetailsController;
 	private FinancialProfitController financialProfitController;
+	private FinancialDocumentDetailsController financialDocumentDetailsController;
 	private MainUIController mainUIController;
 	
     public GeneralManagerViewController(MainUIController mainUIController){
@@ -100,6 +102,21 @@ public class GeneralManagerViewController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/Profit.fxml"));
             Pane page = pageLoader.load();
             financialProfitController = pageLoader.getController();
+
+            mainUIController.setCenter(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showDocumentDetailsView(){
+    	mainUIController.setCenter(null);
+
+        try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/financialStaff/DocumentDetails.fxml"));
+            Pane page = pageLoader.load();
+            financialDocumentDetailsController = pageLoader.getController();
 
             mainUIController.setCenter(page);
         } catch (IOException e) {
