@@ -20,6 +20,7 @@ import vo.CashBillVO;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -123,5 +124,22 @@ public class CashBill {
         }
         CashBillVO vo = new CashBillVO(po.getDate(),po.buildID(),po.getState(),po.getType(),po.getUserName(),String.valueOf(po.getAccountID()),itemVOS,po.getSum());
         return vo;
+    }
+
+    public ArrayList<CashBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
+        ArrayList<CashBillVO> cashBillVOS = new ArrayList<>();
+        if (cashBillPOS == null && cashBillPOS.isEmpty()){
+            cashBillPOS = financeDataService.getAllCashBills();
+        }
+        for (CashBillPO po : cashBillPOS){
+            LocalDate billDate = LocalDate.parse(po.getDate());
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            if (billDate.isBefore(end) && billDate.isAfter(start) && po.getState() == BillState.PASS) {
+                cashBillVOS.add(poTovo(po));
+            }
+        }
+        return cashBillVOS;
     }
 }

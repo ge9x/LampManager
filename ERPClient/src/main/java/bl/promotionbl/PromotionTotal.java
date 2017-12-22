@@ -45,7 +45,10 @@ public class PromotionTotal extends Promotion{
 	}
 	
 	public PromotionTotalVO findPromotionByName(String promotionName) throws RemoteException{
-		PromotionTotalVO promotionTotalVO = poTOvo(promotionDataService.findPTByName(promotionName));
+		PromotionTotalVO promotionTotalVO = null;
+		if(promotionDataService.findPTByName(promotionName)!=null){
+			promotionTotalVO = poTOvo(promotionDataService.findPTByName(promotionName));
+		}
 		return promotionTotalVO;
 	}
 

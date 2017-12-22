@@ -51,6 +51,9 @@ public class InventoryLookController {
     ObservableList<ItemBean> inventoryItemData = FXCollections.observableArrayList();
     ObservableList<ItemBean> salesItemData = FXCollections.observableArrayList();
 
+    int iNum = 0,oNum = 0,pNum = 0,sNum = 0,ioNumTotal = 0,psNumTotal = 0;
+    double iMoney = 0,oMoney = 0,pMoney = 0,sMoney = 0,ioMoneyTotal = 0,psMoneyTotal = 0;
+
     @FXML
     TilePane tilePane;
 
@@ -77,7 +80,7 @@ public class InventoryLookController {
 
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         AlertIcon.setText("\ue6be");
         addIcon.setText("\ue61e");
         tilePane.setPrefColumns(2);
@@ -88,13 +91,9 @@ public class InventoryLookController {
 
         showAlarmTable();
         showItemTable();
-        showSummary();
     }
 
-    public void showSummary(){
-
-    }
-    public boolean getInfos(){
+    public boolean getInfos() {
         inventories = inventoryBLService.showInventory();
 
         alarmTable = new Table<>();
@@ -107,7 +106,7 @@ public class InventoryLookController {
         labels.add(new Label("结束日期"));
 
         ArrayList<Node> nodes = new ArrayList<Node>();
-        JFXComboBox<String> comboBox= new JFXComboBox<>();
+        JFXComboBox<String> comboBox = new JFXComboBox<>();
         comboBox.getItems().addAll(inventories);
         JFXDatePicker startDate = new JFXDatePicker();
         JFXDatePicker endDate = new JFXDatePicker();
@@ -115,7 +114,7 @@ public class InventoryLookController {
         nodes.add(startDate);
         nodes.add(endDate);
 
-        Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels,nodes);
+        Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels, nodes);
         dialog.setHeaderText("请选择查看的仓库名称和时间段");
 
         dialog.setResultConverter(dialogButton -> {
@@ -131,82 +130,95 @@ public class InventoryLookController {
         });
 
         Optional result = dialog.showAndWait();
-        if (result.isPresent()){
-            if (result.get() != null){
-                ArrayList<String> results = (ArrayList<String>)result.get();
+        if (result.isPresent()) {
+            if (result.get() != null) {
+                ArrayList<String> results = (ArrayList<String>) result.get();
                 inventory = results.get(0);
                 StartDate.setValue(LocalDate.parse(results.get(1)));
                 EndDate.setValue(LocalDate.parse(results.get(2)));
                 return true;
             }
         }
-            return false;
+        return false;
     }
-    public void initAlarmTable(){
-        alarmTable.addColumn("编号","ID",160);
-        alarmTable.addColumn("商品名称","name",160);
-        alarmTable.addColumn("当前库存数量","currentNum",100);
-        alarmTable.addColumn("警戒数量","alarmNum",100);
-        alarmTable.addColumn("最少进货数量","minusNum",97);
+
+    public void initAlarmTable() {
+        alarmTable.addColumn("编号", "ID", 160);
+        alarmTable.addColumn("商品名称", "name", 160);
+        alarmTable.addColumn("当前库存数量", "currentNum", 100);
+        alarmTable.addColumn("警戒数量", "alarmNum", 100);
+        alarmTable.addColumn("最少进货数量", "minusNum", 97);
 
         AlarmTablePane.setContent(alarmTable.getTable());
     }
-    public void initItemTable(){
-        salesItemTable.addColumn("时间","date",60);
-        salesItemTable.addColumn("商品名称","name",60);
-        salesItemTable.addColumn("I/O","isIn",60);
-        salesItemTable.addColumn("数量","amount",60);
-        salesItemTable.addColumn("金额","money",55);
 
-        inventoryItemTable.addColumn("时间","date",60);
-        inventoryItemTable.addColumn("商品名称","name",60);
-        inventoryItemTable.addColumn("I/O","isIn",60);
-        inventoryItemTable.addColumn("数量","amount",60);
-        inventoryItemTable.addColumn("金额","money",55);
+    public void initItemTable() {
+        salesItemTable.addColumn("时间", "date", 60);
+        salesItemTable.addColumn("商品名称", "name", 60);
+        salesItemTable.addColumn("I/O", "isIn", 60);
+        salesItemTable.addColumn("数量", "amount", 60);
+        salesItemTable.addColumn("金额", "money", 55);
+
+        inventoryItemTable.addColumn("时间", "date", 60);
+        inventoryItemTable.addColumn("商品名称", "name", 60);
+        inventoryItemTable.addColumn("I/O", "isIn", 60);
+        inventoryItemTable.addColumn("数量", "amount", 60);
+        inventoryItemTable.addColumn("金额", "money", 55);
 
         InventoryItemTablePane.setContent(inventoryItemTable.getTable());
         SalesItemTablePane.setContent(salesItemTable.getTable());
     }
 
-    public void showAlarmTable(){
+    public void showAlarmTable() {
         alarmBills = inventoryBLService.showAlarmBills();
-        for (InventoryBillVO vo : alarmBills){
-            for (GoodsVO good : vo.goodsMap.keySet()){
+        for (InventoryBillVO vo : alarmBills) {
+            for (GoodsVO good : vo.goodsMap.keySet()) {
                 int num = vo.goodsMap.get(good);
-                alarmTable.addRow(new AlarmBean(good.ID,good.name,good.amount,num,num-good.amount));
+                alarmTable.addRow(new AlarmBean(good.ID, good.name, good.amount, num, num - good.amount));
             }
         }
     }
-    public void showItemTable(){
+
+    public void showItemTable() {
         inventoryViewVO = inventoryBLService.show(StartDate.getValue().toString(), EndDate.getValue().toString(), inventory);
         ArrayList<InventoryViewItemVO> items = inventoryViewVO.item;
-        for (InventoryViewItemVO item : items){
-            if (item.type == InventoryListItemType.IN){
-                inventoryItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"I",item.amount,item.price));
-            }else if (item.type == InventoryListItemType.OUT){
-                inventoryItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"O",item.amount,item.price));
-            }else if (item.type == InventoryListItemType.PURCHASE){
-                salesItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"I",item.amount,item.price));
-            }else if (item.type == InventoryListItemType.SALES){
-                salesItemTable.addRow(new ItemBean(item.goods.ID,item.goods.name,"O",item.amount,item.price));
+        for (InventoryViewItemVO item : items) {
+            if (item.type == InventoryListItemType.IN) {
+                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
+                iNum += item.amount;
+                iMoney += item.price;
+            } else if (item.type == InventoryListItemType.OUT) {
+                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                oNum +=item.amount;
+                oMoney+= item.price;
+            } else if (item.type == InventoryListItemType.PURCHASE) {
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
+                pNum += item.amount;
+                pMoney += item.price;
+            } else if (item.type == InventoryListItemType.SALES) {
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                sNum += item.amount;
+                sMoney += item.price;
             }
         }
+        ioNumTotal = iNum + oNum;
+        ioMoneyTotal = iMoney + oMoney;
+        psNumTotal = pNum + sNum;
+
+
+
     }
-    public void setInventoryViewController(InventoryViewController inventoryViewController){
+
+    public void setInventoryViewController(InventoryViewController inventoryViewController) {
         this.inventoryViewController = inventoryViewController;
     }
-    public void clickAddButton(){
+
+    public void clickAddButton() {
         Dialog dialog = DialogFactory.getTextInputDialog();
         dialog.setHeaderText("请输入新的仓库名称");
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
+        if (result.isPresent()) {
             inventoryBLService.addInventory(result.get());
         }
-    }
-
-
-
-    private double stringAdd(String label, double a){
-        return Double.parseDouble(label) + a;
     }
 }

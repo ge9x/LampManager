@@ -305,12 +305,19 @@ public class InventoryBill {
 				boolean isExistent = false;
 				for (GoodsPO po : map.keySet()) {
 					if (vo.ID.equals(po.buildID())) {
-						map.put(po, map.get(po) + sign * goodsMap.get(vo));
+						int number = map.get(po) + sign * goodsMap.get(vo);
+						if (number < 0) { // 负数检查
+							return ResultMessage.FAILED;
+						}
+						map.put(po, number);
 						isExistent = true;
 						break;
 					}
 				}
 				if (!isExistent) { // 如果本来仓库里没有这种商品
+					if (sign == -1) { // 负数检查
+						return ResultMessage.FAILED;
+					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(vo.ID);
 					map.put(goodsPO, goodsMap.get(vo));
 				}

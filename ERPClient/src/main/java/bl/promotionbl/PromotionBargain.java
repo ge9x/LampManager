@@ -47,7 +47,10 @@ public class PromotionBargain extends Promotion{
 	}
 	
 	public PromotionBargainVO findPromotionByName(String promotionName) throws RemoteException{
-		PromotionBargainVO promotionBargainVO = poTOvo(promotionDataService.findPBByName(promotionName));
+		PromotionBargainVO promotionBargainVO = null;
+		if(promotionDataService.findPBByName(promotionName)!=null){
+			promotionBargainVO = poTOvo(promotionDataService.findPBByName(promotionName));
+		}
 		return promotionBargainVO;
 	}
 	

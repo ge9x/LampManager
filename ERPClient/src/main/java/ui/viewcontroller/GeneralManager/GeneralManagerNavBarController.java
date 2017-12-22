@@ -69,4 +69,8 @@ public class GeneralManagerNavBarController {
     public void clickPromotionButton(){
     	generalManagerViewController.showPromotionView();
     }
+    
+    public void clickDocumentDetailsButton(){
+    	generalManagerViewController.showDocumentDetailsView();
+    }
 }

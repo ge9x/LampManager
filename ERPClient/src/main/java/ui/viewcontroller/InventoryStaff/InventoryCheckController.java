@@ -55,9 +55,10 @@ public class  InventoryCheckController {
         table = new Table<>();
         table.setEditable(false);
         table.addColumn("行号","line",50);
-        table.addColumn("商品编号","ID",189);
-        table.addColumn("商品名称","name",200);
+        table.addColumn("商品编号","ID",150);
+        table.addColumn("商品名称","name",150);
         table.addColumn("型号","model",150);
+        table.addColumn("库存数量","amount",89);
         table.addColumn("商品均价","avg",100);
         TablePane.setContent(table.getTable());
     }
