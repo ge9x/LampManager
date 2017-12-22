@@ -163,9 +163,6 @@ public class SalesStaffSalesReturnEditViewController {
         		        					t.getTablePosition().getRow())
         		        					).getRetailPrice()
         							);
-        			total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
         		});
         
         remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
@@ -210,7 +207,14 @@ public class SalesStaffSalesReturnEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-    	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
+    	GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,"");
+    	data.add(itemBean);
+        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
+            }
+        });
     }
 
     public void clickSubmitButton(){

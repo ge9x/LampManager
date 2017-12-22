@@ -42,17 +42,20 @@ public class DocumentDetails{
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
         getAllBills(input.startDate,input.endDate);
-        searchByType(input.billType);
-        if (input.billType == BillType.RECEIPT || input.billType == BillType.PAYMENT) {
-            switch (input.filterType) {
-                case CUSTOMER:
-                    return searchByCustomer(billVOS, input.billType, input.keyword);
-                case SALESMAN:
-                    return searchBySaleman(billVOS, input.billType, input.keyword);
-                case INVENTORY:
-                    return searchByInventory(billVOS, input.billType, input.keyword);
+        if (input.billType != null){
+            searchByType(input.billType);
+            if (input.billType == BillType.RECEIPT || input.billType == BillType.PAYMENT) {
+                switch (input.filterType) {
+                    case CUSTOMER:
+                        return searchByCustomer(billVOS, input.billType, input.keyword);
+                    case SALESMAN:
+                        return searchBySaleman(billVOS, input.billType, input.keyword);
+                    case INVENTORY:
+                        return searchByInventory(billVOS, input.billType, input.keyword);
+                }
             }
         }
+
         return billVOS;
     }
     public void searchByType(BillType type){

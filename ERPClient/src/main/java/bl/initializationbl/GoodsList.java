@@ -22,7 +22,7 @@ public class GoodsList {
     public ArrayList<GoodsVO> posTovos(List<InitGoodsPO> initGoodsPOS) {
         ArrayList<GoodsVO> vos = new ArrayList<>();
         for (InitGoodsPO po : initGoodsPOS){
-            vos.add(new GoodsVO(po.getID(),po.getName(),po.getModel(),po.getGoodsNumber(),po.getBuyingPrice(),po.getRecentBuyingPrice(),po.getRetailPrice(),po.getRecentRetailPrice()));
+            vos.add(new GoodsVO(po.getID()+"",po.getName(),po.getModel(),po.getClassificationName(),po.getGoodsNumber(),0,po.getBuyingPrice(),po.getRecentBuyingPrice(),po.getRetailPrice(),po.getRecentRetailPrice()));
         }
         return vos;
     }

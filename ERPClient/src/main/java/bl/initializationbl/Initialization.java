@@ -2,6 +2,7 @@ package bl.initializationbl;
 
 import bl.classificationbl.Classification;
 import bl.customerbl.Customer;
+import dataimpl.initializationdataimpl.InitializationDataServiceImpl;
 import dataservice.initializationdataservice.InitializationDataService;
 import po.InitializationPO;
 import util.ResultMessage;
@@ -26,6 +27,7 @@ public class Initialization{
     private InitializationDataService initializationDataService;
 
     public Initialization(){
+        initializationDataService = InitializationDataServiceImpl.getInstance();
         goodsList = new GoodsList();
         customerList = new CustomerList();
         accountList = new AccountList();
