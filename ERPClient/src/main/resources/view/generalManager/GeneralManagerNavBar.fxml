@@ -34,7 +34,7 @@
                </Label>
            </children>
        </AnchorPane>
-       <AnchorPane fx:id="DocumentDetailsNav" layoutY="310.0" prefHeight="40.0" prefWidth="170.0">
+       <AnchorPane fx:id="DocumentDetailsNav" layoutY="310.0" onMouseClicked="#clickDocumentDetailsButton" prefHeight="40.0" prefWidth="170.0">
            <children>
                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                <Label fx:id="DocumentDetailsIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
