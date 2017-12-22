@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -51,9 +53,13 @@ public class InitGoodsPO implements Serializable {
 	 * 仓库里存的该商品的总数量
 	 */
 	private int goodsNumber;
+	/**
+	 * 商品所属分类
+	 */
+	private InitClassificationPO initClassificationPO;
 	
 	public InitGoodsPO(int iD, String name, String model, double buyingPrice,
-			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber) {
+			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber,InitClassificationPO initClassificationPO) {
 		super();
 		ID = iD;
 		this.name = name;
@@ -63,6 +69,7 @@ public class InitGoodsPO implements Serializable {
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 		this.goodsNumber = goodsNumber;
+		this.initClassificationPO=initClassificationPO;
 	}
 	@Id
 	@Column(name = "id")
@@ -120,6 +127,14 @@ public class InitGoodsPO implements Serializable {
 	}
 	public void setGoodsNumber(int goodsNumber) {
 		this.goodsNumber = goodsNumber;
+	}
+	@ManyToOne
+	@JoinColumn(name = "initclassification")
+	public InitClassificationPO getInitClassificationPO() {
+		return initClassificationPO;
+	}
+	public void setInitClassificationPO(InitClassificationPO initClassificationPO) {
+		this.initClassificationPO = initClassificationPO;
 	}
 	
 }
