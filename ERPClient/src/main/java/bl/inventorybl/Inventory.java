@@ -10,18 +10,13 @@ import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
-import bl.salesbl.SalesController;
 import blservice.goodsblservice.GoodsInfo;
-import blservice.salesblservice.SalesInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
-import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
-import util.Criterion;
-import util.QueryMode;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
@@ -40,14 +35,13 @@ public class Inventory {
 	private InventoryDataService inventoryDataService;
 	private InventoryList inventoryList;
 	private InventoryBill inventoryBill;
-	private SalesInfo salesInfo;
 	private GoodsInfo goodsInfo;
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		// salesInfo = new SalesController();
 		goodsInfo = new GoodsController();
-		inventoryBill = new InventoryBill();
+		inventoryBill = new InventoryBill(goodsInfo);
+		inventoryList = new InventoryList();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {
@@ -59,21 +53,11 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(String startDate, String endDate, String inventory) { // TODO
-//		LocalDate start = LocalDate.parse(startDate);
-//		LocalDate end = LocalDate.parse(endDate);
-//		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-//		while(!start.equals(end)){	// TODO Optimize
-//			ArrayList<Criterion> criteria = new ArrayList<>();
-//			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
-//			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
-//			ArrayList<InventoryBillVO> vos = new ArrayList<>();
-//			for(InventoryBillPO po : found){
-//				vos.add(this.poToVO(po));
-//			}
-//			ret.addAll(vos);
-//		}
-		return null;
+	public InventoryViewVO show(String startDate, String endDate, String inventory) throws RemoteException {
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		ArrayList<InventoryBillVO> inventoryBillVOs = inventoryBill.getPassBillsByDateAndInventory(startDate, endDate,
+				inventoryPO);
+		return inventoryList.show(startDate, endDate, inventory, inventoryBillVOs);
 	}
 
 	public InventoryCheckVO check() {
@@ -133,7 +117,7 @@ public class Inventory {
 	}
 
 	public ResultMessage deleteInventory(String inventory) throws RemoteException {
-		InventoryPO found = this.getInventoryByName(inventory);
+		InventoryPO found = inventoryDataService.findInventoryByName(inventory);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -147,7 +131,7 @@ public class Inventory {
 	}
 
 	public ResultMessage updateInventory(String before, String after) throws RemoteException {
-		InventoryPO found = this.getInventoryByName(before);
+		InventoryPO found = inventoryDataService.findInventoryByName(before);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -215,17 +199,23 @@ public class Inventory {
 		if (inventoryPO == null) {
 			return ResultMessage.FAILED;
 		}
-		else{
+		else {
+			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
 			for (GoodsItemVO itemVO : goodsItems) {
-				Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+				boolean isExistent = false;
 				for (GoodsPO goods : map.keySet()) {
 					if (goods.buildID().equals(itemVO.ID)) {
 						int number = map.get(goods) + sign * itemVO.number;
 						map.put(goods, number);
+						break;
 					}
 				}
+				if (!isExistent) { // 如果本来仓库里没有这种商品
+					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
+					map.put(goodsPO, itemVO.number);
+				}
 			}
-			System.out.println("Here to change Inventory");
+			inventoryPO.setNumber(map);
 			return inventoryDataService.updateInventory(inventoryPO);
 		}
 	}

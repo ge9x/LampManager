@@ -39,7 +39,6 @@ public class InventorySyncController {
 
     ArrayList<InventoryBillVO> overflow;
     ArrayList<InventoryBillVO> loss;
-    ArrayList<InventoryBillVO> gift;
     BillPane billPane;
     ToggleGroup toggleGroup;
 
@@ -76,7 +75,6 @@ public class InventorySyncController {
 
         overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
         loss = inventoryBLService.findBillByType(BillType.LOSS);
-        gift = inventoryBLService.findBillByType(BillType.GIFT);
 
         billPane = new BillPane("报溢单","报损单","赠送单");
         initTabs();
@@ -106,7 +104,6 @@ public class InventorySyncController {
         switch (tab){
             case "报溢单": bills = overflow;break;
             case "报损单": bills = loss;break;
-            case "赠送单": bills = gift;break;
         }
         for (int i = 0; i < bills.size(); i++){
             try {
@@ -180,13 +177,11 @@ public class InventorySyncController {
             switch (billPane.getSelected()){
                 case "报溢单": overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
                 case "报损单": loss = inventoryBLService.findBillByType(BillType.LOSS);
-                case "赠送单": gift = inventoryBLService.findBillByType(BillType.GIFT);
             }
         }else{
             switch (billPane.getSelected()){
                 case "报溢单": overflow = inventoryBLService.findBillByStateAndType(BillType.OVERFLOW,state);
                 case "报损单": loss = inventoryBLService.findBillByStateAndType(BillType.LOSS,state);
-                case "赠送单": gift = inventoryBLService.findBillByStateAndType(BillType.GIFT,state);
             }
         }
 

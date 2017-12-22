@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blservice.goodsblservice.GoodsInfo;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
@@ -17,6 +18,10 @@ import vo.InventoryBillVO;
  */
 @SuppressWarnings("deprecation")
 public class MockInventoryBill extends InventoryBill {
+
+	public MockInventoryBill(GoodsInfo goodsInfo) {
+		super(goodsInfo);
+	}
 
 	@Override
 	public ResultMessage submit(InventoryBillVO vo) {

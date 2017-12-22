@@ -6,18 +6,27 @@ import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryBill;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
 import util.BillType;
 import vo.*;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -30,18 +39,6 @@ public class FinancialDocumentDetailsController {
     ArrayList<BillVO> bills;
 
     ArrayList<BillVO> receipts;
-//    ArrayList<BillVO> payments;
-//    ArrayList<BillVO> cashBills;
-//
-//    ArrayList<BillVO> overflows;
-//    ArrayList<BillVO> losses;
-//    ArrayList<BillVO> gifts;
-//
-//    ArrayList<BillVO> sales;
-//    ArrayList<BillVO> salesReturns;
-//    ArrayList<BillVO> purchases;
-//    ArrayList<BillVO> purchaseReturns;
-
     ArrayList<VBox> billNodes = new ArrayList<>();
     ArrayList<FXMLLoader> fxmlLoaders = new ArrayList<>();
     BillPane billPane;
@@ -49,9 +46,36 @@ public class FinancialDocumentDetailsController {
 
     @FXML
     VBox vBox;
+
+    @FXML
+    JFXDatePicker StartDate, EndDate;
+
+    @FXML
+    JFXButton redButton,redCopyButton;
+
+    @FXML
+    ComboBox filterType;
+
+    @FXML
+    TextField keyword;
+
+    @FXML
+    Label searchIcon;
+
     @FXML
     public void initialize(){
-        input = new DocumentDetailsInput("2017-2-2","2017-10-22",null,null,null);
+
+        searchIcon.setText("\ue69d");
+
+        String initDate = formBLService.getStartDate();
+        StartDate.setValue(LocalDate.parse(initDate));
+        EndDate.setValue(LocalDate.now());
+        redButton.setText("\ue635");
+        redCopyButton.setText("\ue68c");
+
+
+        input = new DocumentDetailsInput(StartDate.getValue().toString(), EndDate.getValue().toString(), null, null, null);
+
         billPane = new BillPane("全部","库存报溢单","库存报损单","库存赠送单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
@@ -113,4 +137,14 @@ public class FinancialDocumentDetailsController {
         this.financialViewController = financialViewController;
     }
 
+    public void clickRedButton(MouseEvent mouseEvent) {
+
+    }
+
+    public void clickRedCopyButton(MouseEvent mouseEvent) {
+
+    }
+
+    public void clickSearchButton(MouseEvent mouseEvent) {
+    }
 }

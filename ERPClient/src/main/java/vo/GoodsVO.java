@@ -2,6 +2,7 @@ package vo;
 
 /**
  * Created on 2017/10/21
+ * 
  * @author 巽
  *
  */
@@ -46,13 +47,13 @@ public class GoodsVO {
 	 * 商品最近零售价
 	 */
 	public double recentRetailPrice;
-	public GoodsVO(String ID){
-	    this.ID = ID;
-    }
 
-	public GoodsVO(String ID, String name, String model, String classification, int amount,
-			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice) {
+	public GoodsVO(String ID) {
+		this.ID = ID;
+	}
+
+	public GoodsVO(String ID, String name, String model, String classification, int amount, int alarmAmount,
+			double buyingPrice, double retailPrice, double recentBuyingPrice, double recentRetailPrice) {
 		super();
 		this.ID = ID;
 		this.name = name;
@@ -65,7 +66,7 @@ public class GoodsVO {
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 	}
-	
+
 	/**
 	 * 该方法仅限Stub和Mock使用<br>
 	 * 请使用没有String inventory参数的构造方法，
@@ -86,5 +87,21 @@ public class GoodsVO {
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof GoodsVO) {
+			GoodsVO object = (GoodsVO) obj;
+			if (object.ID != null && this.ID != null) {
+				return this.ID.equals(object.ID);
+			}
+			else {
+				return super.equals(obj);
+			}
+		}
+		else {
+			return false;
+		}
+	}
+
 }

@@ -25,6 +25,6 @@ public class InitializationController implements InitializationBLService,InitInf
 
     @Override
     public String getStartDate() {
-        return null;
+        return "2017-01-01";
     }
 }

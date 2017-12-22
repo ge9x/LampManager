@@ -10,6 +10,10 @@ import util.InventoryListItemType;
  */
 public class InventoryViewItemVO{
 	/**
+	 * 变动日期
+	 */
+	public String date;
+	/**
 	 * 商品
 	 */
 	public GoodsVO goods;
@@ -26,8 +30,8 @@ public class InventoryViewItemVO{
 	 */
 	public double price;
 	
-	public InventoryViewItemVO(GoodsVO goods, InventoryListItemType type, int amount, double price) {
-		super();
+	public InventoryViewItemVO(String date, GoodsVO goods, InventoryListItemType type, int amount, double price) {
+		this.date = date;
 		this.goods = goods;
 		this.type = type;
 		this.amount = amount;

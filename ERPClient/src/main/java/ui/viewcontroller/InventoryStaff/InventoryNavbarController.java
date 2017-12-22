@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import ui.viewcontroller.FinancialStaff.FinancialViewController;
 
 /**
  * Created by Kry·L on 2017/11/26.
@@ -53,7 +52,7 @@ public class InventoryNavbarController {
 
         String username = userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
         userName.setText(username);
-        Image img = new Image("./images/avatar/inventory.jpg");
+        Image img = new Image("images/avatar/inventory2.jpg");
         avatar.setFill(new ImagePattern(img));
     }
 
