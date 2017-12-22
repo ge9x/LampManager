@@ -44,11 +44,15 @@ public class LoginViewController {
 
     @FXML
     JFXCheckBox rememberBox;
+    
+    @FXML
+    Label exitButton;
 
     @FXML
     public void initialize(){
         userIcon.setText("\ue608");
         passwordIcon.setText("\ue620");
+        exitButton.setText("\ue604");
 
         try {
             file = new File(getClass().getResource("/login-info").getPath());
@@ -150,5 +154,9 @@ public class LoginViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void close(){
+    	mainUIController.close();
     }
 }
