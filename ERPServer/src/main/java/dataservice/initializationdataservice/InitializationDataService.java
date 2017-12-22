@@ -2,8 +2,10 @@ package dataservice.initializationdataservice;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
+import java.util.Date;
 
 import po.InitAccountPO;
+import po.InitializationPO;
 import util.ResultMessage;
 
 /**
@@ -16,10 +18,16 @@ public interface InitializationDataService extends Remote{
      * @param po
      * @return
      */
-    public ResultMessage init(InitAccountPO po);
-    /**
-     * 展示所有期初建账信息
-     * @return
-     */
-   public  InitAccountPO show();
+    public ResultMessage init(InitializationPO po);
+   /**
+    * 得到所有期初建账日期
+    * @return
+    */
+   public ArrayList<String> getAllInitDates();
+   /**
+    * 通过日期得到该套账
+    * @param date
+    * @return
+    */
+   public InitializationPO getInitializationByDate(String date);
 }
