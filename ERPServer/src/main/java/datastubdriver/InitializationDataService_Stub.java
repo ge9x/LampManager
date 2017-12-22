@@ -40,7 +40,7 @@ public class InitializationDataService_Stub implements InitializationDataService
 		ArrayList<InitClassificationPO> initClassificationPOs=new ArrayList<>();
 		initClassificationPOs.add(classification1);
 		 
-		InitGoodsPO g1=new InitGoodsPO(1, "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,classification1);
+		InitGoodsPO g1=new InitGoodsPO(1, "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"日光灯");
 		ArrayList<InitGoodsPO> initGoodsPOs=new ArrayList<>();
 		initGoodsPOs.add(g1);
 		
