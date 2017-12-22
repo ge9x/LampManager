@@ -96,7 +96,7 @@ public class InventoryGoodsController {
         if (goods == null)
             return ;
         for (GoodsVO good : goods){
-            data.add(new GoodsBean(good.ID,good.name,good.model,good.classification,good.amount,good.alarmAmount,good.recentBuyingPrice,good.recentRetailPrice,good.buyingPrice,good.retailPrice));
+            data.add(new GoodsBean(good.ID,good.name,good.model,good.classification,good.alarmAmount,good.amount,good.recentBuyingPrice,good.recentRetailPrice,good.buyingPrice,good.retailPrice));
         }
 
     }
