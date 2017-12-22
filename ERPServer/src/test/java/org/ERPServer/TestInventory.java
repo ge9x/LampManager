@@ -10,7 +10,6 @@ import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
-import util.BillState;
 
 public class TestInventory {
 

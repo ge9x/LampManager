@@ -206,11 +206,17 @@ public class Inventory {
 				for (GoodsPO goods : map.keySet()) {
 					if (goods.buildID().equals(itemVO.ID)) {
 						int number = map.get(goods) + sign * itemVO.number;
+						if (number < 0) { // 负数检查
+							return ResultMessage.FAILED;
+						}
 						map.put(goods, number);
 						break;
 					}
 				}
 				if (!isExistent) { // 如果本来仓库里没有这种商品
+					if (sign == -1) { // 负数检查
+						return ResultMessage.FAILED;
+					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
 					map.put(goodsPO, itemVO.number);
 				}

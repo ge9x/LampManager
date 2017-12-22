@@ -2,9 +2,7 @@ package org.ERPServer;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -17,9 +15,6 @@ import dataservice.inventorydataservice.InventoryDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 import po.InventoryBillPO;
-import po.InventoryPO;
-import util.BillState;
-import util.BillType;
 
 public class TestDatabase {
 	SessionFactory sf;
@@ -28,16 +23,16 @@ public class TestDatabase {
 		sf = new Configuration().configure().buildSessionFactory();
 	}
 	
-	private Session setUp(){
-		Session s = sf.openSession();
-		s.beginTransaction();
-		return s;
-	}
-	
-	private void end(Session s){
-		s.getTransaction().commit();
-		s.close();
-	}
+//	private Session setUp(){
+//		Session s = sf.openSession();
+//		s.beginTransaction();
+//		return s;
+//	}
+//	
+//	private void end(Session s){
+//		s.getTransaction().commit();
+//		s.close();
+//	}
 	
 	public void testClassification(){
 //		Session s = setUp();
@@ -101,7 +96,7 @@ public class TestDatabase {
 	
 	public void testInventory(){
 		InventoryDataService inventoryImpl = InventoryDataServiceImpl.getInstance();
-		GoodsDataService goodsImpl = GoodsDataServiceImpl.getInstance();
+//		GoodsDataService goodsImpl = GoodsDataServiceImpl.getInstance();
 		try {
 			// 第一次使用请取消这段注释，成功运行一次后再注释掉
 //			HashMap<GoodsPO, Integer> map = new HashMap<>();
