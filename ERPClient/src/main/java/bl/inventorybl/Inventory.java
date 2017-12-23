@@ -18,6 +18,7 @@ import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.AlarmVO;
 import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
@@ -95,6 +96,22 @@ public class Inventory {
 
 	public ArrayList<InventoryBillVO> showAlarmBills() throws RemoteException {
 		return inventoryBill.showAlarm();
+	}
+
+	public ArrayList<AlarmVO> showAlarms(String inventory) throws RemoteException {
+		ArrayList<AlarmVO> ret = new ArrayList<>();
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+		for (GoodsPO goodsPO : map.keySet()) {
+			int alarmAmount = goodsPO.getAlarmAmount();
+			int number = map.get(goodsPO);
+			if (number < alarmAmount) {
+				int numberSuggestAdding = number - alarmAmount;
+				ret.add(new AlarmVO(goodsPO.buildID(), goodsPO.getName(), goodsPO.getModel(), number, alarmAmount,
+						numberSuggestAdding));
+			}
+		}
+		return ret;
 	}
 
 	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) throws RemoteException {
@@ -195,7 +212,6 @@ public class Inventory {
 	private ResultMessage changeInventory(ArrayList<GoodsItemVO> goodsItems, String inventory, int sign)
 			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
-		System.out.println("changeInventory method is called");
 		if (inventoryPO == null) {
 			return ResultMessage.FAILED;
 		}
@@ -210,6 +226,7 @@ public class Inventory {
 							return ResultMessage.FAILED;
 						}
 						map.put(goods, number);
+						isExistent = true;
 						break;
 					}
 				}
