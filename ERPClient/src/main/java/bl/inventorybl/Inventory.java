@@ -102,7 +102,7 @@ public class Inventory {
 			int alarmAmount = goodsPO.getAlarmAmount();
 			int number = map.get(goodsPO);
 			if (number < alarmAmount) {
-				int numberSuggestAdding = number - alarmAmount;	// TODO artificial suggestion
+				int numberSuggestAdding = 2 * alarmAmount - number; // intelligent recommendation
 				ret.add(new AlarmVO(goodsPO.buildID(), goodsPO.getName(), goodsPO.getModel(), number, alarmAmount,
 						numberSuggestAdding));
 			}
