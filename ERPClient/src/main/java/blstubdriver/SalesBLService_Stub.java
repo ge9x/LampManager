@@ -343,5 +343,11 @@ public class SalesBLService_Stub implements SalesBLService{
 		return promotion1;
 	}
 
+	@Override
+	public UserLimits getCurrentUserLimits() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -117,5 +117,11 @@ public class CustomerBLService_Stub implements CustomerBLService{
 	public ArrayList<UserVO> getAllSalesman() {
 		return userList;
 	}
+
+	@Override
+	public UserLimits getCurrentUserLimit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
