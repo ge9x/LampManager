@@ -23,6 +23,7 @@ import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.BillType;
+import util.FilterType;
 import vo.*;
 
 import javax.xml.soap.Text;
@@ -45,6 +46,7 @@ public class FinancialDocumentDetailsController {
     BillPane billPane;
     DocumentDetailsInput input;
 
+
     @FXML
     VBox vBox;
 
@@ -55,7 +57,7 @@ public class FinancialDocumentDetailsController {
     JFXButton redButton,redCopyButton;
 
     @FXML
-    ComboBox filterType;
+    ComboBox<String> filterType;
 
     @FXML
     TextField keyword;
@@ -76,7 +78,7 @@ public class FinancialDocumentDetailsController {
 
         input = new DocumentDetailsInput(StartDate.getValue().toString(), EndDate.getValue().toString(), null, null, null);
 
-        billPane = new BillPane("全部","库存报溢单","库存报损单",
+        billPane = new BillPane("报溢单","报损单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
         initTabs();
@@ -92,47 +94,33 @@ public class FinancialDocumentDetailsController {
                 public void handle(Event event) {
                     Tab tab = (Tab)event.getSource();
                     if (tab.isSelected()){
-                        billNodes.clear();
-                        fxmlLoaders.clear();
+                        input.billType = BillType.getEnumByValue(tab.getText());
                         loadBills(tab.getText());
-                        billPane.setContent(tab,billNodes);
-                        changeFilterItems(BillType.valueOf(tab.getText()));
+                        changeFilter(BillType.getEnumByValue(tab.getText()));
                     }
                 }
             });
         }
     }
-    public void changeFilterItems(BillType type){
+    public void changeFilter(BillType type){
         filterType.getItems().clear();
+        keyword.clear();
         switch (type){
             case RECEIPT:
-            case PAYMENT:
-
+            case PAYMENT:filterType.getItems().addAll("客户");break;
             case PURCHASE:
-            case RETURN:filterType.getItems().add("");
+            case RETURN:filterType.getItems().addAll("仓库","客户");break;
             case SALES:
-            case SALESRETURN: filterType.getItems().add("业务员");
-
-            case CASH:
+            case SALESRETURN: filterType.getItems().addAll("业务员","仓库","客户");break;
             case OVERFLOW:
-            case LOSS:
+            case LOSS:filterType.getItems().addAll("仓库");break;
         }
-
+        input.filterType = null;
     }
     public void loadBills(String tab){
-        switch (tab){
-            case "全部": input.billType = null; break;
-            case "库存报溢单": input.billType = BillType.OVERFLOW;break;
-            case "库存报损单": input.billType = BillType.LOSS; break;
-            case "进货单": input.billType = BillType.PURCHASE; ;break;
-            case "进货退货单": input.billType = BillType.RETURN;break;
-            case "销售单": input.billType = BillType.SALES;break;
-            case "销售退货单": input.billType = BillType.SALESRETURN;break;
-            case "收款单": input.billType = BillType.RECEIPT; break;
-            case "付款单": input.billType = BillType.PAYMENT;break;
-            case "现金费用单": input.billType = BillType.CASH; break;
-        }
         bills = formBLService.getDocumentDetails(input);
+        billNodes.clear();
+        fxmlLoaders.clear();
         for (int i = 0; i < bills.size(); i++){
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -141,20 +129,26 @@ public class FinancialDocumentDetailsController {
                 fxmlLoaders.add(loader);
                 billNodes.add(node);
                 BillController billController = loader.getController();
-                billController.hideCheckbox();
-//                billController.setFinancialDocumentDetailsController(this);
+                billController.setFinancialDocumentDetailsController(this);
                 billController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        billPane.setContent(billPane.getTabByName(billPane.getSelected()),billNodes);
     }
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
     }
 
     public void clickRedButton(MouseEvent mouseEvent) {
-
+        for (FXMLLoader loader:fxmlLoaders){
+            BillController controller = loader.getController();
+            if (controller.isSelected()){
+                BillVO billVO = controller.getBill();
+                formBLService.redCover(billVO);
+            }
+        }
     }
 
     public void clickRedCopyButton(MouseEvent mouseEvent) {
@@ -162,5 +156,9 @@ public class FinancialDocumentDetailsController {
     }
 
     public void clickSearchButton(MouseEvent mouseEvent) {
+        FilterType type = FilterType.getEnumByValue(filterType.getSelectionModel().getSelectedItem());
+        input.filterType = type;
+        input.keyword = keyword.getText();
+        loadBills(billPane.getSelected());
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
+import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
 import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
@@ -34,7 +35,7 @@ public class BillController {
     SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
     SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
     InventorySyncController inventorySyncController;
-
+    FinancialDocumentDetailsController financialDocumentDetailsController;
     @FXML
     Circle circle;
 
@@ -329,5 +330,13 @@ public class BillController {
     public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
         this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
     }
-
+    public void setFinancialDocumentDetailsController(FinancialDocumentDetailsController financialDocumentDetailsController){
+        this.financialDocumentDetailsController = financialDocumentDetailsController;
+    }
+    public boolean isSelected(){
+        return checkBox.isSelected();
+    }
+    public BillVO getBill(){
+        return bill;
+    }
 }

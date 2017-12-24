@@ -6,6 +6,7 @@ import util.ResultMessage;
 import vo.AccountBillVO;
 import vo.CashBillVO;
 
+import java.io.Reader;
 import java.util.ArrayList;
 
 /**
@@ -59,4 +60,16 @@ public interface FinanceInfo {
      * @return
      */
     public ArrayList<CashBillVO> getCashBillsByDate(String startDate,String endDate);
+
+    /**
+     * 红冲单据：生成一个一模一样但是仅仅把数量取负数的单子并入账，以此来抵消之前的单子。
+     * @param billVO
+     */
+    public ResultMessage redCover(AccountBillVO billVO);
+
+    /**
+     * 红冲并复制单据：在红冲的基础上，新建一张以之前单子为模板的草稿单，给用户以编辑的机会。
+     * @param billVO
+     */
+    ResultMessage redCover(CashBillVO billVO);
 }

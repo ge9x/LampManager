@@ -142,4 +142,15 @@ public class CashBill {
         }
         return cashBillVOS;
     }
+
+    public ResultMessage redCover(CashBillVO billVO) throws RemoteException {
+        String ID = getNewCashBillID();
+        billVO.ID = ID;
+        for (CashBillItemVO itemVO:billVO.cashBillItems){
+            itemVO.money = -itemVO.money;
+        }
+        billVO.sum = billVO.calSum();
+        submit(billVO);
+        return examine(billVO);
+    }
 }

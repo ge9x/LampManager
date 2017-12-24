@@ -176,4 +176,22 @@ public class AccountBill {
         }
         return accountBillVOS;
     }
+
+    public ResultMessage redCover(AccountBillVO billVO) throws RemoteException {
+
+        String ID = "";
+
+        if (billVO.type == BillType.RECEIPT)
+            ID = getNewReceiptID();
+        else
+            ID = getNewPaymentID();
+        billVO.ID = ID;
+        for (AccountBillItemVO itemVO : billVO.accountBillItems) {
+            itemVO.transferMoney = -itemVO.transferMoney;
+        }
+
+        billVO.sum = billVO.calSum();
+        submit(billVO);
+        return examine(billVO);
+    }
 }

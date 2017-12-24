@@ -46,7 +46,7 @@ public class AccountBillVO extends BillVO{
      * 根据转账列表计算总额汇总
      * @return 总额汇总
      */
-    private double calSum(){
+    public double calSum(){
         double sum = 0;
         for (int i = 0; i < this.accountBillItems.size(); i++){
             sum += accountBillItems.get(i).transferMoney;

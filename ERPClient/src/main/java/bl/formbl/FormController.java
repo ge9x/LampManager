@@ -37,7 +37,7 @@ public class FormController implements FormBLService{
     }
 
     public ResultMessage redCover(BillVO billVO) {
-        return null;
+        return form.redCover(billVO);
     }
 
     public ResultMessage redCoverAndCopy(BillVO billVO) {

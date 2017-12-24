@@ -15,6 +15,7 @@ import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import util.BillType;
 import util.FilterType;
+import util.ResultMessage;
 import vo.*;
 
 import java.util.ArrayList;
@@ -42,9 +43,9 @@ public class DocumentDetails{
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
         getAllBills(input.startDate,input.endDate);
-        if (input.billType != null){
+        if (input.billType != null) {
             searchByType(input.billType);
-            if (input.billType == BillType.RECEIPT || input.billType == BillType.PAYMENT) {
+            if (input.filterType != null) {
                 switch (input.filterType) {
                     case CUSTOMER:
                         return searchByCustomer(billVOS, input.billType, input.keyword);
@@ -55,7 +56,6 @@ public class DocumentDetails{
                 }
             }
         }
-
         return billVOS;
     }
     public void searchByType(BillType type){
@@ -90,8 +90,7 @@ public class DocumentDetails{
                 break;
             case OVERFLOW:
             case LOSS:
-            case GIFT:
-                for (BillVO billVO:billVOS){
+            for (BillVO billVO:billVOS){
                     if (((InventoryBillVO) billVO).inventory.contains(name)){
                         newArr.add(billVO);
                     }
@@ -152,5 +151,31 @@ public class DocumentDetails{
         billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
         billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
         billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
+    }
+
+    public ResultMessage redCover(BillVO billVO) {
+        ResultMessage re = ResultMessage.FAILED;
+        switch (billVO.type){
+            case OVERFLOW:
+            case LOSS: inventoryInfo.redCover((InventoryBillVO)billVO);
+            case RECEIPT:
+            case PAYMENT: financeInfo.redCover((AccountBillVO)billVO);
+            case CASH: financeInfo.redCover((CashBillVO)billVO);
+            case PURCHASE:
+            case RETURN: salesInfo.redCover((PurchaseVO)billVO);
+            case SALES:
+            case SALESRETURN: salesInfo.redCover((SalesVO)billVO));
+
+        }
+
+    }
+    public ResultMessage redCoverAndCopy(BillVO billVO) {
+        ResultMessage re = ResultMessage.FAILED;
+        switch (billVO.type){
+            case OVERFLOW:
+            case LOSS: inventoryInfo.redCoverAndCopy();
+            case RECEIPT:
+        }
+
     }
 }
