@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryNavbarController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryNavbarController">
     <children>
         <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="63.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
         <AnchorPane fx:id="ViewNav" layoutY="190.0" onMouseClicked="#clickViewButton" prefHeight="40.0" prefWidth="170.0">
@@ -45,7 +49,7 @@
                 </Label>
             </children>
         </AnchorPane>
-        <Label fx:id="userName" layoutX="46.0" layoutY="128.0" prefHeight="33.0" prefWidth="80.0" text="名字" />
+        <Label fx:id="userName" alignment="CENTER" layoutY="128.0" prefHeight="33.0" prefWidth="170.0" text="名字" />
 
     </children>
 </AnchorPane>
