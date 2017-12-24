@@ -10,6 +10,7 @@ import util.BillState;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -269,5 +270,10 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	@Override
 	public PromotionTotalVO findPromotionTotalByName(String name) {
 		return null;
+	}
+
+	@Override
+	public UserLimits getCurrentUserLimits() {
+		return purchase.getCurrentUserLimits();
 	}
 }

@@ -22,6 +22,7 @@ import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PurchaseVO;
@@ -267,5 +268,9 @@ public class Purchase {
 			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
 		}
 		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 }
