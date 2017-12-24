@@ -290,4 +290,20 @@ public class Sales {
 		return salesLineItem.getCurrentUserLimits();
 	}
 	
+	public ResultMessage redCover(SalesVO vo) throws RemoteException {
+		ArrayList<GoodsItemVO> goodsitemList=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsitemList){
+			goodsItemVO.number=-goodsItemVO.number;
+		}
+		vo.goodsItemList=goodsitemList;
+		vo.state=BillState.PASS;
+		return addSales(vo);
+	}
+	
+	public ResultMessage redCoverAndCopy(SalesVO vo) throws RemoteException {
+		redCover(vo);
+		vo.state=BillState.DRAFT;
+		return addSales(vo);
+	}
+	
 }

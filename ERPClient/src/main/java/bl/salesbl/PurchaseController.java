@@ -279,13 +279,27 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 
 	@Override
 	public ResultMessage redCover(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.redCover(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage redCoverAndCopy(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return purchase.redCoverAndCopy(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 }
