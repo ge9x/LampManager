@@ -12,6 +12,7 @@ import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
 import vo.InventoryViewItemVO;
+import vo.AlarmVO;
 import vo.GoodsVO;
 
 /**
@@ -125,8 +126,10 @@ public class InventoryBLService_Stub implements InventoryBLService {
 		return data;
 	}
 
-	public ArrayList<InventoryBillVO> showAlarmBills() {
-		return alarmData;
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) {
+		ArrayList<AlarmVO> ret = new ArrayList<>();
+		ret.add(new AlarmVO("0100001", "圣洁牌经典黑白配台灯", "L", 21, 25, 9));
+		return ret;
 	}
 
 	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) {

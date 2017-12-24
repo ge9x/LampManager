@@ -94,11 +94,7 @@ public class Inventory {
 		return inventoryBill.show();
 	}
 
-	public ArrayList<InventoryBillVO> showAlarmBills() throws RemoteException {
-		return inventoryBill.showAlarm();
-	}
-
-	public ArrayList<AlarmVO> showAlarms(String inventory) throws RemoteException {
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) throws RemoteException {
 		ArrayList<AlarmVO> ret = new ArrayList<>();
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		Map<GoodsPO, Integer> map = inventoryPO.getNumber();
@@ -106,7 +102,7 @@ public class Inventory {
 			int alarmAmount = goodsPO.getAlarmAmount();
 			int number = map.get(goodsPO);
 			if (number < alarmAmount) {
-				int numberSuggestAdding = number - alarmAmount;
+				int numberSuggestAdding = number - alarmAmount;	// TODO artificial suggestion
 				ret.add(new AlarmVO(goodsPO.buildID(), goodsPO.getName(), goodsPO.getModel(), number, alarmAmount,
 						numberSuggestAdding));
 			}
