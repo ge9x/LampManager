@@ -17,7 +17,8 @@ public class GoodsItemBean {
     public StringProperty remark;
 
     public GoodsItemBean(String ID, String name, String model, int amount, double retailPrice, double totalPrice, String remark) {
-    	this.ID = new SimpleStringProperty(ID);
+
+        this.ID = new SimpleStringProperty(ID);
         this.name = new SimpleStringProperty(name);
         this.model = new SimpleStringProperty(model);
         this.amount = new SimpleIntegerProperty(amount);

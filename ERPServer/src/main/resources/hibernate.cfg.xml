@@ -15,7 +15,7 @@
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="show_sql">true</property>
-		<property name="hbm2ddl.auto">none</property>
+		<property name="hbm2ddl.auto">update</property>
 
 		<mapping class="po.AccountBillItemPO" />
 		<mapping class="po.AccountBillPO" />
@@ -35,6 +35,11 @@
 		<mapping class="po.PurchasePO" />
         <mapping class="po.SalesPO"/>
 		<mapping class="po.UserPO" />
+        <mapping class="po.InitializationPO" />
+        <mapping class="po.InitAccountPO" />
+        <mapping class="po.InitCustomerPO" />
+        <mapping class="po.InitGoodsPO" />
+        <mapping class="po.InitClassificationPO" />
 	</session-factory>
 
 </hibernate-configuration>

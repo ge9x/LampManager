@@ -6,3 +6,8 @@
     -fx-font-family: iconfont;
     -fx-font-size: 16px;
 }
+#exitButton {
+	-fx-font-family: iconfont;
+    -fx-font-size: 25px;
+    -fx-text-fill: #808080;
+}
