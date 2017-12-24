@@ -265,4 +265,26 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 		}
 		return null;
 	}
+
+	@Override
+	public ResultMessage redCover(InventoryBillVO vo) {
+		try {
+			return inventory.redCover(vo);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) {
+		try {
+			return inventory.redCoverAndCopy(vo);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
 }

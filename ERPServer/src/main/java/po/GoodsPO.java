@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 /**
  * Created on 2017/10/21
+ * 
  * @author 巽
  *
  */
@@ -60,12 +61,12 @@ public class GoodsPO implements Serializable {
 	 * 同商品分类下第几个商品
 	 */
 	private int turn;
-	
-	public GoodsPO(){ }
 
-	public GoodsPO(String name, String model, ClassificationPO classification,
-			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice, int turn) {
+	public GoodsPO() {
+	}
+
+	public GoodsPO(String name, String model, ClassificationPO classification, int alarmAmount, double buyingPrice,
+			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int turn) {
 		this.name = name;
 		this.model = model;
 		this.classification = classification;
@@ -83,9 +84,8 @@ public class GoodsPO implements Serializable {
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-	public GoodsPO(int ID, String name, String model, ClassificationPO classification,
-			int alarmAmount, double buyingPrice, double retailPrice, double recentBuyingPrice,
-			double recentRetailPrice) {
+	public GoodsPO(int ID, String name, String model, ClassificationPO classification, int alarmAmount,
+			double buyingPrice, double retailPrice, double recentBuyingPrice, double recentRetailPrice) {
 		this.ID = ID;
 		this.name = name;
 		this.model = model;
@@ -96,49 +96,49 @@ public class GoodsPO implements Serializable {
 		this.recentBuyingPrice = recentBuyingPrice;
 		this.recentRetailPrice = recentRetailPrice;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	public int getID() {
 		return ID;
 	}
-	
+
 	public void setID(int ID) {
 		this.ID = ID;
 	}
-	
+
 	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Column(name = "model")
 	public String getModel() {
 		return model;
 	}
-	
+
 	public void setModel(String model) {
 		this.model = model;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name = "claid")
 	public ClassificationPO getClassification() {
 		return classification;
 	}
-	
+
 	public void setClassification(ClassificationPO classification) {
 		this.classification = classification;
 	}
-	
+
 	public int countAmount() {
 		int amount = 0;
-		for(int num : number.values()){
+		for (int num : number.values()) {
 			amount += num;
 		}
 		return amount;
@@ -148,7 +148,7 @@ public class GoodsPO implements Serializable {
 	public int getAlarmAmount() {
 		return alarmAmount;
 	}
-	
+
 	public void setAlarmAmount(int alarmAmount) {
 		this.alarmAmount = alarmAmount;
 	}
@@ -157,7 +157,7 @@ public class GoodsPO implements Serializable {
 	public double getBuyingPrice() {
 		return buyingPrice;
 	}
-	
+
 	public void setBuyingPrice(double buyingPrice) {
 		this.buyingPrice = buyingPrice;
 	}
@@ -166,7 +166,7 @@ public class GoodsPO implements Serializable {
 	public double getRetailPrice() {
 		return retailPrice;
 	}
-	
+
 	public void setRetailPrice(double retailPrice) {
 		this.retailPrice = retailPrice;
 	}
@@ -175,7 +175,7 @@ public class GoodsPO implements Serializable {
 	public double getRecentBuyingPrice() {
 		return recentBuyingPrice;
 	}
-	
+
 	public void setRecentBuyingPrice(double recentBuyingPrice) {
 		this.recentBuyingPrice = recentBuyingPrice;
 	}
@@ -184,13 +184,13 @@ public class GoodsPO implements Serializable {
 	public double getRecentRetailPrice() {
 		return recentRetailPrice;
 	}
-	
+
 	public void setRecentRetailPrice(double recentRetailPrice) {
 		this.recentRetailPrice = recentRetailPrice;
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="inventory_goods_number")
+	@CollectionTable(name = "inventory_goods_number")
 	@MapKeyJoinColumn(name = "InventoryPO_id")
 	@Column(name = "number")
 	public Map<InventoryPO, Integer> getNumber() {
@@ -209,8 +209,8 @@ public class GoodsPO implements Serializable {
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
-	
-	public String buildID(){
+
+	public String buildID() {
 		return String.format("%02d", classification.getID()) + String.format("%06d", turn);
 	}
 }

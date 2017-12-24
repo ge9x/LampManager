@@ -102,7 +102,7 @@ public class Inventory {
 			int alarmAmount = goodsPO.getAlarmAmount();
 			int number = map.get(goodsPO);
 			if (number < alarmAmount) {
-				int numberSuggestAdding = number - alarmAmount;	// TODO artificial suggestion
+				int numberSuggestAdding = 2 * alarmAmount - number; // intelligent recommendation
 				ret.add(new AlarmVO(goodsPO.buildID(), goodsPO.getName(), goodsPO.getModel(), number, alarmAmount,
 						numberSuggestAdding));
 			}
@@ -198,6 +198,14 @@ public class Inventory {
 
 	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() throws RemoteException {
 		return inventoryBill.getAllSubmittedBill();
+	}
+	
+	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCover(vo);
+	}
+
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCoverAndCopy(vo);
 	}
 
 	/**
