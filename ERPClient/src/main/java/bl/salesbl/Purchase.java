@@ -22,6 +22,7 @@ import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PurchaseVO;
@@ -141,8 +142,6 @@ public class Purchase {
 		return purchaseLineItem.getAllCustomer();
 	}
 	
-	//purchaseInfo
-	
 	public ArrayList<PurchaseVO> getAllSubmittedPurchase() throws RemoteException {
 		ArrayList<PurchasePO> purpoList=salesDataService.findPurchaseByState(BillState.SUBMITTED);
 		ArrayList<PurchaseVO> purvoList=new ArrayList<>();
@@ -152,7 +151,6 @@ public class Purchase {
 		return purvoList;
 	}
 	
-	//purchaseList
 	public ArrayList<PurchaseVO> showPurchase() throws RemoteException{
 		return purchaseList.showPurchase();
 	}
@@ -168,34 +166,6 @@ public class Purchase {
 	public String getnewReturnID() throws RemoteException {
 		return salesDataService.getNewReturnID();
 	}
-
-    private static int getnewPurchaseTurn() throws RemoteException{
-    	int turn=0;
-    	ArrayList<PurchasePO> purList=salesDataService.showPurchase();
-    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-    	Date date=new Date();  
-    	String str=sdf.format(date);  
-    	for(PurchasePO po:purList){
-    		if(po.getDate().equals(str)){
-    			turn++;
-    		}
-    	}
-		return turn+1;
-	}
-    
-    private static int getNewReturnTurn() throws RemoteException{
-    	int turn=0;
-    	ArrayList<PurchasePO> retList=salesDataService.showReturn();
-    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-    	Date date=new Date(); 
-    	String str=sdf.format(date);  
-    	for(PurchasePO po:retList){
-    		if(po.getDate().equals(str)){
-    			turn++;
-    		}
-    	}
-		return turn+1;
-    }
     
     public ArrayList<PurchaseVO> getPurchaseByDate(String startDate, String endDate) throws ParseException {
 		try {
@@ -221,29 +191,6 @@ public class Purchase {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date time=dateFormat.parse(date);
 		return time;
-	}
-	
-	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
-		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
-		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
-			goodsItempoList.add(goodsItemPO);
-		}
-		if(vo.type==BillType.PURCHASE){
-			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getnewPurchaseTurn());
-		}else{
-		return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,getNewReturnTurn());
-		}
-	}
-	
-	public static PurchaseVO poTovo(PurchasePO po){
-		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
-		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
-		for(GoodsItemPO goodsItempo:goodsItempoList){
-			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
-		}
-		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
 	}
 	
 	public ArrayList<PurchaseVO> getPurchaseOrderByState(BillState state) throws RemoteException {
@@ -301,5 +248,29 @@ public class Purchase {
 		     }
 		 }
 	    return updatePurchase(vo);
+	}
+	
+	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
+			goodsItempoList.add(goodsItemPO);
+		}
+		String str[]=vo.ID.split("-");
+			return new PurchasePO(vo.type,vo.state,vo.supplier,Integer.parseInt(vo.customerID),vo.inventory,vo.user,goodsItempoList,vo.remarks,vo.date,Integer.parseInt(str[2]));
+	}
+	
+	public static PurchaseVO poTovo(PurchasePO po){
+		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
+		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
+		for(GoodsItemPO goodsItempo:goodsItempoList){
+			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
+		}
+		return new PurchaseVO(po.getType(),po.getState(),po.buildID(),po.getSupplier(),Integer.toString(po.getCustomerID()),po.getInventory(),po.getUser(),goodsItemvoList,po.getRemarks(),po.getDate());
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 }

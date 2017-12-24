@@ -43,6 +43,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
@@ -207,6 +208,22 @@ public class SalesStaffSalesEditViewController {
       							  );
 
       		  });
+        
+        ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
+        ItemTable.retailPriceColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, Double> t)->{
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setRetailPrice(t.getNewValue());
+        			
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setTotalPrice(t.getNewValue() 
+        							* ((GoodsItemBean) t.getTableView().getItems().get(
+        		        					t.getTablePosition().getRow())
+        		        					).getAmount()
+        							);
+        		});
       
         ItemTable.remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
         ItemTable.remarkColumn.setOnEditCommit(
@@ -245,7 +262,9 @@ public class SalesStaffSalesEditViewController {
                 int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+				}
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
 		        initializePromotionComboBox();
             }
@@ -344,7 +363,9 @@ public class SalesStaffSalesEditViewController {
 				int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+				}
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
 		        initializePromotionComboBox();
 			}
@@ -441,7 +462,7 @@ public class SalesStaffSalesEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
+        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
     	data.add(itemBean);
         itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
             @Override

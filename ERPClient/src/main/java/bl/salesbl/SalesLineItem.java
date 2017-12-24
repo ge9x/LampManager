@@ -17,6 +17,7 @@ import blservice.userblservice.UserInfo;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -81,6 +82,10 @@ public class SalesLineItem {
 	
 	public PromotionTotalVO findPromotionTotalByName(String name) {
 		return promotionTotalInfo.findPromotionByName(name);
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 	
 }

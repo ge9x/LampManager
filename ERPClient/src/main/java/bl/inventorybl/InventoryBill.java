@@ -99,15 +99,6 @@ public class InventoryBill {
 		return ret;
 	}
 
-	public ArrayList<InventoryBillVO> showAlarm() throws RemoteException {
-		ArrayList<InventoryBillPO> pos = inventoryDataService.showAlarm();
-		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		for (InventoryBillPO po : pos) {
-			ret.add(this.poToVO(po));
-		}
-		return ret;
-	}
-
 	public InventoryBillVO showDetails(String ID) throws NumberFormatException, RemoteException {
 		InventoryBillPO po = this.getBillByID(ID);
 		return this.poToVO(po);
@@ -216,8 +207,16 @@ public class InventoryBill {
 		}
 		return ret;
 	}
+	
+	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
+		return null;	// TODO
+	}
 
-	private InventoryBillVO poToVO(InventoryBillPO po) {
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
+		return null;	// TODO
+	}
+
+	private InventoryBillVO poToVO(InventoryBillPO po) throws RemoteException {
 		if (po == null) {
 			return null;
 		}

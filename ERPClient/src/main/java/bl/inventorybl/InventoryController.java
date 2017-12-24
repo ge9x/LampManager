@@ -9,6 +9,7 @@ import po.InventoryPO;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.AlarmVO;
 import vo.GoodsItemVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -66,9 +67,9 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 		return null;
 	}
 
-	public ArrayList<InventoryBillVO> showAlarmBills() {
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) {
 		try {
-			return inventory.showAlarmBills();
+			return this.inventory.getAlarmByInventory(inventory);
 		}
 		catch (RemoteException e) {
 			e.printStackTrace();
@@ -263,5 +264,27 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public ResultMessage redCover(InventoryBillVO vo) {
+		try {
+			return inventory.redCover(vo);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) {
+		try {
+			return inventory.redCoverAndCopy(vo);
+		}
+		catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
 	}
 }

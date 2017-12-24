@@ -34,9 +34,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
+import ui.component.SalesBillTable;
 import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
@@ -124,33 +126,12 @@ public class SalesStaffSalesReturnEditViewController {
         inventory.getItems().addAll(inventories);
 
         //初始化表格
+        SalesBillTable ItemTable = new SalesBillTable();
         itemTable = new TableView<>();
         itemTable.setEditable(true);
 
-        TableColumn IDColumn = new TableColumn("商品编号");
-        IDColumn.setPrefWidth(70);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        TableColumn nameColumn = new TableColumn("条目名");
-        nameColumn.setPrefWidth(60);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(60);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn<GoodsItemBean, Integer> amountColumn = new TableColumn("数量");
-        amountColumn.setPrefWidth(60);
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn retailPriceColumn = new TableColumn("单价");
-        retailPriceColumn.setPrefWidth(60);
-        retailPriceColumn.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        TableColumn totalPriceColumn = new TableColumn("总价");
-        totalPriceColumn.setPrefWidth(60);
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        TableColumn<GoodsItemBean, String> remarkColumn = new TableColumn("备注");
-        remarkColumn.setPrefWidth(78);
-        remarkColumn.setCellValueFactory(new PropertyValueFactory<>("remark"));
-
-        amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
-        amountColumn.setOnEditCommit(
+        ItemTable.amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
+        ItemTable.amountColumn.setOnEditCommit(
         		(CellEditEvent<GoodsItemBean, Integer> t)->{
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
@@ -165,8 +146,24 @@ public class SalesStaffSalesReturnEditViewController {
         							);
         		});
         
-        remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
-        remarkColumn.setOnEditCommit(
+        ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
+        ItemTable.retailPriceColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, Double> t)->{
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setRetailPrice(t.getNewValue());
+        			
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setTotalPrice(t.getNewValue() 
+        							* ((GoodsItemBean) t.getTableView().getItems().get(
+        		        					t.getTablePosition().getRow())
+        		        					).getAmount()
+        							);
+        		});
+        
+        ItemTable.remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
+        ItemTable.remarkColumn.setOnEditCommit(
         		(CellEditEvent<GoodsItemBean, String> t)->{
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
@@ -174,7 +171,8 @@ public class SalesStaffSalesReturnEditViewController {
         		});
         
         itemTable.setItems(data);
-        itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        itemTable.getColumns().addAll(ItemTable.IDColumn, ItemTable.nameColumn, ItemTable.modelColumn, ItemTable.amountColumn, 
+        		ItemTable.retailPriceColumn, ItemTable.totalPriceColumn, ItemTable.remarkColumn);
         vbox.getChildren().add(itemTable);
 
         //折让前总额Text与商品总额金额之和绑定
@@ -207,7 +205,7 @@ public class SalesStaffSalesReturnEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-    	GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,"");
+    	GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0,"");
     	data.add(itemBean);
         itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
             @Override

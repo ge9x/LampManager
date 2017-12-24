@@ -12,6 +12,7 @@ import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import dataservice.customerdataservice.CustomerDataService;
 import dataservice.salesdataservice.SalesDataService;
+import javafx.geometry.VPos;
 import po.CustomerPO;
 import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
@@ -65,6 +66,17 @@ public class Customer {
 	 * @throws RemoteException 
 	 */
 	public ResultMessage addCustomer(CustomerVO vo) throws RemoteException {
+		if(vo.level==Level.LEVEL_ONE){
+			vo.points=0;
+		}else if(vo.level==Level.LEVEL_TWO){
+			vo.points=5;
+		}else if(vo.level==Level.LEVEL_THREE){
+			vo.points=10;
+		}else if(vo.level==Level.LEVEL_FOUR){
+			vo.points=20;
+		}else if(vo.level==Level.LEVEL_FIVE){
+			vo.points=35;
+		}
 		CustomerPO po=voTopo(vo);
 		return customerDataService.add(po);
 	}
@@ -126,7 +138,7 @@ public class Customer {
 	public ResultMessage updateCustomer(CustomerVO vo) throws RemoteException{
 			CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(vo.customerID));
 			po.setCategory(vo.category.getValue());
-			po.setLevel(vo.level.getValue());
+//			po.setLevel(vo.level.getValue());
 			po.setCustomerName(vo.customerName);
 			po.setPhone(vo.phone);
 			po.setAddress(vo.address);
@@ -134,6 +146,18 @@ public class Customer {
 			po.setMail(vo.mail);
 			po.setSalesman(vo.salesman);
 			po.setReceivableLimit(vo.receivableLimit);
+			double points=po.getPoints();
+			if(points<5){
+				po.setLevel(Level.LEVEL_ONE.getValue());
+			}else if(points>=5&&points<10){
+				po.setLevel(Level.LEVEL_TWO.getValue());
+			}else if(points>=10&&points<20){
+				po.setLevel(Level.LEVEL_THREE.getValue());
+			}else if(points>=20&&points<35){
+				po.setLevel(Level.LEVEL_FOUR.getValue());
+			}else{
+				po.setLevel(Level.LEVEL_FIVE.getValue());
+			}
 		    return customerDataService.update(po);
 	}
 	
@@ -248,6 +272,13 @@ public class Customer {
 			}
 		}
 		return cusvo;
+	}
+	
+	public ResultMessage raiseCustomerPoints(double sum,int iD) throws RemoteException {
+		CustomerPO po=customerDataService.getCustomerData(iD);
+		double oldPoints=po.getPoints();
+		po.setPoints(oldPoints+sum/1000*1);
+		return customerDataService.update(po);
 	}
 	
 	private String alterID(String ID){

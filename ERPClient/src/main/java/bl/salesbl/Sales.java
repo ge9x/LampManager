@@ -23,6 +23,7 @@ import util.BillState;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -72,12 +73,12 @@ public class Sales {
 		po.setSalesman(vo.salesman);
 		po.setUser(vo.user);
 		po.setInventory(vo.inventory);
+		po.getGoodsItemList().clear();
 		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		ArrayList<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodItemvo:goodsItemvoList){
-			goodsItempoList.add(GoodsItem.voTopo(goodItemvo));
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodItemvo);
+			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setGoodsItemList(goodsItempoList);
 		po.setAllowance(vo.allowance);
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
@@ -203,57 +204,6 @@ public class Sales {
 		return time;
 	}
 	
-	 private static int getnewSalesTurn() throws RemoteException{
-	    	int turn=0;
-	    	ArrayList<SalesPO> salList=salesDataService.showSales();
-	    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-	    	Date date=new Date();  
-	    	String str=sdf.format(date);  
-	    	for(SalesPO po:salList){
-	    		if(po.getDate().equals(str)){
-	    			turn++;
-	    		}
-	    	}
-			return turn+1;
-		}
-	    
-	    private static int getNewSalesReturnTurn() throws RemoteException{
-	    	int turn=0;
-	    	ArrayList<SalesPO> retList=salesDataService.showSalesReturn();
-	    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
-	    	Date date=new Date(); 
-	    	String str=sdf.format(date);  
-	    	for(SalesPO po:retList){
-	    		if(po.getDate().equals(str)){
-	    			turn++;
-	    		}
-	    	}
-			return turn+1;
-	    }
-	
-	public static SalesPO voTopo(SalesVO vo) throws NumberFormatException, RemoteException{
-		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
-		for(GoodsItemVO goodsItemvo:goodsItemvoList){
-			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
-			goodsItempoList.add(goodsItemPO);
-		}
-		if(vo.type==BillType.SALES){
-			return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, getnewSalesTurn(), vo.promotionName);
-		}else{
-		    return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, getNewSalesReturnTurn(), vo.promotionName);
-		}
-	}
-	
-	public static SalesVO poTovo(SalesPO po){
-		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
-		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
-		for(GoodsItemPO goodsItempo:goodsItempoList){
-			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
-		}
-		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
-	}
-	
 	public ArrayList<SalesVO> getSalesOrderByState(BillState state) throws RemoteException {
 		ArrayList<SalesVO> salvoList=new ArrayList<>();
 		ArrayList<SalesPO> salrepoList=salesDataService.findSlaesByState(state);
@@ -314,4 +264,30 @@ public class Sales {
 	public PromotionTotalVO findPromotionTotalByName(String name) {
 		return salesLineItem.findPromotionTotalByName(name);
 	}
+	
+
+	public static SalesPO voTopo(SalesVO vo) throws NumberFormatException, RemoteException{
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
+			goodsItempoList.add(goodsItemPO);
+		}
+		String str[]=vo.date.split("-");
+		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
+	}
+	
+	public static SalesVO poTovo(SalesPO po){
+		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
+		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
+		for(GoodsItemPO goodsItempo:goodsItempoList){
+			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
+		}
+		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return salesLineItem.getCurrentUserLimits();
+	}
+	
 }
