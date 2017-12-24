@@ -10,7 +10,7 @@ public class SalesBillTable {
     public TableColumn nameColumn;
     public TableColumn modelColumn;
     public TableColumn<GoodsItemBean, Integer> amountColumn;
-    public TableColumn retailPriceColumn;
+    public TableColumn<GoodsItemBean, Double> retailPriceColumn;
     public TableColumn totalPriceColumn;
     public TableColumn<GoodsItemBean, String> remarkColumn;
 	
