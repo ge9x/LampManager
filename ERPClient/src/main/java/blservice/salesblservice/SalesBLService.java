@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import util.BillState;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -198,4 +199,9 @@ public interface SalesBLService {
 	   * @return
 	   */
 	  public PromotionTotalVO findPromotionTotalByName(String name);
+	  /**
+	   * 显示当前用户的用户权限
+	   * @return
+	   */
+	  public UserLimits getCurrentUserLimits();
 }

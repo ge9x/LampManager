@@ -23,6 +23,7 @@ import util.BillState;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -284,4 +285,9 @@ public class Sales {
 		}
 		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
 	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return salesLineItem.getCurrentUserLimits();
+	}
+	
 }
