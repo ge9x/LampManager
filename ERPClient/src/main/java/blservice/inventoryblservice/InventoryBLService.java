@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import vo.AlarmVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
@@ -43,15 +44,16 @@ public interface InventoryBLService extends Remote {
 	 */
 	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo);
 	/**
-	 * 得到所有库存报溢/报损单和赠送单
-	 * @return 所有库存报溢/报损单和赠送单的VO
+	 * 得到所有库存报溢和报损单
+	 * @return 所有库存报溢和报损单的VO
 	 */
 	public ArrayList<InventoryBillVO> showBills();
 	/**
-	 * 得到所有库存报警单
+	 * 根据仓库名得到所有库存报警单
+	 * @param 仓库名
 	 * @return 所有库存报警单的VO
 	 */
-	public ArrayList<InventoryBillVO> showAlarmBills();
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory);
 	/**
 	 * 根据单据类型和状态查找单据
 	 * @param type 单据类型
@@ -66,7 +68,7 @@ public interface InventoryBLService extends Remote {
 	 */
 	public ResultMessage addInventory(String inventory);
 	/**
-	 * 添加库存报溢单/报溢单/报警单
+	 * 添加库存报溢单/报溢单
 	 * @param vo
 	 * @return 是否成功添加
 	 */

@@ -126,11 +126,6 @@ public class TestDatabase {
 			for(InventoryBillPO po : allBills){
 				System.out.println(po.getID() + " " + po.getState().toString() + " " + po.getInventory() + " " + po.getGoodsMap());
 			}
-			ArrayList<InventoryBillPO> allAlarmBills = inventoryImpl.showAlarm();
-			System.out.println("共有" + allAlarmBills.size() + "条库存报警单记录：");
-			for(InventoryBillPO po : allAlarmBills){
-				System.out.println(po.getID() + " " + po.getState().toString() + " " + po.getInventory() + " " + po.getGoodsMap());
-			}
 			InventoryBillPO bill3 = inventoryImpl.findBill(3);
 			System.out.println("查询ID为3的库存类单据：");
 			System.out.println(bill3.getID() + " " + bill3.getDate() + " " + bill3.getType() + " " + bill3.getState());

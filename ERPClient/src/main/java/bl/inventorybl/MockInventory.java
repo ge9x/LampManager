@@ -8,6 +8,7 @@ import util.BillState;
 import util.BillType;
 import util.InventoryListItemType;
 import util.ResultMessage;
+import vo.AlarmVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -73,13 +74,9 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ArrayList<InventoryBillVO> showAlarmBills() {
-		HashMap<GoodsVO, Integer> goodsMap = new HashMap<GoodsVO, Integer>();
-		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
-		goodsMap.put(goodsVO, 25);
-		InventoryBillVO billVO = new InventoryBillVO("BJD-20171107-00001", BillType.ALARM, BillState.PASS, LocalDate.now().toString() , "栖霞区仓库", "乐圣洁", goodsMap);
-		ArrayList<InventoryBillVO> ret = new ArrayList<InventoryBillVO>();
-		ret.add(billVO);
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) {
+		ArrayList<AlarmVO> ret = new ArrayList<>();
+		ret.add(new AlarmVO("0100001", "圣洁牌经典黑白配台灯", "L", 21, 25, 9));
 		return ret;
 	}
 
