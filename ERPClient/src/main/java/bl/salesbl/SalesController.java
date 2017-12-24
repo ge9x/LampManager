@@ -285,5 +285,17 @@ public class SalesController implements SalesBLService,SalesInfo{
 	public UserLimits getCurrentUserLimits() {
 		return sales.getCurrentUserLimits();
 	}
+
+	@Override
+	public ResultMessage redCover(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(SalesVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
