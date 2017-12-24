@@ -199,6 +199,14 @@ public class Inventory {
 	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() throws RemoteException {
 		return inventoryBill.getAllSubmittedBill();
 	}
+	
+	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCover(vo);
+	}
+
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCoverAndCopy(vo);
+	}
 
 	/**
 	 * 改变库存（增加或减少）

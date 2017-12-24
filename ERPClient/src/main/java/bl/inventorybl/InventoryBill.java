@@ -207,8 +207,16 @@ public class InventoryBill {
 		}
 		return ret;
 	}
+	
+	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
+		return null;	// TODO
+	}
 
-	private InventoryBillVO poToVO(InventoryBillPO po) {
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
+		return null;	// TODO
+	}
+
+	private InventoryBillVO poToVO(InventoryBillPO po) throws RemoteException {
 		if (po == null) {
 			return null;
 		}
