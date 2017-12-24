@@ -462,7 +462,7 @@ public class SalesStaffSalesEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
+        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
     	data.add(itemBean);
         itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
             @Override
