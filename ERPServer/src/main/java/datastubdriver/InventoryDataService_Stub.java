@@ -99,10 +99,6 @@ public class InventoryDataService_Stub implements InventoryDataService{
 		return data;
 	}
 
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		return alarmData;
-	}
-
 	public InventoryBillPO findBill(int ID) throws RemoteException {
 		for(InventoryBillPO po : data){
 			if(po.getID() == ID){

@@ -56,11 +56,6 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	}
 
 	@Override
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		return inventoryBillDataHelper.fullyQuery("type", BillType.ALARM);
-	}
-
-	@Override
 	public InventoryBillPO findBill(int ID) throws RemoteException {
 		return inventoryBillDataHelper.exactlyQuery("id", ID);
 	}

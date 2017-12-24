@@ -36,11 +36,6 @@ public class InventoryDataRemoteObject extends UnicastRemoteObject implements In
 	}
 
 	@Override
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		return inventoryDataService.showAlarm();
-	}
-
-	@Override
 	public InventoryBillPO findBill(int ID) throws RemoteException {
 		return inventoryDataService.findBill(ID);
 	}
