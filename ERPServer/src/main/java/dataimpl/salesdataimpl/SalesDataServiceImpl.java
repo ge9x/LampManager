@@ -137,6 +137,10 @@ public class SalesDataServiceImpl implements SalesDataService{
 	}
 
 	public ResultMessage updateSales(SalesPO po) throws RemoteException {
+		List<GoodsItemPO> goodsItemPOs=po.getGoodsItemList();
+		for(GoodsItemPO goodsItemPO:goodsItemPOs){
+			addGoodsItem(goodsItemPO);
+		}
 		return salesDataHelper.update(po);
 	}
 
@@ -202,38 +206,50 @@ public class SalesDataServiceImpl implements SalesDataService{
 
 	@Override
 	public String getNewPurchaseID() throws RemoteException{
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", BillType.PURCHASE, QueryMode.FULL));
-		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
-		int num = salesDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.PURCHASE.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+		int turn=1;
+		ArrayList<PurchasePO> purpoList=showPurchase();
+		for(PurchasePO po:purpoList){
+			if(po.getDate().equals(LocalDate.now().toString())){
+				turn++;
+			}
+		}
+		return BillType.PURCHASE.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", turn);
 	}
 
 	@Override
 	public String getNewReturnID() throws RemoteException{
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", BillType.RETURN, QueryMode.FULL));
-		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
-		int num = salesDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.RETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+		int turn=1;
+		ArrayList<PurchasePO> repoList=showPurchase();
+		for(PurchasePO po:repoList){
+			if(po.getDate().equals(LocalDate.now().toString())){
+				turn++;
+			}
+		}
+		return BillType.RETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", turn);
 	}
 
 	@Override
 	public String getNewSalesID() throws RemoteException{
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", BillType.SALES, QueryMode.FULL));
-		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
-		int num = salesDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.SALES.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+		int turn =1;
+		ArrayList<SalesPO> salpoList=showSales();
+		for(SalesPO po:salpoList){
+			if(po.getDate().equals(LocalDate.now().toString())){
+				turn++;
+			}
+		}
+		return BillType.SALES.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", turn);
 	}
 
 	@Override
 	public String getNewSalesReturnID() throws RemoteException{
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", BillType.SALESRETURN, QueryMode.FULL));
-		criteria.add(new Criterion("date", LocalDate.now().toString(), QueryMode.FULL));
-		int num = salesDataHelper.multiQuery(criteria).size() + 1;
-		return BillType.SALESRETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", num);
+		int turn =1;
+		ArrayList<SalesPO> salpoList=showSalesReturn();
+		for(SalesPO po:salpoList){
+			if(po.getDate().equals(LocalDate.now().toString())){
+				turn++;
+			}
+		}
+		return BillType.SALESRETURN.getAcronym() + "-" + LocalDate.now().toString().replace("-", "") + "-" + String.format("%05d", turn);
 	}
 	
 }
