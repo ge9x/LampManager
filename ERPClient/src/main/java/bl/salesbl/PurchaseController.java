@@ -276,4 +276,16 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	public UserLimits getCurrentUserLimits() {
 		return purchase.getCurrentUserLimits();
 	}
+
+	@Override
+	public ResultMessage redCover(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

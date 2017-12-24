@@ -47,5 +47,19 @@ public interface SalesInfo {
 	 * @return
 	 */
 	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate,String endDate,String inventory,BillType type);
+	/**
+	 * 生成红冲单据（原本数量取负以抵消原单据影响）
+	 * 
+	 * @param vo 单据VO
+	 * @return 是否成功添加红冲单据
+	 */
+	public ResultMessage redCover(SalesVO vo);
+	/**
+	 * 生成红冲单据和复制单据（原本数量取负以抵消原单据影响，再新生成一张草稿单据）
+	 * 
+	 * @param vo 单据VO
+	 * @return 是否成功添加红冲单据和草稿单据
+	 */
+	public ResultMessage redCoverAndCopy(SalesVO vo);
 	
 }

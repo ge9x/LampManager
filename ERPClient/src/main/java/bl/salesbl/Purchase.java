@@ -273,4 +273,9 @@ public class Purchase {
 	public UserLimits getCurrentUserLimits() {
 		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
+	
+	public ResultMessage redCover(PurchaseVO vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
