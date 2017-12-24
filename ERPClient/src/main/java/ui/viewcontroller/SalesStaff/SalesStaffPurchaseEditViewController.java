@@ -225,27 +225,34 @@ public class SalesStaffPurchaseEditViewController {
     }
     
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
-    		goodsItemList.add(vo);
-    	}
-        String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
-        String supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
-    	if(!isExamine){
-	        if(isNew){
-	        	salesBLService.submitPurchase(purchaseVO);
-	        }
-	        else{
-	        	salesBLService.updatePurchase(purchaseVO);
-	        }
-	        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+    	if(supplier.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+	    	goodsItemList.clear();
+	    	for(GoodsItemBean bean:data){
+	    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	    		goodsItemList.add(vo);
+	    	}
+	        String supplierName = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerName;
+	        String supplierID = suppliers.get(supplier.getSelectionModel().getSelectedIndex()).customerID;
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
+	    	if(!isExamine){
+		        if(isNew){
+		        	salesBLService.submitPurchase(purchaseVO);
+		        }
+		        else{
+		        	salesBLService.updatePurchase(purchaseVO);
+		        }
+		        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
+	    	}
+	    	else{
+	    		salesBLService.updatePurchase(purchaseVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
     	else{
-    		salesBLService.updatePurchase(purchaseVO);
-    		generalManagerExaminationCellController.clickReturnButton();
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
     	}
     }
     

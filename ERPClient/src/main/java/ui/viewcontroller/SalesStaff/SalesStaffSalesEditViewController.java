@@ -517,41 +517,49 @@ public class SalesStaffSalesEditViewController {
     }
 
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
-    				bean.getRemark());
-    		goodsItemList.add(vo);
-    	}
-        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        double allowancePrice = 0;
-        double voucherPrice = 0;
-        String promotionName = "";
-        if(allowance.getText().length()>0){
-        	allowancePrice = Double.parseDouble(allowance.getText());
-        }
-        if(voucher.getText().length()>0){
-        	voucherPrice = Double.parseDouble(voucher.getText());
-        }
-        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
-        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
-        }
-        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
-        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
-    	if(!isExamine){
-	        if(isNew){
-	        	salesBLService.submitSales(salesVO);
+    	if(customer.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+    		goodsItemList.clear();
+        	for(GoodsItemBean bean:data){
+        		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+        				bean.getRemark());
+        		goodsItemList.add(vo);
+        	}
+        	
+	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        double allowancePrice = 0;
+	        double voucherPrice = 0;
+	        String promotionName = "";
+	        if(allowance.getText().length()>0){
+	        	allowancePrice = Double.parseDouble(allowance.getText());
 	        }
-	        else{
-	        	salesBLService.updateSales(salesVO);
+	        if(voucher.getText().length()>0){
+	        	voucherPrice = Double.parseDouble(voucher.getText());
 	        }
-	        salesStaffSalesOrderViewController.showSalesOrderList();
+	        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
+	        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
+	        }
+	        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
+	        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
+	    	if(!isExamine){
+		        if(isNew){
+		        	salesBLService.submitSales(salesVO);
+		        }
+		        else{
+		        	salesBLService.updateSales(salesVO);
+		        }
+		        salesStaffSalesOrderViewController.showSalesOrderList();
+	    	}
+	    	else{
+	    		salesBLService.updateSales(salesVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
     	else{
-    		salesBLService.updateSales(salesVO);
-    		generalManagerExaminationCellController.clickReturnButton();
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
     	}
     }
     
