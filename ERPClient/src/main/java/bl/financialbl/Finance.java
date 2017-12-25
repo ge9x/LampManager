@@ -156,4 +156,12 @@ public class Finance{
     public ResultMessage redCover(CashBillVO billVO) throws RemoteException {
         return cashBill.redCover(billVO);
     }
+
+    public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
+        return accountBill.redCoverAndCopy(billVO);
+    }
+
+    public ResultMessage redCoverAndCopy(CashBillVO billVO) throws RemoteException {
+        return cashBill.redCoverAndCopy(billVO);
+    }
 }
