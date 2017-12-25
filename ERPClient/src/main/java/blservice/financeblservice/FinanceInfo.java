@@ -66,10 +66,13 @@ public interface FinanceInfo {
      * @param billVO
      */
     public ResultMessage redCover(AccountBillVO billVO);
+    ResultMessage redCover(CashBillVO billVO);
 
     /**
      * 红冲并复制单据：在红冲的基础上，新建一张以之前单子为模板的草稿单，给用户以编辑的机会。
      * @param billVO
      */
-    ResultMessage redCover(CashBillVO billVO);
+    ResultMessage redCoverAndCopy(AccountBillVO billVO);
+    ResultMessage redCoverAndCopy(CashBillVO billVO);
+
 }

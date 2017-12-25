@@ -153,7 +153,16 @@ public class FinancialDocumentDetailsController {
     }
 
     public void clickRedCopyButton(MouseEvent mouseEvent) {
-
+        for (FXMLLoader loader:fxmlLoaders){
+            BillController controller = loader.getController();
+            if (controller.isSelected()){
+                BillVO billVO = controller.getBill();
+                ResultMessage re = formBLService.redCoverAndCopy(billVO);
+                Dialog dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("红冲并复制"+re.toString());
+                dialog.showAndWait();
+            }
+        }
     }
 
     public void clickSearchButton(MouseEvent mouseEvent) {

@@ -49,8 +49,7 @@ public class FinancialPaymentEditController {
 
     FinancialPaymentController financialPaymentController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    FinanceBLService financeBLService2 = new FinanceController();
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
+    FinanceBLService financeBLService = new FinanceController();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
@@ -96,8 +95,8 @@ public class FinancialPaymentEditController {
 
         String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService2.getAllAccount();
-        customers = financeBLService2.getAllCustomer();
+        accounts = financeBLService.getAllAccount();
+        customers = financeBLService.getAllCustomer();
 
         initCustomerCombobox();
         initTable();
@@ -112,7 +111,7 @@ public class FinancialPaymentEditController {
 
     }
     public void addPayment() {
-        String ID = financeBLService2.getNewPaymentID();
+        String ID = financeBLService.getNewPaymentID();
         isNew = true;
         isExamine = false;
         BillID.setText(ID);
@@ -172,14 +171,14 @@ public class FinancialPaymentEditController {
                 Username.getText(),accountBillItems);
     	if(!isExamine){
 	        if (isNew == true){
-	            financeBLService2.submit(accountBillVO);
+	            financeBLService.submit(accountBillVO);
 	        }else{
-	            financeBLService2.updateDraft(accountBillVO);
+	            financeBLService.updateDraft(accountBillVO);
 	        }
 	        financialPaymentController.showPaymentList();
     	}
     	else{
-    		financeBLService2.updateDraft(accountBillVO);
+    		financeBLService.updateDraft(accountBillVO);
     		generalManagerExaminationCellController.clickReturnButton();
     	}
     }
@@ -201,9 +200,9 @@ public class FinancialPaymentEditController {
 	                        Username.getText(), accountBillItems);
 	
 	                if (isNew == true){
-	                    financeBLService2.save(accountBillVO);
+	                    financeBLService.save(accountBillVO);
 	                }else{
-	                    financeBLService2.updateDraft(accountBillVO);
+	                    financeBLService.updateDraft(accountBillVO);
 	                }
 	            }
 	
@@ -322,7 +321,7 @@ public class FinancialPaymentEditController {
         }
 
         for (AccountBillItemVO accountBillItemVO : account.accountBillItems) {
-            String accountName = financeBLService2.getAccountNameByID(accountBillItemVO.account.accountID);
+            String accountName = financeBLService.getAccountNameByID(accountBillItemVO.account.accountID);
             accountBillItems.add(accountBillItemVO);
             data.add(new AccountBillItemBean(accountName, accountBillItemVO.transferMoney, accountBillItemVO.remark));
             total.set(total.get() + accountBillItemVO.transferMoney);

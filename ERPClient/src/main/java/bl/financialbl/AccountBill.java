@@ -194,4 +194,16 @@ public class AccountBill {
         submit(billVO);
         return examine(billVO);
     }
+
+    public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
+       redCover(billVO);
+        String ID = "";
+        if (billVO.type == BillType.RECEIPT)
+            ID = getNewReceiptID();
+        else
+            ID = getNewPaymentID();
+        billVO.ID = ID;
+        billVO.state = BillState.DRAFT;
+        return save(billVO);
+    }
 }
