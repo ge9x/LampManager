@@ -241,10 +241,10 @@ public class Purchase {
 	    if(vo.state==BillState.PASS){
 		     if(vo.type==BillType.PURCHASE){
 			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
-			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
 		     }else{
 			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
-			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
 		     }
 		 }
 	    return updatePurchase(vo);
