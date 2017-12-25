@@ -259,4 +259,9 @@ public class InventoryBLService_Stub implements InventoryBLService {
     		return null;
     	}
     }
+
+	@Override
+	public String getStartDate() {
+		return LocalDate.now().toString();
+	}
 }

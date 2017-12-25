@@ -287,4 +287,9 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 		}
 		return ResultMessage.FAILED;
 	}
+
+	@Override
+	public String getStartDate() {
+		return inventory.getStartDate();
+	}
 }
