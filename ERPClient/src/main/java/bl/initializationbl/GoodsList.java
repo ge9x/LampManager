@@ -26,7 +26,7 @@ public class GoodsList {
         ArrayList<GoodsVO> goodsVOS = goodsInfo.getAllGoods();
 
         for (GoodsVO goodsVO : goodsVOS){
-            pos.add(new InitGoodsPO(Integer.parseInt(goodsVO.ID),goodsVO.name,goodsVO.model,goodsVO.buyingPrice,goodsVO.retailPrice,goodsVO.recentBuyingPrice,goodsVO.recentRetailPrice,goodsVO.amount,goodsVO.classification));
+            pos.add(new InitGoodsPO(goodsVO.ID,goodsVO.name,goodsVO.model,goodsVO.buyingPrice,goodsVO.retailPrice,goodsVO.recentBuyingPrice,goodsVO.recentRetailPrice,goodsVO.amount,goodsVO.classification));
         }
         return pos;
     }

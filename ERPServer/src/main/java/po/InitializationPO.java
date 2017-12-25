@@ -1,5 +1,8 @@
 package po;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -65,8 +68,9 @@ private static final long servialVersionUID=45345768282732L;
 		this.date = date;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "initialization")
+    @Fetch(FetchMode.SUBSELECT)
 	public List<InitCustomerPO> getInitCustomerPOS() {
 		return initCustomerPOS;
 	}
@@ -76,8 +80,9 @@ private static final long servialVersionUID=45345768282732L;
 		this.initCustomerPOS = initCustomerPOS;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "initialization")
+    @Fetch(FetchMode.SUBSELECT)
 	public List<InitAccountPO> getInitAccountPOS() {
 		return initAccountPOS;
 	}
@@ -87,8 +92,9 @@ private static final long servialVersionUID=45345768282732L;
 		this.initAccountPOS = initAccountPOS;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "initialization")
+    @Fetch(FetchMode.SUBSELECT)
 	public List<InitGoodsPO> getInitGoodsPOS() {
 		return initGoodsPOS;
 	}
@@ -98,8 +104,9 @@ private static final long servialVersionUID=45345768282732L;
 		this.initGoodsPOS = initGoodsPOS;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "initialization")
+    @Fetch(FetchMode.SUBSELECT)
 	public List<InitClassificationPO> getInitClassificationPOS() {
 		return initClassificationPOS;
 	}

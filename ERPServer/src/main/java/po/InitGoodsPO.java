@@ -57,7 +57,8 @@ public class InitGoodsPO implements Serializable {
 	 * 商品所属分类
 	 */
 	private String classificationName;
-	
+
+	public InitGoodsPO(){}
 	public InitGoodsPO(String iD, String name, String model, double buyingPrice,
 			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber,String classificationName) {
 		super();

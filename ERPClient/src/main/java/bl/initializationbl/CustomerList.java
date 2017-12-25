@@ -25,7 +25,7 @@ public class CustomerList {
         ArrayList<InitCustomerPO> pos = new ArrayList<>();
         for (Integer ID :IDS){
             CustomerVO customerVO = customerInfo.getCustomerByID(ID);
-            pos.add(new InitCustomerPO(0,customerVO.customerID,
+            pos.add(new InitCustomerPO(customerVO.customerID,
                     customerVO.category.getValue(),customerVO.level.getValue(),
                     customerVO.customerName,customerVO.phone,customerVO.address,
                     customerVO.postCode, customerVO.mail, customerVO.receivableLimit,

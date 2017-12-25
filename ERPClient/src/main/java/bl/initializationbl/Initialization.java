@@ -7,8 +7,10 @@ import util.ResultMessage;
 import vo.*;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Kry·L on 2017/11/5.
@@ -31,6 +33,7 @@ public class Initialization{
     }
     public ResultMessage init() throws RemoteException {
         InitializationPO po = new InitializationPO();
+        po.setDate(LocalDate.now().toString());
         po.setInitClassificationPOS(classificationList.getClassifications());
         po.setInitAccountPOS(accountList.getAccounts());
         po.setInitGoodsPOS(goodsList.getGoods());
@@ -44,7 +47,7 @@ public class Initialization{
     public String getRecentInitDate() throws RemoteException {
         ArrayList<String> dates = getAllInitDate();
         if (dates != null && !dates.isEmpty())
-            return dates.get(dates.size());
+            return dates.get(dates.size()-1);
         else
             return null;
     }
