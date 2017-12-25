@@ -44,6 +44,7 @@ public class InitCustomerPO implements Serializable{
 	private String salesman;
 	/**客户积分*/
 	private double points;
+	public InitCustomerPO(){}
 	public InitCustomerPO(String customerID, String category, String level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
 			String salesman, double points) {

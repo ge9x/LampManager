@@ -7,12 +7,12 @@ import bean.GoodsBean;
 import bl.initializationbl.InitializationController;
 import blservice.initializationblservice.InitializationBLService;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -37,7 +37,7 @@ public class FinancialInitController {
 
 
     @FXML
-    AnchorPane CustomerTable,GoodsTable,ClaTable,AccountTable;
+    ScrollPane CustomerTable,GoodsTable,ClaTable,AccountTable;
 
     @FXML
     Label initIcon;
@@ -80,10 +80,10 @@ public class FinancialInitController {
             initCustomerTable();
             initGoodsTable();
 
-            CustomerTable.getChildren().add(customerTable.getTable());
-            GoodsTable.getChildren().add(goodsTable.getTable());
-            ClaTable.getChildren().add(classificationTable.getTable());
-            AccountTable.getChildren().add(accountTable.getTable());
+            CustomerTable.setContent(customerTable.getTable());
+            GoodsTable.setContent(goodsTable.getTable());
+            ClaTable.setContent(classificationTable.getTable());
+            AccountTable.setContent(accountTable.getTable());
 
             showInitInfo();
         }
@@ -157,10 +157,17 @@ public class FinancialInitController {
         dialog.setHeaderText("期初建账"+re.toString());
         dialog.showAndWait();
 
-        DateBox.getItems().clear();
-        DateBox.getItems().addAll(initializationBLService.getAllInitDate());
-        DateBox.getSelectionModel().selectLast();
+        if (re == ResultMessage.SUCCESS){
+            InitDateHBox.setVisible(true);
+            CustomerTable.setVisible(true);
+            GoodsTable.setVisible(true);
+            ClaTable.setVisible(true);
+            AccountTable.setVisible(true);
 
+            DateBox.getItems().clear();
+            DateBox.getItems().addAll(initializationBLService.getAllInitDate());
+            DateBox.getSelectionModel().selectLast();
+        }
     }
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
