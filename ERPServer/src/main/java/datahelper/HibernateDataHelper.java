@@ -107,6 +107,17 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	}
 
 	@Override
+	public ArrayList<T> rangeQuery(String field, Object min, Object max){
+		initSession();
+		Criteria criteria = session.createCriteria(type);
+		criteria.add(Restrictions.between(field, min, max));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		ArrayList<T> ret = (ArrayList<T>) criteria.list();
+		commitAndClose();
+		return ret;
+	}
+
+	@Override
 	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria) {
 		initSession();
 		Criteria crit = session.createCriteria(type);
