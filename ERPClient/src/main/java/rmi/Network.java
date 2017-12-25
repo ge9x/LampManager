@@ -1,8 +1,5 @@
 package rmi;
 
-import bl.initializationbl.Initialization;
-import dataservice.initializationdataservice.InitializationDataService;
-
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -26,6 +23,7 @@ public class Network {
     private UserRemoteHelper userRemoteHelper;
     private SalesRemoteHelper salesRemoteHelper;
     private InitializationRemoteHelper initializationRemoteHelper;
+    private LogRemoteHelper logRemoteHelper;
 
     public Network(String ip,int port){
         accountRemoteHelper = AccountRemoteHelper.getInstance();
@@ -38,6 +36,7 @@ public class Network {
         userRemoteHelper = UserRemoteHelper.getInstance();
         salesRemoteHelper=SalesRemoteHelper.getInstance();
         initializationRemoteHelper = InitializationRemoteHelper.getInstance();
+        logRemoteHelper = LogRemoteHelper.getInstance();
 
         this.ip = ip;
         this.port = port;
@@ -55,6 +54,7 @@ public class Network {
         userRemoteHelper.setRemote(Naming.lookup(url+"UserDataRemoteObject"));
         salesRemoteHelper.setRemote(Naming.lookup(url+"SalesDataRemoteObject"));
         initializationRemoteHelper.setRemote(Naming.lookup(url+"InitializationDataRemoteObject"));
+        logRemoteHelper.setRemote(Naming.lookup(url + "LogDataRemoteObject"));
     }
 
 

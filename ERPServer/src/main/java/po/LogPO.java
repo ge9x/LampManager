@@ -43,7 +43,8 @@ public class LogPO implements Serializable {
 	 */
 	private String details;
 
-	public LogPO() { }
+	public LogPO() {
+	}
 
 	public LogPO(LocalDateTime dateAndTime, String userID, OperationType operationType,
 			OperationObjectType operationObjectType, String details) {
@@ -111,6 +112,12 @@ public class LogPO implements Serializable {
 
 	public void setDetails(String details) {
 		this.details = details;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + dateAndTime.toString() + "]" + " [" + userID + "]" + " [" + operationType + "]" + " ["
+				+ operationObjectType + "]" + " [" + details + "]";
 	}
 
 }
