@@ -175,7 +175,7 @@ public class Purchase {
 			ArrayList<PurchaseVO> purvoList=new ArrayList<>();
 			for(PurchasePO po:purpoList){
 				Date date=stringToDate(po.getDate());
-				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getState()==BillState.PASS){
 					purvoList.add(poTovo(po));
 				}
 			}

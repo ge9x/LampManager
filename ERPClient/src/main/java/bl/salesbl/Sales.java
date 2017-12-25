@@ -96,7 +96,7 @@ public class Sales {
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
 			for(SalesPO po:salpoList){
 				Date date=stringToDate(po.getDate());
-				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getState()==BillState.PASS){
 					salvoList.add(poTovo(po));
 				}
 			}
@@ -113,7 +113,7 @@ public class Sales {
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
 			for(SalesPO po:salpoList){
 				Date date=stringToDate(po.getDate());
-				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getState()==BillState.PASS){
 					salvoList.add(poTovo(po));
 				}
 			}
