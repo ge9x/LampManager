@@ -10,7 +10,9 @@ import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
+import bl.initializationbl.InitializationController;
 import blservice.goodsblservice.GoodsInfo;
+import blservice.initializationblservice.InitInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryPO;
@@ -37,12 +39,14 @@ public class Inventory {
 	private InventoryList inventoryList;
 	private InventoryBill inventoryBill;
 	private GoodsInfo goodsInfo;
+	private InitInfo initInfo;
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		goodsInfo = new GoodsController();
 		inventoryBill = new InventoryBill(goodsInfo);
 		inventoryList = new InventoryList();
+		initInfo = new InitializationController();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {
@@ -206,6 +210,10 @@ public class Inventory {
 
 	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
 		return inventoryBill.redCoverAndCopy(vo);
+	}
+	
+	public String getStartDate() {
+		return initInfo.getStartDate();
 	}
 
 	/**
