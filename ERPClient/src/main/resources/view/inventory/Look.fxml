@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -36,11 +37,16 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                                 </Label>
-                        <Label styleClass="icon-label" fx:id="addIcon" onMouseClicked="#clickAddButton" text="+">
+                        <Label fx:id="addIcon" onMouseClicked="#clickAddButton" styleClass="icon-label" text="+">
                            <HBox.margin>
-                              <Insets right="335.0" />
+                              <Insets right="190.0" />
                            </HBox.margin>
                         </Label>
+                        <JFXComboBox fx:id="InventoryBox" prefHeight="23.0" prefWidth="116.0">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </JFXComboBox>
                         <JFXDatePicker fx:id="StartDate" prefHeight="23.0" prefWidth="120.0" />
                         <Label contentDisplay="CENTER" prefHeight="15.0" prefWidth="20.0" text="—" />
                         <JFXDatePicker fx:id="EndDate" prefWidth="120.0" />

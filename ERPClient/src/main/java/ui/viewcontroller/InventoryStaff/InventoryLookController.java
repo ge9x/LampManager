@@ -2,12 +2,15 @@ package ui.viewcontroller.InventoryStaff;
 
 import bean.AlarmBean;
 import bean.ItemBean;
+import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -75,6 +78,8 @@ public class InventoryLookController {
     @FXML
     JFXDatePicker EndDate;
 
+    @FXML
+    JFXComboBox<String> InventoryBox;
 
     @FXML
     public void initialize() {
@@ -82,7 +87,31 @@ public class InventoryLookController {
         addIcon.setText("\ue61e");
         tilePane.setPrefColumns(2);
 
-        getInfos();
+        InventoryBox.getItems().addAll(inventoryBLService.showInventory());
+        InventoryBox.getSelectionModel().selectFirst();
+
+        StartDate.setValue(LocalDate.parse(inventoryBLService.getStartDate()));
+        EndDate.setValue(LocalDate.now());
+
+        InventoryBox.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable, SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+                showAlarmTable();
+                showItemTable();
+            }
+        });
+        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                showItemTable();
+            }
+        });
+        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                showItemTable();
+            }
+        });
         initAlarmTable();
         initItemTable();
 
@@ -90,56 +119,8 @@ public class InventoryLookController {
         showItemTable();
     }
 
-    public boolean getInfos() {
-        inventories = inventoryBLService.showInventory();
-
-        alarmTable = new Table<>();
-        salesItemTable = new Table<>();
-        inventoryItemTable = new Table<>();
-
-        ArrayList<Label> labels = new ArrayList<>();
-        labels.add(new Label("仓库名称"));
-        labels.add(new Label("开始日期"));
-        labels.add(new Label("结束日期"));
-
-        ArrayList<Node> nodes = new ArrayList<Node>();
-        JFXComboBox<String> comboBox = new JFXComboBox<>();
-        comboBox.getItems().addAll(inventories);
-        JFXDatePicker startDate = new JFXDatePicker();
-        JFXDatePicker endDate = new JFXDatePicker();
-        nodes.add(comboBox);
-        nodes.add(startDate);
-        nodes.add(endDate);
-
-        Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels, nodes);
-        dialog.setHeaderText("请选择查看的仓库名称和时间段");
-
-        dialog.setResultConverter(dialogButton -> {
-
-            if (dialogButton == ButtonType.FINISH) {
-                ArrayList<String> result = new ArrayList<>();
-                result.add(comboBox.getValue());
-                result.add(startDate.getValue().toString());
-                result.add(endDate.getValue().toString());
-                return result;
-            }
-            return null;
-        });
-
-        Optional result = dialog.showAndWait();
-        if (result.isPresent()) {
-            if (result.get() != null) {
-                ArrayList<String> results = (ArrayList<String>) result.get();
-                inventory = results.get(0);
-                StartDate.setValue(LocalDate.parse(results.get(1)));
-                EndDate.setValue(LocalDate.parse(results.get(2)));
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void initAlarmTable() {
+        alarmTable = new Table<>();
         alarmTable.addColumn("编号", "ID", 160);
         alarmTable.addColumn("商品名称", "name", 160);
         alarmTable.addColumn("当前库存数量", "currentNum", 100);
@@ -150,6 +131,9 @@ public class InventoryLookController {
     }
 
     public void initItemTable() {
+        salesItemTable = new Table<>();
+        inventoryItemTable = new Table<>();
+
         salesItemTable.addColumn("时间", "date", 60);
         salesItemTable.addColumn("商品名称", "name", 60);
         salesItemTable.addColumn("I/O", "isIn", 60);
@@ -167,7 +151,9 @@ public class InventoryLookController {
     }
 
     public void showAlarmTable() {
+        inventory = InventoryBox.getSelectionModel().getSelectedItem();
         alarms = inventoryBLService.getAlarmByInventory(inventory);
+        alarmTable.clear();
         for (AlarmVO vo : alarms) {
             alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName, vo.alarmNumber, vo.goodsNumber, vo.numberSuggestAdding));
         }
@@ -176,6 +162,8 @@ public class InventoryLookController {
     public void showItemTable() {
         inventoryViewVO = inventoryBLService.show(StartDate.getValue().toString(), EndDate.getValue().toString(), inventory);
         ArrayList<InventoryViewItemVO> items = inventoryViewVO.item;
+        inventoryItemTable.clear();
+        salesItemTable.clear();
         for (InventoryViewItemVO item : items) {
             if (item.type == InventoryListItemType.IN) {
                 inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
@@ -198,9 +186,6 @@ public class InventoryLookController {
         ioNumTotal = iNum + oNum;
         ioMoneyTotal = iMoney + oMoney;
         psNumTotal = pNum + sNum;
-
-
-
     }
 
     public void setInventoryViewController(InventoryViewController inventoryViewController) {

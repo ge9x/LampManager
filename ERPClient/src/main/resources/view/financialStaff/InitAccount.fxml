@@ -11,13 +11,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxWidth="830.0" prefHeight="600.0" prefWidth="833.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/init.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialInitController">
+<AnchorPane maxWidth="830.0" prefHeight="600.0" prefWidth="833.0" style="-fx-background-color: #f6f6f7;"  xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialInitController">
     <children>
-        <ScrollPane layoutX="8.0" maxWidth="825.0" prefHeight="601.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" maxWidth="825.0" prefHeight="601.0" prefWidth="820.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" maxWidth="814.0" prefHeight="638.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" maxWidth="814.0" prefHeight="638.0" prefWidth="810.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
-                        <HBox alignment="CENTER_LEFT" maxWidth="716.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                        <HBox alignment="CENTER_LEFT" maxWidth="716.0" minHeight="81.0" minWidth="726.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
                                 <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                             </effect>
@@ -62,7 +62,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="ClaTable" layoutX="20.0" layoutY="52.0" prefHeight="230.0" prefWidth="676.0" />
+                        <ScrollPane styleClass="edge-to-edge" fx:id="ClaTable" layoutX="20.0" layoutY="52.0" prefWidth="676.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="744.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
@@ -75,7 +75,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="AccountTable" layoutX="20.0" layoutY="49.0" prefHeight="232.0" prefWidth="676.0" />
+                        <ScrollPane styleClass="edge-to-edge" fx:id="AccountTable" layoutX="20.0" layoutY="49.0" prefHeight="232.0" prefWidth="676.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
@@ -88,7 +88,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="GoodsTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
+                        <ScrollPane styleClass="edge-to-edge" fx:id="GoodsTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="744.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
@@ -101,7 +101,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="CustomerTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
+                        <ScrollPane styleClass="edge-to-edge" fx:id="CustomerTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
                      </children>
                   </AnchorPane>
                       </children>
