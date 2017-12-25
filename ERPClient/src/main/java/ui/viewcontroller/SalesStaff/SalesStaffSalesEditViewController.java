@@ -1,25 +1,44 @@
 package ui.viewcontroller.SalesStaff;
 
-import bean.GoodsBean;
-import bean.GoodsItemBean;
-import bl.salesbl.SalesController;
-import blservice.salesblservice.SalesBLService;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Optional;
+import java.util.function.DoubleToLongFunction;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+
+import bean.GoodsItemBean;
+import bl.promotionbl.PromotionTotal;
+import bl.salesbl.SalesController;
+import blservice.salesblservice.SalesBLService;
+import blservice.userblservice.UserBLService;
+import blstubdriver.SalesBLService_Stub;
+import blstubdriver.UserBLService_Stub;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -29,13 +48,22 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
+import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
-import util.*;
-import vo.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
+import util.BillState;
+import util.BillType;
+import util.Level;
+import util.Money;
+import util.PromotionType;
+import util.UserLimits;
+import vo.CustomerVO;
+import vo.GoodsItemVO;
+import vo.PromotionBargainVO;
+import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
+import vo.PromotionVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 public class SalesStaffSalesEditViewController {
 	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
@@ -69,6 +97,8 @@ public class SalesStaffSalesEditViewController {
     DoubleProperty bargainPrice = new SimpleDoubleProperty(0);
     //折让、代金券、特价包总额
     DoubleProperty allTotal = new SimpleDoubleProperty(0);
+    //促销策略折让价格
+    DoubleProperty promotionAllowance = new SimpleDoubleProperty(0);
     
     boolean isExamine = false;
     boolean isNew;
@@ -102,6 +132,9 @@ public class SalesStaffSalesEditViewController {
     
     @FXML
     Text beforeSum;
+    
+    @FXML
+    Text promotionAllowanceField;
     
     @FXML
     Text bargainPriceText, goodsTotalText;
@@ -291,17 +324,35 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				if(allowance.getText().length()>0&&voucher.getText().length()>0){
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				}
+//				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+//					afterSum.set(total.get());
+//				}
+//				else if(allowance.getText().length()<=0){
+//					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+//				}
+//				else{
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+//				}
+				if(!oldValue.isEmpty()&&!newValue.isEmpty()){
+					afterSum.set(afterSum.get()-(Double.parseDouble(newValue)-Double.parseDouble(oldValue)));
 				}
-				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
-					afterSum.set(total.get());
+				else if(oldValue.isEmpty()){
+					afterSum.set(afterSum.get()-Double.parseDouble(newValue));
 				}
-				else if(allowance.getText().length()<=0){
-					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+				else if(newValue.isEmpty()){
+					afterSum.set(afterSum.get()+Double.parseDouble(oldValue));
 				}
-				else{
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				
+				Double allowanceLimit = 1000.0;
+				if(salesBLService.getCurrentUserLimits()==UserLimits.MANAGER){
+					allowanceLimit = 5000.0;
+				}
+				if(!newValue.isEmpty()&&Double.parseDouble(newValue)>allowanceLimit){
+					showDialog();
+					allowance.setText(String.valueOf(allowanceLimit));
 				}
 			}      	
         });
@@ -312,17 +363,26 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				if(allowance.getText().length()>0&&voucher.getText().length()>0){
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				}
+//				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+//					afterSum.set(total.get());
+//				}
+//				else if(allowance.getText().length()<=0){
+//					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+//				}
+//				else{
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+//				}
+				if(!oldValue.isEmpty()&&!newValue.isEmpty()){
+					afterSum.set(afterSum.get()-(Double.parseDouble(newValue)-Double.parseDouble(oldValue)));
 				}
-				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
-					afterSum.set(total.get());
+				else if(oldValue.isEmpty()){
+					afterSum.set(afterSum.get()-Double.parseDouble(newValue));
 				}
-				else if(allowance.getText().length()<=0){
-					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
-				}
-				else{
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				else if(newValue.isEmpty()){
+					afterSum.set(afterSum.get()+Double.parseDouble(oldValue));
 				}
 			}      	
         });
@@ -361,7 +421,7 @@ public class SalesStaffSalesEditViewController {
 							bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
 						bargainPrice.set(promotionBargainVO.bargainTotal);
-						allowance.setText("0");
+						promotionAllowance.set(0);
 					}
 					else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
 						PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
@@ -369,7 +429,7 @@ public class SalesStaffSalesEditViewController {
 							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
 						bargainPrice.set(0);
-						allowance.setText(String.valueOf(promotionCustomerVO.allowance));
+						promotionAllowance.set(promotionCustomerVO.allowance);
 					}
 					else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
 						PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
@@ -377,7 +437,7 @@ public class SalesStaffSalesEditViewController {
 							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
 						}
 						bargainPrice.set(0);
-						allowance.setText("0");
+						promotionAllowance.set(0);
 					}
 				}
 			}
@@ -385,6 +445,16 @@ public class SalesStaffSalesEditViewController {
 			
 		});
         
+        //促销策略折让与其对应Text绑定
+        promotionAllowance.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				promotionAllowanceField.setText(Money.getMoneyString(promotionAllowance.get()));
+				afterSum.set(afterSum.get()-(newValue.doubleValue()-oldValue.doubleValue()));
+			}
+		});
     }
     
     public void initializePromotionComboBox(){
@@ -447,41 +517,49 @@ public class SalesStaffSalesEditViewController {
     }
 
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
-    				bean.getRemark());
-    		goodsItemList.add(vo);
-    	}
-        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        double allowancePrice = 0;
-        double voucherPrice = 0;
-        String promotionName = "";
-        if(allowance.getText().length()>0){
-        	allowancePrice = Double.parseDouble(allowance.getText());
-        }
-        if(voucher.getText().length()>0){
-        	voucherPrice = Double.parseDouble(voucher.getText());
-        }
-        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
-        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
-        }
-        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
-        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
-    	if(!isExamine){
-	        if(isNew){
-	        	salesBLService.submitSales(salesVO);
+    	if(customer.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+    		goodsItemList.clear();
+        	for(GoodsItemBean bean:data){
+        		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+        				bean.getRemark());
+        		goodsItemList.add(vo);
+        	}
+        	
+	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        double allowancePrice = 0;
+	        double voucherPrice = 0;
+	        String promotionName = "";
+	        if(allowance.getText().length()>0){
+	        	allowancePrice = Double.parseDouble(allowance.getText());
 	        }
-	        else{
-	        	salesBLService.updateSales(salesVO);
+	        if(voucher.getText().length()>0){
+	        	voucherPrice = Double.parseDouble(voucher.getText());
 	        }
-	        salesStaffSalesOrderViewController.showSalesOrderList();
+	        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
+	        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
+	        }
+	        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
+	        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
+	    	if(!isExamine){
+		        if(isNew){
+		        	salesBLService.submitSales(salesVO);
+		        }
+		        else{
+		        	salesBLService.updateSales(salesVO);
+		        }
+		        salesStaffSalesOrderViewController.showSalesOrderList();
+	    	}
+	    	else{
+	    		salesBLService.updateSales(salesVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
     	else{
-    		salesBLService.updateSales(salesVO);
-    		generalManagerExaminationCellController.clickReturnButton();
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
     	}
     }
     
@@ -673,5 +751,11 @@ public class SalesStaffSalesEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+    
+    private void showDialog(){
+    	Dialog dialog = DialogFactory.getInformationAlert();
+        dialog.setHeaderText("折让数额超过当前登录用户折让上限");
+        Optional result = dialog.showAndWait();
     }
 }

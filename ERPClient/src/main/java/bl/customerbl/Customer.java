@@ -18,6 +18,7 @@ import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.UserVO;
 
@@ -299,5 +300,9 @@ public class Customer {
 	
 	public ArrayList<UserVO> getAllSalesman() {
 		return userInfo.getAllSalesmen();
+	}
+	
+	public UserLimits getCurrentUserLimit() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 }

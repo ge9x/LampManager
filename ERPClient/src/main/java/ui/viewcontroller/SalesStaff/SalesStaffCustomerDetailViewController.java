@@ -21,7 +21,6 @@ import vo.UserVO;
 
 public class SalesStaffCustomerDetailViewController {
 	private boolean hasEdited = false;
-	UserBLService userBLService = new UserBLService_Stub();
 	CustomerBLService customerBLService = new CustomerController();
 
 	@FXML
@@ -132,7 +131,7 @@ public class SalesStaffCustomerDetailViewController {
 			customerPostcode.setEditable(true);
 			customerMail.setEditable(true);
 			customerSalesman.setDisable(false);
-			if(userBLService.findUserByID(userBLService.getCurrentUserID()).limit==UserLimits.MANAGER){
+			if(customerBLService.getCurrentUserLimit()==UserLimits.MANAGER){
 				customerReceivableLimit.setEditable(true);
 			}
 			else{

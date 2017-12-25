@@ -59,7 +59,7 @@
                      <children>
                         <Label layoutX="40.0" layoutY="31.0" prefHeight="31.0" prefWidth="77.0" styleClass="ID-label" text="单据编号" />
                         <Label fx:id="BillID" layoutX="126.0" layoutY="31.0" prefHeight="31.0" prefWidth="347.0" text="SKD-20171022-00001" />
-                        <VBox layoutX="40.0" layoutY="82.0" prefHeight="655.0" prefWidth="192.0" spacing="10.0">
+                        <VBox layoutX="40.0" layoutY="82.0" prefHeight="704.0" prefWidth="192.0" spacing="10.0">
                            <children>
                               <Label styleClass="input-label" text="客户" />
                               <JFXComboBox fx:id="customer" focusColor="#1db1a4" prefHeight="23.0" prefWidth="220.0">
@@ -78,6 +78,15 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </JFXComboBox>
+                              <Label styleClass="input-label" text="促销策略折让" />
+                              <Text fx:id="promotionAllowanceField" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
                               <Label styleClass="input-label" text="折让" />
                               <JFXTextField fx:id="allowance">
                                  <VBox.margin>
@@ -154,7 +163,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER_RIGHT" layoutX="502.0" layoutY="693.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="502.0" layoutY="707.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
                            <children>
                                <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
                                    <font>

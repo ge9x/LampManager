@@ -288,14 +288,22 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ResultMessage redCover(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return sales.redCover(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
 	}
 
 	@Override
 	public ResultMessage redCoverAndCopy(SalesVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	try {
+		return sales.redCoverAndCopy(vo);
+	} catch (RemoteException e) {
+		e.printStackTrace();
+		return ResultMessage.NULL;
+	}
 	}
 	
 }

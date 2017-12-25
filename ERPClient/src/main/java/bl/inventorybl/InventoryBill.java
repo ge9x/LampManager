@@ -209,11 +209,32 @@ public class InventoryBill {
 	}
 	
 	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
-		return null;	// TODO
+		ResultMessage result = ResultMessage.NULL;
+		Map<GoodsVO, Integer> map = vo.goodsMap;
+		for(GoodsVO goodsVO : map.keySet()){
+			map.put(goodsVO, - map.get(goodsVO));	// 数量取负
+		}
+		InventoryBillPO toAdd = this.voToPO(vo);
+		result = inventoryDataService.addBill(toAdd);
+		if(result == ResultMessage.SUCCESS){
+			result = this.examine(this.poToVO(toAdd));
+		}
+		return result;
 	}
 
 	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
-		return null;	// TODO
+		ResultMessage result = ResultMessage.NULL;
+		result = this.redCover(vo);
+		if(result == ResultMessage.SUCCESS){
+			Map<GoodsVO, Integer> map = vo.goodsMap;
+			for(GoodsVO goodsVO : map.keySet()){
+				map.put(goodsVO, - map.get(goodsVO));	// 数量取回正
+			}
+			InventoryBillPO toAdd = this.voToPO(vo);
+			vo.state = BillState.DRAFT;
+			result = inventoryDataService.addBill(toAdd);
+		}
+		return result;
 	}
 
 	private InventoryBillVO poToVO(InventoryBillPO po) throws RemoteException {

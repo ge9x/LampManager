@@ -208,28 +208,35 @@ public class SalesStaffSalesReturnEditViewController {
     }
 
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
-    				bean.getRemark());
-    		goodsItemList.add(vo);
-    	}
-        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
-    	if(!isExamine){
-	        if(isNew){
-	        	salesBLService.submitSales(salesVO);
-	        }
-	        else{
-	        	salesBLService.updateSales(salesVO);
-	        }
-	        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	if(customer.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+	    	goodsItemList.clear();
+	    	for(GoodsItemBean bean:data){
+	    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+	    				bean.getRemark());
+	    		goodsItemList.add(vo);
+	    	}
+	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
+	    	if(!isExamine){
+		        if(isNew){
+		        	salesBLService.submitSales(salesVO);
+		        }
+		        else{
+		        	salesBLService.updateSales(salesVO);
+		        }
+		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+	    	}
+	    	else{
+	    		salesBLService.updateSales(salesVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
     	else{
-    		salesBLService.updateSales(salesVO);
-    		generalManagerExaminationCellController.clickReturnButton();
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
     	}
     }
     

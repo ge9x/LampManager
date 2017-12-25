@@ -274,8 +274,19 @@ public class Purchase {
 		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 	
-	public ResultMessage redCover(PurchaseVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResultMessage redCover(PurchaseVO vo) throws NumberFormatException, RemoteException {
+		ArrayList<GoodsItemVO> goodsitemList=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsitemList){
+			goodsItemVO.number=-goodsItemVO.number;
+		}
+		vo.goodsItemList=goodsitemList;
+		vo.state=BillState.PASS;
+		return addPurchase(vo);
+	}
+	
+	public ResultMessage redCoverAndCopy(PurchaseVO vo) throws NumberFormatException, RemoteException {
+		redCover(vo);
+		vo.state=BillState.DRAFT;
+		return addPurchase(vo);
 	}
 }
