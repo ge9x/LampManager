@@ -10,18 +10,24 @@ import dataservice.logdataservice.LogDataService;
 import po.LogPO;
 import util.ResultMessage;
 
-public class LogDataServiceImpl implements LogDataService{
+/**
+ * Created on 2017/12/25
+ * 
+ * @author 巽
+ *
+ */
+public class LogDataServiceImpl implements LogDataService {
 	private static LogDataServiceImpl logDataServiceImpl;
 	private DataHelper<LogPO> logDataHelper;
 
-	public static LogDataServiceImpl getInstance(){
-		if(logDataServiceImpl == null){
+	public static LogDataServiceImpl getInstance() {
+		if (logDataServiceImpl == null) {
 			logDataServiceImpl = new LogDataServiceImpl();
 		}
 		return logDataServiceImpl;
 	}
-	
-	private LogDataServiceImpl(){
+
+	private LogDataServiceImpl() {
 		logDataHelper = new HibernateDataHelper<LogPO>(LogPO.class);
 	}
 
