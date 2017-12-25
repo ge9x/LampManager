@@ -18,8 +18,6 @@ import javax.persistence.Table;
 public class InitCustomerPO implements Serializable{
 	private static final long servialVersionUID=454723894278482L;
 		
-	/**编号*/
-	private int ID;
 	/**客户编号*/
 	private String customerID;
 	/**客户分类:进货商、销售商*/
@@ -46,11 +44,10 @@ public class InitCustomerPO implements Serializable{
 	private String salesman;
 	/**客户积分*/
 	private double points;
-	public InitCustomerPO(int iD, String customerID, String category, String level, String customerName, String phone,
+	public InitCustomerPO(String customerID, String category, String level, String customerName, String phone,
 			String address, String postCode, String mail, double receivableLimit, double receive, double pay,
 			String salesman, double points) {
 		super();
-		ID = iD;
 		this.customerID = customerID;
 		this.category = category;
 		this.level = level;
@@ -67,16 +64,6 @@ public class InitCustomerPO implements Serializable{
 	}
 	
 	@Id
-	@Column(name = "id")
-	public int getID() {
-		return ID;
-	}
-
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-	
 	@Column(name = "customerID")
 	public String getCustomerID(){
 		return customerID;

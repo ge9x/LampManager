@@ -29,7 +29,7 @@ public class TestInitialization {
 		InitializationDataService initImpl=InitializationDataServiceImpl.getInstance();
 		
 		//			第一次请取消这段注释，成功运行一次后再注释掉
-					InitCustomerPO c1=new InitCustomerPO(1, "00000001", CustomerCategory.PUR_AGENT.getValue(), Level.LEVEL_THREE.getValue(), "进货商1", "13579593893", "马群", "599000", "567@163.com", 300.0, 200.0, 100.0, "Bobule", 30);
+					InitCustomerPO c1=new InitCustomerPO( "00000001", CustomerCategory.PUR_AGENT.getValue(), Level.LEVEL_THREE.getValue(), "进货商1", "13579593893", "马群", "599000", "567@163.com", 300.0, 200.0, 100.0, "Bobule", 30);
 					ArrayList<InitCustomerPO> initCustomerPOs=new ArrayList<>();
 					initCustomerPOs.add(c1);
 					
@@ -41,7 +41,7 @@ public class TestInitialization {
 					ArrayList<InitClassificationPO> initClassificationPOs=new ArrayList<>();
 					initClassificationPOs.add(classification1);
 					 
-					InitGoodsPO g1=new InitGoodsPO(1, "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"大型");
+					InitGoodsPO g1=new InitGoodsPO("00001", "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"大型");
 					ArrayList<InitGoodsPO> initGoodsPOs=new ArrayList<>();
 					initGoodsPOs.add(g1);
 					

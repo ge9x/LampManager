@@ -24,7 +24,7 @@ public class InitGoodsPO implements Serializable {
 	/**
 	 * 商品ID
 	 */
-	private int ID;
+	private String ID;
 	/**
 	 * 商品名称
 	 */
@@ -58,7 +58,7 @@ public class InitGoodsPO implements Serializable {
 	 */
 	private String classificationName;
 	
-	public InitGoodsPO(int iD, String name, String model, double buyingPrice,
+	public InitGoodsPO(String iD, String name, String model, double buyingPrice,
 			double retailPrice, double recentBuyingPrice, double recentRetailPrice, int goodsNumber,String classificationName) {
 		super();
 		ID = iD;
@@ -73,10 +73,10 @@ public class InitGoodsPO implements Serializable {
 	}
 	@Id
 	@Column(name = "id")
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
-	public void setID(int iD) {
+	public void setID(String iD) {
 		ID = iD;
 	}
 	@Column(name = "name")
