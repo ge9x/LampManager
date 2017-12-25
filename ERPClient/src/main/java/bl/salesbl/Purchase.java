@@ -280,12 +280,23 @@ public class Purchase {
 			goodsItemVO.number=-goodsItemVO.number;
 		}
 		vo.goodsItemList=goodsitemList;
+		if(vo.type==BillType.PURCHASE){
+			vo.ID=salesDataService.getNewPurchaseID();
+		}else{
+			vo.ID=salesDataService.getNewReturnID();
+		}
+
 		vo.state=BillState.PASS;
 		return addPurchase(vo);
 	}
 	
 	public ResultMessage redCoverAndCopy(PurchaseVO vo) throws NumberFormatException, RemoteException {
 		redCover(vo);
+		if(vo.type==BillType.PURCHASE){
+			vo.ID=salesDataService.getNewPurchaseID();
+		}else{
+			vo.ID=salesDataService.getNewReturnID();
+		}
 		vo.state=BillState.DRAFT;
 		return addPurchase(vo);
 	}
