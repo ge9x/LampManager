@@ -28,7 +28,7 @@ public class InitializationDataService_Stub implements InitializationDataService
 
 	@Override
 	public InitializationPO getInitializationByDate(String date) {
-		InitCustomerPO c1=new InitCustomerPO(1, "00000001", CustomerCategory.PUR_AGENT.getValue(), Level.LEVEL_THREE.getValue(), "进货商1", "13579593893", "马群", "599000", "567@163.com", 300.0, 200.0, 100.0, "Bobule", 30);
+		InitCustomerPO c1=new InitCustomerPO("00000001", CustomerCategory.PUR_AGENT.getValue(), Level.LEVEL_THREE.getValue(), "进货商1", "13579593893", "马群", "599000", "567@163.com", 300.0, 200.0, 100.0, "Bobule", 30);
 		ArrayList<InitCustomerPO> initCustomerPOs=new ArrayList<>();
 		initCustomerPOs.add(c1);
 		
@@ -40,7 +40,7 @@ public class InitializationDataService_Stub implements InitializationDataService
 		ArrayList<InitClassificationPO> initClassificationPOs=new ArrayList<>();
 		initClassificationPOs.add(classification1);
 		 
-		InitGoodsPO g1=new InitGoodsPO(1, "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"日光灯");
+		InitGoodsPO g1=new InitGoodsPO("0003001", "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"日光灯");
 		ArrayList<InitGoodsPO> initGoodsPOs=new ArrayList<>();
 		initGoodsPOs.add(g1);
 		
