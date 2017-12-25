@@ -45,10 +45,9 @@ public class LogPO implements Serializable {
 
 	public LogPO() { }
 
-	public LogPO(int ID, LocalDateTime dateAndTime, String userID, OperationType operationType,
+	public LogPO(LocalDateTime dateAndTime, String userID, OperationType operationType,
 			OperationObjectType operationObjectType, String details) {
 		super();
-		this.ID = ID;
 		this.dateAndTime = dateAndTime;
 		this.userID = userID;
 		this.operationType = operationType;
