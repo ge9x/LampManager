@@ -1,20 +1,24 @@
 package bean;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * Created by Kry·L on 2017/12/18.
+ * Created by Kry·L on 2017/12/24.
  */
-public class ClassificationBean {
-
+public class AccountBean {
     StringProperty ID;
     StringProperty name;
+    DoubleProperty money;
 
-    public ClassificationBean(String ID, String name) {
+    public AccountBean(String ID, String name, double money) {
         this.ID = new SimpleStringProperty(ID);
         this.name = new SimpleStringProperty(name);
+        this.money = new SimpleDoubleProperty(money);
     }
+
 
     public String getID() {
         return ID.get();
@@ -38,5 +42,17 @@ public class ClassificationBean {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public double getMoney() {
+        return money.get();
+    }
+
+    public DoubleProperty moneyProperty() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money.set(money);
     }
 }

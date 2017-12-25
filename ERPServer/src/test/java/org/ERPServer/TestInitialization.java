@@ -25,7 +25,7 @@ import util.CustomerCategory;
 import util.Level;
 
 public class TestInitialization {
-	public static void main(String[] args){
+	public static void main(String[] args) throws RemoteException {
 		InitializationDataService initImpl=InitializationDataServiceImpl.getInstance();
 		
 		//			第一次请取消这段注释，成功运行一次后再注释掉

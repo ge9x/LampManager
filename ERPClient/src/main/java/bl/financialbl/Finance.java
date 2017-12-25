@@ -148,4 +148,12 @@ public class Finance{
     public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) throws RemoteException {
         return cashBill.getBillsByDate(startDate,endDate);
     }
+
+    public ResultMessage redCover(AccountBillVO billVO) throws RemoteException {
+        return accountBill.redCover(billVO);
+    }
+
+    public ResultMessage redCover(CashBillVO billVO) throws RemoteException {
+        return cashBill.redCover(billVO);
+    }
 }

@@ -240,4 +240,24 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
         }
 
     }
+
+    @Override
+    public ResultMessage redCover(AccountBillVO billVO) {
+        try {
+            return finance.redCover(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage redCover(CashBillVO billVO) {
+        try {
+            return finance.redCover(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
 }

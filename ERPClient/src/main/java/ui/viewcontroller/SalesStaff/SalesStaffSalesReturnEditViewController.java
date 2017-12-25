@@ -1,20 +1,12 @@
 package ui.viewcontroller.SalesStaff;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
-
+import bean.GoodsBean;
 import bean.GoodsItemBean;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
-import blservice.userblservice.UserBLService;
-import blstubdriver.SalesBLService_Stub;
-import blstubdriver.UserBLService_Stub;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,10 +18,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -39,7 +29,6 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
-import bean.GoodsBean;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
@@ -47,8 +36,11 @@ import util.Money;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionVO;
-import vo.PurchaseVO;
 import vo.SalesVO;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class SalesStaffSalesReturnEditViewController {
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;

@@ -40,4 +40,11 @@ public class CashBillVO extends BillVO{
         this.cashBillItems = cashBillItems;
         this.sum = sum;
     }
+    public double calSum(){
+        double sum = 0;
+        for (CashBillItemVO itemVO: cashBillItems){
+            sum += itemVO.money;
+        }
+        return sum;
+    }
 }

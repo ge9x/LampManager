@@ -5,10 +5,12 @@ import bl.classificationbl.ClassificationController;
 import blservice.classificationblservice.ClassificationInfo;
 import dataimpl.initializationdataimpl.InitializationDataServiceImpl;
 import dataservice.initializationdataservice.InitializationDataService;
+import po.ClassificationPO;
 import po.InitClassificationPO;
 import vo.ClassificationVO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,10 +22,15 @@ public class ClassificationList {
     private InitializationDataService initializationDataService = InitializationDataServiceImpl.getInstance();
 
     public ClassificationList(){
-
+        classificationInfo = new ClassificationController();
     }
-    public ArrayList<ClassificationVO> getClassifications(){
-           return classificationVOS;
+    public ArrayList<InitClassificationPO> getClassifications(){
+        ArrayList<InitClassificationPO> pos = new ArrayList<>();
+       HashMap<String,String> clas = classificationInfo.getAllClassification();
+       for (String ID : clas.keySet()){
+           pos.add(new InitClassificationPO(Integer.valueOf(ID),clas.get(ID)));
+       }
+       return pos;
     }
 
     public ArrayList<ClassificationVO> posTovos(List<InitClassificationPO> initClassificationPOS) {

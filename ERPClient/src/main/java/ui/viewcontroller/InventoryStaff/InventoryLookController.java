@@ -18,10 +18,7 @@ import javafx.scene.layout.TilePane;
 import ui.component.DialogFactory;
 import ui.component.Table;
 import util.InventoryListItemType;
-import vo.GoodsVO;
-import vo.InventoryBillVO;
-import vo.InventoryViewItemVO;
-import vo.InventoryViewVO;
+import vo.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.xml.transform.Result;
@@ -40,7 +37,7 @@ public class InventoryLookController {
 
     String inventory;
     InventoryViewVO inventoryViewVO;
-    ArrayList<InventoryBillVO> alarmBills;
+    ArrayList<AlarmVO> alarms;
     ArrayList<String> inventories;
 
 
@@ -170,12 +167,9 @@ public class InventoryLookController {
     }
 
     public void showAlarmTable() {
-        alarmBills = inventoryBLService.showAlarmBills();
-        for (InventoryBillVO vo : alarmBills) {
-            for (GoodsVO good : vo.goodsMap.keySet()) {
-                int num = vo.goodsMap.get(good);
-                alarmTable.addRow(new AlarmBean(good.ID, good.name, good.amount, num, num - good.amount));
-            }
+        alarms = inventoryBLService.getAlarmByInventory(inventory);
+        for (AlarmVO vo : alarms) {
+            alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName, vo.alarmNumber, vo.goodsNumber, vo.numberSuggestAdding));
         }
     }
 
