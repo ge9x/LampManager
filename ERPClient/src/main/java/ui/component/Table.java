@@ -19,6 +19,7 @@ public class Table<T> {
     public Table(){
         tableView = new TableView();
         tableView.setItems(data);
+        tableView.setPrefHeight(200);
     }
 
     /**
