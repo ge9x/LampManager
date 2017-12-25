@@ -1,6 +1,5 @@
 package vo;
 
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -12,13 +11,13 @@ public class InventoryCheckVO {
 	/**
 	 * 盘点日期
 	 */
-	public Date date;
+	public String date;
 	/**
 	 * 每个商品->库存均价
 	 */
 	public HashMap<GoodsVO, Double> averagePrice;
 	
-	public InventoryCheckVO(Date date, HashMap<GoodsVO, Double> averagePrice) {
+	public InventoryCheckVO(String date, HashMap<GoodsVO, Double> averagePrice) {
 		super();
 		this.date = date;
 		this.averagePrice = averagePrice;

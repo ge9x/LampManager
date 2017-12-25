@@ -2,11 +2,9 @@ package rmi;
 
 import dataimpl.accountdataimpl.AccountDataServiceImpl;
 import dataservice.accountdataservice.AccountDataService;
-import datastubdriver.AccountDataService_Stub;
 import po.AccountPO;
 import util.ResultMessage;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,9 +13,8 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/29.
  */
 public class AccountDataRemoteObject extends UnicastRemoteObject implements AccountDataService{
-
-
-    private AccountDataService accountDataService;
+	private static final long serialVersionUID = -2069146524233848107L;
+	private AccountDataService accountDataService;
     protected AccountDataRemoteObject() throws RemoteException{
         accountDataService = AccountDataServiceImpl.getInstance();
     }

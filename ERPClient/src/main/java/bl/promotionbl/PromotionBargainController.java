@@ -12,6 +12,7 @@ import blservice.promotionblservice.promotionbargain.PromotionBargainInfo;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
+import vo.PromotionTotalVO;
 
 public class PromotionBargainController implements PromotionBargainBLService, PromotionBargainInfo{
 
@@ -66,21 +67,7 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 
 	@Override
 	public ArrayList<PromotionBargainVO> getFitPromotionBargain() {
-		try {
-			ArrayList<PromotionBargainVO> VOs = show();
-			for(PromotionBargainVO vo:VOs){
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-				Date startDate = sd.parse(vo.startDate);
-				Date endDate = sd.parse(vo.endDate);
-				if(new Date().before(startDate)||new Date().after(endDate)){
-					VOs.remove(vo);
-				}
-			}
-			return VOs;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return show();
 	}
 
 	@Override
@@ -118,5 +105,25 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 			return null;
 		}
 	}
+
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionBargain.getCurrentUserName();
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionBargain.findPromotionByName(promotionName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 
 }

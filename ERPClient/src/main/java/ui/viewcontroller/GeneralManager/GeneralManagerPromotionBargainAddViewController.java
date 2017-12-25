@@ -43,7 +43,7 @@ import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import util.BillState;
 import util.Money;
 import vo.CashBillItemVO;
@@ -56,7 +56,6 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
 	PromotionBargainBLService promotionBargainBLService = new PromotionBargainController();
-	UserBLService userBLService = new UserBLService_Stub();
 	PromotionBargainVO promotionBargain;
 	ArrayList<GoodsItemVO> bargains = new ArrayList<>();
 	
@@ -111,6 +110,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
+		username.setText(promotionBargainBLService.getCurrentUserName());
 		
 		//初始化表格
         itemTable = new TableView<>();
@@ -192,7 +192,7 @@ public class GeneralManagerPromotionBargainAddViewController {
                                     startDate.getValue().plusDays(1))
                                 ) {
                                     setDisable(true);
-                            }   
+                            }
                     }
                 };
             }
@@ -232,7 +232,12 @@ public class GeneralManagerPromotionBargainAddViewController {
 	
 	public void clickOKButton(){
 		if(isCompleted()){
-			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), Double.parseDouble(Total.getText()), Double.parseDouble(bargainTotal.getText()), 
+			bargains.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+				bargains.add(goodsItemVO);
+			}
+			promotionBargain = new PromotionBargainVO(promotionName.getText(), promotionID.getText(), total.get(), Double.parseDouble(bargainTotal.getText()), 
 					startDate.getValue().toString(), endDate.getValue().toString(), bargains);
 			if(isNew){
 				promotionBargainBLService.submit(promotionBargain);
@@ -240,6 +245,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 			else{
 				promotionBargainBLService.updatePromotion(promotionBargain);
 			}
+			generalManagerPromotionViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

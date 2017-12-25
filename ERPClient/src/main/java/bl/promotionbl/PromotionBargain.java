@@ -5,9 +5,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.loader.custom.EntityFetchReturn;
+
 import bl.financialbl.AccountBillItem;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.AccountBillItemPO;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
@@ -17,13 +21,16 @@ import util.ResultMessage;
 import vo.AccountBillItemVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
+import vo.UserVO;
 
 public class PromotionBargain extends Promotion{
 	
 	ArrayList<PromotionBargainPO> promotionBargainPOs;
+	UserInfo userInfo;
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionBargainVO> show() throws RemoteException{
@@ -37,6 +44,14 @@ public class PromotionBargain extends Promotion{
 	
 	public String getNewPromotionBargainID() throws RemoteException{
 		return promotionDataService.getNewPromotionBargainID();
+	}
+	
+	public PromotionBargainVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionBargainVO promotionBargainVO = null;
+		if(promotionDataService.findPBByName(promotionName)!=null){
+			promotionBargainVO = poTOvo(promotionDataService.findPBByName(promotionName));
+		}
+		return promotionBargainVO;
 	}
 	
 	public void addBargain(GoodsItemVO vo){
@@ -76,7 +91,6 @@ public class PromotionBargain extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionBargainVO promotionBargainVO) throws RemoteException{
-		promotionBargainPOs.clear();
 		promotionBargainPOs = promotionDataService.showPB();
 		for(PromotionBargainPO po:promotionBargainPOs){
 			if(po.getPromotionID().equals(promotionBargainVO.promotionID)){
@@ -104,7 +118,7 @@ public class PromotionBargain extends Promotion{
 			bargains.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionBargainPO(promotionBargainVO.promotionName, promotionBargainVO.startDate, promotionBargainVO.endDate, PromotionType.BARGAIN_STRATEGY, 
-				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, bargains);
+				promotionBargainVO.goodsTotal, promotionBargainVO.bargainTotal, bargains, promotionBargainVO.promotionID);
 	}
 	
 	public PromotionBargainVO poTOvo (PromotionBargainPO promotionBargainPO){
@@ -114,5 +128,9 @@ public class PromotionBargain extends Promotion{
 		}
 		return new PromotionBargainVO(promotionBargainPO.getPromotionName(), promotionBargainPO.getPromotionID(), promotionBargainPO.getGoodsTotal(),
 				promotionBargainPO.getBargainTotal(), promotionBargainPO.getStartDate(), promotionBargainPO.getEndDate(), bargains);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }

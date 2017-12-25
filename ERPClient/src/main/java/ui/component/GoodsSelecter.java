@@ -1,14 +1,12 @@
 package ui.component;
 
 
-
-import java.util.ArrayList;
-
+import bean.GoodsBean;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TableView;
-import ui.component.GoodsTable.GoodsBean;
+
 
 public class GoodsSelecter {
 
@@ -27,7 +25,6 @@ public class GoodsSelecter {
 		
 		dialog.setResultConverter(dialogButton -> {
 		    if (dialogButton == addButtonType) {
-		    	
 		        return table.getSelectionModel().getSelectedItem();
 		    }
 		    return null;

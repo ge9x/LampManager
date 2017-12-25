@@ -1,19 +1,12 @@
 package ui.viewcontroller.SalesStaff;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
-
+import bean.GoodsBean;
+import bean.GoodsItemBean;
+import bl.salesbl.SalesController;
+import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-
-import bean.GoodsItemBean;
-import blservice.salesblservice.SalesBLService;
-import blservice.userblservice.UserBLService;
-import blstubdriver.SalesBLService_Stub;
-import blstubdriver.UserBLService_Stub;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -25,18 +18,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
 import util.BillState;
 import util.BillType;
@@ -44,19 +36,20 @@ import util.Money;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionVO;
-import vo.PurchaseVO;
 import vo.SalesVO;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class SalesStaffSalesReturnEditViewController {
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
-	UserBLService userBLService = new UserBLService_Stub();
+	SalesBLService salesBLService = new SalesController();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
-	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
 	
 	boolean isExamine = false;
 	boolean isNew;
@@ -108,8 +101,9 @@ public class SalesStaffSalesReturnEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
+        String name = salesBLService.getUserName();
         Username.setText(name);
+        Salesman.setText("");
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
 
@@ -124,33 +118,12 @@ public class SalesStaffSalesReturnEditViewController {
         inventory.getItems().addAll(inventories);
 
         //初始化表格
+        SalesBillTable ItemTable = new SalesBillTable();
         itemTable = new TableView<>();
         itemTable.setEditable(true);
 
-        TableColumn IDColumn = new TableColumn("商品编号");
-        IDColumn.setPrefWidth(70);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        TableColumn nameColumn = new TableColumn("条目名");
-        nameColumn.setPrefWidth(60);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(60);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn<GoodsItemBean, Integer> amountColumn = new TableColumn("数量");
-        amountColumn.setPrefWidth(60);
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn retailPriceColumn = new TableColumn("单价");
-        retailPriceColumn.setPrefWidth(60);
-        retailPriceColumn.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        TableColumn totalPriceColumn = new TableColumn("总价");
-        totalPriceColumn.setPrefWidth(60);
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        TableColumn<GoodsItemBean, String> remarkColumn = new TableColumn("备注");
-        remarkColumn.setPrefWidth(78);
-        remarkColumn.setCellValueFactory(new PropertyValueFactory<>("remark"));
-
-        amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
-        amountColumn.setOnEditCommit(
+        ItemTable.amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
+        ItemTable.amountColumn.setOnEditCommit(
         		(CellEditEvent<GoodsItemBean, Integer> t)->{
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
@@ -163,13 +136,26 @@ public class SalesStaffSalesReturnEditViewController {
         		        					t.getTablePosition().getRow())
         		        					).getRetailPrice()
         							);
-        			total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
         		});
         
-        remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
-        remarkColumn.setOnEditCommit(
+        ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
+        ItemTable.retailPriceColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, Double> t)->{
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setRetailPrice(t.getNewValue());
+        			
+        			((GoodsItemBean) t.getTableView().getItems().get(
+        					t.getTablePosition().getRow())
+        					).setTotalPrice(t.getNewValue() 
+        							* ((GoodsItemBean) t.getTableView().getItems().get(
+        		        					t.getTablePosition().getRow())
+        		        					).getAmount()
+        							);
+        		});
+        
+        ItemTable.remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
+        ItemTable.remarkColumn.setOnEditCommit(
         		(CellEditEvent<GoodsItemBean, String> t)->{
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
@@ -177,7 +163,8 @@ public class SalesStaffSalesReturnEditViewController {
         		});
         
         itemTable.setItems(data);
-        itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        itemTable.getColumns().addAll(ItemTable.IDColumn, ItemTable.nameColumn, ItemTable.modelColumn, ItemTable.amountColumn, 
+        		ItemTable.retailPriceColumn, ItemTable.totalPriceColumn, ItemTable.remarkColumn);
         vbox.getChildren().add(itemTable);
 
         //折让前总额Text与商品总额金额之和绑定
@@ -186,6 +173,20 @@ public class SalesStaffSalesReturnEditViewController {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 Total.setText(Money.getMoneyString(total.get()));
             }
+        });
+        
+      //客户与业务员绑定
+        customer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int customerIndex = customer.getSelectionModel().getSelectedIndex();
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					Salesman.setText(customers.get(customerIndex).salesman);
+				}
+			}
+        	
         });
     }
     
@@ -210,26 +211,42 @@ public class SalesStaffSalesReturnEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-    	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
+    	GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0,"");
+    	data.add(itemBean);
+        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
+            }
+        });
     }
 
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
-    		goodsItemList.add(vo);
+    	if(customer.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+	    	goodsItemList.clear();
+	    	for(GoodsItemBean bean:data){
+	    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+	    				bean.getRemark());
+	    		goodsItemList.add(vo);
+	    	}
+	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
+	    	if(!isExamine){
+		        salesBLService.updateSales(salesVO);
+		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+	    	}
+	    	else{
+	    		salesBLService.updateSales(salesVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
-        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
-        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
-        if(isNew){
-        	salesBLService.submitSales(salesVO);
-        }
-        else{
-        	salesBLService.updateSales(salesVO);
-        }
-        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
+    	else{
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
+    	}
     }
     
     public void clickCancelButton(){
@@ -253,9 +270,19 @@ public class SalesStaffSalesReturnEditViewController {
 	                if (inventory.getSelectionModel().getSelectedIndex() >= 0){
 	                	inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	                }
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
 	                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
-	                salesBLService.saveSales(salesVO);
+	                if(isNew){
+	                	salesBLService.saveSales(salesVO);
+	                }
+	                else{
+	                	salesBLService.updateSales(salesVO);
+	                }
 	            }
 	
 	            salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
@@ -289,8 +316,10 @@ public class SalesStaffSalesReturnEditViewController {
     	isNew = false;
         BillID.setText(salesBill.ID);
         title.setText("销售退货单详情");
+        Salesman.setText(salesBill.salesman);
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);

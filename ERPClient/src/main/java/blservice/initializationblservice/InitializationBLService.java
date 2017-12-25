@@ -2,6 +2,7 @@ package blservice.initializationblservice;
 
 import util.ResultMessage;
 import vo.InitAccountVO;
+import vo.InitializationVO;
 
 import java.util.ArrayList;
 
@@ -13,11 +14,24 @@ public interface InitializationBLService {
      * 期初建账
      * @return
      */
-    public InitAccountVO init();
+    public ResultMessage init();
 
     /**
      * 展示所有期初建账信息
      * @return
      */
-    public InitAccountVO show();
+    public InitializationVO show(String date);
+
+    /**
+     * 获得所有期初建账日期
+     * @return
+     */
+    public ArrayList<String> getAllInitDate();
+
+    /**
+     *获得最近一次的期初建账日期
+     * @return
+     */
+    public String getRecentInitdate();
+
 }

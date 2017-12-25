@@ -36,14 +36,14 @@ public class TestPromotion {
 				goodsItemList.add(gi2);
 			}
 			
-			salesImpl.addGoodsItem(gi1);
-			salesImpl.addGoodsItem(gi2);
+			//salesImpl.addGoodsItem(gi1);
+			//salesImpl.addGoodsItem(gi2);
 			
 //			第一次请取消这段注释，成功运行一次后再注释掉
 		
 			
-				proImpl.addPC(new PromotionCustomerPO("会员促销策略","2017-11-30","2017-11-30",PromotionType.MEMBER_PROMOTION_STRATEGY,300,500,goodsItemList,Level.LEVEL_FOUR,"PB-1"));
-				proImpl.addPB(new PromotionBargainPO("特价包","2017-12-1","2017-12-1",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsItemList,"PC-1"));
+				proImpl.addPC(new PromotionCustomerPO("会员促销策略","2017-11-30","2017-12-30",PromotionType.MEMBER_PROMOTION_STRATEGY,300,500,goodsItemList,Level.LEVEL_FOUR,"PC-1"));
+				proImpl.addPB(new PromotionBargainPO("特价包","2017-12-1","2017-12-18",PromotionType.BARGAIN_STRATEGY,900.0,500.0,goodsItemList,"PB-1"));
 				proImpl.addPT(new PromotionTotalPO("总价促销策略","2017-12-1","2017-12-1",PromotionType.TOTAL_PROMOTION_STRATEGY,200.0,goodsItemList,300.0,"PT-1"));
 			
 			PromotionCustomerPO PC=proImpl.findPC("PC-1");	

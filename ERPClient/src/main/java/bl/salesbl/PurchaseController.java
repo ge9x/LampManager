@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesBLService;
 import util.BillState;
+import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -31,7 +33,7 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	@Override
 	public ResultMessage examine(PurchaseVO vo) {
 		try {
-			return purchase.updatePurchase(vo);
+			return purchase.examine(vo);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			return ResultMessage.NULL;
@@ -240,5 +242,64 @@ public class PurchaseController implements SalesBLService,PurchaseInfo{
 	public ResultMessage updateSales(SalesVO vo) {
 		return null;
 	}
-	
+
+	@Override
+	public ArrayList<PurchaseVO> getPurchaseByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) {
+		try {
+			return purchase.getPurchaseByDateAndInventory(startDate, endDate, inventory, type);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return null;
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return null;
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return null;
+	}
+
+	@Override
+	public UserLimits getCurrentUserLimits() {
+		return purchase.getCurrentUserLimits();
+	}
+
+	@Override
+	public ResultMessage redCover(PurchaseVO vo) {
+		try {
+			return purchase.redCover(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(PurchaseVO vo) {
+		try {
+			return purchase.redCoverAndCopy(vo);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
 }

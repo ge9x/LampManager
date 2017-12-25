@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import dataimpl.promotiondataimpl.PromotionDataServiceImpl;
 import dataservice.promotiondataservice.PromotionDataService;
+import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import po.PromotionTotalPO;
@@ -122,6 +123,30 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 	@Override
 	public String getNewPromotionTotalID() throws RemoteException {
 		return promotionDataService.getNewPromotionTotalID();
+	}
+
+	@Override
+	public ResultMessage addGoodsItem(GoodsItemPO po) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.addGoodsItem(po);
+	}
+
+	@Override
+	public PromotionCustomerPO findPCByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPCByName(name);
+	}
+
+	@Override
+	public PromotionBargainPO findPBByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPBByName(name);
+	}
+
+	@Override
+	public PromotionTotalPO findPTByName(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return promotionDataService.findPTByName(name);
 	}
 
 }

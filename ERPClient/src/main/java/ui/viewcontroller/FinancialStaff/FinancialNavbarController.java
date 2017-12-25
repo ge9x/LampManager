@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.accountbl.Account;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
@@ -7,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 
 /**
@@ -45,6 +48,10 @@ public class FinancialNavbarController {
 
     @FXML
     Label userName;
+    
+    @FXML
+    Rectangle AccountRec, AccountSelectRec, ReceiptRec, ReceiptSelectRec, PaymentRec, PaymentSelectRec, CashRec, CashSelectRec, SalesDetailsRec,
+    			SalesDetailsSelectRec, DocumentDetailsRec, DocumentDetailsSelectRec, ProfitRec, ProfitSelectRec, InitRec, InitSelectRec;
 
 
     @FXML
@@ -65,29 +72,61 @@ public class FinancialNavbarController {
     }
 
     public void clickAccountButton(){
+    	showHighlight(AccountRec, AccountSelectRec);
         financialViewController.showAccountView();
     }
     public void clickReceiptButton(){
+    	showHighlight(ReceiptRec, ReceiptSelectRec);
         financialViewController.showReceiptView();
     }
     public void clickPaymentButton() {
+    	showHighlight(PaymentRec, PaymentSelectRec);
         financialViewController.showPaymentView();
     }
     public void clickCashBillButton(){
+    	showHighlight(CashRec, CashSelectRec);
         financialViewController.showCashBillView();
     }
     public void clickSalesDetailsButton(){
+    	showHighlight(SalesDetailsRec, SalesDetailsSelectRec);
         financialViewController.showSalesDetailsView();
     }
     public void clickDocumentDetailsButton(){
+    	showHighlight(DocumentDetailsRec, DocumentDetailsSelectRec);
         financialViewController.showDocumentDetailsView();
     }
     public void clickProfitView(){
+    	showHighlight(ProfitRec, ProfitSelectRec);
         financialViewController.showProfitView();
     }
-
+    public void clickInitView(){ 
+    	showHighlight(InitRec, InitSelectRec);
+    	financialViewController.showInitView();
+    }
 
     public void setFinancialViewController(FinancialViewController financialViewController){
         this.financialViewController = financialViewController;
+    }
+    
+    public void showHighlight(Rectangle rec, Rectangle selectRec){
+    	AccountRec.setFill(Paint.valueOf("#272727"));
+    	AccountSelectRec.setVisible(false);
+    	ReceiptRec.setFill(Paint.valueOf("#272727"));
+    	ReceiptSelectRec.setVisible(false);
+    	PaymentRec.setFill(Paint.valueOf("#272727"));
+    	PaymentSelectRec.setVisible(false);
+    	CashRec.setFill(Paint.valueOf("#272727"));
+		CashSelectRec.setVisible(false);
+		SalesDetailsRec.setFill(Paint.valueOf("#272727"));
+		SalesDetailsSelectRec.setVisible(false);
+		DocumentDetailsRec.setFill(Paint.valueOf("#272727"));
+		DocumentDetailsSelectRec.setVisible(false);
+		ProfitRec.setFill(Paint.valueOf("#272727"));
+		ProfitSelectRec.setVisible(false);
+		InitRec.setFill(Paint.valueOf("#272727"));
+		InitSelectRec.setVisible(false);
+    	
+    	rec.setFill(Paint.valueOf("#000000"));
+    	selectRec.setVisible(true);
     }
 }

@@ -1,5 +1,6 @@
 package ui.viewcontroller.common;
 
+import java.io.*;
 import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder.Case;
@@ -7,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +29,7 @@ import vo.UserVO;
 public class LoginViewController {
     MainUIController mainUIController;
     UserBLService userBLService = new UserController();
+    File file;
     @FXML
     Label userIcon;
 
@@ -40,9 +43,36 @@ public class LoginViewController {
     PasswordField password;
 
     @FXML
+    JFXCheckBox rememberBox;
+    
+    @FXML
+    Label exitButton;
+
+    @FXML
     public void initialize(){
         userIcon.setText("\ue608");
         passwordIcon.setText("\ue620");
+        exitButton.setText("\ue604");
+
+        try {
+            file = new File(getClass().getResource("/login-info").getPath());
+            if (!file.exists())
+                file.createNewFile();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String  line = "";
+            if ((line = reader.readLine()) != null){
+                username.setText(line);
+                rememberBox.setSelected(true);
+            }
+            if ((line = reader.readLine()) != null){
+                password.setText(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         username.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
@@ -108,7 +138,25 @@ public class LoginViewController {
             dialog.setHeaderText("用户名或密码不能为空");
             dialog.showAndWait();
         }else{
+            if (rememberBox.isSelected()){
+                remember(username.getText(),password.getText());
+            }else{
+//                unremember();
+            }
             login(username.getText(),password.getText());
         }
+    }
+    private void remember(String username,String password){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            writer.write(username+System.lineSeparator()+password);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void close(){
+    	mainUIController.close();
     }
 }

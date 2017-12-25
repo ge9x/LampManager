@@ -4,7 +4,6 @@ import util.BillState;
 import util.BillType;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/10/22.
@@ -40,5 +39,12 @@ public class CashBillVO extends BillVO{
         this.accountID = accountID;
         this.cashBillItems = cashBillItems;
         this.sum = sum;
+    }
+    public double calSum(){
+        double sum = 0;
+        for (CashBillItemVO itemVO: cashBillItems){
+            sum += itemVO.money;
+        }
+        return sum;
     }
 }

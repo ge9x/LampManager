@@ -1,5 +1,6 @@
 package bl.salesbl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import bl.customerbl.CustomerController;
@@ -8,6 +9,9 @@ import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.userblservice.UserInfo;
+import dataservice.salesdataservice.SalesDataService;
+import rmi.SalesRemoteHelper;
+import util.BillState;
 import util.BillType;
 import util.ResultMessage;
 import vo.CustomerVO;
@@ -22,10 +26,6 @@ public class PurchaseLineItem {
 		inventoryInfo=new InventoryController();
 		customerInfo=new CustomerController();
 		userInfo=new UserController();
-	}
-    
-    public ResultMessage alterInventory(PurchaseVO vo){
-		return null;
 	}
 	
 	public ResultMessage alterCustomer(PurchaseVO vo){
@@ -46,11 +46,11 @@ public class PurchaseLineItem {
 	}
 
 	public ArrayList<String> getAllInventory() {
-		return null;
+		return inventoryInfo.getAllInventoryName();
 	}
 
 	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
 	}
-
+	
 }

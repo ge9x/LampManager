@@ -78,4 +78,8 @@ public interface PromotionCustomerBLService {
 	public ResultMessage updatePromotion(PromotionCustomerVO vo);
 	
 	public String getNewPromotionCustomerID();
+	
+	public String getCurrentUserName();
+	
+	public PromotionCustomerVO findPromotionByName(String promotionName);
 }

@@ -22,16 +22,10 @@ public interface InventoryDataService extends Remote{
 	public ArrayList<InventoryBillPO> show() throws RemoteException;
 	/**
 	 * 得到所有仓库名
-	 * @return 包含所有仓库名的PO的链表
+	 * @return 包含所有仓库的PO的链表
 	 * @throws RemoteException
 	 */
 	public ArrayList<InventoryPO> showInventory() throws RemoteException;
-	/**
-	 * 得到所有库存报警单
-	 * @return 所有库存报警单的PO
-	 * @throws RemoteException
-	 */
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException;
 	/**
 	 * 查找库存单据
 	 * @param ID 单据ID
@@ -41,7 +35,7 @@ public interface InventoryDataService extends Remote{
 	public InventoryBillPO findBill(int ID) throws RemoteException;
 	/**
 	 * 新增仓库名
-	 * @param po 等待新增的仓库名PO
+	 * @param po 等待新增的仓库PO
 	 * @return 是否新增成功
 	 * @throws RemoteException
 	 */
@@ -55,7 +49,7 @@ public interface InventoryDataService extends Remote{
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException;
 	/**
 	 * 删除仓库名
-	 * @param po 等待删除的仓库名PO
+	 * @param po 等待删除的仓库PO
 	 * @return 是否删除成功
 	 * @throws RemoteException
 	 */
@@ -69,7 +63,7 @@ public interface InventoryDataService extends Remote{
 	public ResultMessage deleteBill(InventoryBillPO po) throws RemoteException;
 	/**
 	 * 修改仓库名
-	 * @param po 已修改的仓库名PO
+	 * @param po 已修改的仓库PO
 	 * @return 是否修改成功
 	 * @throws RemoteException
 	 */
@@ -89,4 +83,11 @@ public interface InventoryDataService extends Remote{
 	 * @see Criterion
 	 */
 	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException;
+	/**
+	 * 通过仓库名字得到仓库
+	 * @param name 仓库名字
+	 * @return 仓库PO
+	 * @throws RemoteException
+	 */
+	public InventoryPO findInventoryByName(String name) throws RemoteException;
 }

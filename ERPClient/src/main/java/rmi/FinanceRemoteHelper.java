@@ -1,7 +1,5 @@
 package rmi;
 
-import bl.financialbl.Finance;
-import dataservice.accountdataservice.AccountDataService;
 import dataservice.financedataservice.FinanceDataService;
 
 import java.rmi.Remote;

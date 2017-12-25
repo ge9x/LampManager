@@ -2,7 +2,6 @@ package datastubdriver;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import dataservice.inventorydataservice.InventoryDataService;
@@ -19,6 +18,7 @@ import util.ResultMessage;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class InventoryDataService_Stub implements InventoryDataService{
 	ArrayList<InventoryBillPO> data;
 	ArrayList<InventoryBillPO> alarmData;
@@ -97,10 +97,6 @@ public class InventoryDataService_Stub implements InventoryDataService{
 
 	public ArrayList<InventoryBillPO> show() throws RemoteException {
 		return data;
-	}
-
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		return alarmData;
 	}
 
 	public InventoryBillPO findBill(int ID) throws RemoteException {
@@ -183,6 +179,16 @@ public class InventoryDataService_Stub implements InventoryDataService{
 	 */
 	@Override
 	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
+		return null;
+	}
+
+	@Override
+	public InventoryPO findInventoryByName(String name) throws RemoteException {
+		for(InventoryPO po : inventory){
+			if(po.getName().equals(name)){
+				return po;
+			}
+		}
 		return null;
 	}
 

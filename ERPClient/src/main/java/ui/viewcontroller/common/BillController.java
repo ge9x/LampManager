@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
+import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
 import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
@@ -34,7 +35,7 @@ public class BillController {
     SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
     SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
     InventorySyncController inventorySyncController;
-
+    FinancialDocumentDetailsController financialDocumentDetailsController;
     @FXML
     Circle circle;
 
@@ -119,7 +120,20 @@ public class BillController {
             billType.setText("赠");
             billType.setTextFill(Color.web("#FFCC00"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoneyIcon.setText("\ue61d");
+            billMoney.setText(inventoryBill.inventory);
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.LOSS){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -127,7 +141,20 @@ public class BillController {
             billType.setText("损");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoneyIcon.setText("\ue61d");
+            billMoney.setText(inventoryBill.inventory);
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.OVERFLOW){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -135,7 +162,20 @@ public class BillController {
             billType.setText("溢");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
-            billMoney.setText(Money.getMoneyString(0.0));
+            billMoneyIcon.setText("\ue61d");
+            billMoney.setText(inventoryBill.inventory);
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.deleteBill(inventoryBill);
+                }
+            });
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    inventorySyncController.setDetailView(inventoryBill);
+                }
+            });
         }
         else if(bill.type==BillType.PAYMENT){
             AccountBillVO accountBill = (AccountBillVO) bill;
@@ -204,6 +244,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FFCCFF"));
             billCreater.setText(purchaseBill.user);
             billMoney.setText(Money.getMoneyString(purchaseBill.sum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffReturnOrderViewController.showReturnDetailView(purchaseBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffReturnOrderViewController.deleteReturn(purchaseBill);
+                }
+            });
         }
         else if(bill.type==BillType.SALES){
             SalesVO salesBill = (SalesVO) bill;
@@ -212,6 +264,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FF0033"));
             billCreater.setText(salesBill.user);
             billMoney.setText(Money.getMoneyString(salesBill.afterSum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesOrderViewController.showSalesOrderDetailView(salesBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesOrderViewController.deleteSales(salesBill);
+                }
+            });
         }
         else if(bill.type==BillType.SALESRETURN){
             SalesVO salesBill = (SalesVO) bill;
@@ -220,6 +284,18 @@ public class BillController {
             billType.setTextFill(Color.web("#FF0033"));
             billCreater.setText(salesBill.user);
             billMoney.setText(Money.getMoneyString(salesBill.afterSum));
+            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesReturnOrderViewController.showSalesReturnDetailView(salesBill);
+                }
+            });
+            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    salesStaffSalesReturnOrderViewController.deleteSalesReturn(salesBill);
+                }
+            });
         }
     }
     public void hideCheckbox(){
@@ -257,5 +333,13 @@ public class BillController {
     public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
         this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
     }
-
+    public void setFinancialDocumentDetailsController(FinancialDocumentDetailsController financialDocumentDetailsController){
+        this.financialDocumentDetailsController = financialDocumentDetailsController;
+    }
+    public boolean isSelected(){
+        return checkBox.isSelected();
+    }
+    public BillVO getBill(){
+        return bill;
+    }
 }

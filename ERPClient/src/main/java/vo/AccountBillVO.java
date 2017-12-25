@@ -4,7 +4,6 @@ import util.BillState;
 import util.BillType;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Kry·L on 2017/10/21.
@@ -47,7 +46,7 @@ public class AccountBillVO extends BillVO{
      * 根据转账列表计算总额汇总
      * @return 总额汇总
      */
-    private double calSum(){
+    public double calSum(){
         double sum = 0;
         for (int i = 0; i < this.accountBillItems.size(); i++){
             sum += accountBillItems.get(i).transferMoney;

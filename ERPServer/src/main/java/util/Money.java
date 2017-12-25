@@ -19,6 +19,6 @@ public class Money {
         }
         if (raw.charAt(0) == ',')
             raw = raw.substring(1);
-        return "￥"+raw;
+        return "￥ "+raw;
     }
 }

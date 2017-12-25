@@ -1,27 +1,30 @@
 package bl.inventorybl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
-import bl.goodsbl.Goods;
+import ExcelUtil.enums.ExcelType;
+import ExcelUtil.impl.ExportToExcel;
+import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
-import bl.salesbl.SalesController;
+import bl.initializationbl.InitializationController;
 import blservice.goodsblservice.GoodsInfo;
-import blservice.salesblservice.SalesInfo;
+import blservice.initializationblservice.InitInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
-import po.InventoryBillPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
-import util.Criterion;
-import util.QueryMode;
 import util.ResultMessage;
+import vo.AlarmVO;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
+import vo.InventoryCheckItemVO;
 import vo.InventoryCheckVO;
 import vo.InventoryViewVO;
 
@@ -34,14 +37,16 @@ import vo.InventoryViewVO;
 public class Inventory {
 	private InventoryDataService inventoryDataService;
 	private InventoryList inventoryList;
-	private ArrayList<InventoryBill> inventoryBill;
-	private SalesInfo salesInfo;
+	private InventoryBill inventoryBill;
 	private GoodsInfo goodsInfo;
+	private InitInfo initInfo;
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-//		salesInfo = new SalesController();
 		goodsInfo = new GoodsController();
+		inventoryBill = new InventoryBill(goodsInfo);
+		inventoryList = new InventoryList();
+		initInfo = new InitializationController();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {
@@ -53,46 +58,64 @@ public class Inventory {
 		return ret;
 	}
 
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
-		return null;
+	public InventoryViewVO show(String startDate, String endDate, String inventory) throws RemoteException {
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		ArrayList<InventoryBillVO> inventoryBillVOs = inventoryBill.getPassBillsByDateAndInventory(startDate, endDate,
+				inventoryPO);
+		return inventoryList.show(startDate, endDate, inventory, inventoryBillVOs);
 	}
 
-	public InventoryCheckVO check(Date today) {
-		return null;
+	public InventoryCheckVO check() {
+		LocalDate date = LocalDate.now();
+		ArrayList<GoodsVO> goods = goodsInfo.getAllGoods();
+		HashMap<GoodsVO, Double> averagePrice = new HashMap<>();
+		for (GoodsVO vo : goods) {
+			averagePrice.put(vo, vo.buyingPrice);
+		}
+		InventoryCheckVO check = new InventoryCheckVO(date.toString(), averagePrice);
+		return check;
 	}
 
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
-		return null;
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
+		fileName = fileName.split("\\.")[0];
+		ArrayList<InventoryCheckItemVO> items = new ArrayList<>();
+		HashMap<GoodsVO, Double> map = vo.averagePrice;
+		for (GoodsVO goodsVO : map.keySet()) {
+			double averagePrice = map.get(goodsVO);
+			items.add(new InventoryCheckItemVO(goodsVO.ID, goodsVO.name, goodsVO.model, goodsVO.amount, averagePrice));
+		}
+		ExportToExcel exporter = new ExportToExcel.Builder(filePath, fileName, ExcelType.XLSX)
+				.withModel(Model.of(InventoryCheckItemVO.class, items)).build();
+		if (exporter.export()) {
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
 	}
 
 	public ArrayList<InventoryBillVO> showBills() throws RemoteException {
-		ArrayList<InventoryBillPO> pos = inventoryDataService.show();
-		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		for (InventoryBillPO po : pos) {
-			ret.add(this.billToVO(po));
-		}
-		return ret;
+		return inventoryBill.show();
 	}
 
-	public ArrayList<InventoryBillVO> showAlarmBills() throws RemoteException {
-		ArrayList<InventoryBillPO> pos = inventoryDataService.showAlarm();
-		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		for (InventoryBillPO po : pos) {
-			ret.add(this.billToVO(po));
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) throws RemoteException {
+		ArrayList<AlarmVO> ret = new ArrayList<>();
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+		for (GoodsPO goodsPO : map.keySet()) {
+			int alarmAmount = goodsPO.getAlarmAmount();
+			int number = map.get(goodsPO);
+			if (number < alarmAmount) {
+				int numberSuggestAdding = 2 * alarmAmount - number; // intelligent recommendation
+				ret.add(new AlarmVO(goodsPO.buildID(), goodsPO.getName(), goodsPO.getModel(), number, alarmAmount,
+						numberSuggestAdding));
+			}
 		}
 		return ret;
 	}
 
 	public ArrayList<InventoryBillVO> findBillByStateAndType(BillType type, BillState state) throws RemoteException {
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", type, QueryMode.FULL));
-		criteria.add(new Criterion("state", state, QueryMode.FULL));
-		ArrayList<InventoryBillPO> pos = inventoryDataService.advancedQuery(criteria);
-		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		for(InventoryBillPO po : pos){
-			ret.add(this.billToVO(po));
-		}
-		return ret;
+		return inventoryBill.findByStateAndType(type, state);
 	}
 
 	public ResultMessage addInventory(String inventory) throws RemoteException {
@@ -107,97 +130,129 @@ public class Inventory {
 	}
 
 	public ResultMessage addBill(InventoryBillVO vo) throws RemoteException {
-		InventoryBillPO toAdd = this.billToPO(vo);
-		return inventoryDataService.addBill(toAdd);
+		return inventoryBill.add(vo);
 	}
 
-	public ResultMessage deleteInventory(String inventory) {
-		return null;
+	public ResultMessage deleteInventory(String inventory) throws RemoteException {
+		InventoryPO found = inventoryDataService.findInventoryByName(inventory);
+		if (found == null) {
+			return ResultMessage.NOT_EXIST;
+		}
+		else {
+			return inventoryDataService.deleteInventory(found);
+		}
 	}
 
-	public ResultMessage deleteBill(String ID) {
-		return null;
+	public ResultMessage deleteBill(String ID) throws RemoteException {
+		return inventoryBill.delete(ID);
 	}
 
-	public ResultMessage updateInventory(String before, String after) {
-		return null;
+	public ResultMessage updateInventory(String before, String after) throws RemoteException {
+		InventoryPO found = inventoryDataService.findInventoryByName(before);
+		if (found == null) {
+			return ResultMessage.NOT_EXIST;
+		}
+		else {
+			return inventoryDataService.updateInventory(found);
+		}
 	}
 
 	public ResultMessage updateBill(InventoryBillVO vo) throws NumberFormatException, RemoteException {
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		int turn = Integer.parseInt(vo.ID.split("-")[2]);
-		criteria.add(new Criterion("type", vo.type, QueryMode.FULL));
-		criteria.add(new Criterion("date", vo.date, QueryMode.FULL));
-		criteria.add(new Criterion("turn", turn, QueryMode.FULL));
-		ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
-		if(found.isEmpty()){
-			return ResultMessage.NOT_EXIST;
-		}
-		else{
-			if(found.size()>1){
-				System.out.println("警告：数据库中出现重复的单据：" + vo.ID);
-			}
-			InventoryBillPO toUpdate = found.get(0);
-			InventoryPO inventory = this.getInventoryByName(vo.inventory);
-			HashMap<GoodsVO, Integer> voMap = vo.goodsMap;
-			HashMap<GoodsPO, Integer> poMap = new HashMap<>();
-			for(GoodsVO goodsVO : voMap.keySet()){
-				GoodsPO goodsPO = goodsInfo.getGoodsByID(goodsVO.ID);
-				poMap.put(goodsPO, voMap.get(goodsVO));
-			}
-			toUpdate.setState(vo.state);
-			toUpdate.setInventory(inventory);
-			toUpdate.setGoodsMap(poMap);
-			return inventoryDataService.updateBill(toUpdate);
-		}
+		return inventoryBill.update(vo);
 	}
 
-	public InventoryBillVO showBillDetails(String ID) {
-		return null;
-	}
-
-	public ResultMessage submitBill(InventoryBillVO vo) throws RemoteException {
-		return this.addBill(vo);
-	}
-
-	private InventoryBillVO billToVO(InventoryBillPO po) {
-		String inventory = po.getInventory().getName();
-		HashMap<GoodsPO, Integer> poMap = (HashMap<GoodsPO, Integer>) po.getGoodsMap();
-		HashMap<GoodsVO, Integer> voMap = new HashMap<>();
-		for (GoodsPO goods : poMap.keySet()) {
-			voMap.put(Goods.poToVO(goods), poMap.get(goods));
-		}
-		InventoryBillVO ret = new InventoryBillVO(po.buildID(), po.getType(), po.getState(), po.getDate(), inventory,
-				po.getUser(), voMap);
-		return ret;
+	public InventoryBillVO showBillDetails(String ID) throws NumberFormatException, RemoteException {
+		return inventoryBill.showDetails(ID);
 	}
 
 	/**
-	 * 仅限增加单据时调用
+	 * 约定：和addBill方法逻辑相同（仅在使用情境和语义上有所区别）
 	 */
-	private InventoryBillPO billToPO(InventoryBillVO vo) throws RemoteException {
-		InventoryPO inventory = this.getInventoryByName(vo.inventory);
-		HashMap<GoodsPO, Integer> poMap = new HashMap<>();
-		for (GoodsVO goods : vo.goodsMap.keySet()) {
-			poMap.put(goodsInfo.getGoodsByID(goods.ID), poMap.get(goods));
-		}
-		// 查询数据库以知晓这是当天该种类型单据的第几张
-		ArrayList<Criterion> criteria = new ArrayList<>();
-		criteria.add(new Criterion("type", vo.type, QueryMode.FULL));
-		criteria.add(new Criterion("date", vo.date, QueryMode.FULL));
-		int turn = inventoryDataService.advancedQuery(criteria).size() + 1;
+	public ResultMessage submitBill(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.submit(vo);
+	}
 
-		InventoryBillPO ret = new InventoryBillPO(vo.date, vo.type, vo.state, inventory, vo.user, poMap, turn);
-		return ret;
+	public ArrayList<InventoryBillVO> findBillByType(BillType type) throws RemoteException {
+		return inventoryBill.findByType(type);
+	}
+
+	public String getNewBillIDByType(BillType type) throws RemoteException {
+		return inventoryBill.getNewIDByType(type);
+	}
+
+	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
+		return inventoryBill.getBillsByDate(startDate, endDate);
+	}
+
+	protected InventoryPO getInventoryByName(String name) throws RemoteException {
+		return inventoryDataService.findInventoryByName(name);
+	}
+
+	public ResultMessage raiseInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
+		return this.changeInventory(goodsItems, inventory, 1);
+	}
+
+	public ResultMessage reduceInventory(ArrayList<GoodsItemVO> goodsItems, String inventory) throws RemoteException {
+		return this.changeInventory(goodsItems, inventory, -1);
+	}
+
+	public ResultMessage examine(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.examine(vo);
+	}
+
+	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() throws RemoteException {
+		return inventoryBill.getAllSubmittedBill();
 	}
 	
-	protected InventoryPO getInventoryByName(String name) throws RemoteException {
-		ArrayList<InventoryPO> all = inventoryDataService.showInventory();
-		for(InventoryPO po : all){
-			if(po.getName().equals(name)){
-				return po;
-			}
-		}
-		return null;
+	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCover(vo);
 	}
+
+	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
+		return inventoryBill.redCoverAndCopy(vo);
+	}
+	
+	public String getStartDate() {
+		return initInfo.getStartDate();
+	}
+
+	/**
+	 * 改变库存（增加或减少）
+	 * 
+	 * @param sign 符号（增加：1，减少：-1）
+	 */
+	private ResultMessage changeInventory(ArrayList<GoodsItemVO> goodsItems, String inventory, int sign)
+			throws RemoteException {
+		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
+		if (inventoryPO == null) {
+			return ResultMessage.FAILED;
+		}
+		else {
+			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
+			for (GoodsItemVO itemVO : goodsItems) {
+				boolean isExistent = false;
+				for (GoodsPO goods : map.keySet()) {
+					if (goods.buildID().equals(itemVO.ID)) {
+						int number = map.get(goods) + sign * itemVO.number;
+						if (number < 0) { // 负数检查
+							return ResultMessage.FAILED;
+						}
+						map.put(goods, number);
+						isExistent = true;
+						break;
+					}
+				}
+				if (!isExistent) { // 如果本来仓库里没有这种商品
+					if (sign == -1) { // 负数检查
+						return ResultMessage.FAILED;
+					}
+					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
+					map.put(goodsPO, itemVO.number);
+				}
+			}
+			inventoryPO.setNumber(map);
+			return inventoryDataService.updateInventory(inventoryPO);
+		}
+	}
+
 }

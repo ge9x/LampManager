@@ -222,11 +222,62 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
 
     @Override
     public ArrayList<AccountBillVO> getAccountBillsByDate(String startDate, String endDate) {
-        return null;
+        try {
+            return finance.getAccountBillsByDate(startDate, endDate);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public ArrayList<CashBillVO> getCashBillsByDate(String startDate, String endDate) {
-        return null;
+        try {
+            return finance.getCashBillsByDate(startDate, endDate);
+        }catch(RemoteException e){
+            e.printStackTrace();;
+            return null;
+        }
+
+    }
+
+    @Override
+    public ResultMessage redCover(AccountBillVO billVO) {
+        try {
+            return finance.redCover(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage redCover(CashBillVO billVO) {
+        try {
+            return finance.redCover(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage redCoverAndCopy(AccountBillVO billVO) {
+        try {
+            return finance.redCoverAndCopy(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
+    }
+
+    @Override
+    public ResultMessage redCoverAndCopy(CashBillVO billVO) {
+        try {
+            return finance.redCoverAndCopy(billVO);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 }

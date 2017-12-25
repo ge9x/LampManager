@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import blservice.customerblservice.CustomerBLService;
 import blservice.customerblservice.CustomerInfo;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.UserVO;
 
@@ -136,6 +137,21 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	@Override
 	public ArrayList<UserVO> getAllSalesman() {
 		return customer.getAllSalesman();
+	}
+
+	@Override
+	public ResultMessage raiseCustomerPoints(double sum,int iD) {
+		try {
+			return customer.raiseCustomerPoints(sum, iD);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public UserLimits getCurrentUserLimit() {
+		return customer.getCurrentUserLimit();
 	}
 	
 }

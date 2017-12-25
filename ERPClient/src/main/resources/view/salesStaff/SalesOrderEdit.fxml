@@ -21,11 +21,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseEdit.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController">
+<AnchorPane prefHeight="600.0" prefWidth="833.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/purchaseEdit.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController">
     <children>
         <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="539.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="934.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -52,26 +52,34 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </HBox>
-                  <AnchorPane fx:id="BillPane" prefHeight="445.0" prefWidth="744.0">
+                  <AnchorPane fx:id="BillPane" prefHeight="762.0" prefWidth="744.0">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
                      <children>
                         <Label layoutX="40.0" layoutY="31.0" prefHeight="31.0" prefWidth="77.0" styleClass="ID-label" text="单据编号" />
                         <Label fx:id="BillID" layoutX="126.0" layoutY="31.0" prefHeight="31.0" prefWidth="347.0" text="SKD-20171022-00001" />
-                        <VBox layoutX="40.0" layoutY="146.0" prefHeight="376.0" prefWidth="101.0" spacing="10.0">
+                        <VBox layoutX="40.0" layoutY="82.0" prefHeight="704.0" prefWidth="192.0" spacing="10.0">
                            <children>
                               <Label styleClass="input-label" text="客户" />
-                              <JFXComboBox fx:id="customer" focusColor="#1db1a4" prefHeight="23.0" prefWidth="154.0">
+                              <JFXComboBox fx:id="customer" focusColor="#1db1a4" prefHeight="23.0" prefWidth="220.0">
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin></JFXComboBox>
-                              <Label styleClass="input-label" text="操作员">
+                              <Label styleClass="input-label" text="仓库" />
+                              <JFXComboBox fx:id="inventory" prefHeight="23.0" prefWidth="218.0">
                                  <VBox.margin>
-                                    <Insets bottom="8.0" />
+                                    <Insets bottom="10.0" />
                                  </VBox.margin>
-                              </Label>
-                              <Text fx:id="Username" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
+                              </JFXComboBox>
+                              <Label styleClass="input-label" text="促销策略" />
+                              <JFXComboBox fx:id="promotion" prefHeight="23.0" prefWidth="219.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                              <Label styleClass="input-label" text="促销策略折让" />
+                              <Text fx:id="promotionAllowanceField" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -84,14 +92,50 @@
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin></JFXTextField>
+                              <Label styleClass="input-label" text="代金券" />
+                              <JFXTextField fx:id="voucher">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin></JFXTextField>
+                              <Label styleClass="input-label" text="操作员">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <Text fx:id="Username" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <Label styleClass="input-label" text="业务员">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin></Label>
+                              <Text fx:id="Salesman" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
                               <Label styleClass="input-label" text="折让前总额" />
                               <Text fx:id="beforeSum" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets />
+                                    <Insets bottom="10.0" />
                                  </VBox.margin>
+                              </Text>
+                              <Label styleClass="input-label" text="折让后总额" />
+                              <Text fx:id="Total" fill="#e83a3f" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
                               </Text>
                            </children>
                         </VBox>
@@ -109,11 +153,17 @@
                                           <Insets left="10.0" />
                                        </HBox.margin>
                                     </Label>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input-label" text="商品总价格：">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="goodsTotalText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER_RIGHT" layoutX="530.0" layoutY="442.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
+                        <HBox alignment="CENTER_RIGHT" layoutX="502.0" layoutY="707.0" prefHeight="44.0" prefWidth="200.0" spacing="20.0">
                            <children>
                                <JFXButton fx:id="submitButton" onMouseClicked="#clickSubmitButton" prefHeight="40.0" prefWidth="96.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="提 交" textFill="WHITE">
                                    <font>
@@ -127,43 +177,32 @@
                                </JFXButton>
                            </children>
                         </HBox>
-                        <Label layoutX="277.0" layoutY="336.0" styleClass="input-label" text="总备注" />
-                        <VBox layoutX="160.0" layoutY="146.0" prefHeight="377.0" prefWidth="101.0" spacing="10.0">
+                        <Label layoutX="275.0" layoutY="657.0" styleClass="input-label" text="总备注" />
+                        <JFXTextField fx:id="remark" focusColor="#1db1a4" layoutX="332.0" layoutY="655.0" prefHeight="23.0" prefWidth="370.0" />
+                        <VBox fx:id="bargainVbox" layoutX="275.0" layoutY="337.0" prefHeight="150.0" prefWidth="448.0" spacing="10.0">
                            <children>
-                              <Label styleClass="input-label" text="仓库" />
-                              <JFXComboBox fx:id="inventory" prefHeight="23.0" prefWidth="101.0">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </JFXComboBox>
-                              <Label styleClass="input-label" text="业务员">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Text fx:id="Salesman" strokeType="OUTSIDE" strokeWidth="0.0" text="乐盛捷">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Label styleClass="input-label" text="代金券" />
-                              <JFXTextField fx:id="voucher">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin></JFXTextField>
-                              <Label styleClass="input-label" text="折让后总额" />
-                              <Text fx:id="Total" fill="#e83a3f" strokeType="OUTSIDE" strokeWidth="0.0" text="￥ 0.00">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
+                              <HBox prefHeight="50.0" prefWidth="448.0">
+                                 <children>
+                                    <Label styleClass="input-label" text="特价包商品清单" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="input-label" text="特价包价格：">
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="bargainPriceText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
-                        <Label layoutX="40.0" layoutY="72.0" styleClass="input-label" text="促销策略" />
-                        <JFXComboBox fx:id="promotion" layoutX="40.0" layoutY="100.0" prefHeight="23.0" prefWidth="219.0" />
-                        <JFXTextField fx:id="remark" focusColor="#1db1a4" layoutX="337.0" layoutY="334.0" prefHeight="23.0" prefWidth="370.0" />
+                        <VBox fx:id="giftVbox" layoutX="275.0" layoutY="500.0" prefHeight="150.0" prefWidth="448.0" spacing="10.0">
+                           <children>
+                              <HBox prefHeight="50.0" prefWidth="448.0">
+                                 <children>
+                                    <Label styleClass="input-label" text="赠品清单" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
 

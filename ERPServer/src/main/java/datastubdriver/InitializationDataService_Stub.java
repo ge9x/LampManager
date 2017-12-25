@@ -14,29 +14,37 @@ import java.util.Date;
  */
 public class InitializationDataService_Stub implements InitializationDataService{
 
-    public ResultMessage init(InitAccountPO po) {
-        return ResultMessage.SUCCESS;
-    }
+	@Override
+	public ResultMessage init(InitializationPO po) {
+		return ResultMessage.SUCCESS;
+	}
 
-    public InitAccountPO show() {
-        AccountPO account = new AccountPO(1,"工商银行账户", 2000.00);
-        ArrayList<AccountPO> accountPOS = new ArrayList<AccountPO>();
-        accountPOS.add(account);
+	@Override
+	public ArrayList<String> getAllInitDates() {
+		ArrayList<String> dates=new ArrayList<>();
+		dates.add("2017-12-21");
+		return dates;
+	}
 
-        CustomerPO customer=new CustomerPO( CustomerCategory.PUR_AGENT, Level.LEVEL_FIVE,"进货商2","15244358373",
-                "南京新街口","421001","34s@163.com",0.8,0.0,2000.0,"业务员2",50.0,100);
-        ArrayList<CustomerPO> customerPOS = new ArrayList<CustomerPO>();
-        customerPOS.add(customer);
-
-        ClassificationPO classification = new ClassificationPO(5, "霓虹灯", null, new ArrayList<ClassificationPO>(), new ArrayList<GoodsPO>());
-        ArrayList<ClassificationPO> classificationPOS = new ArrayList<ClassificationPO>();
-        classificationPOS.add(classification);
-
-        GoodsPO goods = new GoodsPO(5, "后现代主义七彩霓虹灯", "LLL", null, 3, 23333.3, 250000, 2000.0,2000.0);
-        ArrayList<GoodsPO> goodsVOS = new ArrayList<GoodsPO>();
-        goodsVOS.add(goods);
-
-        InitAccountPO po = new InitAccountPO("2017-11-30",customerPOS,accountPOS,goodsVOS,classificationPOS);
-        return po;
-    }
+	@Override
+	public InitializationPO getInitializationByDate(String date) {
+		InitCustomerPO c1=new InitCustomerPO("00000001", CustomerCategory.PUR_AGENT.getValue(), Level.LEVEL_THREE.getValue(), "进货商1", "13579593893", "马群", "599000", "567@163.com", 300.0, 200.0, 100.0, "Bobule", 30);
+		ArrayList<InitCustomerPO> initCustomerPOs=new ArrayList<>();
+		initCustomerPOs.add(c1);
+		
+		InitAccountPO a1=new InitAccountPO(1,"aster", 1000);
+		ArrayList<InitAccountPO> initAccountPOs=new ArrayList<>();
+		initAccountPOs.add(a1);
+		
+		InitClassificationPO classification1=new InitClassificationPO(1, "日光灯");
+		ArrayList<InitClassificationPO> initClassificationPOs=new ArrayList<>();
+		initClassificationPOs.add(classification1);
+		 
+		InitGoodsPO g1=new InitGoodsPO("0003001", "苹果牌护眼灯", "m", 300.0, 200.0, 230.0, 240.0, 3,"日光灯");
+		ArrayList<InitGoodsPO> initGoodsPOs=new ArrayList<>();
+		initGoodsPOs.add(g1);
+		
+		InitializationPO initializationPO=new InitializationPO("2017-12-21", initCustomerPOs, initAccountPOs, initGoodsPOs, initClassificationPOs);
+		return initializationPO;
+	}
 }

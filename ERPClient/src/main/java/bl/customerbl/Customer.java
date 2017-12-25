@@ -4,17 +4,21 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Locale.Category;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import dataservice.customerdataservice.CustomerDataService;
 import dataservice.salesdataservice.SalesDataService;
+import javafx.geometry.VPos;
 import po.CustomerPO;
 import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.UserVO;
 
@@ -41,12 +45,16 @@ public class Customer {
 	 */
 	public String getNewCustomerID() throws RemoteException{
 		ArrayList<CustomerPO> cusList=customerDataService.show();
+		if(cusList.size()==0){
+			return "00000001";
+		}else{
 		String res=String.valueOf(cusList.get(cusList.size()-1).getID()+1);
 		int len=res.length();
 		for(int i=0;i<8-len;i++){
 			res="0"+res;
 		}
 		return res;
+		}
 		//return customerDataService.getNewCustomerID();
 	}
       //管理客户的步骤
@@ -59,6 +67,17 @@ public class Customer {
 	 * @throws RemoteException 
 	 */
 	public ResultMessage addCustomer(CustomerVO vo) throws RemoteException {
+		if(vo.level==Level.LEVEL_ONE){
+			vo.points=0;
+		}else if(vo.level==Level.LEVEL_TWO){
+			vo.points=5;
+		}else if(vo.level==Level.LEVEL_THREE){
+			vo.points=10;
+		}else if(vo.level==Level.LEVEL_FOUR){
+			vo.points=20;
+		}else if(vo.level==Level.LEVEL_FIVE){
+			vo.points=35;
+		}
 		CustomerPO po=voTopo(vo);
 		return customerDataService.add(po);
 	}
@@ -118,20 +137,29 @@ public class Customer {
 	 * @throws RemoteException 
 	 */
 	public ResultMessage updateCustomer(CustomerVO vo) throws RemoteException{
-		if(vo.receivableLimit!=customerDataService.getCustomerData(Integer.valueOf(vo.customerID)).getReceivableLimit()){
-			return ResultMessage.FAILED;
-		}else{
 			CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(vo.customerID));
 			po.setCategory(vo.category.getValue());
-			po.setLevel(vo.level.getValue());
+//			po.setLevel(vo.level.getValue());
 			po.setCustomerName(vo.customerName);
 			po.setPhone(vo.phone);
 			po.setAddress(vo.address);
 			po.setPostCode(vo.postCode);
 			po.setMail(vo.mail);
 			po.setSalesman(vo.salesman);
+			po.setReceivableLimit(vo.receivableLimit);
+			double points=po.getPoints();
+			if(points<5){
+				po.setLevel(Level.LEVEL_ONE.getValue());
+			}else if(points>=5&&points<10){
+				po.setLevel(Level.LEVEL_TWO.getValue());
+			}else if(points>=10&&points<20){
+				po.setLevel(Level.LEVEL_THREE.getValue());
+			}else if(points>=20&&points<35){
+				po.setLevel(Level.LEVEL_FOUR.getValue());
+			}else{
+				po.setLevel(Level.LEVEL_FIVE.getValue());
+			}
 		    return customerDataService.update(po);
-		}
 	}
 	
 	public ArrayList<CustomerVO> show() throws RemoteException {
@@ -247,6 +275,13 @@ public class Customer {
 		return cusvo;
 	}
 	
+	public ResultMessage raiseCustomerPoints(double sum,int iD) throws RemoteException {
+		CustomerPO po=customerDataService.getCustomerData(iD);
+		double oldPoints=po.getPoints();
+		po.setPoints(oldPoints+sum/1000*1);
+		return customerDataService.update(po);
+	}
+	
 	private String alterID(String ID){
 		int len=ID.length();
 		for(int i=0;i<8-len;i++){
@@ -265,5 +300,9 @@ public class Customer {
 	
 	public ArrayList<UserVO> getAllSalesman() {
 		return userInfo.getAllSalesmen();
+	}
+	
+	public UserLimits getCurrentUserLimit() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
 	}
 }

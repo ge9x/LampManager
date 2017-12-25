@@ -1,27 +1,32 @@
 package bl.inventorybl;
 
-import blservice.salesblservice.SalesInfo;
 import util.InventoryListItemType;
 
 /**
  * Created on 2017/11/5
+ * 
  * @author 巽
  *
  */
 public class InventoryLineItem {
+	String date;
 	String goodsID;
-	InventoryListItemType inventoryListItemType;
 	String goodsName;
+	String goodsModel;
+	InventoryListItemType inventoryListItemType;
 	int numberDifference;
-	int totalPrice;
+	double totalPrice;
 	
-	public InventoryLineItem(SalesInfo salesInfo, InventoryListItemType inventoryListItemType, String goodsName,
-			int numberDifference, int totalPrice) {
+	public InventoryLineItem(String date, String goodsID, String goodsName, String goodsModel,
+			InventoryListItemType inventoryListItemType, int numberDifference, double totalPrice) {
 		super();
-		this.inventoryListItemType = inventoryListItemType;
+		this.date = date;
+		this.goodsID = goodsID;
 		this.goodsName = goodsName;
+		this.goodsModel = goodsModel;
+		this.inventoryListItemType = inventoryListItemType;
 		this.numberDifference = numberDifference;
 		this.totalPrice = totalPrice;
 	}
-	
+
 }

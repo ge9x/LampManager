@@ -10,7 +10,6 @@ import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
 import po.InventoryPO;
-import util.BillState;
 
 public class TestInventory {
 
@@ -84,6 +83,11 @@ public class TestInventory {
 				for(GoodsPO ipo : po.getNumber().keySet()){
 					System.out.println('\t' + ipo.getName() + " " + po.getNumber().get(ipo));
 				}
+			}
+			ArrayList<InventoryBillPO> allBill = inventoryImpl.show();
+			System.out.println("共有" + allBill.size() + "条库存类单据记录：");
+			for(InventoryBillPO po : allBill){
+				System.out.println(po.buildID() + " " + po.getUser() + " " + po.getInventory().getName());
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();

@@ -70,4 +70,8 @@ public interface PromotionTotalBLService {
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO);
 	
 	public String getNewPromotionTotalID();
+	
+	public String getCurrentUserName();
+	
+	public PromotionTotalVO findPromotionByName(String promotionName);
 }

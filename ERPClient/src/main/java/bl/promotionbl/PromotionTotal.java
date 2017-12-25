@@ -8,6 +8,8 @@ import java.util.List;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionTotalPO;
@@ -22,9 +24,11 @@ import vo.PromotionTotalVO;
 public class PromotionTotal extends Promotion{
 	
 	private ArrayList<PromotionTotalPO> promotionTotalPOs;
+	UserInfo userInfo;
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionTotalVO> show() throws RemoteException{
@@ -38,6 +42,14 @@ public class PromotionTotal extends Promotion{
 	
 	public String getNewPromotionTotalID() throws RemoteException{
 		return promotionDataService.getNewPromotionTotalID();
+	}
+	
+	public PromotionTotalVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionTotalVO promotionTotalVO = null;
+		if(promotionDataService.findPTByName(promotionName)!=null){
+			promotionTotalVO = poTOvo(promotionDataService.findPTByName(promotionName));
+		}
+		return promotionTotalVO;
 	}
 
 	public void addGift(GoodsItemVO vo){
@@ -81,7 +93,6 @@ public class PromotionTotal extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{
-		promotionTotalPOs.clear();
 		promotionTotalPOs = promotionDataService.showPT();
 		for(PromotionTotalPO po:promotionTotalPOs){
 			if(po.getPromotionID().equals(promotionTotalVO.promotionID)){
@@ -117,6 +128,10 @@ public class PromotionTotal extends Promotion{
 			gifts.add(GoodsItem.voTopo(vo));
 		}
 		return new PromotionTotalPO(promotionTotalVO.promotionName, promotionTotalVO.startDate, promotionTotalVO.endDate, 
-				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice);
+				PromotionType.TOTAL_PROMOTION_STRATEGY, promotionTotalVO.voucher, gifts, promotionTotalVO.totalPrice, promotionTotalVO.promotionID);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }

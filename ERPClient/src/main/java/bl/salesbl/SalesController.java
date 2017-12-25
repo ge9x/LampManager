@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import blservice.salesblservice.SalesBLService;
 import blservice.salesblservice.SalesInfo;
 import util.BillState;
+import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -142,8 +144,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	@Override
 	public ArrayList<String> getAllInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return sales.getAllInventory();
 	}
 
 	@Override
@@ -250,6 +251,59 @@ public class SalesController implements SalesBLService,SalesInfo{
 			return null;
 		}
 	}
-	
+
+	@Override
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) {
+		try {
+			return sales.getSalesByDateAndInventory(startDate, endDate, inventory, type);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return sales.findPromotionCustomerByName(name);
+	}
+
+	@Override
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return sales.findPromotionBargainByName(name);
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return sales.findPromotionTotalByName(name);
+	}
+
+	@Override
+	public UserLimits getCurrentUserLimits() {
+		return sales.getCurrentUserLimits();
+	}
+
+	@Override
+	public ResultMessage redCover(SalesVO vo) {
+		try {
+			return sales.redCover(vo);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return ResultMessage.NULL;
+		}
+	}
+
+	@Override
+	public ResultMessage redCoverAndCopy(SalesVO vo) {
+	try {
+		return sales.redCoverAndCopy(vo);
+	} catch (RemoteException e) {
+		e.printStackTrace();
+		return ResultMessage.NULL;
+	}
+	}
 	
 }

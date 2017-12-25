@@ -1,11 +1,7 @@
 package ui.viewcontroller.SalesStaff;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
-import blstubdriver.SalesBLService_Stub;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +15,9 @@ import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.ResultMessage;
 import vo.SalesVO;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class SalesStaffSalesReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
@@ -46,10 +45,10 @@ public class SalesStaffSalesReturnOrderViewController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = salesBLService.getSalesOrderByState(BillState.DRAFT);
-        submitted = salesBLService.getSalesOrderByState(BillState.SUBMITTED);
-        pass = salesBLService.getSalesOrderByState(BillState.PASS);
-        failed = salesBLService.getSalesOrderByState(BillState.FAILED);
+        draft = salesBLService.getSalesreturnOrderByState(BillState.DRAFT);
+        submitted = salesBLService.getSalesreturnOrderByState(BillState.SUBMITTED);
+        pass = salesBLService.getSalesreturnOrderByState(BillState.PASS);
+        failed = salesBLService.getSalesreturnOrderByState(BillState.FAILED);
 
         billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批不通过单据");
         initTabs();

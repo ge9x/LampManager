@@ -37,11 +37,11 @@ public class FormController implements FormBLService{
     }
 
     public ResultMessage redCover(BillVO billVO) {
-        return null;
+        return form.redCover(billVO);
     }
 
     public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return null;
+        return form.redCoverAndCopy(billVO);
     }
 
     public ProfitVO getProfit(String startDate,String endDate) {

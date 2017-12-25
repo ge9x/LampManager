@@ -51,17 +51,6 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException {
 		ArrayList<Criterion> criteria=new ArrayList<Criterion>();
-		switch (keywords) {
-		case "进货商":
-			criteria.add(
-					new Criterion("category", CustomerCategory.PUR_AGENT,QueryMode.FULL)
-					);
-			return customerDataHelper.multiQuery(criteria);
-		case "销售商":
-			criteria.add(
-					new Criterion("category", CustomerCategory.SELLER,QueryMode.FULL)
-					);
-		default:
 			criteria.add(
 					new Criterion(
 					new Criterion("category",keywords,QueryMode.FUZZY),
@@ -84,7 +73,6 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 	                      	);
 			return customerDataHelper.multiQuery(criteria);
 		}
-	}
 
 	public ResultMessage update(CustomerPO po) throws RemoteException {
 		return customerDataHelper.update(po);

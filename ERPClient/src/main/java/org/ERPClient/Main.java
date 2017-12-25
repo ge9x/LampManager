@@ -3,9 +3,13 @@ package org.ERPClient;
  * Created by Kry·L on 2017/11/10.
  */
 
+import com.sun.javafx.css.Style;
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -14,14 +18,19 @@ import ui.viewcontroller.common.MainUIController;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+
+
 
 public class Main extends Application {
     Network network;
 
     MainUIController mainUIController;
+
+    double xOffset;
+    double yOffset;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -42,9 +51,28 @@ public class Main extends Application {
         }catch (IOException e){
             e.printStackTrace();
         }
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+        StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("/css/main.css").toString());
+
+        //窗口拖动
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
 
 //        无关闭按钮（为测试方便先注释掉了）
         primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -54,7 +82,7 @@ public class Main extends Application {
 
     private void linkToServer() {
         try {
-            network = new Network("127.0.0.1",8080);
+            network = new Network("127.0.0.1",8000);
             network.initNetwork();
             System.out.println("linked");
         } catch (MalformedURLException e) {

@@ -2,13 +2,13 @@ package bl.inventorybl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import util.BillState;
 import util.BillType;
 import util.InventoryListItemType;
 import util.ResultMessage;
+import vo.AlarmVO;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 import vo.InventoryCheckVO;
@@ -20,6 +20,7 @@ import vo.InventoryViewVO;
  * @author 巽
  *
  */
+@SuppressWarnings("deprecation")
 public class MockInventory extends Inventory {
 
 	@Override
@@ -30,28 +31,28 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public InventoryViewVO show(Date startDate, Date endDate, String inventory) {
+	public InventoryViewVO show(String startDate, String endDate, String inventory) {
 		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
-		InventoryViewItemVO itemVO = new InventoryViewItemVO(goodsVO, InventoryListItemType.IN, 250, 2500);
+		InventoryViewItemVO itemVO = new InventoryViewItemVO("2017-12-21", goodsVO, InventoryListItemType.IN, 250, 2500);
 		ArrayList<InventoryViewItemVO> item = new ArrayList<InventoryViewItemVO>();
 		item.add(itemVO);
 		HashMap<GoodsVO, Double> total = new HashMap<GoodsVO, Double>();
 		total.put(goodsVO, 2500.0);
-		InventoryViewVO ret = new InventoryViewVO(new Date(), new Date(), "栖霞区仓库", item, total);
+		InventoryViewVO ret = new InventoryViewVO(LocalDate.now().toString(), LocalDate.now().toString(), "栖霞区仓库", item, total);
 		return ret;
 	}
 
 	@Override
-	public InventoryCheckVO check(Date today) {
+	public InventoryCheckVO check() {
 		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
 		HashMap<GoodsVO, Double> averagePrice = new HashMap<GoodsVO, Double>();
 		averagePrice.put(goodsVO, 250.0);
-		InventoryCheckVO ret = new InventoryCheckVO(new Date(), averagePrice);
+		InventoryCheckVO ret = new InventoryCheckVO(LocalDate.now().toString(), averagePrice);
 		return ret;
 	}
 
 	@Override
-	public ResultMessage exportExcel(InventoryCheckVO vo) {
+	public ResultMessage exportExcel(String filePath, String fileName, InventoryCheckVO vo) {
 		if(vo==null){
 			return null;
 		}
@@ -73,13 +74,9 @@ public class MockInventory extends Inventory {
 	}
 
 	@Override
-	public ArrayList<InventoryBillVO> showAlarmBills() {
-		HashMap<GoodsVO, Integer> goodsMap = new HashMap<GoodsVO, Integer>();
-		GoodsVO goodsVO = new GoodsVO("0100001", "圣洁牌经典黑白配台灯", "L", null, "栖霞区仓库", 250, 25, 250, 2500, 250, 2500);
-		goodsMap.put(goodsVO, 25);
-		InventoryBillVO billVO = new InventoryBillVO("BJD-20171107-00001", BillType.ALARM, BillState.PASS, LocalDate.now().toString() , "栖霞区仓库", "乐圣洁", goodsMap);
-		ArrayList<InventoryBillVO> ret = new ArrayList<InventoryBillVO>();
-		ret.add(billVO);
+	public ArrayList<AlarmVO> getAlarmByInventory(String inventory) {
+		ArrayList<AlarmVO> ret = new ArrayList<>();
+		ret.add(new AlarmVO("0100001", "圣洁牌经典黑白配台灯", "L", 21, 25, 9));
 		return ret;
 	}
 

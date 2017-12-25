@@ -23,13 +23,16 @@ public class InventoryBillVO extends BillVO{
 	 * 该单据内的商品对应的溢出/缺损/赠送/报警数量（报警数量为商品警戒数量，要得到该商品实际数量应通过商品VO）
 	 */
 	public HashMap<GoodsVO, Integer> goodsMap;
-	
+
+
 	public InventoryBillVO(String ID, BillType type, BillState state, String date, String inventory, String user, HashMap<GoodsVO, Integer> goodsMap) {
 		super();
 		this.ID = ID;
 		this.type = type;
 		this.state = state;
 		this.date = date;
+		this.inventory = inventory;
+		this.user = user;
 		this.goodsMap = goodsMap;
 	}
 

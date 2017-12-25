@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.util.ArrayList;
 
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerAddVO;
 import vo.CustomerVO;
 import vo.UserVO;
@@ -73,4 +74,9 @@ public interface CustomerBLService extends Remote{
 	 * @return
 	 */
 	public ArrayList<UserVO> getAllSalesman();
+	/**
+	 * 得到当前登录用户的权限
+	 * @return
+	 */
+	public UserLimits getCurrentUserLimit();
 }

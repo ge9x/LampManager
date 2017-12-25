@@ -38,11 +38,11 @@ public class Form {
     }
 
     public ResultMessage redCover(BillVO billVO) {
-        return null;
+        return documentDetails.redCover(billVO);
     }
 
     public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return null;
+        return documentDetails.redCoverAndCopy(billVO);
     }
 
     public ProfitVO getProfit(String startDate, String endDate) {

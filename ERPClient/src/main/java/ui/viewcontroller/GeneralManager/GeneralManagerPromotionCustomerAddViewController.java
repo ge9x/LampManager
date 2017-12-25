@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionCustomerController;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import blstubdriver.PromotionCustomer_Stub;
 import javafx.beans.property.DoubleProperty;
@@ -36,7 +37,7 @@ import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import bean.GoodsBean;
 import util.Level;
 import util.Money;
 import vo.GoodsItemVO;
@@ -46,7 +47,7 @@ import vo.PromotionCustomerVO;
 public class GeneralManagerPromotionCustomerAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomer_Stub();
+	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomerController();
 	PromotionCustomerVO promotionCustomer;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 	
@@ -106,6 +107,7 @@ public class GeneralManagerPromotionCustomerAddViewController {
 		deleteIcon.setText("\ue606");
 		addIcon.setText("\ue61e");
 		Total.setText(Money.getMoneyString(0));
+		username.setText(promotionCustomerBLService.getCurrentUserName());
 		
 		//初始化等级comboBox
 		customerLevel.getItems().addAll(Level.LEVEL_ONE.getValue(), Level.LEVEL_TWO.getValue(), Level.LEVEL_THREE.getValue(), 
@@ -233,6 +235,12 @@ public class GeneralManagerPromotionCustomerAddViewController {
 	public void clickOKButton(){
 		if(promotionName.getText().length()>0){
 			Level level = getLevel();
+			gifts.clear();
+			for(GoodsItemBean bean:data){
+				GoodsItemVO goodsItemVO = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), 
+						bean.getRetailPrice(), bean.getRemark());
+				gifts.add(goodsItemVO);
+			}
 			promotionCustomer = new PromotionCustomerVO(promotionName.getText(), promotionID.getText(),  startDate.getValue().toString(), 
 					endDate.getValue().toString(), Double.parseDouble(voucherField.getText()), Double.parseDouble(allowanceField.getText()), gifts, level);
 			if(isNew){
@@ -241,6 +249,7 @@ public class GeneralManagerPromotionCustomerAddViewController {
 			else{
 				promotionCustomerBLService.updatePromotion(promotionCustomer);
 			}
+			generalManagerPromotionViewController.clickReturnButton();
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

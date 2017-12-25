@@ -23,82 +23,67 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "initaccount")
 public class InitAccountPO implements Serializable{
-	private static final long servialVersionUID=45345768282732L;
+	private static final long servialVersionUID=453467868782732L;
 	
 	private int ID;
-    private String date;
-    private List<CustomerPO> customerPOS;
-    private List<AccountPO> accountPOS;
-    private List<GoodsPO> goodsPOS;
-    private List<ClassificationPO> classificationPOS;
-    
-    public InitAccountPO(){};
+	/**
+     * 银行账户ID
+     */
+    private  int accountID;
+    /**
+     * 银行账户名称
+     */
+    private String name;
 
-    public InitAccountPO(String date, List<CustomerPO> customerPOS, List<AccountPO> accountPOS, List<GoodsPO> goodsPOS,List<ClassificationPO> classificationPOS) {
-        this.date = date;
-        this.customerPOS = customerPOS;
-        this.accountPOS = accountPOS;
-        this.goodsPOS = goodsPOS;
-        this.classificationPOS = classificationPOS;
+    /**
+     * 银行账户余额
+     */
+    private double money;
+    
+    public InitAccountPO(){ }
+    
+    public InitAccountPO(int accountID,String name, double money) {
+    	this.accountID=accountID;
+        this.name = name;
+        this.money = money;
     }
     
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-    public int getID(){
-    	return ID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getID() {
+        return ID;
+     }
+
+    public void setID(int ID) {
+        this.ID = ID;
+     }
+   	
+    @Column(name = "accountId")
+    public int getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(int accountID) {
+		this.accountID = accountID;
+	}
+
+	@Column(name = "name")
+    public String getName() {
+        return name;
     }
     
-    public void setID(int ID){
-    	this.ID=ID;
-    }
-    
-    @Column(name = "date")
-    public String getDate() {
-        return date;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    @Column(name = "money")
+    public double getMoney() {
+        return money;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "initAccount")
-    public List<CustomerPO> getCustomerPOS() {
-        return customerPOS;
+    public void setMoney(double money) {
+        this.money = money;
     }
 
-    public void setCustomerPOS(List<CustomerPO> customerPOS) {
-        this.customerPOS = customerPOS;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "initAccount")
-    public List<AccountPO> getAccountPOS() {
-        return accountPOS;
-    }
-
-    public void setAccountPOS(List<AccountPO> accountPOS) {
-        this.accountPOS = accountPOS;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "initAccount")
-    public List<GoodsPO> getGoodsPOS() {
-        return goodsPOS;
-    }
-
-    public void setGoodsPOS(List<GoodsPO> goodsPOS) {
-        this.goodsPOS = goodsPOS;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "initAccount")
-    public List<ClassificationPO> getClassificationPOS() {
-        return classificationPOS;
-    }
-
-    public void setClassificationPOS(List<ClassificationPO> classificationPOS) {
-        this.classificationPOS = classificationPOS;
-    }
 }

@@ -56,11 +56,6 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	}
 
 	@Override
-	public ArrayList<InventoryBillPO> showAlarm() throws RemoteException {
-		return inventoryBillDataHelper.fullyQuery("type", BillType.ALARM);
-	}
-
-	@Override
 	public InventoryBillPO findBill(int ID) throws RemoteException {
 		return inventoryBillDataHelper.exactlyQuery("id", ID);
 	}
@@ -99,5 +94,10 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	@Override
 	public ArrayList<InventoryBillPO> advancedQuery(ArrayList<Criterion> criteria) throws RemoteException {
 		return inventoryBillDataHelper.multiQuery(criteria);
+	}
+
+	@Override
+	public InventoryPO findInventoryByName(String name) throws RemoteException {
+		return inventoryDataHelper.exactlyQuery("name", name);
 	}
 }

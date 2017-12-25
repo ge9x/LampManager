@@ -32,7 +32,7 @@ public class InitializationBLService_Stub implements InitializationBLService {
         ArrayList<GoodsVO> goodsVOS = new ArrayList<GoodsVO>();
         goodsVOS.add(goods);
 
-        InitAccountVO vo = new InitAccountVO(new Date(),accountVOS,customerVOS,goodsVOS,classificationVOS);
+        InitAccountVO vo = new InitAccountVO("",accountVOS,customerVOS,goodsVOS,classificationVOS);
         return vo;
     }
 

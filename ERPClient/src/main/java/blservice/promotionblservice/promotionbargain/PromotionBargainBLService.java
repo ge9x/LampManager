@@ -63,4 +63,8 @@ public interface PromotionBargainBLService {
 	public ResultMessage updatePromotion(PromotionBargainVO vo);
 	
 	public String getNewPromotionBargainID();
+	
+	public String getCurrentUserName();
+	
+	public PromotionBargainVO findPromotionByName(String promotionName);
 }

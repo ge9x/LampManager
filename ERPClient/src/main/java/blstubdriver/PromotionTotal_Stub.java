@@ -92,4 +92,16 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 		return "PT-0001";
 	}
 
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	@Override
+	public PromotionTotalVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

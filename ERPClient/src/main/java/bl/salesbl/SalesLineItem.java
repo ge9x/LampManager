@@ -17,6 +17,7 @@ import blservice.userblservice.UserInfo;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
@@ -66,16 +67,25 @@ public class SalesLineItem {
 	public ArrayList<CustomerVO> getAllCustomer() {
 		return customerInfo.getAllSeller();
 	}
-    
-    public ResultMessage alterInventory(SalesVO vo){
-		return null;
+	
+	public ArrayList<String> getAllInventory() {
+		return inventoryInfo.getAllInventoryName();
 	}
 	
-	public ResultMessage alterCustomer(SalesVO vo){
-		if(vo.type==BillType.SALES){
-			return customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
-		}else{
-			return customerInfo.reduceCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
-		}
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return promotionCustomerInfo.findPromotionByName(name);
 	}
+	
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return promotionBargainInfo.findPromotionByName(name);
+	}
+	
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return promotionTotalInfo.findPromotionByName(name);
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return userInfo.findUserByID(userInfo.getCurrentUserID()).limit;
+	}
+	
 }

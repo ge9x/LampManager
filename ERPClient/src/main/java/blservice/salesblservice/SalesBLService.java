@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import util.BillState;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -180,4 +181,27 @@ public interface SalesBLService {
 	   * @return
 	   */
 	  public ArrayList<SalesVO> getSalesreturnOrderByState(BillState state);
+	  /**
+	   * 通过名字查找会员促销策略
+	   * @param name
+	   * @return
+	   */
+	  public PromotionCustomerVO findPromotionCustomerByName(String name);
+	  /**
+	   * 通过名字查找特价包
+	   * @param name
+	   * @return
+	   */
+	  public PromotionBargainVO findPromotionBargainByName(String name);
+	  /**
+	   * 通过名字查找总价促销策略
+	   * @param name
+	   * @return
+	   */
+	  public PromotionTotalVO findPromotionTotalByName(String name);
+	  /**
+	   * 显示当前用户的用户权限
+	   * @return
+	   */
+	  public UserLimits getCurrentUserLimits();
 }

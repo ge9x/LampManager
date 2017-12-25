@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxWidth="830.0" prefHeight="600.0" prefWidth="833.0" style="-fx-background-color: #f6f6f7;"  xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialInitController">
+    <children>
+        <ScrollPane layoutX="8.0" maxWidth="825.0" prefHeight="601.0" prefWidth="820.0" style="-fx-background-color: #f6f6f7;">
+            <content>
+                <VBox alignment="TOP_CENTER" maxWidth="814.0" prefHeight="638.0" prefWidth="810.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxWidth="716.0" minHeight="81.0" minWidth="726.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                            <effect>
+                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                            </effect>
+                            <children>
+                                <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
+                                <Label fx:id="title" prefHeight="32.0" prefWidth="116.0" text="期初建账">
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets left="10.0" />
+                                    </padding>
+                                </Label>
+                        <Label fx:id="initIcon" onMouseClicked="#clickInitButton" styleClass="icon-label" text="icon" />
+                        <HBox fx:id="InitDateHBox" alignment="CENTER_RIGHT" prefHeight="81.0" prefWidth="546.0">
+                           <children>
+                              <Label text="期初日期：">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></Label>
+                              <JFXComboBox fx:id="DateBox" focusColor="#1db1a4" prefHeight="23.0" prefWidth="129.0" />
+                           </children>
+                        </HBox>
+                               </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </HBox>
+                  <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="744.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="商品分类">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane styleClass="edge-to-edge" fx:id="ClaTable" layoutX="20.0" layoutY="52.0" prefWidth="676.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="744.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="银行账户">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane styleClass="edge-to-edge" fx:id="AccountTable" layoutX="20.0" layoutY="49.0" prefHeight="232.0" prefWidth="676.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="商品">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane styleClass="edge-to-edge" fx:id="GoodsTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxWidth="716.0" minHeight="300.0" prefHeight="500.0" prefWidth="744.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="客户">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane styleClass="edge-to-edge" fx:id="CustomerTable" layoutX="20.0" layoutY="52.0" prefHeight="220.0" prefWidth="676.0" />
+                     </children>
+                  </AnchorPane>
+                      </children>
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="30.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

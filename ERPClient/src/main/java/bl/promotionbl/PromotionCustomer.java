@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserController;
+import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
@@ -19,9 +21,11 @@ import vo.PromotionCustomerVO;
 public class PromotionCustomer extends Promotion{
 	
 	ArrayList<PromotionCustomerPO> promotionCustomerPOs;
+	UserInfo userInfo;
 	
 	public PromotionCustomer(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
+		userInfo = new UserController();
 	}
 	
 	public ArrayList<PromotionCustomerVO> show() throws RemoteException{
@@ -35,6 +39,14 @@ public class PromotionCustomer extends Promotion{
 	
 	public String getNewPromotionCustomerID() throws RemoteException{
 		return promotionDataService.getNewPromotionCustomerID();
+	}
+	
+	public PromotionCustomerVO findPromotionByName(String promotionName) throws RemoteException{
+		PromotionCustomerVO promotionCustomerVO = null;
+		if(promotionDataService.findPCByName(promotionName)!=null){
+			promotionCustomerVO = poTOvo(promotionDataService.findPCByName(promotionName));
+		}
+		return promotionCustomerVO;
 	}
 	
 	public void addGift(GoodsItemVO vo){
@@ -82,7 +94,6 @@ public class PromotionCustomer extends Promotion{
 	}
 	
 	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{
-		promotionCustomerPOs.clear();
 		promotionCustomerPOs = promotionDataService.showPC();
 		for(PromotionCustomerPO po:promotionCustomerPOs){
 			if(po.getPromotionID().equals(promotionCustomerVO.promotionID)){
@@ -121,6 +132,10 @@ public class PromotionCustomer extends Promotion{
 		}
 		return new PromotionCustomerPO(promotionCustomerVO.promotionName, promotionCustomerVO.startDate, promotionCustomerVO.endDate, 
 				PromotionType.MEMBER_PROMOTION_STRATEGY, promotionCustomerVO.voucher, promotionCustomerVO.allowance, gifts, 
-				promotionCustomerVO.level);
+				promotionCustomerVO.level, promotionCustomerVO.promotionID);
+	}
+	
+	public String getCurrentUserName(){
+		return userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID());
 	}
 }

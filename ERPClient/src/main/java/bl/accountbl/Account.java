@@ -1,6 +1,8 @@
 package bl.accountbl;
 
+import dataimpl.accountdataimpl.AccountDataServiceImpl;
 import dataservice.accountdataservice.AccountDataService;
+import datastubdriver.AccountDataService_Stub;
 import po.AccountBillPO;
 import po.AccountPO;
 import rmi.AccountRemoteHelper;
@@ -21,7 +23,7 @@ public class Account{
     ArrayList<AccountPO> accountPOS;
 
     public Account() {
-        accountDataService = AccountRemoteHelper.getInstance().getAccountDataService();
+        accountDataService = AccountDataServiceImpl.getInstance();
 
     }
 

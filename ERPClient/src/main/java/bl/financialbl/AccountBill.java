@@ -18,6 +18,7 @@ import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -157,5 +158,52 @@ public class AccountBill {
         }
         AccountBillVO accountBillVO = new AccountBillVO(po.getDate(), po.buildID(), po.getState(), po.getType(), String.valueOf(po.getCustomerID()), po.getUserName(), accountBillItemVOS);
         return accountBillVO;
+    }
+
+    public ArrayList<AccountBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
+        ArrayList<AccountBillVO> accountBillVOS = new ArrayList<>();
+        if (accountBillPOS == null || accountBillPOS.isEmpty()) {
+            accountBillPOS = financeDataService.getAllAccountBills();
+        }
+        for (AccountBillPO po : accountBillPOS) {
+            LocalDate billDate = LocalDate.parse(po.getDate());
+            LocalDate start = LocalDate.parse(startDate);
+            LocalDate end = LocalDate.parse(endDate);
+
+            if (((billDate.isBefore(end) && billDate.isAfter(start) )|| billDate.isEqual(start) || billDate.isEqual(end)) && po.getState() == BillState.PASS ) {
+                accountBillVOS.add(poTovo(po));
+            }
+        }
+        return accountBillVOS;
+    }
+
+    public ResultMessage redCover(AccountBillVO billVO) throws RemoteException {
+
+        String ID = "";
+
+        if (billVO.type == BillType.RECEIPT)
+            ID = getNewReceiptID();
+        else
+            ID = getNewPaymentID();
+        billVO.ID = ID;
+        for (AccountBillItemVO itemVO : billVO.accountBillItems) {
+            itemVO.transferMoney = -itemVO.transferMoney;
+        }
+
+        billVO.sum = billVO.calSum();
+        submit(billVO);
+        return examine(billVO);
+    }
+
+    public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
+       redCover(billVO);
+        String ID = "";
+        if (billVO.type == BillType.RECEIPT)
+            ID = getNewReceiptID();
+        else
+            ID = getNewPaymentID();
+        billVO.ID = ID;
+        billVO.state = BillState.DRAFT;
+        return save(billVO);
     }
 }

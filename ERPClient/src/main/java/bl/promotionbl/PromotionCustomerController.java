@@ -7,12 +7,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
+import bl.userbl.User;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerInfo;
 import util.Level;
 import util.ResultMessage;
 import vo.GoodsItemVO;
 import vo.PromotionCustomerVO;
+import vo.PromotionTotalVO;
 
 public class PromotionCustomerController implements PromotionCustomerBLService, PromotionCustomerInfo{
 
@@ -82,21 +84,14 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 
 	@Override
 	public ArrayList<PromotionCustomerVO> getFitPromotionCustomer(Level level) {
-		try {
-			ArrayList<PromotionCustomerVO> VOs = show();
-			for(PromotionCustomerVO vo:VOs){
-				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-				Date startDate = sd.parse(vo.startDate);
-				Date endDate = sd.parse(vo.endDate);
-				if(new Date().before(startDate)||new Date().after(endDate)||level.ordinal()<vo.level.ordinal()){
-					VOs.remove(vo);
-				}
+		ArrayList<PromotionCustomerVO> VOs = show();
+		ArrayList<PromotionCustomerVO> result = new ArrayList<>();
+		for(PromotionCustomerVO vo:VOs){
+			if(level.ordinal()>=vo.level.ordinal()){
+				result.add(vo);
 			}
-			return VOs;
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
 		}
+		return result;
 	}
 
 	@Override
@@ -128,6 +123,24 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 		// TODO Auto-generated method stub
 		try {
 			return promotionCustomer.getNewPromotionCustomerID();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public String getCurrentUserName() {
+		// TODO Auto-generated method stub
+		return promotionCustomer.getCurrentUserName();
+	}
+
+	@Override
+	public PromotionCustomerVO findPromotionByName(String promotionName) {
+		// TODO Auto-generated method stub
+		try {
+			return promotionCustomer.findPromotionByName(promotionName);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

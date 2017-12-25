@@ -8,19 +8,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
+import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryController;
+import blservice.customerblservice.CustomerInfo;
+import blservice.inventoryblservice.InventoryInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
+import po.PurchasePO;
 import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.Level;
 import util.ResultMessage;
+import util.UserLimits;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
 import vo.PromotionCustomerVO;
 import vo.PromotionTotalVO;
+import vo.PurchaseVO;
 import vo.SalesVO;
 
 /**
@@ -28,15 +37,19 @@ import vo.SalesVO;
  */
 
 public class Sales {
-	private SalesDataService salesDataService;
+	private static SalesDataService salesDataService;
 	
 	SalesLineItem salesLineItem;
 	GoodsItem goodsItem;
+	InventoryInfo inventoryInfo;
+	CustomerInfo customerInfo;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 		salesLineItem=new SalesLineItem();
 		goodsItem=new GoodsItem();
+		inventoryInfo=new InventoryController();
+		customerInfo=new CustomerController();
 	}
 	
 	
@@ -60,12 +73,12 @@ public class Sales {
 		po.setSalesman(vo.salesman);
 		po.setUser(vo.user);
 		po.setInventory(vo.inventory);
+		po.getGoodsItemList().clear();
 		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
-		ArrayList<GoodsItemPO> goodsItempoList=new ArrayList<>();
 		for(GoodsItemVO goodItemvo:goodsItemvoList){
-			goodsItempoList.add(GoodsItem.voTopo(goodItemvo));
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodItemvo);
+			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setGoodsItemList(goodsItempoList);
 		po.setAllowance(vo.allowance);
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
@@ -83,7 +96,7 @@ public class Sales {
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
 			for(SalesPO po:salpoList){
 				Date date=stringToDate(po.getDate());
-				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getState()==BillState.PASS){
 					salvoList.add(poTovo(po));
 				}
 			}
@@ -100,7 +113,7 @@ public class Sales {
 			ArrayList<SalesVO> salvoList=new ArrayList<>();
 			for(SalesPO po:salpoList){
 				Date date=stringToDate(po.getDate());
-				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0){
+				if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getState()==BillState.PASS){
 					salvoList.add(poTovo(po));
 				}
 			}
@@ -116,6 +129,15 @@ public class Sales {
 	}
 	
 	public ResultMessage examine(SalesVO vo) throws RemoteException {
+		if(vo.state==BillState.PASS){
+		if(vo.type==BillType.SALES){
+			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+		}else{
+			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
+			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+		}
+		}
 		return updateSales(vo);
 	}
 	
@@ -145,12 +167,16 @@ public class Sales {
 	}
 	
 	public ResultMessage submitSales(SalesVO vo) throws RemoteException{
-		SalesPO po=salesDataService.findSlaesByID(vo.ID);
-		po.setState(BillState.SUBMITTED);
-		return salesDataService.updateSales(po);
+		CustomerVO customerVO=customerInfo.getCustomerByID(Integer.parseInt(vo.customerID));
+		if(vo.type==BillType.SALES&&((customerVO.receive+vo.afterSum)>customerVO.receivableLimit)){
+			return ResultMessage.FAILED;
+		}
+		vo.state=BillState.SUBMITTED;
+		return addSales(vo);
 	}
 	
 	public ResultMessage saveSales(SalesVO bill) throws RemoteException {
+		addSales(bill);
 		SalesPO po=salesDataService.findSlaesByID(bill.ID);
 		po.setState(BillState.DRAFT);
 		return salesDataService.updateSales(po);
@@ -182,19 +208,6 @@ public class Sales {
 		return time;
 	}
 	
-	public static SalesPO voTopo(SalesVO vo){
-		return null;
-	}
-	
-	public static SalesVO poTovo(SalesPO po){
-		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
-		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
-		for(GoodsItemPO goodsItempo:goodsItempoList){
-			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
-		}
-		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
-	}
-	
 	public ArrayList<SalesVO> getSalesOrderByState(BillState state) throws RemoteException {
 		ArrayList<SalesVO> salvoList=new ArrayList<>();
 		ArrayList<SalesPO> salrepoList=salesDataService.findSlaesByState(state);
@@ -219,6 +232,92 @@ public class Sales {
 	
 	public ResultMessage deleteSales(SalesVO vo) throws RemoteException {
 		return salesDataService.deletePurchase(vo.ID);
+	}
+	
+	public ArrayList<SalesVO> getSalesByDateAndInventory(String startDate, String endDate, String inventory,
+			BillType type) throws ParseException, RemoteException {
+		ArrayList<SalesPO> salList=new ArrayList<>();
+		ArrayList<SalesVO> getList=new ArrayList<>();
+		if(type==BillType.PURCHASE){
+			salList=salesDataService.showSales();
+		}else{
+			salList=salesDataService.showSalesReturn();
+		}
+		for(SalesPO po:salList){
+			Date date=stringToDate(po.getDate());
+			if(date.compareTo(stringToDate(startDate))>=0&&date.compareTo(stringToDate(endDate))<=0&&po.getInventory().equals(inventory)&&po.getState()==BillState.PASS){
+				getList.add(poTovo(po));
+			}
+		}
+		return getList;
+
+	}
+	
+	public ArrayList<String> getAllInventory() {
+		return salesLineItem.getAllInventory();
+	}
+	
+	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+		return salesLineItem.findPromotionCustomerByName(name);
+	}
+	
+	public PromotionBargainVO findPromotionBargainByName(String name) {
+		return salesLineItem.findPromotionBargainByName(name);
+	}
+	
+	public PromotionTotalVO findPromotionTotalByName(String name) {
+		return salesLineItem.findPromotionTotalByName(name);
+	}
+	
+
+	public static SalesPO voTopo(SalesVO vo) throws NumberFormatException, RemoteException{
+		ArrayList<GoodsItemVO> goodsItemvoList=vo.goodsItemList;
+		List<GoodsItemPO> goodsItempoList=new ArrayList<>();
+		for(GoodsItemVO goodsItemvo:goodsItemvoList){
+			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
+			goodsItempoList.add(goodsItemPO);
+		}
+		String str[]=vo.date.split("-");
+		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
+	}
+	
+	public static SalesVO poTovo(SalesPO po){
+		List<GoodsItemPO> goodsItempoList=po.getGoodsItemList();
+		ArrayList<GoodsItemVO> goodsItemvoList=new ArrayList<>();
+		for(GoodsItemPO goodsItempo:goodsItempoList){
+			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
+		}
+		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
+	}
+	
+	public UserLimits getCurrentUserLimits() {
+		return salesLineItem.getCurrentUserLimits();
+	}
+	
+	public ResultMessage redCover(SalesVO vo) throws RemoteException {
+		ArrayList<GoodsItemVO> goodsitemList=vo.goodsItemList;
+		for(GoodsItemVO goodsItemVO:goodsitemList){
+			goodsItemVO.number=-goodsItemVO.number;
+		}
+		vo.goodsItemList=goodsitemList;
+		if(vo.type==BillType.SALES){
+			vo.ID=salesDataService.getNewSalesID();
+		}else{
+			vo.ID=salesDataService.getNewSalesReturnID();
+		}
+		vo.state=BillState.PASS;
+		return addSales(vo);
+	}
+	
+	public ResultMessage redCoverAndCopy(SalesVO vo) throws RemoteException {
+		redCover(vo);
+		vo.state=BillState.DRAFT;
+		if(vo.type==BillType.SALES){
+			vo.ID=salesDataService.getNewSalesID();
+		}else{
+			vo.ID=salesDataService.getNewSalesReturnID();
+		}
+		return addSales(vo);
 	}
 	
 }

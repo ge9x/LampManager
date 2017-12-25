@@ -23,6 +23,8 @@ public class RemoteHelper {
         PromotionDataRemoteObject promotionDataRemoteObject;
         UserDataRemoteObject userDataRemoteObject;
         SalesDataRemoteObject salesDataRemoteObject;
+        InitializationDataRemoteObject initializationDataRemoteObject;
+        LogDataRemoteObject logDataRemoteObject;
         
         try {
             accountDataRemoteObject = new AccountDataRemoteObject();
@@ -34,18 +36,29 @@ public class RemoteHelper {
             promotionDataRemoteObject = new PromotionDataRemoteObject();
             userDataRemoteObject = new UserDataRemoteObject();
             salesDataRemoteObject=new SalesDataRemoteObject();
-            
-            LocateRegistry.createRegistry(8080);
-            Naming.bind("rmi://127.0.0.1:8080/AccountDataRemoteObject",
+            initializationDataRemoteObject = new InitializationDataRemoteObject();
+            logDataRemoteObject = new LogDataRemoteObject();
+
+            String ip = "127.0.0.1";
+            int port = 8000;
+
+            LocateRegistry.createRegistry(port);
+
+            String url = ip + ":"+port;
+            Naming.bind("rmi://"+url+"/AccountDataRemoteObject",
                     accountDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/FinanceDataRemoteObject",financeDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/CustomerDataRemoteObject", customerDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/ClassificationDataRemoteObject", classificationDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/GoodsDataRemoteObject", goodsDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/InventoryDataRemoteObject", inventoryDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/PromotionDataRemoteObject", promotionDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/UserDataRemoteObject", userDataRemoteObject);
-            Naming.bind("rmi://127.0.0.1:8080/SalesDataRemoteObject", salesDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/FinanceDataRemoteObject",financeDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/CustomerDataRemoteObject", customerDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/ClassificationDataRemoteObject", classificationDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/GoodsDataRemoteObject", goodsDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/InventoryDataRemoteObject", inventoryDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/PromotionDataRemoteObject", promotionDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/UserDataRemoteObject", userDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/SalesDataRemoteObject", salesDataRemoteObject);
+            Naming.bind("rmi://" + url + "/InitializationDataRemoteObject", initializationDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/LogDataRemoteObject", logDataRemoteObject);
+
+            System.out.println("start successfully");
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {

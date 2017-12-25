@@ -1,66 +1,47 @@
 package ui.viewcontroller.SalesStaff;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Optional;
-
+import bean.GoodsBean;
+import bean.GoodsItemBean;
+import bl.salesbl.SalesController;
+import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-
-import bean.GoodsItemBean;
-import blservice.salesblservice.SalesBLService;
-import blservice.userblservice.UserBLService;
-import blstubdriver.SalesBLService_Stub;
-import blstubdriver.UserBLService_Stub;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
-import ui.component.GoodsTable.GoodsBean;
+import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
-import util.BillState;
-import util.BillType;
-import util.Level;
-import util.Money;
-import vo.CustomerVO;
-import vo.GoodsItemVO;
-import vo.PromotionVO;
-import vo.PurchaseVO;
-import vo.SalesVO;
+import util.*;
+import vo.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class SalesStaffSalesEditViewController {
 	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesBLService_Stub();
-	UserBLService userBLService = new UserBLService_Stub();
+	SalesBLService salesBLService = new SalesController();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
@@ -69,8 +50,27 @@ public class SalesStaffSalesEditViewController {
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
             FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> bargainItemTable;
+    ObservableList<GoodsItemBean> bargainData =
+            FXCollections.observableArrayList();
+    
+    TableView<GoodsItemBean> giftItemTable;
+    ObservableList<GoodsItemBean> giftData =
+            FXCollections.observableArrayList();
+    
+    //商品原价总额
     DoubleProperty total = new SimpleDoubleProperty(0);
+    //商品原价与特价包总额
+    DoubleProperty bargainAndGoods = new SimpleDoubleProperty(0);
+    //折让与代金券后总额
     DoubleProperty afterSum = new SimpleDoubleProperty(0);
+    //特价包价格
+    DoubleProperty bargainPrice = new SimpleDoubleProperty(0);
+    //折让、代金券、特价包总额
+    DoubleProperty allTotal = new SimpleDoubleProperty(0);
+    //促销策略折让价格
+    DoubleProperty promotionAllowance = new SimpleDoubleProperty(0);
     
     boolean isExamine = false;
     boolean isNew;
@@ -92,12 +92,24 @@ public class SalesStaffSalesEditViewController {
 
     @FXML
     VBox vbox;
+    
+    @FXML
+    VBox bargainVbox;
+    
+    @FXML
+    VBox giftVbox;
 
     @FXML
     Text Total;
     
     @FXML
     Text beforeSum;
+    
+    @FXML
+    Text promotionAllowanceField;
+    
+    @FXML
+    Text bargainPriceText, goodsTotalText;
     
     @FXML
     JFXTextField remark;
@@ -129,13 +141,14 @@ public class SalesStaffSalesEditViewController {
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
-        String name = userBLService.findUserByID(userBLService.getCurrentUserID()).name;
+        String name = salesBLService.getUserName();
         Username.setText(name);
+        Salesman.setText("");
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
-        promotions.addAll(salesBLService.getFitPromotionCustomer(Level.LEVEL_ONE));
-        promotions.addAll(salesBLService.getFitPromotionTotal(0));
+        bargainPriceText.setText(Money.getMoneyString(0));
+        goodsTotalText.setText(Money.getMoneyString(0));
 
         //初始化supplier选择框
         ArrayList<String> customerNames = new ArrayList<>();
@@ -155,77 +168,84 @@ public class SalesStaffSalesEditViewController {
         promotion.getItems().addAll(promotionNames);
 
         //初始化表格
+        SalesBillTable ItemTable = new SalesBillTable();
         itemTable = new TableView<>();
         itemTable.setEditable(true);
+        ItemTable.amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
+        ItemTable.amountColumn.setOnEditCommit(
+      	  	  (CellEditEvent<GoodsItemBean, Integer> t)->{
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setAmount(t.getNewValue());
+      			
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setTotalPrice(t.getNewValue() 
+      							  * ((GoodsItemBean) t.getTableView().getItems().get(
+      		        					  t.getTablePosition().getRow())
+      		        					  ).getRetailPrice()
+      							  );
 
-        TableColumn IDColumn = new TableColumn("商品编号");
-        IDColumn.setPrefWidth(70);
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        TableColumn nameColumn = new TableColumn("条目名");
-        nameColumn.setPrefWidth(60);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn modelColumn = new TableColumn("型号");
-        modelColumn.setPrefWidth(60);
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        TableColumn<GoodsItemBean, Integer> amountColumn = new TableColumn("数量");
-        amountColumn.setPrefWidth(60);
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        TableColumn retailPriceColumn = new TableColumn("单价");
-        retailPriceColumn.setPrefWidth(60);
-        retailPriceColumn.setCellValueFactory(new PropertyValueFactory<>("retailPrice"));
-        TableColumn totalPriceColumn = new TableColumn("总价");
-        totalPriceColumn.setPrefWidth(60);
-        totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        TableColumn<GoodsItemBean, String> remarkColumn = new TableColumn("备注");
-        remarkColumn.setPrefWidth(78);
-        remarkColumn.setCellValueFactory(new PropertyValueFactory<>("remark"));
-
-        amountColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Integer>forTableColumn(new IntegerStringConverter()));
-        amountColumn.setOnEditCommit(
-        		(CellEditEvent<GoodsItemBean, Integer> t)->{
+      		  });
+        
+        ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
+        ItemTable.retailPriceColumn.setOnEditCommit(
+        		(CellEditEvent<GoodsItemBean, Double> t)->{
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
-        					).setAmount(t.getNewValue());
+        					).setRetailPrice(t.getNewValue());
         			
         			((GoodsItemBean) t.getTableView().getItems().get(
         					t.getTablePosition().getRow())
         					).setTotalPrice(t.getNewValue() 
         							* ((GoodsItemBean) t.getTableView().getItems().get(
         		        					t.getTablePosition().getRow())
-        		        					).getRetailPrice()
+        		        					).getAmount()
         							);
-        			total.set(total.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
-        			afterSum.set(afterSum.get()+((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).getTotalPrice());
         		});
-        
-        remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
-        remarkColumn.setOnEditCommit(
-        		(CellEditEvent<GoodsItemBean, String> t)->{
-        			((GoodsItemBean) t.getTableView().getItems().get(
-        					t.getTablePosition().getRow())
-        					).setRemark(t.getNewValue());
-        		});
-        
+      
+        ItemTable.remarkColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean>forTableColumn());
+        ItemTable.remarkColumn.setOnEditCommit(
+      		  (CellEditEvent<GoodsItemBean, String> t)->{
+      			  ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setRemark(t.getNewValue());
+      		  });
         itemTable.setItems(data);
-        itemTable.getColumns().addAll(IDColumn, nameColumn, modelColumn, amountColumn, retailPriceColumn, totalPriceColumn, remarkColumn);
+        itemTable.getColumns().addAll(ItemTable.IDColumn, ItemTable.nameColumn, ItemTable.modelColumn, ItemTable.amountColumn, ItemTable.retailPriceColumn, ItemTable.totalPriceColumn, ItemTable.remarkColumn);
         vbox.getChildren().add(itemTable);
+        
+        SalesBillTable BargainItemTable = new SalesBillTable();
+        bargainItemTable = new TableView<>();
+        bargainItemTable.setEditable(false);
+        bargainItemTable.setItems(bargainData);
+        bargainItemTable.getColumns().addAll(BargainItemTable.IDColumn, BargainItemTable.nameColumn, BargainItemTable.modelColumn, 
+        		BargainItemTable.amountColumn, BargainItemTable.retailPriceColumn, BargainItemTable.totalPriceColumn, BargainItemTable.remarkColumn);
+        bargainVbox.getChildren().add(bargainItemTable);
+        
+        SalesBillTable GiftItemTable = new SalesBillTable();
+        giftItemTable = new TableView<>();
+        giftItemTable.setEditable(false);
+        giftItemTable.setItems(giftData);
+        giftItemTable.getColumns().addAll(GiftItemTable.IDColumn, GiftItemTable.nameColumn, GiftItemTable.modelColumn, GiftItemTable.amountColumn
+        		, GiftItemTable.retailPriceColumn, GiftItemTable.totalPriceColumn, GiftItemTable.remarkColumn);
+        giftVbox.getChildren().add(giftItemTable);
 
         //折让前总额Text与商品总额金额之和绑定，与促销策略绑定
         total.addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                beforeSum.setText(Money.getMoneyString(total.get()));
+            	bargainAndGoods.set(bargainPrice.get()+total.get());
+            	goodsTotalText.setText(Money.getMoneyString(total.get()));
                 
                 int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+				}
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
-		        initializeCustomerComboBox();
+		        initializePromotionComboBox();
             }
         });
         
@@ -235,10 +255,41 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				// TODO Auto-generated method stub
-				Total.setText(Money.getMoneyString(afterSum.get()));
+				allTotal.set(afterSum.get()+bargainPrice.get());
 			}
         	
         });
+        
+        bargainPrice.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				allTotal.set(afterSum.get()+bargainPrice.get());
+				bargainAndGoods.set(total.get()+bargainPrice.get());
+				bargainPriceText.setText(Money.getMoneyString(bargainPrice.get()));
+			}
+        	
+		});
+        
+        allTotal.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				Total.setText(Money.getMoneyString(allTotal.get()));
+			}
+        	
+		});
+        
+        bargainAndGoods.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				beforeSum.setText(Money.getMoneyString(bargainAndGoods.get()));
+			}
+		});
         
         //折让与总额绑定
         allowance.textProperty().addListener(new ChangeListener<String>(){
@@ -246,17 +297,35 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				if(allowance.getText().length()>0&&voucher.getText().length()>0){
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				}
+//				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+//					afterSum.set(total.get());
+//				}
+//				else if(allowance.getText().length()<=0){
+//					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+//				}
+//				else{
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+//				}
+				if(!oldValue.isEmpty()&&!newValue.isEmpty()){
+					afterSum.set(afterSum.get()-(Double.parseDouble(newValue)-Double.parseDouble(oldValue)));
 				}
-				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
-					afterSum.set(total.get());
+				else if(oldValue.isEmpty()){
+					afterSum.set(afterSum.get()-Double.parseDouble(newValue));
 				}
-				else if(allowance.getText().length()<=0){
-					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+				else if(newValue.isEmpty()){
+					afterSum.set(afterSum.get()+Double.parseDouble(oldValue));
 				}
-				else{
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				
+				Double allowanceLimit = 1000.0;
+				if(salesBLService.getCurrentUserLimits()==UserLimits.MANAGER){
+					allowanceLimit = 5000.0;
+				}
+				if(!newValue.isEmpty()&&Double.parseDouble(newValue)>allowanceLimit){
+					showDialog();
+					allowance.setText(String.valueOf(allowanceLimit));
 				}
 			}      	
         });
@@ -267,17 +336,26 @@ public class SalesStaffSalesEditViewController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
-				if(allowance.getText().length()>0&&voucher.getText().length()>0){
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				if(allowance.getText().length()>0&&voucher.getText().length()>0){
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText())-Double.parseDouble(voucher.getText()));
+//				}
+//				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
+//					afterSum.set(total.get());
+//				}
+//				else if(allowance.getText().length()<=0){
+//					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
+//				}
+//				else{
+//					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+//				}
+				if(!oldValue.isEmpty()&&!newValue.isEmpty()){
+					afterSum.set(afterSum.get()-(Double.parseDouble(newValue)-Double.parseDouble(oldValue)));
 				}
-				else if(allowance.getText().length()<=0&&voucher.getText().length()<=0){
-					afterSum.set(total.get());
+				else if(oldValue.isEmpty()){
+					afterSum.set(afterSum.get()-Double.parseDouble(newValue));
 				}
-				else if(allowance.getText().length()<=0){
-					afterSum.set(total.get()-Double.parseDouble(voucher.getText()));
-				}
-				else{
-					afterSum.set(total.get()-Double.parseDouble(allowance.getText()));
+				else if(newValue.isEmpty()){
+					afterSum.set(afterSum.get()+Double.parseDouble(oldValue));
 				}
 			}      	
         });
@@ -291,16 +369,69 @@ public class SalesStaffSalesEditViewController {
 				int customerIndex = customer.getSelectionModel().getSelectedIndex();
 				promotions.clear();
 				promotions.addAll(salesBLService.showBargains());
-		        promotions.addAll(salesBLService.getFitPromotionCustomer(getCustomerLevel(customerIndex)));
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+					Salesman.setText(customers.get(customerIndex).salesman);
+				}
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
-		        initializeCustomerComboBox();
+		        initializePromotionComboBox();
 			}
         	
         });
         
+        promotion.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int promotionIndex = promotion.getSelectionModel().getSelectedIndex();
+				bargainData.clear();
+				giftData.clear();
+				
+				if(promotionIndex!=-1){
+					if(promotions.get(promotionIndex).type==PromotionType.BARGAIN_STRATEGY){
+						PromotionBargainVO promotionBargainVO = (PromotionBargainVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionBargainVO.bargains){
+							bargainData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
+						bargainPrice.set(promotionBargainVO.bargainTotal);
+						promotionAllowance.set(0);
+					}
+					else if(promotions.get(promotionIndex).type==PromotionType.MEMBER_PROMOTION_STRATEGY){
+						PromotionCustomerVO promotionCustomerVO = (PromotionCustomerVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionCustomerVO.gifts){
+							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
+						bargainPrice.set(0);
+						promotionAllowance.set(promotionCustomerVO.allowance);
+					}
+					else if(promotions.get(promotionIndex).type==PromotionType.TOTAL_PROMOTION_STRATEGY){
+						PromotionTotalVO promotionTotalVO = (PromotionTotalVO)promotions.get(promotionIndex);
+						for(GoodsItemVO vo:promotionTotalVO.gifts){
+							giftData.add(new GoodsItemBean(vo.ID, vo.goodsName, vo.model, vo.number, vo.price, 0, vo.remarks));
+						}
+						bargainPrice.set(0);
+						promotionAllowance.set(0);
+					}
+				}
+			}
+
+			
+		});
+        
+        //促销策略折让与其对应Text绑定
+        promotionAllowance.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				promotionAllowanceField.setText(Money.getMoneyString(promotionAllowance.get()));
+				afterSum.set(afterSum.get()-(newValue.doubleValue()-oldValue.doubleValue()));
+			}
+		});
     }
     
-    public void initializeCustomerComboBox(){
+    public void initializePromotionComboBox(){
     	//初始化promotion选择框
     	promotion.getItems().clear();
         ArrayList<String> promotionNames = new ArrayList<String>();
@@ -348,81 +479,64 @@ public class SalesStaffSalesEditViewController {
     	if (result.isPresent()){
     		bean = result.get();
     	}
-    	data.add(new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0,""));
-    	
-//        ArrayList<Label> labels = new ArrayList<>();
-//        labels.add(new Label("商品编号"));
-//        labels.add(new Label("条目名"));
-//        labels.add(new Label("型号"));
-//        labels.add(new Label("数量"));
-//        labels.add(new Label("单价"));
-//        labels.add(new Label("总价"));
-//        labels.add(new Label("备注"));
-//
-//        ArrayList<Node> nodes = new ArrayList<Node>();
-//        TextField IDTF = new TextField();
-//        TextField nameTF = new TextField();
-//        TextField modelTF = new TextField();
-//        TextField amountTF = new TextField();
-//        TextField retailPriceTF = new TextField();
-//        TextField totalPriceTF = new TextField();
-//        TextField remarkTF = new TextField();
-//        nodes.add(IDTF);
-//        nodes.add(nameTF);
-//        nodes.add(modelTF);
-//        nodes.add(amountTF);
-//        nodes.add(retailPriceTF);
-//        nodes.add(totalPriceTF);
-//        nodes.add(remarkTF);
-//
-//        Dialog dialog = DialogFactory.createDialog(labels,nodes);
-//        dialog.setResultConverter(dialogButton -> {
-//            ArrayList<String> result = new ArrayList<>();
-//            result.add(IDTF.getText());
-//            result.add(nameTF.getText());
-//            result.add(modelTF.getText());
-//            result.add(amountTF.getText());
-//            result.add(retailPriceTF.getText());
-//            result.add(totalPriceTF.getText());
-//            result.add(remarkTF.getText());
-//            if (dialogButton == ButtonType.FINISH) {
-//                return result;
-//            }
-//            return null;
-//        });
-//
-//        Optional result = dialog.showAndWait();
-//        if (result.isPresent()){
-//            ArrayList<String> values = (ArrayList<String>)result.get();
-//            Double money = Double.parseDouble(values.get(5));
-//            int amount = Integer.parseInt(values.get(3));
-//            double totalPrice = Double.parseDouble(values.get(5));
-//            GoodsItemVO GoodsItemVO = new GoodsItemVO(values.get(0),values.get(1),values.get(2),amount,money,values.get(6));
-//
-//            goodsItemList.add(GoodsItemVO);
-//            data.add(new GoodsItemBean(values.get(0),values.get(1),values.get(2),amount,money,totalPrice,values.get(6)));
-//            total.set(total.get()+money);
-//            afterSum.set(afterSum.get()+money);
-//        }
+        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
+    	data.add(itemBean);
+        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                total.setValue(total.getValue() - oldValue.doubleValue() + newValue.doubleValue());
+                afterSum.setValue(afterSum.getValue() - oldValue.doubleValue() + newValue.doubleValue());
+            }
+        });
     }
 
     public void clickSubmitButton(){
-    	goodsItemList.clear();
-    	for(GoodsItemBean bean:data){
-    		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
-    		goodsItemList.add(vo);
+    	if(customer.getSelectionModel().getSelectedIndex()!=-1&&inventory.getSelectionModel().getSelectedIndex()!=-1&&!data.isEmpty()){
+    		goodsItemList.clear();
+        	for(GoodsItemBean bean:data){
+        		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), 
+        				bean.getRemark());
+        		goodsItemList.add(vo);
+        	}
+        	
+	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
+	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
+	        double allowancePrice = 0;
+	        double voucherPrice = 0;
+	        String promotionName = "";
+	        if(allowance.getText().length()>0){
+	        	allowancePrice = Double.parseDouble(allowance.getText());
+	        }
+	        if(voucher.getText().length()>0){
+	        	voucherPrice = Double.parseDouble(voucher.getText());
+	        }
+	        if(promotion.getSelectionModel().getSelectedIndex()!=-1){
+	        	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
+	        }
+	        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
+	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
+	        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
+	    	if(!isExamine){
+		        ResultMessage re = salesBLService.submitSales(salesVO);
+		        if(re == ResultMessage.SUCCESS){
+		        	salesStaffSalesOrderViewController.showSalesOrderList();
+		        }
+		        else{
+		        	Dialog dialog = DialogFactory.getInformationAlert();
+			        dialog.setHeaderText("该客户的应收已超过最大额度");
+			        Optional result = dialog.showAndWait();
+		        }
+	    	}
+	    	else{
+	    		salesBLService.updateSales(salesVO);
+	    		generalManagerExaminationCellController.clickReturnButton();
+	    	}
     	}
-        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
-        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
-        PromotionVO promotionVO = promotions.get(promotion.getSelectionModel().getSelectedIndex());
-        SalesVO salesVO = new SalesVO(BillType.SALES, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, customerVO.salesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(),LocalDate.now().toString(), promotionVO.promotionName);
-        if(isNew){
-        	salesBLService.submitSales(salesVO);
-        }
-        else{
-        	salesBLService.updateSales(salesVO);
-        }
-        salesStaffSalesOrderViewController.showSalesOrderList();
+    	else{
+    		Dialog dialog = DialogFactory.getInformationAlert();
+	        dialog.setHeaderText("单据信息不完整");
+	        Optional result = dialog.showAndWait();
+    	}
     }
     
     public void clickCancelButton(){
@@ -450,8 +564,18 @@ public class SalesStaffSalesEditViewController {
 	                if(promotion.getSelectionModel().getSelectedIndex() >= 0){
 	                	promotionName = promotions.get(promotion.getSelectionModel().getSelectedIndex()).promotionName;
 	                }
+	                goodsItemList.clear();
+	            	for(GoodsItemBean bean:data){
+	            		GoodsItemVO vo = new GoodsItemVO(bean.getID(), bean.getName(), bean.getModel(), bean.getAmount(), bean.getRetailPrice(), bean.getRemark());
+	            		goodsItemList.add(vo);
+	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString(), promotionName);
-	                salesBLService.saveSales(salesVO);
+	                if(isNew){
+	                	salesBLService.saveSales(salesVO);
+	                }
+	                else{
+	                	salesBLService.updateSales(salesVO);
+	                }
 	            }
 	
 	            salesStaffSalesOrderViewController.showSalesOrderList();
@@ -485,17 +609,32 @@ public class SalesStaffSalesEditViewController {
     	isNew = false;
         BillID.setText(salesBill.ID);
         title.setText("销售单详情");
+        Salesman.setText(salesBill.salesman);
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
+        remark.setText(salesBill.remarks);
         remark.setEditable(false);
+        voucher.setText(String.valueOf(salesBill.voucher));
         voucher.setEditable(false);
+        allowance.setText(String.valueOf(salesBill.allowance));
         allowance.setEditable(false);
+        total.set(0);
+        bargainAndGoods.set(0);
+        afterSum.set(0);
+        bargainPrice.set(0);
+        allTotal.set(0);
+        itemTable.setEditable(false);
 
         inventory.getSelectionModel().select(salesBill.inventory);
         inventory.setDisable(true);
         customer.getSelectionModel().select(salesBill.customer);
         customer.setDisable(true);
-        promotion.getSelectionModel().select(salesBill.promotionName);
+        if(!salesBill.promotionName.equals("")){
+        	promotion.getSelectionModel().select(salesBill.promotionName);
+        }
+        else{
+        	promotion.getSelectionModel().clearSelection();
+        }
         promotion.setDisable(true);
         Username.setText(salesBill.user);
         
@@ -525,12 +664,44 @@ public class SalesStaffSalesEditViewController {
         }else{
             submitButton.setVisible(false);
         }
+        
+        goodsItemList.clear();
+        data.clear();
         for (GoodsItemVO goodsItemVO:salesBill.goodsItemList){
             goodsItemList.add(goodsItemVO);
             data.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
             		goodsItemVO.sum, goodsItemVO.remarks));
             total.set(total.get() + goodsItemVO.sum);
         }
+        
+        bargainData.clear();
+        giftData.clear();
+        if(!salesBill.promotionName.equals("")){
+        	if(salesBLService.findPromotionBargainByName(salesBill.promotionName)!=null){
+        		PromotionBargainVO promotionBargainVO = salesBLService.findPromotionBargainByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionBargainVO.bargains){
+                    bargainData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        		bargainPrice.set(promotionBargainVO.bargainTotal);
+        	}
+        	else if(salesBLService.findPromotionCustomerByName(salesBill.promotionName)!=null){
+        		PromotionCustomerVO promotionCustomerVO = salesBLService.findPromotionCustomerByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionCustomerVO.gifts){
+                    giftData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        	}
+        	else if(salesBLService.findPromotionTotalByName(salesBill.promotionName)!=null){
+        		PromotionTotalVO promotionTotalVO = salesBLService.findPromotionTotalByName(salesBill.promotionName);
+        		for (GoodsItemVO goodsItemVO:promotionTotalVO.gifts){
+                    giftData.add(new GoodsItemBean(goodsItemVO.ID, goodsItemVO.goodsName, goodsItemVO.model, goodsItemVO.number, goodsItemVO.price, 
+                    		goodsItemVO.sum, goodsItemVO.remarks));
+                }
+        	}
+        }
+        
+        afterSum.set(total.get()-Double.parseDouble(voucher.getText())-Double.parseDouble(allowance.getText()));
     }
     
     public void setForEditView(){
@@ -543,6 +714,7 @@ public class SalesStaffSalesEditViewController {
         inventory.setDisable(false);
         customer.setDisable(false);
         promotion.setDisable(false);
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -561,5 +733,11 @@ public class SalesStaffSalesEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+    
+    private void showDialog(){
+    	Dialog dialog = DialogFactory.getInformationAlert();
+        dialog.setHeaderText("折让数额超过当前登录用户折让上限");
+        Optional result = dialog.showAndWait();
     }
 }

@@ -15,6 +15,7 @@ import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import util.BillType;
 import util.FilterType;
+import util.ResultMessage;
 import vo.*;
 
 import java.util.ArrayList;
@@ -42,15 +43,17 @@ public class DocumentDetails{
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
         getAllBills(input.startDate,input.endDate);
-        searchByType(input.billType);
-        if (input.billType == BillType.RECEIPT || input.billType == BillType.PAYMENT) {
-            switch (input.filterType) {
-                case CUSTOMER:
-                    return searchByCustomer(billVOS, input.billType, input.keyword);
-                case SALESMAN:
-                    return searchBySaleman(billVOS, input.billType, input.keyword);
-                case INVENTORY:
-                    return searchByInventory(billVOS, input.billType, input.keyword);
+        if (input.billType != null) {
+            searchByType(input.billType);
+            if (input.filterType != null) {
+                switch (input.filterType) {
+                    case CUSTOMER:
+                        return searchByCustomer(billVOS, input.billType, input.keyword);
+                    case SALESMAN:
+                        return searchBySaleman(billVOS, input.billType, input.keyword);
+                    case INVENTORY:
+                        return searchByInventory(billVOS, input.billType, input.keyword);
+                }
             }
         }
         return billVOS;
@@ -87,8 +90,7 @@ public class DocumentDetails{
                 break;
             case OVERFLOW:
             case LOSS:
-            case GIFT:
-                for (BillVO billVO:billVOS){
+            for (BillVO billVO:billVOS){
                     if (((InventoryBillVO) billVO).inventory.contains(name)){
                         newArr.add(billVO);
                     }
@@ -149,5 +151,37 @@ public class DocumentDetails{
         billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
         billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
         billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
+    }
+
+    public ResultMessage redCover(BillVO billVO) {
+        ResultMessage re = ResultMessage.FAILED;
+        switch (billVO.type){
+            case OVERFLOW:
+            case LOSS: re = inventoryInfo.redCover((InventoryBillVO)billVO);break;
+            case RECEIPT:
+            case PAYMENT: re = financeInfo.redCover((AccountBillVO)billVO);break;
+            case CASH: re = financeInfo.redCover((CashBillVO)billVO);break;
+            case PURCHASE:
+            case RETURN: re = purchaseInfo.redCover((PurchaseVO)billVO);break;
+            case SALES:
+            case SALESRETURN: re = salesInfo.redCover((SalesVO)billVO);break;
+
+        }
+        return re;
+    }
+    public ResultMessage redCoverAndCopy(BillVO billVO) {
+        ResultMessage re = ResultMessage.FAILED;
+        switch (billVO.type){
+            case OVERFLOW:
+            case LOSS: re = inventoryInfo.redCoverAndCopy((InventoryBillVO)billVO);break;
+            case RECEIPT:
+            case PAYMENT: re = financeInfo.redCoverAndCopy((AccountBillVO)billVO);break;
+            case CASH: re = financeInfo.redCoverAndCopy((CashBillVO)billVO);break;
+            case PURCHASE:
+            case RETURN: re = purchaseInfo.redCoverAndCopy((PurchaseVO)billVO);break;
+            case SALES:
+            case SALESRETURN: re = salesInfo.redCoverAndCopy((SalesVO)billVO);break;
+        }
+        return re;
     }
 }

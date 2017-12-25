@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import ui.viewcontroller.FinancialStaff.FinancialCashBillEditController;
 import ui.viewcontroller.FinancialStaff.FinancialPaymentEditController;
 import ui.viewcontroller.FinancialStaff.FinancialReceiptEditController;
+import ui.viewcontroller.InventoryStaff.InventorySyncEditController;
 import ui.viewcontroller.SalesStaff.SalesStaffPurchaseEditViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffReturnEditViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffSalesEditViewController;
@@ -37,6 +38,7 @@ public class GeneralManagerExaminationCellController {
 	FinancialCashBillEditController financialCashBillEditController;
 	FinancialPaymentEditController financialPaymentEditController;
 	FinancialReceiptEditController financialReceiptEditController;
+	InventorySyncEditController inventorySyncEditController;
 	
 	@FXML
 	Circle circle;
@@ -117,7 +119,8 @@ public class GeneralManagerExaminationCellController {
 			billType.setText("损");
 			billType.setTextFill(Color.web("#99CCFF"));
 			billCreater.setText(inventoryBill.user);
-			billMoney.setText(Money.getMoneyString(0.0));
+			billMoneyIcon.setText("\ue61d");
+			billMoney.setText(inventoryBill.inventory);
 		}
 		else if(bill.type==BillType.OVERFLOW){
 			InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -125,7 +128,8 @@ public class GeneralManagerExaminationCellController {
 			billType.setText("溢");
 			billType.setTextFill(Color.web("#99CCFF"));
 			billCreater.setText(inventoryBill.user);
-			billMoney.setText(Money.getMoneyString(0.0));
+			billMoneyIcon.setText("\ue61d");
+			billMoney.setText(inventoryBill.inventory);
 		}
 		else if(bill.type==BillType.PAYMENT){
 			AccountBillVO accountBill = (AccountBillVO) bill;
@@ -263,6 +267,7 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrderEdit.fxml"));
             page = pageLoader.load();
             salesStaffReturnEditViewController = pageLoader.getController();
+            salesStaffReturnEditViewController.setGeneralManagerExaminationCellViewController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -279,10 +284,12 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBillEdit.fxml"));
             page = pageLoader.load();
             financialCashBillEditController = pageLoader.getController();
+            financialCashBillEditController.setGeneralManagerExaminationCellController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialCashBillEditController.isExamine();
 		financialCashBillEditController.setForDetailView((CashBillVO) bill);
 		return page;
 	}
@@ -294,10 +301,12 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/PaymentEdit.fxml"));
             page = pageLoader.load();
             financialPaymentEditController = pageLoader.getController();
+            financialPaymentEditController.setGeneralManagerExaminationCellController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialPaymentEditController.isExamine();
 		financialPaymentEditController.setForDetailView((AccountBillVO) bill);
 		return page;
 	}
@@ -309,11 +318,30 @@ public class GeneralManagerExaminationCellController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/ReceiptEdit.fxml"));
             page = pageLoader.load();
             financialReceiptEditController = pageLoader.getController();
+            financialReceiptEditController.setGeneralManagerExaminationCellController(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+		financialReceiptEditController.isExamine();
 		financialReceiptEditController.setForDetailView((AccountBillVO) bill);
+		return page;
+	}
+	
+	public Pane showInventoryBill(){
+		Pane page = null;
+		try {
+            FXMLLoader pageLoader = new FXMLLoader();
+            pageLoader.setLocation(getClass().getResource("/view/inventory/SyncEdit.fxml"));
+            page = pageLoader.load();
+            inventorySyncEditController = pageLoader.getController();
+            inventorySyncEditController.setGeneralManagerExaminationCellController(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		inventorySyncEditController.isExamine();
+		inventorySyncEditController.setForDetailView((InventoryBillVO) bill);
 		return page;
 	}
 }

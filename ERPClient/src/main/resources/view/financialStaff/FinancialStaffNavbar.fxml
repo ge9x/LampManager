@@ -1,75 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialNavbarController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="170.0" style="-fx-background-color: #272727;" stylesheets="@../../css/navbar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.FinancialStaff.FinancialNavbarController">
     <children>
         <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="63.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
         <AnchorPane fx:id="AccountNav" layoutY="190.0" onMouseClicked="#clickAccountButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="AccountRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="AccountIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="银行账户" />
+            <Rectangle fx:id="AccountSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="ReceiptNav" layoutY="230.0" onMouseClicked="#clickReceiptButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="ReceiptRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="ReceiptIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="制定收款单" />
+            <Rectangle fx:id="ReceiptSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="PaymentNav" layoutY="270.0" onMouseClicked="#clickPaymentButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="PaymentRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="PaymentIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="制定付款单" />
+            <Rectangle fx:id="PaymentSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="CashNav" layoutY="310.0" onMouseClicked="#clickCashBillButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="CashRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="CashIcon" layoutX="23.0" layoutY="8.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="现金费用单">
                 </Label>
+            <Rectangle fx:id="CashSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="SalesDetailsNav" layoutY="350.0" onMouseClicked="#clickSalesDetailsButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="SalesDetailsRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="SalesDetailsIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="销售明细表">
                 </Label>
+            <Rectangle fx:id="SalesDetailsSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="DocumentDetailsNav" layoutY="390.0" onMouseClicked="#clickDocumentDetailsButton" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="DocumentDetailsRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="DocumentDetailsIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="经营历程表">
                 </Label>
+            <Rectangle fx:id="DocumentDetailsSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="ProfitNav" layoutY="430.0" onMouseClicked="#clickProfitView" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="ProfitRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="ProfitIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="经营情况表">
                 </Label>
+            <Rectangle fx:id="ProfitSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="InitNav" layoutY="470.0" prefHeight="40.0" prefWidth="170.0">
+        <AnchorPane fx:id="InitNav" layoutY="470.0" onMouseClicked="#clickInitView" prefHeight="40.0" prefWidth="170.0">
             <children>
-                <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+                <Rectangle fx:id="InitRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
                 <Label fx:id="InitIcon" layoutX="22.0" layoutY="6.0" styleClass="icon-label" />
                 <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="期初建账">
                 </Label>
+            <Rectangle fx:id="InitSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             </children>
         </AnchorPane>
-      <Label fx:id="userName" layoutX="46.0" layoutY="128.0" prefHeight="33.0" prefWidth="80.0" text="名字" />
+      <Label fx:id="userName" alignment="CENTER" layoutY="128.0" prefHeight="33.0" prefWidth="170.0" text="名字" />
 
     </children>
 </AnchorPane>
