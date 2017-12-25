@@ -132,10 +132,10 @@ public class Sales {
 		if(vo.state==BillState.PASS){
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
-			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
 		}else{
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
-			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
 		}
 		}
 		return updateSales(vo);
@@ -167,6 +167,10 @@ public class Sales {
 	}
 	
 	public ResultMessage submitSales(SalesVO vo) throws RemoteException{
+		CustomerVO customerVO=customerInfo.getCustomerByID(Integer.parseInt(vo.customerID));
+		if(vo.type==BillType.SALES&&((customerVO.receive+vo.afterSum)>customerVO.receivableLimit)){
+			return ResultMessage.FAILED;
+		}
 		vo.state=BillState.SUBMITTED;
 		return addSales(vo);
 	}
