@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerInfo;
 import po.InitCustomerPO;
 import util.CustomerCategory;
@@ -16,8 +17,22 @@ public class CustomerList {
     private ArrayList<CustomerVO> customerVOS;
     private CustomerInfo customerInfo;
 
-    public ArrayList<CustomerVO> getCustomers(){
-        return customerVOS;
+    public CustomerList(){
+        customerInfo = new CustomerController();
+    }
+    public ArrayList<InitCustomerPO> getCustomers(){
+        ArrayList<Integer> IDS = customerInfo.getAllCustomerID();
+        ArrayList<InitCustomerPO> pos = new ArrayList<>();
+        for (Integer ID :IDS){
+            CustomerVO customerVO = customerInfo.getCustomerByID(ID);
+            pos.add(new InitCustomerPO(0,customerVO.customerID,
+                    customerVO.category.getValue(),customerVO.level.getValue(),
+                    customerVO.customerName,customerVO.phone,customerVO.address,
+                    customerVO.postCode, customerVO.mail, customerVO.receivableLimit,
+                    customerVO.receive, customerVO.pay, customerVO.salesman,
+                    customerVO.points));
+        }
+        return pos;
     }
 
     public ArrayList<CustomerVO> posTovos(List<InitCustomerPO> initCustomerPOS) {

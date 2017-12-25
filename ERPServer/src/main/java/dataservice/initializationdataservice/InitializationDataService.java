@@ -1,6 +1,7 @@
 package dataservice.initializationdataservice;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,16 +19,16 @@ public interface InitializationDataService extends Remote{
      * @param po
      * @return
      */
-    public ResultMessage init(InitializationPO po);
+    public ResultMessage init(InitializationPO po) throws RemoteException;
    /**
     * 得到所有期初建账日期
     * @return
     */
-   public ArrayList<String> getAllInitDates();
+   public ArrayList<String> getAllInitDates() throws RemoteException;
    /**
     * 通过日期得到该套账
     * @param date
     * @return
     */
-   public InitializationPO getInitializationByDate(String date);
+   public InitializationPO getInitializationByDate(String date) throws RemoteException;
 }

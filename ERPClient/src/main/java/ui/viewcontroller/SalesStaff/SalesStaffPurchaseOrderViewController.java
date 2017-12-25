@@ -2,7 +2,6 @@ package ui.viewcontroller.SalesStaff;
 
 import bl.salesbl.PurchaseController;
 import blservice.salesblservice.SalesBLService;
-import blstubdriver.SalesBLService_Stub;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,9 +14,7 @@ import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.ResultMessage;
-import vo.AccountBillVO;
 import vo.PurchaseVO;
-import vo.SalesVO;
 
 import java.io.IOException;
 import java.util.ArrayList;

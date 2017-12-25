@@ -14,22 +14,21 @@ public class InitializationDataRemoteObject  extends UnicastRemoteObject impleme
 	InitializationDataService initializationDataService;
 	
 	protected InitializationDataRemoteObject() throws RemoteException{
-		super();
 		initializationDataService=InitializationDataServiceImpl.getInstance();
 	}
 
 	@Override
-	public ResultMessage init(InitializationPO po) {
+	public ResultMessage init(InitializationPO po) throws RemoteException {
 		return initializationDataService.init(po);
 	}
 
 	@Override
-	public ArrayList<String> getAllInitDates() {
+	public ArrayList<String> getAllInitDates() throws RemoteException {
 		return initializationDataService.getAllInitDates();
 	}
 
 	@Override
-	public InitializationPO getInitializationByDate(String date) {
+	public InitializationPO getInitializationByDate(String date) throws RemoteException {
 		return initializationDataService.getInitializationByDate(date);
 	}
   

@@ -1,15 +1,12 @@
 package bl.initializationbl;
 
-import bl.classificationbl.Classification;
-import bl.customerbl.Customer;
 import dataimpl.initializationdataimpl.InitializationDataServiceImpl;
 import dataservice.initializationdataservice.InitializationDataService;
 import po.InitializationPO;
 import util.ResultMessage;
 import vo.*;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,7 +15,6 @@ import java.util.Date;
  */
 public class Initialization{
 
-    private Date date;
     private GoodsList goodsList;
     private CustomerList customerList;
     private AccountList accountList;
@@ -33,22 +29,26 @@ public class Initialization{
         accountList = new AccountList();
         classificationList = new ClassificationList();
     }
-    public ResultMessage init(InitializationVO vo) {
-
-        return initializationDataService.init(null);
+    public ResultMessage init() throws RemoteException {
+        InitializationPO po = new InitializationPO();
+        po.setInitClassificationPOS(classificationList.getClassifications());
+        po.setInitAccountPOS(accountList.getAccounts());
+        po.setInitGoodsPOS(goodsList.getGoods());
+        po.setInitCustomerPOS(customerList.getCustomers());
+        return initializationDataService.init(po);
     }
 
-    public ArrayList<String> getAllInitDate() {
+    public ArrayList<String> getAllInitDate() throws RemoteException {
         return initializationDataService.getAllInitDates();
     }
-    public String getRecentInitDate(){
+    public String getRecentInitDate() throws RemoteException {
         ArrayList<String> dates = getAllInitDate();
         if (dates != null && !dates.isEmpty())
             return dates.get(dates.size());
         else
             return null;
     }
-    public InitializationVO show(String date){
+    public InitializationVO show(String date) throws RemoteException {
         InitializationPO po = initializationDataService.getInitializationByDate(date);
         ArrayList<AccountVO> accountVOS = accountList.posTovos(po.getInitAccountPOS());
         ArrayList<ClassificationVO> classificationVOS = classificationList.posTovos(po.getInitClassificationPOS());

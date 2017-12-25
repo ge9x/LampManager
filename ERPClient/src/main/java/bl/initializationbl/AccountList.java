@@ -1,6 +1,7 @@
 package bl.initializationbl;
 
 import bl.accountbl.Account;
+import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountInfo;
 import po.InitAccountPO;
 import vo.AccountVO;
@@ -16,8 +17,16 @@ public class AccountList {
     private ArrayList<AccountVO> accountVOS;
     private AccountInfo info;
 
-    public ArrayList<AccountVO> getAccounts(){
-        return accountVOS;
+    public AccountList(){
+        info = new AccountController();
+    }
+    public ArrayList<InitAccountPO> getAccounts(){
+        ArrayList<InitAccountPO> pos = new ArrayList<>();
+        ArrayList<AccountVO> accountVOS = info.show();
+        for (AccountVO accountVO : accountVOS){
+            pos.add(new InitAccountPO(Integer.parseInt(accountVO.accountID),accountVO.accountName,accountVO.money));
+        }
+        return pos;
     }
 
     public ArrayList<AccountVO> posTovos(List<InitAccountPO> initAccountPOS) {

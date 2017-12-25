@@ -1,9 +1,12 @@
 package bl.initializationbl;
 
+import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
+import po.GoodsPO;
 import po.InitGoodsPO;
 import vo.GoodsVO;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,18 @@ public class GoodsList {
     private ArrayList<GoodsVO> goodsVOS;
     private GoodsInfo goodsInfo;
 
-    public ArrayList<GoodsVO> getGoods(){
+    public GoodsList(){
+        goodsInfo = new GoodsController();
 
-        return goodsVOS;
+    }
+    public ArrayList<InitGoodsPO> getGoods(){
+        ArrayList<InitGoodsPO> pos = new ArrayList<>();
+        ArrayList<GoodsVO> goodsVOS = goodsInfo.getAllGoods();
+
+        for (GoodsVO goodsVO : goodsVOS){
+            pos.add(new InitGoodsPO(Integer.parseInt(goodsVO.ID),goodsVO.name,goodsVO.model,goodsVO.buyingPrice,goodsVO.retailPrice,goodsVO.recentBuyingPrice,goodsVO.recentRetailPrice,goodsVO.amount,goodsVO.classification));
+        }
+        return pos;
     }
 
     public ArrayList<GoodsVO> posTovos(List<InitGoodsPO> initGoodsPOS) {

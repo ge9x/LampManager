@@ -157,25 +157,25 @@ public class DocumentDetails{
         ResultMessage re = ResultMessage.FAILED;
         switch (billVO.type){
             case OVERFLOW:
-            case LOSS: inventoryInfo.redCover((InventoryBillVO)billVO);
+            case LOSS: re = inventoryInfo.redCover((InventoryBillVO)billVO);
             case RECEIPT:
-            case PAYMENT: financeInfo.redCover((AccountBillVO)billVO);
-            case CASH: financeInfo.redCover((CashBillVO)billVO);
+            case PAYMENT: re = financeInfo.redCover((AccountBillVO)billVO);
+            case CASH: re = financeInfo.redCover((CashBillVO)billVO);
             case PURCHASE:
-            case RETURN: salesInfo.redCover((PurchaseVO)billVO);
+            case RETURN: re = purchaseInfo.redCover((PurchaseVO)billVO);
             case SALES:
-            case SALESRETURN: salesInfo.redCover((SalesVO)billVO));
+            case SALESRETURN: re = salesInfo.redCover((SalesVO)billVO);
 
         }
-
+        return re;
     }
     public ResultMessage redCoverAndCopy(BillVO billVO) {
         ResultMessage re = ResultMessage.FAILED;
         switch (billVO.type){
             case OVERFLOW:
-            case LOSS: inventoryInfo.redCoverAndCopy();
+            case LOSS: re = inventoryInfo.redCoverAndCopy((InventoryBillVO)billVO);
             case RECEIPT:
         }
-
+        return re;
     }
 }
