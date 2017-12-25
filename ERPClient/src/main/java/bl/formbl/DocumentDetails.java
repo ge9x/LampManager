@@ -157,14 +157,14 @@ public class DocumentDetails{
         ResultMessage re = ResultMessage.FAILED;
         switch (billVO.type){
             case OVERFLOW:
-            case LOSS: re = inventoryInfo.redCover((InventoryBillVO)billVO);
+            case LOSS: re = inventoryInfo.redCover((InventoryBillVO)billVO);break;
             case RECEIPT:
-            case PAYMENT: re = financeInfo.redCover((AccountBillVO)billVO);
-            case CASH: re = financeInfo.redCover((CashBillVO)billVO);
+            case PAYMENT: re = financeInfo.redCover((AccountBillVO)billVO);break;
+            case CASH: re = financeInfo.redCover((CashBillVO)billVO);break;
             case PURCHASE:
-            case RETURN: re = purchaseInfo.redCover((PurchaseVO)billVO);
+            case RETURN: re = purchaseInfo.redCover((PurchaseVO)billVO);break;
             case SALES:
-            case SALESRETURN: re = salesInfo.redCover((SalesVO)billVO);
+            case SALESRETURN: re = salesInfo.redCover((SalesVO)billVO);break;
 
         }
         return re;

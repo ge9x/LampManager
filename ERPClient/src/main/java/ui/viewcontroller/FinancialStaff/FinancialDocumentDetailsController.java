@@ -12,18 +12,17 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
+import ui.component.DialogFactory;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.BillType;
 import util.FilterType;
+import util.ResultMessage;
 import vo.*;
 
 import javax.xml.soap.Text;
@@ -40,7 +39,6 @@ public class FinancialDocumentDetailsController {
 
     ArrayList<BillVO> bills;
 
-    ArrayList<BillVO> receipts;
     ArrayList<VBox> billNodes = new ArrayList<>();
     ArrayList<FXMLLoader> fxmlLoaders = new ArrayList<>();
     BillPane billPane;
@@ -146,7 +144,10 @@ public class FinancialDocumentDetailsController {
             BillController controller = loader.getController();
             if (controller.isSelected()){
                 BillVO billVO = controller.getBill();
-                formBLService.redCover(billVO);
+                ResultMessage re = formBLService.redCover(billVO);
+                Dialog dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("红冲"+re.toString());
+                dialog.showAndWait();
             }
         }
     }

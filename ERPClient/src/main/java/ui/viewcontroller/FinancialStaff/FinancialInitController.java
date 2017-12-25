@@ -14,7 +14,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import ui.component.DialogFactory;
 import ui.component.Table;

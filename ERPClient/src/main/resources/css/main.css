@@ -1,0 +1,77 @@
+/*icon样式*/
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #1db1a4;
+}
+
+/*标题样式*/
+#title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/*滚动条样式*/
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-pref-width: 10px;
+    -fx-pref-height: 10px;
+    -fx-background-color: transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #707070;
+    -fx-background-radius: 5em;
+}
+.scroll-pane .corner {
+    -fx-background-color: #f6f6f7 ;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: #ffffff;
+}
+
+/*表格样式*/
+.table-view {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-alignment: left;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-table-cell-border-color, -fx-control-inner-background;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+    -fx-text-fill: -fx-text-inner-color;
+}
+.table-row-cell:selected:focused {
+    -fx-table-cell-border-color: transparent;
+     -fx-background-color: #DCDCDC;
+}
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #eeeeee;
+    -fx-alignment: center-left;
+}
+
+.table-view .table-column{
+    -fx-text-alignment: left;
+    -fx-alignment: center-left;
+
+}

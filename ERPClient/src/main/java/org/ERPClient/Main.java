@@ -3,6 +3,8 @@ package org.ERPClient;
  * Created by Kry·L on 2017/11/10.
  */
 
+import com.sun.javafx.css.Style;
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -49,9 +51,12 @@ public class Main extends Application {
         }catch (IOException e){
             e.printStackTrace();
         }
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+        StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("/css/main.css").toString());
 
         //窗口拖动
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
