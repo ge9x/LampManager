@@ -145,11 +145,9 @@ public class FinancialDocumentDetailsController {
             if (controller.isSelected()){
                 BillVO billVO = controller.getBill();
                 ResultMessage re = formBLService.redCover(billVO);
-                if (re == ResultMessage.SUCCESS){
-                    Dialog dialog = DialogFactory.getInformationAlert();
-                    dialog.setHeaderText("红冲成功");
-                    dialog.showAndWait();
-                }
+                Dialog dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("红冲"+re.toString());
+                dialog.showAndWait();
             }
         }
     }
