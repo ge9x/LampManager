@@ -22,7 +22,7 @@ public interface InventoryDataService extends Remote{
 	public ArrayList<InventoryBillPO> show() throws RemoteException;
 	/**
 	 * 得到所有仓库名
-	 * @return 包含所有仓库名的PO的链表
+	 * @return 包含所有仓库的PO的链表
 	 * @throws RemoteException
 	 */
 	public ArrayList<InventoryPO> showInventory() throws RemoteException;
@@ -35,7 +35,7 @@ public interface InventoryDataService extends Remote{
 	public InventoryBillPO findBill(int ID) throws RemoteException;
 	/**
 	 * 新增仓库名
-	 * @param po 等待新增的仓库名PO
+	 * @param po 等待新增的仓库PO
 	 * @return 是否新增成功
 	 * @throws RemoteException
 	 */
@@ -49,7 +49,7 @@ public interface InventoryDataService extends Remote{
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException;
 	/**
 	 * 删除仓库名
-	 * @param po 等待删除的仓库名PO
+	 * @param po 等待删除的仓库PO
 	 * @return 是否删除成功
 	 * @throws RemoteException
 	 */
@@ -63,7 +63,7 @@ public interface InventoryDataService extends Remote{
 	public ResultMessage deleteBill(InventoryBillPO po) throws RemoteException;
 	/**
 	 * 修改仓库名
-	 * @param po 已修改的仓库名PO
+	 * @param po 已修改的仓库PO
 	 * @return 是否修改成功
 	 * @throws RemoteException
 	 */
