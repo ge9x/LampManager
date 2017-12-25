@@ -21,6 +21,7 @@ import javafx.scene.layout.TilePane;
 import ui.component.DialogFactory;
 import ui.component.Table;
 import util.InventoryListItemType;
+import util.Money;
 import vo.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -132,7 +133,9 @@ public class InventoryLookController {
 
     public void initItemTable() {
         salesItemTable = new Table<>();
+        salesItemTable.getTable().setPrefHeight(330);
         inventoryItemTable = new Table<>();
+        inventoryItemTable.getTable().setPrefHeight(330);
 
         salesItemTable.addColumn("时间", "date", 60);
         salesItemTable.addColumn("商品名称", "name", 60);
@@ -186,6 +189,19 @@ public class InventoryLookController {
         ioNumTotal = iNum + oNum;
         ioMoneyTotal = iMoney + oMoney;
         psNumTotal = pNum + sNum;
+
+        inNum.setText(iNum+"");
+        outNum.setText(oNum+"");
+        inMoney.setText(Money.getMoneyString(iMoney));
+        outMoney.setText(Money.getMoneyString(oMoney));
+        inoutMoneyTotal.setText(Money.getMoneyString(ioMoneyTotal));
+        inoutNumTotal.setText(ioNumTotal + "");
+        pursalNumTotal.setText(psNumTotal+"");
+        pursalMoneyTotal.setText(Money.getMoneyString(psMoneyTotal));
+        purNum.setText(pNum + "");
+        salNum.setText(sNum+"");
+        purMoney.setText(Money.getMoneyString(pMoney));
+        salMoney.setText(Money.getMoneyString(sMoney));
     }
 
     public void setInventoryViewController(InventoryViewController inventoryViewController) {
