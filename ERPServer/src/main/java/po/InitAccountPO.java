@@ -25,10 +25,11 @@ import javax.persistence.TemporalType;
 public class InitAccountPO implements Serializable{
 	private static final long servialVersionUID=453467868782732L;
 	
+	private int ID;
 	/**
      * 银行账户ID
      */
-    private  int ID;
+    private  int accountID;
     /**
      * 银行账户名称
      */
@@ -41,13 +42,14 @@ public class InitAccountPO implements Serializable{
     
     public InitAccountPO(){ }
     
-    public InitAccountPO(int iD,String name, double money) {
-    	this.ID=iD;
+    public InitAccountPO(int accountID,String name, double money) {
+    	this.accountID=accountID;
         this.name = name;
         this.money = money;
     }
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getID() {
         return ID;
@@ -57,8 +59,16 @@ public class InitAccountPO implements Serializable{
         this.ID = ID;
      }
    	
-    
-    @Column(name = "name")
+    @Column(name = "accountId")
+    public int getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(int accountID) {
+		this.accountID = accountID;
+	}
+
+	@Column(name = "name")
     public String getName() {
         return name;
     }
