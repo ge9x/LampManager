@@ -300,6 +300,11 @@ public class Sales {
 			goodsItemVO.number=-goodsItemVO.number;
 		}
 		vo.goodsItemList=goodsitemList;
+		if(vo.type==BillType.SALES){
+			vo.ID=salesDataService.getNewSalesID();
+		}else{
+			vo.ID=salesDataService.getNewSalesReturnID();
+		}
 		vo.state=BillState.PASS;
 		return addSales(vo);
 	}
@@ -307,6 +312,11 @@ public class Sales {
 	public ResultMessage redCoverAndCopy(SalesVO vo) throws RemoteException {
 		redCover(vo);
 		vo.state=BillState.DRAFT;
+		if(vo.type==BillType.SALES){
+			vo.ID=salesDataService.getNewSalesID();
+		}else{
+			vo.ID=salesDataService.getNewSalesReturnID();
+		}
 		return addSales(vo);
 	}
 	
