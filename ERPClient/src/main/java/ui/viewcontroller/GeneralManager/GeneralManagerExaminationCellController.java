@@ -119,7 +119,8 @@ public class GeneralManagerExaminationCellController {
 			billType.setText("损");
 			billType.setTextFill(Color.web("#99CCFF"));
 			billCreater.setText(inventoryBill.user);
-			billMoney.setText(Money.getMoneyString(0.0));
+			billMoneyIcon.setText("\ue61d");
+			billMoney.setText(inventoryBill.inventory);
 		}
 		else if(bill.type==BillType.OVERFLOW){
 			InventoryBillVO inventoryBill = (InventoryBillVO) bill;
@@ -127,7 +128,8 @@ public class GeneralManagerExaminationCellController {
 			billType.setText("溢");
 			billType.setTextFill(Color.web("#99CCFF"));
 			billCreater.setText(inventoryBill.user);
-			billMoney.setText(Money.getMoneyString(0.0));
+			billMoneyIcon.setText("\ue61d");
+			billMoney.setText(inventoryBill.inventory);
 		}
 		else if(bill.type==BillType.PAYMENT){
 			AccountBillVO accountBill = (AccountBillVO) bill;

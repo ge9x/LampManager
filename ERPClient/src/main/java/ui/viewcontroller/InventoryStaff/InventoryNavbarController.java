@@ -1,12 +1,19 @@
 package ui.viewcontroller.InventoryStaff;
 
+import javax.swing.text.View;
+
+import org.hibernate.annotations.Check;
+
+import bl.goodsbl.Goods;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Created by Kry·L on 2017/11/26.
@@ -36,7 +43,9 @@ public class InventoryNavbarController {
     @FXML
     Label userName;
 
-
+    @FXML
+    Rectangle ViewRec, ViewSelectRec, CheckRec, CheckSelectRec, SyncRec, SyncSelectRec, ClassificationRec, ClassificationSelectRec, GoodsRec,
+    			GoodsSelectRec;
 
 
 
@@ -57,23 +66,44 @@ public class InventoryNavbarController {
     }
 
     public void clickViewButton(){
+    	showHighlight(ViewRec, ViewSelectRec);
         inventoryViewController.showViewView();
     }
     public void clickCheckButton() {
+    	showHighlight(CheckRec, CheckSelectRec);
         inventoryViewController.showCheckView();
     }
     public void clicSyncButton() {
+    	showHighlight(SyncRec, SyncSelectRec);
         inventoryViewController.showSyncView();
     }
     public void clickClassificationButton(){
+    	showHighlight(ClassificationRec, ClassificationSelectRec);
         inventoryViewController.showClassificationView();
     }
     public void clickGoodsButton(){
+    	showHighlight(GoodsRec, GoodsSelectRec);
         inventoryViewController.showGoodsView();
     }
 
 
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;
+    }
+    
+    public void showHighlight(Rectangle rec, Rectangle selectRec){
+    	ViewRec.setFill(Paint.valueOf("#272727"));
+    	ViewSelectRec.setVisible(false);
+    	CheckRec.setFill(Paint.valueOf("#272727"));
+    	CheckSelectRec.setVisible(false);
+    	SyncRec.setFill(Paint.valueOf("#272727"));
+    	SyncSelectRec.setVisible(false);
+    	ClassificationRec.setFill(Paint.valueOf("#272727"));
+		ClassificationSelectRec.setVisible(false);
+		GoodsRec.setFill(Paint.valueOf("#272727"));
+		GoodsSelectRec.setVisible(false);
+    	
+    	rec.setFill(Paint.valueOf("#000000"));
+    	selectRec.setVisible(true);
     }
 }

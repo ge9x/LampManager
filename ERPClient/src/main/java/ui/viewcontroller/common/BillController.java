@@ -120,6 +120,7 @@ public class BillController {
             billType.setText("赠");
             billType.setTextFill(Color.web("#FFCC00"));
             billCreater.setText(inventoryBill.user);
+            billMoneyIcon.setText("\ue61d");
             billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -140,6 +141,7 @@ public class BillController {
             billType.setText("损");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
+            billMoneyIcon.setText("\ue61d");
             billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -160,6 +162,7 @@ public class BillController {
             billType.setText("溢");
             billType.setTextFill(Color.web("#99CCFF"));
             billCreater.setText(inventoryBill.user);
+            billMoneyIcon.setText("\ue61d");
             billMoney.setText(inventoryBill.inventory);
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override

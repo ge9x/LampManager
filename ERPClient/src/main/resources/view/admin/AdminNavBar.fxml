@@ -14,7 +14,8 @@
       <Circle fx:id="avatar" fill="DODGERBLUE" layoutX="85.0" layoutY="63.0" radius="49.0" stroke="BLACK" strokeType="INSIDE" />
       <AnchorPane fx:id="UserNav" layoutY="190.0" onMouseClicked="#clickUserButton" prefHeight="40.0" prefWidth="170.0">
          <children>
-            <Rectangle fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+            <Rectangle fx:id="UserRec" fill="#272727" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="5.0" width="170.0" />
+            <Rectangle fx:id="UserSelectRec" arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="40.0" layoutX="163.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
             <Label fx:id="UserIcon" layoutX="25.0" layoutY="8.0" styleClass="icon-label" />
             <Label layoutX="60.0" layoutY="10.0" styleClass="nav-text" text="用户管理" />
          </children>

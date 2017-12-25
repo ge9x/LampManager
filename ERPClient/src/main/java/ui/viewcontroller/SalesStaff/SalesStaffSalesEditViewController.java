@@ -143,6 +143,7 @@ public class SalesStaffSalesEditViewController {
         addIcon.setText("\ue61e");
         String name = salesBLService.getUserName();
         Username.setText(name);
+        Salesman.setText("");
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
         promotions.addAll(salesBLService.showBargains());
@@ -370,6 +371,7 @@ public class SalesStaffSalesEditViewController {
 				promotions.addAll(salesBLService.showBargains());
 				if(customer.getSelectionModel().getSelectedIndex()!=-1){
 					promotions.addAll(salesBLService.getFitPromotionCustomer(customers.get(customerIndex).level));
+					Salesman.setText(customers.get(customerIndex).salesman);
 				}
 		        promotions.addAll(salesBLService.getFitPromotionTotal(total.get()));
 		        initializePromotionComboBox();
@@ -515,13 +517,15 @@ public class SalesStaffSalesEditViewController {
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
 	        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
 	    	if(!isExamine){
-		        if(isNew){
-		        	salesBLService.submitSales(salesVO);
+		        ResultMessage re = salesBLService.submitSales(salesVO);
+		        if(re == ResultMessage.SUCCESS){
+		        	salesStaffSalesOrderViewController.showSalesOrderList();
 		        }
 		        else{
-		        	salesBLService.updateSales(salesVO);
+		        	Dialog dialog = DialogFactory.getInformationAlert();
+			        dialog.setHeaderText("该客户的应收已超过最大额度");
+			        Optional result = dialog.showAndWait();
 		        }
-		        salesStaffSalesOrderViewController.showSalesOrderList();
 	    	}
 	    	else{
 	    		salesBLService.updateSales(salesVO);
@@ -566,7 +570,12 @@ public class SalesStaffSalesEditViewController {
 	            		goodsItemList.add(vo);
 	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALES, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman, Username.getText(), inventoryName, goodsItemList, Double.parseDouble(allowance.getText()), Double.parseDouble(voucher.getText()),remark.getText(), LocalDate.now().toString(), promotionName);
-	                salesBLService.saveSales(salesVO);
+	                if(isNew){
+	                	salesBLService.saveSales(salesVO);
+	                }
+	                else{
+	                	salesBLService.updateSales(salesVO);
+	                }
 	            }
 	
 	            salesStaffSalesOrderViewController.showSalesOrderList();
@@ -600,6 +609,7 @@ public class SalesStaffSalesEditViewController {
     	isNew = false;
         BillID.setText(salesBill.ID);
         title.setText("销售单详情");
+        Salesman.setText(salesBill.salesman);
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
         remark.setText(salesBill.remarks);
