@@ -50,7 +50,6 @@ public class SalesStaffSalesReturnEditViewController {
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
-	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
 	
 	boolean isExamine = false;
 	boolean isNew;
@@ -104,6 +103,7 @@ public class SalesStaffSalesReturnEditViewController {
         addIcon.setText("\ue61e");
         String name = salesBLService.getUserName();
         Username.setText(name);
+        Salesman.setText("");
         customers = salesBLService.getAllCustomer();
         inventories = salesBLService.getAllInventory();
 
@@ -174,6 +174,20 @@ public class SalesStaffSalesReturnEditViewController {
                 Total.setText(Money.getMoneyString(total.get()));
             }
         });
+        
+      //客户与业务员绑定
+        customer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				int customerIndex = customer.getSelectionModel().getSelectedIndex();
+				if(customer.getSelectionModel().getSelectedIndex()!=-1){
+					Salesman.setText(customers.get(customerIndex).salesman);
+				}
+			}
+        	
+        });
     }
     
     public void addSalesReturnOrder() {
@@ -220,12 +234,7 @@ public class SalesStaffSalesReturnEditViewController {
 	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
 	    	if(!isExamine){
-		        if(isNew){
-		        	salesBLService.submitSales(salesVO);
-		        }
-		        else{
-		        	salesBLService.updateSales(salesVO);
-		        }
+		        salesBLService.updateSales(salesVO);
 		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
 	    	}
 	    	else{
@@ -268,7 +277,12 @@ public class SalesStaffSalesReturnEditViewController {
 	            	}
 	                SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.DRAFT, BillID.getText(), customerName, customerID, customerSalesman,
 	                		Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(), LocalDate.now().toString(), "");
-	                salesBLService.saveSales(salesVO);
+	                if(isNew){
+	                	salesBLService.saveSales(salesVO);
+	                }
+	                else{
+	                	salesBLService.updateSales(salesVO);
+	                }
 	            }
 	
 	            salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
@@ -302,6 +316,7 @@ public class SalesStaffSalesReturnEditViewController {
     	isNew = false;
         BillID.setText(salesBill.ID);
         title.setText("销售退货单详情");
+        Salesman.setText(salesBill.salesman);
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
         remark.setText(salesBill.remarks);

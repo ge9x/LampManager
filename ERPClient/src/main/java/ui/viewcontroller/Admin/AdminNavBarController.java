@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class AdminNavBarController {
 
@@ -18,6 +20,9 @@ public class AdminNavBarController {
 	
 	@FXML
     Circle avatar;
+	
+	@FXML
+	Rectangle UserRec, UserSelectRec;
 	
 	AdminViewController adminViewController;
 	UserInfo userInfo = new UserController();
@@ -37,5 +42,11 @@ public class AdminNavBarController {
 
     public void clickUserButton(){
     	adminViewController.showUserView();
+    	showHighlight(UserRec, UserSelectRec);
+    }
+    
+    public void showHighlight(Rectangle rec, Rectangle selectRec){
+    	rec.setFill(Paint.valueOf("#000000"));
+    	selectRec.setVisible(true);
     }
 }

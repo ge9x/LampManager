@@ -35,8 +35,8 @@ public class GeneralManagerExaminationViewController {
     
     @FXML
     public void initialize(){
-        billList.setHgap(50);
-        billList.setVgap(10);
+        billList.setHgap(35);
+        billList.setVgap(30);
         billList.setPrefColumns(3);
 
 //        showBillList();

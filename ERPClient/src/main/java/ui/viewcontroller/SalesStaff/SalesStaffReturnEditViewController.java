@@ -219,12 +219,7 @@ public class SalesStaffReturnEditViewController {
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, 
 	        		inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        if(isNew){
-		        	salesBLService.submitPurchase(purchaseVO);
-		        }
-		        else{
-		        	salesBLService.updatePurchase(purchaseVO);
-		        }
+		        salesBLService.submitPurchase(purchaseVO);
 		        salesStaffReturnOrderViewController.showReturnOrderList();
 	    	}
 	    	else{
@@ -264,7 +259,12 @@ public class SalesStaffReturnEditViewController {
 	            		goodsItemList.add(vo);
 	            	}
 	                PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.DRAFT, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(),LocalDate.now().toString());
-	                salesBLService.savePurchase(purchaseVO);
+	                if(isNew){
+	                	salesBLService.savePurchase(purchaseVO);
+	                }
+	                else{
+	                	salesBLService.updatePurchase(purchaseVO);
+	                }
 	            }
 	
 	            salesStaffReturnOrderViewController.showReturnOrderList();
