@@ -21,6 +21,7 @@ import javax.persistence.Table;
 public class InitGoodsPO implements Serializable {
 	private static final long servialVersionUID=4584937438482L;
 	
+	private int goodsID;
 	/**
 	 * 商品ID
 	 */
@@ -72,6 +73,16 @@ public class InitGoodsPO implements Serializable {
 		this.classificationName=classificationName;
 	}
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "goodsID")
+	public int getGoodsID() {
+		return goodsID;
+	}
+
+	public void setGoodsID(int goodsID) {
+		this.goodsID = goodsID;
+	}
+
 	@Column(name = "id")
 	public String getID() {
 		return ID;

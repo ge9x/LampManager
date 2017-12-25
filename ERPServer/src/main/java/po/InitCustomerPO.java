@@ -18,6 +18,7 @@ import javax.persistence.Table;
 public class InitCustomerPO implements Serializable{
 	private static final long servialVersionUID=454723894278482L;
 		
+	private int iD;
 	/**客户编号*/
 	private String customerID;
 	/**客户分类:进货商、销售商*/
@@ -62,8 +63,17 @@ public class InitCustomerPO implements Serializable{
 		this.salesman = salesman;
 		this.points = points;
 	}
-	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public int getiD() {
+		return iD;
+	}
+
+	public void setiD(int iD) {
+		this.iD = iD;
+	}
+
 	@Column(name = "customerID")
 	public String getCustomerID(){
 		return customerID;

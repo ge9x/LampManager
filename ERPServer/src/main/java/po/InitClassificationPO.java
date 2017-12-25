@@ -25,6 +25,7 @@ import org.hibernate.annotations.FetchMode;
 public class InitClassificationPO implements Serializable{
 	private static final long servialVersionUID=574935438782732L;
     
+	private int classificationID;
 	/**
 	 * 商品分类ID
 	 */
@@ -44,6 +45,16 @@ public class InitClassificationPO implements Serializable{
 	}
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "classificationID")
+	public int getClassificationID() {
+		return classificationID;
+	}
+
+	public void setClassificationID(int classificationID) {
+		this.classificationID = classificationID;
+	}
+
 	@Column(name = "id")
 	public int getID() {
 		return ID;
