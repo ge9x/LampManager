@@ -46,10 +46,10 @@ public class LogController implements LogBLService, LogInfo{
 	}
 	
 	@Override
-	public ResultMessage record(String userID, OperationType operationType, OperationObjectType operationObjectType,
+	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType,
 			String details) {
 		try {
-			return log.record(userID, operationType, operationObjectType, details);
+			return log.record(operationType, operationObjectType, details);
 		}
 		catch (RemoteException e) {
 			e.printStackTrace();

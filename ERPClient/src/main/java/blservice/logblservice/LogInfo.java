@@ -13,11 +13,10 @@ public interface LogInfo {
 	/**
 	 * 添加日志记录
 	 * 
-	 * @param userID 操作员ID
 	 * @param operationType 操作类型
 	 * @param operationObjectType 操作对象的类型
 	 * @param details 对象详情
 	 * @return 是否成功添加
 	 */
-	public ResultMessage record(String userID, OperationType operationType, OperationObjectType operationObjectType, String details);
+	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details);
 }
