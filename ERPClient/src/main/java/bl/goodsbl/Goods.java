@@ -117,7 +117,7 @@ public class Goods {
 			toUpdate.setRetailPrice(vo.retailPrice);
 			ResultMessage ret = goodsDataService.update(toUpdate);
 			if (ret == ResultMessage.SUCCESS) {
-				ret = logInfo.record(OperationType.UPDATE, OperationObjectType.GOODS, toUpdate.toString());
+				logInfo.record(OperationType.UPDATE, OperationObjectType.GOODS, toUpdate.toString());
 			}
 			return ret;
 		}

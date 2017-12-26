@@ -76,7 +76,7 @@ public class Classification {
 		else if(found.getChidren().isEmpty() && found.getGoods().isEmpty()){
 			ResultMessage  ret = classificationDataService.delete(found);
 			if(ret == ResultMessage.SUCCESS){
-				ret = logInfo.record(OperationType.DELETE, OperationObjectType.CLASSIFICATION, found.toString());
+				logInfo.record(OperationType.DELETE, OperationObjectType.CLASSIFICATION, found.toString());
 			}
 			return ret;
 		}
@@ -101,7 +101,7 @@ public class Classification {
 			toUpdate.setName(vo.name);
 			ResultMessage ret = classificationDataService.update(toUpdate);
 			if(ret == ResultMessage.SUCCESS){
-				ret = logInfo.record(OperationType.UPDATE, OperationObjectType.CLASSIFICATION, toUpdate.toString());
+				logInfo.record(OperationType.UPDATE, OperationObjectType.CLASSIFICATION, toUpdate.toString());
 			}
 			return ret;
 		}
