@@ -10,12 +10,13 @@ import util.BillType;
 
 /**
  * Created on 2017/10/21
+ * 
  * @author 巽
  *
  */
 @Entity
 @Table(name = "inventorybill")
-public class InventoryBillPO extends BillPO{
+public class InventoryBillPO extends BillPO {
 	private static final long serialVersionUID = 1767677400033597429L;
 	/**
 	 * 该单据涉及的仓库
@@ -29,10 +30,12 @@ public class InventoryBillPO extends BillPO{
 	 * 该单据内的商品对应的溢出/缺损/赠送/报警数量（报警数量为商品警戒数量，要得到该商品实际数量应通过商品PO）
 	 */
 	private Map<GoodsPO, Integer> goodsMap;
-	
-	public InventoryBillPO(){ }
 
-	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap, int turn) {
+	public InventoryBillPO() {
+	}
+
+	public InventoryBillPO(String date, BillType type, BillState state, InventoryPO inventory, String user,
+			HashMap<GoodsPO, Integer> goodsMap, int turn) {
 		super(date, type, state, turn);
 		this.inventory = inventory;
 		this.user = user;
@@ -45,7 +48,8 @@ public class InventoryBillPO extends BillPO{
 	 * 2、要修改的PO应从数据库中得到，而非代码生成
 	 */
 	@Deprecated
-	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user, HashMap<GoodsPO, Integer> goodsMap) {
+	public InventoryBillPO(int ID, String date, BillType type, BillState state, InventoryPO inventory, String user,
+			HashMap<GoodsPO, Integer> goodsMap) {
 		super(ID, date, type, state);
 		this.inventory = inventory;
 		this.user = user;
@@ -69,7 +73,8 @@ public class InventoryBillPO extends BillPO{
 	}
 
 	public void setID(int iD) {
-		super.setID(iD);;
+		super.setID(iD);
+		;
 	}
 
 	@Column(name = "state")
@@ -120,14 +125,20 @@ public class InventoryBillPO extends BillPO{
 	public void setGoodsMap(Map<GoodsPO, Integer> goodsMap) {
 		this.goodsMap = goodsMap;
 	}
-	
+
 	@Column(name = "turn")
-    public int getTurn() {
+	public int getTurn() {
 		return super.getTurn();
 	}
 
 	public void setTurn(int turn) {
 		super.setTurn(turn);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ID:" + super.buildID() + ", 类型:" + this.getType().getValue() + ", 状态:" + this.getState().getValue()
+				+ ", 操作员:" + user + ", 仓库:" + inventory.getName();
+	}
+
 }

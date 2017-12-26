@@ -14,7 +14,8 @@ public enum OperationObjectType {
 	CUSTOMER("客户"),
 	ACCOUNT("银行账户"),
 	PROMOTION("促销策略"),
-	INITIALIZATION("期初建账");
+	INITIALIZATION("期初建账"),
+	INVENTORY("仓库");
 
 	String value;
 

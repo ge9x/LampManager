@@ -78,4 +78,10 @@ public class InventoryPO implements Serializable {
 	public void setNumber(Map<GoodsPO, Integer> number) {
 		this.number = number;
 	}
+
+	@Override
+	public String toString() {
+		return "名称:" +  name + ", 商品种数:" + number.size();
+	}
+	
 }

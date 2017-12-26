@@ -11,14 +11,18 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsController;
 import bl.initializationbl.InitializationController;
+import bl.logbl.LogController;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.initializationblservice.InitInfo;
+import blservice.logblservice.LogInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import vo.AlarmVO;
 import vo.GoodsItemVO;
@@ -40,6 +44,7 @@ public class Inventory {
 	private InventoryBill inventoryBill;
 	private GoodsInfo goodsInfo;
 	private InitInfo initInfo;
+	private LogInfo logInfo;
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
@@ -47,6 +52,7 @@ public class Inventory {
 		inventoryBill = new InventoryBill(goodsInfo);
 		inventoryList = new InventoryList();
 		initInfo = new InitializationController();
+		logInfo = new LogController();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {
@@ -126,7 +132,11 @@ public class Inventory {
 			}
 		}
 		InventoryPO toAdd = new InventoryPO(inventory);
-		return inventoryDataService.addInventroy(toAdd);
+		ResultMessage ret = inventoryDataService.addInventroy(toAdd);
+		if (ret == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.ADD, OperationObjectType.INVENTORY, toAdd.toString());
+		}
+		return ret;
 	}
 
 	public ResultMessage addBill(InventoryBillVO vo) throws RemoteException {
@@ -139,7 +149,11 @@ public class Inventory {
 			return ResultMessage.NOT_EXIST;
 		}
 		else {
-			return inventoryDataService.deleteInventory(found);
+			ResultMessage ret = inventoryDataService.deleteInventory(found);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.DELETE, OperationObjectType.INVENTORY, found.toString());
+			}
+			return ret;
 		}
 	}
 
@@ -153,7 +167,11 @@ public class Inventory {
 			return ResultMessage.NOT_EXIST;
 		}
 		else {
-			return inventoryDataService.updateInventory(found);
+			ResultMessage ret = inventoryDataService.updateInventory(found);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.UPDATE, OperationObjectType.INVENTORY, found.toString());
+			}
+			return ret;
 		}
 	}
 
@@ -203,7 +221,7 @@ public class Inventory {
 	public ArrayList<InventoryBillVO> getAllSubmittedInventoryBill() throws RemoteException {
 		return inventoryBill.getAllSubmittedBill();
 	}
-	
+
 	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
 		return inventoryBill.redCover(vo);
 	}
@@ -211,7 +229,7 @@ public class Inventory {
 	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
 		return inventoryBill.redCoverAndCopy(vo);
 	}
-	
+
 	public String getStartDate() {
 		return initInfo.getStartDate();
 	}
