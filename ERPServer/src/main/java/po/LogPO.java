@@ -115,8 +115,8 @@ public class LogPO implements Serializable {
 	}
 
 	@Override
-	public String toString() {	// TODO 修改时间格式
-		return "[" + dateAndTime.toString() + "]" + " [" + userID + "]" + " [" + operationType.getValue() + "]" + " ["
+	public String toString() {
+		return "[" + dateAndTime.toString().replace('T', ' ') + "]" + " [" + userID + "]" + " [" + operationType.getValue() + "]" + " ["
 				+ operationObjectType.getValue() + "]" + " [" + details + "]";
 	}
 

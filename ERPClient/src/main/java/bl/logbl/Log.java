@@ -52,7 +52,12 @@ public class Log {
 		}
 		LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType, operationObjectType,
 				details);
-		System.out.println(toAdd.toString());
+		// 暂时保留，方便测试效果↓
+		ArrayList<String> logs = this.show();
+		for(String record : logs){
+			System.out.println(record);
+		}
+		
 		return logDataService.addLog(toAdd);
 	}
 }
