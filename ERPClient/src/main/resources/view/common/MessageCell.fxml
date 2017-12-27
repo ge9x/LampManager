@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="100.0" prefWidth="477.0" stylesheets="@../../css/messageCell.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.MessageCellController">
+   <children>
+      <Label fx:id="messageType" alignment="TOP_CENTER" layoutX="15.0" layoutY="10.0" prefHeight="51.0" prefWidth="49.0" styleClass="icon-label" text="Label" />
+      <Label fx:id="hint" layoutX="68.0" layoutY="8.0" prefHeight="27.0" prefWidth="302.0" text="您有一张单据已提交" wrapText="true">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="time" layoutX="345.0" layoutY="75.0" prefHeight="15.0" prefWidth="132.0" text="Label">
+         <font>
+            <Font name="Microsoft YaHei" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="detail" alignment="TOP_LEFT" layoutX="68.0" layoutY="37.0" prefHeight="38.0" prefWidth="397.0" text="您的编号为XSD-20171227-0001的单据已经提交，请耐心等待审批。" textFill="#707070" wrapText="true">
+         <font>
+            <Font name="Microsoft YaHei" size="11.0" />
+         </font>
+      </Label>
+      <Line endX="350.0" layoutX="115.0" layoutY="95.0" startX="-100.0" stroke="#a7a0a0" strokeWidth="0.5" />
+      <Label fx:id="delete" alignment="TOP_CENTER" layoutX="428.0" onMouseClicked="#clickDeleteButton" prefHeight="38.0" prefWidth="49.0" text="Label" />
+   </children>
+</AnchorPane>

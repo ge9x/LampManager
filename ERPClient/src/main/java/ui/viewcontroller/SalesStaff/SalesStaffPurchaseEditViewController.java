@@ -30,6 +30,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.StateBarController;
 import util.BillState;
 import util.BillType;
 import util.Money;
