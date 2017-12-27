@@ -1,22 +1,29 @@
 package ui.viewcontroller.Admin;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
-import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import ui.viewcontroller.SalesStaff.SalesStaffCustomerCellController;
-import vo.CustomerVO;
 import vo.UserVO;
 
 public class AdminUserViewController {
@@ -127,6 +134,27 @@ public class AdminUserViewController {
     }
     
     public void clickAddButton(){
+//    	try {  
+//    		  
+//            // Open an audio input stream.  
+//             URL url = this.getClass().getResource("/sound/test.wav");
+////            File file = new File();
+//  
+//             AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);  
+////            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);  
+//            // Get a sound clip resource.  
+//            Clip clip = AudioSystem.getClip();  
+//            // Open audio clip and load samples from the audio input stream.  
+//            clip.open(audioIn);  
+//            clip.start();  
+//        } catch (UnsupportedAudioFileException e) {  
+//            e.printStackTrace();  
+//        } catch (IOException e) {  
+//            e.printStackTrace();  
+//        } catch (LineUnavailableException e) {  
+//            e.printStackTrace();  
+//        }
+    	
     	Pane userAdd = null;
     	try{
 	    	FXMLLoader userAddLoader = new FXMLLoader();
