@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.apache.poi.hssf.record.LabelSSTRecord;
+import org.apache.xmlbeans.impl.jam.annotation.LineDelimitedTagParser;
 
 import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXListView;
@@ -22,6 +23,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -29,6 +31,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.VideoTrack;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import util.BillState;
 
@@ -90,7 +94,7 @@ public class StateBarController {
         vBox = new VBox();
         scrollPane.setPrefSize(160.0, 400.0);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        vBox.setPrefWidth(158.0);
+        vBox.setPrefWidth(160.0);
         container.getChildren().add(scrollPane);
         scrollPane.setContent(vBox);
         scrollPane2 = new ScrollPane();
@@ -116,7 +120,7 @@ public class StateBarController {
     	messageCellPane.setPrefSize(160.0, 70.0);
     	Label Icon = new Label();
     	Icon.setPrefSize(35, 35);
-    	Icon.setLayoutX(8);
+    	Icon.setLayoutX(10);
     	Icon.setLayoutY(8);
     	Label hint = new Label();
     	hint.setPrefSize(75, 35);
@@ -130,7 +134,8 @@ public class StateBarController {
     	hint.setFont(new Font("Microsoft YaHei", 12));
     	date.setFont(new Font("Microsoft YaHei", 10));
     	
-    	Icon.getStylesheets().add("icon-label");
+    	Icon.setAlignment(Pos.CENTER);
+    	Icon.setStyle("-fx-font-family: iconfont;-fx-font-size: 30px;-fx-text-fill: #707070;");
     	
     	date.setText(time);
 		if(state == BillState.SUBMITTED){
@@ -149,7 +154,6 @@ public class StateBarController {
     	messageCellPane.getChildren().add(Icon);
     	messageCellPane.getChildren().add(hint);
     	messageCellPane.getChildren().add(date);
-    	
     	messageCellPane.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
