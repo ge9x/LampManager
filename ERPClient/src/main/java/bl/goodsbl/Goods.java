@@ -4,34 +4,41 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import bl.classificationbl.ClassificationController;
+import bl.logbl.LogController;
 import blservice.classificationblservice.ClassificationInfo;
+import blservice.logblservice.LogInfo;
 import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 import rmi.GoodsRemoteHelper;
 import util.Criterion;
+import util.OperationObjectType;
+import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
 import vo.GoodsVO;
 
 /**
  * Created on 2017/11/5
+ * 
  * @author 巽
  *
  */
 public class Goods {
 	private GoodsDataService goodsDataService;
 	private ClassificationInfo classificationInfo;
-	
-	public Goods(){
+	private LogInfo logInfo;
+
+	public Goods() {
 		goodsDataService = GoodsRemoteHelper.getInstance().getGoodsDataService();
 		classificationInfo = new ClassificationController();
+		logInfo = new LogController();
 	}
 
 	public ArrayList<GoodsVO> show() throws RemoteException {
 		ArrayList<GoodsPO> pos = goodsDataService.show();
 		ArrayList<GoodsVO> ret = new ArrayList<>();
-		for(GoodsPO po : pos){
+		for (GoodsPO po : pos) {
 			ret.add(poToVO(po));
 		}
 		return ret;
@@ -40,8 +47,8 @@ public class Goods {
 	public ArrayList<GoodsVO> find(String keyword) throws RemoteException {
 		ArrayList<GoodsPO> pos = goodsDataService.show();
 		ArrayList<GoodsVO> ret = new ArrayList<>();
-		for(GoodsPO po : pos){
-			if(po.buildID().contains(keyword) || po.getName().contains(keyword) || po.getModel().contains(keyword)){
+		for (GoodsPO po : pos) {
+			if (po.buildID().contains(keyword) || po.getName().contains(keyword) || po.getModel().contains(keyword)) {
 				ret.add(poToVO(po));
 			}
 		}
@@ -59,23 +66,27 @@ public class Goods {
 		criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
 		criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
 		ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
-		if(!repeated.isEmpty()){
+		if (!repeated.isEmpty()) {
 			return ResultMessage.EXIST;
 		}
-		else{
+		else {
 			GoodsPO toAdd = voToPO(vo);
-			return goodsDataService.add(toAdd);
+			ResultMessage ret = goodsDataService.add(toAdd);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.ADD, OperationObjectType.GOODS, toAdd.toString());
+			}
+			return ret;
 		}
 	}
 
 	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
 		GoodsPO found = goodsDataService.find(Integer.parseInt(ID.substring(2)));
-		if(found == null){
+		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else{
+		else { // 不加入删除商品功能
 			// TODO 询问Sales是否有账单关联
-//			return goodsDataService.delete(found);
+			// return goodsDataService.delete(found);
 		}
 		return ResultMessage.ERROR;
 	}
@@ -86,16 +97,16 @@ public class Goods {
 	 */
 	public ResultMessage update(GoodsVO vo) throws NumberFormatException, RemoteException {
 		GoodsPO toUpdate = goodsDataService.find(Integer.parseInt(vo.ID.substring(2)));
-		if(toUpdate == null){
+		if (toUpdate == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else{
-			if(!toUpdate.getName().equals(vo.name) || !toUpdate.getModel().equals(vo.model)){	// 若要改名
+		else {
+			if (!toUpdate.getName().equals(vo.name) || !toUpdate.getModel().equals(vo.model)) { // 若要改名
 				ArrayList<Criterion> criteria = new ArrayList<>();
 				criteria.add(new Criterion("name", vo.name, QueryMode.FULL));
 				criteria.add(new Criterion("model", vo.model, QueryMode.FULL));
 				ArrayList<GoodsPO> repeated = goodsDataService.advancedQuery(criteria);
-				if(!repeated.isEmpty()){	// 重名
+				if (!repeated.isEmpty()) { // 重名
 					return ResultMessage.EXIST;
 				}
 			}
@@ -104,30 +115,37 @@ public class Goods {
 			toUpdate.setAlarmAmount(vo.alarmAmount);
 			toUpdate.setBuyingPrice(vo.buyingPrice);
 			toUpdate.setRetailPrice(vo.retailPrice);
-			return goodsDataService.update(toUpdate);
+			ResultMessage ret = goodsDataService.update(toUpdate);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.UPDATE, OperationObjectType.GOODS, toUpdate.toString());
+			}
+			return ret;
 		}
 	}
 
 	public String getNewID(String classificationID) throws RemoteException {
 		return goodsDataService.getNewID(classificationID);
 	}
-	
-	public static GoodsVO poToVO(GoodsPO po){
+
+	public static GoodsVO poToVO(GoodsPO po) {
 		String classificationName = po.getClassification().getName();
-		GoodsVO ret = new GoodsVO(po.buildID(), po.getName(), po.getModel(), classificationName, po.countAmount(), po.getAlarmAmount(), po.getBuyingPrice(), po.getRetailPrice(), po.getRecentBuyingPrice(), po.getRecentRetailPrice());
+		GoodsVO ret = new GoodsVO(po.buildID(), po.getName(), po.getModel(), classificationName, po.countAmount(),
+				po.getAlarmAmount(), po.getBuyingPrice(), po.getRetailPrice(), po.getRecentBuyingPrice(),
+				po.getRecentRetailPrice());
 		return ret;
 	}
-	
+
 	/**
 	 * 仅限增加商品时调用
 	 */
-	private GoodsPO voToPO(GoodsVO vo){
+	private GoodsPO voToPO(GoodsVO vo) {
 		ClassificationPO classification = classificationInfo.getClassificationByName(vo.classification);
 		int turn = Integer.parseInt(vo.ID.substring(2));
-		GoodsPO ret = new GoodsPO(vo.name, vo.model, classification, vo.alarmAmount, vo.buyingPrice, vo.retailPrice, vo.buyingPrice, vo.retailPrice, turn);
+		GoodsPO ret = new GoodsPO(vo.name, vo.model, classification, vo.alarmAmount, vo.buyingPrice, vo.retailPrice,
+				vo.buyingPrice, vo.retailPrice, turn);
 		return ret;
 	}
-	
+
 	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
 		int poID = Integer.parseInt(ID.substring(2));
 		return goodsDataService.find(poID);

@@ -56,13 +56,13 @@ public class InventoryList {
 			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.SALES);
 		}
 		for (SalesVO vo : salesReturnVOs) {
-			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.OUT);
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.IN);
 		}
 		for (PurchaseVO vo : purchaseVOs) {
 			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.PURCHASE);
 		}
 		for (PurchaseVO vo : purchaseReturnVOs) {
-			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.IN);
+			this.addAll(vo.date, vo.goodsItemList, InventoryListItemType.OUT);
 		}
 		for (InventoryBillVO vo : inventoryBillVOs) {
 			InventoryListItemType type = null;

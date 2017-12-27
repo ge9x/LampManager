@@ -4,10 +4,14 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import bl.goodsbl.Goods;
+import bl.logbl.LogController;
+import blservice.logblservice.LogInfo;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 import rmi.ClassificationRemoteHelper;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import vo.ClassificationVO;
 import vo.GoodsVO;
@@ -19,9 +23,11 @@ import vo.GoodsVO;
  */
 public class Classification {
 	private ClassificationDataService classificationDataService;
+	private LogInfo logInfo;
 	
 	public Classification(){
 		classificationDataService = ClassificationRemoteHelper.getInstance().getClassificationDataService();
+		logInfo = new LogController();
 	}
 
 	public ArrayList<ClassificationVO> show() throws RemoteException {
@@ -53,7 +59,12 @@ public class Classification {
 			return ResultMessage.EXIST;
 		}
 		else{
-			return classificationDataService.add(voToPO(vo));
+			ResultMessage ret = classificationDataService.add(this.voToPO(vo));
+			if(ret == ResultMessage.SUCCESS){
+				ClassificationPO added = classificationDataService.findFullyByName(vo.name).get(0);
+				logInfo.record(OperationType.ADD, OperationObjectType.CLASSIFICATION, added.toString());
+			}
+			return ret;
 		}
 	}
 
@@ -63,7 +74,11 @@ public class Classification {
 			return ResultMessage.NOT_EXIST;
 		}
 		else if(found.getChidren().isEmpty() && found.getGoods().isEmpty()){
-			return classificationDataService.delete(found);
+			ResultMessage  ret = classificationDataService.delete(found);
+			if(ret == ResultMessage.SUCCESS){
+				logInfo.record(OperationType.DELETE, OperationObjectType.CLASSIFICATION, found.toString());
+			}
+			return ret;
 		}
 		else{
 			return ResultMessage.FAILED;
@@ -84,7 +99,11 @@ public class Classification {
 		}
 		else{	// 改名以后无重名
 			toUpdate.setName(vo.name);
-			return classificationDataService.update(toUpdate);
+			ResultMessage ret = classificationDataService.update(toUpdate);
+			if(ret == ResultMessage.SUCCESS){
+				logInfo.record(OperationType.UPDATE, OperationObjectType.CLASSIFICATION, toUpdate.toString());
+			}
+			return ret;
 		}
 		
 	}

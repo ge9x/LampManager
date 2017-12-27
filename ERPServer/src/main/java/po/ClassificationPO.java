@@ -114,5 +114,10 @@ public class ClassificationPO implements Serializable {
 	public void setGoods(List<GoodsPO> goods) {
 		this.goods = goods;
 	}
+
+	@Override
+	public String toString() {
+		return "ID:" + String.format("%02d", ID) + ", 名称:" + name + ", 所属商品分类:" + father.getName();
+	}
 	
 }
