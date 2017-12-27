@@ -66,10 +66,8 @@ public class StateBarController {
     public void initialize(){
         exitIcon.setText("\ue72c");
         InfoIcon.setText("\ue60b");
-        snackbar = new JFXSnackbar(container);
-        
-//        showMessage("导出成功");
-        
+
+
         numOfInfo.addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -85,25 +83,18 @@ public class StateBarController {
 			}
 
 		});
-        
-        AnchorPane container = new AnchorPane();
-        container.setPrefSize(650.0, 400.0);
-        container.setMaxSize(650, 400);
-        container.setMinSize(650, 400);
+
         ScrollPane scrollPane = new ScrollPane();
-        vBox = new VBox();
-        scrollPane.setPrefSize(160.0, 400.0);
+        scrollPane.setPrefSize(650.0, 400.0);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        vBox.setPrefWidth(160.0);
-        container.getChildren().add(scrollPane);
+
+
+        vBox = new VBox();
+        vBox.setPrefWidth(649.0);
+
         scrollPane.setContent(vBox);
-        scrollPane2 = new ScrollPane();
-        scrollPane2.setPrefSize(490.0, 400.0);
-        scrollPane2.setLayoutX(160.0);
-        container.getChildren().add(scrollPane2);
-        
-        
-        JFXPopup popup = new JFXPopup(container);
+
+        JFXPopup popup = new JFXPopup(scrollPane);
         badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -580, 35));
         
         addMessageCell(BillState.PASS, LocalDate.now().toString(), "XSD-20171227-00001");
@@ -133,10 +124,10 @@ public class StateBarController {
     	date.setLayoutY(50);
     	hint.setFont(new Font("Microsoft YaHei", 12));
     	date.setFont(new Font("Microsoft YaHei", 10));
-    	
+
     	Icon.setAlignment(Pos.CENTER);
     	Icon.setStyle("-fx-font-family: iconfont;-fx-font-size: 30px;-fx-text-fill: #707070;");
-    	
+
     	date.setText(time);
 		if(state == BillState.SUBMITTED){
 			Icon.setText("\ue602");
@@ -158,19 +149,21 @@ public class StateBarController {
 
 			@Override
 			public void handle(Event arg0) {
-				// TODO Auto-generated method stub
-				Label label = null;
-				if(state == BillState.SUBMITTED){
-					label = new Label("已提交");
-				}
-				else if(state == BillState.PASS){
-					label = new Label("已通过");
-				}
-				else if(state == BillState.FAILED){
-					label = new Label("未通过");
-				}
-				scrollPane2.setContent(label);
+//				// TODO Auto-generated method stub
+//				Label label = null;
+//				if(state == BillState.SUBMITTED){
+//					label = new Label("已提交");
+//				}
+//				else if(state == BillState.PASS){
+//					label = new Label("已通过");
+//				}
+//				else if(state == BillState.FAILED){
+//					label = new Label("未通过");
+//				}
+//				scrollPane2.setContent(label);
+                hint.requestFocus();
 			}
+
 		});
         
         vBox.getChildren().add(messageCellPane);

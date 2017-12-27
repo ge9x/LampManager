@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="70.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ui.viewcontroller.common.MessageCellController">
+<AnchorPane prefHeight="70.0" prefWidth="160.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ui.viewcontroller.common.StateBarController">
    <children>
       <Label layoutX="8.0" layoutY="8.0" prefHeight="35.0" prefWidth="35.0" text="Label" />
       <Label layoutX="57.0" layoutY="8.0" prefHeight="35.0" prefWidth="75.0" text="您有一张单据已提交" wrapText="true">
