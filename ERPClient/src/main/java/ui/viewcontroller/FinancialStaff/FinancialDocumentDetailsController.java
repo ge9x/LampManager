@@ -171,4 +171,8 @@ public class FinancialDocumentDetailsController {
         input.keyword = keyword.getText();
         loadBills(billPane.getSelected());
     }
+    public void setForGeneralMananger(){
+        redButton.setVisible(false);
+        redCopyButton.setVisible(false);
+    }
 }
