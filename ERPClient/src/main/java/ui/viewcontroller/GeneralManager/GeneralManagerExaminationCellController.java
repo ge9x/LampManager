@@ -205,6 +205,12 @@ public class GeneralManagerExaminationCellController {
 		else if(bill.type==BillType.RECEIPT){
 			pane = showReceiptBill();
 		}
+		else if(bill.type==BillType.SALESRETURN){
+			pane = showSalesReturnOrderBill();
+		}
+		else if(bill.type==BillType.OVERFLOW||bill.type==BillType.LOSS){
+			pane = showInventoryBill();
+		}
 		generalManagerExaminationViewController.showBillDetail(pane);
 	}
 	

@@ -234,7 +234,7 @@ public class SalesStaffSalesReturnEditViewController {
 	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
 	    	if(!isExamine){
-		        salesBLService.updateSales(salesVO);
+		        salesBLService.submitSales(salesVO);
 		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
 	    	}
 	    	else{
@@ -344,7 +344,7 @@ public class SalesStaffSalesReturnEditViewController {
             }
         });
 
-        if (salesBill.state == BillState.DRAFT){
+        if (salesBill.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
