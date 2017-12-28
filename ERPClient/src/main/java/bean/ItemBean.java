@@ -10,14 +10,14 @@ public class ItemBean{
     StringProperty name;
     StringProperty isIn;
     IntegerProperty amount;
-    DoubleProperty money;
+    StringProperty money;
 
-    public ItemBean(String date, String name, String isIn, Integer amount, Double money) {
+    public ItemBean(String date, String name, String isIn, Integer amount, String money) {
         this.date = new SimpleStringProperty(date);
         this.name = new SimpleStringProperty(name);
         this.isIn = new SimpleStringProperty(isIn);
         this.amount = new SimpleIntegerProperty(amount);
-        this.money = new SimpleDoubleProperty(money);
+        this.money = new SimpleStringProperty(money);
     }
 
     public String getDate() {
@@ -69,15 +69,15 @@ public class ItemBean{
         this.amount.set(amount);
     }
 
-    public double getMoney() {
+    public String getMoney() {
         return money.get();
     }
 
-    public DoubleProperty moneyProperty() {
+    public StringProperty moneyProperty() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(String money) {
         this.money.set(money);
     }
 }
