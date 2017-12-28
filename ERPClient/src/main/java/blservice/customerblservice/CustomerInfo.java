@@ -63,11 +63,4 @@ public interface CustomerInfo {
 	 * @return
 	 */
 	public ResultMessage reduceCustomerPay(int customerID,double amount);
-	/**
-	 * 根据销售总额增加客户积分
-	 * @param sum
-	 * @return
-	 */
-	public ResultMessage raiseCustomerPoints(double sum,int ID);
-
 }
