@@ -8,15 +8,15 @@ public class InventoryCheckBean {
     StringProperty name;
     StringProperty model;
     IntegerProperty amount;
-    DoubleProperty avg;
+    StringProperty avg;
 
-    public InventoryCheckBean(int line, String ID, String name, String model, int amount,double avg) {
+    public InventoryCheckBean(int line, String ID, String name, String model, int amount,String avg) {
         this.line = new SimpleIntegerProperty(line);
         this.ID = new SimpleStringProperty(ID);
         this.name = new SimpleStringProperty(name);
         this.model = new SimpleStringProperty(model);
         this.amount = new SimpleIntegerProperty(amount);
-        this.avg = new SimpleDoubleProperty(avg);
+        this.avg = new SimpleStringProperty(avg);
     }
 
     public int getLine() {
@@ -79,15 +79,15 @@ public class InventoryCheckBean {
         this.amount.set(amount);
     }
 
-    public double getAvg() {
+    public String getAvg() {
         return avg.get();
     }
 
-    public DoubleProperty avgProperty() {
+    public StringProperty avgProperty() {
         return avg;
     }
 
-    public void setAvg(double avg) {
+    public void setAvg(String avg) {
         this.avg.set(avg);
     }
 }
