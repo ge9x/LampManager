@@ -131,6 +131,7 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+
                     inventorySyncController.setDetailView(inventoryBill);
                 }
             });
@@ -173,6 +174,8 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    if (inventorySyncController == null)
+                        inventorySyncController = new InventorySyncController();
                     inventorySyncController.setDetailView(inventoryBill);
                 }
             });

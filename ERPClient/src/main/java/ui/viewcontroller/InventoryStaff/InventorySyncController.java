@@ -17,6 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
+import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.BillType;
