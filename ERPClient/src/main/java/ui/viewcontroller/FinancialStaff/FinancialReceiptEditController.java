@@ -32,6 +32,7 @@ import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -48,7 +49,7 @@ import javax.sound.midi.VoiceStatus;
  * Created by Kry·L on 2017/11/23.
  */
 public class FinancialReceiptEditController {
-
+    MainUIController mainUIController;
     FinancialReceiptController financialReceiptController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
     FinanceBLService financeBLService = new FinanceBLService_Stub();
@@ -59,6 +60,7 @@ public class FinancialReceiptEditController {
     ArrayList<CustomerVO> customers;
     Boolean isNew;
     boolean isExamine = false;
+    public boolean onlyShow = false;
 
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
@@ -316,6 +318,10 @@ public class FinancialReceiptEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		financialReceiptController.showReceiptList();
             	}
@@ -379,9 +385,12 @@ public class FinancialReceiptEditController {
             }
         });
     }
-    
+
     public void isExamine(){
     	isExamine = true;
     }
 
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
 }

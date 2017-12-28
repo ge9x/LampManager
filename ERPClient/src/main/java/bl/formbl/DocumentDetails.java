@@ -104,7 +104,7 @@ public class DocumentDetails{
             case RECEIPT:
             case PAYMENT:
                 for (BillVO billVO:billVOS){
-                    if (customerInfo.getCustomerByID(Integer.parseInt(((SalesVO) billVO).customerID))
+                    if (customerInfo.getCustomerByID(Integer.parseInt(((AccountBillVO) billVO).customerID))
                             .customerName.contains(name)){
                         newArr.add(billVO);
                     }
@@ -146,9 +146,11 @@ public class DocumentDetails{
         return newArr;
     }
     public void getAllBills(String startDate, String endDate){
+        billVOS.clear();
         billVOS.addAll(inventoryInfo.getInventoryBillsByDate(startDate, endDate));
         billVOS.addAll(purchaseInfo.getPurchaseByDate(startDate,endDate));
         billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
+        billVOS.addAll(salesInfo.getAllSalesReturnOrder(startDate, endDate));
         billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
         billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
     }

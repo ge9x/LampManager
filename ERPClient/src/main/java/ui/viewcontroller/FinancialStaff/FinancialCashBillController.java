@@ -98,7 +98,6 @@ public class FinancialCashBillController {
                     financialBillController.showDeleteIcon();
                 }
                 financialBillController.setFinancialCashBillController(this);
-                financialBillController.setMainUIController(mainUIController);
                 financialBillController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -124,7 +123,6 @@ public class FinancialCashBillController {
             Pane page = pageLoader.load();
             financialCashBillEditController = pageLoader.getController();
             financialCashBillEditController.setFinancialCashBillController(this);
-            financialCashBillEditController.setMainUIController(mainUIController);
             financialViewController.showCashBillEditView(page);
         }catch(IOException e){
             e.printStackTrace();

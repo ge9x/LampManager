@@ -52,6 +52,7 @@ public class FinancialCashBillEditController {
     ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
     Boolean isNew;
+    public boolean onlyShow = false;
     boolean isExamine = false;
 
     TableView<CashBillItemBean> itemTable;
@@ -190,7 +191,7 @@ public class FinancialCashBillEditController {
 	        }else{
 	            financeBLService.updateDraft(cashBillVO);
 	        }
-	        mainUIController.back();
+	        financialCashBillController.showCashBillList();
     	}
     	else{
     		financeBLService.updateDraft(cashBillVO);
@@ -219,7 +220,6 @@ public class FinancialCashBillEditController {
 	                    financeBLService.updateDraft(cashBillVO);
 	                }
 	            }
-	
 	            financialCashBillController.showCashBillList();
 	        }
     	}
@@ -260,14 +260,17 @@ public class FinancialCashBillEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mainUIController.back();
-//                if(!isExamine){
-//                    financialCashBillController.showCashBillList();
-//                }
-//            	else{
-//            		generalManagerExaminationCellController.clickReturnButton();
-//            		isExamine = false;
-//            	}
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
+                if(!isExamine){
+                    financialCashBillController.showCashBillList();
+                }
+            	else{
+                    generalManagerExaminationCellController.clickReturnButton();
+                    isExamine = false;
+                }
             }
         });
 

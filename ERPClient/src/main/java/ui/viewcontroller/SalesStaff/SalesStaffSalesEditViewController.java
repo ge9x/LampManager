@@ -30,6 +30,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.*;
 import vo.*;
 
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffSalesEditViewController {
+    MainUIController mainUIController;
 	SalesStaffSalesOrderViewController salesStaffSalesOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
@@ -74,6 +76,7 @@ public class SalesStaffSalesEditViewController {
     
     boolean isExamine = false;
     boolean isNew;
+    public boolean onlyShow = false;
     
     @FXML
     Label deleteIcon;
@@ -643,6 +646,10 @@ public class SalesStaffSalesEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffSalesOrderViewController.showSalesOrderList();
             	}
@@ -739,5 +746,9 @@ public class SalesStaffSalesEditViewController {
     	Dialog dialog = DialogFactory.getInformationAlert();
         dialog.setHeaderText("折让数额超过当前登录用户折让上限");
         Optional result = dialog.showAndWait();
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

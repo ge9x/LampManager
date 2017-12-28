@@ -8,6 +8,8 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -73,6 +75,20 @@ public class FinancialDocumentDetailsController {
         String initDate = formBLService.getStartDate();
         StartDate.setValue(LocalDate.parse(initDate));
         EndDate.setValue(LocalDate.now());
+        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.startDate = StartDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
+        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.endDate = EndDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
 
 
 
