@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXSnackbar?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="container" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" stylesheets="@../../css/stateBar.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.StateBarController">
+<AnchorPane fx:id="container" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" stylesheets="@../../css/stateBar.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.common.StateBarController">
    <children>
-      <Label fx:id="exitIcon" layoutX="964.0" layoutY="12.0" onMouseClicked="#clickCloseButton" styleClass="icon-label" text="X" />
+      <Label fx:id="exitIcon" layoutX="964.0" layoutY="15.0" onMouseClicked="#clickCloseButton" styleClass="icon-label" text="X" />
       <Rectangle fill="#272727" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="170.0" />
       <ImageView fitHeight="45.0" fitWidth="200.0" layoutX="179.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/logo2.png" />
          </image>
       </ImageView>
+      <HBox layoutX="906.0" layoutY="5.0" prefHeight="40.0" prefWidth="40.0">
+         <children>
+            <JFXBadge fx:id="badge" position="TOP_RIGHT" prefHeight="40.0" prefWidth="40.0" styleClass="icons-badge" text="1">
+               <control>
+                       <StackPane style="-fx-padding: 10;">
+                          <children>
+                          <Label fx:id="InfoIcon" prefHeight="25.0" prefWidth="25.0" styleClass="icon-label" text="Label" />
+                          </children>
+                    </StackPane>
+               </control>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+                </JFXBadge>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -24,3 +24,28 @@
 .jfx-snackbar-action {
     -fx-text-fill: #ff4081;
 }
+
+.icons-badge .badge-pane {
+    -fx-background-color: #ff4081;
+    -fx-background-radius: 23;
+    -fx-pref-width: 19;
+    -fx-pref-height: 19;
+    -fx-alignment: center;
+}
+
+.icons-badge Label {
+    -fx-font-weight: BOLD;
+    -fx-font-size: 14.0px;
+    -fx-text-fill: WHITE;
+}
+
+#InfoIcon {
+	-fx-font-size: 20px;
+	-fx-text-fill: #707070;
+}
+
+#newIcon {
+	-fx-font-family: iconfont;
+    -fx-font-size: 30px;
+    -fx-text-fill: #707070;
+}
