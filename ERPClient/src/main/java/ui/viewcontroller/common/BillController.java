@@ -4,14 +4,14 @@ import bl.financialbl.AccountBill;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
-import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
-import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
-import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
+import org.ERPClient.Main;
+import ui.viewcontroller.FinancialStaff.*;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
 import ui.viewcontroller.SalesStaff.SalesStaffPurchaseOrderViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffReturnOrderViewController;
@@ -21,12 +21,15 @@ import util.BillType;
 import util.Money;
 import vo.*;
 
+import java.io.IOException;
+
 /**
  * Created by Kry·L on 2017/11/27.
  */
 public class BillController {
 
     BillVO bill;
+    MainUIController mainUIController;
     FinancialReceiptController financialReceiptController;
     FinancialPaymentController financialPaymentController;
     FinancialCashBillController financialCashBillController;
@@ -104,7 +107,21 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    financialCashBillController.showCashBillDetailView(cashBill);
+//                    financialCashBillController.showCashBillDetailView(cashBill);
+                    mainUIController.saveView();
+                    Pane page = null;
+                    FinancialCashBillEditController financialCashBillEditController = null;
+                    try {
+                        FXMLLoader pageLoader = new FXMLLoader();
+                        pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBillEdit.fxml"));
+                        page = pageLoader.load();
+                        financialCashBillEditController = pageLoader.getController();
+                        financialCashBillEditController.setMainUIController(mainUIController);
+                        mainUIController.setCenter(page);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    financialCashBillEditController.setForDetailView((CashBillVO) bill);
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -344,5 +361,8 @@ public class BillController {
     }
     public BillVO getBill(){
         return bill;
+    }
+    public void setMainUIController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
     }
 }
