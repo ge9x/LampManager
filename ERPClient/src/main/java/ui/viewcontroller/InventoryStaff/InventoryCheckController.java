@@ -69,6 +69,10 @@ public class  InventoryCheckController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel表格", "*.xlxs"));
         File f = fileChooser.showSaveDialog(new Stage());
 
+        //处理保存文件时点击取消的case
+        if (f == null){
+            return ;
+        }
         ResultMessage re = inventoryBLService.exportExcel(f.getParent(),f.getName(),inventoryCheck);
         if (re == ResultMessage.SUCCESS){
             Dialog alert = DialogFactory.getInformationAlert();
@@ -83,7 +87,7 @@ public class  InventoryCheckController {
         table.clear();
         for (GoodsVO good : inventoryCheck.averagePrice.keySet()){
             double avg = inventoryCheck.averagePrice.get(good);
-            table.addRow(new InventoryCheckBean(n++,good.ID,good.name,good.model,good.amount,avg));
+            table.addRow(new InventoryCheckBean(n++,good.ID,good.name,good.model,good.amount,Money.getMoneyString(avg)));
             totalNum += good.amount;
             totalValue += good.amount * avg;
             avgValue += avg;

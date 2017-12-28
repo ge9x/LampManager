@@ -76,7 +76,7 @@ public class InventorySyncController {
         overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
         loss = inventoryBLService.findBillByType(BillType.LOSS);
 
-        billPane = new BillPane("报溢单","报损单","赠送单");
+        billPane = new BillPane("报溢单","报损单");
         initTabs();
         vBox.getChildren().add(billPane.getTabPane());
         billPane.getTabPane().getSelectionModel().selectLast();
