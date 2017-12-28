@@ -123,5 +123,10 @@ public class CustomerBLService_Stub implements CustomerBLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public ArrayList<CustomerVO> findCustomer(String input) {
+		return customerData;
+	}
 	
 }

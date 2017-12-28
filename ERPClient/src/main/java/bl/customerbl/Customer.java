@@ -128,6 +128,16 @@ public class Customer {
 		}
 		return cusvoList;
 	}
+	
+	public ArrayList<CustomerVO> findCustomer(String input) throws RemoteException {
+		ArrayList<CustomerPO> cuspoList=customerDataService.findCustomer(input);
+		ArrayList<CustomerVO> cusvoList=new ArrayList<>();
+		for(CustomerPO po:cuspoList){
+			cusvoList.add(poTovo(po));
+		}
+		return cusvoList;
+	}
+
 	/**
 	 * 管理客户中的更新客户
 	 * 

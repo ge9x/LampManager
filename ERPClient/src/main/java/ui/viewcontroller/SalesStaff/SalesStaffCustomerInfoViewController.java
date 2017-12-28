@@ -110,14 +110,17 @@ public class SalesStaffCustomerInfoViewController {
     	cells.clear();
     	loaders.clear();
     	ArrayList<CustomerVO> searchResult = new ArrayList<CustomerVO>();
-    	String filters = Filters.getSelectionModel().getSelectedItem();
+    	int index = Filters.getSelectionModel().getSelectedIndex();
     	String keyword = Search.getText();
     	
-    	if(filters.equals("编号")){
+    	if(index==0){
     		searchResult = customerBLService.findCustomerByCustomerID(keyword);
     	}
-    	else if(filters.equals("关键字")){
+    	else if(index==1){
     		searchResult = customerBLService.findCustomerByKeywords(keyword);
+    	}
+    	else if(index==-1){
+    		searchResult = customerBLService.findCustomer(keyword);
     	}
     	
     	customerList.getChildren().clear();

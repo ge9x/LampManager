@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bl.goodsbl.Goods;
+import bl.logbl.LogController;
 import blservice.goodsblservice.GoodsInfo;
+import blservice.logblservice.LogInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
@@ -16,6 +18,8 @@ import rmi.InventoryRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.Criterion;
+import util.OperationObjectType;
+import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
 import vo.GoodsVO;
@@ -30,10 +34,12 @@ import vo.InventoryBillVO;
 public class InventoryBill {
 	private InventoryDataService inventoryDataService;
 	private GoodsInfo goodsInfo;
+	private LogInfo logInfo;
 
 	public InventoryBill(GoodsInfo goodsInfo) {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		this.goodsInfo = goodsInfo;
+		logInfo = new LogController();
 	}
 
 	/**
@@ -48,7 +54,11 @@ public class InventoryBill {
 
 	public ResultMessage add(InventoryBillVO vo) throws RemoteException {
 		InventoryBillPO toAdd = this.voToPO(vo);
-		return inventoryDataService.addBill(toAdd);
+		ResultMessage ret = inventoryDataService.addBill(toAdd);
+		if (ret == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.ADD, OperationObjectType.BILL, toAdd.toString());
+		}
+		return ret;
 	}
 
 	public ResultMessage delete(String ID) throws RemoteException {
@@ -57,7 +67,11 @@ public class InventoryBill {
 			return ResultMessage.NOT_EXIST;
 		}
 		else if (toDelete.getState() == BillState.DRAFT) { // 只能删除草稿单据
-			return inventoryDataService.deleteBill(toDelete);
+			ResultMessage ret = inventoryDataService.deleteBill(toDelete);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.DELETE, OperationObjectType.BILL, toDelete.buildID());
+			}
+			return ret;
 		}
 		else {
 			return ResultMessage.FAILED;
@@ -86,7 +100,11 @@ public class InventoryBill {
 			toUpdate.setState(vo.state);
 			toUpdate.setInventory(inventory);
 			toUpdate.setGoodsMap(poMap);
-			return inventoryDataService.updateBill(toUpdate);
+			ResultMessage ret = inventoryDataService.updateBill(toUpdate);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, toUpdate.toString());
+			}
+			return ret;
 		}
 	}
 
@@ -207,16 +225,16 @@ public class InventoryBill {
 		}
 		return ret;
 	}
-	
+
 	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
 		ResultMessage result = ResultMessage.NULL;
 		Map<GoodsVO, Integer> map = vo.goodsMap;
-		for(GoodsVO goodsVO : map.keySet()){
-			map.put(goodsVO, - map.get(goodsVO));	// 数量取负
+		for (GoodsVO goodsVO : map.keySet()) {
+			map.put(goodsVO, -map.get(goodsVO)); // 数量取负
 		}
 		InventoryBillPO toAdd = this.voToPO(vo);
 		result = inventoryDataService.addBill(toAdd);
-		if(result == ResultMessage.SUCCESS){
+		if (result == ResultMessage.SUCCESS) {
 			result = this.examine(this.poToVO(toAdd));
 		}
 		return result;
@@ -225,13 +243,13 @@ public class InventoryBill {
 	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
 		ResultMessage result = ResultMessage.NULL;
 		result = this.redCover(vo);
-		if(result == ResultMessage.SUCCESS){
+		if (result == ResultMessage.SUCCESS) {
 			Map<GoodsVO, Integer> map = vo.goodsMap;
-			for(GoodsVO goodsVO : map.keySet()){
-				map.put(goodsVO, - map.get(goodsVO));	// 数量取回正
+			for (GoodsVO goodsVO : map.keySet()) {
+				map.put(goodsVO, -map.get(goodsVO)); // 数量取回正
 			}
-			InventoryBillPO toAdd = this.voToPO(vo);
 			vo.state = BillState.DRAFT;
+			InventoryBillPO toAdd = this.voToPO(vo);
 			result = inventoryDataService.addBill(toAdd);
 		}
 		return result;

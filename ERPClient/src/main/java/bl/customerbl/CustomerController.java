@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import blservice.customerblservice.CustomerBLService;
 import blservice.customerblservice.CustomerInfo;
+import dataservice.customerdataservice.CustomerDataService;
 import util.ResultMessage;
 import util.UserLimits;
 import vo.CustomerVO;
@@ -152,6 +153,16 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	@Override
 	public UserLimits getCurrentUserLimit() {
 		return customer.getCurrentUserLimit();
+	}
+
+	@Override
+	public ArrayList<CustomerVO> findCustomer(String input) {
+		try {
+			return customer.findCustomer(input);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 }

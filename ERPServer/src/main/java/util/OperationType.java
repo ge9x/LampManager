@@ -8,7 +8,12 @@ package util;
  *
  */
 public enum OperationType {
-	ADD("增加"), DELETE("删除"), UPDATE("修改"), EXAMINE("审批");
+	ADD("增加"),
+	DELETE("删除"),
+	UPDATE("修改"),
+	EXAMINE("审批"),
+	REDCOVER("红冲"),
+	REDCOVERANDCOPY("红冲并复制");
 
 	String value;
 

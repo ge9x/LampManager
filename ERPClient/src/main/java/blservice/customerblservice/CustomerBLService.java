@@ -57,6 +57,13 @@ public interface CustomerBLService extends Remote{
 	 */
 	public ArrayList<CustomerVO> findCustomerByCustomerID(String customerID);
 	/**
+	 * 不选择查找方式查找客户
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public ArrayList<CustomerVO> findCustomer(String input);
+	/**
 	 * 管理客户中的更新客户
 	 * 
 	 * @param vo

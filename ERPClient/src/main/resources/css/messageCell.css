@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'iconfont';
+    src: url('../fonts/iconfont.ttf');
+}
+.icon-label {
+    -fx-font-family: iconfont;
+    -fx-font-size: 38px;
+    -fx-text-fill: #707070;
+}
+#delete {
+	-fx-font-family: iconfont;
+    -fx-font-size: 20px;
+    -fx-text-fill: #a7a0a0;
+}
+#delete:hover {
+	-fx-text-fill: #1db1a4;
+}

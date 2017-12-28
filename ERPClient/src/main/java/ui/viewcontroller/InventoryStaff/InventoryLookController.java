@@ -56,9 +56,6 @@ public class InventoryLookController {
     double iMoney = 0,oMoney = 0,pMoney = 0,sMoney = 0,ioMoneyTotal = 0,psMoneyTotal = 0;
 
     @FXML
-    TilePane tilePane;
-
-    @FXML
     Label AlertIcon, addIcon, inNum, outNum, inMoney, outMoney, inoutNumTotal, inoutMoneyTotal;
 
     @FXML
@@ -86,7 +83,6 @@ public class InventoryLookController {
     public void initialize() {
         AlertIcon.setText("\ue6be");
         addIcon.setText("\ue61e");
-        tilePane.setPrefColumns(2);
 
         InventoryBox.getItems().addAll(inventoryBLService.showInventory());
         InventoryBox.getSelectionModel().selectFirst();
@@ -137,17 +133,17 @@ public class InventoryLookController {
         inventoryItemTable = new Table<>();
         inventoryItemTable.getTable().setPrefHeight(330);
 
-        salesItemTable.addColumn("时间", "date", 60);
-        salesItemTable.addColumn("商品名称", "name", 60);
-        salesItemTable.addColumn("I/O", "isIn", 60);
-        salesItemTable.addColumn("数量", "amount", 60);
-        salesItemTable.addColumn("金额", "money", 55);
+        salesItemTable.addColumn("时间", "date", 150);
+        salesItemTable.addColumn("商品名称", "name", 200);
+        salesItemTable.addColumn("I/O", "isIn", 100);
+        salesItemTable.addColumn("数量", "amount", 100);
+        salesItemTable.addColumn("金额", "money", 150);
 
-        inventoryItemTable.addColumn("时间", "date", 60);
-        inventoryItemTable.addColumn("商品名称", "name", 60);
-        inventoryItemTable.addColumn("I/O", "isIn", 60);
-        inventoryItemTable.addColumn("数量", "amount", 60);
-        inventoryItemTable.addColumn("金额", "money", 55);
+        inventoryItemTable.addColumn("时间", "date", 150);
+        inventoryItemTable.addColumn("商品名称", "name", 200);
+        inventoryItemTable.addColumn("I/O", "isIn", 100);
+        inventoryItemTable.addColumn("数量", "amount", 100);
+        inventoryItemTable.addColumn("金额", "money", 150);
 
         InventoryItemTablePane.setContent(inventoryItemTable.getTable());
         SalesItemTablePane.setContent(salesItemTable.getTable());
@@ -169,19 +165,19 @@ public class InventoryLookController {
         salesItemTable.clear();
         for (InventoryViewItemVO item : items) {
             if (item.type == InventoryListItemType.IN) {
-                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
+                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
                 iNum += item.amount;
                 iMoney += item.price;
             } else if (item.type == InventoryListItemType.OUT) {
-                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, Money.getMoneyString(item.price)));
                 oNum +=item.amount;
                 oMoney+= item.price;
             } else if (item.type == InventoryListItemType.PURCHASE) {
-                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount, item.price));
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
                 pNum += item.amount;
                 pMoney += item.price;
             } else if (item.type == InventoryListItemType.SALES) {
-                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, item.price));
+                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount,  Money.getMoneyString(item.price)));
                 sNum += item.amount;
                 sMoney += item.price;
             }

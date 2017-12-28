@@ -110,4 +110,9 @@ public class CustomerDataService_Stub implements CustomerDataService{
 		return "00000001";
 	}
 
+	@Override
+	public ArrayList<CustomerPO> findCustomer(String input) throws RemoteException {
+		return customerData;
+	}
+
 }

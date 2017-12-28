@@ -213,4 +213,11 @@ public class GoodsPO implements Serializable {
 	public String buildID() {
 		return String.format("%02d", classification.getID()) + String.format("%06d", turn);
 	}
+
+	@Override
+	public String toString() {
+		return "ID:" + this.buildID() + ", 名称:" + name + ", 型号:" + model + ", 所属商品分类:" + classification.getName() + ", 警戒数量:"
+				+ alarmAmount + ", 进价:" + buyingPrice + ", 零售价:" + retailPrice;
+	}
+
 }
