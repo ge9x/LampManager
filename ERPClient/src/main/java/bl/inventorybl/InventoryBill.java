@@ -151,13 +151,14 @@ public class InventoryBill {
 		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%06d", turn);
 	}
 
-	public ArrayList<InventoryBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
+	public ArrayList<InventoryBillVO> getPassBillsByDate(String startDate, String endDate) throws RemoteException {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
 		do { // TODO Optimize
 			ArrayList<Criterion> criteria = new ArrayList<>();
 			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
+			criteria.add(new Criterion("state", BillState.PASS, QueryMode.FULL));
 			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
 			ArrayList<InventoryBillVO> vos = new ArrayList<>();
 			for (InventoryBillPO po : found) {

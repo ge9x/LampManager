@@ -199,7 +199,7 @@ public class Inventory {
 	}
 
 	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
-		return inventoryBill.getBillsByDate(startDate, endDate);
+		return inventoryBill.getPassBillsByDate(startDate, endDate);
 	}
 
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
