@@ -277,7 +277,7 @@ public class Sales {
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
 			goodsItempoList.add(goodsItemPO);
 		}
-		String str[]=vo.date.split("-");
+		String str[]=vo.ID.split("-");
 		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
 	}
 	

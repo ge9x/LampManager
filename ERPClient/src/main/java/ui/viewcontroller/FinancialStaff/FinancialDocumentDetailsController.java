@@ -146,7 +146,7 @@ public class FinancialDocumentDetailsController {
                 BillVO billVO = controller.getBill();
                 ResultMessage re = formBLService.redCover(billVO);
                 Dialog dialog = DialogFactory.getInformationAlert();
-                dialog.setHeaderText("红冲"+re.toString());
+                dialog.setHeaderText("红冲单据"+ billVO.ID + re.toString());
                 dialog.showAndWait();
             }
         }
@@ -159,7 +159,7 @@ public class FinancialDocumentDetailsController {
                 BillVO billVO = controller.getBill();
                 ResultMessage re = formBLService.redCoverAndCopy(billVO);
                 Dialog dialog = DialogFactory.getInformationAlert();
-                dialog.setHeaderText("红冲并复制"+re.toString());
+                dialog.setHeaderText("红冲并复制单据" + billVO.ID + re.toString());
                 dialog.showAndWait();
             }
         }
@@ -170,5 +170,9 @@ public class FinancialDocumentDetailsController {
         input.filterType = type;
         input.keyword = keyword.getText();
         loadBills(billPane.getSelected());
+    }
+    public void setForGeneralMananger(){
+        redButton.setVisible(false);
+        redCopyButton.setVisible(false);
     }
 }

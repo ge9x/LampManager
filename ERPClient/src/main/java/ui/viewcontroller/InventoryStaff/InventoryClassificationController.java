@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import vo.ClassificationVO;
@@ -261,6 +262,7 @@ public class InventoryClassificationController {
     private Label getMyLabel(String text){
         Label label = new Label(text);
         label.setPrefWidth(70);
+        label.setFont(Font.font(12));
         return label;
     }
     public class GoodsBean{
