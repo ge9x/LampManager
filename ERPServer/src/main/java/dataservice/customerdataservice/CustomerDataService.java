@@ -52,6 +52,14 @@ public interface CustomerDataService extends Remote{
 	 */
 	public ArrayList<CustomerPO> findByKeywords(String keywords) throws RemoteException;
 	/**
+	 * 不选择查找方法进行查找
+	 * 
+	 * @param input
+	 * @return
+	 * @throws RemoteException
+	 */
+	public ArrayList<CustomerPO> findCustomer(String input) throws RemoteException;
+	/**
 	 * 更新客户信息
 	 * 
 	 * @param po
