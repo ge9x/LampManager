@@ -101,6 +101,35 @@ public class CustomerDataServiceImpl implements CustomerDataService{
 		}
 		return res;		
 	}
+
+	@Override
+	public ArrayList<CustomerPO> findCustomer(String input) throws RemoteException {
+		ArrayList<Criterion> criteria=new ArrayList<Criterion>();
+		criteria.add(
+				new Criterion(
+				new Criterion("customerID", input,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("category",input,QueryMode.FUZZY),
+			    new Criterion(
+				new Criterion("level",input,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("customerName",input,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("phone",input,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("address",input,QueryMode.FUZZY),
+				new Criterion(
+				new Criterion("mail",input,QueryMode.FUZZY),
+				new Criterion("salesman",input,QueryMode.FUZZY)																				)
+																)
+														)
+												)	
+				                        )
+								)
+				       )
+                );
+		return customerDataHelper.multiQuery(criteria);
+	}
 	
 	
 }
