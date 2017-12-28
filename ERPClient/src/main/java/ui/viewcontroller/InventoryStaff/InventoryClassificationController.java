@@ -183,12 +183,13 @@ public class InventoryClassificationController {
     }
     public Dialog getAddGoodDialog(String classificationID){
         ArrayList<Label> labels = new ArrayList<>();
-        labels.add(new Label("商品编号"));
-        labels.add(new Label("商品名称"));
-        labels.add(new Label("商品型号"));
-        labels.add(new Label("进价"));
-        labels.add(new Label("零售价"));
-        labels.add(new Label("警戒数量"));
+
+        labels.add(getMyLabel("商品编号"));
+        labels.add(getMyLabel("商品名称"));
+        labels.add(getMyLabel("商品型号"));
+        labels.add(getMyLabel("进价"));
+        labels.add(getMyLabel("零售价"));
+        labels.add(getMyLabel("警戒数量"));
 
         ArrayList<Node> nodes = new ArrayList<>();
         Label ID = new Label(goodsBLService.getNewID(classificationID));
@@ -256,6 +257,11 @@ public class InventoryClassificationController {
             }
         }
         return null;
+    }
+    private Label getMyLabel(String text){
+        Label label = new Label(text);
+        label.setPrefWidth(70);
+        return label;
     }
     public class GoodsBean{
         StringProperty ID;
