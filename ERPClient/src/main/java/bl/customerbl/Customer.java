@@ -149,7 +149,7 @@ public class Customer {
 	public ResultMessage updateCustomer(CustomerVO vo) throws RemoteException{
 			CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(vo.customerID));
 			po.setCategory(vo.category.getValue());
-//			po.setLevel(vo.level.getValue());
+			po.setLevel(vo.level.getValue());
 			po.setCustomerName(vo.customerName);
 			po.setPhone(vo.phone);
 			po.setAddress(vo.address);
@@ -157,18 +157,7 @@ public class Customer {
 			po.setMail(vo.mail);
 			po.setSalesman(vo.salesman);
 			po.setReceivableLimit(vo.receivableLimit);
-			double points=po.getPoints();
-			if(points<5){
-				po.setLevel(Level.LEVEL_ONE.getValue());
-			}else if(points>=5&&points<10){
-				po.setLevel(Level.LEVEL_TWO.getValue());
-			}else if(points>=10&&points<20){
-				po.setLevel(Level.LEVEL_THREE.getValue());
-			}else if(points>=20&&points<35){
-				po.setLevel(Level.LEVEL_FOUR.getValue());
-			}else{
-				po.setLevel(Level.LEVEL_FIVE.getValue());
-			}
+			po.setPoints(vo.points);
 		    return customerDataService.update(po);
 	}
 	
@@ -223,6 +212,20 @@ public class Customer {
 		try {
 			CustomerPO po=customerDataService.getCustomerData(customerID);
 			po.setReceive(po.getReceive()+amount);
+			double oldPoints=po.getPoints();
+			double newPoints=oldPoints+amount/10000*1;
+			po.setPoints(newPoints);
+			if(newPoints<5){
+				po.setLevel(Level.LEVEL_ONE.getValue());
+			}else if(newPoints>=5&&newPoints<10){
+				po.setLevel(Level.LEVEL_TWO.getValue());
+			}else if(newPoints>=10&&newPoints<20){
+				po.setLevel(Level.LEVEL_THREE.getValue());
+			}else if(newPoints>=20&&newPoints<35){
+				po.setLevel(Level.LEVEL_FOUR.getValue());
+			}else{
+				po.setLevel(Level.LEVEL_FIVE.getValue());
+			}
 			return customerDataService.update(po);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -283,13 +286,6 @@ public class Customer {
 			}
 		}
 		return cusvo;
-	}
-	
-	public ResultMessage raiseCustomerPoints(double sum,int iD) throws RemoteException {
-		CustomerPO po=customerDataService.getCustomerData(iD);
-		double oldPoints=po.getPoints();
-		po.setPoints(oldPoints+sum/1000*1);
-		return customerDataService.update(po);
 	}
 	
 	private String alterID(String ID){
