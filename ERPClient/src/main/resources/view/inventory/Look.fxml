@@ -8,16 +8,15 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/look.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
     <children>
-        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+        <ScrollPane layoutX="8.0" prefHeight="2000.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -144,29 +143,22 @@
                         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                      </padding>
                   </VBox>
-                  <TilePane fx:id="tilePane" hgap="60.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="764.0">
-                     <children>
-                        <ScrollPane fx:id="InventoryItemTablePane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
-                            <effect>
-                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
-                            </effect>
-                           <TilePane.margin>
-                              <Insets />
-                           </TilePane.margin>
-                           <padding>
-                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                           </padding>
-                        </ScrollPane>
-                        <ScrollPane fx:id="SalesItemTablePane" prefHeight="350.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
-                            <effect>
-                                <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
-                            </effect>
-                           <padding>
-                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                           </padding>
-                        </ScrollPane>
-                     </children>
-                  </TilePane>
+                  <ScrollPane fx:id="InventoryItemTablePane" prefHeight="167.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                  </ScrollPane>
+                  <ScrollPane fx:id="SalesItemTablePane" prefHeight="216.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                      <effect>
+                          <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
+                      </effect>
+                     <padding>
+                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                     </padding>
+                  </ScrollPane>
                     </children>
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="30.0" top="20.0" />

@@ -56,9 +56,6 @@ public class InventoryLookController {
     double iMoney = 0,oMoney = 0,pMoney = 0,sMoney = 0,ioMoneyTotal = 0,psMoneyTotal = 0;
 
     @FXML
-    TilePane tilePane;
-
-    @FXML
     Label AlertIcon, addIcon, inNum, outNum, inMoney, outMoney, inoutNumTotal, inoutMoneyTotal;
 
     @FXML
@@ -86,7 +83,6 @@ public class InventoryLookController {
     public void initialize() {
         AlertIcon.setText("\ue6be");
         addIcon.setText("\ue61e");
-        tilePane.setPrefColumns(2);
 
         InventoryBox.getItems().addAll(inventoryBLService.showInventory());
         InventoryBox.getSelectionModel().selectFirst();
