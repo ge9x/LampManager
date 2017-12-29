@@ -25,7 +25,7 @@ public class Classification {
 	private ClassificationDataService classificationDataService;
 	private LogInfo logInfo;
 	
-	public Classification(){
+	protected Classification(){
 		classificationDataService = ClassificationRemoteHelper.getInstance().getClassificationDataService();
 		logInfo = LogBLFactory.getInfo();
 	}

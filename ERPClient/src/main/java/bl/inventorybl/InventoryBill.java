@@ -37,7 +37,7 @@ public class InventoryBill {
 	private GoodsInfo goodsInfo;
 	private LogInfo logInfo;
 
-	public InventoryBill() {
+	protected InventoryBill() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		goodsInfo = GoodsBLFactory.getInfo();
 		logInfo = LogBLFactory.getInfo();

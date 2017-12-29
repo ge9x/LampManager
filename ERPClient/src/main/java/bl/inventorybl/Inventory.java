@@ -46,7 +46,7 @@ public class Inventory {
 	private InitInfo initInfo;
 	private LogInfo logInfo;
 
-	public Inventory() {
+	protected Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		inventoryBill = new InventoryBill();
 		inventoryList = new InventoryList();

@@ -29,7 +29,7 @@ public class Goods {
 	private ClassificationInfo classificationInfo;
 	private LogInfo logInfo;
 
-	public Goods() {
+	protected Goods() {
 		goodsDataService = GoodsRemoteHelper.getInstance().getGoodsDataService();
 		classificationInfo = ClassificationBLFactory.getInfo();
 		logInfo = LogBLFactory.getInfo();
