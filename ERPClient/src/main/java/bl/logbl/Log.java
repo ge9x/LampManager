@@ -23,7 +23,7 @@ public class Log {
 	private LogDataService logDataService;
 	private UserInfo userInfo;
 
-	public Log() {
+	protected Log() {
 		logDataService = LogRemoteHelper.getInstance().getLogDataService();
 	}
 

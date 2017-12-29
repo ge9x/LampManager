@@ -19,8 +19,8 @@ import vo.InventoryBillVO;
 @SuppressWarnings("deprecation")
 public class MockInventoryBill extends InventoryBill {
 
-	public MockInventoryBill(GoodsInfo goodsInfo) {
-		super(goodsInfo);
+	public MockInventoryBill() {
+		super();
 	}
 
 	@Override
