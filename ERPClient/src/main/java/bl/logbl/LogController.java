@@ -19,7 +19,7 @@ import util.ResultMessage;
 public class LogController implements LogBLService, LogInfo{
 	private Log log;
 
-	public LogController() {
+	protected LogController() {
 		log = new Log();
 	}
 
