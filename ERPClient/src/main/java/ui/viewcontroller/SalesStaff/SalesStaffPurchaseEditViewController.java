@@ -219,7 +219,12 @@ public class SalesStaffPurchaseEditViewController {
 	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        salesBLService.submitPurchase(purchaseVO);
+	    		if(isNew){
+	    			salesBLService.submitPurchase(purchaseVO);
+	    		}
+	    		else{
+	    			salesBLService.updatePurchase(purchaseVO);
+	    		}
 		        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
 	    	}
 	    	else{
