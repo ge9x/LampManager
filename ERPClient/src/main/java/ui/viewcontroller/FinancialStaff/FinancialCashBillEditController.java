@@ -22,8 +22,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.ERPClient.Main;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -44,11 +46,13 @@ import javax.sound.midi.VoiceStatus;
 public class FinancialCashBillEditController {
     FinancialCashBillController financialCashBillController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
+    MainUIController mainUIController;
     FinanceBLService financeBLService = new FinanceController();
 
     ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
     Boolean isNew;
+    public boolean onlyShow = false;
     boolean isExamine = false;
 
     TableView<CashBillItemBean> itemTable;
@@ -216,7 +220,6 @@ public class FinancialCashBillEditController {
 	                    financeBLService.updateDraft(cashBillVO);
 	                }
 	            }
-	
 	            financialCashBillController.showCashBillList();
 	        }
     	}
@@ -257,13 +260,17 @@ public class FinancialCashBillEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	if(!isExamine){
-            		financialCashBillController.showCashBillList();
-            	}
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
+                if(!isExamine){
+                    financialCashBillController.showCashBillList();
+                }
             	else{
-            		generalManagerExaminationCellController.clickReturnButton();
-            		isExamine = false;
-            	}
+                    generalManagerExaminationCellController.clickReturnButton();
+                    isExamine = false;
+                }
             }
         });
 
@@ -324,4 +331,8 @@ public class FinancialCashBillEditController {
     public void isExamine() {
 		isExamine = true;
 	}
+
+	public void setMainUIController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
+    }
 }

@@ -30,6 +30,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import ui.viewcontroller.common.StateBarController;
 import util.BillState;
 import util.BillType;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffPurchaseEditViewController {
-	
+	MainUIController mainUIController;
 	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
@@ -54,6 +55,7 @@ public class SalesStaffPurchaseEditViewController {
 	
 	boolean isNew;
 	boolean isExamine = false;
+	public boolean onlyShow = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -219,7 +221,12 @@ public class SalesStaffPurchaseEditViewController {
 	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        salesBLService.submitPurchase(purchaseVO);
+	    		if(isNew){
+	    			salesBLService.submitPurchase(purchaseVO);
+	    		}
+	    		else{
+	    			salesBLService.updatePurchase(purchaseVO);
+	    		}
 		        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
 	    	}
 	    	else{
@@ -314,6 +321,10 @@ public class SalesStaffPurchaseEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffPurchaseOrderViewController.showPurchaseOrderList();
             	}
@@ -368,5 +379,9 @@ public class SalesStaffPurchaseEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

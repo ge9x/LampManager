@@ -219,7 +219,12 @@ public class SalesStaffReturnEditViewController {
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, 
 	        		inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        salesBLService.submitPurchase(purchaseVO);
+	    		if(isNew){
+	    			salesBLService.submitPurchase(purchaseVO);
+	    		}
+	    		else{
+	    			salesBLService.updatePurchase(purchaseVO);
+	    		}
 		        salesStaffReturnOrderViewController.showReturnOrderList();
 	    	}
 	    	else{

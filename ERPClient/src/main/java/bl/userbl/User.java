@@ -15,7 +15,7 @@ public class User {
 
 	private UserDataService userDataService;
 	private static String currentUserID;
-	ArrayList<UserPO> userPOs;
+	ArrayList<UserPO> userPOs = new ArrayList<>();
 	
 	public User(){
 		userDataService = UserRemoteHelper.getInstance().getUserDataService();

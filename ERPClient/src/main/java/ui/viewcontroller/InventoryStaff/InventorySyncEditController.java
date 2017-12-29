@@ -20,6 +20,7 @@ import javafx.util.converter.IntegerStringConverter;
 import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import vo.GoodsVO;
@@ -35,7 +36,7 @@ import javax.sound.midi.VoiceStatus;
  * Created by Kry·L on 2017/11/30.
  */
 public class InventorySyncEditController {
-
+    MainUIController mainUIController;
     InventorySyncController inventorySyncController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
     InventoryBLService inventoryBLService = new InventoryController();
@@ -43,6 +44,7 @@ public class InventorySyncEditController {
     UserInfo userInfo = new UserController();
     Boolean isNew;
     boolean isExamine = false;
+    public boolean onlyShow;
     BillType type;
 
     ObservableList<GoodsBean> data = FXCollections.observableArrayList();
@@ -241,6 +243,10 @@ public class InventorySyncEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		inventorySyncController.showInventoryBills();
             	}
@@ -298,5 +304,9 @@ public class InventorySyncEditController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

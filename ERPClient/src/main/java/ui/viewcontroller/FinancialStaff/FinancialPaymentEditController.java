@@ -32,6 +32,7 @@ import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -46,7 +47,7 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/23.
  */
 public class FinancialPaymentEditController {
-
+    MainUIController mainUIController;
     FinancialPaymentController financialPaymentController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
     FinanceBLService financeBLService = new FinanceController();
@@ -56,6 +57,7 @@ public class FinancialPaymentEditController {
     ArrayList<CustomerVO> customers;
     Boolean isNew;
     boolean isExamine = false;
+    public boolean onlyShow = false;
 
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
@@ -295,6 +297,10 @@ public class FinancialPaymentEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		financialPaymentController.showPaymentList();
             	}
@@ -361,5 +367,8 @@ public class FinancialPaymentEditController {
     public void isExamine(){
     	isExamine = true;
     }
-    
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
 }
