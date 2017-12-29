@@ -237,7 +237,12 @@ public class SalesStaffSalesReturnEditViewController {
 	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
 	    	if(!isExamine){
-		        salesBLService.submitSales(salesVO);
+	    		if(isNew){
+	    			salesBLService.submitSales(salesVO);
+	    		}
+	    		else{
+	    			salesBLService.updateSales(salesVO);
+	    		}
 		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
 	    	}
 	    	else{
