@@ -316,6 +316,8 @@ public class SalesStaffPurchaseEditViewController {
         Username.setText(purchaseBill.user);
         remark.setText(purchaseBill.remarks);
         
+        itemTable.setEditable(false);
+        
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -361,6 +363,8 @@ public class SalesStaffPurchaseEditViewController {
         remark.setEditable(true);
         inventory.setDisable(false);
         supplier.setDisable(false);
+        
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
