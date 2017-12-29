@@ -41,6 +41,7 @@ public class User {
 	}
 
 	public ResultMessage modifyUser(UserVO vo) throws RemoteException{
+		userPOs = userDataService.show();
 		for(UserPO userPO:userPOs){
 			if(userPO.getUserID().equals(vo.userID)){
 				userPO.setPassword(vo.password);
