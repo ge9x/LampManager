@@ -99,6 +99,8 @@ public class FinancialViewController {
             Pane page = pageLoader.load();
             financialCashBillController = pageLoader.getController();
             financialCashBillController.setFinancialViewController(this);
+            financialCashBillController.setMainUIController(mainUIController);
+            financialCashBillController.initBillPane();
 
             mainUIController.setCenter(page);
         } catch (IOException e) {
@@ -146,6 +148,8 @@ public class FinancialViewController {
             Pane page = pageLoader.load();
             financialDocumentDetailsController = pageLoader.getController();
             financialDocumentDetailsController.setFinancialViewController(this);
+            financialDocumentDetailsController.setMainUIController(mainUIController);
+            financialDocumentDetailsController.initView();
 
             mainUIController.setCenter(page);
         } catch (IOException e) {
@@ -186,4 +190,7 @@ public class FinancialViewController {
     }
 
 
+    public void back() {
+        mainUIController.back();
+    }
 }

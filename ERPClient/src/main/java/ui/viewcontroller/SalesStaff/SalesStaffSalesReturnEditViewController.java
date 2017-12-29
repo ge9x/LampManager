@@ -30,6 +30,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffSalesReturnEditViewController {
+    MainUIController mainUIController;
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
@@ -53,6 +55,7 @@ public class SalesStaffSalesReturnEditViewController {
 	
 	boolean isExamine = false;
 	boolean isNew;
+	public boolean onlyShow = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -339,6 +342,10 @@ public class SalesStaffSalesReturnEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
             	}
@@ -393,5 +400,9 @@ public class SalesStaffSalesReturnEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.viewcontroller.common.BillController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.ResultMessage;
 import vo.AccountBillVO;
@@ -27,9 +28,9 @@ import java.util.ArrayList;
 public class FinancialCashBillController {
     FinancialViewController financialViewController;
     FinancialCashBillEditController financialCashBillEditController;
+    MainUIController mainUIController;
 
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
-    FinanceBLService financeBLService2 = new FinanceController();
+    FinanceBLService financeBLService = new FinanceController();
 
     ArrayList<CashBillVO> draft;
     ArrayList<CashBillVO> submitted;
@@ -50,16 +51,12 @@ public class FinancialCashBillController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = financeBLService2.getCashBillByState(BillState.DRAFT);
-        submitted = financeBLService2.getCashBillByState(BillState.SUBMITTED);
-        pass = financeBLService2.getCashBillByState(BillState.PASS);
-        failed = financeBLService2.getCashBillByState(BillState.FAILED);
+        draft = financeBLService.getCashBillByState(BillState.DRAFT);
+        submitted = financeBLService.getCashBillByState(BillState.SUBMITTED);
+        pass = financeBLService.getCashBillByState(BillState.PASS);
+        failed = financeBLService.getCashBillByState(BillState.FAILED);
 
-        billPane = new BillPane("草稿单据", "待审批单据", "审批通过单据", "审批不通过单据");
-        initTabs();
-        vBox.getChildren().add(billPane.getTabPane());
-        billPane.getTabPane().getSelectionModel().selectLast();
-        billPane.getTabPane().getSelectionModel().selectFirst();
+
     }
 
     public void initTabs(){
@@ -120,6 +117,7 @@ public class FinancialCashBillController {
     }
     public void showCashBillEditView(){
         try{
+            mainUIController.saveView();
             FXMLLoader pageLoader = new FXMLLoader();
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBillEdit.fxml"));
             Pane page = pageLoader.load();
@@ -135,9 +133,19 @@ public class FinancialCashBillController {
         this.financialViewController = financialViewController;
     }
     public void deleteCashBill(CashBillVO cashBillVO){
-        ResultMessage re = financeBLService2.deleteDraftCashBill(cashBillVO.ID);
+        ResultMessage re = financeBLService.deleteDraftCashBill(cashBillVO.ID);
         if (re == ResultMessage.SUCCESS){
             showCashBillList();
         }
+    }
+    public void initBillPane(){
+        billPane = new BillPane("草稿单据", "待审批单据", "审批通过单据", "审批不通过单据");
+        initTabs();
+        vBox.getChildren().add(billPane.getTabPane());
+        billPane.getTabPane().getSelectionModel().selectLast();
+        billPane.getTabPane().getSelectionModel().selectFirst();
+    }
+    public void setMainUIController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
     }
 }

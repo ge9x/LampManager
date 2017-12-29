@@ -8,6 +8,8 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.layout.VBox;
 import ui.component.BillPane;
 import ui.component.DialogFactory;
 import ui.viewcontroller.common.BillController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.FilterType;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
  */
 public class FinancialDocumentDetailsController {
     FinancialViewController financialViewController;
+    MainUIController mainUIController;
     FormBLService formBLService = new FormController();
 
     ArrayList<BillVO> bills;
@@ -71,6 +75,20 @@ public class FinancialDocumentDetailsController {
         String initDate = formBLService.getStartDate();
         StartDate.setValue(LocalDate.parse(initDate));
         EndDate.setValue(LocalDate.now());
+        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.startDate = StartDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
+        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.endDate = EndDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
 
 
 
@@ -79,10 +97,7 @@ public class FinancialDocumentDetailsController {
         billPane = new BillPane("报溢单","报损单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
-        initTabs();
-        vBox.getChildren().add(billPane.getTabPane());
-        billPane.getTabPane().getSelectionModel().selectLast();
-        billPane.getTabPane().getSelectionModel().selectFirst();
+
     }
     public void initTabs(){
         ArrayList<Tab> tabs = billPane.getAllTabs();
@@ -128,6 +143,7 @@ public class FinancialDocumentDetailsController {
                 billNodes.add(node);
                 BillController billController = loader.getController();
                 billController.setFinancialDocumentDetailsController(this);
+                billController.setMainUIController(mainUIController);
                 billController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -174,5 +190,16 @@ public class FinancialDocumentDetailsController {
     public void setForGeneralMananger(){
         redButton.setVisible(false);
         redCopyButton.setVisible(false);
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+
+        this.mainUIController = mainUIController;
+    }
+    public void initView(){
+        initTabs();
+        vBox.getChildren().add(billPane.getTabPane());
+        billPane.getTabPane().getSelectionModel().selectLast();
+        billPane.getTabPane().getSelectionModel().selectFirst();
     }
 }

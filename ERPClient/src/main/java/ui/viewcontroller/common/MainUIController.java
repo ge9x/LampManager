@@ -17,6 +17,7 @@ import ui.viewcontroller.InventoryStaff.InventoryViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffViewController;
 
 import java.io.IOException;
+import java.util.Stack;
 
 /**
  * Created by Kry·L on 2017/11/14.
@@ -28,7 +29,10 @@ public class MainUIController {
  
     Stage primaryStage;
 
+    Stack<Pane> paneStack;
+
     public MainUIController(){
+        paneStack = new Stack<>();
     }
 
     public void showFinancialStaffView(){
@@ -127,6 +131,16 @@ public class MainUIController {
 
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
+    }
+
+    public void back() {
+        if (!paneStack.isEmpty()){
+            Pane pane = paneStack.pop();
+            setCenter(pane);
+        }
+    }
+    public void saveView(){
+        paneStack.push((Pane)borderPane.getCenter());
     }
 
 }
