@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bl.goodsbl.Goods;
-import bl.logbl.LogController;
+import bl.goodsbl.GoodsBLFactory;
+import bl.logbl.LogBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.logblservice.LogInfo;
 import dataservice.inventorydataservice.InventoryDataService;
@@ -36,10 +37,10 @@ public class InventoryBill {
 	private GoodsInfo goodsInfo;
 	private LogInfo logInfo;
 
-	public InventoryBill(GoodsInfo goodsInfo) {
+	public InventoryBill() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		this.goodsInfo = goodsInfo;
-		logInfo = new LogController();
+		goodsInfo = GoodsBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	/**

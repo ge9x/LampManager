@@ -19,7 +19,7 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	
 	private Goods goods;
 	
-	public GoodsController(){
+	protected GoodsController(){
 		goods = new Goods();
 	}
 

@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import bl.goodsbl.Goods;
-import bl.logbl.LogController;
+import bl.logbl.LogBLFactory;
 import blservice.logblservice.LogInfo;
 import dataservice.classificationdataservice.ClassificationDataService;
 import po.ClassificationPO;
@@ -27,7 +27,7 @@ public class Classification {
 	
 	public Classification(){
 		classificationDataService = ClassificationRemoteHelper.getInstance().getClassificationDataService();
-		logInfo = new LogController();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	public ArrayList<ClassificationVO> show() throws RemoteException {
