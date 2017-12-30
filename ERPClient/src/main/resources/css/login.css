@@ -11,3 +11,7 @@
     -fx-font-size: 25px;
     -fx-text-fill: #808080;
 }
+
+#LoginButton:hover {
+    -fx-effect: dropshadow(three-pass-box,rgba(29,177,164,0.8),7, 0.0 , 0 , 0.5 );
+}

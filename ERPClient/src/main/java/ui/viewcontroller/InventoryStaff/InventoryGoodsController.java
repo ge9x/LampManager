@@ -3,16 +3,13 @@ package ui.viewcontroller.InventoryStaff;
 import bean.GoodsBean;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
-import blstubdriver.GoodsBLService_Stub;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import vo.GoodsVO;
@@ -120,7 +117,11 @@ public class InventoryGoodsController {
                     bean.setAlarmAmount(goodsVO.alarmAmount);
                     bean.setPurchasePrice(goodsVO.buyingPrice);
                     bean.setSalesPrice(goodsVO.retailPrice);
+                } else{
+                    dialog = DialogFactory.getInformationAlert();
+                    dialog.setHeaderText("修改商品信息失败");
                 }
+
             }
         }
     }
@@ -149,16 +150,23 @@ public class InventoryGoodsController {
         nodes.add(alarmTF);
 
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+
         dialog.setHeaderText("请输入新的商品信息");
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.FINISH) {
                 ArrayList<String> result = new ArrayList<>();
-                result.add(nameTF.getText());
-                result.add(modelTF.getText());
-                result.add(alarmTF.getText());
-                result.add(purchaseTF.getText());
-                result.add(salesTF.getText());
-                return result;
+                if (nameTF.getText().isEmpty() || modelTF.getText().isEmpty() || alarmTF.getText().isEmpty()||purchaseTF.getText().isEmpty()||salesTF.getText().isEmpty()){
+                    Dialog dialog1 = DialogFactory.getInformationAlert();
+                    dialog1.setHeaderText("商品信息填写不完整");
+                    dialog1.showAndWait();
+                }else{
+                    result.add(nameTF.getText());
+                    result.add(modelTF.getText());
+                    result.add(alarmTF.getText());
+                    result.add(purchaseTF.getText());
+                    result.add(salesTF.getText());
+                    return result;
+                }
             }
             return null;
         });

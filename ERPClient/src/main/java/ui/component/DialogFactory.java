@@ -1,5 +1,7 @@
 package ui.component;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -7,8 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Kry·L on 2017/11/20.
@@ -17,6 +17,16 @@ public class DialogFactory {
 
     public static Dialog getTextInputDialog() {
         TextInputDialog dialog = new TextInputDialog();
+        Button confirmButton = (Button)dialog.getDialogPane().lookupButton(ButtonType.OK);
+        confirmButton.setDisable(true);
+        TextField input =  dialog.getEditor();
+
+        input.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                confirmButton.setDisable(dialog.getEditor().getText().trim().isEmpty());
+            }
+        });
         initStyle(dialog);
         return dialog;
     }
@@ -102,6 +112,7 @@ public class DialogFactory {
             cancelButton.setId("CancelButton");
         dialog.getDialogPane().getStylesheets().add("/css/dialog.css");
     }
+
 
 
 }

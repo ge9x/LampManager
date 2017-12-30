@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder.Case;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,8 +17,12 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import util.UserPosition;
@@ -30,6 +35,10 @@ public class LoginViewController {
     MainUIController mainUIController;
     UserBLService userBLService = new UserController();
     File file;
+
+    @FXML
+    JFXButton LoginButton;
+
     @FXML
     Label userIcon;
 
@@ -90,6 +99,7 @@ public class LoginViewController {
                 }
             }
         });
+
     }
 
     public void login(String userID,String password){
@@ -140,8 +150,6 @@ public class LoginViewController {
         }else{
             if (rememberBox.isSelected()){
                 remember(username.getText(),password.getText());
-            }else{
-//                unremember();
             }
             login(username.getText(),password.getText());
         }
@@ -158,5 +166,32 @@ public class LoginViewController {
     
     public void close(){
     	mainUIController.close();
+    }
+
+    public void clickLogButton(MouseEvent mouseEvent) {
+        if (username.getText().isEmpty() || password.getText().isEmpty()){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("用户名或密码不能为空");
+            dialog.showAndWait();
+        }else{
+            if (rememberBox.isSelected()){
+                remember(username.getText(),password.getText());
+            }
+            logLogin(username.getText(),password.getText());
+        }
+    }
+
+    private void logLogin(String username, String password) {
+        ResultMessage re = userBLService.login(username,password);
+        if (re == ResultMessage.SUCCESS) {
+            UserVO user = userBLService.findUserByID(username);
+            if (user.position == UserPosition.GENERAL_MANAGER || user.position == UserPosition.FINANCIAL_STAFF){
+                mainUIController.showLog();
+            }else{
+                Dialog dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("权限不足，无法查看日志");
+                dialog.showAndWait();
+            }
+        }
     }
 }
