@@ -102,7 +102,7 @@ public class MockInventory extends Inventory {
 			return ResultMessage.EXIST;
 		}
 		else{
-			System.out.println("Add inventory succeed");
+			System.out.println("Add account succeed");
 			return ResultMessage.SUCCESS;
 		}
 	}
@@ -113,7 +113,7 @@ public class MockInventory extends Inventory {
 			return ResultMessage.EXIST;
 		}
 		else{
-			System.out.println("Add inventory bill succeed");
+			System.out.println("Add account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 	}
@@ -121,7 +121,7 @@ public class MockInventory extends Inventory {
 	@Override
 	public ResultMessage deleteInventory(String inventory) {
 		if(inventory.equals("栖霞区仓库")){
-			System.out.println("Delete inventory succeed");
+			System.out.println("Delete account succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -132,7 +132,7 @@ public class MockInventory extends Inventory {
 	@Override
 	public ResultMessage deleteBill(String ID) {
 		if(ID.equals("BYD-20171107-00001")){
-			System.out.println("Add inventory bill succeed");
+			System.out.println("Add account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -143,7 +143,7 @@ public class MockInventory extends Inventory {
 	@Override
 	public ResultMessage updateInventory(String before, String after) {
 		if(before.equals("栖霞区仓库")){
-			System.out.println("Update inventory succeed");
+			System.out.println("Update account succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -154,7 +154,7 @@ public class MockInventory extends Inventory {
 	@Override
 	public ResultMessage updateBill(InventoryBillVO vo) {
 		if(vo.ID.equals("BYD-20171107-00001")){
-			System.out.println("Update inventory bill succeed");
+			System.out.println("Update account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -179,7 +179,7 @@ public class MockInventory extends Inventory {
 	@Override
 	public ResultMessage submitBill(InventoryBillVO vo) {
 		if(vo.ID.equals("BYD-20171107-00001")){
-			System.out.println("Submit inventory bill succeed");
+			System.out.println("Submit account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{

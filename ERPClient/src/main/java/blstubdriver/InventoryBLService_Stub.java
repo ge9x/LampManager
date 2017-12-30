@@ -61,12 +61,12 @@ public class InventoryBLService_Stub implements InventoryBLService {
 	public ResultMessage addInventory(String inventory) {
 		for (String s : inventoryName) {
 			if (s.equals(inventory)) {
-				System.out.println("add inventory failed");
+				System.out.println("add account failed");
 				return ResultMessage.FAILED;
 			}
 		}
 		inventoryName.add(inventory);
-		System.out.println("add inventory success");
+		System.out.println("add account success");
 		return ResultMessage.SUCCESS;
 	}
 
@@ -74,12 +74,12 @@ public class InventoryBLService_Stub implements InventoryBLService {
 		for (String s : inventoryName) {
 			if (s.equals(inventory)) {
 				inventoryName.remove(s);
-				System.out.println("delete inventory success");
+				System.out.println("delete account success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		inventoryName.add(inventory);
-		System.out.println("delete inventory failed");
+		System.out.println("delete account failed");
 		return ResultMessage.FAILED;
 	}
 
@@ -88,11 +88,11 @@ public class InventoryBLService_Stub implements InventoryBLService {
 			if (s.equals(before)) {
 				inventoryName.remove(s);
 				inventoryName.add(after);
-				System.out.println("update inventory success");
+				System.out.println("update account success");
 				return ResultMessage.SUCCESS;
 			}
 		}
-		System.out.println("update inventory failed");
+		System.out.println("update account failed");
 		return ResultMessage.FAILED;
 	}
 

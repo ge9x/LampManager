@@ -26,7 +26,7 @@ public class MockInventoryBill extends InventoryBill {
 	@Override
 	public ResultMessage submit(InventoryBillVO vo) {
 		if(vo.ID.equals("BYD-20171107-00001")){
-			System.out.println("submit inventory bill succeed");
+			System.out.println("submit account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -37,7 +37,7 @@ public class MockInventoryBill extends InventoryBill {
 	@Override
 	public ResultMessage update(InventoryBillVO vo) {
 		if(vo.ID.equals("BYD-20171107-00001")){
-			System.out.println("Update inventory bill succeed");
+			System.out.println("Update account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -47,7 +47,7 @@ public class MockInventoryBill extends InventoryBill {
 
 	public ResultMessage add(InventoryBillVO vo) throws RemoteException {
 		if(vo.ID.equals("BYD-20171107-00001")){
-			System.out.println("add inventory bill succeed");
+			System.out.println("add account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
@@ -57,7 +57,7 @@ public class MockInventoryBill extends InventoryBill {
 	
 	public ResultMessage delete(String ID) {
 		if(ID.equals("BYD-20171107-00001")){
-			System.out.println("delete inventory bill succeed");
+			System.out.println("delete account bill succeed");
 			return ResultMessage.SUCCESS;
 		}
 		else{
