@@ -1,6 +1,8 @@
 package ui.viewcontroller.common;
 
+import bl.initializationbl.InitializationBLFactory;
 import bl.initializationbl.InitializationController;
+import bl.logbl.LogBLFactory;
 import bl.logbl.LogController;
 import blservice.initializationblservice.InitInfo;
 import blservice.logblservice.LogBLService;
@@ -45,8 +47,8 @@ public class LogViewController {
     public void initialize(){
         ExitIcon.setText("\ue72c");
 
-        initializationController = new InitializationController();
-        logBLService = new LogController();
+        initializationController = InitializationBLFactory.getInfo();
+        logBLService = LogBLFactory.getBLService();
 
         StartDate.setValue(LocalDate.parse(initializationController.getStartDate()));
         EndDate.setValue(LocalDate.now());

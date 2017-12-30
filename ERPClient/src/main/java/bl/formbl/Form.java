@@ -1,6 +1,7 @@
 package bl.formbl;
 
 import bean.SalesDetailsBean;
+import bl.initializationbl.InitializationBLFactory;
 import bl.initializationbl.InitializationController;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.SalesDetailsInput;
@@ -26,7 +27,7 @@ public class Form {
         salesDetails = new SalesDetails();
         documentDetails = new DocumentDetails();
         profit = new Profit();
-        initInfo = new InitializationController();
+        initInfo = InitializationBLFactory.getInfo();
     }
 
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {

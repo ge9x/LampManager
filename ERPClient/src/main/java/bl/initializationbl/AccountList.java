@@ -1,6 +1,7 @@
 package bl.initializationbl;
 
 import bl.accountbl.Account;
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountInfo;
 import po.InitAccountPO;
@@ -18,7 +19,7 @@ public class AccountList {
     private AccountInfo info;
 
     public AccountList(){
-        info = new AccountController();
+        info = AccountBLFactory.getInfo();
     }
     public ArrayList<InitAccountPO> getAccounts(){
         ArrayList<InitAccountPO> pos = new ArrayList<>();

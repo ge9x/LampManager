@@ -20,7 +20,7 @@ import java.util.Formattable;
 public class FormController implements FormBLService{
     Form form;
 
-    public FormController(){
+    protected FormController(){
         form = new Form();
     }
 

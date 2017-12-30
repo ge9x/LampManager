@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class InitializationController implements InitializationBLService,InitInfo{
     private Initialization initialization;
 
-    public InitializationController(){
+    protected InitializationController(){
         initialization = new Initialization();
     }
     public ResultMessage init() {

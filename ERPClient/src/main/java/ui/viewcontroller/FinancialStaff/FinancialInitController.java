@@ -4,6 +4,7 @@ import bean.AccountBean;
 import bean.ClassificationBean;
 import bean.CustomerBean;
 import bean.GoodsBean;
+import bl.initializationbl.InitializationBLFactory;
 import bl.initializationbl.InitializationController;
 import blservice.initializationblservice.InitializationBLService;
 import com.jfoenix.controls.JFXComboBox;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  */
 public class FinancialInitController {
     FinancialViewController financialViewController;
-    InitializationBLService initializationBLService = new InitializationController();
+    InitializationBLService initializationBLService = InitializationBLFactory.getBLService();
 
     Table<ClassificationBean> classificationTable;
     Table<GoodsBean> goodsTable;

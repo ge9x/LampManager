@@ -10,6 +10,7 @@ import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsBLFactory;
+import bl.initializationbl.InitializationBLFactory;
 import bl.initializationbl.InitializationController;
 import bl.logbl.LogBLFactory;
 import blservice.goodsblservice.GoodsInfo;
@@ -50,7 +51,7 @@ public class Inventory {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		inventoryBill = new InventoryBill();
 		inventoryList = new InventoryList();
-		initInfo = new InitializationController();
+		initInfo = InitializationBLFactory.getInfo();
 		goodsInfo = GoodsBLFactory.getInfo();
 		logInfo = LogBLFactory.getInfo();
 	}

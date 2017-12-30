@@ -16,7 +16,7 @@ public class AccountController implements AccountBLService, AccountInfo{
 
     private Account account;
 
-    public AccountController(){
+    protected AccountController(){
         account = new Account();
     }
 
@@ -30,7 +30,12 @@ public class AccountController implements AccountBLService, AccountInfo{
     }
 
     public ResultMessage deleteAccount(String ID) {
-        return null;
+        try {
+            return account.deleteAccount(ID);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return ResultMessage.FAILED;
+        }
     }
 
     public ArrayList<AccountVO> findAccountByName(String keyword) {

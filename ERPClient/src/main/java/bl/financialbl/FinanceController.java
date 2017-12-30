@@ -21,7 +21,7 @@ public class FinanceController implements FinanceBLService, FinanceInfo{
 
     private Finance finance;
 
-    public FinanceController(){
+    protected FinanceController(){
         finance = new Finance();
     }
 

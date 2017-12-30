@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bl.accountbl.Account;
+import bl.formbl.FormBLFactory;
 import bl.formbl.FormController;
 import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryBill;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 public class FinancialDocumentDetailsController {
     FinancialViewController financialViewController;
     MainUIController mainUIController;
-    FormBLService formBLService = new FormController();
+    FormBLService formBLService =  FormBLFactory.getBLService();
 
     ArrayList<BillVO> bills;
 
