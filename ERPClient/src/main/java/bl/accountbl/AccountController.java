@@ -16,7 +16,7 @@ public class AccountController implements AccountBLService, AccountInfo{
 
     private Account account;
 
-    public AccountController(){
+    protected AccountController(){
         account = new Account();
     }
 

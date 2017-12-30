@@ -3,6 +3,7 @@ package ui.viewcontroller.FinancialStaff;
 import bean.AccountBillItemBean;
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -50,7 +51,7 @@ public class FinancialPaymentEditController {
     MainUIController mainUIController;
     FinancialPaymentController financialPaymentController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    FinanceBLService financeBLService = new FinanceController();
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;

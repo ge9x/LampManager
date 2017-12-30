@@ -3,6 +3,7 @@ package bl.formbl;
 import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import bl.inventorybl.InventoryController;
 import bl.promotionbl.*;
@@ -84,7 +85,7 @@ public class Profit {
     public Profit() {
         salesInfo = new SalesController();
         inventoryInfo = new InventoryController();
-        goodsInfo = new GoodsController();
+        goodsInfo = GoodsBLFactory.getInfo();
         purchaseInfo = new PurchaseController();
         promotionTotalInfo = new PromotionTotalController();
         promotionCustomerInfo = new PromotionCustomerController();

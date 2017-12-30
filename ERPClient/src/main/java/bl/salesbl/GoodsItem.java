@@ -1,5 +1,6 @@
 package bl.salesbl;
 
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
 import po.GoodsItemPO;
@@ -9,7 +10,7 @@ public class GoodsItem {
     GoodsInfo goodsInfo;
 	
 	public GoodsItem(){
-		goodsInfo=new GoodsController();
+		goodsInfo= GoodsBLFactory.getInfo();
 	}
 	
     public static GoodsItemPO voTopo(GoodsItemVO vo){

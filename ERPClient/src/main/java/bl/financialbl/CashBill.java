@@ -1,5 +1,6 @@
 package bl.financialbl;
 
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountInfo;
 import blservice.userblservice.UserInfo;
@@ -34,7 +35,7 @@ public class CashBill {
 
     public CashBill(){
         financeDataService = FinanceDataServiceImpl.getInstance();
-        accountInfo = new AccountController();
+        accountInfo = AccountBLFactory.getInfo();
         cashBillPOS = new ArrayList<>();
     }
 

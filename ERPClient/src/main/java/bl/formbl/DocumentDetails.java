@@ -1,6 +1,7 @@
 package bl.formbl;
 
 import bl.customerbl.CustomerController;
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import bl.inventorybl.InventoryController;
 import bl.salesbl.Purchase;
@@ -36,7 +37,7 @@ public class DocumentDetails{
     public DocumentDetails(){
         salesInfo = new SalesController();
         purchaseInfo = new PurchaseController();
-        financeInfo = new FinanceController();
+        financeInfo = FinanceBLFactory.getInfo();
         inventoryInfo = new InventoryController();
         customerInfo = new CustomerController();
     }

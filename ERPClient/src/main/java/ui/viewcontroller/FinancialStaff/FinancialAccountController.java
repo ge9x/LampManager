@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountBLService;
 import blstubdriver.AccountBLService_Stub;
@@ -40,7 +41,7 @@ public class FinancialAccountController {
     private ArrayList<FXMLLoader> loaders = new ArrayList<>();
     private ArrayList<VBox> cells = new ArrayList<>();
 
-    AccountBLService accountBLService = new AccountController();
+    AccountBLService accountBLService = AccountBLFactory.getBLService();
     FinancialViewController financialViewController;
     ArrayList<AccountVO> accounts;
 

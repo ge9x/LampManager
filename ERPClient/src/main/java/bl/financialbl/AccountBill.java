@@ -1,6 +1,7 @@
 package bl.financialbl;
 
 import bl.accountbl.Account;
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import bl.customerbl.CustomerController;
 import blservice.accountblservice.AccountInfo;
@@ -28,7 +29,6 @@ import java.util.HashMap;
  * Created by Kry·L on 2017/11/5.
  */
 public class AccountBill {
-    //TODO 草稿更新单据
 
     private AccountBillVO accountBill;
     private ArrayList<AccountBillItem> accountBillItems;
@@ -41,7 +41,7 @@ public class AccountBill {
     public AccountBill(){
         accountBillPOS = new ArrayList<>();
         accountBillItem = new AccountBillItem();
-        accountInfo = new AccountController();
+        accountInfo = AccountBLFactory.getInfo();
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 
