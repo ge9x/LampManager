@@ -37,21 +37,23 @@ public class Account{
         AccountPO accountPO = voTopo(accountVO);
         ResultMessage re = accountDataService.addAccount(accountPO);
         if (re == ResultMessage.SUCCESS){
-            logInfo.record(OperationType.DELETE, OperationObjectType.ACCOUNT,accountPO.toString());
+            logInfo.record(OperationType.ADD, OperationObjectType.ACCOUNT,accountPO.toString());
         }
         return re;
     }
 
     public ResultMessage deleteAccount(String ID) throws RemoteException {
-        for (AccountPO po : accountPOS){
-            if (po.getID() == Integer.parseInt(ID)){
+        accountPOS = accountDataService.show();
+        for (AccountPO po : accountPOS) {
+            if (po.getID() == Integer.parseInt(ID)) {
                 ResultMessage re = accountDataService.deleteAccount(po);
-                if (re == ResultMessage.SUCCESS){
-                    logInfo.record(OperationType.DELETE, OperationObjectType.ACCOUNT,po.toString());
+                if (re == ResultMessage.SUCCESS) {
+                    logInfo.record(OperationType.DELETE, OperationObjectType.ACCOUNT, po.toString());
                 }
+                return re;
             }
         }
-       return ResultMessage.FAILED;
+        return ResultMessage.FAILED;
     }
 
     public ArrayList<AccountVO> findAccountByName(String keyword) throws RemoteException{
@@ -69,7 +71,7 @@ public class Account{
                 accountPO.setName(accountVO.accountName);
                  ResultMessage re = accountDataService.updateAccount(accountPO);
                 if (re == ResultMessage.SUCCESS){
-                    logInfo.record(OperationType.DELETE, OperationObjectType.ACCOUNT,accountPO.toString());
+                    logInfo.record(OperationType.UPDATE, OperationObjectType.ACCOUNT,accountPO.toString());
                 }
                 return re;
             }
@@ -116,7 +118,12 @@ public class Account{
         for (AccountPO po: accountPOS){
             if (po.getID() == Integer.parseInt(id)){
                 po.setMoney(po.getMoney()+money);
-                return accountDataService.updateAccount(po);
+                if (po.getMoney()<0){
+                    po.setMoney(po.getMoney()-money);
+                    return ResultMessage.INSUFFICIENT;
+                }else{
+                    return accountDataService.updateAccount(po);
+                }
             }
         }
         return ResultMessage.FAILED;
