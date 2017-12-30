@@ -5,6 +5,11 @@ package util;
  */
 public class Money {
     public static String getMoneyString(double money){
+        boolean lessThanZero = false;
+        if (money < 0){
+            lessThanZero = true;
+            money = -money;
+        }
         String raw = String.valueOf(money);
         if (!raw.contains(".")){
             raw = raw + ".00";
@@ -21,6 +26,9 @@ public class Money {
             raw = raw.substring(1);
         if (raw.substring(raw.length()-3).equals(".00"))
             raw = raw.substring(0,raw.length()-3);
-        return "￥"+raw;
+        if (lessThanZero)
+            return "￥-"+raw;
+        else
+            return "￥"+raw;
     }
 }

@@ -1,15 +1,11 @@
 package ui.viewcontroller.common;
 
-import blservice.userblservice.UserBLService;
-import blstubdriver.UserBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
@@ -72,13 +68,26 @@ public class MainUIController {
             LoginViewController loginViewController = loader.getController();
             loginViewController.setMainUIController(this);
 
-//            resizeToLogin();
             setCenter(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void showLog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/common/Log.fxml"));
+            Pane root = loader.load();
 
+            LogViewController logViewController = loader.getController();
+            logViewController.setMainUIController(this);
+
+            resizeToLog();
+            setCenter(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 将界面大小调整为适合登录界面
      */
@@ -96,6 +105,10 @@ public class MainUIController {
     public void resizeToPage(){
         primaryStage.setMinHeight(650);
         primaryStage.setMinWidth(1000);
+    }
+
+    public void resizeToLog(){
+        primaryStage.setMinHeight(600);
     }
 
     public void showStateBar(){
@@ -142,5 +155,6 @@ public class MainUIController {
     public void saveView(){
         paneStack.push((Pane)borderPane.getCenter());
     }
+
 
 }

@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
 
 
 
-public class Main extends Application {
+public class  Main extends Application {
     Network network;
 
     MainUIController mainUIController;
