@@ -2,6 +2,7 @@ package po;
 
 import util.BillState;
 import util.BillType;
+import util.Money;
 
 import java.util.List;
 
@@ -166,4 +167,8 @@ public class CashBillPO extends BillPO{
         setSum(sum);
         return sum;
 	}
+    public String toString() {
+        return "ID:" + super.buildID() + ", 类型:" + this.getType().getValue() + ", 状态:" + this.getState().getValue()
+                + ", 银行账户ID:" + String.format("%02d",accountID) +", 操作员:" + userName + ", 总额:" + Money.getMoneyString(sum);
+    }
 }

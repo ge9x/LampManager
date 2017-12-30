@@ -1,8 +1,12 @@
 package bl.initializationbl;
 
+import bl.logbl.LogBLFactory;
+import blservice.logblservice.LogInfo;
 import dataimpl.initializationdataimpl.InitializationDataServiceImpl;
 import dataservice.initializationdataservice.InitializationDataService;
 import po.InitializationPO;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import vo.*;
 
@@ -16,7 +20,7 @@ import java.util.Locale;
  * Created by Kry·L on 2017/11/5.
  */
 public class Initialization{
-
+    private LogInfo logInfo;
     private GoodsList goodsList;
     private CustomerList customerList;
     private AccountList accountList;
@@ -26,6 +30,7 @@ public class Initialization{
 
     public Initialization(){
         initializationDataService = InitializationDataServiceImpl.getInstance();
+        logInfo = LogBLFactory.getInfo();
         goodsList = new GoodsList();
         customerList = new CustomerList();
         accountList = new AccountList();
@@ -38,7 +43,11 @@ public class Initialization{
         po.setInitAccountPOS(accountList.getAccounts());
         po.setInitGoodsPOS(goodsList.getGoods());
         po.setInitCustomerPOS(customerList.getCustomers());
-        return initializationDataService.init(po);
+        ResultMessage re = initializationDataService.init(po);
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD, OperationObjectType.INITIALIZATION,po.toString());
+        }
+        return re;
     }
 
     public ArrayList<String> getAllInitDate() throws RemoteException {
