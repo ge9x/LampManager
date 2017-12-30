@@ -148,6 +148,10 @@ public class InventoryClassificationController {
                     ResultMessage re = classificationBLService.add(new ClassificationVO(newID, name, classificationVO, null, null));
                     if (re == ResultMessage.SUCCESS) {
                         showTree();
+                    }else{
+                        dialog = DialogFactory.getInformationAlert();
+                        dialog.setHeaderText("添加商品分类失败");
+                        dialog.showAndWait();
                     }
                 }
             }else {
@@ -232,8 +236,14 @@ public class InventoryClassificationController {
             if (result.isPresent()){
                 ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
                 classificationVO.name = result.get();
-                classificationBLService.update(classificationVO);
-                showTree();
+                ResultMessage re = classificationBLService.update(classificationVO);
+                if (re == ResultMessage.SUCCESS){
+                    showTree();
+                }else{
+                    dialog = DialogFactory.getInformationAlert();
+                    dialog.setHeaderText("修改商品分类失败");
+                    dialog.showAndWait();
+                }
             }
         }
     }
