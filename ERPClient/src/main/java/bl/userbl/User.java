@@ -15,7 +15,7 @@ public class User {
 
 	private UserDataService userDataService;
 	private static String currentUserID;
-	ArrayList<UserPO> userPOs;
+	ArrayList<UserPO> userPOs = new ArrayList<>();
 	
 	public User(){
 		userDataService = UserRemoteHelper.getInstance().getUserDataService();
@@ -41,6 +41,7 @@ public class User {
 	}
 
 	public ResultMessage modifyUser(UserVO vo) throws RemoteException{
+		userPOs = userDataService.show();
 		for(UserPO userPO:userPOs){
 			if(userPO.getUserID().equals(vo.userID)){
 				userPO.setPassword(vo.password);

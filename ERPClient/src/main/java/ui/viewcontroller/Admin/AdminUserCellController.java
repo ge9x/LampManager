@@ -1,13 +1,17 @@
 package ui.viewcontroller.Admin;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import ui.component.DialogFactory;
 import util.UserPosition;
 import vo.UserVO;
 
@@ -117,6 +121,15 @@ public class AdminUserCellController {
 	}
 	
 	public void clickDeleteButton(){
-		adminUserViewController.clickDeleteButton(user);
+		Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("确定删除该用户吗？");
+        Optional result = dialog.showAndWait();
+
+
+        if (result.isPresent()){
+            if (result.get() == ButtonType.OK) {
+            	adminUserViewController.clickDeleteButton(user);
+            }
+        }
 	}
 }

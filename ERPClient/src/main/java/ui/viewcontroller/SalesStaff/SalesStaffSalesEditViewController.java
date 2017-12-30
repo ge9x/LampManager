@@ -48,6 +48,7 @@ public class SalesStaffSalesEditViewController {
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
 	ArrayList<PromotionVO> promotions = new ArrayList<PromotionVO>();
+	ArrayList<Integer> goodsInventory = new ArrayList<>();
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -188,7 +189,17 @@ public class SalesStaffSalesEditViewController {
       		        					  t.getTablePosition().getRow())
       		        					  ).getRetailPrice()
       							  );
-
+      			  int index = t.getTablePosition().getRow();
+      			  if(t.getNewValue()>goodsInventory.get(index)){
+      				Dialog dialog = DialogFactory.getInformationAlert();
+      		        dialog.setHeaderText("添加商品数量超过库存数量");
+      		        Optional result = dialog.showAndWait();
+      		        
+      		      ((GoodsItemBean) t.getTableView().getItems().get(
+      					  t.getTablePosition().getRow())
+      					  ).setAmount(goodsInventory.get(index));
+      			  }
+      			  
       		  });
         
         ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
@@ -471,6 +482,7 @@ public class SalesStaffSalesEditViewController {
     	total.set(total.get()-data.get(index).getTotalPrice());
     	afterSum.set(afterSum.get()-data.get(index).getTotalPrice());
     	data.remove(index);
+    	goodsInventory.remove(index);
     }
 
     public void clickAddButton(){
@@ -484,6 +496,7 @@ public class SalesStaffSalesEditViewController {
     	}
         GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
     	data.add(itemBean);
+    	goodsInventory.add(bean.getAmount());
         itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -501,7 +514,7 @@ public class SalesStaffSalesEditViewController {
         				bean.getRemark());
         		goodsItemList.add(vo);
         	}
-        	
+        	                                                               
 	        CustomerVO customerVO = customers.get(customer.getSelectionModel().getSelectedIndex());
 	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	        double allowancePrice = 0;
@@ -520,15 +533,21 @@ public class SalesStaffSalesEditViewController {
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, allowancePrice, 
 	        		voucherPrice,remark.getText(),LocalDate.now().toString(), promotionName);
 	    	if(!isExamine){
-		        ResultMessage re = salesBLService.submitSales(salesVO);
-		        if(re == ResultMessage.SUCCESS){
-		        	salesStaffSalesOrderViewController.showSalesOrderList();
-		        }
-		        else{
-		        	Dialog dialog = DialogFactory.getInformationAlert();
-			        dialog.setHeaderText("该客户的应收已超过最大额度");
-			        Optional result = dialog.showAndWait();
-		        }
+	    		if(isNew){
+			        ResultMessage re = salesBLService.submitSales(salesVO);
+			        if(re == ResultMessage.SUCCESS){
+			        	salesStaffSalesOrderViewController.showSalesOrderList();
+			        }
+			        else{
+			        	Dialog dialog = DialogFactory.getInformationAlert();
+				        dialog.setHeaderText("该客户的应收已超过最大额度");
+				        Optional result = dialog.showAndWait();
+			        }
+	    		}
+	    		else{
+	    			salesBLService.updateSales(salesVO);
+	    			salesStaffSalesOrderViewController.showSalesOrderList();
+	    		}
 	    	}
 	    	else{
 	    		salesBLService.updateSales(salesVO);

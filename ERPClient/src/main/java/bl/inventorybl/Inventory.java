@@ -9,9 +9,9 @@ import java.util.Map;
 import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
-import bl.goodsbl.GoodsController;
+import bl.goodsbl.GoodsBLFactory;
 import bl.initializationbl.InitializationController;
-import bl.logbl.LogController;
+import bl.logbl.LogBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.initializationblservice.InitInfo;
 import blservice.logblservice.LogInfo;
@@ -48,11 +48,11 @@ public class Inventory {
 
 	public Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		goodsInfo = new GoodsController();
-		inventoryBill = new InventoryBill(goodsInfo);
+		inventoryBill = new InventoryBill();
 		inventoryList = new InventoryList();
 		initInfo = new InitializationController();
-		logInfo = new LogController();
+		goodsInfo = GoodsBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {

@@ -3,8 +3,8 @@ package bl.goodsbl;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import bl.classificationbl.ClassificationController;
-import bl.logbl.LogController;
+import bl.classificationbl.ClassificationBLFactory;
+import bl.logbl.LogBLFactory;
 import blservice.classificationblservice.ClassificationInfo;
 import blservice.logblservice.LogInfo;
 import dataservice.goodsdataservice.GoodsDataService;
@@ -31,8 +31,8 @@ public class Goods {
 
 	public Goods() {
 		goodsDataService = GoodsRemoteHelper.getInstance().getGoodsDataService();
-		classificationInfo = new ClassificationController();
-		logInfo = new LogController();
+		classificationInfo = ClassificationBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	public ArrayList<GoodsVO> show() throws RemoteException {

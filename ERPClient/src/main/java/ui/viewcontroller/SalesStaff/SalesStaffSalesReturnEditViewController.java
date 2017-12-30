@@ -39,6 +39,7 @@ import vo.GoodsItemVO;
 import vo.PromotionVO;
 import vo.SalesVO;
 
+import java.awt.event.ItemEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -237,7 +238,12 @@ public class SalesStaffSalesReturnEditViewController {
 	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
 	    	if(!isExamine){
-		        salesBLService.submitSales(salesVO);
+	    		if(isNew){
+	    			salesBLService.submitSales(salesVO);
+	    		}
+	    		else{
+	    			salesBLService.updateSales(salesVO);
+	    		}
 		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
 	    	}
 	    	else{
@@ -332,6 +338,7 @@ public class SalesStaffSalesReturnEditViewController {
         Username.setText(salesBill.user);
         Salesman.setText(salesBill.salesman);
         
+        itemTable.setEditable(false);
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -377,6 +384,8 @@ public class SalesStaffSalesReturnEditViewController {
         remark.setEditable(true);
         inventory.setDisable(false);
         customer.setDisable(false);
+        
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
