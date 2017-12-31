@@ -22,6 +22,7 @@ import util.ResultMessage;
 public class Log {
 	private LogDataService logDataService;
 	private UserInfo userInfo;
+	private boolean isOpen = true;	// 日志系统是否处于开启状态
 
 	protected Log() {
 		logDataService = LogRemoteHelper.getInstance().getLogDataService();
@@ -47,17 +48,43 @@ public class Log {
 
 	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details)
 			throws RemoteException {
-		if(userInfo == null){
-			userInfo = new UserController();
+		if (isOpen) {
+			if (userInfo == null) {
+				userInfo = new UserController();
+			}
+			LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType,
+					operationObjectType, details);
+			// 暂时保留，方便测试效果↓
+			ResultMessage ret = logDataService.addLog(toAdd);
+			ArrayList<String> logs = this.show();
+			for (String record : logs) {
+				System.out.println(record);
+			}
+
+			return ret;
 		}
-		LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType, operationObjectType,
-				details);
-		// 暂时保留，方便测试效果↓
-		ArrayList<String> logs = this.show();
-		for(String record : logs){
-			System.out.println(record);
+		else {
+			return ResultMessage.FAILED;
 		}
-		
-		return logDataService.addLog(toAdd);
+	}
+
+	public ResultMessage close() {
+		if (isOpen) {
+			isOpen = false;
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
+	}
+
+	public ResultMessage open() {
+		if (!isOpen) {
+			isOpen = true;
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
 	}
 }

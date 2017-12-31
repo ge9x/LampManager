@@ -57,4 +57,14 @@ public class LogController implements LogBLService, LogInfo{
 		return ResultMessage.FAILED;
 	}
 
+	@Override
+	public ResultMessage close() {
+		return log.close();
+	}
+
+	@Override
+	public ResultMessage open() {
+		return log.open();
+	}
+
 }
