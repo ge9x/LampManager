@@ -139,4 +139,10 @@ public class PromotionTotalPO extends PromotionPO implements Serializable {
 	public void setPromotionID(String promotionID){
 		this.promotionID=promotionID;
 	}
+	
+	@Override
+	public String toString(){
+		return "促销策略编号:" + promotionID + ", 促销策略名称:" + promotionName + ", 促销策略类型:" + type.getValue() +  ", 开始日期:" + startDate
+				+ ", 结束日期:" + endDate + ", 目标总价:" + totalPrice + ", 代金券:" +voucher;
+	}
 }
