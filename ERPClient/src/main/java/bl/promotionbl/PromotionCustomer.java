@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
@@ -25,7 +26,7 @@ public class PromotionCustomer extends Promotion{
 	
 	public PromotionCustomer(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
-		userInfo = new UserController();
+		userInfo = UserBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionCustomerVO> show() throws RemoteException{

@@ -10,6 +10,7 @@ import java.util.Date;
 import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import bl.inventorybl.Inventory;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesController;
@@ -33,18 +34,18 @@ import vo.SalesVO;
 public class Examination {
 
 	private ExaminationDataService examinationDataService;
-	ArrayList<BillPO> billPOs;
-	FinanceInfo financeInfo;
-	SalesInfo salesInfo;
-	PurchaseInfo purchaseInfo;
-	InventoryInfo inventoryInfo;
+	private ArrayList<BillPO> billPOs;
+	private FinanceInfo financeInfo;
+	private SalesInfo salesInfo;
+	private PurchaseInfo purchaseInfo;
+	private InventoryInfo inventoryInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
 		financeInfo = FinanceBLFactory.getInfo();
 		salesInfo = new SalesController();
 		purchaseInfo = new PurchaseController();
-		inventoryInfo = new InventoryController();
+		inventoryInfo = InventoryBLFactory.getInfo();
 	}
 	
 

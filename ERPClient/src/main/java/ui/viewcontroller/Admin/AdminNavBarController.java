@@ -1,5 +1,6 @@
 package ui.viewcontroller.Admin;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class AdminNavBarController {
 	AnchorPane UserNav;
 	
 	AdminViewController adminViewController;
-	UserInfo userInfo = new UserController();
+	UserInfo userInfo = UserBLFactory.getInfo();
 	
     @FXML
     public void initialize() {

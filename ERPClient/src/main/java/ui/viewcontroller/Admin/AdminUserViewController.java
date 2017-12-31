@@ -14,6 +14,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import javafx.fxml.FXML;
@@ -46,7 +47,7 @@ public class AdminUserViewController {
     private ArrayList<FXMLLoader> loaders = new ArrayList<FXMLLoader>();
     private ArrayList<VBox> cells = new ArrayList<VBox>();
     
-    UserBLService userBLService = new UserController();
+    UserBLService userBLService = UserBLFactory.getBLService();
     AdminViewController adminViewController;
     AdminUserAddViewController adminUserAddViewController;
     ArrayList<UserVO> users = new ArrayList<>();

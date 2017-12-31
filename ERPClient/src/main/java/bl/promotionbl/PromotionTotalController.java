@@ -17,7 +17,7 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 
 	private PromotionTotal promotionTotal;
 	
-	public PromotionTotalController(){
+	protected PromotionTotalController(){
 		promotionTotal = new PromotionTotal();
 	}
 	

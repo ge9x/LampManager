@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionBLFactory;
 import bl.promotionbl.PromotionTotalController;
 import blservice.promotionblservice.promotionTotal.PromotionTotalBLService;
 import blstubdriver.PromotionTotal_Stub;
@@ -45,7 +46,7 @@ import vo.PromotionTotalVO;
 public class GeneralManagerPromotionTotalAddViewController {
 
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionTotalBLService promotionTotalBLService = new PromotionTotalController();
+	PromotionTotalBLService promotionTotalBLService = PromotionBLFactory.getTotalBLService();
 	PromotionTotalVO promotionTotal;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 	

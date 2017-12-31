@@ -18,7 +18,7 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 
 	private PromotionBargain promotionBargain;
 	
-	public PromotionBargainController(){
+	protected PromotionBargainController(){
 		promotionBargain = new PromotionBargain();
 	}
 	

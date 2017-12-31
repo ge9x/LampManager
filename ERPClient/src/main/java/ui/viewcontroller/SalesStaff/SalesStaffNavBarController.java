@@ -1,5 +1,6 @@
 package ui.viewcontroller.SalesStaff;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 
 public class SalesStaffNavBarController {
 	private SalesStaffViewController salesStaffViewController;
-	UserInfo userInfo = new UserController();
+	UserInfo userInfo = UserBLFactory.getInfo();
 	
 	@FXML
 	Label CustomerIcon;

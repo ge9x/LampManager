@@ -10,6 +10,7 @@ import org.hibernate.loader.custom.EntityFetchReturn;
 import bl.financialbl.AccountBillItem;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import po.AccountBillItemPO;
@@ -30,7 +31,7 @@ public class PromotionBargain extends Promotion{
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
-		userInfo = new UserController();
+		userInfo = UserBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionBargainVO> show() throws RemoteException{
