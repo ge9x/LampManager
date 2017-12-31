@@ -25,7 +25,7 @@ public class InventoryController implements InventoryBLService, InventoryInfo {
 
 	private Inventory inventory;
 
-	public InventoryController() {
+	protected InventoryController() {
 		inventory = new Inventory();
 	}
 

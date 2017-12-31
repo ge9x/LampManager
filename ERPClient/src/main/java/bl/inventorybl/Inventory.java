@@ -47,7 +47,7 @@ public class Inventory {
 	private InitInfo initInfo;
 	private LogInfo logInfo;
 
-	public Inventory() {
+	protected Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		inventoryBill = new InventoryBill();
 		inventoryList = new InventoryList();
@@ -200,7 +200,7 @@ public class Inventory {
 	}
 
 	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
-		return inventoryBill.getBillsByDate(startDate, endDate);
+		return inventoryBill.getPassBillsByDate(startDate, endDate);
 	}
 
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
