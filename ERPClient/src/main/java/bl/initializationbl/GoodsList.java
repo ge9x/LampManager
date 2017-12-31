@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
 import po.GoodsPO;
@@ -18,7 +19,7 @@ public class GoodsList {
     private GoodsInfo goodsInfo;
 
     public GoodsList(){
-        goodsInfo = new GoodsController();
+        goodsInfo = GoodsBLFactory.getInfo();
 
     }
     public ArrayList<InitGoodsPO> getGoods(){

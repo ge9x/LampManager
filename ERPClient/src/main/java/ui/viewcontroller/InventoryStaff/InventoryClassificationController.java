@@ -1,6 +1,8 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.classificationbl.ClassificationBLFactory;
 import bl.classificationbl.ClassificationController;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.goodsblservice.GoodsBLService;
@@ -30,8 +32,8 @@ import java.util.Optional;
  */
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
-    ClassificationBLService classificationBLService = new ClassificationController();
-    GoodsBLService goodsBLService = new GoodsController();
+    ClassificationBLService classificationBLService;
+    GoodsBLService goodsBLService;
 
     ArrayList<ClassificationVO> classifications;
     ArrayList<GoodsVO> goods;
@@ -50,6 +52,9 @@ public class InventoryClassificationController {
 
     @FXML
     public void initialize() {
+        classificationBLService = ClassificationBLFactory.getBLService();
+        goodsBLService = GoodsBLFactory.getBLService();
+
         initTree();
         showTree();
         initTable();

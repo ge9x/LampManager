@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bean.SalesDetailsBean;
+import bl.formbl.FormBLFactory;
 import bl.formbl.FormController;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 public class FinancialSalesDetailsController {
     FinancialViewController financialViewController;
     FormBLService formBLService = new FormBLService_Stub();
-    FormBLService formBLService2 = new FormController();
+    FormBLService formBLService2 = FormBLFactory.getBLService();
     ArrayList<SalesDetailVO> salesDetails = new ArrayList<>();
 
     TableView<SalesDetailsBean> table = new TableView<SalesDetailsBean>();

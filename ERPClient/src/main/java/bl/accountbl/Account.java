@@ -1,11 +1,16 @@
 package bl.accountbl;
 
+import bl.logbl.LogBLFactory;
+import blservice.logblservice.LogInfo;
+import com.mysql.jdbc.log.LogFactory;
 import dataimpl.accountdataimpl.AccountDataServiceImpl;
 import dataservice.accountdataservice.AccountDataService;
 import datastubdriver.AccountDataService_Stub;
 import po.AccountBillPO;
 import po.AccountPO;
 import rmi.AccountRemoteHelper;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import vo.AccountVO;
 
@@ -20,21 +25,35 @@ public class Account{
     //TODO delete
 
     private AccountDataService accountDataService;
+    private LogInfo logInfo;
     ArrayList<AccountPO> accountPOS;
 
     public Account() {
         accountDataService = AccountDataServiceImpl.getInstance();
-
+        logInfo = LogBLFactory.getInfo();
     }
 
     public ResultMessage addAccount(AccountVO accountVO) throws RemoteException{
         AccountPO accountPO = voTopo(accountVO);
         ResultMessage re = accountDataService.addAccount(accountPO);
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD, OperationObjectType.ACCOUNT,accountPO.toString());
+        }
         return re;
     }
 
-    public ResultMessage deleteAccount(String name) {
-        return null;
+    public ResultMessage deleteAccount(String ID) throws RemoteException {
+        accountPOS = accountDataService.show();
+        for (AccountPO po : accountPOS) {
+            if (po.getID() == Integer.parseInt(ID)) {
+                ResultMessage re = accountDataService.deleteAccount(po);
+                if (re == ResultMessage.SUCCESS) {
+                    logInfo.record(OperationType.DELETE, OperationObjectType.ACCOUNT, po.toString());
+                }
+                return re;
+            }
+        }
+        return ResultMessage.FAILED;
     }
 
     public ArrayList<AccountVO> findAccountByName(String keyword) throws RemoteException{
@@ -50,7 +69,11 @@ public class Account{
         for (AccountPO accountPO:accountPOS){
             if (accountPO.getID() == Integer.parseInt(accountVO.accountID)) {
                 accountPO.setName(accountVO.accountName);
-                return accountDataService.updateAccount(accountPO);
+                 ResultMessage re = accountDataService.updateAccount(accountPO);
+                if (re == ResultMessage.SUCCESS){
+                    logInfo.record(OperationType.UPDATE, OperationObjectType.ACCOUNT,accountPO.toString());
+                }
+                return re;
             }
         }
         return ResultMessage.FAILED;
@@ -95,7 +118,12 @@ public class Account{
         for (AccountPO po: accountPOS){
             if (po.getID() == Integer.parseInt(id)){
                 po.setMoney(po.getMoney()+money);
-                return accountDataService.updateAccount(po);
+                if (po.getMoney()<0){
+                    po.setMoney(po.getMoney()-money);
+                    return ResultMessage.INSUFFICIENT;
+                }else{
+                    return accountDataService.updateAccount(po);
+                }
             }
         }
         return ResultMessage.FAILED;

@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -30,7 +31,7 @@ public class FinancialCashBillController {
     FinancialCashBillEditController financialCashBillEditController;
     MainUIController mainUIController;
 
-    FinanceBLService financeBLService = new FinanceController();
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
 
     ArrayList<CashBillVO> draft;
     ArrayList<CashBillVO> submitted;

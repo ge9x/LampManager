@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryController;
@@ -40,7 +41,7 @@ public class Examination {
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
-		financeInfo = new FinanceController();
+		financeInfo = FinanceBLFactory.getInfo();
 		salesInfo = new SalesController();
 		purchaseInfo = new PurchaseController();
 		inventoryInfo = new InventoryController();

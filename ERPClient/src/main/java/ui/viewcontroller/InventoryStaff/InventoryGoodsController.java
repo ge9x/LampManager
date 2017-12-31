@@ -1,6 +1,7 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
 import com.jfoenix.controls.JFXTextField;
@@ -21,7 +22,7 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/27.
  */
 public class InventoryGoodsController {
-    GoodsBLService goodsBLService = new GoodsController();
+    GoodsBLService goodsBLService;
 
     InventoryViewController inventoryViewController;
     ArrayList<GoodsVO> goods;
@@ -41,6 +42,7 @@ public class InventoryGoodsController {
 
     @FXML
     public void initialize(){
+        goodsBLService = GoodsBLFactory.getBLService();
         searchIcon.setText("\ue69d");
 
         initTable();

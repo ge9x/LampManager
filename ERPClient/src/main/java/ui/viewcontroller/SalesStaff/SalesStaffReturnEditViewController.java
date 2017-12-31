@@ -30,6 +30,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffReturnEditViewController {
+    MainUIController mainUIController;
 	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
@@ -93,7 +95,9 @@ public class SalesStaffReturnEditViewController {
     
     @FXML
     JFXComboBox<String> inventory;
-    
+
+    public boolean onlyShow = false;
+
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
@@ -376,5 +380,9 @@ public class SalesStaffReturnEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

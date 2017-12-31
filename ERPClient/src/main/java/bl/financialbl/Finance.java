@@ -1,6 +1,7 @@
 package bl.financialbl;
 
 import bl.accountbl.Account;
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import bl.customerbl.Customer;
 import bl.customerbl.CustomerController;
@@ -43,7 +44,7 @@ public class Finance{
         cashBill = new CashBill();
         userInfo = new UserController();
         customerInfo = new CustomerController();
-        accountInfo = new AccountController();
+        accountInfo = AccountBLFactory.getInfo();
     }
 
     public String getNewReceiptID() throws RemoteException {
