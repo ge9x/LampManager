@@ -17,7 +17,7 @@ import util.ResultMessage;
 import vo.ClassificationVO;
 
 /**
- * 约定：启动前数据库中只有一条ID为1，名字为“灯”的数据且自增为2<br>
+ * 约定：启动前数据库中只有一条ID为1，名字为“灯”的商品分类数据且自增为2<br>
  * Created on 2018/1/1
  * 
  * @author 巽
@@ -36,9 +36,9 @@ public class ClassificationTest {
 	@Before
 	public void setUp() throws Exception {
 		classification = new Classification();
-		ArrayList<ClassificationVO> pos = classification.show();
-		if (pos.size() > 1) {
-			classificationVO = pos.get(1);
+		ArrayList<ClassificationVO> vos = classification.show();
+		if (vos.size() > 1) {
+			classificationVO = vos.get(1);
 		}
 	}
 
