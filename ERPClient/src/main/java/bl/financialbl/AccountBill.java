@@ -94,6 +94,7 @@ public class AccountBill {
                 if (re == ResultMessage.SUCCESS){
                     logInfo.record(OperationType.UPDATE,OperationObjectType.BILL,po.toString());
                 }
+                return re;
             }
         }
         return ResultMessage.FAILED;

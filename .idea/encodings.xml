@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPClient" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/accountbl/AccountTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/financialbl/AccountBillItemTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/financialbl/AccountBillTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPServer" charset="UTF-8" />
   </component>
 </project>
