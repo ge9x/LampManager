@@ -30,7 +30,6 @@ import vo.InventoryBillVO;
  * 约定：启动前数据库中：<br>
  * 只有一条ID为1，名字为“灯”的商品分类数据<br>
  * 有一条名字为“默认仓库”的仓库数据<br>
- * 有一条编号为“01000001”，名字为“SJ牌欧洲奢华落地灯”，型号为“SJ-0001”，所属分类为“灯”的商品数据<br>
  * 没有任何库存类单据(InventoryBill)数据<br>
  * Created on 2018/1/1
  * 
@@ -40,53 +39,40 @@ import vo.InventoryBillVO;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InventoryBillTest {
 	private InventoryBill inventoryBill;
-	private InventoryBillVO overflow;
-	private InventoryBillVO loss;
-	private GoodsVO goodsVO;
+	private static InventoryBillVO overflow;
+	private static InventoryBillVO loss;
+	private static GoodsVO goodsVO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		new AppTest();
 		GoodsBLService goods = GoodsBLFactory.getBLService();
-		GoodsVO goodsVO = new GoodsVO("01000001", "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
+		goodsVO = new GoodsVO(goods.getNewID("01"), "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
 		goods.add(goodsVO);
+		String date = LocalDate.now().toString();
+		HashMap<GoodsVO, Integer> goodsMap = new HashMap<>();
+		goodsMap.put(goodsVO, 7);
+		overflow = new InventoryBillVO("BYD-" + date.replaceAll("-", "") + "-00001", BillType.OVERFLOW,
+				BillState.DRAFT, date, "默认仓库", "InventoryBillTest", goodsMap);
+		goodsMap = new HashMap<>();
+		goodsMap.put(goodsVO, 6);
+		loss = new InventoryBillVO("BSD-" + date.replaceAll("-", "") + "-00001", BillType.LOSS, BillState.DRAFT, date,
+				"默认仓库", "InventoryBillTest", goodsMap);
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		inventoryBill = new InventoryBill();
-		ArrayList<InventoryBillVO> found = inventoryBill.findByType(BillType.OVERFLOW);
-		if (found.isEmpty()) {
-			String date = LocalDate.now().toString();
-			HashMap<GoodsVO, Integer> goodsMap = new HashMap<>();
-			goodsMap.put(goodsVO, 7);
-			overflow = new InventoryBillVO("BYD-" + date.replaceAll("-", "") + "-000001", BillType.OVERFLOW,
-					BillState.DRAFT, date, "默认仓库", "InventoryBillTest", goodsMap);
-		}
-		else {
-			overflow = found.get(0);
-		}
-		found = inventoryBill.findByType(BillType.LOSS);
-		if (found.isEmpty()) {
-			String date = LocalDate.now().toString();
-			HashMap<GoodsVO, Integer> goodsMap = new HashMap<>();
-			goodsMap.put(goodsVO, 6);
-			loss = new InventoryBillVO("BSD-" + date.replaceAll("-", "") + "-000001", BillType.LOSS, BillState.DRAFT,
-					date, "默认仓库", "InventoryBillTest", goodsMap);
-		}
-		else {
-			loss = found.get(0);
-		}
 	}
-	
+
 	@AfterClass
-	public void AfterClass(){
+	public static void AfterClass() {
 		GoodsBLService goods = GoodsBLFactory.getBLService();
 		goods.delete(goodsVO.ID);
 	}
 
 	@Test
-	public void b_testSubmit() throws RemoteException {
+	public void c_testSubmit() throws RemoteException {
 		ResultMessage result = inventoryBill.submit(loss);
 		assertEquals(ResultMessage.SUCCESS, result);
 	}
@@ -122,7 +108,7 @@ public class InventoryBillTest {
 	}
 
 	@Test
-	public void z_testShow() throws RemoteException {
+	public void l_testShow() throws RemoteException {
 		int number = inventoryBill.show().size();
 		assertEquals(6, number);
 	}

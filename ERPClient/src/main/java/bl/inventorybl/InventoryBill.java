@@ -149,7 +149,7 @@ public class InventoryBill {
 		criteria.add(new Criterion("type", type, QueryMode.FULL));
 		criteria.add(new Criterion("date", date, QueryMode.FULL));
 		int turn = inventoryDataService.advancedQuery(criteria).size() + 1;
-		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%06d", turn);
+		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%05d", turn);
 	}
 
 	public ArrayList<InventoryBillVO> getPassBillsByDate(String startDate, String endDate) throws RemoteException {
@@ -352,7 +352,7 @@ public class InventoryBill {
 			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		if (inventoryPO == null) {
-			return ResultMessage.FAILED;
+			return ResultMessage.NOT_EXIST;
 		}
 		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
@@ -362,7 +362,7 @@ public class InventoryBill {
 					if (vo.ID.equals(po.buildID())) {
 						int number = map.get(po) + sign * goodsMap.get(vo);
 						if (number < 0) {	// 负数检查
-							return ResultMessage.FAILED;
+							return ResultMessage.INSUFFICIENT;
 						}
 						map.put(po, number);
 						isExistent = true;
@@ -371,7 +371,7 @@ public class InventoryBill {
 				}
 				if (!isExistent) {	// 如果本来仓库里没有这种商品
 					if (sign == -1) {	// 负数检查
-						return ResultMessage.FAILED;
+						return ResultMessage.INSUFFICIENT;
 					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(vo.ID);
 					map.put(goodsPO, goodsMap.get(vo));
