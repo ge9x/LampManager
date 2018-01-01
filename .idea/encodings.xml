@@ -7,7 +7,7 @@
     <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/financialbl/AccountBillTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/formbl/DocumentDetailsTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/formbl/SalesDetailsTest.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/initializationbl/InitializationTest.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/initializationbl/InitializationTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ERPServer" charset="UTF-8" />
   </component>
 </project>

@@ -1,20 +1,23 @@
 package bl.initializationbl;
 
 import bl.accountbl.AccountBLFactory;
+import bl.classificationbl.Classification;
+import bl.classificationbl.ClassificationBLFactory;
+import bl.customerbl.CustomerBLFactory;
 import bl.goodsbl.GoodsBLFactory;
 import blservice.accountblservice.AccountBLService;
+import blservice.classificationblservice.ClassificationBLService;
+import blservice.customerblservice.CustomerBLService;
 import blservice.goodsblservice.GoodsBLService;
 import org.ERPClient.AppTest;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import po.InitializationPO;
+import util.CustomerCategory;
+import util.Level;
 import util.ResultMessage;
-import vo.AccountVO;
-import vo.GoodsVO;
-import vo.InitAccountVO;
-import vo.InitializationVO;
+import vo.*;
 
 import java.util.ArrayList;
 
@@ -24,9 +27,9 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Initialization Tester.
  *
- * @author Kry°§L
+ * @author Kry¬∑L
  * @version 1.0
- * @since <pre>“ª‘¬ 1, 2018</pre>
+ * @since <pre>‰∏ÄÊúà 1, 2018</pre>
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InitializationTest {
@@ -37,12 +40,20 @@ public class InitializationTest {
         initialization = new Initialization();
         GoodsBLService goodsBLService = GoodsBLFactory.getBLService();
         AccountBLService accountBLService = AccountBLFactory.getBLService();
+        CustomerBLService customerBLService = CustomerBLFactory.getBLService();
+        ClassificationBLService classificationBLService = ClassificationBLFactory.getBLService();
 
-        AccountVO accountVO = new AccountVO("01","µÿ∆Ωœﬂ“¯––", 200000);
+        String classificationID = classificationBLService.getNewID();
+        ClassificationVO classificationVO = new ClassificationVO(classificationID,"ËêΩÂú∞ÁÅØ",null,null,null);
+        AccountVO accountVO = new AccountVO("01","Âú∞Âπ≥Á∫øÈì∂Ë°å", 200000);
         accountBLService.addAccount(accountVO);
 
-        GoodsVO goodsVO = new GoodsVO("02000001", "µÿ∆Ωœﬂ≈∆≈∑ Ω¬‰µÿµ∆", "DPX-0001", "¬‰µÿµ∆", "ƒ¨»œ≤÷ø‚", 1, 20, 250, 255, 250, 255);
+        GoodsVO goodsVO = new GoodsVO(goodsBLService.getNewID("02"), "Âú∞Âπ≥Á∫øÁâåÊ¨ßÂºèËêΩÂú∞ÁÅØ", "DPX-0001", "ËêΩÂú∞ÁÅØ", "ÈªòËÆ§‰ªìÂ∫ì", 1, 20, 250, 255, 250, 255);
         goodsBLService.add(goodsVO);
+
+        CustomerVO customerVO = new CustomerVO(customerBLService.getNewCustomerID(), CustomerCategory.SELLER, Level.LEVEL_FIVE, "Ë∑Ø‰∫∫Áî≤", "15545786610",
+                "Âçó‰∫¨‰ªôÊûóÂ§ßÂ≠¶Âüé", "421000", "ddl@163.com", 1.0, 10000.0, 0.0, "Êú±Èõ®Ê¨£", 125.0, 600);
+        customerBLService.addCustomer(customerVO);
 
     }
 
@@ -68,7 +79,7 @@ public class InitializationTest {
     @Test
     public void d_testShow() throws Exception {
         InitializationVO initializationVO = initialization.show("2018-01-01");
-        assertEquals("2018-01-01",initializationVO);
+        assertNotNull(initializationVO);
     }
 
 
