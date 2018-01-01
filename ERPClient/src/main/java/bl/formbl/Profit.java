@@ -110,19 +110,19 @@ public class Profit {
                 allowance, salescost, lossExpense, giftExpense, totalExpense, profit);
     }
 
-    public void getSalesOrders(String startDate, String endDate) {
+    private void getSalesOrders(String startDate, String endDate) {
         salesVOS = salesInfo.getAllSalesOrder(startDate, endDate);
     }
 
-    public void getInventoryBills(String startDate, String endDate) {
+    private void getInventoryBills(String startDate, String endDate) {
         inventoryBillVOS = inventoryInfo.getInventoryBillsByDate(startDate, endDate);
     }
 
-    public void getPurchaseBills(String startDate, String endDate) {
+    private void getPurchaseBills(String startDate, String endDate) {
         purchaseVOS = purchaseInfo.getPurchaseByDate(startDate, endDate);
     }
 
-    public void handlePurchaseBills() {
+    private void handlePurchaseBills() {
         for (PurchaseVO purchaseVO : purchaseVOS) {
             if (purchaseVO.type == BillType.PURCHASE) {
                 salescost += purchaseVO.sum;
@@ -133,7 +133,7 @@ public class Profit {
     }
 
     //处理销售出货单
-    public void handleSalesBills() {
+    private void handleSalesBills() {
         for (SalesVO salesVO : salesVOS) {
             if (salesVO.type == BillType.SALES) {
                 salesIncome += salesVO.beforeSum;
@@ -160,15 +160,15 @@ public class Profit {
         }
     }
 
-    public void handleInventoryBills() {
+    private void handleInventoryBills() {
         for (InventoryBillVO inventoryBillVO : inventoryBillVOS) {
             if (inventoryBillVO.type == BillType.OVERFLOW) {
                 for (GoodsVO goodsVO : inventoryBillVO.goodsMap.keySet()) {
-                    overflowIncome += goodsVO.recentBuyingPrice;
+                    overflowIncome += goodsVO.recentBuyingPrice*inventoryBillVO.goodsMap.get(goodsVO);
                 }
             } else if (inventoryBillVO.type == BillType.LOSS) {
                 for (GoodsVO goodsVO : inventoryBillVO.goodsMap.keySet()) {
-                    lossExpense += goodsVO.recentBuyingPrice;
+                    lossExpense += goodsVO.recentBuyingPrice*inventoryBillVO.goodsMap.get(goodsVO);
                 }
             }
         }
