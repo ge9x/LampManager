@@ -28,24 +28,22 @@ import vo.GoodsVO;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GoodsTest {
 	private Goods goods;
-	private GoodsVO goodsVO;
+	private static GoodsVO goodsVO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		new AppTest();
+		Goods goods = new Goods();
+		goodsVO = new GoodsVO(goods.getNewID("01"), "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		goods = new Goods();
-		ArrayList<GoodsVO> vos = goods.show();
-		if (!vos.isEmpty()) {
-			goodsVO = vos.get(0);
-		}
 	}
 
 	@Test
-	public void z_testShow() throws RemoteException {
+	public void g_testShow() throws RemoteException {
 		int number = goods.show().size();
 		assertEquals(0, number);
 	}
@@ -58,7 +56,7 @@ public class GoodsTest {
 
 	@Test
 	public void e_testShowDetails() throws NumberFormatException, RemoteException {
-		GoodsVO vo = goods.showDetails("01000001");
+		GoodsVO vo = goods.showDetails(goodsVO.ID);
 		assertEquals(goodsVO.ID, vo.ID);
 		assertEquals(goodsVO.name, vo.name);
 		assertEquals(goodsVO.model, vo.model);
@@ -66,14 +64,13 @@ public class GoodsTest {
 
 	@Test
 	public void b_testAdd() throws RemoteException {
-		goodsVO = new GoodsVO(goods.getNewID("01"), "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
 		ResultMessage result = goods.add(goodsVO);
 		assertEquals(ResultMessage.SUCCESS, result);
 	}
 
 	@Test
-	public void y_testDelete() throws NumberFormatException, RemoteException {
-		ResultMessage result = goods.delete("01000001");
+	public void f_testDelete() throws NumberFormatException, RemoteException {
+		ResultMessage result = goods.delete(goodsVO.ID);
 		assertEquals(ResultMessage.SUCCESS, result);
 	}
 
@@ -87,12 +84,12 @@ public class GoodsTest {
 	@Test
 	public void a_testGetNewID() throws RemoteException {
 		String ID = goods.getNewID("01");
-		assertEquals("01000001", ID);
+		assertEquals(goodsVO.ID, ID);
 	}
 
 	@Test
 	public void e_testGetGoodsByID() throws NumberFormatException, RemoteException {
-		GoodsPO po = goods.getGoodsByID("01000001");
+		GoodsPO po = goods.getGoodsByID(goodsVO.ID);
 		GoodsVO vo = Goods.poToVO(po);
 		assertEquals(goodsVO.ID, vo.ID);
 		assertEquals(goodsVO.name, vo.name);

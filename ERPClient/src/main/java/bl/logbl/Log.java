@@ -56,10 +56,7 @@ public class Log {
 					operationObjectType, details);
 			// 暂时保留，方便测试效果↓
 			ResultMessage ret = logDataService.addLog(toAdd);
-			ArrayList<String> logs = this.show();
-			for (String record : logs) {
-				System.out.println(record);
-			}
+			System.out.println(toAdd.toString());
 
 			return ret;
 		}
