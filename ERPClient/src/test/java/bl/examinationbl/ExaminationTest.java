@@ -2,6 +2,7 @@ package bl.examinationbl;
 
 import static org.junit.Assert.*;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -32,22 +33,25 @@ public class ExaminationTest {
 	AccountBillVO accountBill2;
 
 	@Before
-	public void setUp() throws Exception {
-		AppTest appTest = new AppTest();
-	}
-
-	@Before
     public void before() throws Exception{
         examination = new Examination();
-        Finance finance = new Finance();
         accountBill = new AccountBillVO(LocalDate.now().toString(), "SKD-20180101-00001", BillState.SUBMITTED, BillType.RECEIPT, 
         		"00000001", "Aster",new ArrayList<AccountBillItemVO>());
         accountBill2 = new AccountBillVO(LocalDate.now().toString(), "SKD-20180101-00002", BillState.SUBMITTED, BillType.RECEIPT, 
-        		"00000001", "Aster",new ArrayList<AccountBillItemVO>());
-        finance.submit(accountBill);
-        finance.submit(accountBill2);
-        
+        		"00000001", "Aster",new ArrayList<AccountBillItemVO>());        
     }
+	
+	@BeforeClass
+	public static void addBill() throws RemoteException{
+		 AppTest appTest = new AppTest();
+		 Finance finance = new Finance();
+	     AccountBillVO newAccountBill = new AccountBillVO(LocalDate.now().toString(), "SKD-20180101-00001", BillState.SUBMITTED, BillType.RECEIPT, 
+	     "00000001", "Aster",new ArrayList<AccountBillItemVO>());
+	     AccountBillVO newAccountBill2 = new AccountBillVO(LocalDate.now().toString(), "SKD-20180101-00002", BillState.SUBMITTED, BillType.RECEIPT, 
+	        		"00000001", "Aster",new ArrayList<AccountBillItemVO>());
+	     finance.submit(newAccountBill);
+	     finance.submit(newAccountBill2);
+	}
 	
 	@Test
 	public void a_testShow() {
