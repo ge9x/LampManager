@@ -10,8 +10,11 @@ import java.util.List;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.userbl.UserBLFactory;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import dataservice.salesdataservice.SalesDataService;
@@ -48,8 +51,8 @@ public class Sales {
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 		salesLineItem=new SalesLineItem();
 		goodsItem=new GoodsItem();
-		inventoryInfo=new InventoryController();
-		customerInfo=new CustomerController();
+		inventoryInfo=InventoryBLFactory.getInfo();
+		customerInfo=CustomerBLFactory.getInfo();
 	}
 	
 	

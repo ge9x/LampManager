@@ -19,7 +19,7 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	
 	private Customer customer;
 	
-	public CustomerController(){
+	protected CustomerController(){
 		customer=new Customer();
 	}
 

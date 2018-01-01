@@ -8,6 +8,7 @@ import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
 import com.jfoenix.controls.JFXPopup.PopupHPosition;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import dataservice.customerdataservice.CustomerDataService;
@@ -32,7 +33,7 @@ public class Customer {
 	
 	public Customer(){
 		customerDataService=CustomerRemoteHelper.getInstance().getCustomerDataService();
-		userInfo=new UserController(); 
+		userInfo=UserBLFactory.getInfo(); 
 	}
 	
 	/**
