@@ -24,6 +24,7 @@ public class Network {
     private SalesRemoteHelper salesRemoteHelper;
     private InitializationRemoteHelper initializationRemoteHelper;
     private LogRemoteHelper logRemoteHelper;
+    private MessageRemoteHelper messageRemoteHelper;
 
     public Network(String ip,int port){
         accountRemoteHelper = AccountRemoteHelper.getInstance();
@@ -37,6 +38,7 @@ public class Network {
         salesRemoteHelper=SalesRemoteHelper.getInstance();
         initializationRemoteHelper = InitializationRemoteHelper.getInstance();
         logRemoteHelper = LogRemoteHelper.getInstance();
+        messageRemoteHelper = MessageRemoteHelper.getInstance();
 
         this.ip = ip;
         this.port = port;
@@ -55,6 +57,7 @@ public class Network {
         salesRemoteHelper.setRemote(Naming.lookup(url+"SalesDataRemoteObject"));
         initializationRemoteHelper.setRemote(Naming.lookup(url+"InitializationDataRemoteObject"));
         logRemoteHelper.setRemote(Naming.lookup(url + "LogDataRemoteObject"));
+        messageRemoteHelper.setRemote(Naming.lookup(url+"MessageDataRemoteObject"));
     }
 
 

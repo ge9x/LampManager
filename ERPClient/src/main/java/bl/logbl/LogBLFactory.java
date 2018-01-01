@@ -19,6 +19,6 @@ public class LogBLFactory {
 	}
 
 	public synchronized static LogInfo getInfo() {
-		return new LogController();
+		return new LogController();	// 因为日志系统持有开启/关闭状态，所以不适用单例模式
 	}
 }

@@ -273,5 +273,10 @@ public class SalesPO extends BillPO{
 		this.promotionName = promotionName;
 	}
 	
+	@Override
+	public String toString() {
+		return "ID:" + super.buildID() + ", 类型:" + this.getType().getValue() + ", 状态:" + this.getState().getValue()
+				+ ", 操作员:" + user + ", 仓库:" + inventory;
+	}
 	
 }

@@ -12,10 +12,12 @@ import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.logbl.LogBLFactory;
 import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.logblservice.LogInfo;
 import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import javafx.geometry.VPos;
@@ -24,6 +26,8 @@ import po.PurchasePO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import util.UserLimits;
 import vo.CustomerVO;
@@ -43,6 +47,7 @@ public class Purchase {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	UserInfo userInfo;
+	LogInfo logInfo;
 	
 	private static SalesDataService salesDataService;
 	
@@ -50,6 +55,7 @@ public class Purchase {
 		inventoryInfo=InventoryBLFactory.getInfo();
 		customerInfo=CustomerBLFactory.getInfo();
 		userInfo=UserBLFactory.getInfo();
+		logInfo=LogBLFactory.getInfo();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
 		goodsItem=new GoodsItem();
@@ -245,9 +251,11 @@ public class Purchase {
 		     if(vo.type==BillType.PURCHASE){
 			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findPurchaseByID(vo.ID).toString());
 		     }else{
 			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findPurchaseByID(vo.ID).toString());
 		     }
 		 }
 	    return updatePurchase(vo);
@@ -290,11 +298,23 @@ public class Purchase {
 		}
 
 		vo.state=BillState.PASS;
-		return addPurchase(vo);
+		ResultMessage res=ResultMessage.NULL;
+		res=addPurchase(vo);
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.close();
+			res = this.examine(vo);
+			logInfo.open();
+			if (res == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, salesDataService.findPurchaseByID(vo.ID).toString());
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage redCoverAndCopy(PurchaseVO vo) throws NumberFormatException, RemoteException {
+		logInfo.close();
 		redCover(vo);
+		logInfo.open();
 		if(vo.type==BillType.PURCHASE){
 			vo.ID=salesDataService.getNewPurchaseID();
 		}else{
