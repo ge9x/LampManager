@@ -11,7 +11,6 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsBLFactory;
 import bl.initializationbl.InitializationBLFactory;
-import bl.initializationbl.InitializationController;
 import bl.logbl.LogBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.initializationblservice.InitInfo;
@@ -126,11 +125,12 @@ public class Inventory {
 	}
 
 	public ResultMessage addInventory(String inventory) throws RemoteException {
-		ArrayList<InventoryPO> pos = inventoryDataService.showInventory();
-		for (InventoryPO po : pos) {
-			if (po.getName().equals(inventory)) {
-				return ResultMessage.EXIST;
-			}
+		if (inventory.isEmpty()) {
+			return ResultMessage.NULL;
+		}
+		InventoryPO repeated = inventoryDataService.findInventoryByName(inventory);
+		if (repeated != null) {
+			return ResultMessage.EXIST;
 		}
 		InventoryPO toAdd = new InventoryPO(inventory);
 		ResultMessage ret = inventoryDataService.addInventroy(toAdd);
@@ -163,6 +163,9 @@ public class Inventory {
 	}
 
 	public ResultMessage updateInventory(String before, String after) throws RemoteException {
+		if (after.isEmpty()) {
+			return ResultMessage.NULL;
+		}
 		InventoryPO found = inventoryDataService.findInventoryByName(before);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
