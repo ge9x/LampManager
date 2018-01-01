@@ -1,13 +1,15 @@
 package bl.formbl;
 
+import ExcelUtil.enums.ExcelType;
+import ExcelUtil.impl.ExportToExcel;
+import ExcelUtil.model.Model;
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
-import bl.salesbl.Purchase;
-import bl.salesbl.PurchaseController;
-import bl.salesbl.Sales;
-import bl.salesbl.SalesController;
+import bl.salesbl.*;
 import blservice.customerblservice.CustomerInfo;
 import blservice.financeblservice.FinanceInfo;
 import blservice.formblservice.DocumentDetailsInput;
@@ -19,6 +21,10 @@ import util.FilterType;
 import util.ResultMessage;
 import vo.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -32,14 +38,16 @@ public class DocumentDetails{
     InventoryInfo inventoryInfo;
     CustomerInfo customerInfo;
 
+
+
     ArrayList<BillVO> billVOS = new ArrayList<>();
 
     public DocumentDetails(){
-        salesInfo = new SalesController();
-        purchaseInfo = new PurchaseController();
+        salesInfo = SalesBLFactory.getSalesInfo();
+        purchaseInfo = SalesBLFactory.getPurchaseInfo();
         financeInfo = FinanceBLFactory.getInfo();
-        inventoryInfo = new InventoryController();
-        customerInfo = new CustomerController();
+        inventoryInfo = InventoryBLFactory.getInfo();
+        customerInfo = CustomerBLFactory.getInfo();
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
@@ -186,5 +194,49 @@ public class DocumentDetails{
             case SALESRETURN: re = salesInfo.redCoverAndCopy((SalesVO)billVO);break;
         }
         return re;
+    }
+
+    public ResultMessage export(String filePath, ArrayList<BillVO> vos) {
+
+        for (BillVO billVO : vos){
+          switch (billVO.type){
+              case OVERFLOW:
+              case LOSS:
+                  return exportInventoryBill(filePath,(InventoryBillVO) billVO);
+              case PURCHASE:
+              case RETURN:
+              case SALES:
+              case SALESRETURN:
+
+              case RECEIPT:
+              case PAYMENT:
+              case CASH:
+//                  return exportCash
+          }
+        }
+        return ResultMessage.FAILED;
+    }
+
+    private ResultMessage exportInventoryBill(String filePath, InventoryBillVO billVO) {
+        File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        write(billVO.toString(), file);
+        return ResultMessage.SUCCESS;
+    }
+    private void write(String a, File f){
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(f));
+            writer.write(a);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -13,6 +13,8 @@ import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import bl.salesbl.PurchaseController;
+import bl.salesbl.Sales;
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.financeblservice.FinanceInfo;
 import blservice.inventoryblservice.InventoryInfo;
@@ -43,8 +45,8 @@ public class Examination {
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
 		financeInfo = FinanceBLFactory.getInfo();
-		salesInfo = new SalesController();
-		purchaseInfo = new PurchaseController();
+		salesInfo = SalesBLFactory.getSalesInfo();
+		purchaseInfo = SalesBLFactory.getPurchaseInfo();
 		inventoryInfo = InventoryBLFactory.getInfo();
 	}
 	

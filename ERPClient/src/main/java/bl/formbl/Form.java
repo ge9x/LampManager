@@ -60,4 +60,8 @@ public class Form {
     public ResultMessage exportProfit(String filePath, String filename, ArrayList<ProfitVO> profitVOS){
         return profit.export(filePath,filename,profitVOS);
     }
+
+    public ResultMessage exportDocumentDetails(String filePath,ArrayList<BillVO> vos) {
+        return documentDetails.export(filePath,vos);
+    }
 }

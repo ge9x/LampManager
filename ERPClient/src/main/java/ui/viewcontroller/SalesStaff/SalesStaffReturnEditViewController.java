@@ -3,6 +3,7 @@ package ui.viewcontroller.SalesStaff;
 import bean.GoodsBean;
 import bean.GoodsItemBean;
 import bl.salesbl.PurchaseController;
+import bl.salesbl.SalesBLFactory;
 import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -47,7 +48,7 @@ public class SalesStaffReturnEditViewController {
 	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new PurchaseController();
+	SalesBLService salesBLService = SalesBLFactory.getPurchaseBLService();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();

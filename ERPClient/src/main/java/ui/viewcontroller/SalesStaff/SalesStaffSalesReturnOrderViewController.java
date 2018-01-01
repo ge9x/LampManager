@@ -1,5 +1,6 @@
 package ui.viewcontroller.SalesStaff;
 
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import javafx.event.Event;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class SalesStaffSalesReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffSalesReturnEditViewController salesStaffSalesReturnEditViewController;
-    SalesBLService salesBLService = new SalesController();
+    SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 
 
     ArrayList<SalesVO> draft;

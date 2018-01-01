@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import bl.customerbl.CustomerBLFactory;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -70,7 +71,7 @@ public class SalesStaffCustomerAddViewController {
 	JFXButton cancelButton;
 
 	SalesStaffCustomerInfoViewController salesStaffCustomerInfoViewController;
-	CustomerBLService customerBLService = new CustomerController();
+	CustomerBLService customerBLService = CustomerBLFactory.getBLService();
 	CustomerVO customer;
 	
 	@FXML

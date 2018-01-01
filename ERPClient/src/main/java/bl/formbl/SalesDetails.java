@@ -5,6 +5,7 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bean.SalesDetailsBean;
 import bl.salesbl.Sales;
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.formblservice.SalesDetailsInput;
 import blservice.salesblservice.SalesInfo;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class SalesDetails {
 
     ArrayList<SalesVO> salesVOS;
-    SalesInfo salesInfo = new SalesController();
+    SalesInfo salesInfo = SalesBLFactory.getSalesInfo();
 
     public SalesDetails(){
         salesVOS = new ArrayList<>();

@@ -2,6 +2,8 @@ package ui.viewcontroller.InventoryStaff;
 
 import javax.swing.text.View;
 
+import bl.userbl.User;
+import bl.userbl.UserBLFactory;
 import org.hibernate.annotations.Check;
 
 import bl.goodsbl.Goods;
@@ -51,7 +53,7 @@ public class InventoryNavbarController {
 
     @FXML
     public void initialize() {
-        userInfo = new UserController();
+        userInfo = UserBLFactory.getInfo();
 
         ViewIcon.setText("\ue678");
         CheckIcon.setText("\ue803");

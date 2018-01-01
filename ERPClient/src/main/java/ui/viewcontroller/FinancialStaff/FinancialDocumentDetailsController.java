@@ -19,6 +19,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ui.component.BillPane;
 import ui.component.DialogFactory;
 import ui.viewcontroller.common.BillController;
@@ -30,6 +33,7 @@ import util.ResultMessage;
 import vo.*;
 
 import javax.xml.soap.Text;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -202,5 +206,29 @@ public class FinancialDocumentDetailsController {
         vBox.getChildren().add(billPane.getTabPane());
         billPane.getTabPane().getSelectionModel().selectLast();
         billPane.getTabPane().getSelectionModel().selectFirst();
+    }
+
+    public void clickExportButton(MouseEvent mouseEvent) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("导出经营历程表");
+        File f = directoryChooser.showDialog(new Stage());
+
+        if (f != null){
+            ArrayList<BillVO> billVOS = new ArrayList<>();
+
+            for (FXMLLoader loader:fxmlLoaders){
+                BillController controller = loader.getController();
+                if (controller.isSelected()){
+                    BillVO billVO = controller.getBill();
+                    billVOS.add(billVO);
+                }
+            }
+
+            ResultMessage re = formBLService.exportDocumentDetails(f.getPath(),billVOS);
+
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("经营历程表导出" + re.toString());
+            dialog.showAndWait();
+        }
     }
 }

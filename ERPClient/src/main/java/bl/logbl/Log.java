@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import dataservice.logdataservice.LogDataService;
@@ -50,7 +51,7 @@ public class Log {
 			throws RemoteException {
 		if (isOpen) {
 			if (userInfo == null) {
-				userInfo = new UserController();
+				userInfo = UserBLFactory.getInfo();
 			}
 			LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType,
 					operationObjectType, details);

@@ -1,7 +1,9 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.inventoryblservice.InventoryBLService;
 import blservice.userblservice.UserInfo;
@@ -39,9 +41,9 @@ public class InventorySyncEditController {
     MainUIController mainUIController;
     InventorySyncController inventorySyncController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    InventoryBLService inventoryBLService = new InventoryController();
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
     HashMap<GoodsVO,Integer> goodsItems = new HashMap<>();
-    UserInfo userInfo = new UserController();
+    UserInfo userInfo = UserBLFactory.getInfo();
     Boolean isNew;
     boolean isExamine = false;
     public boolean onlyShow;

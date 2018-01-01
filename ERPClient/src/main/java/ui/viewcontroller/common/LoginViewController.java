@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder.Case;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
@@ -33,7 +34,7 @@ import vo.UserVO;
  */
 public class LoginViewController {
     MainUIController mainUIController;
-    UserBLService userBLService = new UserController();
+    UserBLService userBLService = UserBLFactory.getBLService();
     File file;
 
     @FXML
