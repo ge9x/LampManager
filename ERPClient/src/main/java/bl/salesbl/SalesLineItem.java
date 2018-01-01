@@ -2,11 +2,15 @@ package bl.salesbl;
 
 import java.util.ArrayList;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.promotionbl.PromotionBLFactory;
 import bl.promotionbl.PromotionBargainController;
 import bl.promotionbl.PromotionCustomerController;
 import bl.promotionbl.PromotionTotalController;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
@@ -34,12 +38,12 @@ public class SalesLineItem {
 	UserInfo userInfo;
 	
 	public SalesLineItem(){
-		inventoryInfo=new InventoryController();
-		customerInfo=new CustomerController();
-		promotionBargainInfo=new PromotionBargainController();
-		promotionCustomerInfo=new PromotionCustomerController();
-		promotionTotalInfo=new PromotionTotalController();
-		userInfo=new UserController();
+		inventoryInfo=InventoryBLFactory.getInfo();
+		customerInfo=CustomerBLFactory.getInfo();
+		promotionBargainInfo=PromotionBLFactory.getBargainInfo();
+		promotionCustomerInfo=PromotionBLFactory.getCustomerInfo();
+		promotionTotalInfo=PromotionBLFactory.getTotalInfo();
+		userInfo=UserBLFactory.getInfo();
 	}
 
 	

@@ -27,7 +27,7 @@ public class SalesController implements SalesBLService,SalesInfo{
 
 	private Sales sales;
 	
-	public SalesController(){
+	protected SalesController(){
 		sales=new Sales();
 	}
 

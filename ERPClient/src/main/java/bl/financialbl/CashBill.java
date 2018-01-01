@@ -107,11 +107,14 @@ public class CashBill {
     }
 
     public ResultMessage examine(CashBillVO vo) throws RemoteException {
-        if(vo.state == BillState.PASS){
+        logInfo.close();
+        ResultMessage re = update(vo);
+        logInfo.open();
+        if (vo.state == BillState.PASS) {
             accountInfo.changeMoney(vo.accountID, -vo.sum);
-            logInfo.record(OperationType.REDCOVERANDCOPY,OperationObjectType.BILL,voTopo(vo).toString());
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(vo).toString());
         }
-        return update(vo);
+        return re;
     }
 
     public ArrayList<CashBillVO> getCashBillByState(BillState state) throws RemoteException {
@@ -168,28 +171,32 @@ public class CashBill {
     }
 
     public ResultMessage redCover(CashBillVO billVO) throws RemoteException {
+        logInfo.close();
         String ID = getNewCashBillID();
         billVO.ID = ID;
-        for (CashBillItemVO itemVO:billVO.cashBillItems){
+        for (CashBillItemVO itemVO : billVO.cashBillItems) {
             itemVO.money = -itemVO.money;
         }
         billVO.sum = billVO.calSum();
         submit(billVO);
         ResultMessage re = examine(billVO);
-        if (re == ResultMessage.SUCCESS){
-            logInfo.record(OperationType.REDCOVERANDCOPY,OperationObjectType.BILL,voTopo(billVO).toString());
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
         }
         return re;
     }
 
     public ResultMessage redCoverAndCopy(CashBillVO billVO) throws RemoteException {
+        logInfo.close();
         redCover(billVO);
         String ID = getNewCashBillID();
         billVO.ID = ID;
         billVO.state = BillState.DRAFT;
         ResultMessage re = save(billVO);
-        if (re == ResultMessage.SUCCESS){
-            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL,voTopo(billVO).toString());
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
         }
         return re;
     }

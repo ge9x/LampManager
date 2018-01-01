@@ -1,6 +1,8 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bl.accountbl.Account;
+import bl.userbl.User;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
@@ -18,7 +20,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class FinancialNavbarController {
     private FinancialViewController financialViewController;
-    UserInfo userInfo = new UserController();
+    UserInfo userInfo = UserBLFactory.getInfo();
     @FXML
     Label AccountIcon;
 

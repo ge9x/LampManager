@@ -142,20 +142,21 @@ public class AccountBill {
     }
 
 
-
     public ResultMessage examine(AccountBillVO vo) throws RemoteException {
+        logInfo.close();
         ResultMessage re = update(vo);
-        if (vo.state == BillState.PASS){
-            if (vo.type == BillType.RECEIPT){
-                for (AccountBillItemVO itemVO : vo.accountBillItems){
-                    accountInfo.changeMoney(itemVO.account.accountID,itemVO.transferMoney);
+        logInfo.open();
+        if (vo.state == BillState.PASS) {
+            if (vo.type == BillType.RECEIPT) {
+                for (AccountBillItemVO itemVO : vo.accountBillItems) {
+                    accountInfo.changeMoney(itemVO.account.accountID, itemVO.transferMoney);
                 }
-            }else{
-                for (AccountBillItemVO itemVO : vo.accountBillItems){
-                    accountInfo.changeMoney(itemVO.account.accountID,-itemVO.transferMoney);
+            } else {
+                for (AccountBillItemVO itemVO : vo.accountBillItems) {
+                    accountInfo.changeMoney(itemVO.account.accountID, -itemVO.transferMoney);
                 }
             }
-            logInfo.record(OperationType.EXAMINE,OperationObjectType.BILL,voTopo(vo).toString());
+            logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, voTopo(vo).toString());
         }
         return re;
     }
@@ -199,7 +200,7 @@ public class AccountBill {
     }
 
     public ResultMessage redCover(AccountBillVO billVO) throws RemoteException {
-
+        logInfo.close();
         String ID = "";
 
         if (billVO.type == BillType.RECEIPT)
@@ -215,6 +216,7 @@ public class AccountBill {
         submit(billVO);
 
         ResultMessage re = examine(billVO);
+        logInfo.open();
         if (re == ResultMessage.SUCCESS){
             logInfo.record(OperationType.REDCOVER,OperationObjectType.BILL,voTopo(billVO).toString());
         }
@@ -222,7 +224,8 @@ public class AccountBill {
     }
 
     public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
-       redCover(billVO);
+        logInfo.close();
+        redCover(billVO);
         String ID = "";
         if (billVO.type == BillType.RECEIPT)
             ID = getNewReceiptID();
@@ -231,8 +234,9 @@ public class AccountBill {
         billVO.ID = ID;
         billVO.state = BillState.DRAFT;
         ResultMessage re = save(billVO);
-        if (re == ResultMessage.SUCCESS){
-            logInfo.record(OperationType.REDCOVERANDCOPY,OperationObjectType.BILL,voTopo(billVO).toString());
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
         }
         return re;
     }

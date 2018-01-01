@@ -1,6 +1,7 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.InventoryCheckBean;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ import java.time.LocalDate;
  * Created by Kry·L on 2017/11/27.
  */
 public class  InventoryCheckController {
-    InventoryBLService inventoryBLService = new InventoryController();
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
     InventoryViewController inventoryViewController;
     InventoryCheckVO inventoryCheck;
 

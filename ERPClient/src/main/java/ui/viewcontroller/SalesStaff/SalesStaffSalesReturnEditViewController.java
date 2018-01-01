@@ -2,6 +2,7 @@ package ui.viewcontroller.SalesStaff;
 
 import bean.GoodsBean;
 import bean.GoodsItemBean;
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
@@ -49,7 +50,7 @@ public class SalesStaffSalesReturnEditViewController {
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesController();
+	SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();

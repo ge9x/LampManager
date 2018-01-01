@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/5.
  */
 public class AccountController implements AccountBLService, AccountInfo{
-    //TODO deleteAccount
 
     private Account account;
 

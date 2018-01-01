@@ -17,6 +17,7 @@ import java.util.Formattable;
 /**
  * Created by Kry·L on 2017/11/23.
  */
+
 public class FormController implements FormBLService{
     Form form;
 
@@ -57,9 +58,10 @@ public class FormController implements FormBLService{
     }
 
     @Override
-    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {
-        return null;
+    public ResultMessage exportDocumentDetails(String filePath, ArrayList<BillVO> vos) {
+        return form.exportDocumentDetails(filePath,vos);
     }
+
 
     @Override
     public ResultMessage exportProfit(String filePath,String filename,ArrayList<ProfitVO> vos) {

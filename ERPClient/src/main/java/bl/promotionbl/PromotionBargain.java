@@ -8,15 +8,19 @@ import java.util.List;
 import org.hibernate.loader.custom.EntityFetchReturn;
 
 import bl.financialbl.AccountBillItem;
+import bl.logbl.LogBLFactory;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
 import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
+import blservice.logblservice.LogInfo;
 import blservice.userblservice.UserInfo;
 import po.AccountBillItemPO;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import rmi.PromotionRemoteHelper;
+import util.OperationObjectType;
+import util.OperationType;
 import util.PromotionType;
 import util.ResultMessage;
 import vo.AccountBillItemVO;
@@ -26,12 +30,14 @@ import vo.UserVO;
 
 public class PromotionBargain extends Promotion{
 	
-	ArrayList<PromotionBargainPO> promotionBargainPOs;
-	UserInfo userInfo;
+	ArrayList<PromotionBargainPO> promotionBargainPOs = new ArrayList<>();
+	private UserInfo userInfo;
+	private LogInfo logInfo;
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
 		userInfo = UserBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionBargainVO> show() throws RemoteException{
@@ -72,7 +78,12 @@ public class PromotionBargain extends Promotion{
 	}
 	
 	public ResultMessage submit(PromotionBargainVO vo) throws RemoteException{
-		return promotionDataService.addPB(voTOpo(vo));
+		PromotionBargainPO po = voTOpo(vo);
+		ResultMessage re = promotionDataService.addPB(po);
+		if(re == ResultMessage.SUCCESS){
+			logInfo.record(OperationType.ADD, OperationObjectType.PROMOTION, po.toString());
+		}
+		return re;
 	}
 	
 	public PromotionBargainVO findPromotionByID(String promotionID) throws RemoteException{
@@ -85,7 +96,11 @@ public class PromotionBargain extends Promotion{
 		promotionBargainPOs = promotionDataService.showPB();
 		for(PromotionBargainPO po:promotionBargainPOs){
 			if(po.getPromotionID().equals(promotionID)){
-				return promotionDataService.deletePB(po);
+				ResultMessage re = promotionDataService.deletePB(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		return ResultMessage.FAILED;
@@ -106,7 +121,11 @@ public class PromotionBargain extends Promotion{
                     GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getBargains().add(itemPO);
                 }
-				return promotionDataService.updatePB(po);
+				ResultMessage re = promotionDataService.updatePB(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		
