@@ -171,6 +171,7 @@ public class Inventory {
 			return ResultMessage.NOT_EXIST;
 		}
 		else {
+			found.setName(after);
 			ResultMessage ret = inventoryDataService.updateInventory(found);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.UPDATE, OperationObjectType.INVENTORY, found.toString());
@@ -247,7 +248,7 @@ public class Inventory {
 			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		if (inventoryPO == null) {
-			return ResultMessage.FAILED;
+			return ResultMessage.NOT_EXIST;
 		}
 		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
@@ -257,7 +258,7 @@ public class Inventory {
 					if (goods.buildID().equals(itemVO.ID)) {
 						int number = map.get(goods) + sign * itemVO.number;
 						if (number < 0) { // 负数检查
-							return ResultMessage.FAILED;
+							return ResultMessage.INSUFFICIENT;
 						}
 						map.put(goods, number);
 						isExistent = true;
@@ -266,7 +267,7 @@ public class Inventory {
 				}
 				if (!isExistent) { // 如果本来仓库里没有这种商品
 					if (sign == -1) { // 负数检查
-						return ResultMessage.FAILED;
+						return ResultMessage.INSUFFICIENT;
 					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
 					map.put(goodsPO, itemVO.number);
