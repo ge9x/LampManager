@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.ERPClient.AppTest;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import bl.goodsbl.GoodsBLFactory;
+import blservice.goodsblservice.GoodsBLService;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.InventoryPO;
 import rmi.InventoryRemoteHelper;
@@ -39,16 +42,19 @@ public class InventoryBillTest {
 	private InventoryBill inventoryBill;
 	private InventoryBillVO overflow;
 	private InventoryBillVO loss;
+	private GoodsVO goodsVO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		new AppTest();
+		GoodsBLService goods = GoodsBLFactory.getBLService();
+		GoodsVO goodsVO = new GoodsVO("01000001", "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
+		goods.add(goodsVO);
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		inventoryBill = new InventoryBill();
-		GoodsVO goodsVO = new GoodsVO("01000001", "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
 		ArrayList<InventoryBillVO> found = inventoryBill.findByType(BillType.OVERFLOW);
 		if (found.isEmpty()) {
 			String date = LocalDate.now().toString();
@@ -71,7 +77,12 @@ public class InventoryBillTest {
 		else {
 			loss = found.get(0);
 		}
-
+	}
+	
+	@AfterClass
+	public void AfterClass(){
+		GoodsBLService goods = GoodsBLFactory.getBLService();
+		goods.delete(goodsVO.ID);
 	}
 
 	@Test
