@@ -12,7 +12,7 @@ public class UserController implements UserBLService, UserInfo{
 
 	private User user;
 	
-	public UserController(){
+	protected UserController(){
 		user = new User();
 	}
 

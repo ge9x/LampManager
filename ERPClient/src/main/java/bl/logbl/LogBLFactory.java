@@ -19,9 +19,6 @@ public class LogBLFactory {
 	}
 
 	public synchronized static LogInfo getInfo() {
-		if (logController == null) {
-			logController = new LogController();
-		}
-		return logController;
+		return new LogController();
 	}
 }

@@ -6,6 +6,4 @@ public class Promotion {
 	
 	protected PromotionDataService promotionDataService;
 	
-	protected PromotionList list;
-	
 }

@@ -20,7 +20,7 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 
 	private PromotionCustomer promotionCustomer;
 	
-	public PromotionCustomerController(){
+	protected PromotionCustomerController(){
 		promotionCustomer = new PromotionCustomer();
 	}
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 
+import bl.examinationbl.ExaminationBLFactory;
 import bl.examinationbl.ExaminationController;
 import blservice.examinationblservice.ExaminationBLService;
 import blstubdriver.ExaminationBLService_Stub;
@@ -29,7 +30,7 @@ public class GeneralManagerExaminationViewController {
 	private ArrayList<FXMLLoader> loaders = new ArrayList<>();
     private ArrayList<VBox> cells = new ArrayList<>();
     
-    ExaminationBLService examinationBLService = new ExaminationController();
+    ExaminationBLService examinationBLService = ExaminationBLFactory.getBLService();
     GeneralManagerViewController generalManagerViewController;
     ArrayList<BillVO> bills;
     

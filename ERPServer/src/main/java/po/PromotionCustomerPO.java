@@ -156,5 +156,10 @@ public class PromotionCustomerPO extends PromotionPO implements Serializable {
 		this.promotionID=promotionID;
 	}
 
-
+	@Override
+	public String toString(){
+		return "促销策略编号:" + promotionID + ", 促销策略名称:" + promotionName + ", 促销策略类型:" + type + ", 开始日期:" + startDate + ", 结束日期:" + endDate
+				+ ", 顾客等级:" + level.toString() + ", 代金券:" + voucher + ", 折让:" + allowance;
+	}
+	
 }

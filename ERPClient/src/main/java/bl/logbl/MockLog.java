@@ -12,6 +12,7 @@ import util.ResultMessage;
 
 public class MockLog extends Log {
 	ArrayList<String> data;
+	private boolean isOpen = true;	// 日志系统是否处于开启状态
 	{
 		data = new ArrayList<>();
 		data.add("[2017-12-25 21:04] [00002] [增加] [商品分类] [ID:02, 商品分类名称:落地灯]");
@@ -33,14 +34,41 @@ public class MockLog extends Log {
 	@Override
 	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details)
 			throws RemoteException {
-		if (details == null) {
-			return null;
+		if (isOpen) {
+			if (details == null) {
+				return null;
+			}
+			String time = LocalTime.now().toString();
+			time = time.substring(0, time.charAt('.'));
+			data.add('[' + LocalDate.now().toString() + ' ' + time + "] [00000] [" + operationType.getValue() + "] ["
+					+ operationObjectType.getValue() + "] [" + details + ']');
+			return super.record(operationType, operationObjectType, details);
 		}
-		String time = LocalTime.now().toString();
-		time = time.substring(0, time.charAt('.'));
-		data.add('[' + LocalDate.now().toString() + ' ' + time + "] [00000] [" + operationType.getValue() + "] ["
-				+ operationObjectType.getValue() + "] [" + details + ']');
-		return super.record(operationType, operationObjectType, details);
+		else {
+			return ResultMessage.FAILED;
+		}
+	}
+
+	@Override
+	public ResultMessage close() {
+		if (isOpen) {
+			isOpen = false;
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
+	}
+
+	@Override
+	public ResultMessage open() {
+		if (!isOpen) {
+			isOpen = true;
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
 	}
 
 }

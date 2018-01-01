@@ -8,6 +8,7 @@ import java.util.List;
 
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
@@ -28,7 +29,7 @@ public class PromotionTotal extends Promotion{
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
-		userInfo = new UserController();
+		userInfo = UserBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionTotalVO> show() throws RemoteException{
