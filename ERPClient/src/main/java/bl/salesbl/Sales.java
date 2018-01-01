@@ -14,9 +14,11 @@ import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.logbl.LogBLFactory;
 import bl.userbl.UserBLFactory;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.logblservice.LogInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -25,6 +27,8 @@ import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.Level;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import util.UserLimits;
 import vo.CustomerVO;
@@ -46,6 +50,7 @@ public class Sales {
 	GoodsItem goodsItem;
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
+	LogInfo logInfo;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
@@ -53,16 +58,9 @@ public class Sales {
 		goodsItem=new GoodsItem();
 		inventoryInfo=InventoryBLFactory.getInfo();
 		customerInfo=CustomerBLFactory.getInfo();
+		logInfo=LogBLFactory.getInfo();
 	}
 	
-	
-	public SalesVO findSlaesByID(String ID) {
-		return null;
-	}
-	
-	public SalesVO findSalesByState(BillState state) {
-		return null;
-	}
 	
 	public ResultMessage addSales(SalesVO vo) throws RemoteException{
 		return salesDataService.addSales(voTopo(vo));
@@ -136,9 +134,11 @@ public class Sales {
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}else{
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
 		}
 		return updateSales(vo);
@@ -309,11 +309,24 @@ public class Sales {
 			vo.ID=salesDataService.getNewSalesReturnID();
 		}
 		vo.state=BillState.PASS;
-		return addSales(vo);
+		
+		ResultMessage res=ResultMessage.NULL;
+		res=addSales(vo);
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.close();
+			res = this.examine(vo);
+			logInfo.open();
+			if (res == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage redCoverAndCopy(SalesVO vo) throws RemoteException {
+		logInfo.close();
 		redCover(vo);
+		logInfo.open();
 		vo.state=BillState.DRAFT;
 		if(vo.type==BillType.SALES){
 			vo.ID=salesDataService.getNewSalesID();
