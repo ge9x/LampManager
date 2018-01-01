@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import com.jfoenix.controls.JFXNodesList;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/27.
  */
 public class InventorySyncController {
-    InventoryBLService inventoryBLService = new InventoryController();
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
     InventoryViewController inventoryViewController;
     InventorySyncEditController inventorySyncEditController;
 

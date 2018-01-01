@@ -39,7 +39,7 @@ public class SalesDetailsTest {
         AppTest appTest = new AppTest();
         salesDetails = new SalesDetails();
 
-        SalesBLService salesBLService = SalesBLFactory.getBLService();
+        SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 
         GoodsItemVO goodsItemVO = new GoodsItemVO("02000001","地平线牌欧式落地灯","DPX-0001",2,200,"无");
         ArrayList<GoodsItemVO> goodsItemVOS = new ArrayList<>();

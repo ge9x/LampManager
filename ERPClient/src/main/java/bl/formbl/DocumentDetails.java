@@ -3,14 +3,13 @@ package bl.formbl;
 import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
-import bl.salesbl.Purchase;
-import bl.salesbl.PurchaseController;
-import bl.salesbl.Sales;
-import bl.salesbl.SalesController;
+import bl.salesbl.*;
 import blservice.customerblservice.CustomerInfo;
 import blservice.financeblservice.FinanceInfo;
 import blservice.formblservice.DocumentDetailsInput;
@@ -44,11 +43,11 @@ public class DocumentDetails{
     ArrayList<BillVO> billVOS = new ArrayList<>();
 
     public DocumentDetails(){
-        salesInfo = new SalesController();
-        purchaseInfo = new PurchaseController();
+        salesInfo = SalesBLFactory.getSalesInfo();
+        purchaseInfo = SalesBLFactory.getPurchaseInfo();
         financeInfo = FinanceBLFactory.getInfo();
-        inventoryInfo = new InventoryController();
-        customerInfo = new CustomerController();
+        inventoryInfo = InventoryBLFactory.getInfo();
+        customerInfo = CustomerBLFactory.getInfo();
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {

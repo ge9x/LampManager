@@ -3,6 +3,7 @@ package ui.viewcontroller.InventoryStaff;
 import bean.AlarmBean;
 import bean.ItemBean;
 import bl.inventorybl.Inventory;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import blstubdriver.InventoryBLService_Stub;
@@ -36,7 +37,7 @@ import java.util.Optional;
  */
 public class InventoryLookController {
     InventoryViewController inventoryViewController;
-    InventoryBLService inventoryBLService = new InventoryController();
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
 
 
     String inventory;

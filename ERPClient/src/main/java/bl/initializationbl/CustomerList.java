@@ -1,5 +1,6 @@
 package bl.initializationbl;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerInfo;
 import po.InitCustomerPO;
@@ -18,7 +19,7 @@ public class CustomerList {
     private CustomerInfo customerInfo;
 
     public CustomerList(){
-        customerInfo = new CustomerController();
+        customerInfo = CustomerBLFactory.getInfo();
     }
     public ArrayList<InitCustomerPO> getCustomers(){
         ArrayList<Integer> IDS = customerInfo.getAllCustomerID();

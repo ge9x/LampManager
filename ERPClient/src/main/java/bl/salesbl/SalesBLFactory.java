@@ -14,12 +14,18 @@ public class SalesBLFactory {
 	private static SalesController salesController;
 	private static PurchaseController purchaseController;
 
-	public synchronized static SalesBLService getBLService() {
-		if (salesController == null) {
-			salesController = new SalesController();
+	public synchronized static SalesBLService getPurchaseBLService() {
+		if (purchaseController == null) {
+			purchaseController = new PurchaseController();
 		}
-		return salesController;
+		return purchaseController;
 	}
+    public synchronized static SalesBLService getSalesBLService() {
+        if (salesController == null) {
+            salesController = new SalesController();
+        }
+        return salesController;
+    }
 
 	public synchronized static SalesInfo getSalesInfo() {
 		if (salesController == null) {
@@ -28,7 +34,7 @@ public class SalesBLFactory {
 		return salesController;
 	}
 
-	public synchronized static PurchaseInfo getCustomerInfo() {
+	public synchronized static PurchaseInfo getPurchaseInfo() {
 		if (purchaseController == null) {
 			purchaseController = new PurchaseController();
 		}

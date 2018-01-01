@@ -5,11 +5,10 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import bl.promotionbl.*;
-import bl.salesbl.GoodsItem;
-import bl.salesbl.PurchaseController;
-import bl.salesbl.SalesController;
+import bl.salesbl.*;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.promotionblservice.PromotionInfo;
@@ -83,12 +82,12 @@ public class Profit {
     double salesIncome = 0;
 
     public Profit() {
-        salesInfo = new SalesController();
-        inventoryInfo = new InventoryController();
+        salesInfo = SalesBLFactory.getSalesInfo();
+        inventoryInfo = InventoryBLFactory.getInfo();
         goodsInfo = GoodsBLFactory.getInfo();
-        purchaseInfo = new PurchaseController();
-        promotionTotalInfo = new PromotionTotalController();
-        promotionCustomerInfo = new PromotionCustomerController();
+        purchaseInfo = SalesBLFactory.getPurchaseInfo();
+        promotionTotalInfo = PromotionBLFactory.getTotalInfo();
+        promotionCustomerInfo = PromotionBLFactory.getCustomerInfo();
 
         salesVOS = new ArrayList<>();
         inventoryBillVOS = new ArrayList<>();
