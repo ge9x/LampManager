@@ -84,11 +84,10 @@ public class Goods {
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else { // 不加入删除商品功能
+		else {	// 不加入删除商品功能
 			// TODO 询问Sales是否有账单关联
-			// return goodsDataService.delete(found);
+			return goodsDataService.delete(found);
 		}
-		return ResultMessage.ERROR;
 	}
 
 	/**
