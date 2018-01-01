@@ -16,7 +16,6 @@ public class MessagePO {
 		this.billID = billID;
 		this.messageTime = messageTime;
 		this.position = position;
-		this.messageID = messageID;
 	}
 
 	public int getMessageID() {

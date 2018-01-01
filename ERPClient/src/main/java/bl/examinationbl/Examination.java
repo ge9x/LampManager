@@ -12,12 +12,14 @@ import bl.financialbl.FinanceController;
 import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.messagebl.MessageBLFactory;
 import bl.salesbl.PurchaseController;
 import bl.salesbl.Sales;
 import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.financeblservice.FinanceInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.messageblservice.MessageInfo;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.examinationdataservice.ExaminationDataService;
@@ -41,6 +43,7 @@ public class Examination {
 	private SalesInfo salesInfo;
 	private PurchaseInfo purchaseInfo;
 	private InventoryInfo inventoryInfo;
+	private MessageInfo messageInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
@@ -48,6 +51,7 @@ public class Examination {
 		salesInfo = SalesBLFactory.getSalesInfo();
 		purchaseInfo = SalesBLFactory.getPurchaseInfo();
 		inventoryInfo = InventoryBLFactory.getInfo();
+		messageInfo = MessageBLFactory.getInfo();
 	}
 	
 
