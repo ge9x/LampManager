@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
@@ -44,9 +47,9 @@ public class Purchase {
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
-		inventoryInfo=new InventoryController();
-		customerInfo=new CustomerController();
-		userInfo=new UserController();
+		inventoryInfo=InventoryBLFactory.getInfo();
+		customerInfo=CustomerBLFactory.getInfo();
+		userInfo=UserBLFactory.getInfo();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
 		goodsItem=new GoodsItem();

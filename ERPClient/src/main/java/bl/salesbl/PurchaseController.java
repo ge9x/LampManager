@@ -26,7 +26,7 @@ import vo.SalesVO;
 public class PurchaseController implements SalesBLService,PurchaseInfo{
 	private Purchase purchase;
 	
-	public PurchaseController(){
+	protected PurchaseController(){
 		purchase=new Purchase();
 	}
 
