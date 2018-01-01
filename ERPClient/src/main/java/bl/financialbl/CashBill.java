@@ -188,8 +188,8 @@ public class CashBill {
         billVO.ID = ID;
         billVO.state = BillState.DRAFT;
         ResultMessage re = save(billVO);
-        if (re == ResultMessage.SUCCESS){
-            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL,voTopo(billVO).toString());
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
         }
         return re;
     }

@@ -93,12 +93,12 @@ public class FormBLService_Stub implements FormBLService {
         return null;
     }
 
-
     @Override
-    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos) {
-        System.out.println("Export Succeed");
-        return ResultMessage.SUCCESS;
+    public ResultMessage exportDocumentDetails(String filePath, ArrayList<BillVO> vos) {
+        return null;
     }
+
+
 
     @Override
     public ResultMessage exportProfit(String filePath, String filename, ArrayList<ProfitVO> vos) {
