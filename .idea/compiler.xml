@@ -2,10 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <excludeFromCompile>
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/inventorybl/MockInventory.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/inventorybl/MockInventoryLineItem.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/inventorybl/MockInventoryList.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/bl/initializationbl/MockInitialization.java" />
+      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventory.java" />
+      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventoryLineItem.java" />
+      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventoryList.java" />
+      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/initializationbl/MockInitialization.java" />
       <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/blstubdriver/InitializationBLService_Stub.java" />
       <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/blstubdriver/SalesBLService_Stub.java" />
     </excludeFromCompile>
