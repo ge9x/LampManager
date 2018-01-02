@@ -20,7 +20,7 @@ public class Message {
 	}
 	
 	public ArrayList<MessageVO> show(UserPosition position){
-		messagePOs = messageDataService.show(position);
+//		messagePOs = messageDataService.show(position);
 		ArrayList<MessageVO> messageVOs = new ArrayList<>();
 		for(MessagePO po:messagePOs){
 			messageVOs.add(poTOvo(po));

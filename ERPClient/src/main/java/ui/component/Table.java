@@ -1,6 +1,7 @@
 package ui.component;
 
 
+import bean.GoodsBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -62,5 +63,10 @@ public class Table<T> {
 
     public void clear() {
         data.clear();
+    }
+
+    public T getSelectedItem() {
+        int index = tableView.getSelectionModel().getSelectedIndex();
+        return data.get(index);
     }
 }
