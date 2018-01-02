@@ -25,6 +25,7 @@ import bl.messagebl.MessageBLFactory;
 import bl.userbl.UserBLFactory;
 import blservice.messageblservice.MessageBLService;
 import blservice.userblservice.UserInfo;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -71,7 +72,7 @@ public class StateBarController {
     
     ScrollPane scrollPane2;
     
-    IntegerProperty numOfInfo = new SimpleIntegerProperty(0);
+    IntegerProperty numOfInfo = new SimpleIntegerProperty(1);
     ArrayList<Integer> hasRemove = new ArrayList<>();
     ArrayList<MessageVO> messageVOs = new ArrayList<>();
     static int count = 0;
@@ -125,14 +126,21 @@ public class StateBarController {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				refreshMessageBox();
+				Platform.runLater(new Runnable() {					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						refreshMessageBox();
+					}
+				});
 			}
-		}, new Date(), 1000);
+		}, 0, 1000);
     }
     
     public void refreshMessageBox(){
     	vBox.getChildren().clear();
     	messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
+    	numOfInfo.set(0);
     	count = 0;
     	for(MessageVO vo : messageVOs){
     		addMessageCell(vo);
@@ -165,6 +173,8 @@ public class StateBarController {
     	int index = hasRemove.indexOf(order);
     	vBox.getChildren().remove(order-index);
     	numOfInfo.set(numOfInfo.get()-1);
+    	
+    	messageBLService.deleteMessage(messageVOs.get(order-index).messageID);
     }
 
     public void showMessage(String message){

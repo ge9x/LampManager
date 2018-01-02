@@ -2,6 +2,7 @@ package bl.examinationbl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,6 +29,7 @@ import rmi.ExaminationRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.AccountBillVO;
 import vo.BillVO;
 import vo.CashBillVO;
@@ -95,6 +97,9 @@ public class Examination {
 		else if(bill.type==BillType.PURCHASE||bill.type==BillType.RETURN){
 			PurchaseVO purchaseBill = (PurchaseVO) bill;
 			purchaseInfo.examine(purchaseBill);
+			if(bill.state==BillState.PASS){
+				messageInfo.addMessage(purchaseBill.state, purchaseBill.ID, LocalDate.now().toString(), UserPosition.SALES_STAFF);
+			}
 		}
 		else if(bill.type==BillType.SALES||bill.type==BillType.SALESRETURN){
 			SalesVO salesBill = (SalesVO) bill;
