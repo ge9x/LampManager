@@ -47,6 +47,8 @@ public class InventoryViewController {
             Pane page = loader.load();
             inventoryLookController = loader.getController();
             inventoryLookController.setInventoryViewController(this);
+            inventoryLookController.setMainUIController(mainUIController);
+            inventoryLookController.init();
 
             mainUIController.setCenter(page);
         }catch (IOException e){
