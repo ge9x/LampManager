@@ -23,6 +23,7 @@ public class MessagePO implements Serializable {
 		this.billID = billID;
 		this.messageTime = messageTime;
 		this.position = position;
+		this.state = state;
 	}
 
 	@Id
