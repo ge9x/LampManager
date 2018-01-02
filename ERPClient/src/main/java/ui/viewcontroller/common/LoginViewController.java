@@ -164,11 +164,7 @@ public class LoginViewController {
         Task<UserVO> task = new Task<UserVO>(){
             @Override
             protected UserVO call() throws Exception {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }return userBLService.findUserByID(username.getText());
+               return userBLService.findUserByID(username.getText());
             }
         };
 
