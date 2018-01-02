@@ -158,6 +158,20 @@ public class FinancialCashBillEditController {
         nodes.add(remarkTF);
 
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+        Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        moneyTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || nameTF.getText().trim().isEmpty());
+            }
+        });
+        nameTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || moneyTF.getText().trim().isEmpty());
+            }
+        });
         dialog.setResultConverter(dialogButton -> {
             ArrayList<String> result = new ArrayList<>();
             result.add(nameTF.getText());
@@ -182,6 +196,12 @@ public class FinancialCashBillEditController {
     }
 
     public void clickSubmitButton(){
+        if (Accounts.getSelectionModel().getSelectedItem() == null || itemTable.getItems().size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
         CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
