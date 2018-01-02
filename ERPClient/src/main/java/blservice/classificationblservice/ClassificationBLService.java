@@ -38,7 +38,10 @@ public interface ClassificationBLService extends Remote{
 	/**
 	 * 删除商品分类
 	 * @param ID 待删除的商品分类的ID
-	 * @return 是否删除成功
+	 * @return 	SUCCESS：删除成功<br>
+	 * 			FAILED：删除失败（网络错误）<br>
+	 * 			EXIST：已有子分类或已包含商品<br>
+	 * 			NOT_EXIST：要删除的商品分类不存在
 	 */
 	public ResultMessage delete(String ID);
 	/**
