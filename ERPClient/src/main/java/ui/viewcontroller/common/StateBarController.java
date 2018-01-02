@@ -111,7 +111,22 @@ public class StateBarController {
         scrollPane.setContent(vBox);
 
         JFXPopup popup = new JFXPopup(scrollPane);
-        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+//        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+        badge.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35);
+				messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
+				numOfInfo.set(messageVOs.size());
+				vBox.getChildren().clear();
+		    	count = 0;
+		    	for(MessageVO vo : messageVOs){
+		    		addMessageCell(vo);
+		    	}
+			}
+		});
         
 //        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
 //        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
@@ -138,13 +153,10 @@ public class StateBarController {
     }
     
     public void refreshMessageBox(){
-    	vBox.getChildren().clear();
     	messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
-    	numOfInfo.set(0);
-    	count = 0;
-    	for(MessageVO vo : messageVOs){
-    		addMessageCell(vo);
-    	}
+	    if(numOfInfo.get()!=messageVOs.size()){
+		    numOfInfo.set(messageVOs.size());
+	    }
     }
     
     public void addMessageCell(MessageVO vo){
@@ -163,7 +175,6 @@ public class StateBarController {
         }
         
         vBox.getChildren().add(messageCellPane);
-        numOfInfo.set(numOfInfo.get()+1);
         count++;
     }
     
@@ -172,7 +183,6 @@ public class StateBarController {
     	Collections.sort(hasRemove);
     	int index = hasRemove.indexOf(order);
     	vBox.getChildren().remove(order-index);
-    	numOfInfo.set(numOfInfo.get()-1);
     	
     	messageBLService.deleteMessage(messageVOs.get(order-index).messageID);
     }
