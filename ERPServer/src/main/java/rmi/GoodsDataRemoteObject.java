@@ -30,7 +30,7 @@ public class GoodsDataRemoteObject extends UnicastRemoteObject implements GoodsD
 	}
 
 	@Override
-	public GoodsPO find(int ID) throws RemoteException {
+	public GoodsPO find(String ID) throws RemoteException {
 		return goodsDataService.find(ID);
 	}
 

@@ -56,8 +56,7 @@ public class Goods {
 	}
 
 	public GoodsVO showDetails(String ID) throws NumberFormatException, RemoteException {
-		int poID = Integer.parseInt(ID.substring(2));
-		GoodsPO found = goodsDataService.find(poID);
+		GoodsPO found = goodsDataService.find(ID);
 		return poToVO(found);
 	}
 
@@ -80,7 +79,7 @@ public class Goods {
 	}
 
 	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
-		GoodsPO found = goodsDataService.find(Integer.parseInt(ID.substring(2)));
+		GoodsPO found = goodsDataService.find(ID);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -95,7 +94,7 @@ public class Goods {
 	 * 名字(name)、型号(model)、警戒数量(alarmAmount)、进价(buyingPrice)和零售价(retailPrice)
 	 */
 	public ResultMessage update(GoodsVO vo) throws NumberFormatException, RemoteException {
-		GoodsPO toUpdate = goodsDataService.find(Integer.parseInt(vo.ID.substring(2)));
+		GoodsPO toUpdate = goodsDataService.find(vo.ID);
 		if (toUpdate == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -146,7 +145,6 @@ public class Goods {
 	}
 
 	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
-		int poID = Integer.parseInt(ID.substring(2));
-		return goodsDataService.find(poID);
+		return goodsDataService.find(ID);
 	}
 }
