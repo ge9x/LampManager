@@ -1,12 +1,16 @@
 package bl.goodsbl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import bl.classificationbl.ClassificationBLFactory;
 import bl.logbl.LogBLFactory;
+import bl.salesbl.SalesBLFactory;
 import blservice.classificationblservice.ClassificationInfo;
 import blservice.logblservice.LogInfo;
+import blservice.salesblservice.PurchaseInfo;
+import blservice.salesblservice.SalesInfo;
 import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
@@ -16,7 +20,10 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 /**
  * Created on 2017/11/5
@@ -83,10 +90,44 @@ public class Goods {
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else {	// 不加入删除商品功能
-			// TODO 询问Sales是否有账单关联
+		else if (found.countAmount() > 0) {
+			return ResultMessage.EXIST;
+		}
+		else {
+			SalesInfo salesInfo = SalesBLFactory.getSalesInfo();
+			PurchaseInfo purchaseInfo = SalesBLFactory.getPurchaseInfo();
+			LocalDate now = LocalDate.now();
+			String start = now.minusYears(1).toString();
+			String end = now.toString();
+			ArrayList<SalesVO> salesVOs = salesInfo.getAllSalesOrder(start, end);
+			ArrayList<SalesVO> salesReturnVOs = salesInfo.getAllSalesReturnOrder(start, end);
+			ArrayList<PurchaseVO> purchaseVOs = purchaseInfo.getPurchaseByDate(start, end);
+			for (SalesVO salesVO : salesVOs) {
+				if (this.isInvolvedGoods(salesVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
+			for (SalesVO salesReturnVO : salesReturnVOs) {
+				if (this.isInvolvedGoods(salesReturnVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
+			for (PurchaseVO purchaseVO : purchaseVOs) {
+				if (this.isInvolvedGoods(purchaseVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
 			return goodsDataService.delete(found);
 		}
+	}
+
+	private boolean isInvolvedGoods(ArrayList<GoodsItemVO> list, String goodsID) {
+		for (GoodsItemVO vo : list) {
+			if (vo.ID.equals(goodsID)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

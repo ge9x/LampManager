@@ -38,7 +38,10 @@ public interface GoodsBLService extends Remote {
 	/**
 	 * 删除商品
 	 * @param ID 待删除的商品的ID
-	 * @return 是否删除成功
+	 * @return 	SUCCESS：删除成功<br>
+	 * 			FAILED：删除失败（网络连接错误）<br>
+	 * 			EXIST：商品数量不为零或与一年内的已通过单据有关联<br>
+	 * 			NOT_EXIST：要删除的商品不存在
 	 */
 	public ResultMessage delete(String ID);
 	/**
