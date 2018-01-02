@@ -20,31 +20,6 @@ public class MockPromotionBargain extends PromotionBargain{
 	}
 	
 	@Override
-	public void addBargain(GoodsItemVO vo){
-		promotionBargain.bargains.add(vo);
-		System.out.println("Add goods success!");
-	}
-	
-	@Override
-	public void setPrice(double price){
-		promotionBargain.bargainTotal = price;
-		System.out.println("Set bargain price success!");
-		
-	}
-	
-	@Override
-	public void setStartDate(String date){
-		promotionBargain.startDate = date;
-		System.out.println("Set promotion start date success!");
-	}
-	
-	@Override
-	public void setEndDate(String date){
-		promotionBargain.endDate = date;
-		System.out.println("Set promotion end date success!");
-	}
-	
-	@Override
 	public ResultMessage submit(PromotionBargainVO vo){
 		if(!vo.bargains.isEmpty()&&vo.bargainTotal!=0&&vo.bargainTotal<vo.goodsTotal){
 			System.out.println("Submit success!");

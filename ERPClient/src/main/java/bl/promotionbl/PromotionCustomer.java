@@ -55,30 +55,6 @@ public class PromotionCustomer extends Promotion{
 		}
 		return promotionCustomerVO;
 	}
-	
-	public void addGift(GoodsItemVO vo){
-		
-	}
-
-	public void addVoucher(double price){
-		
-	}
-
-	public void addAllowance(double price){
-		
-	}
-
-	public void setCustomer(Level level){
-		
-	}
-
-	public void setStartDate(String date){
-		
-	}
-
-	public void setEndDate(String date){
-		
-	}
 
 	public ResultMessage submit(PromotionCustomerVO vo) throws RemoteException{
 		PromotionCustomerPO po = voTOpo(vo);

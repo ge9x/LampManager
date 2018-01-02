@@ -21,50 +21,56 @@ public interface PromotionBargainBLService {
 	public ArrayList<PromotionBargainVO> show();
 	
 	/**
-     * 添加商品到特价包中
-     * 
-     * @param GoodsVO
-     */
-	public void addBargain(GoodsItemVO vo);
-	
-	/**
-     * 设置特价包价格
-     * 
-     * @param price
-     */
-	public void setPrice(double price);
-	
-	/**
-     * 设置促销策略开始时间
-     * 
-     * @param date
-     */
-	public void setStartDate(String date);
-	
-	/**
-     * 设置促销策略结束时间
-     * 
-     * @param date
-     */
-	public void setEndDate(String date);
-	
-	/**
-     * 提交促销策略
+     * 提交特价包促销策略
      * 
      * @param PromotionCustomerVO
      * @return ResultMessage
      */
 	public ResultMessage submit(PromotionBargainVO vo);
 	
+	/**
+	 * 通过促销策略ID查找特价包促销策略
+	 * 
+	 * @param promotionID
+	 * @return PromotionBargainVO
+	 */
 	public PromotionBargainVO findPromotionByID(String promotionID);
 	
+	/**
+	 * 删除特价包促销策略
+	 * 
+	 * @param promotionID
+	 * @return ResultMessage
+	 */
 	public ResultMessage deletePromotion(String promotionID);
 	
+	/**
+	 * 修改已有特价包促销策略
+	 * 
+	 * @param PromotionBargainVO
+	 * @return ResultMessage
+	 */
 	public ResultMessage updatePromotion(PromotionBargainVO vo);
 	
+	/**
+	 * 得到新的特价包促销策略ID
+	 * 
+	 * @return String
+	 */
 	public String getNewPromotionBargainID();
 	
+	/**
+	 * 得到当前登录用户名
+	 * 
+	 * @return String
+	 */
 	public String getCurrentUserName();
 	
+	/**
+	 * 通过促销策略名查找特价包促销策略
+	 * 
+	 * @param promotionName
+	 * @return PromotionBargainVO
+	 */
 	public PromotionBargainVO findPromotionByName(String promotionName);
 }

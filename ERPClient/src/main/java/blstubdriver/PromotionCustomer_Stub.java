@@ -23,41 +23,6 @@ public class PromotionCustomer_Stub implements PromotionCustomerBLService{
 		return promotion;
 	}
 
-	public void addGift(GoodsItemVO vo) {
-		// TODO Auto-generated method stub
-		ArrayList<GoodsItemVO> gifts = new ArrayList<GoodsItemVO>();
-		gifts.add(vo);
-		System.out.println("Add gift success!");
-	}
-
-	public void addVoucher(double price) {
-		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
-		promotion.voucher = price;
-		System.out.println("Set voucher success!");
-	}
-
-	public void addAllowance(double price) {
-		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
-		promotion.allowance = price;
-		System.out.println("Set allowance success!");
-	}
-
-	public void setStartDate(String date) {
-		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
-		promotion.startDate = date;
-		System.out.println("Set start time success!");
-	}
-
-	public void setEndDate(String date) {
-		// TODO Auto-generated method stub
-		PromotionCustomerVO promotion = new PromotionCustomerVO("会员促销策略1","000003", LocalDate.now().toString(), LocalDate.now().toString(), 1000, 0, new ArrayList<GoodsItemVO>(), Level.LEVEL_THREE);
-		promotion.endDate = date;
-		System.out.println("Set end time success!");
-	}
-
 	public ResultMessage submit(PromotionCustomerVO vo) {
 		// TODO Auto-generated method stub
 		return ResultMessage.SUCCESS;

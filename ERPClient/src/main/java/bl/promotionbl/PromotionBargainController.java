@@ -31,22 +31,6 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 		}
 	}
 
-	public void addBargain(GoodsItemVO vo) {
-		
-	}
-
-	public void setPrice(double price) {
-		
-	}
-
-	public void setStartDate(String date) {
-		
-	}
-
-	public void setEndDate(String date) {
-		
-	}
-
 	public ResultMessage submit(PromotionBargainVO vo) {
 		try {
 			return promotionBargain.submit(vo);

@@ -21,41 +21,6 @@ public interface PromotionTotalBLService {
 	public ArrayList<PromotionTotalVO> show();
 	
 	/**
-     * 添加赠品到促销策略中
-     * 
-     * @param GoodsVO
-     */
-	public void addGift(GoodsItemVO vo);
-	
-	/**
-     * 添加代金券到促销策略中
-     * 
-     * @param price
-     */
-	public void addVoucher(double price);
-	
-	/**
-     * 设置促销策略的目标总价
-     * 
-     * @param price
-     */
-	public void setPrice(double price);
-	
-	/**
-     * 设置促销策略开始时间
-     * 
-     * @param date
-     */
-	public void setStartDate(String date);
-	
-	/**
-     * 设置促销策略结束时间
-     * 
-     * @param date
-     */
-	public void setEndDate(String date);
-	
-	/**
      * 提交促销策略
      * 
      * @param PromotionCustomerVO
@@ -63,15 +28,49 @@ public interface PromotionTotalBLService {
      */
 	public ResultMessage submit(PromotionTotalVO vo);
 	
+	/**
+	 * 通过促销策略ID查找总价促销策略
+	 * 
+	 * @param promotionID
+	 * @return PromotionTotalVO
+	 */
 	public PromotionTotalVO findPromotionByID(String promotionID);
 	
+	/**
+	 * 删除总价促销策略
+	 * 
+	 * @param promotionID
+	 * @return ResultMessage
+	 */
 	public ResultMessage deletePromotion(String promotionID);
 	
+	/**
+	 * 修改已有的总价促销策略
+	 * 
+	 * @param promotionTotalVO
+	 * @return ResultMessage
+	 */
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO);
 	
+	/**
+	 * 得到新的总价促销策略ID
+	 * 
+	 * @return String
+	 */
 	public String getNewPromotionTotalID();
 	
+	/**
+	 * 得到当前登录用户名
+	 * 
+	 * @return
+	 */
 	public String getCurrentUserName();
 	
+	/**
+	 * 通过促销策略名查找总价促销策略
+	 * 
+	 * @param promotionName
+	 * @return
+	 */
 	public PromotionTotalVO findPromotionByName(String promotionName);
 }
