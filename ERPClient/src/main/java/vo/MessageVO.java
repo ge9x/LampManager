@@ -1,7 +1,5 @@
 package vo;
 
-import javax.swing.border.TitledBorder;
-
 import util.BillState;
 import util.UserPosition;
 

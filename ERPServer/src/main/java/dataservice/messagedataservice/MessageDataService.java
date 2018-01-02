@@ -1,19 +1,19 @@
 package dataservice.messagedataservice;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import javafx.scene.effect.Shadow;
 import po.MessagePO;
 import util.ResultMessage;
 import util.UserPosition;
 
 public interface MessageDataService extends Remote{
 
-	public ArrayList<MessagePO> show(UserPosition position);
+	public ArrayList<MessagePO> show(UserPosition position) throws RemoteException ;
 	
-	public ResultMessage add(MessagePO po);
+	public ResultMessage add(MessagePO po) throws RemoteException ;
 	
-	public ResultMessage delete(int messageID);
+	public ResultMessage delete(int messageID) throws RemoteException ;
 	
 }
