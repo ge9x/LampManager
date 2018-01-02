@@ -61,22 +61,6 @@ public class PromotionBargain extends Promotion{
 		return promotionBargainVO;
 	}
 	
-	public void addBargain(GoodsItemVO vo){
-		
-	}
-	
-	public void setPrice(double price){
-		
-	}
-	
-	public void setStartDate(String date){
-		
-	}
-	
-	public void setEndDate(String date){
-		
-	}
-	
 	public ResultMessage submit(PromotionBargainVO vo) throws RemoteException{
 		PromotionBargainPO po = voTOpo(vo);
 		ResultMessage re = promotionDataService.addPB(po);

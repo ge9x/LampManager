@@ -33,36 +33,6 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 		}
 	}
 
-	public void addGift(GoodsItemVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addVoucher(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addAllowance(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setCustomer(Level level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setStartDate(String date) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setEndDate(String date) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public ResultMessage submit(PromotionCustomerVO vo) {
 		try {
 			return promotionCustomer.submit(vo);

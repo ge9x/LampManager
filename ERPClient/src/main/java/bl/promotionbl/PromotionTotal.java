@@ -59,26 +59,6 @@ public class PromotionTotal extends Promotion{
 		return promotionTotalVO;
 	}
 
-	public void addGift(GoodsItemVO vo){
-		
-	}
-
-	public void addVoucher(double price){
-		
-	}
-
-	public void setPrice(double price){
-		
-	}
-
-	public void setStartDate(String date){
-		
-	}
-
-	public void setEndDate(String date){
-		
-	}
-
 	public ResultMessage submit(PromotionTotalVO vo) throws RemoteException{
 		PromotionTotalPO po = voTOpo(vo);
 		ResultMessage re = promotionDataService.addPT(po);
