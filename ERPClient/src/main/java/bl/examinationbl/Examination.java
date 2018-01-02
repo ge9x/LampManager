@@ -97,9 +97,6 @@ public class Examination {
 		else if(bill.type==BillType.PURCHASE||bill.type==BillType.RETURN){
 			PurchaseVO purchaseBill = (PurchaseVO) bill;
 			purchaseInfo.examine(purchaseBill);
-			if(bill.state==BillState.PASS){
-				messageInfo.addMessage(purchaseBill.state, purchaseBill.ID, LocalDate.now().toString(), UserPosition.SALES_STAFF);
-			}
 		}
 		else if(bill.type==BillType.SALES||bill.type==BillType.SALESRETURN){
 			SalesVO salesBill = (SalesVO) bill;
