@@ -67,7 +67,6 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 
 	@Override
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException {
-		
 		return inventoryBillDataHelper.save(po);
 	}
 

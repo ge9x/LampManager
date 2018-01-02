@@ -3,9 +3,7 @@ package bl.inventorybl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import bl.salesbl.PurchaseController;
 import bl.salesbl.SalesBLFactory;
-import bl.salesbl.SalesController;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import util.BillType;

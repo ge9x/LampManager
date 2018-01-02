@@ -27,23 +27,17 @@ import vo.InventoryCheckVO;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InventoryTest {
 	private Inventory inventory;
-	private String name;
+	private static String name;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		new AppTest();
+		name = "仙林区仓库";
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		inventory = new Inventory();
-		ArrayList<String> names = inventory.showInventory();
-		if (names.size() > 1) {
-			name = names.get(1);
-		}
-		else {
-			name = "仙林区仓库";
-		}
 	}
 
 	@Test
@@ -74,7 +68,7 @@ public class InventoryTest {
 
 	@Test
 	public void e_testDeleteInventory() throws RemoteException {
-		ResultMessage result = inventory.deleteInventory("鼓楼区仓库");
+		ResultMessage result = inventory.deleteInventory(name);
 		assertEquals(ResultMessage.SUCCESS, result);
 	}
 
@@ -82,11 +76,12 @@ public class InventoryTest {
 	public void c_testUpdateInventory() throws RemoteException {
 		ResultMessage result = inventory.updateInventory(name, "鼓楼区仓库");
 		assertEquals(ResultMessage.SUCCESS, result);
+		name = "鼓楼区仓库";
 	}
 
 	@Test
 	public void d_testGetInventoryByName() throws RemoteException {
-		assertNotNull(inventory.getInventoryByName("鼓楼区仓库"));
+		assertNotNull(inventory.getInventoryByName(name));
 	}
 
 	@Test
@@ -102,7 +97,7 @@ public class InventoryTest {
 	}
 
 	@Test
-	public void testGetStartDate() {
+	public void f_testGetStartDate() {
 		assertNotNull(inventory.getStartDate());
 	}
 
