@@ -6,6 +6,7 @@ import bl.inventorybl.InventoryBLFactory;
 import blservice.inventoryblservice.InventoryBLService;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,8 +14,10 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import ui.component.DialogFactory;
 import ui.component.Table;
+import ui.viewcontroller.common.MainUIController;
 import util.InventoryListItemType;
 import util.Money;
 import vo.*;
@@ -33,7 +36,7 @@ import java.util.concurrent.Executors;
 public class InventoryLookController {
     InventoryViewController inventoryViewController;
     InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
-
+    MainUIController mainUIController;
 
     String inventory;
     InventoryViewVO inventoryViewVO;
@@ -59,6 +62,9 @@ public class InventoryLookController {
     Label purNum, salNum, purMoney, salMoney, pursalNumTotal, pursalMoneyTotal;
 
     @FXML
+    StackPane Page;
+
+    @FXML
     ScrollPane AlarmTablePane;
 
     @FXML
@@ -76,8 +82,7 @@ public class InventoryLookController {
     @FXML
     JFXComboBox<String> InventoryBox;
 
-    @FXML
-    public void initialize() {
+    public void init() {
         executor = Executors.newCachedThreadPool(runnable -> {
             Thread t = new Thread(runnable);
             t.setDaemon(true);
@@ -247,5 +252,9 @@ public class InventoryLookController {
         if (result.isPresent()) {
             inventoryBLService.addInventory(result.get());
         }
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }
