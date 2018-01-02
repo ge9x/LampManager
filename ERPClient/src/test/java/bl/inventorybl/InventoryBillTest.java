@@ -42,13 +42,13 @@ public class InventoryBillTest {
 	private InventoryBill inventoryBill;
 	private InventoryBillVO overflow;
 	private InventoryBillVO loss;
-	private GoodsVO goodsVO;
+	static private GoodsVO goodsVO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		new AppTest();
 		GoodsBLService goods = GoodsBLFactory.getBLService();
-		GoodsVO goodsVO = new GoodsVO("01000001", "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
+		goodsVO = new GoodsVO("01000001", "SJ牌欧洲奢华落地灯", "SJ-0001", "灯", 0, 7, 233, 250, 233, 250);
 		goods.add(goodsVO);
 	}
 
@@ -80,7 +80,7 @@ public class InventoryBillTest {
 	}
 	
 	@AfterClass
-	public void AfterClass(){
+	public static void AfterClass(){
 		GoodsBLService goods = GoodsBLFactory.getBLService();
 		goods.delete(goodsVO.ID);
 	}

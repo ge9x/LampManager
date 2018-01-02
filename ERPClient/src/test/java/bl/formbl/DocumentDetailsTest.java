@@ -82,7 +82,7 @@ public class DocumentDetailsTest {
         inventoryBLService.addInventory("默认仓库");
         ArrayList<InventoryBillVO> ret = new ArrayList<>();
         HashMap<GoodsVO, Integer> goodsMap = new HashMap<>();
-        GoodsVO goodsVO = new GoodsVO("02000001", "地平线牌欧式落地灯", "DPX-0001", "落地灯", "默认仓库", 1, 20, 250, 255, 250, 255);
+        GoodsVO goodsVO = new GoodsVO(goodsBLService.getNewID("02"), "地平线牌欧式落地灯", "DPX-0001", "落地灯", "默认仓库", 1, 20, 250, 255, 250, 255);
         goodsBLService.add(goodsVO);
 
         goodsMap.put(goodsVO, 5);
