@@ -22,16 +22,18 @@ public interface LogInfo {
 	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details);
 
 	/**
-	 * 关闭日志系统（默认开启），关闭期间所有的record调用将无法生效并返回FAILED
+	 * 关闭日志系统（默认开启），关闭期间所有的record调用将无法生效并返回FAILED<br>
+	 * 每调用一次本方法都将给日志系统加上一层锁，在所有的锁解开前系统都处于关闭状态
 	 * 
-	 * @return SUCCEED：关闭成功<br>FAILED：已为关闭状态
+	 * @return SUCCEED：关闭成功
 	 */
 	public ResultMessage close();
 
 	/**
-	 * 开启日志系统（默认开启），开启后可正常调用record方法
+	 * 开启日志系统（默认开启），开启后可正常调用record方法<br>
+	 * 每调用一次本方法都将给日志系统解开一层锁，在所有的锁解开前系统都处于关闭状态
 	 * 
-	 * @return SUCCEED：开启成功<br>FAILED：已为开启状态
+	 * @return SUCCEED：成功解开所有锁，系统已处于开启状态<br>FAILED：解开了一层锁但系统仍处于关闭状态
 	 */
 	public ResultMessage open();
 }

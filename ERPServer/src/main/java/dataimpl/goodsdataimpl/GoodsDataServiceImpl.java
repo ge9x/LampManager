@@ -10,6 +10,7 @@ import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
 import util.Criterion;
+import util.QueryMode;
 import util.ResultMessage;
 
 /**
@@ -38,8 +39,19 @@ public class GoodsDataServiceImpl implements GoodsDataService{
 	}
 
 	@Override
-	public GoodsPO find(int ID) throws RemoteException {
-		return goodsDataHelper.exactlyQuery("id", ID);
+	public GoodsPO find(String ID) throws RemoteException {
+		ArrayList<Criterion> criteria = new ArrayList<>();
+		ClassificationPO classification = ClassificationDataServiceImpl.getInstance().findByID(Integer.parseInt(ID.substring(0, 2)));
+		criteria.add(new Criterion("classification", classification, QueryMode.FULL));
+		criteria.add(new Criterion("turn", Integer.parseInt(ID.substring(2)), QueryMode.FULL));
+		ArrayList<GoodsPO> found = goodsDataHelper.multiQuery(criteria);
+		if(found.isEmpty()){
+			return null;
+		}
+		else if(found.size()>1){
+			System.out.println("警告：数据库中出现一样的商品：" + ID);
+		}
+		return found.get(0);
 	}
 
 	@Override

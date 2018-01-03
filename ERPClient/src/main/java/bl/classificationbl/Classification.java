@@ -85,7 +85,7 @@ public class Classification {
 			return ret;
 		}
 		else {
-			return ResultMessage.FAILED;
+			return ResultMessage.EXIST;
 		}
 	}
 
