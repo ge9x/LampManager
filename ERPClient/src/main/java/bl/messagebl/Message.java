@@ -1,5 +1,6 @@
 package bl.messagebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import dataservice.messagedataservice.MessageDataService;
@@ -19,8 +20,8 @@ public class Message {
 		messageDataService = MessageRemoteHelper.getInstance().getMessageDataService();
 	}
 	
-	public ArrayList<MessageVO> show(UserPosition position){
-//		messagePOs = messageDataService.show(position);
+	public ArrayList<MessageVO> show(UserPosition position) throws RemoteException{
+		messagePOs = messageDataService.show(position);
 		ArrayList<MessageVO> messageVOs = new ArrayList<>();
 		for(MessagePO po:messagePOs){
 			messageVOs.add(poTOvo(po));
@@ -28,13 +29,14 @@ public class Message {
 		return messageVOs;
 	}
 	
-	public ResultMessage addMessage(BillState state, String ID, String messageTime, UserPosition position){
+	public ResultMessage addMessage(BillState state, String ID, String messageTime, UserPosition position) throws RemoteException{
 		MessagePO po = new MessagePO(state, ID, messageTime, position);
+		System.out.println(po.getState() + state.toString());
 		ResultMessage re = messageDataService.add(po);
 		return re;
 	}
 	
-	public ResultMessage deleteMessage(int messageID){
+	public ResultMessage deleteMessage(int messageID) throws RemoteException{
 		ResultMessage re = messageDataService.delete(messageID);
 		return re;
 	}

@@ -494,17 +494,17 @@ public class SalesStaffSalesEditViewController {
     	GoodsBean bean = null;
     	if (result.isPresent()){
     		bean = result.get();
+    		GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
+        	data.add(itemBean);
+        	goodsInventory.add(bean.getAmount());
+            itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    total.setValue(total.getValue() - oldValue.doubleValue() + newValue.doubleValue());
+                    afterSum.setValue(afterSum.getValue() - oldValue.doubleValue() + newValue.doubleValue());
+                }
+            });
     	}
-        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0, "");
-    	data.add(itemBean);
-    	goodsInventory.add(bean.getAmount());
-        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                total.setValue(total.getValue() - oldValue.doubleValue() + newValue.doubleValue());
-                afterSum.setValue(afterSum.getValue() - oldValue.doubleValue() + newValue.doubleValue());
-            }
-        });
     }
 
     public void clickSubmitButton(){

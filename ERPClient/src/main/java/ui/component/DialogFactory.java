@@ -2,9 +2,11 @@ package ui.component;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
@@ -101,6 +103,7 @@ public class DialogFactory {
             grid.add(nodes.get(i), 1, i);
         }
         dialog.getDialogPane().setContent(grid);
+
 
         initStyle(dialog);
         return dialog;

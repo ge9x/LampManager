@@ -1,10 +1,13 @@
 package ui.viewcontroller.common;
 
+import com.jfoenix.controls.JFXSpinner;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
@@ -22,13 +25,17 @@ public class MainUIController {
 
     @FXML
     BorderPane borderPane;
- 
+
+    @FXML
+    public JFXSpinner ProgressCircle;
+
     Stage primaryStage;
 
     Stack<Pane> paneStack;
 
     public MainUIController(){
         paneStack = new Stack<>();
+
     }
 
     public void showFinancialStaffView(){
@@ -88,6 +95,7 @@ public class MainUIController {
             e.printStackTrace();
         }
     }
+
     /**
      * 将界面大小调整为适合登录界面
      */
@@ -134,6 +142,7 @@ public class MainUIController {
         borderPane.setCenter(node);
     }
 
+
     public void setLeft(Node node){
         borderPane.setLeft(node);
     }
@@ -155,6 +164,5 @@ public class MainUIController {
     public void saveView(){
         paneStack.push((Pane)borderPane.getCenter());
     }
-
 
 }

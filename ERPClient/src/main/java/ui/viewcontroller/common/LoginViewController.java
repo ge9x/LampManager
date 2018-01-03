@@ -20,16 +20,17 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import util.UserPosition;
@@ -45,6 +46,8 @@ public class LoginViewController {
     private Executor executor;
 
     @FXML
+    AnchorPane root;
+    @FXML
     JFXButton LoginButton,LogButton;
 
     @FXML
@@ -58,9 +61,7 @@ public class LoginViewController {
 
     @FXML
     JFXCheckBox rememberBox;
-    
-    @FXML
-    JFXSpinner ProgressCircle;
+
 
     @FXML
     public void initialize(){
@@ -155,15 +156,15 @@ public class LoginViewController {
                 dialog.showAndWait();
             }
         });
+
         executor.execute(task);
     }
 
     public void showMainView(){
-
         Task<UserVO> task = new Task<UserVO>(){
             @Override
             protected UserVO call() throws Exception {
-                return userBLService.findUserByID(username.getText());
+               return userBLService.findUserByID(username.getText());
             }
         };
 

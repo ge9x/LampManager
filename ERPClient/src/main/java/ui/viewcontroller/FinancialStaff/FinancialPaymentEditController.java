@@ -168,6 +168,12 @@ public class FinancialPaymentEditController {
     }
 
     public void clickSubmitButton(){
+        if (Customer.getSelectionModel().getSelectedItem() == null || itemTable.getItems().size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
@@ -227,7 +233,7 @@ public class FinancialPaymentEditController {
     	}
     }
     public  Dialog getAccountBillItemDialog(){
-        JFXComboBox name = new JFXComboBox();
+        JFXComboBox<String> name = new JFXComboBox();
         ArrayList<String> names = new ArrayList<>();
         for (AccountVO account:accounts){
             names.add(account.accountName);
@@ -249,7 +255,20 @@ public class FinancialPaymentEditController {
         nodes.add(remarks);
 
         Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels,nodes);
-
+        Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        money.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || name.getSelectionModel().getSelectedItem().trim().isEmpty());
+            }
+        });
+        name.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable, SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+                button.setDisable(newValue.getSelectedItem().trim().isEmpty() || money.getText().trim().isEmpty());
+            }
+        });
         Platform.runLater(() -> name.requestFocus());
 
         //获得输入

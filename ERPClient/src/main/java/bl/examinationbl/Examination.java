@@ -2,6 +2,7 @@ package bl.examinationbl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,6 +29,7 @@ import rmi.ExaminationRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.AccountBillVO;
 import vo.BillVO;
 import vo.CashBillVO;
