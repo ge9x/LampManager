@@ -2,6 +2,7 @@ package bl.inventorybl;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +10,10 @@ import java.util.Map;
 import bl.goodsbl.Goods;
 import bl.goodsbl.GoodsBLFactory;
 import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
@@ -23,6 +26,7 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -36,11 +40,13 @@ public class InventoryBill {
 	private InventoryDataService inventoryDataService;
 	private GoodsInfo goodsInfo;
 	private LogInfo logInfo;
+	private MessageInfo messageInfo;
 
 	protected InventoryBill() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		goodsInfo = GoodsBLFactory.getInfo();
 		logInfo = LogBLFactory.getInfo();
+		messageInfo = MessageBLFactory.getInfo();
 	}
 
 	/**
@@ -215,6 +221,10 @@ public class InventoryBill {
 			else {	// BillType = LOSS
 				this.changeInventory(goodsMap, vo.inventory, -1);
 			}
+		}
+		if (vo.state != BillState.SUBMITTED) {
+			String now = LocalDateTime.now().toString();
+			messageInfo.addMessage(vo.state, vo.ID, now.replace('T', ' '), UserPosition.INVENTORY_STAFF);
 		}
 		if (ret == ResultMessage.SUCCESS) {
 			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
