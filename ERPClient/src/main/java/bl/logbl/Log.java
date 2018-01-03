@@ -22,7 +22,7 @@ import util.ResultMessage;
 public class Log {
 	private LogDataService logDataService;
 	private UserInfo userInfo;
-	private boolean isOpen = true;	// 日志系统是否处于开启状态
+	private int lockNumber = 0;	// 日志系统上锁数，为0时日志系统处于开启状态，>0时为关闭状态
 
 	protected Log() {
 		logDataService = LogRemoteHelper.getInstance().getLogDataService();
@@ -48,7 +48,7 @@ public class Log {
 
 	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details)
 			throws RemoteException {
-		if (isOpen) {
+		if (lockNumber == 0) {
 			if (userInfo == null) {
 				userInfo = UserBLFactory.getInfo();
 			}
@@ -66,18 +66,15 @@ public class Log {
 	}
 
 	public ResultMessage close() {
-		if (isOpen) {
-			isOpen = false;
-			return ResultMessage.SUCCESS;
-		}
-		else {
-			return ResultMessage.FAILED;
-		}
+		lockNumber++;
+		return ResultMessage.SUCCESS;
 	}
 
 	public ResultMessage open() {
-		if (!isOpen) {
-			isOpen = true;
+		if (lockNumber > 0) {
+			lockNumber--;
+		}
+		if (lockNumber == 0) {
 			return ResultMessage.SUCCESS;
 		}
 		else {

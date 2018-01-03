@@ -25,7 +25,7 @@ public interface GoodsDataService extends Remote{
 	 * @return 找到的商品PO
 	 * @throws RemoteException
 	 */
-	public GoodsPO find(int ID) throws RemoteException;
+	public GoodsPO find(String ID) throws RemoteException;
 	/**
 	 * 添加商品
 	 * @param po 待添加的商品PO

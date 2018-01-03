@@ -25,6 +25,7 @@ import bl.messagebl.MessageBLFactory;
 import bl.userbl.UserBLFactory;
 import blservice.messageblservice.MessageBLService;
 import blservice.userblservice.UserInfo;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -71,7 +72,7 @@ public class StateBarController {
     
     ScrollPane scrollPane2;
     
-    IntegerProperty numOfInfo = new SimpleIntegerProperty(0);
+    IntegerProperty numOfInfo = new SimpleIntegerProperty(1);
     ArrayList<Integer> hasRemove = new ArrayList<>();
     ArrayList<MessageVO> messageVOs = new ArrayList<>();
     static int count = 0;
@@ -110,7 +111,22 @@ public class StateBarController {
         scrollPane.setContent(vBox);
 
         JFXPopup popup = new JFXPopup(scrollPane);
-        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+//        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+        badge.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35);
+				messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
+				numOfInfo.set(messageVOs.size());
+				vBox.getChildren().clear();
+		    	count = 0;
+		    	for(MessageVO vo : messageVOs){
+		    		addMessageCell(vo);
+		    	}
+			}
+		});
         
 //        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
 //        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
@@ -125,18 +141,22 @@ public class StateBarController {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				refreshMessageBox();
+				Platform.runLater(new Runnable() {					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						refreshMessageBox();
+					}
+				});
 			}
-		}, new Date(), 1000);
+		}, 0, 1000);
     }
     
     public void refreshMessageBox(){
-    	vBox.getChildren().clear();
     	messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
-    	count = 0;
-    	for(MessageVO vo : messageVOs){
-    		addMessageCell(vo);
-    	}
+	    if(numOfInfo.get()!=messageVOs.size()){
+		    numOfInfo.set(messageVOs.size());
+	    }
     }
     
     public void addMessageCell(MessageVO vo){
@@ -155,7 +175,6 @@ public class StateBarController {
         }
         
         vBox.getChildren().add(messageCellPane);
-        numOfInfo.set(numOfInfo.get()+1);
         count++;
     }
     
@@ -164,7 +183,8 @@ public class StateBarController {
     	Collections.sort(hasRemove);
     	int index = hasRemove.indexOf(order);
     	vBox.getChildren().remove(order-index);
-    	numOfInfo.set(numOfInfo.get()-1);
+    	
+    	messageBLService.deleteMessage(messageVOs.get(order-index).messageID);
     }
 
     public void showMessage(String message){

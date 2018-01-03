@@ -29,6 +29,7 @@
 		<mapping class="po.InventoryBillPO" />
 		<mapping class="po.InventoryPO" />
 		<mapping class="po.LogPO" />
+		<mapping class="po.MessagePO" />
 		<mapping class="po.PromotionCustomerPO" />
 		<mapping class="po.PromotionBargainPO" />
 		<mapping class="po.PromotionTotalPO" />

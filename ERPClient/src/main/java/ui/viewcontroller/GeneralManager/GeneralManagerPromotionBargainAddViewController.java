@@ -256,7 +256,7 @@ public class GeneralManagerPromotionBargainAddViewController {
 	}
 	
 	public boolean isCompleted(){
-		if(promotionName.getText().length()>0&&bargainTotal.getText().length()>0){
+		if(promotionName.getText().length()>0&&bargainTotal.getText().length()>0&&!data.isEmpty()){
 			return true;
 		}
 		else{

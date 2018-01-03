@@ -8,13 +8,15 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/look.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
-    <children>
-        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+
+<StackPane fx:id="Page" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/look.css" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
+   <children>
+      <ScrollPane prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
                 <VBox alignment="TOP_CENTER" prefHeight="1165.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
@@ -31,8 +33,8 @@
                                     <padding>
                                         <Insets left="10.0" />
                                     </padding>
-
-                           <HBox.margin>
+      
+                                 <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                                 </Label>
@@ -149,8 +151,8 @@
                       </effect>
                      <children>
                         <ScrollPane fx:id="InventoryItemTablePane" layoutX="2.0" layoutY="44.0" prefHeight="227.0" prefWidth="762.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
-
-                           <padding>
+      
+                                 <padding>
                               <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                            </padding>
                         </ScrollPane>
@@ -185,5 +187,5 @@
                 </VBox>
             </content>
         </ScrollPane>
-    </children>
-</AnchorPane>
+   </children>
+</StackPane>

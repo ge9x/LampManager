@@ -1,5 +1,6 @@
 package bl.messagebl;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import blservice.messageblservice.MessageBLService;
@@ -18,19 +19,37 @@ public class MessageController implements MessageBLService, MessageInfo{
 	}
 	
 	public ArrayList<MessageVO> show(UserPosition position){
-		return message.show(position);
+		try {
+			return message.show(position);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public ResultMessage addMessage(BillState state, String ID, String messageTime, UserPosition position) {
 		// TODO Auto-generated method stub
-		return message.addMessage(state, ID, messageTime, position);
+		try {
+			return message.addMessage(state, ID, messageTime, position);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
 	}
 
 	@Override
 	public ResultMessage deleteMessage(int messageID) {
 		// TODO Auto-generated method stub
-		return message.deleteMessage(messageID);
+		try {
+			return message.deleteMessage(messageID);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResultMessage.ERROR;
+		}
 	}
 	
 	

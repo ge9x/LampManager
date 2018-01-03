@@ -4,6 +4,7 @@ import bean.InventoryCheckBean;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -19,6 +20,8 @@ import vo.InventoryCheckVO;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Kry·L on 2017/11/27.
@@ -27,7 +30,7 @@ public class  InventoryCheckController {
     InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
     InventoryViewController inventoryViewController;
     InventoryCheckVO inventoryCheck;
-
+    private Executor executor;
     Table<InventoryCheckBean> table;
 
     int totalNum;
@@ -41,6 +44,12 @@ public class  InventoryCheckController {
 
     @FXML
     public void initialize(){
+        executor = Executors.newCachedThreadPool(runnable -> {
+            Thread t = new Thread(runnable);
+            t.setDaemon(true);
+            return t;
+        });
+
         TotalIcon.setText("\ue6e3");
         ValueIcon.setText("\ue605");
         AvgPriceIcon.setText("\ueb73");
@@ -83,17 +92,26 @@ public class  InventoryCheckController {
 
     }
     public void showInventoryCheck(){
-        inventoryCheck = inventoryBLService.check();
-        int n = 1;
-        table.clear();
-        for (GoodsVO good : inventoryCheck.averagePrice.keySet()){
-            double avg = inventoryCheck.averagePrice.get(good);
-            table.addRow(new InventoryCheckBean(n++,good.ID,good.name,good.model,good.amount,Money.getMoneyString(avg)));
-            totalNum += good.amount;
-            totalValue += good.amount * avg;
-            avgValue += avg;
-        }
-        avgValue /= inventoryCheck.averagePrice.keySet().size();
+        Task<InventoryCheckVO> task = new Task<InventoryCheckVO>() {
+            @Override
+            protected InventoryCheckVO call() throws Exception {
+                return inventoryBLService.check();
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            inventoryCheck = task.getValue();
+            int n = 1;
+            table.clear();
+            for (GoodsVO good : inventoryCheck.averagePrice.keySet()){
+                double avg = inventoryCheck.averagePrice.get(good);
+                table.addRow(new InventoryCheckBean(n++,good.ID,good.name,good.model,good.amount,Money.getMoneyString(avg)));
+                totalNum += good.amount;
+                totalValue += good.amount * avg;
+                avgValue += avg;
+            }
+            avgValue /= inventoryCheck.averagePrice.keySet().size();
+        });
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;

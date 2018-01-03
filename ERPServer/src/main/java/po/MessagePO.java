@@ -1,23 +1,34 @@
 package po;
 
+import java.io.Serializable;
+
+import javax.persistence.*;
+
 import util.BillState;
 import util.UserPosition;
 
-public class MessagePO {
-
+@Entity
+@Table(name = "message")
+public class MessagePO implements Serializable {
+	private static final long serialVersionUID = 4988040023443037988L;
 	int messageID;
 	BillState state;
 	String messageTime;
 	String billID;
 	UserPosition position;
-	
+
+	public MessagePO() {}
+
 	public MessagePO(BillState state, String billID, String messageTime, UserPosition position) {
-		// TODO Auto-generated constructor stub
 		this.billID = billID;
 		this.messageTime = messageTime;
 		this.position = position;
+		this.state = state;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	public int getMessageID() {
 		return messageID;
 	}
@@ -26,6 +37,8 @@ public class MessagePO {
 		this.messageID = messageID;
 	}
 
+	@Column(name = "state")
+	@Enumerated(EnumType.STRING)
 	public BillState getState() {
 		return state;
 	}
@@ -34,6 +47,7 @@ public class MessagePO {
 		this.state = state;
 	}
 
+	@Column(name = "time")
 	public String getMessageTime() {
 		return messageTime;
 	}
@@ -42,6 +56,7 @@ public class MessagePO {
 		this.messageTime = messageTime;
 	}
 
+	@Column(name = "billID")
 	public String getBillID() {
 		return billID;
 	}
@@ -50,6 +65,8 @@ public class MessagePO {
 		this.billID = billID;
 	}
 
+	@Column(name = "position")
+	@Enumerated(EnumType.STRING)
 	public UserPosition getPosition() {
 		return position;
 	}
@@ -57,6 +74,5 @@ public class MessagePO {
 	public void setPosition(UserPosition position) {
 		this.position = position;
 	}
-	
-	
+
 }
