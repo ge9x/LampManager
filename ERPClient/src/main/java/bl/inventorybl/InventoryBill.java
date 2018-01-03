@@ -2,6 +2,7 @@ package bl.inventorybl;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +10,10 @@ import java.util.Map;
 import bl.goodsbl.Goods;
 import bl.goodsbl.GoodsBLFactory;
 import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
@@ -23,6 +26,7 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -36,11 +40,13 @@ public class InventoryBill {
 	private InventoryDataService inventoryDataService;
 	private GoodsInfo goodsInfo;
 	private LogInfo logInfo;
+	private MessageInfo messageInfo;
 
 	protected InventoryBill() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
 		goodsInfo = GoodsBLFactory.getInfo();
 		logInfo = LogBLFactory.getInfo();
+		messageInfo = MessageBLFactory.getInfo();
 	}
 
 	/**
@@ -50,7 +56,11 @@ public class InventoryBill {
 	 * @return 是否提交成功
 	 */
 	public ResultMessage submit(InventoryBillVO vo) throws RemoteException {
-		return this.add(vo);
+		ResultMessage ret = this.add(vo);
+		if (ret == ResultMessage.SUCCESS) {
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+		}
+		return ret;
 	}
 
 	public ResultMessage add(InventoryBillVO vo) throws RemoteException {
@@ -104,6 +114,9 @@ public class InventoryBill {
 			ResultMessage ret = inventoryDataService.updateBill(toUpdate);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, toUpdate.toString());
+				if (vo.state == BillState.SUBMITTED) {
+					messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+				}
 			}
 			return ret;
 		}
@@ -215,6 +228,9 @@ public class InventoryBill {
 			else {	// BillType = LOSS
 				this.changeInventory(goodsMap, vo.inventory, -1);
 			}
+		}
+		if (vo.state != BillState.SUBMITTED) {
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
 		}
 		if (ret == ResultMessage.SUCCESS) {
 			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
@@ -380,5 +396,9 @@ public class InventoryBill {
 			inventoryPO.setNumber(map);
 			return inventoryDataService.updateInventory(inventoryPO);
 		}
+	}
+	
+	private String getCurrentDateTime(){
+		return LocalDateTime.now().toString().replace('T', ' ');
 	}
 }
