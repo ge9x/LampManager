@@ -56,7 +56,11 @@ public class InventoryBill {
 	 * @return 是否提交成功
 	 */
 	public ResultMessage submit(InventoryBillVO vo) throws RemoteException {
-		return this.add(vo);
+		ResultMessage ret = this.add(vo);
+		if (ret == ResultMessage.SUCCESS) {
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+		}
+		return ret;
 	}
 
 	public ResultMessage add(InventoryBillVO vo) throws RemoteException {
@@ -110,6 +114,9 @@ public class InventoryBill {
 			ResultMessage ret = inventoryDataService.updateBill(toUpdate);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, toUpdate.toString());
+				if (vo.state == BillState.SUBMITTED) {
+					messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+				}
 			}
 			return ret;
 		}
@@ -223,8 +230,7 @@ public class InventoryBill {
 			}
 		}
 		if (vo.state != BillState.SUBMITTED) {
-			String now = LocalDateTime.now().toString();
-			messageInfo.addMessage(vo.state, vo.ID, now.replace('T', ' '), UserPosition.INVENTORY_STAFF);
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
 		}
 		if (ret == ResultMessage.SUCCESS) {
 			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
@@ -390,5 +396,9 @@ public class InventoryBill {
 			inventoryPO.setNumber(map);
 			return inventoryDataService.updateInventory(inventoryPO);
 		}
+	}
+	
+	private String getCurrentDateTime(){
+		return LocalDateTime.now().toString().replace('T', ' ');
 	}
 }
