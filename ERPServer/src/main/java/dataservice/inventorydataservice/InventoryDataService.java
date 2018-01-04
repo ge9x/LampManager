@@ -15,8 +15,8 @@ import util.ResultMessage;
  */
 public interface InventoryDataService extends Remote{
 	/**
-	 * 得到所有库存报溢单、报损单和赠送单
-	 * @return 所有库存报溢单、报损单和赠送单的PO
+	 * 得到所有库存报溢单、报损单
+	 * @return 所有库存报溢单、报损单的PO
 	 * @throws RemoteException
 	 */
 	public ArrayList<InventoryBillPO> show() throws RemoteException;
