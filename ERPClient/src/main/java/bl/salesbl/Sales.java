@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +16,12 @@ import bl.customerbl.CustomerController;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import bl.userbl.UserBLFactory;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -31,6 +34,7 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.ResultMessage;
 import util.UserLimits;
+import util.UserPosition;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -51,6 +55,7 @@ public class Sales {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	LogInfo logInfo;
+	MessageInfo messageInfo;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
@@ -59,6 +64,7 @@ public class Sales {
 		inventoryInfo=InventoryBLFactory.getInfo();
 		customerInfo=CustomerBLFactory.getInfo();
 		logInfo=LogBLFactory.getInfo();
+		messageInfo=MessageBLFactory.getInfo();
 	}
 	
 	
@@ -84,7 +90,14 @@ public class Sales {
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
 		po.setPromotionName(vo.promotionName);
-		return salesDataService.updateSales(po);
+		ResultMessage res=salesDataService.updateSales(po);
+		if(res==ResultMessage.SUCCESS){
+			logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, po.toString());
+			if(vo.state==BillState.SUBMITTED){
+				messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage deleteSales(String ID) {
@@ -130,18 +143,27 @@ public class Sales {
 	}
 	
 	public ResultMessage examine(SalesVO vo) throws RemoteException {
+		logInfo.close();
+		ResultMessage res=updateSales(vo);
+		logInfo.open();
+		SalesPO salesPO=salesDataService.findSlaesByID(vo.ID);
 		if(vo.state==BillState.PASS){
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
-			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}else{
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
-			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
+		logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
-		return updateSales(vo);
+		if(vo.state!=BillState.SUBMITTED){
+			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesPO.toString());
+		}
+		return res;
 	}
 	
 	public ArrayList<SalesVO> getAllSubmittedSales() throws RemoteException {
@@ -175,7 +197,11 @@ public class Sales {
 			return ResultMessage.FAILED;
 		}
 		vo.state=BillState.SUBMITTED;
-		return addSales(vo);
+		ResultMessage res=addSales(vo);
+		if(res==ResultMessage.SUCCESS){
+			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		return res;
 	}
 	
 	public ResultMessage saveSales(SalesVO bill) throws RemoteException {
