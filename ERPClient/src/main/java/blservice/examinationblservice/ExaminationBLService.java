@@ -19,18 +19,24 @@ public interface ExaminationBLService {
 	/**
      * 修改单据内容
      * 
-     * @param receipt
+     * @param BillVO
      * @return ResultMessage
      */
 	public ResultMessage modifyReceipt(BillVO bill);
 	
 	/**
-     * 修改单据状态
+     * 单据通过审批
      * 
-     * @param receipt
+     * @param BillVO
      * @return ResultMessage
      */
 	public ResultMessage approveReceipt(BillVO bill);
 	
+	/**
+	 * 单据未通过审批
+	 * 
+	 * @param BillVO
+	 * @return ResultMessage
+	 */
 	public ResultMessage refuseReceipt(BillVO bill);
 }

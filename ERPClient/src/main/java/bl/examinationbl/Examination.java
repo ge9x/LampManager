@@ -40,12 +40,10 @@ import vo.SalesVO;
 public class Examination {
 
 	private ExaminationDataService examinationDataService;
-	private ArrayList<BillPO> billPOs;
 	private FinanceInfo financeInfo;
 	private SalesInfo salesInfo;
 	private PurchaseInfo purchaseInfo;
 	private InventoryInfo inventoryInfo;
-	private MessageInfo messageInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
@@ -53,7 +51,6 @@ public class Examination {
 		salesInfo = SalesBLFactory.getSalesInfo();
 		purchaseInfo = SalesBLFactory.getPurchaseInfo();
 		inventoryInfo = InventoryBLFactory.getInfo();
-		messageInfo = MessageBLFactory.getInfo();
 	}
 	
 
