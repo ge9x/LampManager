@@ -8,10 +8,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import ui.component.DialogFactory;
 import ui.component.Table;
 import util.ResultMessage;
@@ -51,6 +53,7 @@ public class InventoryGoodsController {
             t.setDaemon(true);
             return t;
         });
+
         goodsBLService = GoodsBLFactory.getBLService();
         searchIcon.setText("\ue69d");
 
@@ -67,6 +70,7 @@ public class InventoryGoodsController {
         });
 
         executor.execute(task);
+
     }
 
     public void initTable(){
@@ -84,6 +88,13 @@ public class InventoryGoodsController {
         table.addColumn("最近零售价","salesPrice",70);
 
         TablePane.setContent(table.getTable());
+
+        SearchField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                clickSearchButton();
+            }
+        });
     }
     public void showGoods(){
         data.clear();
@@ -117,6 +128,7 @@ public class InventoryGoodsController {
                 } else{
                     dialog = DialogFactory.getInformationAlert();
                     dialog.setHeaderText("修改商品信息失败");
+                    dialog.showAndWait();
                 }
 
             }

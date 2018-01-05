@@ -41,6 +41,7 @@
         <mapping class="po.InitGoodsPO" />
         <mapping class="po.InitClassificationPO" />
         <mapping class="po.LogPO" />
+        <mapping class="po.MessagePO" />
 	</session-factory>
 
 </hibernate-configuration>

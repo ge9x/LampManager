@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/check.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryCheckController">
     <children>
-          <VBox alignment="TOP_CENTER" prefHeight="555.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+          <VBox alignment="TOP_CENTER" prefHeight="598.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
               <children>
                   <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                       <effect>

@@ -10,6 +10,8 @@ import blstubdriver.ClassificationBLService_Stub;
 import blstubdriver.GoodsBLService_Stub;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -58,6 +60,7 @@ public class InventoryClassificationController {
         initTree();
         showTree();
         initTable();
+        tree.getSelectionModel().selectFirst();
     }
     public void initTree(){
         tree = new TreeView<>();
@@ -69,6 +72,7 @@ public class InventoryClassificationController {
         });
         tree.setEditable(true);
         tree.setPrefWidth(200);
+
         TreePane.setContent(tree);
     }
 
@@ -182,6 +186,11 @@ public class InventoryClassificationController {
                    if (re == ResultMessage.SUCCESS) {
                        showGoods(findID(item.getValue()));
                    }
+                   else if (re == ResultMessage.EXIST){
+                       dialog = DialogFactory.getInformationAlert();
+                       dialog.setHeaderText("商品已存在，无法添加");
+                       dialog.showAndWait();
+                   }
                }
            }else {
                Dialog dialog = DialogFactory.getInformationAlert();
@@ -215,7 +224,42 @@ public class InventoryClassificationController {
         nodes.add(salesTF);
         nodes.add(alarmTF);
 
+
+
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+
+        Button button = (Button)dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        nameTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        modelTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty());
+            }
+        });
+        purchaseTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || nameTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        salesTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        alarmTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
         dialog.setHeaderText("请输入新的商品信息");
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.FINISH) {

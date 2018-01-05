@@ -224,6 +224,7 @@ public class AccountBill {
     }
 
     public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
+        /**将log上锁**/
         logInfo.close();
         redCover(billVO);
         String ID = "";
