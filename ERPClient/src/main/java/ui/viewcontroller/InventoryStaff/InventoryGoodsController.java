@@ -70,6 +70,7 @@ public class InventoryGoodsController {
         });
 
         executor.execute(task);
+
     }
 
     public void initTable(){
@@ -127,6 +128,7 @@ public class InventoryGoodsController {
                 } else{
                     dialog = DialogFactory.getInformationAlert();
                     dialog.setHeaderText("修改商品信息失败");
+                    dialog.showAndWait();
                 }
 
             }
