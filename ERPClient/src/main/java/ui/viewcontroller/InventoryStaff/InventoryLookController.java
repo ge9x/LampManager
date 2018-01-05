@@ -15,13 +15,16 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 import ui.component.DialogFactory;
 import ui.component.Table;
 import ui.viewcontroller.common.MainUIController;
 import util.InventoryListItemType;
 import util.Money;
+import util.ResultMessage;
 import vo.*;
 
+import javax.xml.transform.Result;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -106,8 +109,7 @@ public class InventoryLookController {
         AlertIcon.setText("\ue6be");
         addIcon.setText("\ue61e");
 
-        StartDate.setValue(LocalDate.parse(inventoryBLService.getStartDate()));
-        EndDate.setValue(LocalDate.now());
+        initDatePicker();
 
         InventoryBox.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
             @Override
@@ -116,18 +118,9 @@ public class InventoryLookController {
                 showItemTable();
             }
         });
-        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                showItemTable();
-            }
-        });
-        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
-                showItemTable();
-            }
-        });
+
+
+
         initAlarmTable();
         initItemTable();
 
@@ -250,11 +243,67 @@ public class InventoryLookController {
         dialog.setHeaderText("请输入新的仓库名称");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            inventoryBLService.addInventory(result.get());
+            ResultMessage re = inventoryBLService.addInventory(result.get());
+            dialog = DialogFactory.getInformationAlert();
+            if (re == ResultMessage.SUCCESS){
+                dialog.setHeaderText("添加仓库成功");
+            }
+            else if (ResultMessage.EXIST == re){
+                dialog.setHeaderText("仓库已存在");
+            }
+            dialog.showAndWait();
         }
     }
 
     public void setMainUIController(MainUIController mainUIController) {
         this.mainUIController = mainUIController;
+    }
+    private void initDatePicker(){
+        /**
+         * 设定初始值
+         */
+        StartDate.setValue(LocalDate.parse(inventoryBLService.getStartDate()));
+        EndDate.setValue(LocalDate.now());
+
+
+        /**
+         * 监听日期变更
+         */
+        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                if (EndDate.getValue().isBefore(newValue)){
+                    EndDate.setValue(newValue);
+                }
+                showItemTable();
+            }
+        });
+
+        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                showItemTable();
+            }
+        });
+
+
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(
+                                        StartDate.getValue())
+                                        ) {
+                                    setDisable(true);
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate.setDayCellFactory(dayCellFactory);
     }
 }
