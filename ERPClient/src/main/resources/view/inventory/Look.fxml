@@ -8,15 +8,17 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="830.0" style="-fx-background-color: #f6f6f7;" stylesheets="@../../css/look.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
-    <children>
-        <ScrollPane layoutX="8.0" prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
+
+<StackPane fx:id="Page" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/look.css" fx:controller="ui.viewcontroller.InventoryStaff.InventoryLookController">
+   <children>
+      <ScrollPane prefHeight="600.0" prefWidth="825.0" style="-fx-background-color: #f6f6f7;">
             <content>
-                <VBox alignment="TOP_CENTER" prefHeight="1072.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
+                <VBox alignment="TOP_CENTER" prefHeight="1165.0" prefWidth="814.0" spacing="20.0" style="-fx-background-color: #f6f6f7;">
                     <children>
                         <HBox alignment="CENTER_LEFT" maxWidth="840.0" minHeight="81.0" minWidth="716.0" prefHeight="81.0" prefWidth="716.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                             <effect>
@@ -31,8 +33,8 @@
                                     <padding>
                                         <Insets left="10.0" />
                                     </padding>
-
-                           <HBox.margin>
+      
+                                 <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
                                 </Label>
@@ -143,22 +145,41 @@
                         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
                      </padding>
                   </VBox>
-                  <ScrollPane fx:id="InventoryItemTablePane" prefHeight="220.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
-                     <padding>
-                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                     </padding>
-                  </ScrollPane>
-                  <ScrollPane fx:id="SalesItemTablePane" prefHeight="220.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                     <children>
+                        <ScrollPane fx:id="InventoryItemTablePane" layoutX="2.0" layoutY="44.0" prefHeight="227.0" prefWidth="762.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+      
+                                 <padding>
+                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                        <Label layoutX="20.0" layoutY="20.0" text="库存条目">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="285.0" prefWidth="764.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
                       <effect>
                           <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                       </effect>
-                     <padding>
-                        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-                     </padding>
-                  </ScrollPane>
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="销售条目">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane fx:id="SalesItemTablePane" layoutX="2.0" layoutY="44.0" prefHeight="227.0" prefWidth="762.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10;">
+                           <padding>
+                              <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                           </padding>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
                     </children>
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="30.0" top="20.0" />
@@ -166,5 +187,5 @@
                 </VBox>
             </content>
         </ScrollPane>
-    </children>
-</AnchorPane>
+   </children>
+</StackPane>

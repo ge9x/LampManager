@@ -2,14 +2,18 @@ package bl.inventorybl;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import bl.goodsbl.Goods;
-import bl.logbl.LogController;
+import bl.goodsbl.GoodsBLFactory;
+import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.inventorydataservice.InventoryDataService;
 import po.GoodsPO;
 import po.InventoryBillPO;
@@ -22,6 +26,7 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.GoodsVO;
 import vo.InventoryBillVO;
 
@@ -35,11 +40,13 @@ public class InventoryBill {
 	private InventoryDataService inventoryDataService;
 	private GoodsInfo goodsInfo;
 	private LogInfo logInfo;
+	private MessageInfo messageInfo;
 
-	public InventoryBill(GoodsInfo goodsInfo) {
+	protected InventoryBill() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		this.goodsInfo = goodsInfo;
-		logInfo = new LogController();
+		goodsInfo = GoodsBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
+		messageInfo = MessageBLFactory.getInfo();
 	}
 
 	/**
@@ -49,7 +56,11 @@ public class InventoryBill {
 	 * @return 是否提交成功
 	 */
 	public ResultMessage submit(InventoryBillVO vo) throws RemoteException {
-		return this.add(vo);
+		ResultMessage ret = this.add(vo);
+		if (ret == ResultMessage.SUCCESS) {
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+		}
+		return ret;
 	}
 
 	public ResultMessage add(InventoryBillVO vo) throws RemoteException {
@@ -66,7 +77,7 @@ public class InventoryBill {
 		if (toDelete == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else if (toDelete.getState() == BillState.DRAFT) { // 只能删除草稿单据
+		else if (toDelete.getState() == BillState.DRAFT) {	// 只能删除草稿单据
 			ResultMessage ret = inventoryDataService.deleteBill(toDelete);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.DELETE, OperationObjectType.BILL, toDelete.buildID());
@@ -103,6 +114,9 @@ public class InventoryBill {
 			ResultMessage ret = inventoryDataService.updateBill(toUpdate);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, toUpdate.toString());
+				if (vo.state == BillState.SUBMITTED) {
+					messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+				}
 			}
 			return ret;
 		}
@@ -148,16 +162,17 @@ public class InventoryBill {
 		criteria.add(new Criterion("type", type, QueryMode.FULL));
 		criteria.add(new Criterion("date", date, QueryMode.FULL));
 		int turn = inventoryDataService.advancedQuery(criteria).size() + 1;
-		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%06d", turn);
+		return type.getAcronym() + "-" + date.replace("-", "") + "-" + String.format("%05d", turn);
 	}
 
-	public ArrayList<InventoryBillVO> getBillsByDate(String startDate, String endDate) throws RemoteException {
+	public ArrayList<InventoryBillVO> getPassBillsByDate(String startDate, String endDate) throws RemoteException {
 		LocalDate start = LocalDate.parse(startDate);
 		LocalDate end = LocalDate.parse(endDate);
 		ArrayList<InventoryBillVO> ret = new ArrayList<>();
-		do { // TODO Optimize
+		do {	// TODO Optimize
 			ArrayList<Criterion> criteria = new ArrayList<>();
 			criteria.add(new Criterion("date", start.toString(), QueryMode.FULL));
+			criteria.add(new Criterion("state", BillState.PASS, QueryMode.FULL));
 			ArrayList<InventoryBillPO> found = inventoryDataService.advancedQuery(criteria);
 			ArrayList<InventoryBillVO> vos = new ArrayList<>();
 			for (InventoryBillPO po : found) {
@@ -202,15 +217,23 @@ public class InventoryBill {
 	}
 
 	public ResultMessage examine(InventoryBillVO vo) throws RemoteException {
+		logInfo.close();
 		ResultMessage ret = this.update(vo);
+		logInfo.open();
 		if (vo.state == BillState.PASS) {
 			HashMap<GoodsVO, Integer> goodsMap = vo.goodsMap;
 			if (vo.type == BillType.OVERFLOW) {
 				this.changeInventory(goodsMap, vo.inventory, 1);
 			}
-			else { // BillType = LOSS
+			else {	// BillType = LOSS
 				this.changeInventory(goodsMap, vo.inventory, -1);
 			}
+		}
+		if (vo.state != BillState.SUBMITTED) {
+			messageInfo.addMessage(vo.state, vo.ID, this.getCurrentDateTime(), UserPosition.INVENTORY_STAFF);
+		}
+		if (ret == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
 		}
 		return ret;
 	}
@@ -227,32 +250,42 @@ public class InventoryBill {
 	}
 
 	public ResultMessage redCover(InventoryBillVO vo) throws RemoteException {
-		ResultMessage result = ResultMessage.NULL;
+		ResultMessage ret = ResultMessage.NULL;
 		Map<GoodsVO, Integer> map = vo.goodsMap;
 		for (GoodsVO goodsVO : map.keySet()) {
-			map.put(goodsVO, -map.get(goodsVO)); // 数量取负
+			map.put(goodsVO, -map.get(goodsVO));	// 数量取负
 		}
 		InventoryBillPO toAdd = this.voToPO(vo);
-		result = inventoryDataService.addBill(toAdd);
-		if (result == ResultMessage.SUCCESS) {
-			result = this.examine(this.poToVO(toAdd));
+		ret = inventoryDataService.addBill(toAdd);
+		if (ret == ResultMessage.SUCCESS) {
+			logInfo.close();
+			ret = this.examine(this.poToVO(toAdd));
+			logInfo.open();
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
+			}
 		}
-		return result;
+		return ret;
 	}
 
 	public ResultMessage redCoverAndCopy(InventoryBillVO vo) throws RemoteException {
-		ResultMessage result = ResultMessage.NULL;
-		result = this.redCover(vo);
-		if (result == ResultMessage.SUCCESS) {
+		ResultMessage ret = ResultMessage.NULL;
+		logInfo.close();
+		ret = this.redCover(vo);
+		logInfo.open();
+		if (ret == ResultMessage.SUCCESS) {
 			Map<GoodsVO, Integer> map = vo.goodsMap;
 			for (GoodsVO goodsVO : map.keySet()) {
-				map.put(goodsVO, -map.get(goodsVO)); // 数量取回正
+				map.put(goodsVO, -map.get(goodsVO));	// 数量取回正
 			}
 			vo.state = BillState.DRAFT;
 			InventoryBillPO toAdd = this.voToPO(vo);
-			result = inventoryDataService.addBill(toAdd);
+			ret = inventoryDataService.addBill(toAdd);
+			if (ret == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, this.getBillByID(vo.ID).toString());
+			}
 		}
-		return result;
+		return ret;
 	}
 
 	private InventoryBillVO poToVO(InventoryBillPO po) throws RemoteException {
@@ -335,7 +368,7 @@ public class InventoryBill {
 			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		if (inventoryPO == null) {
-			return ResultMessage.FAILED;
+			return ResultMessage.NOT_EXIST;
 		}
 		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
@@ -344,17 +377,17 @@ public class InventoryBill {
 				for (GoodsPO po : map.keySet()) {
 					if (vo.ID.equals(po.buildID())) {
 						int number = map.get(po) + sign * goodsMap.get(vo);
-						if (number < 0) { // 负数检查
-							return ResultMessage.FAILED;
+						if (number < 0) {	// 负数检查
+							return ResultMessage.INSUFFICIENT;
 						}
 						map.put(po, number);
 						isExistent = true;
 						break;
 					}
 				}
-				if (!isExistent) { // 如果本来仓库里没有这种商品
-					if (sign == -1) { // 负数检查
-						return ResultMessage.FAILED;
+				if (!isExistent) {	// 如果本来仓库里没有这种商品
+					if (sign == -1) {	// 负数检查
+						return ResultMessage.INSUFFICIENT;
 					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(vo.ID);
 					map.put(goodsPO, goodsMap.get(vo));
@@ -363,5 +396,9 @@ public class InventoryBill {
 			inventoryPO.setNumber(map);
 			return inventoryDataService.updateInventory(inventoryPO);
 		}
+	}
+	
+	private String getCurrentDateTime(){
+		return LocalDateTime.now().toString().replace('T', ' ');
 	}
 }

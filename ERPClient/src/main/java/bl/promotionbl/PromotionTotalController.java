@@ -17,7 +17,7 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 
 	private PromotionTotal promotionTotal;
 	
-	public PromotionTotalController(){
+	protected PromotionTotalController(){
 		promotionTotal = new PromotionTotal();
 	}
 	
@@ -28,31 +28,6 @@ public class PromotionTotalController implements PromotionTotalBLService, Promot
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public void addGift(GoodsItemVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addVoucher(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setPrice(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setStartDate(String date) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setEndDate(String date) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public ResultMessage submit(PromotionTotalVO vo) {

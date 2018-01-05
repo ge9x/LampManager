@@ -1,15 +1,14 @@
 package ui.viewcontroller.common;
 
-import blservice.userblservice.UserBLService;
-import blstubdriver.UserBLService_Stub;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.viewcontroller.Admin.AdminViewController;
 import ui.viewcontroller.FinancialStaff.FinancialViewController;
 import ui.viewcontroller.GeneralManager.GeneralManagerViewController;
@@ -17,6 +16,7 @@ import ui.viewcontroller.InventoryStaff.InventoryViewController;
 import ui.viewcontroller.SalesStaff.SalesStaffViewController;
 
 import java.io.IOException;
+import java.util.Stack;
 
 /**
  * Created by Kry·L on 2017/11/14.
@@ -25,10 +25,17 @@ public class MainUIController {
 
     @FXML
     BorderPane borderPane;
- 
+
+    @FXML
+    public JFXSpinner ProgressCircle;
+
     Stage primaryStage;
 
+    Stack<Pane> paneStack;
+
     public MainUIController(){
+        paneStack = new Stack<>();
+
     }
 
     public void showFinancialStaffView(){
@@ -68,7 +75,21 @@ public class MainUIController {
             LoginViewController loginViewController = loader.getController();
             loginViewController.setMainUIController(this);
 
-//            resizeToLogin();
+            setCenter(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showLog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/common/Log.fxml"));
+            Pane root = loader.load();
+
+            LogViewController logViewController = loader.getController();
+            logViewController.setMainUIController(this);
+
+            resizeToLog();
             setCenter(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,6 +115,10 @@ public class MainUIController {
         primaryStage.setMinWidth(1000);
     }
 
+    public void resizeToLog(){
+        primaryStage.setMinHeight(600);
+    }
+
     public void showStateBar(){
         try {
             FXMLLoader stateBarLoader = new FXMLLoader();
@@ -117,6 +142,7 @@ public class MainUIController {
         borderPane.setCenter(node);
     }
 
+
     public void setLeft(Node node){
         borderPane.setLeft(node);
     }
@@ -127,6 +153,16 @@ public class MainUIController {
 
     public void setStage(Stage primaryStage){
         this.primaryStage = primaryStage;
+    }
+
+    public void back() {
+        if (!paneStack.isEmpty()){
+            Pane pane = paneStack.pop();
+            setCenter(pane);
+        }
+    }
+    public void saveView(){
+        paneStack.push((Pane)borderPane.getCenter());
     }
 
 }

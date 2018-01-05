@@ -3,6 +3,7 @@ package ui.viewcontroller.SalesStaff;
 import bean.GoodsBean;
 import bean.GoodsItemBean;
 import bl.salesbl.PurchaseController;
+import bl.salesbl.SalesBLFactory;
 import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -30,6 +31,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import ui.viewcontroller.common.StateBarController;
 import util.BillState;
 import util.BillType;
@@ -43,17 +45,18 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffPurchaseEditViewController {
-	
+	MainUIController mainUIController;
 	SalesStaffPurchaseOrderViewController salesStaffPurchaseOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new PurchaseController();
+	SalesBLService salesBLService = SalesBLFactory.getPurchaseBLService();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
 	
 	boolean isNew;
 	boolean isExamine = false;
+	public boolean onlyShow = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -190,15 +193,15 @@ public class SalesStaffPurchaseEditViewController {
     	GoodsBean bean = null;
     	if (result.isPresent()){
     		bean = result.get();
+    		GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
+        	data.add(itemBean);
+            itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
+                }
+            });
     	}
-        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
-    	data.add(itemBean);
-        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
-            }
-        });
     }
 
     public void clickDeleteButton(){
@@ -219,7 +222,12 @@ public class SalesStaffPurchaseEditViewController {
 	        String inventoryName = inventories.get(inventory.getSelectionModel().getSelectedIndex());
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.PURCHASE, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        salesBLService.submitPurchase(purchaseVO);
+	    		if(isNew){
+	    			salesBLService.submitPurchase(purchaseVO);
+	    		}
+	    		else{
+	    			salesBLService.updatePurchase(purchaseVO);
+	    		}
 		        salesStaffPurchaseOrderViewController.showPurchaseOrderList();
 	    	}
 	    	else{
@@ -309,11 +317,17 @@ public class SalesStaffPurchaseEditViewController {
         Username.setText(purchaseBill.user);
         remark.setText(purchaseBill.remarks);
         
+        itemTable.setEditable(false);
+        
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffPurchaseOrderViewController.showPurchaseOrderList();
             	}
@@ -350,6 +364,8 @@ public class SalesStaffPurchaseEditViewController {
         remark.setEditable(true);
         inventory.setDisable(false);
         supplier.setDisable(false);
+        
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -368,5 +384,9 @@ public class SalesStaffPurchaseEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

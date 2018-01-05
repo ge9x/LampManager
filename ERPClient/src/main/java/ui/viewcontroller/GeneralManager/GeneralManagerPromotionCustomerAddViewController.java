@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import bean.GoodsItemBean;
+import bl.promotionbl.PromotionBLFactory;
 import bl.promotionbl.PromotionCustomerController;
 import blservice.promotionblservice.promotioncustomer.PromotionCustomerBLService;
 import blstubdriver.PromotionCustomer_Stub;
@@ -47,7 +48,7 @@ import vo.PromotionCustomerVO;
 public class GeneralManagerPromotionCustomerAddViewController {
 	
 	GeneralManagerPromotionViewController generalManagerPromotionViewController;
-	PromotionCustomerBLService promotionCustomerBLService = new PromotionCustomerController();
+	PromotionCustomerBLService promotionCustomerBLService = PromotionBLFactory.getCustormerBLService();
 	PromotionCustomerVO promotionCustomer;
 	ArrayList<GoodsItemVO> gifts = new ArrayList<>();
 	

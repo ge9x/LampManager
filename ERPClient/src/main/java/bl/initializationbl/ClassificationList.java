@@ -1,6 +1,7 @@
 package bl.initializationbl;
 
 import bl.classificationbl.Classification;
+import bl.classificationbl.ClassificationBLFactory;
 import bl.classificationbl.ClassificationController;
 import blservice.classificationblservice.ClassificationInfo;
 import dataimpl.initializationdataimpl.InitializationDataServiceImpl;
@@ -22,7 +23,7 @@ public class ClassificationList {
     private InitializationDataService initializationDataService = InitializationDataServiceImpl.getInstance();
 
     public ClassificationList(){
-        classificationInfo = new ClassificationController();
+        classificationInfo = ClassificationBLFactory.getInfo();
     }
     public ArrayList<InitClassificationPO> getClassifications(){
         ArrayList<InitClassificationPO> pos = new ArrayList<>();

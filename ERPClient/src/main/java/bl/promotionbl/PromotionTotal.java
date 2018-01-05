@@ -6,14 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.logbl.LogBLFactory;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
+import blservice.logblservice.LogInfo;
 import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionTotalPO;
 import rmi.PromotionRemoteHelper;
+import util.OperationObjectType;
+import util.OperationType;
 import util.PromotionType;
 import util.ResultMessage;
 import vo.GoodsItemVO;
@@ -23,12 +28,14 @@ import vo.PromotionTotalVO;
 
 public class PromotionTotal extends Promotion{
 	
-	private ArrayList<PromotionTotalPO> promotionTotalPOs;
-	UserInfo userInfo;
+	private ArrayList<PromotionTotalPO> promotionTotalPOs = new ArrayList<>();
+	private UserInfo userInfo;
+	private LogInfo logInfo;
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
-		userInfo = new UserController();
+		userInfo = UserBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionTotalVO> show() throws RemoteException{
@@ -52,28 +59,13 @@ public class PromotionTotal extends Promotion{
 		return promotionTotalVO;
 	}
 
-	public void addGift(GoodsItemVO vo){
-		
-	}
-
-	public void addVoucher(double price){
-		
-	}
-
-	public void setPrice(double price){
-		
-	}
-
-	public void setStartDate(String date){
-		
-	}
-
-	public void setEndDate(String date){
-		
-	}
-
 	public ResultMessage submit(PromotionTotalVO vo) throws RemoteException{
-		return promotionDataService.addPT(voTOpo(vo));
+		PromotionTotalPO po = voTOpo(vo);
+		ResultMessage re = promotionDataService.addPT(po);
+		if(re == ResultMessage.SUCCESS){
+			logInfo.record(OperationType.ADD, OperationObjectType.PROMOTION, po.toString());
+		}
+		return re;
 	}
 	
 	public PromotionTotalVO findPromotionByID(String promotionID) throws RemoteException{
@@ -86,7 +78,11 @@ public class PromotionTotal extends Promotion{
 		promotionTotalPOs = promotionDataService.showPT();
 		for(PromotionTotalPO po:promotionTotalPOs){
 			if(po.getPromotionID().equals(promotionID)){
-				return promotionDataService.addPT(po);
+				ResultMessage re = promotionDataService.deletePT(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		return ResultMessage.FAILED;
@@ -107,7 +103,11 @@ public class PromotionTotal extends Promotion{
                     GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getGifts().add(itemPO);
                 }
-				return promotionDataService.updatePT(po);
+				ResultMessage re = promotionDataService.updatePT(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		return ResultMessage.FAILED;

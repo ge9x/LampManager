@@ -18,7 +18,7 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 
 	private PromotionBargain promotionBargain;
 	
-	public PromotionBargainController(){
+	protected PromotionBargainController(){
 		promotionBargain = new PromotionBargain();
 	}
 	
@@ -29,22 +29,6 @@ public class PromotionBargainController implements PromotionBargainBLService, Pr
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public void addBargain(GoodsItemVO vo) {
-		
-	}
-
-	public void setPrice(double price) {
-		
-	}
-
-	public void setStartDate(String date) {
-		
-	}
-
-	public void setEndDate(String date) {
-		
 	}
 
 	public ResultMessage submit(PromotionBargainVO vo) {

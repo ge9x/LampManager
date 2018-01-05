@@ -3,8 +3,7 @@ package bl.inventorybl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import bl.salesbl.PurchaseController;
-import bl.salesbl.SalesController;
+import bl.salesbl.SalesBLFactory;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import util.BillType;
@@ -36,10 +35,10 @@ public class InventoryList {
 			ArrayList<InventoryBillVO> inventoryBillVOs) {
 		// 初始化
 		if (salesInfo == null) {
-			salesInfo = new SalesController();
+			salesInfo = SalesBLFactory.getSalesInfo();
 		}
 		if (purchaseInfo == null) {
-			purchaseInfo = new PurchaseController();
+			purchaseInfo = SalesBLFactory.getPurchaseInfo();
 		}
 		inventoryLineItems.clear();
 		// 获取数据

@@ -1,5 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import blservice.inventoryblservice.InventoryBLService;
 import com.jfoenix.controls.JFXNodesList;
@@ -17,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ui.component.BillPane;
+import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
 import ui.viewcontroller.common.BillController;
 import util.BillState;
 import util.BillType;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/27.
  */
 public class InventorySyncController {
-    InventoryBLService inventoryBLService = new InventoryController();
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
     InventoryViewController inventoryViewController;
     InventorySyncEditController inventorySyncEditController;
 
@@ -76,7 +78,7 @@ public class InventorySyncController {
         overflow = inventoryBLService.findBillByType(BillType.OVERFLOW);
         loss = inventoryBLService.findBillByType(BillType.LOSS);
 
-        billPane = new BillPane("报溢单","报损单","赠送单");
+        billPane = new BillPane("报溢单","报损单");
         initTabs();
         vBox.getChildren().add(billPane.getTabPane());
         billPane.getTabPane().getSelectionModel().selectLast();

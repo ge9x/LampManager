@@ -21,7 +21,7 @@
                     </effect>
                     <children>
                         <Rectangle fill="#1db1a4" height="40.0" stroke="TRANSPARENT" strokeType="INSIDE" width="8.0" />
-                        <Label fx:id="title" prefHeight="32.0" prefWidth="290.0" text="管理商品分类">
+                        <Label fx:id="title" prefHeight="32.0" prefWidth="278.0" text="管理商品分类">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -32,17 +32,26 @@
                                 <Insets right="150.0" />
                             </HBox.margin>
                         </Label>
-                  <JFXButton onMouseClicked="#clickAddClassButton" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="增 加 分 类" textFill="WHITE">
+                  <JFXButton onMouseClicked="#clickAddClassButton" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="增 加 分 类" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Microsoft YaHei" size="12.0" />
+                     </font>
                   </JFXButton>
-                  <JFXButton onMouseClicked="#clickAddGoodButton" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="增 加 商 品" textFill="WHITE">
+                  <JFXButton onMouseClicked="#clickAddGoodButton" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="增 加 商 品" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
+                      <font>
+                          <Font name="Microsoft YaHei" size="12.0" />
+                      </font>
                   </JFXButton>
-                  <JFXButton onMouseClicked="#clickModifyButton" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="修 改 名 称" textFill="WHITE" />
+                  <JFXButton onMouseClicked="#clickModifyButton" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: #1db1a4; -fx-background-radius: 5; -fx-border-radius: 5;" text="修 改 名 称" textFill="WHITE" > <font>
+                        <Font name="Microsoft YaHei" size="12.0" />
+                    </font>
+                  </JFXButton>
                     </children>
                     <opaqueInsets>
                         <Insets />

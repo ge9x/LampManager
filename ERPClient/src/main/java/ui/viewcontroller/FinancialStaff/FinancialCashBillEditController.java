@@ -2,6 +2,7 @@ package ui.viewcontroller.FinancialStaff;
 
 import bean.CashBillItemBean;
 import bl.customerbl.Customer;
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -22,8 +23,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.ERPClient.Main;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -44,11 +47,13 @@ import javax.sound.midi.VoiceStatus;
 public class FinancialCashBillEditController {
     FinancialCashBillController financialCashBillController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    FinanceBLService financeBLService = new FinanceController();
+    MainUIController mainUIController;
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
 
     ArrayList<CashBillItemVO> cashBillItems = new ArrayList<>();
     ArrayList<AccountVO> accounts;
     Boolean isNew;
+    public boolean onlyShow = false;
     boolean isExamine = false;
 
     TableView<CashBillItemBean> itemTable;
@@ -153,6 +158,20 @@ public class FinancialCashBillEditController {
         nodes.add(remarkTF);
 
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+        Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        moneyTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || nameTF.getText().trim().isEmpty());
+            }
+        });
+        nameTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || moneyTF.getText().trim().isEmpty());
+            }
+        });
         dialog.setResultConverter(dialogButton -> {
             ArrayList<String> result = new ArrayList<>();
             result.add(nameTF.getText());
@@ -177,6 +196,12 @@ public class FinancialCashBillEditController {
     }
 
     public void clickSubmitButton(){
+        if (Accounts.getSelectionModel().getSelectedItem() == null || itemTable.getItems().size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	String accountID = accounts.get(Accounts.getSelectionModel().getSelectedIndex()).accountID;
         CashBillVO cashBillVO = new CashBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED, BillType.CASH,Username.getText(),accountID
@@ -216,7 +241,6 @@ public class FinancialCashBillEditController {
 	                    financeBLService.updateDraft(cashBillVO);
 	                }
 	            }
-	
 	            financialCashBillController.showCashBillList();
 	        }
     	}
@@ -257,13 +281,17 @@ public class FinancialCashBillEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	if(!isExamine){
-            		financialCashBillController.showCashBillList();
-            	}
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
+                if(!isExamine){
+                    financialCashBillController.showCashBillList();
+                }
             	else{
-            		generalManagerExaminationCellController.clickReturnButton();
-            		isExamine = false;
-            	}
+                    generalManagerExaminationCellController.clickReturnButton();
+                    isExamine = false;
+                }
             }
         });
 
@@ -324,4 +352,8 @@ public class FinancialCashBillEditController {
     public void isExamine() {
 		isExamine = true;
 	}
+
+	public void setMainUIController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
+    }
 }

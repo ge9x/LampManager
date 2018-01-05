@@ -9,9 +9,9 @@ import java.util.Map;
 import ExcelUtil.enums.ExcelType;
 import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
-import bl.goodsbl.GoodsController;
-import bl.initializationbl.InitializationController;
-import bl.logbl.LogController;
+import bl.goodsbl.GoodsBLFactory;
+import bl.initializationbl.InitializationBLFactory;
+import bl.logbl.LogBLFactory;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.initializationblservice.InitInfo;
 import blservice.logblservice.LogInfo;
@@ -46,13 +46,13 @@ public class Inventory {
 	private InitInfo initInfo;
 	private LogInfo logInfo;
 
-	public Inventory() {
+	protected Inventory() {
 		inventoryDataService = InventoryRemoteHelper.getInstance().getInventoryDataService();
-		goodsInfo = new GoodsController();
-		inventoryBill = new InventoryBill(goodsInfo);
+		inventoryBill = new InventoryBill();
 		inventoryList = new InventoryList();
-		initInfo = new InitializationController();
-		logInfo = new LogController();
+		initInfo = InitializationBLFactory.getInfo();
+		goodsInfo = GoodsBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	public ArrayList<String> showInventory() throws RemoteException {
@@ -125,11 +125,12 @@ public class Inventory {
 	}
 
 	public ResultMessage addInventory(String inventory) throws RemoteException {
-		ArrayList<InventoryPO> pos = inventoryDataService.showInventory();
-		for (InventoryPO po : pos) {
-			if (po.getName().equals(inventory)) {
-				return ResultMessage.EXIST;
-			}
+		if (inventory.isEmpty()) {
+			return ResultMessage.NULL;
+		}
+		InventoryPO repeated = inventoryDataService.findInventoryByName(inventory);
+		if (repeated != null) {
+			return ResultMessage.EXIST;
 		}
 		InventoryPO toAdd = new InventoryPO(inventory);
 		ResultMessage ret = inventoryDataService.addInventroy(toAdd);
@@ -162,11 +163,15 @@ public class Inventory {
 	}
 
 	public ResultMessage updateInventory(String before, String after) throws RemoteException {
+		if (after.isEmpty()) {
+			return ResultMessage.NULL;
+		}
 		InventoryPO found = inventoryDataService.findInventoryByName(before);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
 		else {
+			found.setName(after);
 			ResultMessage ret = inventoryDataService.updateInventory(found);
 			if (ret == ResultMessage.SUCCESS) {
 				logInfo.record(OperationType.UPDATE, OperationObjectType.INVENTORY, found.toString());
@@ -199,7 +204,7 @@ public class Inventory {
 	}
 
 	public ArrayList<InventoryBillVO> getInventoryBillsByDate(String startDate, String endDate) throws RemoteException {
-		return inventoryBill.getBillsByDate(startDate, endDate);
+		return inventoryBill.getPassBillsByDate(startDate, endDate);
 	}
 
 	protected InventoryPO getInventoryByName(String name) throws RemoteException {
@@ -243,7 +248,7 @@ public class Inventory {
 			throws RemoteException {
 		InventoryPO inventoryPO = inventoryDataService.findInventoryByName(inventory);
 		if (inventoryPO == null) {
-			return ResultMessage.FAILED;
+			return ResultMessage.NOT_EXIST;
 		}
 		else {
 			Map<GoodsPO, Integer> map = inventoryPO.getNumber();
@@ -253,7 +258,7 @@ public class Inventory {
 					if (goods.buildID().equals(itemVO.ID)) {
 						int number = map.get(goods) + sign * itemVO.number;
 						if (number < 0) { // 负数检查
-							return ResultMessage.FAILED;
+							return ResultMessage.INSUFFICIENT;
 						}
 						map.put(goods, number);
 						isExistent = true;
@@ -262,7 +267,7 @@ public class Inventory {
 				}
 				if (!isExistent) { // 如果本来仓库里没有这种商品
 					if (sign == -1) { // 负数检查
-						return ResultMessage.FAILED;
+						return ResultMessage.INSUFFICIENT;
 					}
 					GoodsPO goodsPO = goodsInfo.getGoodsByID(itemVO.ID);
 					map.put(goodsPO, itemVO.number);

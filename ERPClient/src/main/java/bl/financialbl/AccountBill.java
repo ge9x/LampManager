@@ -1,19 +1,20 @@
 package bl.financialbl;
 
 import bl.accountbl.Account;
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import bl.customerbl.CustomerController;
+import bl.logbl.LogBLFactory;
 import blservice.accountblservice.AccountInfo;
 import blservice.customerblservice.CustomerInfo;
+import blservice.logblservice.LogInfo;
 import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountBillItemPO;
 import po.AccountBillPO;
 import po.AccountPO;
 import rmi.FinanceRemoteHelper;
-import util.BillState;
-import util.BillType;
-import util.ResultMessage;
+import util.*;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
@@ -28,20 +29,22 @@ import java.util.HashMap;
  * Created by Kry·L on 2017/11/5.
  */
 public class AccountBill {
-    //TODO 草稿更新单据
 
     private AccountBillVO accountBill;
     private ArrayList<AccountBillItem> accountBillItems;
     private AccountBillItem accountBillItem;
+
     FinanceDataService financeDataService;
     AccountInfo accountInfo;
+    LogInfo logInfo;
 
     ArrayList<AccountBillPO> accountBillPOS;
 
     public AccountBill(){
         accountBillPOS = new ArrayList<>();
         accountBillItem = new AccountBillItem();
-        accountInfo = new AccountController();
+        accountInfo = AccountBLFactory.getInfo();
+        logInfo = LogBLFactory.getInfo();
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 
@@ -55,10 +58,19 @@ public class AccountBill {
 
     public ResultMessage submit(AccountBillVO vo) throws RemoteException {
         AccountBillPO po = voTopo(vo);
-        return financeDataService.addBill(po);
+        ResultMessage re = financeDataService.addBill(po);
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD,OperationObjectType.BILL,po.toString());
+        }
+        return re;
     }
     public ResultMessage save(AccountBillVO vo) throws RemoteException {
-        return financeDataService.addBill(voTopo(vo));
+        AccountBillPO po = voTopo(vo);
+        ResultMessage re = financeDataService.addBill(po);
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD,OperationObjectType.BILL,po.toString());
+        }
+        return re;
     }
 
     public ResultMessage update(AccountBillVO vo) throws RemoteException {
@@ -78,7 +90,11 @@ public class AccountBill {
                     AccountBillItemPO itemPO = AccountBillItem.voTopo(itemVO);
                     po.getAccountBillItemPOS().add(itemPO);
                 }
-                return financeDataService.updateBill(po);
+                ResultMessage re = financeDataService.updateBill(po);
+                if (re == ResultMessage.SUCCESS){
+                    logInfo.record(OperationType.UPDATE,OperationObjectType.BILL,po.toString());
+                }
+                return re;
             }
         }
         return ResultMessage.FAILED;
@@ -89,7 +105,11 @@ public class AccountBill {
         ArrayList<AccountBillPO> accountBillPOS = financeDataService.getAllAccountBills();
         for (AccountBillPO po : accountBillPOS){
             if (po.buildID().equals(id)){
-                return financeDataService.deleteBill(po);
+                ResultMessage re = financeDataService.deleteBill(po);
+                if (re == ResultMessage.SUCCESS){
+                    logInfo.record(OperationType.DELETE,OperationObjectType.BILL,po.toString());
+                }
+                return re;
             }
         }
         return ResultMessage.FAILED;
@@ -122,19 +142,21 @@ public class AccountBill {
     }
 
 
-
     public ResultMessage examine(AccountBillVO vo) throws RemoteException {
+        logInfo.close();
         ResultMessage re = update(vo);
-        if (vo.state == BillState.PASS){
-            if (vo.type == BillType.RECEIPT){
-                for (AccountBillItemVO itemVO : vo.accountBillItems){
-                    accountInfo.changeMoney(itemVO.account.accountID,itemVO.transferMoney);
+        logInfo.open();
+        if (vo.state == BillState.PASS) {
+            if (vo.type == BillType.RECEIPT) {
+                for (AccountBillItemVO itemVO : vo.accountBillItems) {
+                    accountInfo.changeMoney(itemVO.account.accountID, itemVO.transferMoney);
                 }
-            }else{
-                for (AccountBillItemVO itemVO : vo.accountBillItems){
-                    accountInfo.changeMoney(itemVO.account.accountID,-itemVO.transferMoney);
+            } else {
+                for (AccountBillItemVO itemVO : vo.accountBillItems) {
+                    accountInfo.changeMoney(itemVO.account.accountID, -itemVO.transferMoney);
                 }
             }
+            logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, voTopo(vo).toString());
         }
         return re;
     }
@@ -178,7 +200,7 @@ public class AccountBill {
     }
 
     public ResultMessage redCover(AccountBillVO billVO) throws RemoteException {
-
+        logInfo.close();
         String ID = "";
 
         if (billVO.type == BillType.RECEIPT)
@@ -192,11 +214,19 @@ public class AccountBill {
 
         billVO.sum = billVO.calSum();
         submit(billVO);
-        return examine(billVO);
+
+        ResultMessage re = examine(billVO);
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.REDCOVER,OperationObjectType.BILL,voTopo(billVO).toString());
+        }
+        return re;
     }
 
     public ResultMessage redCoverAndCopy(AccountBillVO billVO) throws RemoteException {
-       redCover(billVO);
+        /**将log上锁**/
+        logInfo.close();
+        redCover(billVO);
         String ID = "";
         if (billVO.type == BillType.RECEIPT)
             ID = getNewReceiptID();
@@ -204,6 +234,11 @@ public class AccountBill {
             ID = getNewPaymentID();
         billVO.ID = ID;
         billVO.state = BillState.DRAFT;
-        return save(billVO);
+        ResultMessage re = save(billVO);
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
+        }
+        return re;
     }
 }

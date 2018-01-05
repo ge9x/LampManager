@@ -1,37 +1,41 @@
 package ui.viewcontroller.InventoryStaff;
 
 import bean.GoodsBean;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
-import blstubdriver.GoodsBLService_Stub;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.KeyEvent;
 import ui.component.DialogFactory;
+import ui.component.Table;
 import util.ResultMessage;
 import vo.GoodsVO;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Kry·L on 2017/11/27.
  */
 public class InventoryGoodsController {
-    GoodsBLService goodsBLService = new GoodsController();
+    GoodsBLService goodsBLService;
 
     InventoryViewController inventoryViewController;
     ArrayList<GoodsVO> goods;
 
-    TableView<GoodsBean> table;
-    ObservableList<GoodsBean> data = FXCollections.observableArrayList();
-
+    Table<GoodsBean> table = new Table();
+    ObservableList<GoodsBean> data = table.data;
+    private Executor executor;
 
     @FXML
     ScrollPane TablePane;
@@ -44,52 +48,53 @@ public class InventoryGoodsController {
 
     @FXML
     public void initialize(){
+        executor = Executors.newCachedThreadPool(runnable -> {
+            Thread t = new Thread(runnable);
+            t.setDaemon(true);
+            return t;
+        });
+
+        goodsBLService = GoodsBLFactory.getBLService();
         searchIcon.setText("\ue69d");
 
         initTable();
-        goods = goodsBLService.show();
-        showGoods();
+        Task<ArrayList<GoodsVO>> task = new Task<ArrayList<GoodsVO>>() {
+            @Override
+            protected ArrayList<GoodsVO> call() throws Exception {
+                return goodsBLService.show();
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            showGoods();
+        });
+
+        executor.execute(task);
+
     }
 
     public void initTable(){
-        table = new TableView<>();
+
         table.setEditable(true);
-        TableColumn IDColumn = new TableColumn("编号");
-        TableColumn nameColumn = new TableColumn("商品名称");
-        TableColumn modelColumn = new TableColumn("商品型号");
-        TableColumn classificationColumn = new TableColumn("商品分类");
-        TableColumn amountColumn = new TableColumn("库存数量");
-        TableColumn alarmAmountColumn = new TableColumn("警戒数量");
-        TableColumn purchaseColumn = new TableColumn("进价");
-        TableColumn recentPurchaseColumn = new TableColumn("最近进价");
-        TableColumn salesColumn = new TableColumn("零售价");
-        TableColumn recentSalesColumn = new TableColumn("最近零售价");
+        table.addColumn("编号","ID",90);
+        table.addColumn("商品名称","name",90);
+        table.addColumn("商品型号","model",90);
+        table.addColumn("商品分类","classification",90);
+        table.addColumn("库存数量","amount",49);
+        table.addColumn("警戒数量","alarmAmount",49);
+        table.addColumn("进价","recentPurchasePrice",70);
+        table.addColumn("最近进价","purchasePrice",70);
+        table.addColumn("零售价","recentSalesPrice",70);
+        table.addColumn("最近零售价","salesPrice",70);
 
-        IDColumn.setPrefWidth(90);
-        nameColumn.setPrefWidth(90);
-        modelColumn.setPrefWidth(90);
-        classificationColumn.setPrefWidth(90);
-        amountColumn.setPrefWidth(49);
-        alarmAmountColumn.setPrefWidth(49);
-        purchaseColumn.setPrefWidth(70);
-        salesColumn.setPrefWidth(70);
-        recentPurchaseColumn.setPrefWidth(70);
-        recentSalesColumn.setPrefWidth(70);
+        TablePane.setContent(table.getTable());
 
-        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        modelColumn.setCellValueFactory(new PropertyValueFactory<>("model"));
-        classificationColumn.setCellValueFactory(new PropertyValueFactory<>("classification"));
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        alarmAmountColumn.setCellValueFactory(new PropertyValueFactory<>("alarmAmount"));
-        recentPurchaseColumn.setCellValueFactory(new PropertyValueFactory<>("recentPurchasePrice"));
-        purchaseColumn.setCellValueFactory(new PropertyValueFactory<>("purchasePrice"));
-        recentSalesColumn.setCellValueFactory(new PropertyValueFactory<>("recentSalesPrice"));
-        salesColumn.setCellValueFactory(new PropertyValueFactory<>("salesPrice"));
-
-        table.getColumns().addAll(IDColumn,nameColumn,modelColumn,classificationColumn,amountColumn,alarmAmountColumn,purchaseColumn,recentPurchaseColumn,salesColumn,recentSalesColumn);
-        table.setItems(data);
-        TablePane.setContent(table);
+        SearchField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                clickSearchButton();
+            }
+        });
     }
     public void showGoods(){
         data.clear();
@@ -120,7 +125,12 @@ public class InventoryGoodsController {
                     bean.setAlarmAmount(goodsVO.alarmAmount);
                     bean.setPurchasePrice(goodsVO.buyingPrice);
                     bean.setSalesPrice(goodsVO.retailPrice);
+                } else{
+                    dialog = DialogFactory.getInformationAlert();
+                    dialog.setHeaderText("修改商品信息失败");
+                    dialog.showAndWait();
                 }
+
             }
         }
     }
@@ -149,16 +159,23 @@ public class InventoryGoodsController {
         nodes.add(alarmTF);
 
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+
         dialog.setHeaderText("请输入新的商品信息");
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.FINISH) {
                 ArrayList<String> result = new ArrayList<>();
-                result.add(nameTF.getText());
-                result.add(modelTF.getText());
-                result.add(alarmTF.getText());
-                result.add(purchaseTF.getText());
-                result.add(salesTF.getText());
-                return result;
+                if (nameTF.getText().isEmpty() || modelTF.getText().isEmpty() || alarmTF.getText().isEmpty()||purchaseTF.getText().isEmpty()||salesTF.getText().isEmpty()){
+                    Dialog dialog1 = DialogFactory.getInformationAlert();
+                    dialog1.setHeaderText("商品信息填写不完整");
+                    dialog1.showAndWait();
+                }else{
+                    result.add(nameTF.getText());
+                    result.add(modelTF.getText());
+                    result.add(alarmTF.getText());
+                    result.add(purchaseTF.getText());
+                    result.add(salesTF.getText());
+                    return result;
+                }
             }
             return null;
         });
@@ -171,7 +188,7 @@ public class InventoryGoodsController {
         showGoods();
     }
     public GoodsBean getSelectedItem(){
-        GoodsBean goodsBean = table.getSelectionModel().getSelectedItem();
+        GoodsBean goodsBean = table.getSelectedItem();
         if(goodsBean == null){
             Dialog dialog = DialogFactory.getInformationAlert();
             dialog.setHeaderText("请先选择商品记录");

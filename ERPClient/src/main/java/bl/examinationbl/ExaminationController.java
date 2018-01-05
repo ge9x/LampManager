@@ -10,7 +10,7 @@ public class ExaminationController implements ExaminationBLService{
 	
 	private Examination examination;
 	
-	public ExaminationController(){
+	protected ExaminationController(){
 		examination = new Examination();
 	}
 

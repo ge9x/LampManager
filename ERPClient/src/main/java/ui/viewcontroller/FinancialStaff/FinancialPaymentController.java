@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -40,8 +41,7 @@ public class FinancialPaymentController {
     FinancialViewController financialViewController;
     FinancialPaymentEditController financialPaymentEditController;
 
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
-    FinanceBLService financeBLService2 = new FinanceController();
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
 
     ArrayList<AccountBillVO> draft;
     ArrayList<AccountBillVO> submitted;
@@ -56,10 +56,10 @@ public class FinancialPaymentController {
     public void initialize(){
         addIcon.setText("\ue61e");
 
-        draft = financeBLService2.getPaymentsByState(BillState.DRAFT);
-        submitted = financeBLService2.getPaymentsByState(BillState.SUBMITTED);
-        pass = financeBLService2.getPaymentsByState(BillState.PASS);
-        failed = financeBLService2.getPaymentsByState(BillState.FAILED);
+        draft = financeBLService.getPaymentsByState(BillState.DRAFT);
+        submitted = financeBLService.getPaymentsByState(BillState.SUBMITTED);
+        pass = financeBLService.getPaymentsByState(BillState.PASS);
+        failed = financeBLService.getPaymentsByState(BillState.FAILED);
 
         billPane = new BillPane("草稿单据","待审批单据","审批通过单据","审批通过单据");
         initTabs();
@@ -141,7 +141,7 @@ public class FinancialPaymentController {
     }
 
     public void deletePayment(AccountBillVO accountBill) {
-        ResultMessage re = financeBLService2.deleteDraftAccountBill(accountBill.ID);
+        ResultMessage re = financeBLService.deleteDraftAccountBill(accountBill.ID);
         if (re == ResultMessage.SUCCESS){
             showPaymentList();
         }

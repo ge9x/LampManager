@@ -69,10 +69,9 @@ public interface FormBLService {
 
     /**
      * 导出经营历程表
-     * @param vos
      * @return
      */
-    public ResultMessage exportDocumentDetails(ArrayList<BillVO> vos);
+    public ResultMessage exportDocumentDetails(String filePath,ArrayList<BillVO> vos);
 
     /**
      * 导出经营情况表

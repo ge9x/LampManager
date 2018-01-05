@@ -42,19 +42,41 @@ public interface UserBLService {
 	public ResultMessage modifyUser(UserVO vo);
 	
 	/**
-     * 根据用户ID查找相应用户
+     * 通过用户ID模糊查找用户
      * 
      * @param userID
      * @return userVO
      */
 	public ArrayList<UserVO> findUsersByID(String UserID);
 	
+	/**
+	 * 得到所有用户
+	 * 
+	 * @return ArrayList
+	 */
 	public ArrayList<UserVO> show();
 	
+	/**
+	 * 得到当前登录用户ID
+	 * 
+	 * @return String
+	 */
 	public String getCurrentUserID();
 	
+	/**
+	 * 通过关键字模糊查找用户
+	 * 
+	 * @param keywords
+	 * @return ArrayList
+	 */
 	public ArrayList<UserVO> findUsersByKeywords(String keywords);
 	
+	/**
+	 * 通过用户ID精确查找用户
+	 * 
+	 * @param userID
+	 * @return UserVO
+	 */
 	public UserVO findUserByID(String userID);
 	
 }

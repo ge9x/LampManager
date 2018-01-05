@@ -2,18 +2,25 @@ package bl.examinationbl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import bl.inventorybl.Inventory;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.messagebl.MessageBLFactory;
 import bl.salesbl.PurchaseController;
+import bl.salesbl.Sales;
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.financeblservice.FinanceInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.messageblservice.MessageInfo;
 import blservice.salesblservice.PurchaseInfo;
 import blservice.salesblservice.SalesInfo;
 import dataservice.examinationdataservice.ExaminationDataService;
@@ -22,6 +29,7 @@ import rmi.ExaminationRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.ResultMessage;
+import util.UserPosition;
 import vo.AccountBillVO;
 import vo.BillVO;
 import vo.CashBillVO;
@@ -32,18 +40,17 @@ import vo.SalesVO;
 public class Examination {
 
 	private ExaminationDataService examinationDataService;
-	ArrayList<BillPO> billPOs;
-	FinanceInfo financeInfo;
-	SalesInfo salesInfo;
-	PurchaseInfo purchaseInfo;
-	InventoryInfo inventoryInfo;
+	private FinanceInfo financeInfo;
+	private SalesInfo salesInfo;
+	private PurchaseInfo purchaseInfo;
+	private InventoryInfo inventoryInfo;
 	
 	public Examination(){
 		examinationDataService = ExaminationRemoteHelper.getInstance().getExaminationDataService();
-		financeInfo = new FinanceController();
-		salesInfo = new SalesController();
-		purchaseInfo = new PurchaseController();
-		inventoryInfo = new InventoryController();
+		financeInfo = FinanceBLFactory.getInfo();
+		salesInfo = SalesBLFactory.getSalesInfo();
+		purchaseInfo = SalesBLFactory.getPurchaseInfo();
+		inventoryInfo = InventoryBLFactory.getInfo();
 	}
 	
 

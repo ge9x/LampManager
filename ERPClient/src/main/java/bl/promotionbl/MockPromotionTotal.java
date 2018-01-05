@@ -22,36 +22,6 @@ public class MockPromotionTotal extends PromotionTotal{
 	}
 
 	@Override
-	public void addGift(GoodsItemVO vo){
-		promotionTotal.gifts.add(vo);
-		System.out.println("Add gift success!");
-	}
-
-	@Override
-	public void addVoucher(double price){
-		promotionTotal.voucher = price;
-		System.out.println("Set voucher success!");
-	}
-
-	@Override
-	public void setPrice(double price){
-		promotionTotal.totalPrice = price;
-		System.out.println("Set target price success!");
-	}
-
-	@Override
-	public void setStartDate(String date){
-		promotionTotal.startDate = date;
-		System.out.println("Set start time success!");
-	}
-
-	@Override
-	public void setEndDate(String date){
-		promotionTotal.endDate = date;
-		System.out.println("Set end time success!");
-	}
-
-	@Override
 	public ResultMessage submit(PromotionTotalVO vo){
 		return ResultMessage.SUCCESS;
 	}

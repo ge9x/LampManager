@@ -2,6 +2,7 @@ package ui.viewcontroller.SalesStaff;
 
 import bean.GoodsBean;
 import bean.GoodsItemBean;
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
@@ -30,6 +31,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -38,21 +40,24 @@ import vo.GoodsItemVO;
 import vo.PromotionVO;
 import vo.SalesVO;
 
+import java.awt.event.ItemEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffSalesReturnEditViewController {
+    MainUIController mainUIController;
 	SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new SalesController();
+	SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> customers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
 	
 	boolean isExamine = false;
 	boolean isNew;
+	public boolean onlyShow = false;
 	
 	TableView<GoodsItemBean> itemTable;
     ObservableList<GoodsItemBean> data =
@@ -210,15 +215,15 @@ public class SalesStaffSalesReturnEditViewController {
     	GoodsBean bean = null;
     	if (result.isPresent()){
     		bean = result.get();
+    		GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0,"");
+        	data.add(itemBean);
+            itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
+                }
+            });
     	}
-    	GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentSalesPrice(), 0,"");
-    	data.add(itemBean);
-        itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
-            }
-        });
     }
 
     public void clickSubmitButton(){
@@ -234,7 +239,12 @@ public class SalesStaffSalesReturnEditViewController {
 	        SalesVO salesVO = new SalesVO(BillType.SALESRETURN, BillState.SUBMITTED, BillID.getText(), customerVO.customerName, customerVO.customerID, 
 	        		customerVO.salesman, Username.getText(), inventoryName, goodsItemList, 0, 0,remark.getText(),LocalDate.now().toString(), "");
 	    	if(!isExamine){
-		        salesBLService.updateSales(salesVO);
+	    		if(isNew){
+	    			salesBLService.submitSales(salesVO);
+	    		}
+	    		else{
+	    			salesBLService.updateSales(salesVO);
+	    		}
 		        salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
 	    	}
 	    	else{
@@ -329,11 +339,16 @@ public class SalesStaffSalesReturnEditViewController {
         Username.setText(salesBill.user);
         Salesman.setText(salesBill.salesman);
         
+        itemTable.setEditable(false);
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffSalesReturnOrderViewController.showSalesReturnOrderList();
             	}
@@ -344,7 +359,7 @@ public class SalesStaffSalesReturnEditViewController {
             }
         });
 
-        if (salesBill.state == BillState.DRAFT){
+        if (salesBill.state == BillState.DRAFT||isExamine){
             submitButton.setText("编 辑");
             submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -370,6 +385,8 @@ public class SalesStaffSalesReturnEditViewController {
         remark.setEditable(true);
         inventory.setDisable(false);
         customer.setDisable(false);
+        
+        itemTable.setEditable(true);
 
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -388,5 +405,9 @@ public class SalesStaffSalesReturnEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

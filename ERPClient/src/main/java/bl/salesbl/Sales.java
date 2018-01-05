@@ -4,16 +4,24 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
+import bl.userbl.UserBLFactory;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.PurchasePO;
@@ -22,8 +30,11 @@ import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
 import util.Level;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import util.UserLimits;
+import util.UserPosition;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
@@ -43,23 +54,19 @@ public class Sales {
 	GoodsItem goodsItem;
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
+	LogInfo logInfo;
+	MessageInfo messageInfo;
 	
 	public Sales(){
 		salesDataService=SalesRemoteHelper.getInstance().getSalesDataService();
 		salesLineItem=new SalesLineItem();
 		goodsItem=new GoodsItem();
-		inventoryInfo=new InventoryController();
-		customerInfo=new CustomerController();
+		inventoryInfo=InventoryBLFactory.getInfo();
+		customerInfo=CustomerBLFactory.getInfo();
+		logInfo=LogBLFactory.getInfo();
+		messageInfo=MessageBLFactory.getInfo();
 	}
 	
-	
-	public SalesVO findSlaesByID(String ID) {
-		return null;
-	}
-	
-	public SalesVO findSalesByState(BillState state) {
-		return null;
-	}
 	
 	public ResultMessage addSales(SalesVO vo) throws RemoteException{
 		return salesDataService.addSales(voTopo(vo));
@@ -83,7 +90,14 @@ public class Sales {
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
 		po.setPromotionName(vo.promotionName);
-		return salesDataService.updateSales(po);
+		ResultMessage res=salesDataService.updateSales(po);
+		if(res==ResultMessage.SUCCESS){
+			logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, po.toString());
+			if(vo.state==BillState.SUBMITTED){
+				messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage deleteSales(String ID) {
@@ -129,6 +143,10 @@ public class Sales {
 	}
 	
 	public ResultMessage examine(SalesVO vo) throws RemoteException {
+		logInfo.close();
+		ResultMessage res=updateSales(vo);
+		logInfo.open();
+		SalesPO salesPO=salesDataService.findSlaesByID(vo.ID);
 		if(vo.state==BillState.PASS){
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
@@ -137,8 +155,15 @@ public class Sales {
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
 		}
+		logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
-		return updateSales(vo);
+		if(vo.state!=BillState.SUBMITTED){
+			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesPO.toString());
+		}
+		return res;
 	}
 	
 	public ArrayList<SalesVO> getAllSubmittedSales() throws RemoteException {
@@ -172,7 +197,11 @@ public class Sales {
 			return ResultMessage.FAILED;
 		}
 		vo.state=BillState.SUBMITTED;
-		return addSales(vo);
+		ResultMessage res=addSales(vo);
+		if(res==ResultMessage.SUCCESS){
+			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		return res;
 	}
 	
 	public ResultMessage saveSales(SalesVO bill) throws RemoteException {
@@ -277,7 +306,7 @@ public class Sales {
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
 			goodsItempoList.add(goodsItemPO);
 		}
-		String str[]=vo.date.split("-");
+		String str[]=vo.ID.split("-");
 		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
 	}
 	
@@ -306,11 +335,24 @@ public class Sales {
 			vo.ID=salesDataService.getNewSalesReturnID();
 		}
 		vo.state=BillState.PASS;
-		return addSales(vo);
+		
+		ResultMessage res=ResultMessage.NULL;
+		res=addSales(vo);
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.close();
+			res = this.examine(vo);
+			logInfo.open();
+			if (res == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage redCoverAndCopy(SalesVO vo) throws RemoteException {
+		logInfo.close();
 		redCover(vo);
+		logInfo.open();
 		vo.state=BillState.DRAFT;
 		if(vo.type==BillType.SALES){
 			vo.ID=salesDataService.getNewSalesID();

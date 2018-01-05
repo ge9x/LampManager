@@ -3,6 +3,7 @@ package ui.viewcontroller.FinancialStaff;
 import bean.AccountBillItemBean;
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -32,6 +33,7 @@ import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -48,17 +50,17 @@ import javax.sound.midi.VoiceStatus;
  * Created by Kry·L on 2017/11/23.
  */
 public class FinancialReceiptEditController {
-
+    MainUIController mainUIController;
     FinancialReceiptController financialReceiptController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    FinanceBLService financeBLService = new FinanceBLService_Stub();
-    FinanceBLService financeBLService2 = new FinanceController();
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
     Boolean isNew;
     boolean isExamine = false;
+    public boolean onlyShow = false;
 
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
@@ -99,10 +101,10 @@ public class FinancialReceiptEditController {
         addIcon.setText("\ue61e");
         deleteIcon.setText("\ue606");
 
-        String name = financeBLService2.getUserID();
+        String name = financeBLService.getUserID();
         Username.setText(name);
-        accounts = financeBLService2.getAllAccount();
-        customers = financeBLService2.getAllCustomer();
+        accounts = financeBLService.getAllAccount();
+        customers = financeBLService.getAllCustomer();
 
         initCustomerCombobox();
         initTable();
@@ -118,7 +120,7 @@ public class FinancialReceiptEditController {
     }
 
     public void addReceipt() {
-        String ID = financeBLService2.getNewReceiptID();
+        String ID = financeBLService.getNewReceiptID();
         isNew = true;
         isExamine = false;
         BillID.setText(ID);
@@ -178,20 +180,26 @@ public class FinancialReceiptEditController {
     }
 
     public void clickSubmitButton(){
+        if (Customer.getSelectionModel().getSelectedItem() == null || itemTable.getItems().size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.RECEIPT,customerID,
                 Username.getText(),accountBillItems);
     	if(!isExamine){
 	        if (isNew == true){
-	            financeBLService2.submit(accountBillVO);
+	            financeBLService.submit(accountBillVO);
 	        }else{
-	            financeBLService2.updateDraft(accountBillVO);
+	            financeBLService.updateDraft(accountBillVO);
 	        }
 	        financialReceiptController.showReceiptList();
     	}
     	else{
-    		financeBLService2.updateDraft(accountBillVO);
+    		financeBLService.updateDraft(accountBillVO);
     		generalManagerExaminationCellController.clickReturnButton();
     	}
     }
@@ -213,9 +221,9 @@ public class FinancialReceiptEditController {
 	                        Username.getText(), accountBillItems);
 	
 	                if (isNew == true){
-	                    financeBLService2.save(accountBillVO);
+	                    financeBLService.save(accountBillVO);
 	                }else{
-	                    financeBLService2.updateDraft(accountBillVO);
+	                    financeBLService.updateDraft(accountBillVO);
 	                }
 	            }
 	
@@ -237,7 +245,7 @@ public class FinancialReceiptEditController {
     	}
     }
     public  Dialog getAccountBillItemDialog(){
-        JFXComboBox name = new JFXComboBox();
+        JFXComboBox<String> name = new JFXComboBox();
         ArrayList<String> names = new ArrayList<>();
         for (AccountVO account:accounts){
             names.add(account.accountName);
@@ -246,6 +254,7 @@ public class FinancialReceiptEditController {
 
         TextField money = new TextField();
         TextField remarks = new TextField();
+        remarks.setPromptText("备注");
         Label label1 = new Label("银行账户");
         Label label2 = new Label("转账金额");
         Label label3 = new Label("备注");
@@ -259,7 +268,20 @@ public class FinancialReceiptEditController {
         nodes.add(remarks);
 
         Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels,nodes);
-
+        Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        money.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || name.getSelectionModel().getSelectedItem().trim().isEmpty());
+            }
+        });
+        name.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable, SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+                button.setDisable(newValue.getSelectedItem().trim().isEmpty() || money.getText().trim().isEmpty());
+            }
+        });
         Platform.runLater(() -> name.requestFocus());
 
         //获得输入
@@ -276,6 +298,8 @@ public class FinancialReceiptEditController {
             }
             return null;
         });
+
+
 
         return dialog;
     }
@@ -305,7 +329,7 @@ public class FinancialReceiptEditController {
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
 
-        String customerName = financeBLService2.getCustomerNameByID(account.customerID);
+        String customerName = financeBLService.getCustomerNameByID(account.customerID);
         Customer.getItems().clear();
         Customer.getItems().add(customerName);
         Customer.getSelectionModel().selectFirst();
@@ -316,6 +340,10 @@ public class FinancialReceiptEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		financialReceiptController.showReceiptList();
             	}
@@ -342,7 +370,7 @@ public class FinancialReceiptEditController {
         }
 
         for (AccountBillItemVO accountBillItemVO : account.accountBillItems) {
-            String accountName = financeBLService2.getAccountNameByID(accountBillItemVO.account.accountID);
+            String accountName = financeBLService.getAccountNameByID(accountBillItemVO.account.accountID);
             accountBillItems.add(accountBillItemVO);
             data.add(new AccountBillItemBean(accountName, accountBillItemVO.transferMoney, accountBillItemVO.remark));
             total.set(total.get() + accountBillItemVO.transferMoney);
@@ -379,9 +407,12 @@ public class FinancialReceiptEditController {
             }
         });
     }
-    
+
     public void isExamine(){
     	isExamine = true;
     }
 
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
 }

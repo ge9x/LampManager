@@ -41,10 +41,7 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 		criteria.add(
 				new Criterion(
 						new Criterion("type", BillType.OVERFLOW, QueryMode.FULL),
-						new Criterion(
-								new Criterion("type", BillType.GIFT, QueryMode.FULL),
-								new Criterion("type", BillType.LOSS, QueryMode.FULL)
-								)
+						new Criterion("type", BillType.LOSS, QueryMode.FULL)
 						)
 				);
 		return inventoryBillDataHelper.multiQuery(criteria);
@@ -67,7 +64,6 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 
 	@Override
 	public ResultMessage addBill(InventoryBillPO po) throws RemoteException {
-		
 		return inventoryBillDataHelper.save(po);
 	}
 

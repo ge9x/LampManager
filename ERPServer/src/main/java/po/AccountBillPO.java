@@ -2,6 +2,7 @@ package po;
 
 import util.BillState;
 import util.BillType;
+import util.Money;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,4 +159,9 @@ public class AccountBillPO extends BillPO{
 	public void setTurn(int turn) {
 		super.setTurn(turn);
 	}
+    @Override
+    public String toString() {
+        return "ID:" + super.buildID() + ", 类型:" + this.getType().getValue() + ", 状态:" + this.getState().getValue()
+                + ", 客户ID:" + String.format("%08d",customerID) +", 操作员:" + userName + ", 总额:" + Money.getMoneyString(sum);
+    }
 }

@@ -4,25 +4,37 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
+import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
 import blservice.inventoryblservice.InventoryInfo;
+import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import blservice.userblservice.UserInfo;
 import dataservice.salesdataservice.SalesDataService;
 import javafx.geometry.VPos;
 import po.GoodsItemPO;
 import po.PurchasePO;
+import po.SalesPO;
 import rmi.SalesRemoteHelper;
 import util.BillState;
 import util.BillType;
+import util.OperationObjectType;
+import util.OperationType;
 import util.ResultMessage;
 import util.UserLimits;
+import util.UserPosition;
 import vo.CustomerVO;
 import vo.GoodsItemVO;
 import vo.PurchaseVO;
@@ -40,13 +52,17 @@ public class Purchase {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	UserInfo userInfo;
+	LogInfo logInfo;
+	MessageInfo messageInfo;
 	
 	private static SalesDataService salesDataService;
 	
 	public Purchase(){
-		inventoryInfo=new InventoryController();
-		customerInfo=new CustomerController();
-		userInfo=new UserController();
+		inventoryInfo=InventoryBLFactory.getInfo();
+		customerInfo=CustomerBLFactory.getInfo();
+		userInfo=UserBLFactory.getInfo();
+		logInfo=LogBLFactory.getInfo();
+		messageInfo=MessageBLFactory.getInfo();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
 		goodsItem=new GoodsItem();
@@ -81,7 +97,14 @@ public class Purchase {
 		}
 		po.setRemarks(vo.remarks);
 		po.setSum(vo.sum);
-		return salesDataService.updatePurchase(po);
+		ResultMessage res=salesDataService.updatePurchase(po);
+		if(res==ResultMessage.SUCCESS){
+			logInfo.record(OperationType.UPDATE, OperationObjectType.BILL, po.toString());
+			if(vo.state==BillState.SUBMITTED){
+				messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+			}
+		}
+		return res;
 	}
 		
 	public ResultMessage deletePurchase(String ID) throws RemoteException {
@@ -108,7 +131,11 @@ public class Purchase {
 
 	public ResultMessage submitPurchase(PurchaseVO pur) throws RemoteException {
 		pur.state=BillState.SUBMITTED;
-		return addPurchase(pur);
+		ResultMessage res=addPurchase(pur);
+		if(res==ResultMessage.SUCCESS){
+			messageInfo.addMessage(pur.state, pur.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		return res;
 	}
 
 	public ResultMessage submitSales(SalesVO sal) {
@@ -238,16 +265,28 @@ public class Purchase {
 	}
 	
 	public ResultMessage examine(PurchaseVO vo) throws RemoteException {
+		logInfo.close();
+		ResultMessage res=updatePurchase(vo);
+		logInfo.open();
+		PurchasePO purchasePO=salesDataService.findPurchaseByID(vo.ID);
 	    if(vo.state==BillState.PASS){
 		     if(vo.type==BillType.PURCHASE){
 			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
+			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
 		     }else{
 			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
+			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
 		     }
 		 }
-	    return updatePurchase(vo);
+	    if(vo.state!=BillState.SUBMITTED){
+			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
+		}
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
+		}
+	    return res;
 	}
 	
 	public static PurchasePO voTopo(PurchaseVO vo) throws NumberFormatException, RemoteException{
@@ -287,11 +326,23 @@ public class Purchase {
 		}
 
 		vo.state=BillState.PASS;
-		return addPurchase(vo);
+		ResultMessage res=ResultMessage.NULL;
+		res=addPurchase(vo);
+		if (res == ResultMessage.SUCCESS) {
+			logInfo.close();
+			res = this.examine(vo);
+			logInfo.open();
+			if (res == ResultMessage.SUCCESS) {
+				logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, salesDataService.findPurchaseByID(vo.ID).toString());
+			}
+		}
+		return res;
 	}
 	
 	public ResultMessage redCoverAndCopy(PurchaseVO vo) throws NumberFormatException, RemoteException {
+		logInfo.close();
 		redCover(vo);
+		logInfo.open();
 		if(vo.type==BillType.PURCHASE){
 			vo.ID=salesDataService.getNewPurchaseID();
 		}else{

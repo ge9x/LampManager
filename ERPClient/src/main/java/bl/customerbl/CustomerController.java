@@ -19,7 +19,7 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	
 	private Customer customer;
 	
-	public CustomerController(){
+	protected CustomerController(){
 		customer=new Customer();
 	}
 
@@ -138,16 +138,6 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	@Override
 	public ArrayList<UserVO> getAllSalesman() {
 		return customer.getAllSalesman();
-	}
-
-	@Override
-	public ResultMessage raiseCustomerPoints(double sum,int iD) {
-		try {
-			return customer.raiseCustomerPoints(sum, iD);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-			return ResultMessage.NULL;
-		}
 	}
 
 	@Override

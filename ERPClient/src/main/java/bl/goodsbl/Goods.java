@@ -1,12 +1,16 @@
 package bl.goodsbl;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-import bl.classificationbl.ClassificationController;
-import bl.logbl.LogController;
+import bl.classificationbl.ClassificationBLFactory;
+import bl.logbl.LogBLFactory;
+import bl.salesbl.SalesBLFactory;
 import blservice.classificationblservice.ClassificationInfo;
 import blservice.logblservice.LogInfo;
+import blservice.salesblservice.PurchaseInfo;
+import blservice.salesblservice.SalesInfo;
 import dataservice.goodsdataservice.GoodsDataService;
 import po.ClassificationPO;
 import po.GoodsPO;
@@ -16,7 +20,10 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.QueryMode;
 import util.ResultMessage;
+import vo.GoodsItemVO;
 import vo.GoodsVO;
+import vo.PurchaseVO;
+import vo.SalesVO;
 
 /**
  * Created on 2017/11/5
@@ -29,10 +36,10 @@ public class Goods {
 	private ClassificationInfo classificationInfo;
 	private LogInfo logInfo;
 
-	public Goods() {
+	protected Goods() {
 		goodsDataService = GoodsRemoteHelper.getInstance().getGoodsDataService();
-		classificationInfo = new ClassificationController();
-		logInfo = new LogController();
+		classificationInfo = ClassificationBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 
 	public ArrayList<GoodsVO> show() throws RemoteException {
@@ -56,8 +63,7 @@ public class Goods {
 	}
 
 	public GoodsVO showDetails(String ID) throws NumberFormatException, RemoteException {
-		int poID = Integer.parseInt(ID.substring(2));
-		GoodsPO found = goodsDataService.find(poID);
+		GoodsPO found = goodsDataService.find(ID);
 		return poToVO(found);
 	}
 
@@ -80,15 +86,48 @@ public class Goods {
 	}
 
 	public ResultMessage delete(String ID) throws NumberFormatException, RemoteException {
-		GoodsPO found = goodsDataService.find(Integer.parseInt(ID.substring(2)));
+		GoodsPO found = goodsDataService.find(ID);
 		if (found == null) {
 			return ResultMessage.NOT_EXIST;
 		}
-		else { // 不加入删除商品功能
-			// TODO 询问Sales是否有账单关联
-			// return goodsDataService.delete(found);
+		else if (found.countAmount() > 0) {
+			return ResultMessage.EXIST;
 		}
-		return ResultMessage.ERROR;
+		else {
+			SalesInfo salesInfo = SalesBLFactory.getSalesInfo();
+			PurchaseInfo purchaseInfo = SalesBLFactory.getPurchaseInfo();
+			LocalDate now = LocalDate.now();
+			String start = now.minusYears(1).toString();
+			String end = now.toString();
+			ArrayList<SalesVO> salesVOs = salesInfo.getAllSalesOrder(start, end);
+			ArrayList<SalesVO> salesReturnVOs = salesInfo.getAllSalesReturnOrder(start, end);
+			ArrayList<PurchaseVO> purchaseVOs = purchaseInfo.getPurchaseByDate(start, end);
+			for (SalesVO salesVO : salesVOs) {
+				if (this.isInvolvedGoods(salesVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
+			for (SalesVO salesReturnVO : salesReturnVOs) {
+				if (this.isInvolvedGoods(salesReturnVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
+			for (PurchaseVO purchaseVO : purchaseVOs) {
+				if (this.isInvolvedGoods(purchaseVO.goodsItemList, ID)) {
+					return ResultMessage.EXIST;
+				}
+			}
+			return goodsDataService.delete(found);
+		}
+	}
+
+	private boolean isInvolvedGoods(ArrayList<GoodsItemVO> list, String goodsID) {
+		for (GoodsItemVO vo : list) {
+			if (vo.ID.equals(goodsID)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -96,7 +135,7 @@ public class Goods {
 	 * 名字(name)、型号(model)、警戒数量(alarmAmount)、进价(buyingPrice)和零售价(retailPrice)
 	 */
 	public ResultMessage update(GoodsVO vo) throws NumberFormatException, RemoteException {
-		GoodsPO toUpdate = goodsDataService.find(Integer.parseInt(vo.ID.substring(2)));
+		GoodsPO toUpdate = goodsDataService.find(vo.ID);
 		if (toUpdate == null) {
 			return ResultMessage.NOT_EXIST;
 		}
@@ -147,7 +186,6 @@ public class Goods {
 	}
 
 	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
-		int poID = Integer.parseInt(ID.substring(2));
-		return goodsDataService.find(poID);
+		return goodsDataService.find(ID);
 	}
 }

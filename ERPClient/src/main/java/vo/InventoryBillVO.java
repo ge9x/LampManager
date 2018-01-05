@@ -11,6 +11,7 @@ import util.BillType;
  *
  */
 public class InventoryBillVO extends BillVO{
+    private static final String seperator = System.lineSeparator();
 	/**
 	 * 该单据涉及的仓库
 	 */
@@ -35,5 +36,22 @@ public class InventoryBillVO extends BillVO{
 		this.user = user;
 		this.goodsMap = goodsMap;
 	}
+	@Override
+    public String toString(){
+	    return  super.toString()+
+                "仓库: " + inventory + seperator +
+                "操作员: " + user + seperator +
+                goodsMapToString();
+
+
+    }
+
+    private String goodsMapToString() {
+        String str = "";
+        for (GoodsVO vo : goodsMap.keySet()){
+            str += (vo.ID + "\t" +  vo.name + "\t" +goodsMap.get(vo) + seperator);
+        }
+        return "商品列表: " + seperator + str;
+    }
 
 }

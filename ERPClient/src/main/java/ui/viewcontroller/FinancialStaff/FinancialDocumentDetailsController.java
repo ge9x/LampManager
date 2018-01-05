@@ -1,6 +1,7 @@
 package ui.viewcontroller.FinancialStaff;
 
 import bl.accountbl.Account;
+import bl.formbl.FormBLFactory;
 import bl.formbl.FormController;
 import bl.inventorybl.Inventory;
 import bl.inventorybl.InventoryBill;
@@ -8,6 +9,8 @@ import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,9 +19,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ui.component.BillPane;
 import ui.component.DialogFactory;
 import ui.viewcontroller.common.BillController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.FilterType;
@@ -26,6 +33,7 @@ import util.ResultMessage;
 import vo.*;
 
 import javax.xml.soap.Text;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +43,8 @@ import java.util.ArrayList;
  */
 public class FinancialDocumentDetailsController {
     FinancialViewController financialViewController;
-    FormBLService formBLService = new FormController();
+    MainUIController mainUIController;
+    FormBLService formBLService =  FormBLFactory.getBLService();
 
     ArrayList<BillVO> bills;
 
@@ -71,6 +80,20 @@ public class FinancialDocumentDetailsController {
         String initDate = formBLService.getStartDate();
         StartDate.setValue(LocalDate.parse(initDate));
         EndDate.setValue(LocalDate.now());
+        StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.startDate = StartDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
+        EndDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                input.endDate = EndDate.getValue().toString();
+                loadBills(billPane.getSelected());
+            }
+        });
 
 
 
@@ -79,10 +102,7 @@ public class FinancialDocumentDetailsController {
         billPane = new BillPane("报溢单","报损单",
                 "进货单","进货退货单","销售单","销售退货单",
                 "收款单","付款单","现金费用单");
-        initTabs();
-        vBox.getChildren().add(billPane.getTabPane());
-        billPane.getTabPane().getSelectionModel().selectLast();
-        billPane.getTabPane().getSelectionModel().selectFirst();
+
     }
     public void initTabs(){
         ArrayList<Tab> tabs = billPane.getAllTabs();
@@ -128,6 +148,7 @@ public class FinancialDocumentDetailsController {
                 billNodes.add(node);
                 BillController billController = loader.getController();
                 billController.setFinancialDocumentDetailsController(this);
+                billController.setMainUIController(mainUIController);
                 billController.setBill(bills.get(i));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -146,7 +167,7 @@ public class FinancialDocumentDetailsController {
                 BillVO billVO = controller.getBill();
                 ResultMessage re = formBLService.redCover(billVO);
                 Dialog dialog = DialogFactory.getInformationAlert();
-                dialog.setHeaderText("红冲"+re.toString());
+                dialog.setHeaderText("红冲单据"+ billVO.ID + re.toString());
                 dialog.showAndWait();
             }
         }
@@ -159,7 +180,7 @@ public class FinancialDocumentDetailsController {
                 BillVO billVO = controller.getBill();
                 ResultMessage re = formBLService.redCoverAndCopy(billVO);
                 Dialog dialog = DialogFactory.getInformationAlert();
-                dialog.setHeaderText("红冲并复制"+re.toString());
+                dialog.setHeaderText("红冲并复制单据" + billVO.ID + re.toString());
                 dialog.showAndWait();
             }
         }
@@ -170,5 +191,44 @@ public class FinancialDocumentDetailsController {
         input.filterType = type;
         input.keyword = keyword.getText();
         loadBills(billPane.getSelected());
+    }
+    public void setForGeneralMananger(){
+        redButton.setVisible(false);
+        redCopyButton.setVisible(false);
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+
+        this.mainUIController = mainUIController;
+    }
+    public void initView(){
+        initTabs();
+        vBox.getChildren().add(billPane.getTabPane());
+        billPane.getTabPane().getSelectionModel().selectLast();
+        billPane.getTabPane().getSelectionModel().selectFirst();
+    }
+
+    public void clickExportButton(MouseEvent mouseEvent) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("导出经营历程表");
+        File f = directoryChooser.showDialog(new Stage());
+
+        if (f != null){
+            ArrayList<BillVO> billVOS = new ArrayList<>();
+
+            for (FXMLLoader loader:fxmlLoaders){
+                BillController controller = loader.getController();
+                if (controller.isSelected()){
+                    BillVO billVO = controller.getBill();
+                    billVOS.add(billVO);
+                }
+            }
+
+            ResultMessage re = formBLService.exportDocumentDetails(f.getPath(),billVOS);
+
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("经营历程表导出" + re.toString());
+            dialog.showAndWait();
+        }
     }
 }

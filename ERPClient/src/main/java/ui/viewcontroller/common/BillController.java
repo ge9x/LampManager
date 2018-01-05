@@ -4,29 +4,33 @@ import bl.financialbl.AccountBill;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import ui.viewcontroller.FinancialStaff.FinancialCashBillController;
-import ui.viewcontroller.FinancialStaff.FinancialDocumentDetailsController;
-import ui.viewcontroller.FinancialStaff.FinancialPaymentController;
-import ui.viewcontroller.FinancialStaff.FinancialReceiptController;
+import org.ERPClient.Main;
+import org.omg.PortableInterceptor.INACTIVE;
+import ui.viewcontroller.FinancialStaff.*;
 import ui.viewcontroller.InventoryStaff.InventorySyncController;
-import ui.viewcontroller.SalesStaff.SalesStaffPurchaseOrderViewController;
-import ui.viewcontroller.SalesStaff.SalesStaffReturnOrderViewController;
-import ui.viewcontroller.SalesStaff.SalesStaffSalesOrderViewController;
-import ui.viewcontroller.SalesStaff.SalesStaffSalesReturnOrderViewController;
+import ui.viewcontroller.InventoryStaff.InventorySyncEditController;
+import ui.viewcontroller.SalesStaff.*;
 import util.BillType;
 import util.Money;
 import vo.*;
+
+import java.io.IOException;
 
 /**
  * Created by Kry·L on 2017/11/27.
  */
 public class BillController {
 
+    public Boolean onlyShow = false;
+
     BillVO bill;
+    MainUIController mainUIController;
     FinancialReceiptController financialReceiptController;
     FinancialPaymentController financialPaymentController;
     FinancialCashBillController financialCashBillController;
@@ -104,7 +108,26 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    financialCashBillController.showCashBillDetailView(cashBill);
+                    if (!onlyShow){
+                        financialCashBillController.showCashBillDetailView(cashBill);
+                    }
+                    else {
+                        mainUIController.saveView();
+                        Pane page = null;
+                        FinancialCashBillEditController financialCashBillEditController = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/financialStaff/CashBillEdit.fxml"));
+                            page = pageLoader.load();
+                            financialCashBillEditController = pageLoader.getController();
+                            financialCashBillEditController.setMainUIController(mainUIController);
+                            financialCashBillEditController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        financialCashBillEditController.setForDetailView((CashBillVO) bill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -114,28 +137,7 @@ public class BillController {
                 }
             });
         }
-        else if(bill.type==BillType.GIFT){
-            InventoryBillVO inventoryBill = (InventoryBillVO) bill;
-            circle.setStyle("-fx-Stroke:#FFCC00");
-            billType.setText("赠");
-            billType.setTextFill(Color.web("#FFCC00"));
-            billCreater.setText(inventoryBill.user);
-            billMoneyIcon.setText("\ue61d");
-            billMoney.setText(inventoryBill.inventory);
-            DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    inventorySyncController.deleteBill(inventoryBill);
-                }
-            });
-            DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    inventorySyncController.setDetailView(inventoryBill);
-                }
-            });
-        }
-        else if(bill.type==BillType.LOSS){
+       else if(bill.type==BillType.LOSS){
             InventoryBillVO inventoryBill = (InventoryBillVO) bill;
             circle.setStyle("-fx-Stroke:#99CCFF");
             billType.setText("损");
@@ -152,7 +154,7 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    inventorySyncController.setDetailView(inventoryBill);
+                   showInventoryBillDetail(inventoryBill);
                 }
             });
         }
@@ -173,7 +175,7 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    inventorySyncController.setDetailView(inventoryBill);
+                 showInventoryBillDetail(inventoryBill);
                 }
             });
         }
@@ -187,7 +189,25 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    financialPaymentController.showPaymentDetailView(accountBill);
+                    if (onlyShow){
+                        mainUIController.saveView();
+                        FinancialPaymentEditController financialPaymentEditController = null;
+                        Pane page = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/financialStaff/PaymentEdit.fxml"));
+                            page = pageLoader.load();
+                            financialPaymentEditController = pageLoader.getController();
+                            financialPaymentEditController.setMainUIController(mainUIController);
+                            financialPaymentEditController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        financialPaymentEditController.setForDetailView((AccountBillVO) bill);
+                    }else{
+                        financialPaymentController.showPaymentDetailView(accountBill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -207,7 +227,26 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    financialReceiptController.showReceiptDetailView(accountBill);
+                    if (onlyShow){
+                        mainUIController.saveView();
+                        Pane page = null;
+                        FinancialReceiptEditController financialReceiptEditController = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/financialStaff/ReceiptEdit.fxml"));
+                            page = pageLoader.load();
+                            financialReceiptEditController = pageLoader.getController();
+                            financialReceiptEditController.setMainUIController(mainUIController);
+                            financialReceiptEditController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        financialReceiptEditController.setForDetailView((AccountBillVO) bill);
+                    }else{
+
+                        financialReceiptController.showReceiptDetailView(accountBill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -228,7 +267,26 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesStaffPurchaseOrderViewController.showPurchaseDetailView(purchaseBill);               }
+                    if (onlyShow) {
+                        mainUIController.saveView();
+                        Pane page = null;
+                        SalesStaffPurchaseEditViewController salesStaffPurchaseEditViewController = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/salesStaff/PurchaseOrderEdit.fxml"));
+                            page = pageLoader.load();
+                            salesStaffPurchaseEditViewController = pageLoader.getController();
+                            salesStaffPurchaseEditViewController.setMainUIController(mainUIController);
+                            salesStaffPurchaseEditViewController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        salesStaffPurchaseEditViewController.setForDetailView((PurchaseVO) bill);
+                    } else {
+                        salesStaffPurchaseOrderViewController.showPurchaseDetailView(purchaseBill);
+                    }
+                }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -247,7 +305,25 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesStaffReturnOrderViewController.showReturnDetailView(purchaseBill);
+                    if (onlyShow){
+                        Pane page = null;
+                        mainUIController.saveView();
+                        SalesStaffReturnEditViewController salesStaffReturnEditViewController = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/salesStaff/ReturnOrderEdit.fxml"));
+                            page = pageLoader.load();
+                            salesStaffReturnEditViewController = pageLoader.getController();
+                            salesStaffReturnEditViewController.setMainUIController(mainUIController);
+                            salesStaffReturnEditViewController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        salesStaffReturnEditViewController.setForDetailView((PurchaseVO) bill);
+                    }else{
+                        salesStaffReturnOrderViewController.showReturnDetailView(purchaseBill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -267,7 +343,26 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesStaffSalesOrderViewController.showSalesOrderDetailView(salesBill);
+                    if (onlyShow){
+                        mainUIController.saveView();
+                        Pane page = null;
+                        SalesStaffSalesEditViewController salesStaffSalesEditViewController = null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesOrderEdit.fxml"));
+                            page = pageLoader.load();
+                            salesStaffSalesEditViewController = pageLoader.getController();
+                            salesStaffSalesEditViewController.setMainUIController(mainUIController);
+                            salesStaffSalesEditViewController.onlyShow = true;
+                            mainUIController.setCenter(page);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        salesStaffSalesEditViewController.setForDetailView(salesBill);
+                    }else{
+                        salesStaffSalesOrderViewController.showSalesOrderDetailView(salesBill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -287,7 +382,25 @@ public class BillController {
             DetailIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesStaffSalesReturnOrderViewController.showSalesReturnDetailView(salesBill);
+                    if (onlyShow){
+                        mainUIController.saveView();
+                        Pane page = null;
+                        SalesStaffSalesReturnEditViewController salesStaffSalesReturnEditViewController= null;
+                        try {
+                            FXMLLoader pageLoader = new FXMLLoader();
+                            pageLoader.setLocation(getClass().getResource("/view/salesStaff/SalesReturnOrderEdit.fxml"));
+                            page = pageLoader.load();
+                            salesStaffSalesReturnEditViewController = pageLoader.getController();
+                            salesStaffSalesReturnEditViewController.setMainUIController(mainUIController);
+                            salesStaffSalesReturnEditViewController.onlyShow = true;
+                            mainUIController.setCenter(page);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        salesStaffSalesReturnEditViewController.setForDetailView(salesBill);
+                    }else{
+                        salesStaffSalesReturnOrderViewController.showSalesReturnDetailView(salesBill);
+                    }
                 }
             });
             DeleteIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -333,7 +446,9 @@ public class BillController {
     public void setSalesStaffSalesReturnOrderViewController(SalesStaffSalesReturnOrderViewController salesStaffSalesReturnOrderViewController){
         this.salesStaffSalesReturnOrderViewController = salesStaffSalesReturnOrderViewController;
     }
-    public void setFinancialDocumentDetailsController(FinancialDocumentDetailsController financialDocumentDetailsController){
+
+    public void setFinancialDocumentDetailsController(FinancialDocumentDetailsController financialDocumentDetailsController) {
+        onlyShow = true;
         this.financialDocumentDetailsController = financialDocumentDetailsController;
     }
     public boolean isSelected(){
@@ -341,5 +456,29 @@ public class BillController {
     }
     public BillVO getBill(){
         return bill;
+    }
+    public void setMainUIController(MainUIController mainUIController){
+        this.mainUIController = mainUIController;
+    }
+    private void showInventoryBillDetail(InventoryBillVO inventoryBill){
+        if (onlyShow){
+            mainUIController.saveView();
+            Pane page = null;
+            InventorySyncEditController inventorySyncEditController = null;
+            try {
+                FXMLLoader pageLoader = new FXMLLoader();
+                pageLoader.setLocation(getClass().getResource("/view/inventory/SyncEdit.fxml"));
+                page = pageLoader.load();
+                inventorySyncEditController = pageLoader.getController();
+                inventorySyncEditController.setMainUIController(mainUIController);
+                inventorySyncEditController.onlyShow = true;
+                mainUIController.setCenter(page);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            inventorySyncEditController.setForDetailView((InventoryBillVO) bill);
+        }else{
+            inventorySyncController.setDetailView(inventoryBill);
+        }
     }
 }

@@ -3,6 +3,7 @@ package ui.viewcontroller.SalesStaff;
 import bean.GoodsBean;
 import bean.GoodsItemBean;
 import bl.salesbl.PurchaseController;
+import bl.salesbl.SalesBLFactory;
 import blservice.salesblservice.SalesBLService;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -30,6 +31,7 @@ import ui.component.DialogFactory;
 import ui.component.GoodsSelecter;
 import ui.component.SalesBillTable;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -42,13 +44,15 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class SalesStaffReturnEditViewController {
+    MainUIController mainUIController;
 	SalesStaffReturnOrderViewController salesStaffReturnOrderViewController;
 	GeneralManagerExaminationCellController generalManagerExaminationCellController;
 	
-	SalesBLService salesBLService = new PurchaseController();
+	SalesBLService salesBLService = SalesBLFactory.getPurchaseBLService();
 	ArrayList<GoodsItemVO> goodsItemList = new ArrayList<GoodsItemVO>();
 	ArrayList<CustomerVO> suppliers = new ArrayList<CustomerVO>();
 	ArrayList<String> inventories = new ArrayList<String>();
+	ArrayList<Integer> goodsInventory = new ArrayList<>();
 	
 	boolean isNew;
 	boolean isExamine = false;
@@ -93,7 +97,9 @@ public class SalesStaffReturnEditViewController {
     
     @FXML
     JFXComboBox<String> inventory;
-    
+
+    public boolean onlyShow = false;
+
     public void initialize(){
     	deleteIcon.setText("\ue606");
         addIcon.setText("\ue61e");
@@ -132,6 +138,18 @@ public class SalesStaffReturnEditViewController {
         		        					t.getTablePosition().getRow())
         		        					).getRetailPrice()
         							);
+        			
+        			int index = t.getTablePosition().getRow();
+        			  if(t.getNewValue()>goodsInventory.get(index)){
+        				Dialog dialog = DialogFactory.getInformationAlert();
+        		        dialog.setHeaderText("添加商品数量超过库存数量");
+        		        Optional result = dialog.showAndWait();
+        		        
+        		      ((GoodsItemBean) t.getTableView().getItems().get(
+        					  t.getTablePosition().getRow())
+        					  ).setAmount(goodsInventory.get(index));
+        			  }
+        			  
         		});
         
         ItemTable.retailPriceColumn.setCellFactory(TextFieldTableCell.<GoodsItemBean, Double>forTableColumn(new DoubleStringConverter()));
@@ -184,6 +202,7 @@ public class SalesStaffReturnEditViewController {
     	int index = itemTable.getSelectionModel().getSelectedIndex();
     	total.set(total.get()-data.get(index).getTotalPrice());
     	data.remove(index);
+    	goodsInventory.remove(index);
     }
 
     public void clickAddButton(){
@@ -194,15 +213,16 @@ public class SalesStaffReturnEditViewController {
     	GoodsBean bean = null;
     	if (result.isPresent()){
     		bean = result.get();
+    		GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
+        	data.add(itemBean);
+        	goodsInventory.add(bean.getAmount());
+        	itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
+                }
+            });
     	}
-        GoodsItemBean itemBean = new GoodsItemBean(bean.getID(), bean.getName(), bean.getModel(), 0, bean.getRecentPurchasePrice(), 0, "");
-    	data.add(itemBean);
-    	itemBean.totalPriceProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                total.setValue(total.getValue()-oldValue.doubleValue()+newValue.doubleValue());
-            }
-        });
     }
 
     public void clickSubmitButton(){
@@ -219,7 +239,12 @@ public class SalesStaffReturnEditViewController {
 	        PurchaseVO purchaseVO = new PurchaseVO(BillType.RETURN, BillState.SUBMITTED, BillID.getText(), supplierName, supplierID, 
 	        		inventoryName, Username.getText(), goodsItemList,remark.getText(), LocalDate.now().toString());
 	    	if(!isExamine){
-		        salesBLService.submitPurchase(purchaseVO);
+	    		if(isNew){
+	    			salesBLService.submitPurchase(purchaseVO);
+	    		}
+	    		else{
+	    			salesBLService.updatePurchase(purchaseVO);
+	    		}
 		        salesStaffReturnOrderViewController.showReturnOrderList();
 	    	}
 	    	else{
@@ -309,6 +334,7 @@ public class SalesStaffReturnEditViewController {
         Username.setText(purchaseBill.user);
         remark.setText(purchaseBill.remarks);
         
+        itemTable.setEditable(false);
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -351,6 +377,8 @@ public class SalesStaffReturnEditViewController {
         inventory.setDisable(false);
         supplier.setDisable(false);
 
+        itemTable.setEditable(true);
+        
         submitButton.setText("提 交");
         submitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -368,5 +396,9 @@ public class SalesStaffReturnEditViewController {
     
     public void isExamine(){
     	isExamine = true;
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

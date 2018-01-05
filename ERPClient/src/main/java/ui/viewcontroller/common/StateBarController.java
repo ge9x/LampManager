@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
+import javafx.scene.control.Dialog;
 import org.apache.poi.hssf.record.LabelSSTRecord;
 import org.apache.xmlbeans.impl.jam.annotation.LineDelimitedTagParser;
 
@@ -18,6 +17,11 @@ import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.controls.JFXSnackbar;
 
+import bl.messagebl.MessageBLFactory;
+import bl.userbl.UserBLFactory;
+import blservice.messageblservice.MessageBLService;
+import blservice.userblservice.UserInfo;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -38,13 +42,19 @@ import javafx.scene.media.VideoTrack;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import ui.component.DialogFactory;
 import util.BillState;
+import vo.MessageVO;
+
+import javax.swing.text.html.Option;
 
 /**
  * Created by Kry·L on 2017/12/12.
  */
 public class StateBarController {
     MainUIController mainUIController;
+    MessageBLService messageBLService = MessageBLFactory.getBLService();
+    UserInfo userInfo = UserBLFactory.getInfo();
 
     @FXML
     Label exitIcon, InfoIcon;
@@ -61,8 +71,9 @@ public class StateBarController {
     
     ScrollPane scrollPane2;
     
-    IntegerProperty numOfInfo = new SimpleIntegerProperty(0);
+    IntegerProperty numOfInfo = new SimpleIntegerProperty(1);
     ArrayList<Integer> hasRemove = new ArrayList<>();
+    ArrayList<MessageVO> messageVOs = new ArrayList<>();
     static int count = 0;
 
     @FXML
@@ -99,70 +110,62 @@ public class StateBarController {
         scrollPane.setContent(vBox);
 
         JFXPopup popup = new JFXPopup(scrollPane);
-        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+//        badge.setOnMouseClicked(e -> popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35));
+        badge.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				// TODO Auto-generated method stub
+				popup.show(InfoIcon, PopupVPosition.TOP, PopupHPosition.LEFT, -400, 35);
+				messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
+				numOfInfo.set(messageVOs.size());
+				vBox.getChildren().clear();
+		    	count = 0;
+		    	for(MessageVO vo : messageVOs){
+		    		addMessageCell(vo);
+		    	}
+			}
+		});
         
-        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
-        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
-        addMessageCell(BillState.SUBMITTED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
-        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
-        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
-        addMessageCell(BillState.SUBMITTED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.SUBMITTED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.FAILED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.PASS, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
+//        addMessageCell(BillState.SUBMITTED, LocalDate.now().toString() + " " +LocalTime.now().toString(), "XSD-20171227-00001");
         
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Platform.runLater(new Runnable() {					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						refreshMessageBox();
+					}
+				});
+			}
+		}, 0, 1000);
     }
     
-    public void addMessageCell(BillState state, String time, String billID){
+    public void refreshMessageBox(){
+    	messageVOs = messageBLService.show(userInfo.findUserByID(userInfo.getCurrentUserID()).position);
+	    if(numOfInfo.get()!=messageVOs.size()){
+		    numOfInfo.set(messageVOs.size());
+	    }
+    }
+    
+    public void addMessageCell(MessageVO vo){
     	AnchorPane messageCellPane = null;
-//    	messageCellPane.setPrefSize(649.0, 70.0);
-//    	Label Icon = new Label();
-//    	Icon.setPrefSize(35, 35);
-//    	Icon.setLayoutX(10);
-//    	Icon.setLayoutY(8);
-//    	Label hint = new Label();
-//    	hint.setPrefSize(600, 35);
-//    	hint.setLayoutX(57);
-//    	hint.setLayoutY(8);
-//    	hint.setWrapText(true);
-//    	Label date = new Label();
-//    	date.setPrefSize(97, 15);
-//    	date.setLayoutX(650);
-//    	date.setLayoutY(50);
-//    	hint.setFont(new Font("Microsoft YaHei", 12));
-//    	date.setFont(new Font("Microsoft YaHei", 10));
-//
-//    	Icon.setAlignment(Pos.CENTER);
-//    	Icon.setStyle("-fx-font-family: iconfont;-fx-font-size: 30px;-fx-text-fill: #707070;");
-//
-//    	date.setText(time);
-//		if(state == BillState.SUBMITTED){
-//			Icon.setText("\ue602");
-//			hint.setText("您有一张单据已提交");
-//		}
-//		else if(state == BillState.PASS){
-//			Icon.setText("\ue625");
-//			hint.setText("您有一张单据已通过");
-//		}
-//		else if(state == BillState.FAILED){
-//			Icon.setText("\ue624");
-//			hint.setText("您有一张单据未通过");
-//		}
-//    	
-//    	messageCellPane.getChildren().add(Icon);
-//    	messageCellPane.getChildren().add(hint);
-//    	messageCellPane.getChildren().add(date);
-//    	messageCellPane.setOnMouseClicked(new EventHandler<Event>() {
-//
-//			@Override
-//			public void handle(Event arg0) {
-//                hint.requestFocus();
-//			}
-//
-//		});
     	try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/common/MessageCell.fxml"));
             messageCellPane = loader.load();
             MessageCellController messageCellController = loader.getController();
-            messageCellController.setMessage(state, time, billID);
+            messageCellController.setMessage(vo);
             messageCellController.setStateBarController(this);
             messageCellController.setOrder(count);
             
@@ -171,7 +174,6 @@ public class StateBarController {
         }
         
         vBox.getChildren().add(messageCellPane);
-        numOfInfo.set(numOfInfo.get()+1);
         count++;
     }
     
@@ -180,14 +182,20 @@ public class StateBarController {
     	Collections.sort(hasRemove);
     	int index = hasRemove.indexOf(order);
     	vBox.getChildren().remove(order-index);
-    	numOfInfo.set(numOfInfo.get()-1);
+    	
+    	messageBLService.deleteMessage(messageVOs.get(order-index).messageID);
     }
 
     public void showMessage(String message){
         snackbar.show(message,3000);
     }
     public void clickCloseButton(){
-        mainUIController.close();
+        Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("您确定要退出本系统吗？");
+        Optional result = dialog.showAndWait();
+        if (result.isPresent()){
+            mainUIController.close();
+        }
     }
 
     public void setMainUIController(MainUIController mainUIController) {

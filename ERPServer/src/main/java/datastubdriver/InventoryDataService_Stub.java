@@ -60,12 +60,12 @@ public class InventoryDataService_Stub implements InventoryDataService{
 	public ResultMessage addInventroy(InventoryPO inventory) throws RemoteException {
 		for(InventoryPO s : this.inventory){
 			if(s.equals(inventory)){
-				System.out.println("add inventory failed");
+				System.out.println("add account failed");
 				return ResultMessage.FAILED;
 			}
 		}
 		this.inventory.add(inventory);
-		System.out.println("add inventory success");
+		System.out.println("add account success");
 		return ResultMessage.SUCCESS;
 	}
 
@@ -73,12 +73,12 @@ public class InventoryDataService_Stub implements InventoryDataService{
 		for(InventoryPO s : this.inventory){
 			if(s.equals(inventory)){
 				this.inventory.remove(s);
-				System.out.println("delete inventory success");
+				System.out.println("delete account success");
 				return ResultMessage.SUCCESS;
 			}
 		}
 		this.inventory.add(inventory);
-		System.out.println("delete inventory failed");
+		System.out.println("delete account failed");
 		return ResultMessage.FAILED;
 	}
 
@@ -87,11 +87,11 @@ public class InventoryDataService_Stub implements InventoryDataService{
 			if(s.getID() == po.getID()){
 				this.inventory.remove(s);
 				this.inventory.add(po);
-				System.out.println("update inventory success");
+				System.out.println("update account success");
 				return ResultMessage.SUCCESS;
 			}
 		}
-		System.out.println("update inventory failed");
+		System.out.println("update account failed");
 		return ResultMessage.FAILED;
 	}
 

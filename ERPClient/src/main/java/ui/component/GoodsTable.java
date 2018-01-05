@@ -1,6 +1,7 @@
 package ui.component;
 
 import bean.GoodsBean;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsBLService;
 import blstubdriver.GoodsBLService_Stub;
@@ -18,7 +19,7 @@ public class GoodsTable {
 	TableView<GoodsBean> table;
 	ArrayList<GoodsVO> goods;
 	ObservableList<GoodsBean> data = FXCollections.observableArrayList();
-	GoodsBLService goodsBLService = new GoodsController();
+	GoodsBLService goodsBLService = GoodsBLFactory.getBLService();
 	
 	public GoodsTable(){
 		

@@ -35,9 +35,9 @@ public class GoodsDataService_Stub implements GoodsDataService{
 		return data;
 	}
 
-	public GoodsPO find(int ID) throws RemoteException {
+	public GoodsPO find(String ID) throws RemoteException {
 		for(GoodsPO po : data){
-			if(po.getID() == ID){
+			if(po.buildID().equals(ID)){
 				return po;
 			}
 		}

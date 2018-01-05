@@ -1,5 +1,6 @@
 package bl.financialbl;
 
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
 import blservice.accountblservice.AccountInfo;
 import po.AccountBillItemPO;
@@ -15,7 +16,7 @@ public class AccountBillItem {
     AccountInfo accountInfo;
 
     public AccountBillItem(){
-        accountInfo = new AccountController();
+        accountInfo = AccountBLFactory.getInfo();
     }
 
     public static AccountBillItemPO voTopo(AccountBillItemVO vo){

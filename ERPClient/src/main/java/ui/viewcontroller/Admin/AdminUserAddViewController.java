@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
 import blstubdriver.UserBLService_Stub;
@@ -21,7 +22,7 @@ import vo.UserVO;
 
 public class AdminUserAddViewController {
 	
-	UserBLService userBLService = new UserController();
+	UserBLService userBLService = UserBLFactory.getBLService();
 	UserVO user;
 	AdminUserViewController adminUserViewController;
 	

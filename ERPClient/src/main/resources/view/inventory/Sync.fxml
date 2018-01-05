@@ -76,17 +76,17 @@
                     <DropShadow color="#00000058" height="15.07" radius="9.1975" width="23.72" />
                 </effect>
                <children>
-                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="11.0" prefHeight="53.0" prefWidth="510.0" spacing="10.0">
+                  <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="11.0" prefHeight="53.0" prefWidth="620.0">
                      <children>
-                        <Label prefHeight="22.0" prefWidth="72.0" text="筛选单据">
+                        <Label prefHeight="22.0" prefWidth="95.0" text="筛选单据">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <JFXRadioButton fx:id="All" selectedColor="#1db1a5" text="全部" />
-                        <JFXRadioButton fx:id="Draft" selectedColor="#1db1a5" text="草稿" />
-                        <JFXRadioButton fx:id="Submitted" selectedColor="#1db1a5" text="已提交" />
-                        <JFXRadioButton fx:id="Pass" selectedColor="#1db1a5" text="审批通过" />
+                        <JFXRadioButton fx:id="All" prefHeight="15.0" prefWidth="73.0" selectedColor="#1db1a5" text="全部" />
+                        <JFXRadioButton fx:id="Draft" prefHeight="15.0" prefWidth="68.0" selectedColor="#1db1a5" text="草稿" />
+                        <JFXRadioButton fx:id="Submitted" prefHeight="15.0" prefWidth="81.0" selectedColor="#1db1a5" text="已提交" />
+                        <JFXRadioButton fx:id="Pass" prefHeight="15.0" prefWidth="92.0" selectedColor="#1db1a5" text="审批通过" />
                         <JFXRadioButton fx:id="Failed" selectedColor="#1db1a5" text="审批失败" />
                      </children>
                   </HBox>

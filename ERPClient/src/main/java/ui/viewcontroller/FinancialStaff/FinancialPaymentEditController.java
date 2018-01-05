@@ -3,6 +3,7 @@ package ui.viewcontroller.FinancialStaff;
 import bean.AccountBillItemBean;
 import bl.customerbl.Customer;
 import bl.financialbl.AccountBill;
+import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import blservice.financeblservice.FinanceBLService;
 import blstubdriver.FinanceBLService_Stub;
@@ -32,6 +33,7 @@ import javafx.util.Callback;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import ui.component.DialogFactory;
 import ui.viewcontroller.GeneralManager.GeneralManagerExaminationCellController;
+import ui.viewcontroller.common.MainUIController;
 import util.BillState;
 import util.BillType;
 import util.Money;
@@ -46,16 +48,17 @@ import java.util.Optional;
  * Created by Kry·L on 2017/11/23.
  */
 public class FinancialPaymentEditController {
-
+    MainUIController mainUIController;
     FinancialPaymentController financialPaymentController;
     GeneralManagerExaminationCellController generalManagerExaminationCellController;
-    FinanceBLService financeBLService = new FinanceController();
+    FinanceBLService financeBLService = FinanceBLFactory.getBLService();
     ArrayList<AccountBillItemVO> accountBillItems = new ArrayList<>();
 
     ArrayList<AccountVO> accounts;
     ArrayList<CustomerVO> customers;
     Boolean isNew;
     boolean isExamine = false;
+    public boolean onlyShow = false;
 
     TableView<AccountBillItemBean> itemTable;
     ObservableList<AccountBillItemBean> data =
@@ -165,6 +168,12 @@ public class FinancialPaymentEditController {
     }
 
     public void clickSubmitButton(){
+        if (Customer.getSelectionModel().getSelectedItem() == null || itemTable.getItems().size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	String customerID = customers.get(Customer.getSelectionModel().getSelectedIndex()).customerID;
         AccountBillVO accountBillVO = new AccountBillVO(LocalDate.now().toString(),BillID.getText(),
                 BillState.SUBMITTED,BillType.PAYMENT,customerID,
@@ -224,7 +233,7 @@ public class FinancialPaymentEditController {
     	}
     }
     public  Dialog getAccountBillItemDialog(){
-        JFXComboBox name = new JFXComboBox();
+        JFXComboBox<String> name = new JFXComboBox();
         ArrayList<String> names = new ArrayList<>();
         for (AccountVO account:accounts){
             names.add(account.accountName);
@@ -246,7 +255,20 @@ public class FinancialPaymentEditController {
         nodes.add(remarks);
 
         Dialog<ArrayList<String>> dialog = DialogFactory.createDialog(labels,nodes);
-
+        Button button = (Button) dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        money.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || name.getSelectionModel().getSelectedItem().trim().isEmpty());
+            }
+        });
+        name.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable, SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+                button.setDisable(newValue.getSelectedItem().trim().isEmpty() || money.getText().trim().isEmpty());
+            }
+        });
         Platform.runLater(() -> name.requestFocus());
 
         //获得输入
@@ -295,6 +317,10 @@ public class FinancialPaymentEditController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		financialPaymentController.showPaymentList();
             	}
@@ -361,5 +387,8 @@ public class FinancialPaymentEditController {
     public void isExamine(){
     	isExamine = true;
     }
-    
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
+    }
 }

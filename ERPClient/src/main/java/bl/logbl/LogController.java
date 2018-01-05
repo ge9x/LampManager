@@ -19,7 +19,7 @@ import util.ResultMessage;
 public class LogController implements LogBLService, LogInfo{
 	private Log log;
 
-	public LogController() {
+	protected LogController() {
 		log = new Log();
 	}
 
@@ -55,6 +55,16 @@ public class LogController implements LogBLService, LogInfo{
 			e.printStackTrace();
 		}
 		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ResultMessage close() {
+		return log.close();
+	}
+
+	@Override
+	public ResultMessage open() {
+		return log.open();
 	}
 
 }

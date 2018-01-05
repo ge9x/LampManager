@@ -19,7 +19,7 @@ public class ClassificationController implements ClassificationBLService, Classi
 	
 	private Classification classification;
 
-	public ClassificationController(){
+	protected ClassificationController(){
 		classification = new Classification();
 	}
 	

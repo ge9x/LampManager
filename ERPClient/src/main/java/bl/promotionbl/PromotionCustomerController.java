@@ -20,7 +20,7 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 
 	private PromotionCustomer promotionCustomer;
 	
-	public PromotionCustomerController(){
+	protected PromotionCustomerController(){
 		promotionCustomer = new PromotionCustomer();
 	}
 	
@@ -31,36 +31,6 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	public void addGift(GoodsItemVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addVoucher(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addAllowance(double price) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setCustomer(Level level) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setStartDate(String date) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setEndDate(String date) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public ResultMessage submit(PromotionCustomerVO vo) {

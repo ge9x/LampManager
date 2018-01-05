@@ -20,42 +20,6 @@ public class MockPromotionCustomer extends PromotionCustomer{
 		promotionCustomerList.add(promotionCustomer);
 		return promotionCustomerList;
 	}
-	
-	@Override
-	public void addGift(GoodsItemVO vo){
-		promotionCustomer.gifts.add(vo);
-		System.out.println("Add gift success!");
-	}
-
-	@Override
-	public void addVoucher(double price){
-		promotionCustomer.voucher = price;
-		System.out.println("Set voucher success!");
-	}
-
-	@Override
-	public void addAllowance(double price){
-		promotionCustomer.allowance = price;
-		System.out.println("Set allowance success!");
-	}
-
-	@Override
-	public void setCustomer(Level level){
-		promotionCustomer.level = level;
-		System.out.println("Set customer level success!");
-	}
-
-	@Override
-	public void setStartDate(String date){
-		promotionCustomer.startDate = date;
-		System.out.println("Set start time success!");
-	}
-
-	@Override
-	public void setEndDate(String date){
-		promotionCustomer.endDate = date;
-		System.out.println("Set end time success!");
-	}
 
 	@Override
 	public ResultMessage submit(PromotionCustomerVO vo){

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import util.Money;
 import util.UserLimits;
 import util.UserPosition;
 
@@ -113,5 +114,10 @@ public class UserPO implements Serializable {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+	
+	@Override
+    public String toString() {
+        return "账号:" + userID + ", 密码:" + password + ", 姓名:" + name + ", 职位:" + position.getValue() + ", 权限:" +limit.getValue();
+    }
 	
 }

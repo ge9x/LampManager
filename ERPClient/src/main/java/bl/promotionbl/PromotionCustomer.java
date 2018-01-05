@@ -4,15 +4,20 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import bl.logbl.LogBLFactory;
 import bl.salesbl.GoodsItem;
 import bl.salesbl.Purchase;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
+import blservice.logblservice.LogInfo;
 import blservice.userblservice.UserInfo;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import po.PromotionCustomerPO;
 import rmi.PromotionRemoteHelper;
 import util.Level;
+import util.OperationObjectType;
+import util.OperationType;
 import util.PromotionType;
 import util.ResultMessage;
 import vo.GoodsItemVO;
@@ -20,12 +25,14 @@ import vo.PromotionCustomerVO;
 
 public class PromotionCustomer extends Promotion{
 	
-	ArrayList<PromotionCustomerPO> promotionCustomerPOs;
-	UserInfo userInfo;
+	ArrayList<PromotionCustomerPO> promotionCustomerPOs = new ArrayList<>();
+	private UserInfo userInfo;
+	private LogInfo logInfo;
 	
 	public PromotionCustomer(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
-		userInfo = new UserController();
+		userInfo = UserBLFactory.getInfo();
+		logInfo = LogBLFactory.getInfo();
 	}
 	
 	public ArrayList<PromotionCustomerVO> show() throws RemoteException{
@@ -48,33 +55,14 @@ public class PromotionCustomer extends Promotion{
 		}
 		return promotionCustomerVO;
 	}
-	
-	public void addGift(GoodsItemVO vo){
-		
-	}
-
-	public void addVoucher(double price){
-		
-	}
-
-	public void addAllowance(double price){
-		
-	}
-
-	public void setCustomer(Level level){
-		
-	}
-
-	public void setStartDate(String date){
-		
-	}
-
-	public void setEndDate(String date){
-		
-	}
 
 	public ResultMessage submit(PromotionCustomerVO vo) throws RemoteException{
-		return promotionDataService.addPC(voTOpo(vo));
+		PromotionCustomerPO po = voTOpo(vo);
+		ResultMessage re = promotionDataService.addPC(po);
+		if(re == ResultMessage.SUCCESS){
+			logInfo.record(OperationType.ADD, OperationObjectType.PROMOTION, po.toString());
+		}
+		return re;
 	}
 	
 	public PromotionCustomerVO findPromotionByID(String promotionID) throws RemoteException{
@@ -87,7 +75,11 @@ public class PromotionCustomer extends Promotion{
 		promotionCustomerPOs = promotionDataService.showPC();
 		for(PromotionCustomerPO po:promotionCustomerPOs){
 			if(po.getPromotionID().equals(promotionID)){
-				return promotionDataService.deletePC(po);
+				ResultMessage re = promotionDataService.deletePC(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		return ResultMessage.FAILED;
@@ -109,7 +101,11 @@ public class PromotionCustomer extends Promotion{
                     GoodsItemPO itemPO = GoodsItem.voTopo(itemVO);
                     po.getGifts().add(itemPO);
                 }
-				return promotionDataService.updatePC(po);
+				ResultMessage re = promotionDataService.updatePC(po);
+				if(re == ResultMessage.SUCCESS){
+					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
+				}
+				return re;
 			}
 		}
 		

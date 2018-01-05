@@ -1,6 +1,8 @@
 package ui.viewcontroller.InventoryStaff;
 
+import bl.classificationbl.ClassificationBLFactory;
 import bl.classificationbl.ClassificationController;
+import bl.goodsbl.GoodsBLFactory;
 import bl.goodsbl.GoodsController;
 import blservice.classificationblservice.ClassificationBLService;
 import blservice.goodsblservice.GoodsBLService;
@@ -8,6 +10,8 @@ import blstubdriver.ClassificationBLService_Stub;
 import blstubdriver.GoodsBLService_Stub;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import vo.ClassificationVO;
@@ -29,8 +34,8 @@ import java.util.Optional;
  */
 public class InventoryClassificationController {
     InventoryViewController inventoryViewController;
-    ClassificationBLService classificationBLService = new ClassificationController();
-    GoodsBLService goodsBLService = new GoodsController();
+    ClassificationBLService classificationBLService;
+    GoodsBLService goodsBLService;
 
     ArrayList<ClassificationVO> classifications;
     ArrayList<GoodsVO> goods;
@@ -49,9 +54,13 @@ public class InventoryClassificationController {
 
     @FXML
     public void initialize() {
+        classificationBLService = ClassificationBLFactory.getBLService();
+        goodsBLService = GoodsBLFactory.getBLService();
+
         initTree();
         showTree();
         initTable();
+        tree.getSelectionModel().selectFirst();
     }
     public void initTree(){
         tree = new TreeView<>();
@@ -63,6 +72,7 @@ public class InventoryClassificationController {
         });
         tree.setEditable(true);
         tree.setPrefWidth(200);
+
         TreePane.setContent(tree);
     }
 
@@ -147,6 +157,10 @@ public class InventoryClassificationController {
                     ResultMessage re = classificationBLService.add(new ClassificationVO(newID, name, classificationVO, null, null));
                     if (re == ResultMessage.SUCCESS) {
                         showTree();
+                    }else{
+                        dialog = DialogFactory.getInformationAlert();
+                        dialog.setHeaderText("添加商品分类失败");
+                        dialog.showAndWait();
                     }
                 }
             }else {
@@ -172,6 +186,11 @@ public class InventoryClassificationController {
                    if (re == ResultMessage.SUCCESS) {
                        showGoods(findID(item.getValue()));
                    }
+                   else if (re == ResultMessage.EXIST){
+                       dialog = DialogFactory.getInformationAlert();
+                       dialog.setHeaderText("商品已存在，无法添加");
+                       dialog.showAndWait();
+                   }
                }
            }else {
                Dialog dialog = DialogFactory.getInformationAlert();
@@ -183,12 +202,13 @@ public class InventoryClassificationController {
     }
     public Dialog getAddGoodDialog(String classificationID){
         ArrayList<Label> labels = new ArrayList<>();
-        labels.add(new Label("商品编号"));
-        labels.add(new Label("商品名称"));
-        labels.add(new Label("商品型号"));
-        labels.add(new Label("进价"));
-        labels.add(new Label("零售价"));
-        labels.add(new Label("警戒数量"));
+
+        labels.add(getMyLabel("商品编号"));
+        labels.add(getMyLabel("商品名称"));
+        labels.add(getMyLabel("商品型号"));
+        labels.add(getMyLabel("进价"));
+        labels.add(getMyLabel("零售价"));
+        labels.add(getMyLabel("警戒数量"));
 
         ArrayList<Node> nodes = new ArrayList<>();
         Label ID = new Label(goodsBLService.getNewID(classificationID));
@@ -204,7 +224,42 @@ public class InventoryClassificationController {
         nodes.add(salesTF);
         nodes.add(alarmTF);
 
+
+
         Dialog dialog = DialogFactory.createDialog(labels,nodes);
+
+        Button button = (Button)dialog.getDialogPane().lookupButton(ButtonType.FINISH);
+        button.setDisable(true);
+        nameTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        modelTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty());
+            }
+        });
+        purchaseTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || nameTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        salesTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty() || alarmTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
+        alarmTF.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                button.setDisable(newValue.trim().isEmpty() || purchaseTF.getText().trim().isEmpty() || salesTF.getText().trim().isEmpty() || nameTF.getText().trim().isEmpty() || modelTF.getText().trim().isEmpty());
+            }
+        });
         dialog.setHeaderText("请输入新的商品信息");
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.FINISH) {
@@ -230,8 +285,14 @@ public class InventoryClassificationController {
             if (result.isPresent()){
                 ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
                 classificationVO.name = result.get();
-                classificationBLService.update(classificationVO);
-                showTree();
+                ResultMessage re = classificationBLService.update(classificationVO);
+                if (re == ResultMessage.SUCCESS){
+                    showTree();
+                }else{
+                    dialog = DialogFactory.getInformationAlert();
+                    dialog.setHeaderText("修改商品分类失败");
+                    dialog.showAndWait();
+                }
             }
         }
     }
@@ -256,6 +317,12 @@ public class InventoryClassificationController {
             }
         }
         return null;
+    }
+    private Label getMyLabel(String text){
+        Label label = new Label(text);
+        label.setPrefWidth(70);
+        label.setFont(Font.font(12));
+        return label;
     }
     public class GoodsBean{
         StringProperty ID;

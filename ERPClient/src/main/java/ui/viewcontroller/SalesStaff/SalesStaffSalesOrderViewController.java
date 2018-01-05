@@ -1,7 +1,9 @@
 package ui.viewcontroller.SalesStaff;
 
+import bl.salesbl.SalesBLFactory;
 import bl.salesbl.SalesController;
 import blservice.salesblservice.SalesBLService;
+import com.sun.xml.internal.ws.api.message.saaj.SAAJFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +26,7 @@ public class SalesStaffSalesOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffSalesEditViewController salesStaffSalesEditViewController;
 
-    SalesBLService salesBLService = new SalesController();
+    SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 
     ArrayList<SalesVO> draft;
     ArrayList<SalesVO> submitted;

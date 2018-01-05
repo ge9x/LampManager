@@ -117,6 +117,7 @@ public class GeneralManagerViewController {
             pageLoader.setLocation(getClass().getResource("/view/financialStaff/DocumentDetails.fxml"));
             Pane page = pageLoader.load();
             financialDocumentDetailsController = pageLoader.getController();
+            financialDocumentDetailsController.setForGeneralMananger();
 
             mainUIController.setCenter(page);
         } catch (IOException e) {

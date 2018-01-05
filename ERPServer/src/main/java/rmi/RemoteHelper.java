@@ -25,6 +25,7 @@ public class RemoteHelper {
         SalesDataRemoteObject salesDataRemoteObject;
         InitializationDataRemoteObject initializationDataRemoteObject;
         LogDataRemoteObject logDataRemoteObject;
+        MessageDataRemoteObject messageDataRemoteObject;
         
         try {
             accountDataRemoteObject = new AccountDataRemoteObject();
@@ -38,6 +39,7 @@ public class RemoteHelper {
             salesDataRemoteObject=new SalesDataRemoteObject();
             initializationDataRemoteObject = new InitializationDataRemoteObject();
             logDataRemoteObject = new LogDataRemoteObject();
+            messageDataRemoteObject = new MessageDataRemoteObject();
 
             String ip = "127.0.0.1";
             int port = 8000;
@@ -57,6 +59,7 @@ public class RemoteHelper {
             Naming.bind("rmi://127.0.0.1:8000/SalesDataRemoteObject", salesDataRemoteObject);
             Naming.bind("rmi://" + url + "/InitializationDataRemoteObject", initializationDataRemoteObject);
             Naming.bind("rmi://127.0.0.1:8000/LogDataRemoteObject", logDataRemoteObject);
+            Naming.bind("rmi://127.0.0.1:8000/MessageDataRemoteObject", messageDataRemoteObject);
 
             System.out.println("start successfully");
         } catch (RemoteException e) {

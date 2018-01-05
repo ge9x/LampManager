@@ -116,5 +116,8 @@ private static final long servialVersionUID=45345768282732L;
 		this.initClassificationPOS = initClassificationPOS;
 	}
 
-
+	@Override
+    public String toString(){
+        return "ID: " + String.format("%03d",ID);
+    }
 }

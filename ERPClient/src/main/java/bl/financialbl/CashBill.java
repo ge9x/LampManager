@@ -1,7 +1,13 @@
 package bl.financialbl;
 
+import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
+import bl.logbl.LogBLFactory;
+import bl.messagebl.Message;
+import bl.messagebl.MessageBLFactory;
 import blservice.accountblservice.AccountInfo;
+import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import blservice.userblservice.UserInfo;
 import com.sun.org.apache.regexp.internal.RE;
 import dataimpl.financedataimpl.FinanceDataServiceImpl;
@@ -11,9 +17,7 @@ import po.AccountBillItemPO;
 import po.AccountBillPO;
 import po.CashBillItemPO;
 import po.CashBillPO;
-import util.BillState;
-import util.BillType;
-import util.ResultMessage;
+import util.*;
 import vo.AccountBillVO;
 import vo.CashBillItemVO;
 import vo.CashBillVO;
@@ -21,20 +25,25 @@ import vo.CashBillVO;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * Created by Kry·L on 2017/11/5.
  */
 public class CashBill {
-
     private FinanceDataService financeDataService;
+    private LogInfo logInfo;
+    private MessageInfo messageInfo;
+    private AccountInfo accountInfo;
+
     ArrayList<CashBillPO> cashBillPOS;
-    AccountInfo accountInfo;
 
     public CashBill(){
         financeDataService = FinanceDataServiceImpl.getInstance();
-        accountInfo = new AccountController();
+        logInfo = LogBLFactory.getInfo();
+        messageInfo = MessageBLFactory.getInfo();
+        accountInfo = AccountBLFactory.getInfo();
         cashBillPOS = new ArrayList<>();
     }
 
@@ -42,10 +51,23 @@ public class CashBill {
         return financeDataService.getNewCashBillID();
     }
     public ResultMessage submit(CashBillVO vo) throws RemoteException {
-        return financeDataService.addBill(voTopo(vo));
+        CashBillPO po = voTopo(vo);
+        ResultMessage re = financeDataService.addBill(po);
+
+        /**如果提交成功，就记录日志，并向总经理发送审批消息**/
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD, OperationObjectType.BILL, po.toString());
+            messageInfo.addMessage(vo.state,vo.ID, LocalDateTime.now().toString(),UserPosition.FINANCIAL_STAFF);
+        }
+        return re;
     }
     public ResultMessage save(CashBillVO vo) throws RemoteException {
-        return financeDataService.addBill(voTopo(vo));
+        CashBillPO po = voTopo(vo);
+        ResultMessage re = financeDataService.addBill(po);
+        if (re == ResultMessage.SUCCESS){
+            logInfo.record(OperationType.ADD,OperationObjectType.BILL,po.toString());
+        }
+        return re;
     }
 
     public ResultMessage update(CashBillVO vo) throws RemoteException {
@@ -65,7 +87,11 @@ public class CashBill {
                     CashBillItemPO itemPO = CashBillItem.voTopo(itemVO);
                     po.getCashBillItemPOS().add(itemPO);
                 }
-                return financeDataService.updateBill(po);
+                ResultMessage re = financeDataService.updateBill(po);
+                if (re == ResultMessage.SUCCESS){
+                    logInfo.record(OperationType.UPDATE,OperationObjectType.BILL,po.toString());
+                }
+                return re;
             }
         }
         return ResultMessage.FAILED;
@@ -77,17 +103,29 @@ public class CashBill {
         ArrayList<CashBillPO> cashBillPOS = financeDataService.getAllCashBills();
         int turn = Integer.parseInt(id.split("-")[2]);
         for (CashBillPO po : cashBillPOS){
-            if (po.getTurn() == turn)
-                return financeDataService.deleteBill(po);
+            if (po.getTurn() == turn) {
+                ResultMessage re = financeDataService.deleteBill(po);
+                if (re == ResultMessage.SUCCESS) {
+                    logInfo.record(OperationType.DELETE, OperationObjectType.BILL, po.toString());
+                }
+                return re;
+            }
         }
         return ResultMessage.FAILED;
     }
 
     public ResultMessage examine(CashBillVO vo) throws RemoteException {
-        if(vo.state == BillState.PASS){
+        logInfo.close();
+        ResultMessage re = update(vo);
+        logInfo.open();
+
+        /**如果审批成功，就记录日志，并且向单据制定人员发送消息**/
+        if (vo.state != BillState.SUBMITTED && re == ResultMessage.SUCCESS) {
             accountInfo.changeMoney(vo.accountID, -vo.sum);
+            logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, voTopo(vo).toString());
+            messageInfo.addMessage(vo.state,vo.ID,LocalDateTime.now().toString(),UserPosition.FINANCIAL_STAFF);
         }
-        return update(vo);
+        return re;
     }
 
     public ArrayList<CashBillVO> getCashBillByState(BillState state) throws RemoteException {
@@ -144,21 +182,33 @@ public class CashBill {
     }
 
     public ResultMessage redCover(CashBillVO billVO) throws RemoteException {
+        logInfo.close();
         String ID = getNewCashBillID();
         billVO.ID = ID;
-        for (CashBillItemVO itemVO:billVO.cashBillItems){
+        for (CashBillItemVO itemVO : billVO.cashBillItems) {
             itemVO.money = -itemVO.money;
         }
         billVO.sum = billVO.calSum();
         submit(billVO);
-        return examine(billVO);
+        ResultMessage re = examine(billVO);
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVER, OperationObjectType.BILL, voTopo(billVO).toString());
+        }
+        return re;
     }
 
     public ResultMessage redCoverAndCopy(CashBillVO billVO) throws RemoteException {
+        logInfo.close();
         redCover(billVO);
         String ID = getNewCashBillID();
         billVO.ID = ID;
         billVO.state = BillState.DRAFT;
-        return save(billVO);
+        ResultMessage re = save(billVO);
+        logInfo.open();
+        if (re == ResultMessage.SUCCESS) {
+            logInfo.record(OperationType.REDCOVERANDCOPY, OperationObjectType.BILL, voTopo(billVO).toString());
+        }
+        return re;
     }
 }

@@ -2,33 +2,32 @@ package ui.viewcontroller.InventoryStaff;
 
 import bean.AlarmBean;
 import bean.ItemBean;
-import bl.inventorybl.Inventory;
-import bl.inventorybl.InventoryController;
+import bl.inventorybl.InventoryBLFactory;
 import blservice.inventoryblservice.InventoryBLService;
-import blstubdriver.InventoryBLService_Stub;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
-import javafx.beans.property.*;
+import com.jfoenix.controls.JFXSpinner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.StackPane;
 import ui.component.DialogFactory;
 import ui.component.Table;
+import ui.viewcontroller.common.MainUIController;
 import util.InventoryListItemType;
 import util.Money;
 import vo.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.xml.transform.Result;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -36,8 +35,8 @@ import java.util.Optional;
  */
 public class InventoryLookController {
     InventoryViewController inventoryViewController;
-    InventoryBLService inventoryBLService = new InventoryController();
-
+    InventoryBLService inventoryBLService = InventoryBLFactory.getBLService();
+    MainUIController mainUIController;
 
     String inventory;
     InventoryViewVO inventoryViewVO;
@@ -51,6 +50,7 @@ public class InventoryLookController {
 
     ObservableList<ItemBean> inventoryItemData = FXCollections.observableArrayList();
     ObservableList<ItemBean> salesItemData = FXCollections.observableArrayList();
+    private Executor executor;
 
     int iNum = 0,oNum = 0,pNum = 0,sNum = 0,ioNumTotal = 0,psNumTotal = 0;
     double iMoney = 0,oMoney = 0,pMoney = 0,sMoney = 0,ioMoneyTotal = 0,psMoneyTotal = 0;
@@ -60,6 +60,9 @@ public class InventoryLookController {
 
     @FXML
     Label purNum, salNum, purMoney, salMoney, pursalNumTotal, pursalMoneyTotal;
+
+    @FXML
+    StackPane Page;
 
     @FXML
     ScrollPane AlarmTablePane;
@@ -79,13 +82,29 @@ public class InventoryLookController {
     @FXML
     JFXComboBox<String> InventoryBox;
 
-    @FXML
-    public void initialize() {
+    public void init() {
+        executor = Executors.newCachedThreadPool(runnable -> {
+            Thread t = new Thread(runnable);
+            t.setDaemon(true);
+            return t;
+        });
+
+        Task<ArrayList<String>> task = new Task<ArrayList<String>>() {
+            @Override
+            protected ArrayList<String> call() throws Exception {
+                return inventoryBLService.showInventory();
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            InventoryBox.getItems().addAll(task.getValue());
+            InventoryBox.getSelectionModel().selectFirst();
+        });
+
+        executor.execute(task);
+
         AlertIcon.setText("\ue6be");
         addIcon.setText("\ue61e");
-
-        InventoryBox.getItems().addAll(inventoryBLService.showInventory());
-        InventoryBox.getSelectionModel().selectFirst();
 
         StartDate.setValue(LocalDate.parse(inventoryBLService.getStartDate()));
         EndDate.setValue(LocalDate.now());
@@ -151,53 +170,75 @@ public class InventoryLookController {
 
     public void showAlarmTable() {
         inventory = InventoryBox.getSelectionModel().getSelectedItem();
-        alarms = inventoryBLService.getAlarmByInventory(inventory);
-        alarmTable.clear();
-        for (AlarmVO vo : alarms) {
-            alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName, vo.alarmNumber, vo.goodsNumber, vo.numberSuggestAdding));
-        }
+
+        Task<ArrayList<AlarmVO>> task = new Task<ArrayList<AlarmVO>>() {
+            @Override
+            protected ArrayList<AlarmVO> call() throws Exception {
+                return inventoryBLService.getAlarmByInventory(inventory);
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            alarms = task.getValue();
+            alarmTable.clear();
+            for (AlarmVO vo : alarms) {
+                alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName, vo.alarmNumber, vo.goodsNumber, vo.numberSuggestAdding));
+            }
+        });
+
+        executor.execute(task);
     }
 
     public void showItemTable() {
-        inventoryViewVO = inventoryBLService.show(StartDate.getValue().toString(), EndDate.getValue().toString(), inventory);
-        ArrayList<InventoryViewItemVO> items = inventoryViewVO.item;
-        inventoryItemTable.clear();
-        salesItemTable.clear();
-        for (InventoryViewItemVO item : items) {
-            if (item.type == InventoryListItemType.IN) {
-                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
-                iNum += item.amount;
-                iMoney += item.price;
-            } else if (item.type == InventoryListItemType.OUT) {
-                inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, Money.getMoneyString(item.price)));
-                oNum +=item.amount;
-                oMoney+= item.price;
-            } else if (item.type == InventoryListItemType.PURCHASE) {
-                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
-                pNum += item.amount;
-                pMoney += item.price;
-            } else if (item.type == InventoryListItemType.SALES) {
-                salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount,  Money.getMoneyString(item.price)));
-                sNum += item.amount;
-                sMoney += item.price;
+        Task<InventoryViewVO> task = new Task<InventoryViewVO>() {
+            @Override
+            protected InventoryViewVO call() throws Exception {
+                return inventoryBLService.show(StartDate.getValue().toString(), EndDate.getValue().toString(), inventory);
             }
-        }
-        ioNumTotal = iNum + oNum;
-        ioMoneyTotal = iMoney + oMoney;
-        psNumTotal = pNum + sNum;
+        };
 
-        inNum.setText(iNum+"");
-        outNum.setText(oNum+"");
-        inMoney.setText(Money.getMoneyString(iMoney));
-        outMoney.setText(Money.getMoneyString(oMoney));
-        inoutMoneyTotal.setText(Money.getMoneyString(ioMoneyTotal));
-        inoutNumTotal.setText(ioNumTotal + "");
-        pursalNumTotal.setText(psNumTotal+"");
-        pursalMoneyTotal.setText(Money.getMoneyString(psMoneyTotal));
-        purNum.setText(pNum + "");
-        salNum.setText(sNum+"");
-        purMoney.setText(Money.getMoneyString(pMoney));
-        salMoney.setText(Money.getMoneyString(sMoney));
+        task.setOnSucceeded(e -> {
+            inventoryViewVO = task.getValue();
+            ArrayList<InventoryViewItemVO> items = inventoryViewVO.item;
+            inventoryItemTable.clear();
+            salesItemTable.clear();
+            for (InventoryViewItemVO item : items) {
+                if (item.type == InventoryListItemType.IN) {
+                    inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
+                    iNum += item.amount;
+                    iMoney += item.price;
+                } else if (item.type == InventoryListItemType.OUT) {
+                    inventoryItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount, Money.getMoneyString(item.price)));
+                    oNum +=item.amount;
+                    oMoney+= item.price;
+                } else if (item.type == InventoryListItemType.PURCHASE) {
+                    salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "I", item.amount,  Money.getMoneyString(item.price)));
+                    pNum += item.amount;
+                    pMoney += item.price;
+                } else if (item.type == InventoryListItemType.SALES) {
+                    salesItemTable.addRow(new ItemBean(item.date, item.goods.name, "O", item.amount,  Money.getMoneyString(item.price)));
+                    sNum += item.amount;
+                    sMoney += item.price;
+                }
+            }
+            ioNumTotal = iNum + oNum;
+            ioMoneyTotal = iMoney + oMoney;
+            psNumTotal = pNum + sNum;
+
+            inNum.setText(iNum+"");
+            outNum.setText(oNum+"");
+            inMoney.setText(Money.getMoneyString(iMoney));
+            outMoney.setText(Money.getMoneyString(oMoney));
+            inoutMoneyTotal.setText(Money.getMoneyString(ioMoneyTotal));
+            inoutNumTotal.setText(ioNumTotal + "");
+            pursalNumTotal.setText(psNumTotal+"");
+            pursalMoneyTotal.setText(Money.getMoneyString(psMoneyTotal));
+            purNum.setText(pNum + "");
+            salNum.setText(sNum+"");
+            purMoney.setText(Money.getMoneyString(pMoney));
+            salMoney.setText(Money.getMoneyString(sMoney));
+        });
+        executor.execute(task);
     }
 
     public void setInventoryViewController(InventoryViewController inventoryViewController) {
@@ -211,5 +252,9 @@ public class InventoryLookController {
         if (result.isPresent()) {
             inventoryBLService.addInventory(result.get());
         }
+    }
+
+    public void setMainUIController(MainUIController mainUIController) {
+        this.mainUIController = mainUIController;
     }
 }

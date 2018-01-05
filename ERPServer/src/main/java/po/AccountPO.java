@@ -1,5 +1,7 @@
 package po;
 
+import util.Money;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -70,5 +72,10 @@ public class AccountPO implements Serializable{
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    @Override
+    public String toString() {
+        return "ID:" + String.format("%02d", ID) + ", 账户名称:" + name + ", 账户余额:" + Money.getMoneyString(money);
     }
 }

@@ -12,10 +12,10 @@
 		<property name="connection.username">root</property>
 		<property name="connection.password">admin</property>
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="show_sql">true</property>
-		<property name="hbm2ddl.auto">none</property>
+		<property name="hbm2ddl.auto">update</property>
 
 		<mapping class="po.AccountBillItemPO" />
 		<mapping class="po.AccountBillPO" />
@@ -29,6 +29,7 @@
 		<mapping class="po.InventoryBillPO" />
 		<mapping class="po.InventoryPO" />
 		<mapping class="po.LogPO" />
+		<mapping class="po.MessagePO" />
 		<mapping class="po.PromotionCustomerPO" />
 		<mapping class="po.PromotionBargainPO" />
 		<mapping class="po.PromotionTotalPO" />

@@ -2,6 +2,7 @@ package ui.viewcontroller.SalesStaff;
 
 import java.util.ArrayList;
 
+import bl.customerbl.CustomerBLFactory;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -21,7 +22,7 @@ import vo.UserVO;
 
 public class SalesStaffCustomerDetailViewController {
 	private boolean hasEdited = false;
-	CustomerBLService customerBLService = new CustomerController();
+	CustomerBLService customerBLService = CustomerBLFactory.getBLService();
 
 	@FXML
 	JFXTextField customerID;

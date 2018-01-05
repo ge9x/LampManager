@@ -1,6 +1,7 @@
 package ui.viewcontroller.GeneralManager;
 
 import bl.promotionbl.Promotion;
+import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import javafx.scene.shape.Rectangle;
 public class GeneralManagerNavBarController {
 	
 	private GeneralManagerViewController generalManagerViewController;
-	UserInfo userInfo = new UserController();
+	UserInfo userInfo = UserBLFactory.getInfo();
 
     @FXML
     Label ExaminationIcon;

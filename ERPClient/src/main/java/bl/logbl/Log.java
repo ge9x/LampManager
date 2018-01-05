@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import bl.userbl.UserController;
+import bl.userbl.UserBLFactory;
 import blservice.userblservice.UserInfo;
 import dataservice.logdataservice.LogDataService;
 import po.LogPO;
@@ -22,8 +22,9 @@ import util.ResultMessage;
 public class Log {
 	private LogDataService logDataService;
 	private UserInfo userInfo;
+	private int lockNumber = 0;	// 日志系统上锁数，为0时日志系统处于开启状态，>0时为关闭状态
 
-	public Log() {
+	protected Log() {
 		logDataService = LogRemoteHelper.getInstance().getLogDataService();
 	}
 
@@ -47,17 +48,37 @@ public class Log {
 
 	public ResultMessage record(OperationType operationType, OperationObjectType operationObjectType, String details)
 			throws RemoteException {
-		if(userInfo == null){
-			userInfo = new UserController();
+		if (lockNumber == 0) {
+			if (userInfo == null) {
+				userInfo = UserBLFactory.getInfo();
+			}
+			LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType,
+					operationObjectType, details);
+			// 暂时保留，方便测试效果↓
+			ResultMessage ret = logDataService.addLog(toAdd);
+			System.out.println(toAdd.toString());
+
+			return ret;
 		}
-		LogPO toAdd = new LogPO(LocalDateTime.now(), userInfo.getCurrentUserID(), operationType, operationObjectType,
-				details);
-		// 暂时保留，方便测试效果↓
-		ArrayList<String> logs = this.show();
-		for(String record : logs){
-			System.out.println(record);
+		else {
+			return ResultMessage.FAILED;
 		}
-		
-		return logDataService.addLog(toAdd);
+	}
+
+	public ResultMessage close() {
+		lockNumber++;
+		return ResultMessage.SUCCESS;
+	}
+
+	public ResultMessage open() {
+		if (lockNumber > 0) {
+			lockNumber--;
+		}
+		if (lockNumber == 0) {
+			return ResultMessage.SUCCESS;
+		}
+		else {
+			return ResultMessage.FAILED;
+		}
 	}
 }

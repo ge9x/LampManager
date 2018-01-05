@@ -1,5 +1,6 @@
 package ui.viewcontroller.FinancialStaff;
 
+import bl.formbl.FormBLFactory;
 import bl.formbl.FormController;
 import blservice.formblservice.FormBLService;
 import blstubdriver.FormBLService_Stub;
@@ -34,7 +35,7 @@ import java.util.Optional;
  */
 public class FinancialProfitController {
     FinancialViewController financialViewController;
-    FormBLService formBLService = new FormController();
+    FormBLService formBLService = FormBLFactory.getBLService();
     ProfitVO profitVO;
     ObservableList<Double> data = FXCollections.observableArrayList();
 

@@ -1,6 +1,7 @@
 package ui.viewcontroller.SalesStaff;
 
 import bl.salesbl.PurchaseController;
+import bl.salesbl.SalesBLFactory;
 import blservice.salesblservice.SalesBLService;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -23,7 +24,7 @@ public class SalesStaffReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
 
-    SalesBLService salesBLService = new PurchaseController();
+    SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
 
     ArrayList<PurchaseVO> draft;
     ArrayList<PurchaseVO> submitted;
