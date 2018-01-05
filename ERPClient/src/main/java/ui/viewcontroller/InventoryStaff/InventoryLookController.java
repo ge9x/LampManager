@@ -175,7 +175,7 @@ public class InventoryLookController {
             alarms = task.getValue();
             alarmTable.clear();
             for (AlarmVO vo : alarms) {
-                alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName, vo.alarmNumber, vo.goodsNumber, vo.numberSuggestAdding));
+                alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName,  vo.goodsNumber, vo.alarmNumber,vo.numberSuggestAdding));
             }
         });
 
