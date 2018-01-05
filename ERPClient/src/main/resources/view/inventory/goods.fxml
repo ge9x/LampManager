@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -33,11 +32,6 @@
                                 <Insets right="520.0" />
                             </HBox.margin>
                         </Label>
-                        <JFXButton onMouseClicked="#clickModifyButton" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #1DB1A5; -fx-background-radius: 5;" text="修 改" textFill="WHITE">
-                            <font>
-                                <Font name="Arial" size="14.0" />
-                            </font>
-                        </JFXButton>
                     </children>
                     <opaqueInsets>
                         <Insets />
@@ -57,6 +51,17 @@
                   <TextField fx:id="SearchField" layoutX="529.0" layoutY="32.0" style="-fx-background-color: #f6f6f7; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #eeeeee;" />
                   <Label fx:id="searchIcon" layoutX="701.0" layoutY="31.0" onMouseClicked="#clickSearchButton" prefHeight="23.0" prefWidth="23.0" styleClass="icon-label" text="Q" />
                   <ScrollPane fx:id="TablePane" layoutX="26.0" layoutY="73.0" prefHeight="369.0" prefWidth="707.0" />
+                  <HBox alignment="CENTER_LEFT" layoutX="26.0" layoutY="29.0" prefHeight="32.0" prefWidth="155.0">
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="75.0" text="商品列表">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="ModifyIcon" onMouseClicked="#clickModifyButton" prefHeight="15.0" prefWidth="25.0" styleClass="icon-label" text="#" />
+                        <Label fx:id="DeleteIcon" onMouseClicked="#clickDeleteButton" prefHeight="15.0" prefWidth="23.0" styleClass="icon-label" text="-" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
             </children>

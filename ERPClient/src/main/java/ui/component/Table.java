@@ -67,6 +67,9 @@ public class Table<T> {
 
     public T getSelectedItem() {
         int index = tableView.getSelectionModel().getSelectedIndex();
-        return data.get(index);
+        if (index == -1)
+            return null;
+        else
+            return data.get(index);
     }
 }
