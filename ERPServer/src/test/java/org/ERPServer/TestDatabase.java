@@ -126,9 +126,6 @@ public class TestDatabase {
 			for(InventoryBillPO po : allBills){
 				System.out.println(po.getID() + " " + po.getState().toString() + " " + po.getInventory() + " " + po.getGoodsMap());
 			}
-			InventoryBillPO bill3 = inventoryImpl.findBill(3);
-			System.out.println("查询ID为3的库存类单据：");
-			System.out.println(bill3.getID() + " " + bill3.getDate() + " " + bill3.getType() + " " + bill3.getState());
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
