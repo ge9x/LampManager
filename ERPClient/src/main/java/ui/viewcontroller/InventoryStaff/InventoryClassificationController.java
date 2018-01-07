@@ -307,16 +307,18 @@ public class InventoryClassificationController {
         if (item != null){
             Dialog dialog = DialogFactory.getConfirmationAlert();
             dialog.setHeaderText("确定要删除分类："+item.getValue() + " 吗?");
-            Optional<String> result = dialog.showAndWait();
+            Optional result = dialog.showAndWait();
             if (result.isPresent()){
-                ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
-                ResultMessage re = classificationBLService.delete(classificationVO.ID);
-                if (re == ResultMessage.SUCCESS){
-                    showTree();
-                }else{
-                    dialog = DialogFactory.getInformationAlert();
-                    dialog.setHeaderText("删除商品分类失败");
-                    dialog.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
+                    ResultMessage re = classificationBLService.delete(classificationVO.ID);
+                    if (re == ResultMessage.SUCCESS){
+                        showTree();
+                    }else{
+                        dialog = DialogFactory.getInformationAlert();
+                        dialog.setHeaderText("删除商品分类失败");
+                        dialog.showAndWait();
+                    }
                 }
             }
         }

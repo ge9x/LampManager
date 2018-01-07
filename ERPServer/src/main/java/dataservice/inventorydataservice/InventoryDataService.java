@@ -27,13 +27,6 @@ public interface InventoryDataService extends Remote{
 	 */
 	public ArrayList<InventoryPO> showInventory() throws RemoteException;
 	/**
-	 * 查找库存单据
-	 * @param ID 单据ID
-	 * @return 找到的库存单据PO
-	 * @throws RemoteException
-	 */
-	public InventoryBillPO findBill(int ID) throws RemoteException;
-	/**
 	 * 新增仓库名
 	 * @param po 等待新增的仓库PO
 	 * @return 是否新增成功

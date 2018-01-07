@@ -16,30 +16,31 @@ import util.ResultMessage;
 /**
  * 用Hibernate实现对MySQL的直接操作<br>
  * Created on 2017/11/23
+ * 
  * @author 巽
  *
  */
 @SuppressWarnings({ "deprecation", "unchecked" })
-public class HibernateDataHelper<T> implements DataHelper<T>{
+public class HibernateDataHelper<T> implements DataHelper<T> {
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Class<T> type;
-	
-	public HibernateDataHelper(Class<T> type){
+
+	public HibernateDataHelper(Class<T> type) {
 		sessionFactory = new Configuration().configure().buildSessionFactory();
 		this.type = type;
 	}
-	
-	private void initSession(){
+
+	private void initSession() {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 	}
-	
-	private void commitAndClose(){
+
+	private void commitAndClose() {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
+
 	@Override
 	public ResultMessage save(T po) {
 		initSession();
@@ -67,10 +68,10 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	@Override
 	public T exactlyQuery(String field, Object value) {
 		ArrayList<T> ret = fullyQuery(field, value);
-		if(ret.size() == 0){
+		if (ret.size() == 0) {
 			return null;
 		}
-		else{
+		else {
 			return ret.get(0);
 		}
 	}
@@ -79,7 +80,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fullyQuery(String field, Object value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		if(field != null && value != null){
+		if (field != null && value != null) {
 			criteria.add(Restrictions.eq(field, value));
 		}
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -92,11 +93,12 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> fuzzyQuery(String field, String value) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
-		if(value != null){
-			if(field.toLowerCase().equals("id")){	// 查询字段是ID，即数字类型
-				criteria.add(Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", value, StandardBasicTypes.STRING));
+		if (value != null) {
+			if (field.toLowerCase().equals("id")) {	// 查询字段是ID，即数字类型
+				criteria.add(Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", value,
+						StandardBasicTypes.STRING));
 			}
-			else{	// （默认）查询字段是varchar类型
+			else {	// （默认）查询字段是varchar类型
 				criteria.add(Restrictions.like(field, "%" + value + "%"));
 			}
 		}
@@ -107,7 +109,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	}
 
 	@Override
-	public ArrayList<T> rangeQuery(String field, Object min, Object max){
+	public ArrayList<T> rangeQuery(String field, Object min, Object max) {
 		initSession();
 		Criteria criteria = session.createCriteria(type);
 		criteria.add(Restrictions.between(field, min, max));
@@ -121,7 +123,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 	public ArrayList<T> multiQuery(ArrayList<Criterion> criteria) {
 		initSession();
 		Criteria crit = session.createCriteria(type);
-		for(Criterion criterion : criteria){
+		for (Criterion criterion : criteria) {
 			crit.add(buildCriterion(criterion));
 		}
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -129,16 +131,17 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 		commitAndClose();
 		return ret;
 	}
-	
-	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion){
-		switch(criterion.getQueryMode()){
+
+	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion) {
+		switch (criterion.getQueryMode()) {
 		case FULL:
 			return Restrictions.eq(criterion.getField(), criterion.getValue());
 		case FUZZY:
-			if(criterion.getField().toLowerCase().equals("id")){
-				return Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", criterion.getValue(), StandardBasicTypes.STRING);
+			if (criterion.getField().toLowerCase().equals("id")) {
+				return Restrictions.sqlRestriction("CAST({alias}.id AS CHAR) like ?", criterion.getValue(),
+						StandardBasicTypes.STRING);
 			}
-			else{
+			else {
 				return Restrictions.like(criterion.getField(), criterion.getValue());
 			}
 		case RANGE:
@@ -150,7 +153,7 @@ public class HibernateDataHelper<T> implements DataHelper<T>{
 			return null;
 		}
 	}
-	
+
 	private org.hibernate.criterion.Criterion buildCriterion(Criterion criterion1, Criterion criterion2) {
 		return Restrictions.or(buildCriterion(criterion1), buildCriterion(criterion2));
 	}

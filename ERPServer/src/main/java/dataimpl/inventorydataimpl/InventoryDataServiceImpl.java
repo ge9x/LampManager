@@ -53,11 +53,6 @@ public class InventoryDataServiceImpl implements InventoryDataService{
 	}
 
 	@Override
-	public InventoryBillPO findBill(int ID) throws RemoteException {
-		return inventoryBillDataHelper.exactlyQuery("id", ID);
-	}
-
-	@Override
 	public ResultMessage addInventroy(InventoryPO po) throws RemoteException {
 		return inventoryDataHelper.save(po);
 	}
