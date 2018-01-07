@@ -35,7 +35,6 @@ public class Finance{
     AccountBill accountBill;
     CashBill cashBill;
 
-    private FinanceDataService financeDataService;
     UserInfo userInfo;
     CustomerInfo customerInfo;
     AccountInfo accountInfo;

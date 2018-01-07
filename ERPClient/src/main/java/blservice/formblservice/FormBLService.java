@@ -15,13 +15,6 @@ import java.util.Date;
 public interface FormBLService {
 
     /**
-     * 根据ID查找单据
-     * @param ID
-     * @return
-     */
-    public BillVO findByID(String ID);
-
-    /**
      * 查看销售明细表
      * @return 商品销售记录列表
      */

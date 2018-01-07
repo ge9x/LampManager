@@ -200,19 +200,21 @@ public class InventoryGoodsController {
             dialog.setHeaderText("确定要删除商品: " + bean.getName() + " 吗？");
             Optional result = dialog.showAndWait();
             if (result.isPresent()){
-                ResultMessage re = goodsBLService.delete(bean.getID());
-                dialog = DialogFactory.getInformationAlert();
-                if (re == ResultMessage.SUCCESS) {
-                    data.remove(bean);
-                    goods = goodsBLService.show();
-                    dialog.setHeaderText("删除商品成功");
-                    dialog.showAndWait();
-                    showGoods();
-                }
-                else {
-                    dialog.setHeaderText("删除商品失败");
+                if (result.get() == ButtonType.OK){
+                    ResultMessage re = goodsBLService.delete(bean.getID());
+                    dialog = DialogFactory.getInformationAlert();
+                    if (re == ResultMessage.SUCCESS) {
+                        data.remove(bean);
+                        goods = goodsBLService.show();
+                        dialog.setHeaderText("删除商品成功");
+                        dialog.showAndWait();
+                        showGoods();
+                    }
+                    else {
+                        dialog.setHeaderText("删除商品失败");
 
-                    dialog.showAndWait();
+                        dialog.showAndWait();
+                    }
                 }
             }
         }
