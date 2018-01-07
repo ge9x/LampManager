@@ -24,7 +24,7 @@ public class SalesStaffReturnOrderViewController {
 	SalesStaffViewController salesStaffViewController;
 	SalesStaffReturnEditViewController salesStaffReturnEditViewController;
 
-    SalesBLService salesBLService = SalesBLFactory.getSalesBLService();
+    SalesBLService salesBLService = SalesBLFactory.getPurchaseBLService();
 
     ArrayList<PurchaseVO> draft;
     ArrayList<PurchaseVO> submitted;

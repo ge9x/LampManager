@@ -48,14 +48,20 @@ public class InventoryClassificationController {
 
 
     @FXML
-    ScrollPane TreePane;
+    ScrollPane TreePane, GoodsPane;
+
     @FXML
-    ScrollPane GoodsPane;
+    Label AddClaIcon, DeleteClaIcon, EditClaIcon, AddGoodsIcon;
 
     @FXML
     public void initialize() {
         classificationBLService = ClassificationBLFactory.getBLService();
         goodsBLService = GoodsBLFactory.getBLService();
+
+        AddClaIcon.setText("\ue61e");
+        AddGoodsIcon.setText("\ue61e");
+        DeleteClaIcon.setText("\ue606");
+        EditClaIcon.setText("\ue601");
 
         initTree();
         showTree();
@@ -292,6 +298,27 @@ public class InventoryClassificationController {
                     dialog = DialogFactory.getInformationAlert();
                     dialog.setHeaderText("修改商品分类失败");
                     dialog.showAndWait();
+                }
+            }
+        }
+    }
+    public void clickDeleteButton(){
+        TreeItem<String> item = getSelectedItem();
+        if (item != null){
+            Dialog dialog = DialogFactory.getConfirmationAlert();
+            dialog.setHeaderText("确定要删除分类："+item.getValue() + " 吗?");
+            Optional result = dialog.showAndWait();
+            if (result.isPresent()){
+                if (result.get() == ButtonType.OK){
+                    ClassificationVO classificationVO = classificationBLService.showDetails(findID(item.getValue()));
+                    ResultMessage re = classificationBLService.delete(classificationVO.ID);
+                    if (re == ResultMessage.SUCCESS){
+                        showTree();
+                    }else{
+                        dialog = DialogFactory.getInformationAlert();
+                        dialog.setHeaderText("删除商品分类失败");
+                        dialog.showAndWait();
+                    }
                 }
             }
         }

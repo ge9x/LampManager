@@ -151,6 +151,12 @@ public class InventorySyncEditController {
 
     }
     public void clickSubmitButton(){
+        if (Inventory.getSelectionModel().getSelectedItem() == null || goodsItems.size() == 0){
+            Dialog dialog = DialogFactory.getInformationAlert();
+            dialog.setHeaderText("信息填写不完整，请填写完整后再提交");
+            dialog.showAndWait();
+            return ;
+        }
     	InventoryBillVO vo = new InventoryBillVO(BillID.getText(), type, BillState.SUBMITTED, LocalDate.now().toString(),
                 Inventory.getSelectionModel().getSelectedItem().toString(),userInfo.getCurrentUserNameByID(userInfo.getCurrentUserID()),
                 goodsItems);

@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ui.component.DialogFactory;
 import ui.component.Table;
@@ -41,7 +42,7 @@ public class InventoryGoodsController {
     ScrollPane TablePane;
 
     @FXML
-    Label searchIcon;
+    Label searchIcon, DeleteIcon, ModifyIcon;
 
     @FXML
     TextField SearchField;
@@ -56,6 +57,8 @@ public class InventoryGoodsController {
 
         goodsBLService = GoodsBLFactory.getBLService();
         searchIcon.setText("\ue69d");
+        DeleteIcon.setText("\ue606");
+        ModifyIcon.setText("\ue601");
 
         initTable();
         Task<ArrayList<GoodsVO>> task = new Task<ArrayList<GoodsVO>>() {
@@ -66,6 +69,7 @@ public class InventoryGoodsController {
         };
 
         task.setOnSucceeded(e -> {
+            goods = task.getValue();
             showGoods();
         });
 
@@ -88,11 +92,13 @@ public class InventoryGoodsController {
         table.addColumn("最近零售价","salesPrice",70);
 
         TablePane.setContent(table.getTable());
+        table.getTable().setPrefHeight(300);
 
         SearchField.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                clickSearchButton();
+                if (event.getCode() == KeyCode.ENTER)
+                    clickSearchButton();
             }
         });
     }
@@ -186,6 +192,32 @@ public class InventoryGoodsController {
         String keyword = SearchField.getText();
         goods = goodsBLService.find(keyword);
         showGoods();
+    }
+    public void clickDeleteButton(){
+        GoodsBean bean = getSelectedItem();
+        if (bean != null){
+            Dialog dialog = DialogFactory.getConfirmationAlert();
+            dialog.setHeaderText("确定要删除商品: " + bean.getName() + " 吗？");
+            Optional result = dialog.showAndWait();
+            if (result.isPresent()){
+                if (result.get() == ButtonType.OK){
+                    ResultMessage re = goodsBLService.delete(bean.getID());
+                    dialog = DialogFactory.getInformationAlert();
+                    if (re == ResultMessage.SUCCESS) {
+                        data.remove(bean);
+                        goods = goodsBLService.show();
+                        dialog.setHeaderText("删除商品成功");
+                        dialog.showAndWait();
+                        showGoods();
+                    }
+                    else {
+                        dialog.setHeaderText("删除商品失败");
+
+                        dialog.showAndWait();
+                    }
+                }
+            }
+        }
     }
     public GoodsBean getSelectedItem(){
         GoodsBean goodsBean = table.getSelectedItem();
