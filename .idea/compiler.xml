@@ -20,9 +20,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="ERPClient" target="1.5" />
-      <module name="ERPServer" target="1.5" />
-      <module name="LampManager" target="1.5" />
+      <module name="ERPClient" target="1.8" />
+      <module name="ERPServer" target="1.8" />
+      <module name="LampManager" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
