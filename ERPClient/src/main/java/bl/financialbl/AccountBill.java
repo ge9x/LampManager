@@ -3,6 +3,7 @@ package bl.financialbl;
 import bl.accountbl.Account;
 import bl.accountbl.AccountBLFactory;
 import bl.accountbl.AccountController;
+import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.logbl.LogBLFactory;
 import blservice.accountblservice.AccountInfo;
@@ -36,6 +37,7 @@ public class AccountBill {
 
     FinanceDataService financeDataService;
     AccountInfo accountInfo;
+    CustomerInfo customerInfo;
     LogInfo logInfo;
 
     ArrayList<AccountBillPO> accountBillPOS;
@@ -44,6 +46,7 @@ public class AccountBill {
         accountBillPOS = new ArrayList<>();
         accountBillItem = new AccountBillItem();
         accountInfo = AccountBLFactory.getInfo();
+        customerInfo = CustomerBLFactory.getInfo();
         logInfo = LogBLFactory.getInfo();
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
@@ -151,10 +154,12 @@ public class AccountBill {
                 for (AccountBillItemVO itemVO : vo.accountBillItems) {
                     accountInfo.changeMoney(itemVO.account.accountID, itemVO.transferMoney);
                 }
+                customerInfo.reduceCustomerPay(Integer.parseInt(vo.customerID),vo.sum);
             } else {
                 for (AccountBillItemVO itemVO : vo.accountBillItems) {
                     accountInfo.changeMoney(itemVO.account.accountID, -itemVO.transferMoney);
                 }
+                customerInfo.reduceCustomerReceive(Integer.parseInt(vo.customerID),vo.sum);
             }
             logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, voTopo(vo).toString());
         }
