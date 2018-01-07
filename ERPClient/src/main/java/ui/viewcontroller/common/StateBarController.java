@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import org.apache.poi.hssf.record.LabelSSTRecord;
 import org.apache.xmlbeans.impl.jam.annotation.LineDelimitedTagParser;
@@ -194,7 +195,8 @@ public class StateBarController {
         dialog.setHeaderText("您确定要退出本系统吗？");
         Optional result = dialog.showAndWait();
         if (result.isPresent()){
-            mainUIController.close();
+            if (result.get() == ButtonType.OK)
+                mainUIController.close();
         }
     }
 
