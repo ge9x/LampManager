@@ -49,13 +49,8 @@ public class AdminViewController {
         adminUserViewController.showUserList();
     }
     
-    public void showUserDetail(Pane userDetail){
+    public void showEditView(Pane userDetail){
     	mainUIController.setCenter(null);
         mainUIController.setCenter(userDetail);
-    }
-    
-    public void showUserAddView(Pane userAdd){
-    	mainUIController.setCenter(null);
-        mainUIController.setCenter(userAdd);
     }
 }

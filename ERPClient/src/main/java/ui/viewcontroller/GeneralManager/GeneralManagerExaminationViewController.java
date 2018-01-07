@@ -92,7 +92,7 @@ public class GeneralManagerExaminationViewController {
     }
     
     public void showBillDetail(Pane pane){
-    	generalManagerViewController.showBillDetail(pane);
+    	generalManagerViewController.showEditView(pane);
     }
     
     public void clickReturnButton(){

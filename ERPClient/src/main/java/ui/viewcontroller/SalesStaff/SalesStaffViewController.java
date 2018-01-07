@@ -54,15 +54,6 @@ public class SalesStaffViewController {
         salesStaffCustomerInfoController.showCustomerList();
     }
     
-    public void showCustomerDetail(Pane customerDetail){
-    	mainUIController.setCenter(customerDetail);
-    }
-    
-    public void showCustomerAddView(Pane customerAdd){
-    	mainUIController.setCenter(null);
-    	mainUIController.setCenter(customerAdd);
-    }
-    
     public void showPurchaseOrderView(){
         mainUIController.setCenter(null);
 
@@ -77,11 +68,6 @@ public class SalesStaffViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    public void showPurchaseOrderEditView(Pane pane){
-        mainUIController.setCenter(null);
-        mainUIController.setCenter(pane);
     }
     
     public void showReturnOrderView(){
@@ -100,11 +86,6 @@ public class SalesStaffViewController {
         }
     }
     
-    public void showReturnOrderEditView(Pane pane){
-        mainUIController.setCenter(null);
-        mainUIController.setCenter(pane);
-    }
-    
     public void showSalesOrderView(){
         mainUIController.setCenter(null);
 
@@ -119,11 +100,6 @@ public class SalesStaffViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    public void showSalesOrderEditView(Pane pane){
-        mainUIController.setCenter(null);
-        mainUIController.setCenter(pane);
     }
     
     public void showSalesReturnOrderView(){
@@ -142,7 +118,7 @@ public class SalesStaffViewController {
         }
     }
     
-    public void showSalesReturnOrderEditView(Pane pane){
+    public void showEditView(Pane pane){
         mainUIController.setCenter(null);
         mainUIController.setCenter(pane);
     }

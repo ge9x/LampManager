@@ -125,7 +125,7 @@ public class SalesStaffSalesOrderViewController {
             Pane page = pageLoader.load();
             salesStaffSalesEditViewController = pageLoader.getController();
             salesStaffSalesEditViewController.setSalesStaffSalesOrderViewController(this);
-            salesStaffViewController.showSalesOrderEditView(page);
+            salesStaffViewController.showEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }
