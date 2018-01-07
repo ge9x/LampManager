@@ -115,10 +115,25 @@ public interface FinanceBLService extends Remote{
      */
     String getAccountNameByID(String accountID);
 
+    /**
+     * 通过单据状态获得收款单
+     * @param state
+     * @return
+     */
     ArrayList<AccountBillVO> getReceiptsByState(BillState state);
 
+    /**
+     * 通过单据状态获得付款单
+     * @param state
+     * @return
+     */
     ArrayList<AccountBillVO> getPaymentsByState(BillState state);
 
+    /**
+     * 通过单据状态获得现金费用单
+     * @param state
+     * @return
+     */
     ArrayList<CashBillVO> getCashBillByState(BillState state);
 
 }
