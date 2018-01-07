@@ -123,7 +123,7 @@ public class SalesStaffSalesReturnOrderViewController {
             Pane page = pageLoader.load();
             salesStaffSalesReturnEditViewController = pageLoader.getController();
             salesStaffSalesReturnEditViewController.setSalesStaffSalesReturnOrderViewController(this);
-            salesStaffViewController.showSalesOrderEditView(page);
+            salesStaffViewController.showEditView(page);
         }catch(IOException e){
             e.printStackTrace();
         }

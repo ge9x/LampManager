@@ -110,7 +110,7 @@ public class GeneralManagerPromotionViewController {
             e.printStackTrace();
     	}
     	generalManagerPromotionBargainAddViewController.addPromotionBargain();
-    	generalManagerViewController.showPromotionAddView(promotionAdd);
+    	generalManagerViewController.showEditView(promotionAdd);
 	}
 	
 	public void clickAddPromotionCustomer(){
@@ -126,7 +126,7 @@ public class GeneralManagerPromotionViewController {
             e.printStackTrace();
     	}
     	generalManagerPromotionCustomerAddViewController.addPromotionCustomer();
-    	generalManagerViewController.showPromotionAddView(promotionAdd);
+    	generalManagerViewController.showEditView(promotionAdd);
 	}
 	
 	public void clickAddPromotionTotal(){
@@ -142,10 +142,10 @@ public class GeneralManagerPromotionViewController {
             e.printStackTrace();
     	}
     	generalManagerPromotionTotalAddViewController.addPromotionTotal();
-    	generalManagerViewController.showPromotionAddView(promotionAdd);
+    	generalManagerViewController.showEditView(promotionAdd);
 	}
 	
 	public void showPromotionDetail(Pane pane){
-		generalManagerViewController.showPromotionDetail(pane);
+		generalManagerViewController.showEditView(pane);
 	}
 }

@@ -56,8 +56,4 @@ public class AdminNavBarController {
     	rec.setFill(Paint.valueOf("#000000"));
     	selectRec.setVisible(true);
     }
-    
-    public void setMouse(){
-    	
-    }
 }

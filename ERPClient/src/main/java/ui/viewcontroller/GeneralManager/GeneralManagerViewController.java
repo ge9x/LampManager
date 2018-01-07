@@ -75,10 +75,6 @@ public class GeneralManagerViewController {
         generalManagerPromotionViewController.showPromotionList();
     }
     
-    public void showPromotionAddView(Pane promotionAdd){
-    	mainUIController.setCenter(promotionAdd);
-    }
-    
     public void showSalesDetailsView(){
     	 mainUIController.setCenter(null);
 
@@ -125,11 +121,7 @@ public class GeneralManagerViewController {
         }
     }
     
-    public void showBillDetail(Pane pane){
-    	mainUIController.setCenter(pane);
-    }
-    
-    public void showPromotionDetail(Pane pane){
+    public void showEditView(Pane pane){
     	mainUIController.setCenter(pane);
     }
 }
