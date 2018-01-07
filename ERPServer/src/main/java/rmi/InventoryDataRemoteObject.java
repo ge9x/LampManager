@@ -36,11 +36,6 @@ public class InventoryDataRemoteObject extends UnicastRemoteObject implements In
 	}
 
 	@Override
-	public InventoryBillPO findBill(int ID) throws RemoteException {
-		return inventoryDataService.findBill(ID);
-	}
-
-	@Override
 	public ResultMessage addInventroy(InventoryPO po) throws RemoteException {
 		return inventoryDataService.addInventroy(po);
 	}
