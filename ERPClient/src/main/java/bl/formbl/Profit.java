@@ -70,7 +70,6 @@ public class Profit {
     SalesInfo salesInfo;
     PurchaseInfo purchaseInfo;
     InventoryInfo inventoryInfo;
-    GoodsInfo goodsInfo;
     PromotionTotalInfo promotionTotalInfo;
     PromotionCustomerInfo promotionCustomerInfo;
     ArrayList<SalesVO> salesVOS;
@@ -84,7 +83,6 @@ public class Profit {
     public Profit() {
         salesInfo = SalesBLFactory.getSalesInfo();
         inventoryInfo = InventoryBLFactory.getInfo();
-        goodsInfo = GoodsBLFactory.getInfo();
         purchaseInfo = SalesBLFactory.getPurchaseInfo();
         promotionTotalInfo = PromotionBLFactory.getTotalInfo();
         promotionCustomerInfo = PromotionBLFactory.getCustomerInfo();
