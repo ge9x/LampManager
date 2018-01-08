@@ -67,103 +67,6 @@ public class DocumentDetails{
         }
         return billVOS;
     }
-    public void searchByType(BillType type){
-        if (type != null){
-            ArrayList<BillVO> newArr = new ArrayList<>();
-            for (BillVO billVO:billVOS){
-                if (billVO.type == type)
-                    newArr.add(billVO);
-            }
-            billVOS.clear();
-            billVOS.addAll(newArr);
-        }
-    }
-    public ArrayList<BillVO> searchByInventory(ArrayList<BillVO> billVOS,BillType type,String name){
-        ArrayList<BillVO> newArr = new ArrayList<>();
-        switch (type){
-            case SALES:
-            case SALESRETURN:
-                for (BillVO billVO:billVOS){
-                    if (((SalesVO) billVO).inventory.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-                break;
-            case PURCHASE:
-            case RETURN:
-                for (BillVO billVO:billVOS){
-                    if (((PurchaseVO) billVO).inventory.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-                break;
-            case OVERFLOW:
-            case LOSS:
-            for (BillVO billVO:billVOS){
-                    if (((InventoryBillVO) billVO).inventory.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-        }
-        return newArr;
-    }
-    public ArrayList<BillVO> searchByCustomer(ArrayList<BillVO> billVOS,BillType type ,String name){
-        ArrayList<BillVO> newArr = new ArrayList<>();
-        switch (type){
-            case RECEIPT:
-            case PAYMENT:
-                for (BillVO billVO:billVOS){
-                    if (customerInfo.getCustomerByID(Integer.parseInt(((AccountBillVO) billVO).customerID))
-                            .customerName.contains(name)){
-                        newArr.add(billVO);
-                    }
-
-                }
-                break;
-            case SALES:
-            case SALESRETURN:
-                for (BillVO billVO:billVOS){
-                    if (((SalesVO) billVO).customer.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-                break;
-            case PURCHASE:
-            case RETURN:
-                for (BillVO billVO:billVOS){
-                    if (customerInfo.getCustomerByID(Integer.parseInt(((PurchaseVO) billVO).customerID))
-                            .customerName.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-                break;
-        }
-        return newArr;
-    }
-    public ArrayList<BillVO> searchBySaleman(ArrayList<BillVO> billVOS,BillType type ,String name){
-        ArrayList<BillVO> newArr = new ArrayList<>();
-        switch (type){
-            case SALES:
-            case SALESRETURN:
-                for (BillVO billVO:billVOS){
-                    if (((SalesVO) billVO).salesman.contains(name)){
-                        newArr.add(billVO);
-                    }
-                }
-                break;
-        }
-        return newArr;
-    }
-    public void getAllBills(String startDate, String endDate){
-        billVOS.clear();
-        billVOS.addAll(inventoryInfo.getInventoryBillsByDate(startDate, endDate));
-        billVOS.addAll(purchaseInfo.getPurchaseByDate(startDate,endDate));
-        billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
-        billVOS.addAll(salesInfo.getAllSalesReturnOrder(startDate, endDate));
-        billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
-        billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
-    }
-
     public ResultMessage redCover(BillVO billVO) {
         ResultMessage re = ResultMessage.FAILED;
         switch (billVO.type){
@@ -199,23 +102,122 @@ public class DocumentDetails{
     public ResultMessage export(String filePath, ArrayList<BillVO> vos) {
 
         for (BillVO billVO : vos){
-          switch (billVO.type){
-              case OVERFLOW:
-              case LOSS:
-                  return exportInventoryBill(filePath,(InventoryBillVO) billVO);
-              case PURCHASE:
-              case RETURN:
-              case SALES:
-              case SALESRETURN:
+            switch (billVO.type){
+                case OVERFLOW:
+                case LOSS:
+                    return exportInventoryBill(filePath,(InventoryBillVO) billVO);
+                case PURCHASE:
+                case RETURN:
+                case SALES:
+                case SALESRETURN:
 
-              case RECEIPT:
-              case PAYMENT:
-              case CASH:
+                case RECEIPT:
+                case PAYMENT:
+                case CASH:
 //                  return exportCash
-          }
+            }
         }
         return ResultMessage.FAILED;
     }
+
+    private void searchByType(BillType type){
+        if (type != null){
+            ArrayList<BillVO> newArr = new ArrayList<>();
+            for (BillVO billVO:billVOS){
+                if (billVO.type == type)
+                    newArr.add(billVO);
+            }
+            billVOS.clear();
+            billVOS.addAll(newArr);
+        }
+    }
+    private ArrayList<BillVO> searchByInventory(ArrayList<BillVO> billVOS,BillType type,String name){
+        ArrayList<BillVO> newArr = new ArrayList<>();
+        switch (type){
+            case SALES:
+            case SALESRETURN:
+                for (BillVO billVO:billVOS){
+                    if (((SalesVO) billVO).inventory.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+                break;
+            case PURCHASE:
+            case RETURN:
+                for (BillVO billVO:billVOS){
+                    if (((PurchaseVO) billVO).inventory.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+                break;
+            case OVERFLOW:
+            case LOSS:
+            for (BillVO billVO:billVOS){
+                    if (((InventoryBillVO) billVO).inventory.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+        }
+        return newArr;
+    }
+    private ArrayList<BillVO> searchByCustomer(ArrayList<BillVO> billVOS,BillType type ,String name){
+        ArrayList<BillVO> newArr = new ArrayList<>();
+        switch (type){
+            case RECEIPT:
+            case PAYMENT:
+                for (BillVO billVO:billVOS){
+                    if (customerInfo.getCustomerByID(Integer.parseInt(((AccountBillVO) billVO).customerID))
+                            .customerName.contains(name)){
+                        newArr.add(billVO);
+                    }
+
+                }
+                break;
+            case SALES:
+            case SALESRETURN:
+                for (BillVO billVO:billVOS){
+                    if (((SalesVO) billVO).customer.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+                break;
+            case PURCHASE:
+            case RETURN:
+                for (BillVO billVO:billVOS){
+                    if (customerInfo.getCustomerByID(Integer.parseInt(((PurchaseVO) billVO).customerID))
+                            .customerName.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+                break;
+        }
+        return newArr;
+    }
+    private ArrayList<BillVO> searchBySaleman(ArrayList<BillVO> billVOS,BillType type ,String name){
+        ArrayList<BillVO> newArr = new ArrayList<>();
+        switch (type){
+            case SALES:
+            case SALESRETURN:
+                for (BillVO billVO:billVOS){
+                    if (((SalesVO) billVO).salesman.contains(name)){
+                        newArr.add(billVO);
+                    }
+                }
+                break;
+        }
+        return newArr;
+    }
+    private void getAllBills(String startDate, String endDate){
+        billVOS.clear();
+        billVOS.addAll(inventoryInfo.getInventoryBillsByDate(startDate, endDate));
+        billVOS.addAll(purchaseInfo.getPurchaseByDate(startDate,endDate));
+        billVOS.addAll(salesInfo.getAllSalesOrder(startDate, endDate));
+        billVOS.addAll(salesInfo.getAllSalesReturnOrder(startDate, endDate));
+        billVOS.addAll(financeInfo.getAccountBillsByDate(startDate, endDate));
+        billVOS.addAll(financeInfo.getCashBillsByDate(startDate, endDate));
+    }
+
+
 
     private ResultMessage exportInventoryBill(String filePath, InventoryBillVO billVO) {
         File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");

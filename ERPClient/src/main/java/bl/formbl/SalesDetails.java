@@ -29,6 +29,7 @@ public class SalesDetails {
     public SalesDetails(){
         salesVOS = new ArrayList<>();
     }
+
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
 
@@ -46,8 +47,17 @@ public class SalesDetails {
         }
         return salesDetailVOS;
     }
+    public ResultMessage export(String filePath, String filename, ArrayList<SalesDetailVO> beans){
+        filename = filename.split("\\.")[0];
+        ExportToExcel exporter = new ExportToExcel.Builder(filePath, filename, ExcelType.XLSX)
+                .withModel(Model.of(SalesDetailVO.class, beans)).build();
+        if (exporter.export())
+            return ResultMessage.SUCCESS;
+        else
+            return ResultMessage.FAILED;
+    }
 
-    public ArrayList<SalesDetailVO> searchByInventory(String keyword){
+    private ArrayList<SalesDetailVO> searchByInventory(String keyword){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
         for (SalesVO salesVO : salesVOS){
             if (salesVO.inventory.contains(keyword)){
@@ -60,7 +70,7 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ArrayList<SalesDetailVO> searchByCustomer(String keyword){
+    private ArrayList<SalesDetailVO> searchByCustomer(String keyword){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
         for (SalesVO salesVO : salesVOS){
             if (salesVO.customer.contains(keyword)){
@@ -73,7 +83,7 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ArrayList<SalesDetailVO> searchBySalesman(String keyword){
+    private ArrayList<SalesDetailVO> searchBySalesman(String keyword){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
         for (SalesVO salesVO : salesVOS){
             if (salesVO.salesman.contains(keyword)){
@@ -86,7 +96,7 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ArrayList<SalesDetailVO> searchByGoodsName(String keyword){
+    private ArrayList<SalesDetailVO> searchByGoodsName(String keyword){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
         for (SalesVO salesVO : salesVOS){
             for (GoodsItemVO itemVO:salesVO.goodsItemList) {
@@ -99,7 +109,7 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ArrayList<SalesDetailVO> getAllSalesDetails(){
+    private ArrayList<SalesDetailVO> getAllSalesDetails(){
         ArrayList<SalesDetailVO> salesDetailVOS = new ArrayList<>();
         for (SalesVO salesVO : salesVOS){
             for (GoodsItemVO itemVO:salesVO.goodsItemList) {
@@ -110,13 +120,5 @@ public class SalesDetails {
         return salesDetailVOS;
     }
 
-    public ResultMessage export(String filePath, String filename, ArrayList<SalesDetailVO> beans){
-        filename = filename.split("\\.")[0];
-        ExportToExcel exporter = new ExportToExcel.Builder(filePath, filename, ExcelType.XLSX)
-                .withModel(Model.of(SalesDetailVO.class, beans)).build();
-        if (exporter.export())
-            return ResultMessage.SUCCESS;
-        else
-            return ResultMessage.FAILED;
-    }
+
 }

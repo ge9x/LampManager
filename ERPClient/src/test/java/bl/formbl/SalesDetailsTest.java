@@ -123,7 +123,7 @@ public class SalesDetailsTest {
 
     @Test
     public void testExport() throws Exception {
-        ResultMessage re = salesDetails.export("C:/Users/Dell/git/LampManager","销售明细表Test",salesDetails.getAllSalesDetails());
+        ResultMessage re = salesDetails.export("C:/Users/Dell/git/LampManager","销售明细表Test",null);
         assertEquals(ResultMessage.SUCCESS,re);
     }
 

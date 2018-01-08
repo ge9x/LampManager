@@ -85,7 +85,7 @@ public class SalesStaffCustomerInfoViewController {
     }
     
     public void showCustomerDetail(Pane customerDetail){
-    	salesStaffViewController.showEditView(customerDetail);
+    	salesStaffViewController.showCustomerDetail(customerDetail);
     }
     
     public void clickReturnButton(){
@@ -104,7 +104,7 @@ public class SalesStaffCustomerInfoViewController {
     	}catch (IOException e){
             e.printStackTrace();
     	}
-    	salesStaffViewController.showEditView(customerAdd);
+    	salesStaffViewController.showCustomerAddView(customerAdd);
     }
     
     public void clickSearchButton(){

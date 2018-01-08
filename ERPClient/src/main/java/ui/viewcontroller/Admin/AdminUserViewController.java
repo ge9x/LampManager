@@ -95,7 +95,7 @@ public class AdminUserViewController {
     }
     
     public void showUserDetail(Pane userDetail){
-    	adminViewController.showEditView(userDetail);
+    	adminViewController.showUserDetail(userDetail);
     }
     
     public void clickSearchButton(){
@@ -167,7 +167,7 @@ public class AdminUserViewController {
     	}catch (IOException e){
             e.printStackTrace();
     	}
-    	adminViewController.showEditView(userAdd);
+    	adminViewController.showUserAddView(userAdd);
     }
     
     public void clickReturnButton(){
