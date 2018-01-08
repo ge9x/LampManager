@@ -26,7 +26,7 @@ public interface CustomerInfo {
 	 */
 	public CustomerVO getCustomerByID(int ID);
 	/**
-	 * 得到所有的供应商ID
+	 * 得到所有的供应商
 	 * @return
 	 */
 	public ArrayList<CustomerVO> getAllSupplier();
