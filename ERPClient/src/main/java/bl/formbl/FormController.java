@@ -1,9 +1,11 @@
 package bl.formbl;
 
 import bean.SalesDetailsBean;
+import bl.initializationbl.InitializationBLFactory;
 import blservice.formblservice.DocumentDetailsInput;
 import blservice.formblservice.FormBLService;
 import blservice.formblservice.SalesDetailsInput;
+import blservice.initializationblservice.InitInfo;
 import javafx.beans.property.StringProperty;
 import util.ResultMessage;
 import vo.BillVO;
@@ -19,52 +21,54 @@ import java.util.Formattable;
  */
 
 public class FormController implements FormBLService{
-    Form form;
+    SalesDetails salesDetails;
+    DocumentDetails documentDetails;
+    Profit profit;
+    InitInfo initInfo;
 
-    protected FormController(){
-        form = new Form();
-    }
-
-    public BillVO findByID(String ID) {
-        return null;
+    protected FormController() {
+        initInfo = InitializationBLFactory.getInfo();
+        salesDetails = new SalesDetails();
+        documentDetails = new DocumentDetails();
+        profit = new Profit();
     }
 
     public ArrayList<SalesDetailVO> getSalesDetails(SalesDetailsInput input) {
-        return form.getSalesDetails(input);
+        return salesDetails.getSalesDetails(input);
     }
 
     public ArrayList<BillVO> getDocumentDetails(DocumentDetailsInput input) {
-        return form.getDocumentDetails(input);
+        return documentDetails.getDocumentDetails(input);
     }
 
     public ResultMessage redCover(BillVO billVO) {
-        return form.redCover(billVO);
+        return documentDetails.redCover(billVO);
     }
 
     public ResultMessage redCoverAndCopy(BillVO billVO) {
-        return form.redCoverAndCopy(billVO);
+        return documentDetails.redCoverAndCopy(billVO);
     }
 
     public ProfitVO getProfit(String startDate,String endDate) {
-        return form.getProfit(startDate,endDate);
+        return profit.getProfit(startDate,endDate);
     }
     public String getStartDate(){
-        return form.getStartDate();
+        return initInfo.getStartDate();
     }
 
     @Override
     public ResultMessage exportSalesDetails(String filePath, String filename, ArrayList<SalesDetailVO> salesDetailVOS) {
-        return form.exportSalesDetails(filePath,filename,salesDetailVOS);
+        return salesDetails.export(filePath,filename,salesDetailVOS);
     }
 
     @Override
     public ResultMessage exportDocumentDetails(String filePath, ArrayList<BillVO> vos) {
-        return form.exportDocumentDetails(filePath,vos);
+        return documentDetails.export(filePath,vos);
     }
 
 
     @Override
     public ResultMessage exportProfit(String filePath,String filename,ArrayList<ProfitVO> vos) {
-        return form.exportProfit(filePath,filename,vos);
+        return profit.export(filePath,filename,vos);
     }
 }
