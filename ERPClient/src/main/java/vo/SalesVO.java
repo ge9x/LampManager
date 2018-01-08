@@ -8,7 +8,9 @@ import util.BillType;
 import util.UserPosition;
 
 public class SalesVO extends BillVO{
-	/**客户*/
+    private static final String seperator = System.lineSeparator();
+
+    /**客户*/
 	public String customer;
 	/**客户编号*/
 	public String customerID;
@@ -71,5 +73,22 @@ public class SalesVO extends BillVO{
 		sum=sum-allowance-voucher;
 		return sum;
 	}
-	
+
+	@Override
+    public String toString(){
+	    String str =  "客户：" + customer + seperator +
+                "业务员: " + salesman + seperator +
+                "操作员: " + user + seperator +
+                "仓库: " + inventory + seperator +
+                "折让前总额: " + beforeSum + seperator +
+                "折让: " + allowance + seperator +
+                "使用代金券金额: " + voucher + seperator +
+                "折让后总额: " + afterSum + seperator +
+                "备注：" + remarks + seperator +
+                "商品列表：" + seperator;
+	    for (GoodsItemVO itemVO : goodsItemList){
+	        str += (itemVO.toString() + seperator);
+        }
+        return str;
+    }
 }

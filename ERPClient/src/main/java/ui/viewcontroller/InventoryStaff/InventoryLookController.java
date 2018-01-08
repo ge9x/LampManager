@@ -98,6 +98,9 @@ public class InventoryLookController {
         InventoryBox.getItems().addAll(inventories);
         InventoryBox.getSelectionModel().selectFirst();
 
+        iNum = 0;oNum = 0;pNum = 0;sNum = 0;ioNumTotal = 0;psNumTotal = 0;
+        iMoney = 0;oMoney = 0;pMoney = 0;sMoney = 0;ioMoneyTotal = 0;psMoneyTotal = 0;
+
         initDatePicker();
         initAlarmTable();
         initItemTable();

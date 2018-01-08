@@ -1,7 +1,9 @@
 package vo;
 
 public class GoodsItemVO {
-	/**编号*/
+    private static final String seperator = System.lineSeparator();
+
+    /**编号*/
 	public String ID;
 	/**名称*/
 	public String goodsName;
@@ -27,5 +29,10 @@ public class GoodsItemVO {
 		this.sum = number*price;
 		this.remarks = remarks;
 	}
+
+	@Override
+    public String toString(){
+	    return goodsName + "\t" + model + "\t" + number + "\t" + price + "\t" + sum + "\t" + remarks;
+    }
 	
 }
