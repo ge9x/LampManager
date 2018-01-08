@@ -2,6 +2,7 @@ package vo;
 
 import util.BillState;
 import util.BillType;
+import util.Money;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/10/21.
  */
 public class AccountBillVO extends BillVO{
-
+    private static final String seperator = System.lineSeparator();
 
     /**
      * 客户ID
@@ -52,6 +53,23 @@ public class AccountBillVO extends BillVO{
             sum += accountBillItems.get(i).transferMoney;
         }
         return sum;
+    }
+
+    @Override
+    public String toString(){
+        return  super.toString()+
+                "客户ID: " + String.format("%0d",Integer.parseInt(customerID)) + seperator +
+                "操作员: " + userName + seperator +
+                "总额汇总: " + Money.getMoneyString(sum) + seperator +
+                itemsToString();
+    }
+
+    private String itemsToString(){
+        String str = "转账列表:" + seperator;
+        for (AccountBillItemVO itemVO : accountBillItems){
+            str += itemVO.toString() + seperator;
+        }
+        return str;
     }
 
 }
