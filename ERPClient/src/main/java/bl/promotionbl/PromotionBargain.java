@@ -31,8 +31,6 @@ import vo.UserVO;
 public class PromotionBargain extends Promotion{
 	
 	ArrayList<PromotionBargainPO> promotionBargainPOs = new ArrayList<>();
-	private UserInfo userInfo;
-	private LogInfo logInfo;
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
