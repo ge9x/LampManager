@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.hibernate.type.StandardBasicTypes;
 
 import util.Criterion;
@@ -37,7 +39,10 @@ public class HibernateDataHelper<T> implements DataHelper<T> {
 	}
 
 	private void commitAndClose() {
-		session.getTransaction().commit();
+		Transaction transaction = session.getTransaction();
+		if (transaction.getStatus().equals(TransactionStatus.ACTIVE)) { 
+			transaction.commit();
+		}
 		session.close();
 	}
 
