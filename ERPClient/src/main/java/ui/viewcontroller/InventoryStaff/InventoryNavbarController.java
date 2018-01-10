@@ -1,13 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
-import javax.swing.text.View;
-
-import bl.userbl.User;
 import bl.userbl.UserBLFactory;
-import org.hibernate.annotations.Check;
-
-import bl.goodsbl.Goods;
-import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -13,6 +13,26 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.ERPServer.Server</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
   <parent>
@@ -36,6 +56,8 @@
           <groupId>edu.nju.erp</groupId>
           <artifactId>ERPServer</artifactId>
           <version>0.0.1-SNAPSHOT</version>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/lib/ERPServer-0.0.1-SNAPSHOT.jar</systemPath>
       </dependency>
 
       <dependency>
