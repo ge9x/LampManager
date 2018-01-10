@@ -5,6 +5,7 @@ import bl.classificationbl.Classification;
 import bl.goodsbl.Goods;
 import util.CustomerCategory;
 import util.Level;
+import util.ResultMessage;
 import vo.*;
 
 import java.util.ArrayList;
@@ -16,7 +17,13 @@ import java.util.Date;
 public class MockInitialization extends Initialization {
 
     @Override
-    public InitAccountVO init() {
+    public ResultMessage init() {
+       return ResultMessage.SUCCESS;
+    }
+
+
+    @Override
+    public InitializationVO show(String date) {
         AccountVO account = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList<AccountVO> accountVOS = new ArrayList<AccountVO>();
         accountVOS.add(account);
@@ -35,12 +42,6 @@ public class MockInitialization extends Initialization {
         goodsVOS.add(goods);
 
         InitAccountVO vo = new InitAccountVO("",accountVOS,customerVOS,goodsVOS,classificationVOS);
-        return vo;
-    }
-
-
-    @Override
-    public InitAccountVO show() {
-        return init();
+        return null;
     }
 }
