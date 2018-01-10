@@ -1,21 +1,8 @@
 package bl.promotionbl;
 
-import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.loader.custom.EntityFetchReturn;
-
-import bl.financialbl.AccountBillItem;
 import bl.logbl.LogBLFactory;
 import bl.salesbl.GoodsItem;
-import bl.salesbl.Purchase;
 import bl.userbl.UserBLFactory;
-import bl.userbl.UserController;
-import blservice.logblservice.LogInfo;
-import blservice.userblservice.UserInfo;
-import po.AccountBillItemPO;
 import po.GoodsItemPO;
 import po.PromotionBargainPO;
 import rmi.PromotionRemoteHelper;
@@ -23,16 +10,16 @@ import util.OperationObjectType;
 import util.OperationType;
 import util.PromotionType;
 import util.ResultMessage;
-import vo.AccountBillItemVO;
 import vo.GoodsItemVO;
 import vo.PromotionBargainVO;
-import vo.UserVO;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PromotionBargain extends Promotion{
 	
 	ArrayList<PromotionBargainPO> promotionBargainPOs = new ArrayList<>();
-	private UserInfo userInfo;
-	private LogInfo logInfo;
 	
 	public PromotionBargain(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();

@@ -1,30 +1,24 @@
 package bl.financialbl;
 
-import bl.accountbl.Account;
 import bl.accountbl.AccountBLFactory;
-import bl.accountbl.AccountController;
 import bl.customerbl.CustomerBLFactory;
-import bl.customerbl.CustomerController;
 import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import blservice.accountblservice.AccountInfo;
 import blservice.customerblservice.CustomerInfo;
 import blservice.logblservice.LogInfo;
-import blservice.userblservice.UserInfo;
+import blservice.messageblservice.MessageInfo;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountBillItemPO;
 import po.AccountBillPO;
-import po.AccountPO;
 import rmi.FinanceRemoteHelper;
 import util.*;
 import vo.AccountBillItemVO;
 import vo.AccountBillVO;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.awt.image.AreaAveragingScaleFilter;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Kry·L on 2017/11/5.
@@ -38,6 +32,7 @@ public class AccountBill {
     FinanceDataService financeDataService;
     AccountInfo accountInfo;
     CustomerInfo customerInfo;
+    MessageInfo messageInfo;
     LogInfo logInfo;
 
     ArrayList<AccountBillPO> accountBillPOS;
@@ -48,6 +43,8 @@ public class AccountBill {
         accountInfo = AccountBLFactory.getInfo();
         customerInfo = CustomerBLFactory.getInfo();
         logInfo = LogBLFactory.getInfo();
+        messageInfo = MessageBLFactory.getInfo();
+
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 

@@ -14,7 +14,12 @@ import java.util.Date;
  */
 public class InitializationBLService_Stub implements InitializationBLService {
 
-    public InitAccountVO init() {
+    @Override
+    public ResultMessage init() {
+        return ResultMessage.SUCCESS;
+    }
+
+    public InitializationVO show(String date)  {
         AccountVO account = new AccountVO("001","工商银行账户", 2000.00);
         ArrayList<AccountVO> accountVOS = new ArrayList<AccountVO>();
         accountVOS.add(account);
@@ -33,12 +38,20 @@ public class InitializationBLService_Stub implements InitializationBLService {
         ArrayList<GoodsVO> goodsVOS = new ArrayList<GoodsVO>();
         goodsVOS.add(goods);
 
-        InitAccountVO vo = new InitAccountVO("",accountVOS,customerVOS,goodsVOS,classificationVOS);
+        InitializationVO vo = new InitializationVO(accountVOS,classificationVOS,goodsVOS,customerVOS);
         return vo;
     }
 
-    public InitAccountVO show() {
-        return init();
+    @Override
+    public ArrayList<String> getAllInitDate() {
+        ArrayList<String> dates = new ArrayList<>();
+        dates.add("2018-01-01");
+        return dates;
+    }
+
+    @Override
+    public String getRecentInitdate() {
+        return "2018-01-01";
     }
 
 }

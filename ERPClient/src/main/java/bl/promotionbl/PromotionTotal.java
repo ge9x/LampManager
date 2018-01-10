@@ -29,8 +29,6 @@ import vo.PromotionTotalVO;
 public class PromotionTotal extends Promotion{
 	
 	private ArrayList<PromotionTotalPO> promotionTotalPOs = new ArrayList<>();
-	private UserInfo userInfo;
-	private LogInfo logInfo;
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();

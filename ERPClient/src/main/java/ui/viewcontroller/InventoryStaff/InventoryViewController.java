@@ -1,8 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import ui.viewcontroller.common.MainUIController;
 
@@ -38,7 +36,7 @@ public class InventoryViewController {
 
         inventoryNavbarController.clickCheckButton();
     }
-    public void showViewView(){
+    public void showLookView(){
         mainUIController.setCenter(null);
 
         try {
