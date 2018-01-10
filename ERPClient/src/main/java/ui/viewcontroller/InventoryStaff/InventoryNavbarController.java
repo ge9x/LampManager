@@ -69,7 +69,7 @@ public class InventoryNavbarController {
 
     public void clickViewButton(){
     	showHighlight(ViewRec, ViewSelectRec);
-        inventoryViewController.showViewView();
+        inventoryViewController.showLookView();
     }
     public void clickCheckButton() {
     	showHighlight(CheckRec, CheckSelectRec);
