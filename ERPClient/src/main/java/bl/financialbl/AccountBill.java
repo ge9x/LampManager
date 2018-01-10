@@ -6,9 +6,11 @@ import bl.accountbl.AccountController;
 import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
 import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
 import blservice.accountblservice.AccountInfo;
 import blservice.customerblservice.CustomerInfo;
 import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
 import blservice.userblservice.UserInfo;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountBillItemPO;
@@ -38,6 +40,7 @@ public class AccountBill {
     FinanceDataService financeDataService;
     AccountInfo accountInfo;
     CustomerInfo customerInfo;
+    MessageInfo messageInfo;
     LogInfo logInfo;
 
     ArrayList<AccountBillPO> accountBillPOS;
@@ -48,6 +51,8 @@ public class AccountBill {
         accountInfo = AccountBLFactory.getInfo();
         customerInfo = CustomerBLFactory.getInfo();
         logInfo = LogBLFactory.getInfo();
+        messageInfo = MessageBLFactory.getInfo();
+
         financeDataService = FinanceRemoteHelper.getInstance().getFinanceDataService();
     }
 
