@@ -3,6 +3,7 @@ package blstubdriver;
 import blservice.initializationblservice.InitializationBLService;
 import util.CustomerCategory;
 import util.Level;
+import util.ResultMessage;
 import vo.*;
 
 import java.util.ArrayList;
