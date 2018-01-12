@@ -48,6 +48,7 @@ public class ServerUIController {
 		startTime.setText("0:0:0:0");
 		close.setText("\ue72c");
 		portText.setText("8000");
+		portText.setEditable(false);
 		
 		startButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
 
