@@ -64,14 +64,14 @@ public class InitializationController implements InitializationBLService,InitInf
 
     /**
      * 本方法用于报表等Info接口，提供本次期初建账的开始日期
-     * 如果尚未期初建账，返回2017-01-01
+     * 如果尚未期初建账，返回2018-01-01
      * @return
      */
     @Override
     public String getStartDate() {
         try {
             if (initialization.getRecentInitDate() == null){
-                return "2017-01-01";
+                return "2018-01-01";
             }
             else
                 return initialization.getRecentInitDate();
