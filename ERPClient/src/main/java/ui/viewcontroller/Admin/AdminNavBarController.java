@@ -36,7 +36,7 @@ public class AdminNavBarController {
     @FXML
     public void initialize() {
         UserIcon.setText("\ue610");
-        Image img = new Image("./images/avatar/admin.jpg");
+        Image img = new Image("images/avatar/admin.jpg");
         avatar.setFill(new ImagePattern(img));
         String userID = userInfo.getCurrentUserID();
         userName.setText(userInfo.getCurrentUserNameByID(userID));

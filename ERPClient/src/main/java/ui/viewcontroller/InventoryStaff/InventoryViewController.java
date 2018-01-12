@@ -88,7 +88,7 @@ public class InventoryViewController {
         mainUIController.setCenter(null);
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/inventory/Classification.fxml"));
+            loader.setLocation(getClass().getResource("/view/inventory/classification.fxml"));
             Pane page = loader.load();
             inventoryClassificationController = loader.getController();
             inventoryClassificationController.setInventoryViewController(this);
@@ -102,7 +102,7 @@ public class InventoryViewController {
         mainUIController.setCenter(null);
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/inventory/Goods.fxml"));
+            loader.setLocation(getClass().getResource("/view/inventory/goods.fxml"));
             Pane page = loader.load();
             inventoryGoodsController = loader.getController();
             inventoryGoodsController.setInventoryViewController(this);
