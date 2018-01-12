@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.validation.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #f6f6f7;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.common.ServerUIController">
+   <children>
+      <JFXToggleButton fx:id="startButton" focusTraversable="false" layoutX="119.0" layoutY="125.0" prefHeight="62.0" prefWidth="167.0" size="13.0" text="开启服务器">
+         <font>
+            <Font name="Microsoft YaHei" size="15.0" />
+         </font>
+      </JFXToggleButton>
+      <AnchorPane prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="155.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logo2.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="close" alignment="CENTER" layoutX="263.0" layoutY="6.0" onMouseClicked="#close" prefHeight="25.0" prefWidth="28.0" styleClass="icon-label" stylesheets="@serverUI.css" text="X" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="31.0" layoutY="64.0" prefHeight="35.0" prefWidth="80.0" text="运行时间：">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="49.0" layoutY="99.0" prefHeight="35.0" prefWidth="44.0" text="端口：">
+         <font>
+            <Font name="Microsoft YaHei Bold" size="14.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="portText" focusColor="#1db1a4" layoutX="111.0" layoutY="105.0" prefHeight="23.0" prefWidth="155.0" />
+      <Text fx:id="startTime" fill="RED" layoutX="122.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="132.12109375">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
