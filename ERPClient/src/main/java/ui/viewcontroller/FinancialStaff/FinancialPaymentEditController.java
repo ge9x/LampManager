@@ -306,9 +306,11 @@ public class FinancialPaymentEditController {
         addIcon.setVisible(false);
         deleteIcon.setVisible(false);
 
-        String customerName = financeBLService.getCustomerNameByID(account.customerID);
+        if (Integer.parseInt(account.customerID) != 0){
+            String customerName = financeBLService.getCustomerNameByID(account.customerID);
+            Customer.getItems().add(customerName);
+        }
         Customer.getItems().clear();
-        Customer.getItems().add(customerName);
         Customer.getSelectionModel().selectFirst();
         Customer.setEditable(false);
 

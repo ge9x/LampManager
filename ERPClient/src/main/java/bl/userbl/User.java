@@ -30,8 +30,11 @@ public class User {
 	}
 
 	public ResultMessage addUser(UserVO vo) throws RemoteException{
-		UserPO userPO = voTOpo(vo);
-		ResultMessage re = userDataService.add(userPO);
+		ResultMessage re = ResultMessage.FAILED;
+		if(userDataService.find(vo.userID)==null){
+			UserPO userPO = voTOpo(vo);
+			re = userDataService.add(userPO);
+		}
 		return re;
 	}
 
