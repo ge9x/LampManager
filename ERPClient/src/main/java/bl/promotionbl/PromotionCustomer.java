@@ -68,21 +68,6 @@ public class PromotionCustomer extends Promotion{
 		return vo;
 	}
 	
-	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
-		promotionCustomerPOs.clear();
-		promotionCustomerPOs = promotionDataService.showPC();
-		for(PromotionCustomerPO po:promotionCustomerPOs){
-			if(po.getPromotionID().equals(promotionID)){
-				ResultMessage re = promotionDataService.deletePC(po);
-				if(re == ResultMessage.SUCCESS){
-					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
-				}
-				return re;
-			}
-		}
-		return ResultMessage.FAILED;
-	}
-	
 	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{
 		promotionCustomerPOs = promotionDataService.showPC();
 		for(PromotionCustomerPO po:promotionCustomerPOs){

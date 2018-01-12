@@ -38,14 +38,6 @@ public interface PromotionCustomerBLService {
 	public PromotionCustomerVO findPromotionByID(String promotionID);
 	
 	/**
-	 * 删除会员促销策略
-	 * 
-	 * @param promotionID
-	 * @return ResultMessage
-	 */
-	public ResultMessage deletePromotion(String promotionID);
-	
-	/**
 	 * 修改已有会员促销策略
 	 * 
 	 * @param PromotionCustomerVO

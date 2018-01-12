@@ -66,12 +66,6 @@ public class PromotionBargain_Stub implements PromotionBargainBLService{
 	}
 
 	@Override
-	public ResultMessage deletePromotion(String promotionID) {
-		// TODO Auto-generated method stub
-		return ResultMessage.SUCCESS;
-	}
-
-	@Override
 	public ResultMessage updatePromotion(PromotionBargainVO vo) {
 		// TODO Auto-generated method stub
 		return ResultMessage.SUCCESS;
