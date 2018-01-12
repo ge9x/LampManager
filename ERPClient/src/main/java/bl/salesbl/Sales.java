@@ -76,7 +76,11 @@ public class Sales {
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodItemvo);
 			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setAllowance(vo.allowance);
+		double promotionAllowance=0;
+		if(findPromotionCustomerByName(vo.promotionName)!=null){
+			promotionAllowance=findPromotionCustomerByName(vo.promotionName).allowance;
+		}
+		po.setAllowance(vo.allowance+promotionAllowance);
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
 		po.setPromotionName(vo.promotionName);
@@ -304,8 +308,14 @@ public class Sales {
 		if(findPromotionCustomerByName(vo.promotionName)!=null){
 			promotionAllowance=findPromotionCustomerByName(vo.promotionName).allowance;
 		}
+		double resultAllowance=0;
+		if(vo.allowance<0){
+			resultAllowance=vo.allowance-promotionAllowance;
+		}else {
+			resultAllowance=vo.allowance+promotionAllowance;	
+		}
 		String str[]=vo.ID.split("-");
-		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance+promotionAllowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
+		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, resultAllowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
 	}
 	
 	public static SalesVO poTovo(SalesPO po){
@@ -333,10 +343,6 @@ public class Sales {
 		vo.goodsItemList=goodsitemList;
 		
 		vo.allowance=-vo.allowance;
-		double promotionAllowance=0;
-		if(findPromotionCustomerByName(vo.promotionName)!=null){
-			promotionAllowance=findPromotionCustomerByName(vo.promotionName).allowance;
-		}
 		vo.voucher=-vo.voucher;
 		
 		if(vo.type==BillType.SALES){

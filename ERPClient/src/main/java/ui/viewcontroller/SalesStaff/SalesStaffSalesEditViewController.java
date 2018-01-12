@@ -652,13 +652,7 @@ public class SalesStaffSalesEditViewController {
         inventory.setDisable(true);
         customer.getSelectionModel().select(salesBill.customer);
         customer.setDisable(true);
-        if(!salesBill.promotionName.equals("")){
-        	promotion.getSelectionModel().select(salesBill.promotionName);
-        }
-        else{
-        	promotion.getSelectionModel().clearSelection();
-        }
-        promotion.setDisable(true);
+
         Username.setText(salesBill.user);
 
         cancelButton.setText("返 回");
@@ -700,6 +694,14 @@ public class SalesStaffSalesEditViewController {
             total.set(total.get() + goodsItemVO.sum);
         }
         
+        if(!salesBill.promotionName.equals("")){
+        	promotion.getSelectionModel().select(salesBill.promotionName);
+        }
+        else{
+        	promotion.getSelectionModel().clearSelection();
+        }
+        promotion.setDisable(true);
+        
         bargainData.clear();
         giftData.clear();
         if(!salesBill.promotionName.equals("")){
@@ -727,7 +729,7 @@ public class SalesStaffSalesEditViewController {
         	}
         }
         
-        afterSum.set(total.get()-Double.parseDouble(voucher.getText())-Double.parseDouble(allowance.getText()));
+        afterSum.set(total.get()-Double.parseDouble(voucher.getText())-Double.parseDouble(allowance.getText())-promotionAllowance.get());
     }
     
     public void setForEditView(){

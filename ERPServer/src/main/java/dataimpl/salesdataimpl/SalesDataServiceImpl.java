@@ -219,7 +219,7 @@ public class SalesDataServiceImpl implements SalesDataService{
 	@Override
 	public String getNewReturnID() throws RemoteException{
 		int turn=1;
-		ArrayList<PurchasePO> repoList=showPurchase();
+		ArrayList<PurchasePO> repoList=showReturn();
 		for(PurchasePO po:repoList){
 			if(po.getDate().equals(LocalDate.now().toString())){
 				turn++;
