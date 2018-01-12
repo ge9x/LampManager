@@ -5,6 +5,7 @@ import bl.inventorybl.InventoryBLFactory;
 import bl.logbl.LogBLFactory;
 import bl.messagebl.MessageBLFactory;
 import blservice.customerblservice.CustomerInfo;
+import blservice.goodsblservice.GoodsInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.logblservice.LogInfo;
 import blservice.messageblservice.MessageInfo;
@@ -36,6 +37,7 @@ public class Sales {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	LogInfo logInfo;
+	GoodsInfo goodsInfo;
 	MessageInfo messageInfo;
 	
 	public Sales(){
@@ -132,6 +134,10 @@ public class Sales {
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+			List<GoodsItemPO> goodsItemPOs=salesPO.getGoodsItemList();
+			for(GoodsItemPO goodsItemPO:goodsItemPOs){
+				goodsInfo.updateRecentRetailPrice(goodsItemPO.getGoodsID(), goodsItemPO.getPrice());
+			}
 		}else{
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
