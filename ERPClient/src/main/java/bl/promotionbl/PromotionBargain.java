@@ -62,21 +62,6 @@ public class PromotionBargain extends Promotion{
 		return promotionBargainVO;
 	}
 	
-	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
-		promotionBargainPOs.clear();
-		promotionBargainPOs = promotionDataService.showPB();
-		for(PromotionBargainPO po:promotionBargainPOs){
-			if(po.getPromotionID().equals(promotionID)){
-				ResultMessage re = promotionDataService.deletePB(po);
-				if(re == ResultMessage.SUCCESS){
-					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
-				}
-				return re;
-			}
-		}
-		return ResultMessage.FAILED;
-	}
-	
 	public ResultMessage updatePromotion(PromotionBargainVO promotionBargainVO) throws RemoteException{
 		promotionBargainPOs = promotionDataService.showPB();
 		for(PromotionBargainPO po:promotionBargainPOs){

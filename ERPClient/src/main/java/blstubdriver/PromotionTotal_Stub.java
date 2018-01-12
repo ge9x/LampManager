@@ -40,12 +40,6 @@ public class PromotionTotal_Stub implements PromotionTotalBLService{
 	}
 
 	@Override
-	public ResultMessage deletePromotion(String promotionID) {
-		// TODO Auto-generated method stub
-		return ResultMessage.SUCCESS;
-	}
-
-	@Override
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) {
 		// TODO Auto-generated method stub
 		return ResultMessage.SUCCESS;

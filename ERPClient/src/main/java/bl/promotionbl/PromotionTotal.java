@@ -71,21 +71,6 @@ public class PromotionTotal extends Promotion{
 		return vo;
 	}
 	
-	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
-		promotionTotalPOs.clear();
-		promotionTotalPOs = promotionDataService.showPT();
-		for(PromotionTotalPO po:promotionTotalPOs){
-			if(po.getPromotionID().equals(promotionID)){
-				ResultMessage re = promotionDataService.deletePT(po);
-				if(re == ResultMessage.SUCCESS){
-					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
-				}
-				return re;
-			}
-		}
-		return ResultMessage.FAILED;
-	}
-	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{
 		promotionTotalPOs = promotionDataService.showPT();
 		for(PromotionTotalPO po:promotionTotalPOs){
