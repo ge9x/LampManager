@@ -188,4 +188,26 @@ public class Goods {
 	protected GoodsPO getGoodsByID(String ID) throws NumberFormatException, RemoteException {
 		return goodsDataService.find(ID);
 	}
+
+	public ResultMessage updateRecentBuyingPrice(String goodsID, int recentBuyingPrice) throws NumberFormatException, RemoteException {
+		GoodsPO found = goodsDataService.find(goodsID);
+		if(found == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			found.setRecentBuyingPrice(recentBuyingPrice);
+			return goodsDataService.update(found);
+		}
+	}
+
+	public ResultMessage updateRecentRetailPrice(String goodsID, int recentRetailPrice) throws NumberFormatException, RemoteException {
+		GoodsPO found = goodsDataService.find(goodsID);
+		if(found == null){
+			return ResultMessage.NOT_EXIST;
+		}
+		else{
+			found.setRecentBuyingPrice(recentRetailPrice);
+			return goodsDataService.update(found);
+		}
+	}
 }
