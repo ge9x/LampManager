@@ -660,7 +660,6 @@ public class SalesStaffSalesEditViewController {
         }
         promotion.setDisable(true);
         Username.setText(salesBill.user);
-        
 
         cancelButton.setText("返 回");
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {

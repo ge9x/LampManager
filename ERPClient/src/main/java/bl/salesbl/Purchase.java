@@ -334,6 +334,7 @@ public class Purchase {
 		}
 
 		vo.state=BillState.PASS;
+		
 		ResultMessage res=ResultMessage.NULL;
 		res=addPurchase(vo);
 		if (res == ResultMessage.SUCCESS) {
