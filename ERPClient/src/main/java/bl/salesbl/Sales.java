@@ -1,6 +1,7 @@
 package bl.salesbl;
 
 import bl.customerbl.CustomerBLFactory;
+import bl.goodsbl.GoodsBLFactory;
 import bl.inventorybl.InventoryBLFactory;
 import bl.logbl.LogBLFactory;
 import bl.messagebl.MessageBLFactory;
@@ -47,6 +48,7 @@ public class Sales {
 		inventoryInfo=InventoryBLFactory.getInfo();
 		customerInfo=CustomerBLFactory.getInfo();
 		logInfo=LogBLFactory.getInfo();
+		goodsInfo=GoodsBLFactory.getInfo();
 		messageInfo=MessageBLFactory.getInfo();
 	}
 	
@@ -142,7 +144,7 @@ public class Sales {
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
 		}
-		logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
+		//logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
 		if(vo.state!=BillState.SUBMITTED){
 			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);

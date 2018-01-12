@@ -11,6 +11,7 @@ import java.util.List;
 
 import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.goodsbl.GoodsBLFactory;
 import bl.inventorybl.InventoryBLFactory;
 import bl.inventorybl.InventoryController;
 import bl.logbl.LogBLFactory;
@@ -64,6 +65,7 @@ public class Purchase {
 		customerInfo=CustomerBLFactory.getInfo();
 		userInfo=UserBLFactory.getInfo();
 		logInfo=LogBLFactory.getInfo();
+		goodsInfo=GoodsBLFactory.getInfo();
 		messageInfo=MessageBLFactory.getInfo();
 		purchaseLineItem=new PurchaseLineItem();
 		purchaseList=new PurchaseList();
@@ -275,7 +277,7 @@ public class Purchase {
 		     if(vo.type==BillType.PURCHASE){
 			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
-			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
+			       //logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
 			       List<GoodsItemPO> goodsItems=purchasePO.getGoodsItemList();
 			       for(GoodsItemPO goodsItemPO:goodsItems){
 			    	   goodsInfo.updateRecentBuyingPrice(goodsItemPO.getGoodsID(), goodsItemPO.getPrice());
@@ -283,7 +285,7 @@ public class Purchase {
 		     }else{
 			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
-			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
+			      // logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
 		     }
 		 }
 	    if(vo.state!=BillState.SUBMITTED){
