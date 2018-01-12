@@ -189,7 +189,7 @@ public class Goods {
 		return goodsDataService.find(ID);
 	}
 
-	public ResultMessage updateRecentBuyingPrice(String goodsID, int recentBuyingPrice) throws NumberFormatException, RemoteException {
+	public ResultMessage updateRecentBuyingPrice(String goodsID, double recentBuyingPrice) throws NumberFormatException, RemoteException {
 		GoodsPO found = goodsDataService.find(goodsID);
 		if(found == null){
 			return ResultMessage.NOT_EXIST;
@@ -200,7 +200,7 @@ public class Goods {
 		}
 	}
 
-	public ResultMessage updateRecentRetailPrice(String goodsID, int recentRetailPrice) throws NumberFormatException, RemoteException {
+	public ResultMessage updateRecentRetailPrice(String goodsID, double recentRetailPrice) throws NumberFormatException, RemoteException {
 		GoodsPO found = goodsDataService.find(goodsID);
 		if(found == null){
 			return ResultMessage.NOT_EXIST;

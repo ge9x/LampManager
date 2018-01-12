@@ -49,7 +49,7 @@ public interface GoodsInfo {
 	 * 			FAILED：更新失败（网络错误）<br>
 	 * 			NOT_EXIST：商品不存在
 	 */
-	public ResultMessage updateRecentBuyingPrice(String goodsID, int recentBuyingPrice);
+	public ResultMessage updateRecentBuyingPrice(String goodsID, double recentBuyingPrice);
 	/**
 	 * 根据商品ID更新商品最近零售价
 	 * @param goodsID 商品ID
@@ -58,5 +58,5 @@ public interface GoodsInfo {
 	 * 			FAILED：更新失败（网络错误）<br>
 	 * 			NOT_EXIST：商品不存在
 	 */
-	public ResultMessage updateRecentRetailPrice(String goodsID, int recentRetailPrice);
+	public ResultMessage updateRecentRetailPrice(String goodsID, double recentRetailPrice);
 }

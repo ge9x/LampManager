@@ -126,7 +126,7 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	@Override
-	public ResultMessage updateRecentBuyingPrice(String goodsID, int recentBuyingPrice) {
+	public ResultMessage updateRecentBuyingPrice(String goodsID, double recentBuyingPrice) {
 		try {
 			return goods.updateRecentBuyingPrice(goodsID, recentBuyingPrice);
 		}
@@ -137,7 +137,7 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 	}
 
 	@Override
-	public ResultMessage updateRecentRetailPrice(String goodsID, int recentRetailPrice) {
+	public ResultMessage updateRecentRetailPrice(String goodsID, double recentRetailPrice) {
 		try {
 			return goods.updateRecentRetailPrice(goodsID, recentRetailPrice);
 		}
