@@ -2,6 +2,7 @@ package ui.viewcontroller.GeneralManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -11,9 +12,12 @@ import blservice.examinationblservice.ExaminationBLService;
 import blstubdriver.ExaminationBLService_Stub;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import ui.component.DialogFactory;
 import vo.BillVO;
 
 public class GeneralManagerExaminationViewController {
@@ -72,23 +76,39 @@ public class GeneralManagerExaminationViewController {
     }
     
     public void clickPassButton(){
-    	for(int i=0;i<loaders.size();i++){
-    		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
-    		if(generalManagerExaminationCellController.checkBox.isSelected()){
-    			examinationBLService.approveReceipt(bills.get(i));
-    		}
-    	}
-    	generalManagerViewController.showExaminationView();
+    	Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("确定通过选中单据吗？");
+        Optional result = dialog.showAndWait();
+
+        if (result.isPresent()){
+            if (result.get() == ButtonType.OK) {
+            	for(int i=0;i<loaders.size();i++){
+            		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
+            		if(generalManagerExaminationCellController.checkBox.isSelected()){
+            			examinationBLService.approveReceipt(bills.get(i));
+            		}
+            	}
+            	generalManagerViewController.showExaminationView();
+            }
+        }
     }
     
     public void clickNoPassButton(){
-    	for(int i=0;i<loaders.size();i++){
-    		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
-    		if(generalManagerExaminationCellController.checkBox.isSelected()){
-    			examinationBLService.refuseReceipt(bills.get(i));
-    		}
-    	}
-    	generalManagerViewController.showExaminationView();
+    	Dialog dialog = DialogFactory.getConfirmationAlert();
+        dialog.setHeaderText("确定不通过选中单据吗？");
+        Optional result = dialog.showAndWait();
+
+        if (result.isPresent()){
+            if (result.get() == ButtonType.OK) {
+            	for(int i=0;i<loaders.size();i++){
+            		GeneralManagerExaminationCellController generalManagerExaminationCellController = loaders.get(i).getController();
+            		if(generalManagerExaminationCellController.checkBox.isSelected()){
+            			examinationBLService.refuseReceipt(bills.get(i));
+            		}
+            	}
+            	generalManagerViewController.showExaminationView();
+            }
+        }
     }
     
     public void showBillDetail(Pane pane){

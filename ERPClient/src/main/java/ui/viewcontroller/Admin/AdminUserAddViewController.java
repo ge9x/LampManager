@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import ui.component.DialogFactory;
+import util.ResultMessage;
 import util.UserLimits;
 import util.UserPosition;
 import vo.UserVO;
@@ -108,8 +109,15 @@ public class AdminUserAddViewController {
 			
 			user = new UserVO(userID.getText(), userPassword.getText(), userName.getText(), position, limit);
 			
-			userBLService.addUser(user);
-			adminUserViewController.clickReturnButton();
+			ResultMessage re = userBLService.addUser(user);
+			if(re==ResultMessage.SUCCESS){
+				adminUserViewController.clickReturnButton();
+			}
+			else{
+				Dialog dialog = DialogFactory.getInformationAlert();
+		        dialog.setHeaderText("该用户ID已存在");
+		        Optional result = dialog.showAndWait();
+			}
 		}
 		else{
 			Dialog dialog = DialogFactory.getInformationAlert();

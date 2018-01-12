@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import com.jfoenix.validation.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="362.0" style="-fx-background-color: #f6f6f7;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.common.ServerUIController">
+   <children>
+      <AnchorPane prefHeight="35.0" prefWidth="362.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ImageView fitHeight="35.0" fitWidth="155.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logo2.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="close" alignment="CENTER" layoutX="328.0" layoutY="5.0" onMouseClicked="#close" prefHeight="25.0" prefWidth="28.0" styleClass="icon-label" stylesheets="@serverUI.css" text="X" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="42.0" prefHeight="47.0" prefWidth="342.0" style="-fx-background-color: #ffffff; -fx-border-radius: 10; -fx-background-radius: 10;">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1db1a4" height="30.0" layoutX="22.0" layoutY="9.0" stroke="#1db1a4" strokeType="INSIDE" width="6.0" />
+            <Label layoutX="45.0" layoutY="8.0" prefHeight="30.0" prefWidth="161.0" text="服务器端">
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="11.0" layoutY="98.0" prefHeight="141.0" prefWidth="343.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-radius: 10;">
+         <children>
+            <Label layoutX="29.0" layoutY="14.0" prefHeight="35.0" prefWidth="80.0" text="运行时间：">
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="49.0" prefHeight="35.0" prefWidth="44.0" text="端口：">
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="14.0" />
+               </font>
+            </Label>
+            <Text fx:id="startTime" fill="RED" layoutX="124.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="132.12109375">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="portText" focusColor="#1db1a4" layoutX="85.0" layoutY="55.0" prefHeight="23.0" prefWidth="155.0" />
+            <JFXToggleButton fx:id="startButton" focusTraversable="false" layoutX="170.0" layoutY="84.0" prefHeight="12.0" prefWidth="173.0" size="11.0" text="开启服务器">
+               <font>
+                  <Font name="Microsoft YaHei" size="14.0" />
+               </font>
+            </JFXToggleButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
