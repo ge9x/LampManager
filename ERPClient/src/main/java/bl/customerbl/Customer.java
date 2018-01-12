@@ -15,6 +15,8 @@ import vo.UserVO;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
+
 /**
  * Created by zlk on 2017/11/5
  */
@@ -84,8 +86,11 @@ public class Customer {
 	 */
 	public ResultMessage deleteCustomer(String customerID) throws RemoteException{
 		CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(customerID));
+		if(po.getReceive()==0&&po.getPay()==0){
 		return customerDataService.delete(po);
-		
+		}else{
+			return ResultMessage.FAILED;
+		}
 	}
 	/**
 	 * 通过关键字查找客户
