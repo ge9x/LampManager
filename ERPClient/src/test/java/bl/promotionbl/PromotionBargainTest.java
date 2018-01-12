@@ -78,13 +78,4 @@ public class PromotionBargainTest {
 		assertEquals(ResultMessage.SUCCESS, re);
 	}
 
-	@Test
-	public void g_testDeletePromotion() throws RemoteException {
-		ResultMessage resultMessage = promotionBargain.deletePromotion("PB-1");
-		assertEquals(ResultMessage.SUCCESS, resultMessage);
-		
-		resultMessage = promotionBargain.deletePromotion("PB-100");
-		assertEquals(ResultMessage.FAILED, resultMessage);
-	}
-
 }
