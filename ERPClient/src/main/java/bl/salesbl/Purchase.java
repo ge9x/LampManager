@@ -18,6 +18,7 @@ import bl.messagebl.MessageBLFactory;
 import bl.userbl.UserBLFactory;
 import bl.userbl.UserController;
 import blservice.customerblservice.CustomerInfo;
+import blservice.goodsblservice.GoodsInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.logblservice.LogInfo;
 import blservice.messageblservice.MessageInfo;
@@ -52,6 +53,7 @@ public class Purchase {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	UserInfo userInfo;
+	GoodsInfo goodsInfo;
 	LogInfo logInfo;
 	MessageInfo messageInfo;
 	
@@ -274,6 +276,10 @@ public class Purchase {
 			       inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.sum);
 			       logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, purchasePO.toString());
+			       List<GoodsItemPO> goodsItems=purchasePO.getGoodsItemList();
+			       for(GoodsItemPO goodsItemPO:goodsItems){
+			    	   goodsInfo.updateRecentBuyingPrice(goodsItemPO.getGoodsID(), goodsItemPO.getPrice());
+			       }
 		     }else{
 			       inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			       customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.sum);
