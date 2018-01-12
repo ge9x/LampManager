@@ -21,6 +21,7 @@ import util.UserPosition;
 import vo.UserVO;
 
 import java.io.*;
+import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -64,8 +65,8 @@ public class LoginViewController {
             return t;
         });
 
-        try {
-            file = new File(getClass().getResource("/login-info").getPath());
+     try {
+            file = new File("login-info");
             if (!file.exists())
                 file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));

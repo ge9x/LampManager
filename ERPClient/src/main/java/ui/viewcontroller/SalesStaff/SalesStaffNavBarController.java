@@ -47,7 +47,7 @@ public class SalesStaffNavBarController {
         ReturnOrderIcon.setText("\ue67f");
         SalesIcon.setText("\ue693");
         SalesReturnIcon.setText("\ue6e5");
-        Image img = new Image("./images/avatar/salesStaff.jpg");
+        Image img = new Image("images/avatar/salesStaff.jpg");
         avatar.setFill(new ImagePattern(img));
         String userID = userInfo.getCurrentUserID();
         userName.setText(userInfo.getCurrentUserNameByID(userID));
