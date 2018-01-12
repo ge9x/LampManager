@@ -37,14 +37,6 @@ public interface PromotionTotalBLService {
 	public PromotionTotalVO findPromotionByID(String promotionID);
 	
 	/**
-	 * 删除总价促销策略
-	 * 
-	 * @param promotionID
-	 * @return ResultMessage
-	 */
-	public ResultMessage deletePromotion(String promotionID);
-	
-	/**
 	 * 修改已有的总价促销策略
 	 * 
 	 * @param promotionTotalVO
