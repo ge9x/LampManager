@@ -3,6 +3,7 @@ package blservice.goodsblservice;
 import java.util.ArrayList;
 
 import po.GoodsPO;
+import util.ResultMessage;
 import vo.GoodsIdentityVO;
 import vo.GoodsVO;
 
@@ -40,4 +41,22 @@ public interface GoodsInfo {
 	 * @return 商品
 	 */
 	public GoodsPO getGoodsByID(String ID);
+	/**
+	 * 根据商品ID更新商品最近进价
+	 * @param goodsID 商品ID
+	 * @param recentBuyingPrice 新的最近进价
+	 * @return 	SUCCESS：更新成功<br>
+	 * 			FAILED：更新失败（网络错误）<br>
+	 * 			NOT_EXIST：商品不存在
+	 */
+	public ResultMessage updateRecentBuyingPrice(String goodsID, int recentBuyingPrice);
+	/**
+	 * 根据商品ID更新商品最近零售价
+	 * @param goodsID 商品ID
+	 * @param recentRetailPrice 新的最近零售价
+	 * @return 	SUCCESS：更新成功<br>
+	 * 			FAILED：更新失败（网络错误）<br>
+	 * 			NOT_EXIST：商品不存在
+	 */
+	public ResultMessage updateRecentRetailPrice(String goodsID, int recentRetailPrice);
 }
