@@ -65,18 +65,6 @@ public class PromotionCustomerController implements PromotionCustomerBLService, 
 	}
 
 	@Override
-	public ResultMessage deletePromotion(String promotionID) {
-		// TODO Auto-generated method stub
-		try {
-			return promotionCustomer.deletePromotion(promotionID);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return ResultMessage.ERROR;
-		}
-	}
-
-	@Override
 	public ResultMessage updatePromotion(PromotionCustomerVO vo) {
 		// TODO Auto-generated method stub
 		try {

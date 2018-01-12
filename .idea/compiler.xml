@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <excludeFromCompile>
-      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventory.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventoryLineItem.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/inventorybl/MockInventoryList.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/test/java/bl/initializationbl/MockInitialization.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/blstubdriver/InitializationBLService_Stub.java" />
-      <file url="file://$PROJECT_DIR$/ERPClient/src/main/java/blstubdriver/SalesBLService_Stub.java" />
-    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -22,7 +14,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="ERPClient" target="1.8" />
       <module name="ERPServer" target="1.8" />
-      <module name="LampManager" target="1.8" />
+      <module name="LampManager" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

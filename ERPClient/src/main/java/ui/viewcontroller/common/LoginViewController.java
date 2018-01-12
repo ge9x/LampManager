@@ -1,40 +1,30 @@
 package ui.viewcontroller.common;
 
-import java.io.*;
-import java.util.Optional;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import javax.persistence.criteria.CriteriaBuilder.Case;
-
 import bl.userbl.UserBLFactory;
-import bl.userbl.UserController;
 import blservice.userblservice.UserBLService;
-import blstubdriver.UserBLService_Stub;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXSpinner;
-import com.sun.javaws.progress.Progress;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import ui.component.DialogFactory;
 import util.ResultMessage;
 import util.UserPosition;
 import vo.UserVO;
+
+import java.io.*;
+import java.net.URL;
+import java.util.Optional;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Kry·L on 2017/11/10.
@@ -75,8 +65,8 @@ public class LoginViewController {
             return t;
         });
 
-        try {
-            file = new File(getClass().getResource("/login-info").getPath());
+     try {
+            file = new File("login-info");
             if (!file.exists())
                 file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));

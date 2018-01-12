@@ -25,4 +25,9 @@ public class AccountBillItemVO {
         this.remark = remark;
     }
 
+    @Override
+    public String toString(){
+        return account.accountName + "\t" + transferMoney + "\t" + remark;
+    }
+
 }

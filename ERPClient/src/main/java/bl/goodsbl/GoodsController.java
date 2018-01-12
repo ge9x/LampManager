@@ -125,4 +125,26 @@ public class GoodsController implements GoodsBLService, GoodsInfo{
 		return null;
 	}
 
+	@Override
+	public ResultMessage updateRecentBuyingPrice(String goodsID, double recentBuyingPrice) {
+		try {
+			return goods.updateRecentBuyingPrice(goodsID, recentBuyingPrice);
+		}
+		catch (NumberFormatException | RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
+
+	@Override
+	public ResultMessage updateRecentRetailPrice(String goodsID, double recentRetailPrice) {
+		try {
+			return goods.updateRecentRetailPrice(goodsID, recentRetailPrice);
+		}
+		catch (NumberFormatException | RemoteException e) {
+			e.printStackTrace();
+		}
+		return ResultMessage.FAILED;
+	}
+
 }

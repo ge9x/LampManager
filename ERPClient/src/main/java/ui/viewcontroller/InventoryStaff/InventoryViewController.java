@@ -1,8 +1,6 @@
 package ui.viewcontroller.InventoryStaff;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import ui.viewcontroller.common.MainUIController;
 
@@ -38,7 +36,7 @@ public class InventoryViewController {
 
         inventoryNavbarController.clickCheckButton();
     }
-    public void showViewView(){
+    public void showLookView(){
         mainUIController.setCenter(null);
 
         try {
@@ -90,7 +88,7 @@ public class InventoryViewController {
         mainUIController.setCenter(null);
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/inventory/Classification.fxml"));
+            loader.setLocation(getClass().getResource("/view/inventory/classification.fxml"));
             Pane page = loader.load();
             inventoryClassificationController = loader.getController();
             inventoryClassificationController.setInventoryViewController(this);
@@ -104,7 +102,7 @@ public class InventoryViewController {
         mainUIController.setCenter(null);
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/inventory/Goods.fxml"));
+            loader.setLocation(getClass().getResource("/view/inventory/goods.fxml"));
             Pane page = loader.load();
             inventoryGoodsController = loader.getController();
             inventoryGoodsController.setInventoryViewController(this);

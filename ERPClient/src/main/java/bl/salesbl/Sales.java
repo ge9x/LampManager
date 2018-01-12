@@ -1,5 +1,21 @@
 package bl.salesbl;
 
+import bl.customerbl.CustomerBLFactory;
+import bl.inventorybl.InventoryBLFactory;
+import bl.logbl.LogBLFactory;
+import bl.messagebl.MessageBLFactory;
+import blservice.customerblservice.CustomerInfo;
+import blservice.goodsblservice.GoodsInfo;
+import blservice.inventoryblservice.InventoryInfo;
+import blservice.logblservice.LogInfo;
+import blservice.messageblservice.MessageInfo;
+import dataservice.salesdataservice.SalesDataService;
+import po.GoodsItemPO;
+import po.SalesPO;
+import rmi.SalesRemoteHelper;
+import util.*;
+import vo.*;
+
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,40 +24,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
-
-import bl.customerbl.CustomerBLFactory;
-import bl.customerbl.CustomerController;
-import bl.inventorybl.InventoryBLFactory;
-import bl.inventorybl.InventoryController;
-import bl.logbl.LogBLFactory;
-import bl.messagebl.MessageBLFactory;
-import bl.userbl.UserBLFactory;
-import blservice.customerblservice.CustomerInfo;
-import blservice.inventoryblservice.InventoryInfo;
-import blservice.logblservice.LogInfo;
-import blservice.messageblservice.MessageInfo;
-import dataservice.salesdataservice.SalesDataService;
-import po.GoodsItemPO;
-import po.PurchasePO;
-import po.SalesPO;
-import rmi.SalesRemoteHelper;
-import util.BillState;
-import util.BillType;
-import util.Level;
-import util.OperationObjectType;
-import util.OperationType;
-import util.ResultMessage;
-import util.UserLimits;
-import util.UserPosition;
-import vo.CustomerVO;
-import vo.GoodsItemVO;
-import vo.PromotionBargainVO;
-import vo.PromotionCustomerVO;
-import vo.PromotionTotalVO;
-import vo.PurchaseVO;
-import vo.SalesVO;
 
 /**
  * Created by zlk on 2017/11/5
@@ -55,6 +37,7 @@ public class Sales {
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	LogInfo logInfo;
+	GoodsInfo goodsInfo;
 	MessageInfo messageInfo;
 	
 	public Sales(){
@@ -151,6 +134,10 @@ public class Sales {
 		if(vo.type==BillType.SALES){
 			inventoryInfo.reduceInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerReceive(Integer.parseInt(vo.customerID), vo.afterSum);
+			List<GoodsItemPO> goodsItemPOs=salesPO.getGoodsItemList();
+			for(GoodsItemPO goodsItemPO:goodsItemPOs){
+				goodsInfo.updateRecentRetailPrice(goodsItemPO.getGoodsID(), goodsItemPO.getPrice());
+			}
 		}else{
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);

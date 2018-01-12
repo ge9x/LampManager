@@ -53,7 +53,7 @@ public class GeneralManagerNavBarController {
         SalesDetailsIcon.setText("\ue62a");
         DocumentDetailsIcon.setText("\ue644");
         ProfitIcon.setText("\ue677");
-        Image img = new Image("./images/avatar/generalManager.jpg");
+        Image img = new Image("images/avatar/generalManager.jpg");
         avatar.setFill(new ImagePattern(img));
         String userID = userInfo.getCurrentUserID();
         userName.setText(userInfo.getCurrentUserNameByID(userID));

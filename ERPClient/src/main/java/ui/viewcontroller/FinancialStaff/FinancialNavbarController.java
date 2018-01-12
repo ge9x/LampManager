@@ -67,7 +67,7 @@ public class FinancialNavbarController {
         ProfitIcon.setText("\ue677");
         InitIcon.setText("\ue6eb");
 
-        Image img = new Image("./images/avatar/financial.jpg");
+        Image img = new Image("images/avatar/financial.jpg");
         avatar.setFill(new ImagePattern(img));
         String userID = userInfo.getCurrentUserID();
         userName.setText(userInfo.getCurrentUserNameByID(userID));

@@ -1,7 +1,9 @@
 package vo;
 
+import bl.financialbl.CashBillItem;
 import util.BillState;
 import util.BillType;
+import util.Money;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/10/22.
  */
 public class CashBillVO extends BillVO{
+    private static final String seperator = System.lineSeparator();
 
     /**
      * 操作员（当前登录用户）名称
@@ -46,5 +49,22 @@ public class CashBillVO extends BillVO{
             sum += itemVO.money;
         }
         return sum;
+    }
+
+    @Override
+    public String toString(){
+        return super.toString()+
+                "操作员: " + userName+ seperator +
+                "银行账户: " + accountID + seperator +
+                "总额: " + Money.getMoneyString(sum) + seperator +
+                itemsToString();
+    }
+
+    public String itemsToString(){
+        String str = "条目清单：" + seperator;
+        for (CashBillItemVO itemVO : cashBillItems){
+            str += (itemVO.toString() + seperator);
+        }
+        return str;
     }
 }

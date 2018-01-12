@@ -2,19 +2,14 @@ package bl.accountbl;
 
 import bl.logbl.LogBLFactory;
 import blservice.logblservice.LogInfo;
-import com.mysql.jdbc.log.LogFactory;
 import dataimpl.accountdataimpl.AccountDataServiceImpl;
 import dataservice.accountdataservice.AccountDataService;
-import datastubdriver.AccountDataService_Stub;
-import po.AccountBillPO;
 import po.AccountPO;
-import rmi.AccountRemoteHelper;
 import util.OperationObjectType;
 import util.OperationType;
 import util.ResultMessage;
 import vo.AccountVO;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -22,7 +17,6 @@ import java.util.ArrayList;
  * Created by Kry·L on 2017/11/5.
  */
 public class Account{
-    //TODO delete
 
     private AccountDataService accountDataService;
     private LogInfo logInfo;
@@ -105,13 +99,6 @@ public class Account{
         }
         return null;
     }
-    public AccountPO voTopo(AccountVO accountVO){
-        return new AccountPO(accountVO.accountName,accountVO.money);
-    }
-    public AccountVO poTOvo(AccountPO accountPO){
-        return new AccountVO(String.valueOf(accountPO.getID()),accountPO.getName(),accountPO.getMoney());
-    }
-
 
     public ResultMessage changeMoney(String id, double money) throws RemoteException {
         ArrayList<AccountPO> accountPOS = accountDataService.show();
@@ -127,5 +114,12 @@ public class Account{
             }
         }
         return ResultMessage.FAILED;
+    }
+    public AccountPO voTopo(AccountVO accountVO){
+        return new AccountPO(accountVO.accountName,accountVO.money);
+    }
+
+    public AccountVO poTOvo(AccountPO accountPO){
+        return new AccountVO(String.valueOf(accountPO.getID()),accountPO.getName(),accountPO.getMoney());
     }
 }

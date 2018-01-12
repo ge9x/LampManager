@@ -56,9 +56,7 @@ public class  InventoryCheckController {
 
         initTable();
         showInventoryCheck();
-        TotalNum.setText("库存数量合计："+totalNum+"件");
-        TotalValue.setText("库存总价值："+ Money.getMoneyString(totalValue));
-        AvgValue.setText("库存均价："+Money.getMoneyString(avgValue));
+
 
     }
     public void initTable(){
@@ -111,7 +109,11 @@ public class  InventoryCheckController {
                 avgValue += avg;
             }
             avgValue /= inventoryCheck.averagePrice.keySet().size();
+            TotalNum.setText("库存数量合计："+totalNum+"件");
+            TotalValue.setText("库存总价值："+ Money.getMoneyString(totalValue));
+            AvgValue.setText("库存均价："+Money.getMoneyString(avgValue));
         });
+        executor.execute(task);
     }
     public void setInventoryViewController(InventoryViewController inventoryViewController){
         this.inventoryViewController = inventoryViewController;

@@ -114,6 +114,11 @@ public class SalesStaffCustomerCellController {
 
         if (result.isPresent()){
             if (result.get() == ButtonType.OK) {
+            	if(customer.pay!=0||customer.receive!=0){
+            		Dialog subDialog = DialogFactory.getConfirmationAlert();
+                    subDialog.setHeaderText("该客户应收应付仍未清零，不可删除");
+                    Optional subResult = subDialog.showAndWait();
+            	}
             	salesStaffCustomerInfoViewController.clickDeleteButton(customer.customerID);
             }
         }

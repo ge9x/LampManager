@@ -1,13 +1,10 @@
 package bl.initializationbl;
 
 import bl.goodsbl.GoodsBLFactory;
-import bl.goodsbl.GoodsController;
 import blservice.goodsblservice.GoodsInfo;
-import po.GoodsPO;
 import po.InitGoodsPO;
 import vo.GoodsVO;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 

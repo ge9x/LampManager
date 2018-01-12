@@ -26,9 +26,7 @@ import vo.PromotionCustomerVO;
 public class PromotionCustomer extends Promotion{
 	
 	ArrayList<PromotionCustomerPO> promotionCustomerPOs = new ArrayList<>();
-	private UserInfo userInfo;
-	private LogInfo logInfo;
-	
+
 	public PromotionCustomer(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
 		userInfo = UserBLFactory.getInfo();
@@ -68,21 +66,6 @@ public class PromotionCustomer extends Promotion{
 	public PromotionCustomerVO findPromotionByID(String promotionID) throws RemoteException{
 		PromotionCustomerVO vo = poTOvo(promotionDataService.findPC(promotionID));
 		return vo;
-	}
-	
-	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
-		promotionCustomerPOs.clear();
-		promotionCustomerPOs = promotionDataService.showPC();
-		for(PromotionCustomerPO po:promotionCustomerPOs){
-			if(po.getPromotionID().equals(promotionID)){
-				ResultMessage re = promotionDataService.deletePC(po);
-				if(re == ResultMessage.SUCCESS){
-					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
-				}
-				return re;
-			}
-		}
-		return ResultMessage.FAILED;
 	}
 	
 	public ResultMessage updatePromotion(PromotionCustomerVO promotionCustomerVO) throws RemoteException{

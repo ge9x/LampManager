@@ -24,4 +24,8 @@ public class CashBillItemVO {
         this.money = money;
         this.remark = remark;
     }
+    @Override
+    public String toString(){
+        return itemName + "\t" + money + "\t" + remark;
+    }
 }

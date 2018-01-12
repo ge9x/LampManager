@@ -29,8 +29,6 @@ import vo.PromotionTotalVO;
 public class PromotionTotal extends Promotion{
 	
 	private ArrayList<PromotionTotalPO> promotionTotalPOs = new ArrayList<>();
-	private UserInfo userInfo;
-	private LogInfo logInfo;
 	
 	public PromotionTotal(){
 		promotionDataService = PromotionRemoteHelper.getInstance().getPromotionDataService();
@@ -71,21 +69,6 @@ public class PromotionTotal extends Promotion{
 	public PromotionTotalVO findPromotionByID(String promotionID) throws RemoteException{
 		PromotionTotalVO vo = poTOvo(promotionDataService.findPT(promotionID));
 		return vo;
-	}
-	
-	public ResultMessage deletePromotion(String promotionID) throws RemoteException{
-		promotionTotalPOs.clear();
-		promotionTotalPOs = promotionDataService.showPT();
-		for(PromotionTotalPO po:promotionTotalPOs){
-			if(po.getPromotionID().equals(promotionID)){
-				ResultMessage re = promotionDataService.deletePT(po);
-				if(re == ResultMessage.SUCCESS){
-					logInfo.record(OperationType.DELETE, OperationObjectType.PROMOTION, po.toString());
-				}
-				return re;
-			}
-		}
-		return ResultMessage.FAILED;
 	}
 	
 	public ResultMessage updatePromotion(PromotionTotalVO promotionTotalVO) throws RemoteException{

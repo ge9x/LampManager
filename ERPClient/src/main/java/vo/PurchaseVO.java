@@ -8,7 +8,9 @@ import util.BillType;
 import util.UserPosition;
 
 public class PurchaseVO extends BillVO{
-	/**供应商*/
+    private static final String seperator = System.lineSeparator();
+
+    /**供应商*/
 	public String supplier;
 	/**供应商ID*/
 	public String customerID;
@@ -46,4 +48,16 @@ public class PurchaseVO extends BillVO{
 		}
 		return sum;
 	}
+    @Override
+    public String toString(){
+        String str =  "客户：" + supplier + seperator +
+                "操作员: " + user + seperator +
+                "仓库: " + inventory + seperator +
+                "总额: " + sum + seperator +
+                "备注：" + remarks + seperator;
+        for (GoodsItemVO itemVO : goodsItemList){
+            str += (itemVO.toString() + seperator);
+        }
+        return str;
+    }
 }

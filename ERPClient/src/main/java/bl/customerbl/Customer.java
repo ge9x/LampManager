@@ -1,19 +1,8 @@
 package bl.customerbl;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Locale.Category;
-
-import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
-
-import com.jfoenix.controls.JFXPopup.PopupHPosition;
-
 import bl.userbl.UserBLFactory;
-import bl.userbl.UserController;
 import blservice.userblservice.UserInfo;
 import dataservice.customerdataservice.CustomerDataService;
-import dataservice.salesdataservice.SalesDataService;
-import javafx.geometry.VPos;
 import po.CustomerPO;
 import rmi.CustomerRemoteHelper;
 import util.CustomerCategory;
@@ -22,6 +11,11 @@ import util.ResultMessage;
 import util.UserLimits;
 import vo.CustomerVO;
 import vo.UserVO;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import org.hibernate.procedure.internal.Util.ResultClassesResolutionContext;
 
 /**
  * Created by zlk on 2017/11/5
@@ -92,8 +86,11 @@ public class Customer {
 	 */
 	public ResultMessage deleteCustomer(String customerID) throws RemoteException{
 		CustomerPO po=customerDataService.getCustomerData(Integer.parseInt(customerID));
+		if(po.getReceive()==0&&po.getPay()==0){
 		return customerDataService.delete(po);
-		
+		}else{
+			return ResultMessage.FAILED;
+		}
 	}
 	/**
 	 * 通过关键字查找客户
