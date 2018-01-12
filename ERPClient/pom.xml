@@ -26,7 +26,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.ERPServer.Server</mainClass>
+                                    <mainClass>org.ERPClient.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -35,16 +35,15 @@
             </plugin>
         </plugins>
     </build>
-  <parent>
+
+
+
+
     <groupId>edu.nju.erp</groupId>
-    <artifactId>ERPnju</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-  </parent>
-
-
-  <artifactId>ERPClient</artifactId>
-  <name>ERPClient</name>
-  <url>http://maven.apache.org</url>
+      <artifactId>ERPClient</artifactId>
+      <name>ERPClient</name>
+      <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
