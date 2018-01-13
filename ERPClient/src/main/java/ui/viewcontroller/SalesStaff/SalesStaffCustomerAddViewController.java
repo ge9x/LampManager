@@ -13,6 +13,8 @@ import bl.customerbl.CustomerController;
 import blservice.customerblservice.CustomerBLService;
 import blservice.salesblservice.SalesBLService;
 import blstubdriver.CustomerBLService_Stub;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -100,6 +102,52 @@ public class SalesStaffCustomerAddViewController {
 			salesmenName.add(vo.name);
 		}
 		customerSalesman.getItems().addAll(salesmenName);
+		
+		customerPhone.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<newValue.length();i++){
+					if(Character.isDigit(newValue.charAt(i))){
+						Dialog dialog = DialogFactory.getConfirmationAlert();
+				        dialog.setHeaderText("客户电话填写错误");
+				        Optional result = dialog.showAndWait();
+					}
+				}
+			}
+		});
+		
+		customerReceivableLimit.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<newValue.length();i++){
+					if(Character.isDigit(newValue.charAt(i))){
+						Dialog dialog = DialogFactory.getConfirmationAlert();
+				        dialog.setHeaderText("客户应收额度填写错误");
+				        Optional result = dialog.showAndWait();
+					}
+				}
+			}
+		});
+		
+		customerPostcode.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<newValue.length();i++){
+					if(Character.isDigit(newValue.charAt(i))){
+						Dialog dialog = DialogFactory.getConfirmationAlert();
+				        dialog.setHeaderText("客户邮编填写错误");
+				        Optional result = dialog.showAndWait();
+					}
+				}
+			}
+		});
+		
     }
 	
 	public void setSalesStaffCustomerInfoViewController(SalesStaffCustomerInfoViewController salesStaffCustomerInfoViewController){
@@ -182,4 +230,5 @@ public class SalesStaffCustomerAddViewController {
 			return false;
 		}
 	}
+	
 }
