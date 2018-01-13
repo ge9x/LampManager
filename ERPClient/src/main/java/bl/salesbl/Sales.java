@@ -1,14 +1,18 @@
 package bl.salesbl;
 
 import bl.customerbl.CustomerBLFactory;
+import bl.goodsbl.GoodsBLFactory;
 import bl.inventorybl.InventoryBLFactory;
 import bl.logbl.LogBLFactory;
 import bl.messagebl.MessageBLFactory;
+import bl.promotionbl.PromotionBLFactory;
 import blservice.customerblservice.CustomerInfo;
 import blservice.goodsblservice.GoodsInfo;
 import blservice.inventoryblservice.InventoryInfo;
 import blservice.logblservice.LogInfo;
 import blservice.messageblservice.MessageInfo;
+import blservice.promotionblservice.PromotionInfo;
+import blservice.promotionblservice.promotioncustomer.PromotionCustomerInfo;
 import dataservice.salesdataservice.SalesDataService;
 import po.GoodsItemPO;
 import po.SalesPO;
@@ -32,12 +36,13 @@ import java.util.List;
 public class Sales {
 	private static SalesDataService salesDataService;
 	
-	SalesLineItem salesLineItem;
+	static SalesLineItem salesLineItem;
 	GoodsItem goodsItem;
 	InventoryInfo inventoryInfo;
 	CustomerInfo customerInfo;
 	LogInfo logInfo;
 	GoodsInfo goodsInfo;
+	PromotionCustomerInfo promotionInfo;
 	MessageInfo messageInfo;
 	
 	public Sales(){
@@ -47,6 +52,8 @@ public class Sales {
 		inventoryInfo=InventoryBLFactory.getInfo();
 		customerInfo=CustomerBLFactory.getInfo();
 		logInfo=LogBLFactory.getInfo();
+		goodsInfo=GoodsBLFactory.getInfo();
+		promotionInfo=PromotionBLFactory.getCustomerInfo();
 		messageInfo=MessageBLFactory.getInfo();
 	}
 	
@@ -69,7 +76,11 @@ public class Sales {
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodItemvo);
 			po.getGoodsItemList().add(goodsItemPO);
 		}
-		po.setAllowance(vo.allowance);
+		double promotionAllowance=0;
+		if(findPromotionCustomerByName(vo.promotionName)!=null){
+			promotionAllowance=findPromotionCustomerByName(vo.promotionName).allowance;
+		}
+		po.setAllowance(vo.allowance+promotionAllowance);
 		po.setVoucher(vo.voucher);
 		po.setRemarks(vo.remarks);
 		po.setPromotionName(vo.promotionName);
@@ -142,7 +153,7 @@ public class Sales {
 			inventoryInfo.raiseInventory(vo.goodsItemList, vo.inventory);
 			customerInfo.raiseCustomerPay(Integer.parseInt(vo.customerID), vo.afterSum);
 		}
-		logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
+		//logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, salesDataService.findSlaesByID(vo.ID).toString());
 		}
 		if(vo.state!=BillState.SUBMITTED){
 			messageInfo.addMessage(vo.state, vo.ID, LocalDateTime.now().toString().replace('T', ' '), UserPosition.SALES_STAFF);
@@ -273,7 +284,7 @@ public class Sales {
 		return salesLineItem.getAllInventory();
 	}
 	
-	public PromotionCustomerVO findPromotionCustomerByName(String name) {
+	public static PromotionCustomerVO findPromotionCustomerByName(String name) {
 		return salesLineItem.findPromotionCustomerByName(name);
 	}
 	
@@ -293,8 +304,18 @@ public class Sales {
 			GoodsItemPO goodsItemPO=GoodsItem.voTopo(goodsItemvo);
 			goodsItempoList.add(goodsItemPO);
 		}
+		double promotionAllowance=0;
+		if(findPromotionCustomerByName(vo.promotionName)!=null){
+			promotionAllowance=findPromotionCustomerByName(vo.promotionName).allowance;
+		}
+		double resultAllowance=0;
+		if(vo.allowance<0){
+			resultAllowance=vo.allowance-promotionAllowance;
+		}else {
+			resultAllowance=vo.allowance+promotionAllowance;	
+		}
 		String str[]=vo.ID.split("-");
-		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, vo.allowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
+		return new SalesPO(vo.type, vo.state, vo.customer, Integer.parseInt(vo.customerID), vo.salesman, vo.user, vo.inventory, goodsItempoList, resultAllowance, vo.voucher, vo.remarks, vo.date, Integer.parseInt(str[2]), vo.promotionName);
 	}
 	
 	public static SalesVO poTovo(SalesPO po){
@@ -303,7 +324,11 @@ public class Sales {
 		for(GoodsItemPO goodsItempo:goodsItempoList){
 			goodsItemvoList.add(GoodsItem.poTovo(goodsItempo));
 		}
-		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance(), po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
+		double promotionAllowance=0;
+		if(findPromotionCustomerByName(po.getPromotionName())!=null){
+			promotionAllowance=findPromotionCustomerByName(po.getPromotionName()).allowance;
+		}
+		return new SalesVO(po.getType(), po.getState(), po.buildID(), po.getCustomer(), String.valueOf(po.getCustomerID()), po.getSalesman(), po.getUser(), po.getInventory(), goodsItemvoList, po.getAllowance()-promotionAllowance, po.getVoucher(), po.getRemarks(), po.getDate(), po.getPromotionName());
 	}
 	
 	public UserLimits getCurrentUserLimits() {
@@ -316,6 +341,10 @@ public class Sales {
 			goodsItemVO.number=-goodsItemVO.number;
 		}
 		vo.goodsItemList=goodsitemList;
+		
+		vo.allowance=-vo.allowance;
+		vo.voucher=-vo.voucher;
+		
 		if(vo.type==BillType.SALES){
 			vo.ID=salesDataService.getNewSalesID();
 		}else{

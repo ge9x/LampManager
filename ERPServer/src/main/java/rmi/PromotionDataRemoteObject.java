@@ -57,24 +57,6 @@ public class PromotionDataRemoteObject extends UnicastRemoteObject implements Pr
 	}
 
 	@Override
-	public ResultMessage deletePC(PromotionCustomerPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return promotionDataService.deletePC(po);
-	}
-
-	@Override
-	public ResultMessage deletePB(PromotionBargainPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return promotionDataService.deletePB(po);
-	}
-
-	@Override
-	public ResultMessage deletePT(PromotionTotalPO po) throws RemoteException {
-		// TODO Auto-generated method stub
-		return promotionDataService.deletePT(po);
-	}
-
-	@Override
 	public ResultMessage updatePC(PromotionCustomerPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		return promotionDataService.updatePC(po);

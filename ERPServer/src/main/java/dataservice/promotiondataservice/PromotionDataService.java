@@ -87,30 +87,6 @@ public interface PromotionDataService extends Remote{
 	 */
 	public ResultMessage addPT(PromotionTotalPO po) throws RemoteException;
 	/**
-	 * 删除会员促销策略
-	 * 
-	 * @param po
-	 * @return
-	 * @throws RemoteException
-	 */
-	public ResultMessage deletePC(PromotionCustomerPO po) throws RemoteException;
-	/**
-	 * 删除特价包
-	 * 
-	 * @param po
-	 * @return
-	 * @throws RemoteException
-	 */
-	public ResultMessage deletePB(PromotionBargainPO po) throws RemoteException;
-	/**
-	 * 删除总价促销策略
-	 * 
-	 * @param po
-	 * @return
-	 * @throws RemoteException
-	 */
-	public ResultMessage deletePT(PromotionTotalPO po) throws RemoteException;
-	/**
 	 * 修改会员促销策略
 	 * 
 	 * @param po

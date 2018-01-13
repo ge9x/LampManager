@@ -18,6 +18,7 @@ import vo.AccountBillVO;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -61,6 +62,7 @@ public class AccountBill {
         ResultMessage re = financeDataService.addBill(po);
         if (re == ResultMessage.SUCCESS){
             logInfo.record(OperationType.ADD,OperationObjectType.BILL,po.toString());
+            messageInfo.addMessage(vo.state,vo.ID, LocalDateTime.now().toString(),UserPosition.FINANCIAL_STAFF);
         }
         return re;
     }
@@ -159,6 +161,7 @@ public class AccountBill {
                 customerInfo.reduceCustomerReceive(Integer.parseInt(vo.customerID),vo.sum);
             }
             logInfo.record(OperationType.EXAMINE, OperationObjectType.BILL, voTopo(vo).toString());
+            messageInfo.addMessage(BillState.PASS, vo.ID, LocalDateTime.now().toString(), UserPosition.FINANCIAL_STAFF);
         }
         return re;
     }
