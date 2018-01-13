@@ -5,6 +5,7 @@ import ExcelUtil.impl.ExportToExcel;
 import ExcelUtil.model.Model;
 import bl.customerbl.CustomerBLFactory;
 import bl.customerbl.CustomerController;
+import bl.financialbl.CashBill;
 import bl.financialbl.FinanceBLFactory;
 import bl.financialbl.FinanceController;
 import bl.inventorybl.InventoryBLFactory;
@@ -108,17 +109,72 @@ public class DocumentDetails{
                     return exportInventoryBill(filePath,(InventoryBillVO) billVO);
                 case PURCHASE:
                 case RETURN:
+                    return exportPurchaseBill(filePath,(PurchaseVO)billVO);
                 case SALES:
                 case SALESRETURN:
-
+                    return exportSalesBill(filePath,(SalesVO) billVO);
                 case RECEIPT:
                 case PAYMENT:
+                    return exportAccountBill(filePath,(AccountBillVO)billVO);
                 case CASH:
-//                  return exportCash
+                  return exportCashBill(filePath,(CashBillVO)billVO);
             }
         }
         return ResultMessage.FAILED;
     }
+
+    private ResultMessage exportAccountBill(String filePath, AccountBillVO billVO) {
+        File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        write(billVO.toString(), file);
+        return ResultMessage.SUCCESS;
+    }
+
+    private ResultMessage exportSalesBill(String filePath, SalesVO billVO) {
+        File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        write(billVO.toString(), file);
+        return ResultMessage.SUCCESS;
+    }
+
+    private ResultMessage exportCashBill(String filePath, CashBillVO billVO) {
+        File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        write(billVO.toString(), file);
+        return ResultMessage.SUCCESS;
+    }
+
+    private ResultMessage exportPurchaseBill(String filePath, PurchaseVO billVO) {
+        File file = new File(filePath + "/" + billVO.type.getValue() + billVO.ID + ".txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        write(billVO.toString(), file);
+        return ResultMessage.SUCCESS;
+    }
+
 
     private void searchByType(BillType type){
         if (type != null){
