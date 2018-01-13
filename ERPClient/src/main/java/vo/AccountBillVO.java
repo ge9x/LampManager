@@ -58,7 +58,7 @@ public class AccountBillVO extends BillVO{
     @Override
     public String toString(){
         return  super.toString()+
-                "客户ID: " + String.format("%0d",Integer.parseInt(customerID)) + seperator +
+                "客户ID: " + String.format("%08d",Integer.parseInt(customerID)) + seperator +
                 "操作员: " + userName + seperator +
                 "总额汇总: " + Money.getMoneyString(sum) + seperator +
                 itemsToString();
