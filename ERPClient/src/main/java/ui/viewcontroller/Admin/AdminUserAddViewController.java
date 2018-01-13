@@ -71,20 +71,6 @@ public class AdminUserAddViewController {
 			}
 			
 		});
-		userID.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
-				for(int i=0;i<newValue.length();i++){
-					if(Character.isDigit(newValue.charAt(i))){
-						Dialog dialog = DialogFactory.getConfirmationAlert();
-				        dialog.setHeaderText("用户ID填写错误");
-				        Optional result = dialog.showAndWait();
-					}
-				}
-			}
-		});
 	}	
 	
 	public void setAdminUserViewController(AdminUserViewController adminUserViewController){
