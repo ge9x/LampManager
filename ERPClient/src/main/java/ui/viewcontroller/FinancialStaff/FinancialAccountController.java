@@ -105,13 +105,20 @@ public class FinancialAccountController {
             String accountName = null;
             String money = null;
             Pair<String,String> results = result.get();
-            AccountVO account = new AccountVO(null, results.getKey(), Double.parseDouble(results.getValue()));
+            try{
+                AccountVO account = new AccountVO(null, results.getKey(),Double.parseDouble(results.getValue()));
 
-            ResultMessage re = accountBLService.addAccount(account);
-            if (re == ResultMessage.SUCCESS){
-                getAllAccount();
-                showAccountList();
+                ResultMessage re = accountBLService.addAccount(account);
+                if (re == ResultMessage.SUCCESS){
+                    getAllAccount();
+                    showAccountList();
+                }
+            }catch (NumberFormatException e){
+                dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("错误的输入");
+                dialog.showAndWait();
             }
+
         }
     }
     public void deleteAccount(String ID){
