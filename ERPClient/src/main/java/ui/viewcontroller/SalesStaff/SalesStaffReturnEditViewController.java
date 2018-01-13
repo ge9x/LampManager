@@ -340,6 +340,10 @@ public class SalesStaffReturnEditViewController {
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (onlyShow){
+                    mainUIController.back();
+                    return;
+                }
             	if(!isExamine){
             		salesStaffReturnOrderViewController.showReturnOrderList();
             	}
