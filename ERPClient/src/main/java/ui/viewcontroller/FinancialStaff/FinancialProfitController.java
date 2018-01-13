@@ -13,10 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import ui.component.DialogFactory;
 import util.Money;
 import util.ResultMessage;
@@ -87,6 +90,9 @@ public class FinancialProfitController {
         StartDate.valueProperty().addListener(new javafx.beans.value.ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                if (EndDate.getValue().isBefore(newValue)){
+                    EndDate.setValue(newValue);
+                }
                 showProfit();
             }
         });
@@ -97,6 +103,24 @@ public class FinancialProfitController {
             }
         });
         EndDate.setValue(LocalDate.now());
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(
+                                        StartDate.getValue())
+                                        ) {
+                                    setDisable(true);
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate.setDayCellFactory(dayCellFactory);
         showProfit();
         showData();
 

@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import ui.component.DialogFactory;
 import util.FilterType;
 import util.ResultMessage;
@@ -97,6 +98,9 @@ public class FinancialSalesDetailsController {
         StartDate.valueProperty().addListener(new javafx.beans.value.ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                if (EndDate.getValue().isBefore(newValue)){
+                    EndDate.setValue(newValue);
+                }
                 showSalesDetails();
             }
         });
@@ -106,7 +110,24 @@ public class FinancialSalesDetailsController {
                 showSalesDetails();
             }
         });
-
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(
+                                        StartDate.getValue())
+                                        ) {
+                                    setDisable(true);
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate.setDayCellFactory(dayCellFactory);
         Search.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
