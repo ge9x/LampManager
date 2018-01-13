@@ -152,22 +152,11 @@ public class InventoryLookController {
     public void showAlarmTable() {
         inventory = InventoryBox.getSelectionModel().getSelectedItem();
 
-        Task<ArrayList<AlarmVO>> task = new Task<ArrayList<AlarmVO>>() {
-            @Override
-            protected ArrayList<AlarmVO> call() throws Exception {
-                return inventoryBLService.getAlarmByInventory(inventory);
-            }
-        };
-
-        task.setOnSucceeded(e -> {
-            alarms = task.getValue();
-            alarmTable.clear();
-            for (AlarmVO vo : alarms) {
-                alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName,  vo.goodsNumber, vo.alarmNumber,vo.numberSuggestAdding));
-            }
-        });
-
-        executor.execute(task);
+        alarms = inventoryBLService.getAlarmByInventory(inventory);
+        alarmTable.clear();
+        for (AlarmVO vo : alarms) {
+            alarmTable.addRow(new AlarmBean(vo.goodsID, vo.goodsName,  vo.goodsNumber, vo.alarmNumber,vo.numberSuggestAdding));
+        }
     }
 
     public void showItemTable() {
