@@ -159,16 +159,22 @@ public class FinancialReceiptEditController {
         Dialog<ArrayList<String>> dialog = getAccountBillItemDialog();
         Optional result = dialog.showAndWait();
         if (result.isPresent()){
-            ArrayList<String> values = (ArrayList<String>)result.get();
+            try{
+                ArrayList<String> values = (ArrayList<String>)result.get();
 
-            AccountVO account = accounts.get(Integer.parseInt(values.get(0)));
-            double money = Double.parseDouble(values.get(1));
-            String remark = values.get(2);
+                AccountVO account = accounts.get(Integer.parseInt(values.get(0)));
+                double money = Double.parseDouble(values.get(1));
+                String remark = values.get(2);
 
-            AccountBillItemVO accountBillItemVO = new AccountBillItemVO(account,money,remark);
-            accountBillItems.add(accountBillItemVO);
-            data.add(new AccountBillItemBean(account.accountName,money,remark));
-            total.set(total.get()+money);
+                AccountBillItemVO accountBillItemVO = new AccountBillItemVO(account,money,remark);
+                accountBillItems.add(accountBillItemVO);
+                data.add(new AccountBillItemBean(account.accountName,money,remark));
+                total.set(total.get()+money);
+            }catch (NumberFormatException e){
+                dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("错误的输入");
+                dialog.showAndWait();
+            }
         }
     }
 

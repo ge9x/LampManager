@@ -185,13 +185,19 @@ public class FinancialCashBillEditController {
 
         Optional result = dialog.showAndWait();
         if (result.isPresent()){
-            ArrayList<String> values = (ArrayList<String>)result.get();
-            Double money = Double.parseDouble(values.get(1));
-            CashBillItemVO cashBillItemVO = new CashBillItemVO(values.get(0),money,values.get(2));
+            try{
+                ArrayList<String> values = (ArrayList<String>)result.get();
+                Double money = Double.parseDouble(values.get(1));
+                CashBillItemVO cashBillItemVO = new CashBillItemVO(values.get(0),money,values.get(2));
 
-            cashBillItems.add(cashBillItemVO);
-            data.add(new CashBillItemBean(values.get(0),money,values.get(2)));
-            total.set(total.get()+money);
+                cashBillItems.add(cashBillItemVO);
+                data.add(new CashBillItemBean(values.get(0),money,values.get(2)));
+                total.set(total.get()+money);
+            }catch (NumberFormatException e){
+                dialog = DialogFactory.getInformationAlert();
+                dialog.setHeaderText("错误的输入");
+                dialog.showAndWait();
+            }
         }
     }
 
