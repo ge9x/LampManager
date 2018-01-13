@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import ui.component.BillPane;
 import ui.component.DialogFactory;
 import ui.viewcontroller.common.BillController;
@@ -83,6 +84,9 @@ public class FinancialDocumentDetailsController {
         StartDate.valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue, LocalDate newValue) {
+                if (EndDate.getValue().isBefore(newValue)){
+                    EndDate.setValue(newValue);
+                }
                 input.startDate = StartDate.getValue().toString();
                 loadBills(billPane.getSelected());
             }
@@ -95,7 +99,24 @@ public class FinancialDocumentDetailsController {
             }
         });
 
-
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(
+                                        StartDate.getValue())
+                                        ) {
+                                    setDisable(true);
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate.setDayCellFactory(dayCellFactory);
 
         input = new DocumentDetailsInput(StartDate.getValue().toString(), EndDate.getValue().toString(), null, null, null);
 
