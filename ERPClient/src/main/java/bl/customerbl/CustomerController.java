@@ -114,7 +114,7 @@ public class CustomerController implements CustomerBLService,CustomerInfo{
 	}
 
 	public ResultMessage reduceCustomerPay(int customerID, double amount) {
-		return customer.raiseCustomerPay(customerID, amount);
+		return customer.reduceCustomerPay(customerID, amount);
 	}
 
 	public ArrayList<CustomerVO> getAllSupplier()  {

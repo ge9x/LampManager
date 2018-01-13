@@ -83,21 +83,6 @@ public class PromotionDataServiceImpl implements PromotionDataService{
 	}
 
 	@Override
-	public ResultMessage deletePC(PromotionCustomerPO po) throws RemoteException {
-		return promotionCustomerDataHelper.delete(po);
-	}
-
-	@Override
-	public ResultMessage deletePB(PromotionBargainPO po) throws RemoteException {
-		return promotionBargainDataHelper.delete(po);
-	}
-
-	@Override
-	public ResultMessage deletePT(PromotionTotalPO po) throws RemoteException {
-		return promotionTotalDataHelper.delete(po);
-	}
-
-	@Override
 	public ResultMessage updatePC(PromotionCustomerPO po) throws RemoteException {
 		List<GoodsItemPO> goodsItemPOs=po.getGifts();
 		for(GoodsItemPO goodsItemPO:goodsItemPOs){
